@@ -200,7 +200,6 @@ export function SidebarContentMobile({
 }: ComponentProps<"aside">) {
   const { open, setOpen } = useSidebar();
   const state = open ? "open" : "closed";
-  const mobileTop = "calc(var(--fd-banner-height) + var(--fd-nav-height))";
 
   useEffect(() => {
     if (!open) return;
@@ -271,8 +270,7 @@ export function SidebarContentMobile({
         <div
           data-state={state}
           aria-hidden="true"
-          className="fixed inset-x-0 bottom-0 z-40 bg-gray-a8 data-[state=open]:animate-fd-fade-in data-[state=closed]:animate-fd-fade-out motion-reduce:animate-none"
-          style={{ top: mobileTop }}
+          className="fixed inset-0 z-40 h-dvh bg-gray-a8 data-[state=open]:animate-fd-fade-in data-[state=closed]:animate-fd-fade-out motion-reduce:animate-none"
           onClick={() => setOpen(false)}
         />
       </Presence>
@@ -287,11 +285,11 @@ export function SidebarContentMobile({
             aria-label={props["aria-label"] ?? "Documentation"}
             tabIndex={props.tabIndex ?? -1}
             className={cn(
-              "fixed end-0 bottom-0 z-40 flex w-full max-w-26 min-h-0 origin-right flex-col overflow-hidden border-s bg-gray-2 text-sm shadow-lg outline-none data-[state=open]:animate-fd-sidebar-in data-[state=closed]:animate-fd-sidebar-out motion-reduce:animate-none rtl:origin-left",
+              "fixed end-0 top-0 z-40 flex h-dvh w-full max-w-26 min-h-0 origin-right flex-col overflow-hidden border-s bg-gray-2 text-sm shadow-lg outline-none data-[state=open]:animate-fd-sidebar-in data-[state=closed]:animate-fd-sidebar-out motion-reduce:animate-none rtl:origin-left",
               className
             )}
             hidden={!present}
-            style={{ ...style, top: mobileTop }}
+            style={style}
             onClick={(event) => {
               props.onClick?.(event);
               if (event.defaultPrevented) return;
