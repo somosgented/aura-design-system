@@ -287,7 +287,7 @@ export function SidebarContentMobile({
             aria-label={props["aria-label"] ?? "Documentation"}
             tabIndex={props.tabIndex ?? -1}
             className={cn(
-              "fixed start-0 bottom-0 z-40 flex w-full max-w-22 min-h-0 flex-col overflow-hidden border-e bg-gray-2 text-sm shadow-lg outline-none data-[state=open]:animate-fd-sidebar-in data-[state=closed]:animate-fd-sidebar-out motion-reduce:animate-none",
+              "fixed end-0 bottom-0 z-40 flex w-full max-w-26 min-h-0 origin-right flex-col overflow-hidden border-s bg-gray-2 text-sm shadow-lg outline-none data-[state=open]:animate-fd-sidebar-in data-[state=closed]:animate-fd-sidebar-out motion-reduce:animate-none rtl:origin-left",
               className
             )}
             hidden={!present}
