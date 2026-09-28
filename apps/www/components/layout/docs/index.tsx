@@ -156,7 +156,7 @@ export function DocsLayout({
             <BrandLockup
               href={nav.url ?? "/"}
               compact
-              className="me-auto min-w-0"
+              className="me-auto min-w-0 max-md:hidden"
             />
             {nav.children}
             {collapsible && (
