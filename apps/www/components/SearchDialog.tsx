@@ -353,8 +353,8 @@ export function SearchDialogTrigger({ className }: SearchDialogTriggerProps) {
         aria-label="Open search"
       >
         <Search className="size-1" />
-        <span className="max-sm:hidden">Search</span>
-        <div className="ms-auto inline-flex gap-0.5 max-sm:hidden">
+        <span>Search</span>
+        <div className="ms-auto inline-flex gap-0.5">
           <Kbd>⌘</Kbd>
           <Kbd>K</Kbd>
         </div>

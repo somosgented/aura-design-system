@@ -15,10 +15,7 @@ import {
 } from "fumadocs-ui/utils/get-sidebar-tabs";
 import { cn } from "@/utils/class-names";
 
-import {
-  LanguageToggle,
-  LanguageToggleText,
-} from "@/components/LanguageToggle";
+import { LanguageToggle } from "@/components/LanguageToggle";
 import { type Option, RootToggle } from "@/components/RootToggle";
 
 import { SearchDialogTrigger, SearchDialogTriggerIcon } from "@/components/SearchDialog";
@@ -27,7 +24,6 @@ import {
   SidebarCollapseTrigger,
   type SidebarComponents,
   SidebarContent,
-  SidebarContentMobile,
   SidebarFolder,
   SidebarFolderContent,
   SidebarFolderLink,
@@ -153,58 +149,6 @@ export function DocsLayout({
       </SidebarViewport>
     );
 
-    const mobile = (
-      <SidebarContentMobile {...rest}>
-        <SidebarHeader>
-          <div className="flex text-fd-muted-foreground items-center gap-0.5">
-            <div className="flex flex-1">
-              {iconLinks.map((item, i) => (
-                <BaseLinkItem
-                  key={i}
-                  item={item}
-                  className={cn(
-                    buttonVariants({
-                      size: "icon",
-                      variant: "pill",
-                      className: "p-0.5",
-                    })
-                  )}
-                  aria-label={item.label}
-                >
-                  {item.icon}
-                </BaseLinkItem>
-              ))}
-            </div>
-            {i18n ? (
-              <LanguageToggle>
-                <Languages className="size-1.5" />
-                <LanguageToggleText />
-              </LanguageToggle>
-            ) : null}
-            {themeSwitch.enabled !== false &&
-              (themeSwitch.component ?? (
-                <ThemeToggle className="p-0" mode={themeSwitch.mode} />
-              ))}
-            <SidebarTrigger
-              className={cn(
-                buttonVariants({
-                  variant: "pill",
-                  size: "sm",
-                  className: "p-0.5 size-3",
-                })
-              )}
-            >
-              <SidebarIcon className="icon" />
-            </SidebarTrigger>
-          </div>
-          {tabs.length > 0 && <RootToggle options={tabs} />}
-          {banner}
-        </SidebarHeader>
-        {viewport}
-        <SidebarFooter className="empty:hidden">{footer}</SidebarFooter>
-      </SidebarContentMobile>
-    );
-
     const content = (
       <SidebarContent {...rest}>
         <SidebarHeader>
@@ -212,7 +156,7 @@ export function DocsLayout({
             <BrandLockup
               href={nav.url ?? "/"}
               compact
-              className="me-auto min-w-0"
+              className="me-auto min-w-0 max-md:hidden"
             />
             {nav.children}
             {collapsible && (
@@ -282,7 +226,6 @@ export function DocsLayout({
       <Sidebar
         defaultOpenLevel={defaultOpenLevel}
         prefetch={prefetch}
-        Mobile={mobile}
         Content={
           <>
             {collapsible && <CollapsibleControl />}

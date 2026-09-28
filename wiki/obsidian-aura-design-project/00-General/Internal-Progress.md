@@ -1,12 +1,12 @@
 ---
 title: Internal progress
-date: 2026-09-25
+date: 2026-09-28
 tags: [dev-log, agents]
 ---
 ## Summary
-The header lockup puts “Made by” to the left of the full Somos Gente Digital logo (faces and wordmark). GitHub org links in the site and package metadata point at `somosgented/aura-design-system`.
+The home route `/` uses the same docs sidebar as `/docs`. On small screens that panel is full viewport height, covers the top bar, and enters from the right edge. The brand lockup is in the top bar below 768px and in the sidebar from `md` up.
 
 ## Context
-- Related: [[Sgd-cobrand]] [[Site and docs app]] [[Vision]]
-- Implementation Path: `apps/www/components/brand/BrandLockup.tsx`
-- Next: Pablo review of the draft PR.
+- Related: [[Site and docs app]]
+- Implementation Path: `apps/www/app/(home)/layout.tsx`
+- Next: Review the draft PR.

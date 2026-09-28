@@ -8,6 +8,7 @@ import {
   Fragment,
   type ReactNode,
   useContext,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -57,7 +58,8 @@ export interface SidebarProps {
   Content: ReactNode;
 
   /**
-   * Alternative children for mobile
+   * Optional replacement tree for viewports under 768px.
+   * Docs omit this so the mobile button opens the same sidebar content.
    */
   Mobile?: ReactNode;
 }
@@ -109,7 +111,17 @@ export function Sidebar({
   );
 }
 
+const sidebarFocusableSelector =
+  'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+function getSidebarFocusable(root: HTMLElement) {
+  return Array.from(root.querySelectorAll<HTMLElement>(sidebarFocusableSelector)).filter(
+    (node) => !node.hasAttribute("disabled") && node.getClientRects().length > 0
+  );
+}
+
 export function SidebarContent(props: ComponentProps<"aside">) {
+  const isMobile = useMediaQuery("(width < 768px)") ?? false;
   const { collapsed } = useSidebar();
   const [hover, setHover] = useState(false);
   const timerRef = useRef(0);
@@ -119,6 +131,10 @@ export function SidebarContent(props: ComponentProps<"aside">) {
     setHover(false);
     closeTimeRef.current = Date.now() + 150;
   });
+
+  if (isMobile) {
+    return <SidebarContentMobile {...props} />;
+  }
 
   return (
     <aside
@@ -179,31 +195,108 @@ export function SidebarContent(props: ComponentProps<"aside">) {
 export function SidebarContentMobile({
   className,
   children,
+  style,
   ...props
 }: ComponentProps<"aside">) {
   const { open, setOpen } = useSidebar();
   const state = open ? "open" : "closed";
+
+  useEffect(() => {
+    if (!open) return;
+
+    const previouslyFocused =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const frame = window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        document.getElementById("nd-sidebar")?.focus();
+      });
+    });
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      const aside = document.getElementById("nd-sidebar");
+      if (!aside) return;
+
+      if (event.key === "Escape") {
+        if (event.target instanceof Node && aside.contains(event.target)) {
+          event.preventDefault();
+          setOpen(false);
+        }
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+      if (
+        !(document.activeElement instanceof Node) ||
+        !aside.contains(document.activeElement)
+      ) {
+        return;
+      }
+
+      const nodes = getSidebarFocusable(aside);
+      if (nodes.length === 0) {
+        event.preventDefault();
+        aside.focus();
+        return;
+      }
+
+      const first = nodes[0];
+      const last = nodes[nodes.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = previousOverflow;
+      if (previouslyFocused?.isConnected) previouslyFocused.focus();
+    };
+  }, [open, setOpen]);
 
   return (
     <>
       <Presence present={open}>
         <div
           data-state={state}
-          className="fixed z-40 inset-0 data-[state=open]:animate-fd-fade-in data-[state=closed]:animate-fd-fade-out"
+          aria-hidden="true"
+          className="fixed inset-0 z-40 h-dvh bg-gray-a8 data-[state=open]:animate-fd-fade-in data-[state=closed]:animate-fd-fade-out motion-reduce:animate-none"
           onClick={() => setOpen(false)}
         />
       </Presence>
       <Presence present={open}>
         {({ present }) => (
           <aside
-            id="nd-sidebar-mobile"
+            id="nd-sidebar"
             {...props}
             data-state={state}
+            role="dialog"
+            aria-modal="true"
+            aria-label={props["aria-label"] ?? "Documentation"}
+            tabIndex={props.tabIndex ?? -1}
             className={cn(
-              "fixed flex flex-col shadow-lg border-s end-0 inset-y-0 w-[85%] max-w-[380px] z-40 bg-gray-1 data-[state=open]:animate-fd-sidebar-in data-[state=closed]:animate-fd-sidebar-out",
-              !present && "invisible",
+              "fixed end-0 top-0 z-40 flex h-dvh w-full max-w-26 min-h-0 origin-right flex-col overflow-hidden border-s bg-gray-2 text-sm shadow-lg outline-none data-[state=open]:animate-fd-sidebar-in data-[state=closed]:animate-fd-sidebar-out motion-reduce:animate-none rtl:origin-left",
               className
             )}
+            hidden={!present}
+            style={style}
+            onClick={(event) => {
+              props.onClick?.(event);
+              if (event.defaultPrevented) return;
+              const target = event.target;
+              if (!(target instanceof Element)) return;
+              if (target.closest("a[href]")) setOpen(false);
+            }}
           >
             {children}
           </aside>
@@ -413,13 +506,19 @@ export function SidebarTrigger({
   children,
   ...props
 }: ComponentProps<"button">) {
-  const { setOpen } = useSidebar();
+  const { open, setOpen } = useSidebar();
 
   return (
     <button
+      type="button"
+      aria-controls="nd-sidebar"
       {...props}
-      aria-label="Open Sidebar"
-      onClick={() => setOpen((prev) => !prev)}
+      aria-expanded={open}
+      aria-label={props["aria-label"] ?? (open ? "Close sidebar" : "Open sidebar")}
+      onClick={(event) => {
+        props.onClick?.(event);
+        if (!event.defaultPrevented) setOpen((prev) => !prev);
+      }}
     >
       {children}
     </button>
@@ -427,16 +526,22 @@ export function SidebarTrigger({
 }
 
 export function SidebarCollapseTrigger(props: ComponentProps<"button">) {
-  const { collapsed, setCollapsed } = useSidebar();
+  const { collapsed, setCollapsed, setOpen } = useSidebar();
+  const isMobile = useMediaQuery("(width < 768px)") ?? false;
 
   return (
     <button
       type="button"
-      aria-label="Collapse Sidebar"
       data-collapsed={collapsed}
       {...props}
-      onClick={() => {
-        setCollapsed((prev) => !prev);
+      aria-label={
+        props["aria-label"] ?? (isMobile ? "Close sidebar" : "Collapse Sidebar")
+      }
+      onClick={(event) => {
+        props.onClick?.(event);
+        if (event.defaultPrevented) return;
+        if (isMobile) setOpen(false);
+        else setCollapsed((prev) => !prev);
       }}
     >
       {props.children}

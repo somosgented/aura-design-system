@@ -1,5 +1,5 @@
 import { baseOptions } from "@/utils/layout.shared";
-import { HomeLayout } from "@/components/layout/home";
+import { DocsLayout } from "@/components/layout/docs";
 import Footer from "@/components/Footer";
 import { source } from "@/utils/source";
 
@@ -7,9 +7,9 @@ import { ThemeColorSwitcher } from "@/components/ThemeColorSwitcher";
 
 export default function Layout({ children }: LayoutProps<"/">) {
   return (
-    <HomeLayout
-      {...baseOptions()}
+    <DocsLayout
       tree={source.pageTree}
+      {...baseOptions()}
       themeSwitch={{
         enabled: true,
         component: <ThemeColorSwitcher />,
@@ -17,6 +17,6 @@ export default function Layout({ children }: LayoutProps<"/">) {
     >
       {children}
       <Footer />
-    </HomeLayout>
+    </DocsLayout>
   );
 }
