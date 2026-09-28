@@ -14,7 +14,7 @@ The public docs experience is the **`@aura-design/www`** Next.js app under `apps
 | `app/llms.mdx/docs/[[...slug]]/route.ts` | Per-page Markdown for agents; public URLs rewrite `/docs/*.md` → this route. |
 | `app/docs/handbook/llms.txt/route.ts` | Handbook-scoped LLM text route (redirects to `llms-full.txt`). |
 | `app/og/docs/[...slug]/route.tsx` | Open Graph images for docs. |
-| `app/api/search/route.ts` | Fumadocs Orama-backed search (`GET`, query-driven). |
+| `app/api/search/route.ts` | Fumadocs search (`GET`). Omits component-catalog duplicates. See [[Docs search]]. |
 | `app/api/quick-links/route.ts` | Curated suggestions for the command palette (cached). |
 
 ## Content pipeline
@@ -24,7 +24,7 @@ The public docs experience is the **`@aura-design/www`** Next.js app under `apps
 - **Fumadocs** — **16.15.9** (`fumadocs-core` / `fumadocs-ui`) + **fumadocs-mdx 15.4.0**. See [[Fumadocs-upgrade]].
 - **Fumadocs MDX** — `apps/www/source.config.ts`; `postinstall` runs `postInstall` to generate `@/.source` (`server.ts`).
 - **Runtime** — `utils/source.tsx` builds the Fumadocs `loader` with base URL `/docs`, `statusBadgesPlugin` for sidebar `status` badges (see [[Sidebar-status-badges]]), and `docsLlms` for Markdown exports.
-- **Search UI** — `apps/www/components/SearchDialog.tsx` calls `/api/search?query=…` and `/api/quick-links`.
+- **Search UI** — `apps/www/components/SearchDialog.tsx` calls `/api/search?query=…` and `/api/quick-links`. `<mark>` in result `content` is rendered as a highlight. See [[Docs search]].
 - **Registry on the same origin** — `apps/www/public/r/` is produced by `packages/registry` (`registry:build`); the live site serves the shadcn registry consumers use.
 - **Custom layout** — Forked under `components/layout/`; v15 sidebar/nav/`I18nLabel` contexts vendored in `components/layout/contexts/` after Fumadocs UI 16 removed those exports.
 - **Docs sidebar** — `/` and `/docs` share one tree in `components/layout/docs/index.tsx` via `DocsLayout`. Below 768px the header button opens that sidebar as a right-edge dialog (`h-dvh`, covering the top bar, `translateX(100%)` → `0`, 250ms). The lockup stays in the top bar on small screens and in the sidebar from `md` up.
