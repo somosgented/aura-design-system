@@ -27,6 +27,7 @@ The public docs experience is the **`@aura-design/www`** Next.js app under `apps
 - **Search UI** — `apps/www/components/SearchDialog.tsx` calls `/api/search?query=…` and `/api/quick-links`.
 - **Registry on the same origin** — `apps/www/public/r/` is produced by `packages/registry` (`registry:build`); the live site serves the shadcn registry consumers use.
 - **Custom layout** — Forked under `components/layout/`; v15 sidebar/nav/`I18nLabel` contexts vendored in `components/layout/contexts/` after Fumadocs UI 16 removed those exports.
+- **Docs sidebar** — Desktop and viewports under 768px share one tree in `components/layout/docs/index.tsx`. The mobile header button opens that sidebar as a dialog in `components/Sidebar.tsx` (Escape, backdrop, and the header control close it). The home header menu is separate.
 
 ## API reference in-repo
 

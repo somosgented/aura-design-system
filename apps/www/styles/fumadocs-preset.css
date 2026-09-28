@@ -11,11 +11,11 @@
 }
 
 [dir="rtl"] {
-  --fd-sidebar-mobile-offset: -100%;
+  --fd-sidebar-mobile-offset: 100%;
 }
 
 @theme {
-  --fd-sidebar-mobile-offset: 100%;
+  --fd-sidebar-mobile-offset: -100%;
   --spacing-fd-container: 1400px;
   --fd-page-width: 1200px;
   --fd-sidebar-width: 0px;
