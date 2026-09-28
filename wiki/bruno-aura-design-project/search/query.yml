@@ -36,3 +36,4 @@ docs: |-
   - `tag`: optional, comma-separated tags.
   - `locale`: optional.
   - `mode`: `full` (default) or `vector`.
+  - Component catalog headings that repeat a real `/docs/components/{slug}` page are omitted. `content` may include `<mark>` around matches.

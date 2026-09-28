@@ -24,6 +24,7 @@ import {
 import { Kbd, KbdGroup } from "@/components/ui/Kbd";
 import { ScrollArea } from "@/components/ui/ScrollArea";
 import { cn } from "@/utils/class-names";
+import { splitSearchMarks } from "@/utils/search-index";
 import { Button } from "@/components/ui/Button";
 
 interface SearchResult {
@@ -66,6 +67,24 @@ interface SearchItem {
 interface Group {
   value: string;
   items: (QuickLink | SearchItem)[];
+}
+
+function SearchHighlightedText({ text }: { text: string }) {
+  const parts = splitSearchMarks(text);
+
+  return (
+    <>
+      {parts.map((part, index) =>
+        part.highlight ? (
+          <mark key={index} className="bg-accent-a6 text-accent-12">
+            {part.content}
+          </mark>
+        ) : (
+          <span key={index}>{part.content}</span>
+        ),
+      )}
+    </>
+  );
 }
 
 const searchFetcher = async (url: string): Promise<SearchResult[]> => {
@@ -246,8 +265,10 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                                 >
                                   <div className="flex flex-col gap-0.5">
                                     <div className="font-medium text-gray-12">
-                                      {"contentWithHighlights" in item &&
-                                      item.contentWithHighlights ? (
+                                      {item.label.includes("<mark>") ? (
+                                        <SearchHighlightedText text={item.label} />
+                                      ) : "contentWithHighlights" in item &&
+                                        item.contentWithHighlights ? (
                                         <span>
                                           {item.contentWithHighlights.map(
                                             (part, idx) => (
