@@ -9,4 +9,4 @@ Home-page `AuraAesthetic` uses the same live preview as [[Theme Color Switcher]]
 ## Context
 - Related: [[Taste]], [[Theme-Colors-Crash-Fix]], [[Internal-Progress]]
 - Implementation Path: `apps/www/components/AuraAesthetic.tsx`, `apps/www/hooks/use-aura-theme-colors.ts`, `apps/www/components/ThemeColorSwitcher.tsx`
-- Layout: `smesh` container, stacked controls on mobile, 3-column component preview from `lg`
+- Layout: `smesh` container, stacked controls on mobile, 3-column component preview from `lg`. Preview field groups and the two quotes use `gap-2.5`; layer rows use `py-1` and icon `gap-0.5`.
