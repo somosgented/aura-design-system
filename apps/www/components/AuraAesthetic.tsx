@@ -441,7 +441,7 @@ function ComponentsShowcase() {
             <div
               key={`${layer.label}-${index}`}
               className={cn(
-                "flex items-center gap-1 border-b border-gray-6 px-1 py-0.5 last:border-b-0 hover:bg-gray-3",
+                "flex items-center gap-0.5 border-b border-gray-6 px-1 py-1 last:border-b-0 hover:bg-gray-3",
                 layer.indent && "pl-3"
               )}
             >
@@ -601,52 +601,54 @@ function ComponentsShowcase() {
                   Create account
                 </CardTitle>
               </CardHeader>
-              <CardContent className="flex flex-col gap-1.5">
-                <div className="flex flex-col gap-0.5">
-                  <Label htmlFor="example-name" className="text-sm">
-                    Full name
-                  </Label>
-                  <Input
-                    id="example-name"
-                    placeholder="Enter your name"
-                    className="h-3 rounded-md border border-gray-6 bg-gray-1 px-1 text-gray-12"
-                  />
-                </div>
-                <div className="flex flex-col gap-0.5">
-                  <Label htmlFor="example-email" className="text-sm">
-                    Email
-                  </Label>
-                  <Input
-                    id="example-email"
-                    type="email"
-                    placeholder="Enter your email address"
-                    className="h-3 rounded-md border border-gray-6 bg-gray-1 px-1 text-gray-12"
-                  />
-                </div>
-                <div className="flex flex-col gap-0.5">
-                  <Label htmlFor="example-password" className="text-sm">
-                    Password
-                  </Label>
-                  <Input
-                    id="example-password"
-                    type="password"
-                    placeholder="Enter your password"
-                    className="h-3 rounded-md border border-gray-6 bg-gray-1 px-1 text-gray-12"
-                  />
-                </div>
-                <div className="mt-0.5 flex flex-col gap-1">
-                  <Button type="button" size="sm">
-                    Create account
-                  </Button>
-                  <div className="flex items-center gap-1">
-                    <Separator className="flex-1" />
-                    <span className="text-xs text-gray-11">OR</span>
-                    <Separator className="flex-1" />
+              <CardContent>
+                <div className="flex flex-col gap-2.5">
+                  <div className="flex flex-col gap-0.5">
+                    <Label htmlFor="example-name" className="text-sm">
+                      Full name
+                    </Label>
+                    <Input
+                      id="example-name"
+                      placeholder="Enter your name"
+                      className="h-3 rounded-md border border-gray-6 bg-gray-1 px-1 text-gray-12"
+                    />
                   </div>
-                  <Button type="button" size="sm" variant="pill">
-                    <GitHubLogoIcon className="icon" />
-                    Continue with GitHub
-                  </Button>
+                  <div className="flex flex-col gap-0.5">
+                    <Label htmlFor="example-email" className="text-sm">
+                      Email
+                    </Label>
+                    <Input
+                      id="example-email"
+                      type="email"
+                      placeholder="Enter your email address"
+                      className="h-3 rounded-md border border-gray-6 bg-gray-1 px-1 text-gray-12"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-0.5">
+                    <Label htmlFor="example-password" className="text-sm">
+                      Password
+                    </Label>
+                    <Input
+                      id="example-password"
+                      type="password"
+                      placeholder="Enter your password"
+                      className="h-3 rounded-md border border-gray-6 bg-gray-1 px-1 text-gray-12"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <Button type="button" size="sm">
+                      Create account
+                    </Button>
+                    <div className="flex items-center gap-1">
+                      <Separator className="flex-1" />
+                      <span className="text-xs text-gray-11">OR</span>
+                      <Separator className="flex-1" />
+                    </div>
+                    <Button type="button" size="sm" variant="pill">
+                      <GitHubLogoIcon className="icon" />
+                      Continue with GitHub
+                    </Button>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -732,7 +734,7 @@ function ComponentsShowcase() {
 
         <Separator />
 
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-2.5">
           <LinksExample />
           <LinksExample muted />
         </div>
