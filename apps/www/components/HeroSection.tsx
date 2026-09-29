@@ -51,7 +51,7 @@ function CopyableCommand({ command }: { command: string }) {
 
 export default function HeroSection() {
   return (
-    <Section>
+    <Section className="px-2 md:px-3">
       <div className="flex flex-col items-center text-center gap-0.5">
         <div className="space-y-1">
           <h1 className="h1 font-bold tracking-tight text-gray-12">

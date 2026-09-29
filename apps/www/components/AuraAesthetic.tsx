@@ -762,7 +762,7 @@ export default function AuraAesthetic() {
 
   return (
     <section className="overflow-x-clip border-t border-gray-6 bg-gray-2">
-      <div className="smesh pad flex flex-col gap-2.5 py-3">
+      <div className="smesh pad flex flex-col gap-2.5 px-2 py-3 md:px-3">
         <div className="mx-auto flex max-w-2xl flex-col items-center gap-1 text-center">
           <h2 className="font-bold text-gray-12">Create a custom palette</h2>
           <p className="text-balance text-gray-11">
@@ -804,7 +804,7 @@ export default function AuraAesthetic() {
           </div>
         </div>
 
-        <div className="mx-auto flex w-full max-w-4xl flex-col items-stretch gap-1 rounded-xl border border-gray-6 bg-gray-1 p-1.5 sm:flex-row sm:items-end sm:gap-1.5">
+        <div className="mx-auto flex w-full max-w-4xl flex-col items-stretch gap-1 rounded-xl border border-gray-6 bg-gray-1 p-2 sm:flex-row sm:items-end sm:gap-1.5">
           <div className="grid flex-1 grid-cols-1 gap-1 sm:grid-cols-3">
             <ColorField
               id="custom-accent"
@@ -882,7 +882,7 @@ export default function AuraAesthetic() {
               Aura components using your live palette.
             </p>
           </div>
-          <div className="rounded-xl border border-gray-6 bg-gray-1 p-1.5 md:p-2">
+          <div className="rounded-xl border border-gray-6 bg-gray-1 p-2 md:p-3">
             <ComponentsShowcase />
           </div>
         </div>

@@ -23,7 +23,7 @@ export default function HomeDocSection({
   className,
 }: HomeDocSectionProps) {
   return (
-    <Section className={cn("border-t border-gray-6 bg-gray-2", className)}>
+    <Section className={cn("border-t border-gray-6 bg-gray-2 px-2 md:px-3", className)}>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
         <div className="flex items-start gap-2">
           <span className="text-gray-11 shrink-0 mt-0.5" aria-hidden>
