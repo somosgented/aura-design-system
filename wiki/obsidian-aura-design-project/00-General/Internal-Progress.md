@@ -1,12 +1,12 @@
 ---
 title: Internal progress
-date: 2026-09-29
+date: 2026-10-01
 tags: [dev-log, logic]
 ---
 ## Summary
-Component preview on `/` uses wider vertical rhythm on the 13px grid: sign-up field groups are `gap-2.5` (32.5px), the Susan Kare quotes are `gap-2.5`, and the layer list rows use `py-1` with `gap-0.5` between icon and label. Nested rows stay at `pl-3` (39px).
+Canary now has a Cloud Run preview workflow for `aura-www`, `aura-stories`, and `aura-design-md` in `us-central1`. Images are tagged with the commit SHA. Custom domains stay on Vercel until cutover.
 
 ## Context
-- Related: [[Custom-Colors-Showcase]] [[Site and docs app]]
-- Implementation Path: `apps/www/components/AuraAesthetic.tsx`
-- Next: none for this spacing pass.
+- Related: [[Cloud Run]] [[Site and docs app]] [[Design md]] [[Registry]]
+- Implementation Path: `.github/workflows/cloud-run.yml`
+- Next: add GitHub secrets `CLOUD_RUN_CREDENTIALS` and `CLOUD_RUN_PROJECT_ID`, then confirm services with `gcloud run services list --project sgd-marketing-bellatrix --region us-central1`.

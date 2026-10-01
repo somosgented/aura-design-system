@@ -1,0 +1,123 @@
+# Canary preview deploys to Cloud Run. Custom domains stay on Vercel until cutover.
+# Required GitHub secrets:
+#   CLOUD_RUN_CREDENTIALS  — service account JSON key (Artifact Registry + Cloud Run admin)
+#   CLOUD_RUN_PROJECT_ID   — GCP project; defaults to sgd-marketing-bellatrix when unset
+name: Cloud Run (canary)
+
+on:
+  push:
+    branches:
+      - canary
+  workflow_dispatch:
+
+concurrency:
+  group: cloud-run-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  PROJECT_ID: ${{ secrets.CLOUD_RUN_PROJECT_ID || 'sgd-marketing-bellatrix' }}
+  REGION: us-central1
+  GAR_LOCATION: us-central1
+  REPOSITORY: aura-design-system
+
+jobs:
+  registry:
+    name: Ensure Artifact Registry
+    runs-on: ubuntu-latest
+    steps:
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.CLOUD_RUN_CREDENTIALS }}
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+
+      - name: Enable APIs and create the Docker repository
+        run: |
+          set -euo pipefail
+          gcloud services enable artifactregistry.googleapis.com run.googleapis.com \
+            --project="${PROJECT_ID}"
+          if ! gcloud artifacts repositories describe "${REPOSITORY}" \
+            --location="${GAR_LOCATION}" \
+            --project="${PROJECT_ID}" >/dev/null 2>&1; then
+            gcloud artifacts repositories create "${REPOSITORY}" \
+              --repository-format=docker \
+              --location="${GAR_LOCATION}" \
+              --project="${PROJECT_ID}" \
+              --description="Aura Design System container images"
+          fi
+
+  deploy:
+    name: Deploy ${{ matrix.service }}
+    needs: registry
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - service: aura-www
+            image: www
+            dockerfile: apps/www/Dockerfile
+            memory: 1Gi
+          - service: aura-stories
+            image: stories
+            dockerfile: packages/registry/Dockerfile
+            memory: 512Mi
+          - service: aura-design-md
+            image: design-md
+            dockerfile: packages/design-md/Dockerfile
+            memory: 512Mi
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.CLOUD_RUN_CREDENTIALS }}
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker "${GAR_LOCATION}-docker.pkg.dev" --quiet
+
+      - name: Build and push image
+        env:
+          IMAGE: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ matrix.image }}:${{ github.sha }}
+        run: |
+          set -euo pipefail
+          docker build -f "${{ matrix.dockerfile }}" -t "${IMAGE}" .
+          docker push "${IMAGE}"
+
+      - name: Deploy Cloud Run service
+        env:
+          IMAGE: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ matrix.image }}:${{ github.sha }}
+        run: |
+          set -euo pipefail
+          gcloud run deploy "${{ matrix.service }}" \
+            --image "${IMAGE}" \
+            --region "${REGION}" \
+            --project "${PROJECT_ID}" \
+            --allow-unauthenticated \
+            --port 3000 \
+            --memory "${{ matrix.memory }}" \
+            --cpu 1 \
+            --update-labels "managed-by=github-actions,commit-sha=${GITHUB_SHA}" \
+            --quiet
+
+      - name: Print service URL
+        run: |
+          gcloud run services describe "${{ matrix.service }}" \
+            --region "${REGION}" \
+            --project "${PROJECT_ID}" \
+            --format='value(status.url)'

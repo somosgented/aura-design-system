@@ -4,6 +4,8 @@
 FROM node:20-alpine AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
+# corepack prompts before downloading pnpm; that hangs a non-interactive build.
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 RUN corepack enable
 RUN pnpm add -g turbo
 
