@@ -3,10 +3,11 @@
 
 FROM node:20-alpine AS base
 ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
+# pnpm 10 keeps global bins in PNPM_HOME; newer pnpm uses PNPM_HOME/bin.
+ENV PATH="$PNPM_HOME:$PNPM_HOME/bin:$PATH"
 # corepack prompts before downloading pnpm; that hangs a non-interactive build.
 ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
-RUN corepack enable
+RUN corepack enable && corepack prepare pnpm@10.2.1 --activate
 RUN pnpm add -g turbo
 
 # Stage 1: Prune the monorepo to only include the www app and its dependencies
