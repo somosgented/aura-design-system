@@ -1,0 +1,110 @@
+# Production Cloud Run deploy. Same flow as next-sgd
+# (`.github/workflows/cloud-run-prod.yml`): push to `deploy/production` only.
+# Custom domains stay on Vercel until cutover.
+#
+# Required GitHub secrets:
+#   CLOUD_RUN_CREDENTIALS — service account JSON key
+#   CLOUD_RUN_PROJECT_ID  — GCP project (sgd-marketing-bellatrix)
+name: Cloud Run (production)
+
+on:
+  push:
+    branches:
+      - deploy/production
+
+concurrency:
+  group: cloud-run-prod
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  GAR_LOCATION: us-central1
+  PROJECT_ID: ${{ secrets.CLOUD_RUN_PROJECT_ID }}
+  REPOSITORY: aura-design-system
+
+jobs:
+  deploy:
+    name: Deploy ${{ matrix.service }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - service: aura-www
+            image: www
+            dockerfile: apps/www/Dockerfile
+            memory: 1Gi
+          - service: aura-stories
+            image: stories
+            dockerfile: packages/registry/Dockerfile
+            memory: 512Mi
+          - service: aura-design-md
+            image: design-md
+            dockerfile: packages/design-md/Dockerfile
+            memory: 512Mi
+    env:
+      IMAGE: ${{ matrix.image }}
+      SERVICE: ${{ matrix.service }}
+      DOCKERFILE: ${{ matrix.dockerfile }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v3
+        with:
+          credentials_json: ${{ secrets.CLOUD_RUN_CREDENTIALS }}
+          token_format: access_token
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v3
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+
+      - name: Ensure Artifact Registry repository
+        run: |
+          set -euo pipefail
+          if ! gcloud artifacts repositories describe "${REPOSITORY}" \
+            --location="${GAR_LOCATION}" \
+            --project="${PROJECT_ID}" >/dev/null 2>&1; then
+            gcloud artifacts repositories create "${REPOSITORY}" \
+              --repository-format=docker \
+              --location="${GAR_LOCATION}" \
+              --project="${PROJECT_ID}" \
+              --description="Aura Design System container images"
+          fi
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Artifact Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.GAR_LOCATION }}-docker.pkg.dev
+          username: oauth2accesstoken
+          password: ${{ steps.auth.outputs.access_token }}
+
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ${{ env.DOCKERFILE }}
+          push: true
+          tags: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.IMAGE }}:${{ github.sha }}
+
+      - name: Deploy to Cloud Run
+        run: |
+          set -euo pipefail
+          gcloud run deploy "${SERVICE}" \
+            --image "${GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY}/${IMAGE}:${GITHUB_SHA}" \
+            --region "${GAR_LOCATION}" \
+            --project "${PROJECT_ID}" \
+            --allow-unauthenticated \
+            --port 3000 \
+            --memory "${{ matrix.memory }}" \
+            --cpu 1 \
+            --quiet

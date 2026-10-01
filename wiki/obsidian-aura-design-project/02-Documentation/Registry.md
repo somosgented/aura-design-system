@@ -15,7 +15,7 @@ Holds the **default registry tree** under `registry/` (UI primitives, blocks, Cu
 
 ## Key commands or entrypoints
 
-- **`pnpm dev`** / **`pnpm build`** — Ladle serve / build to `build/`.
+- **`pnpm dev`** / **`pnpm build`** — Ladle serve / build to `build/`. The static build is the Cloud Run `aura-stories` image (`packages/registry/Dockerfile`). See [[Cloud Run]].
 - **`pnpm sync:rules`** — Copies rules into the registry (`scripts/sync-rules.ts`).
 - **`pnpm sync:skills`** — Copies whitelisted `.cursor/skills/*` into the registry (`scripts/sync-skills.ts`).
 - **`pnpm sync:design-md`** — Syncs DESIGN.md into the registry (`scripts/sync-design-md.ts`).

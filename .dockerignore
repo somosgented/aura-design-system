@@ -38,7 +38,9 @@ playwright-report
 .turbo
 
 # Misc
+# Root markdown only. Nested files such as packages/design-md/DESIGN.md stay in context.
 *.md
 !README.md
+!packages/design-md/DESIGN.md
 LICENSE
 
