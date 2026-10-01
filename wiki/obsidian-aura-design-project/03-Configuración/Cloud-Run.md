@@ -11,7 +11,7 @@ Pushing `deploy/production` builds three images and deploys unauthenticated Clou
 - Implementation Path: `.github/workflows/cloud-run-prod.yml`
 
 ## Why this shape
-Static apps use nginx so `/dark` and the `DESIGN.md` content type match `packages/design-md/vercel.json` without a Node process. The docs app keeps the existing Next.js standalone image. One matrix workflow deploys all three on `deploy/production`, matching next-sgd's auth, Buildx, and `gcloud run deploy` steps.
+Static apps use nginx so `/dark` and the `DESIGN.md` content type match `packages/design-md/vercel.json` without a Node process. The docs app keeps the Next.js standalone image. `turbo prune` drops two registry stylesheets that `apps/www/app/globals.css` imports by path, so `apps/www/Dockerfile` copies them in before `next build`. One matrix workflow deploys all three on `deploy/production`, matching next-sgd's auth, Buildx, and `gcloud run deploy` steps.
 
 ## Services
 
