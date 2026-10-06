@@ -1,0 +1,76 @@
+---
+title: Portal
+description: Renders children into another element.
+---
+
+import { ComponentPreview } from "@/components/ComponentPreview"
+import { ComponentSource } from "@/components/ComponentSource"
+import { Steps, Step } from "fumadocs-ui/components/steps"
+
+## Preview
+
+<ComponentPreview name="portal-demo" description="Renders children into another element.">
+
+```tsx
+import { useState } from "react";
+import { Portal } from "@/components/ui/Portal";
+
+export function PortalDemo() {
+  const [target, setTarget] = useState<HTMLDivElement | null>(null);
+  return (
+    <div className="flex flex-col gap-0.5">
+      <p className="m-0 text-gray-11">The line below is rendered through a portal.</p>
+      <div ref={setTarget} className="min-h-6 rounded-sm border border-dashed border-gray-7 p-1" />
+      <Portal container={target}>
+        <span>Portaled into the frame</span>
+      </Portal>
+    </div>
+  );
+}
+```
+
+</ComponentPreview>
+
+## Installation
+Make sure that `namespace` is set in your component.json file. Namespace docs: [Learn more about namespaces](/docs/namespace)
+```bash
+pnpm dlx shadcn@latest add @aura/portal
+```
+
+
+
+### Manual
+
+<Steps>
+  <Step>
+    Copy and paste the Portal component into your `components/ui/Portal.tsx` file.
+
+```tsx
+"use client";
+
+import * as React from "react";
+import { createPortal } from "react-dom";
+
+function Portal({
+  children,
+  container,
+}: {
+  children: React.ReactNode;
+  container?: HTMLElement | null;
+}) {
+  const [target, setTarget] = React.useState<HTMLElement | null>(container ?? null);
+
+  React.useEffect(() => {
+    setTarget(container === undefined ? document.body : container);
+  }, [container]);
+
+  if (!target) return null;
+  return createPortal(children, target);
+}
+
+export { Portal };
+
+```
+  </Step>
+</Steps>
+

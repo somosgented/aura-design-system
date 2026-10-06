@@ -1,0 +1,99 @@
+---
+title: Fps
+description: A live frames-per-second meter.
+---
+
+import { ComponentPreview } from "@/components/ComponentPreview"
+import { ComponentSource } from "@/components/ComponentSource"
+import { Steps, Step } from "fumadocs-ui/components/steps"
+
+## Preview
+
+<ComponentPreview name="fps-demo" description="A live frames-per-second meter.">
+
+```tsx
+import { Fps } from "@/components/ui/Fps";
+
+export function FpsDemo() {
+  return <Fps />;
+}
+```
+
+</ComponentPreview>
+
+## Installation
+Make sure that `namespace` is set in your component.json file. Namespace docs: [Learn more about namespaces](/docs/namespace)
+```bash
+pnpm dlx shadcn@latest add @aura/fps
+```
+
+
+
+### Manual
+
+<Steps>
+  <Step>
+    Copy and paste the class names utility into your `utils/class-names.ts` file.
+
+```ts
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+
+```
+  </Step>
+  <Step>
+    Copy and paste the Fps component into your `components/ui/Fps.tsx` file.
+
+```tsx
+"use client";
+
+import * as React from "react";
+import { cn } from "@/utils/class-names";
+
+function Fps({ className, label = "Frames per second" }: { className?: string; label?: string }) {
+  const [fps, setFps] = React.useState(0);
+
+  React.useEffect(() => {
+    let frames = 0;
+    let last = performance.now();
+    let frame = 0;
+    const tick = (now: number) => {
+      frames += 1;
+      const elapsed = now - last;
+      if (elapsed >= 250) {
+        setFps(Math.round((frames * 1000) / elapsed));
+        frames = 0;
+        last = now;
+      }
+      frame = window.requestAnimationFrame(tick);
+    };
+    frame = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+
+  return (
+    <span
+      role="meter"
+      aria-label={label}
+      aria-valuemin={0}
+      aria-valuenow={fps}
+      data-slot="fps"
+      className={cn("inline-flex items-center gap-0.5 rounded-sm border border-gray-6 bg-gray-2 px-1 py-0.5", className)}
+    >
+      <span aria-hidden className="size-1 rounded-full bg-accent-9" />
+      {fps} fps
+    </span>
+  );
+}
+
+export { Fps };
+
+```
+  </Step>
+</Steps>
+

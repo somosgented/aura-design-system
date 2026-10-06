@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { MediaPlayer } from "../registry/default/components/ui/MediaPlayer";
+import { MediaPlayer } from "@/components/ui/MediaPlayer";
 
-export const Default = () => {
+export const MediaPlayerDemo = () => {
   const [src, setSrc] = useState<string>();
   useEffect(() => {
     const sampleRate = 8000;

@@ -999,6 +999,18 @@
       ]
     },
     {
+      "name": "client-only",
+      "type": "registry:ui",
+      "title": "ClientOnly",
+      "description": "The ClientOnly component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/ClientOnly.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "collapsible",
       "type": "registry:ui",
       "title": "Collapsible",
@@ -1075,6 +1087,21 @@
       ]
     },
     {
+      "name": "compare-slider",
+      "type": "registry:ui",
+      "title": "CompareSlider",
+      "description": "The CompareSlider component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/CompareSlider.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "context-menu",
       "type": "registry:ui",
       "title": "ContextMenu",
@@ -1098,6 +1125,21 @@
       "dependencies": [
         "@radix-ui/react-icons",
         "radix-ui"
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
+      "name": "cropper",
+      "type": "registry:ui",
+      "title": "Cropper",
+      "description": "The Cropper component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Cropper.tsx",
+          "type": "registry:ui"
+        }
       ],
       "registryDependencies": [
         "@aura/class-names"
@@ -1334,6 +1376,21 @@
       ]
     },
     {
+      "name": "fps",
+      "type": "registry:ui",
+      "title": "Fps",
+      "description": "The Fps component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Fps.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "grid",
       "type": "registry:ui",
       "title": "Grid",
@@ -1341,6 +1398,21 @@
       "files": [
         {
           "path": "registry/default/components/ui/Grid.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
+      "name": "hitbox",
+      "type": "registry:ui",
+      "title": "Hitbox",
+      "description": "The Hitbox component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Hitbox.tsx",
           "type": "registry:ui"
         }
       ],
@@ -1520,6 +1592,22 @@
       ]
     },
     {
+      "name": "media-player",
+      "type": "registry:ui",
+      "title": "MediaPlayer",
+      "description": "The MediaPlayer component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/MediaPlayer.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/button",
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "mention",
       "type": "registry:ui",
       "title": "Mention",
@@ -1677,6 +1765,21 @@
       ]
     },
     {
+      "name": "pending",
+      "type": "registry:ui",
+      "title": "Pending",
+      "description": "The Pending component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Pending.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "popover",
       "type": "registry:ui",
       "title": "Popover",
@@ -1700,6 +1803,33 @@
       "dependencies": [
         "@radix-ui/react-icons",
         "radix-ui"
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
+      "name": "portal",
+      "type": "registry:ui",
+      "title": "Portal",
+      "description": "The Portal component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Portal.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "presence",
+      "type": "registry:ui",
+      "title": "Presence",
+      "description": "The Presence component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Presence.tsx",
+          "type": "registry:ui"
+        }
       ],
       "registryDependencies": [
         "@aura/class-names"
@@ -2185,6 +2315,22 @@
       ]
     },
     {
+      "name": "swap",
+      "type": "registry:ui",
+      "title": "Swap",
+      "description": "The Swap component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Swap.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/button",
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "switch",
       "type": "registry:ui",
       "title": "Switch",
@@ -2311,6 +2457,37 @@
       },
       "dependencies": [
         "radix-ui"
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
+      "name": "tour",
+      "type": "registry:ui",
+      "title": "Tour",
+      "description": "The Tour component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Tour.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/button",
+        "@aura/class-names"
+      ]
+    },
+    {
+      "name": "visually-hidden",
+      "type": "registry:ui",
+      "title": "VisuallyHidden",
+      "description": "The VisuallyHidden component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/VisuallyHidden.tsx",
+          "type": "registry:ui"
+        }
       ],
       "registryDependencies": [
         "@aura/class-names"
