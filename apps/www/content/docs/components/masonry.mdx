@@ -1,0 +1,98 @@
+---
+title: Masonry
+description: A two-column layout that keeps items intact.
+---
+
+import { ComponentPreview } from "@/components/ComponentPreview"
+import { ComponentSource } from "@/components/ComponentSource"
+import { Steps, Step } from "fumadocs-ui/components/steps"
+
+## Preview
+
+<ComponentPreview name="masonry-demo" description="A two-column layout that keeps items intact.">
+
+```tsx
+import { Masonry, MasonryItem } from "@/components/ui/Masonry";
+
+export function MasonryDemo() {
+  return (
+  <Masonry>
+    <MasonryItem>
+      <div className="h-8">Color</div>
+    </MasonryItem>
+    <MasonryItem>
+      <div className="h-12">Typography runs taller</div>
+    </MasonryItem>
+    <MasonryItem>
+      <div className="h-6">Space</div>
+    </MasonryItem>
+    <MasonryItem>
+      <div className="h-10">Motion</div>
+    </MasonryItem>
+  </Masonry>
+)
+}
+```
+
+</ComponentPreview>
+
+## Installation
+Make sure that `namespace` is set in your component.json file. Namespace docs: [Learn more about namespaces](/docs/namespace)
+```bash
+pnpm dlx shadcn@latest add @aura/masonry
+```
+
+
+
+### Manual
+
+<Steps>
+  <Step>
+    Copy and paste the class names utility into your `utils/class-names.ts` file.
+
+```ts
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+
+```
+  </Step>
+  <Step>
+    Copy and paste the Masonry component into your `components/ui/Masonry.tsx` file.
+
+```tsx
+"use client";
+
+import * as React from "react";
+import { cn } from "@/utils/class-names";
+
+function Masonry({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="masonry"
+      className={cn("columns-2 gap-1", className)}
+      {...props}
+    />
+  );
+}
+
+function MasonryItem({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="masonry-item"
+      className={cn("mb-1 break-inside-avoid rounded-sm bg-gray-3 p-1", className)}
+      {...props}
+    />
+  );
+}
+
+export { Masonry, MasonryItem };
+
+```
+  </Step>
+</Steps>
+

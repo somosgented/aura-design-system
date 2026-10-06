@@ -820,6 +820,24 @@
       ]
     },
     {
+      "name": "banner",
+      "type": "registry:ui",
+      "title": "Banner",
+      "description": "The Banner component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Banner.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-icons"
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "breadcrumb",
       "type": "registry:ui",
       "title": "Breadcrumb",
@@ -1334,6 +1352,21 @@
       ]
     },
     {
+      "name": "gauge",
+      "type": "registry:ui",
+      "title": "Gauge",
+      "description": "The Gauge component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Gauge.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "grid",
       "type": "registry:ui",
       "title": "Grid",
@@ -1452,6 +1485,21 @@
       ]
     },
     {
+      "name": "kanban",
+      "type": "registry:ui",
+      "title": "Kanban",
+      "description": "The Kanban component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Kanban.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "kbd",
       "type": "registry:ui",
       "title": "Kbd",
@@ -1501,6 +1549,21 @@
       ]
     },
     {
+      "name": "marquee",
+      "type": "registry:ui",
+      "title": "Marquee",
+      "description": "The Marquee component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Marquee.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "mask-input",
       "type": "registry:ui",
       "title": "MaskInput",
@@ -1517,6 +1580,21 @@
       "registryDependencies": [
         "@aura/class-names",
         "@aura/compose-refs"
+      ]
+    },
+    {
+      "name": "masonry",
+      "type": "registry:ui",
+      "title": "Masonry",
+      "description": "The Masonry component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Masonry.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
       ]
     },
     {
@@ -1745,6 +1823,21 @@
       ]
     },
     {
+      "name": "qr-code",
+      "type": "registry:ui",
+      "title": "QrCode",
+      "description": "The QrCode component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/QrCode.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "questionnaire",
       "type": "registry:ui",
       "title": "Questionnaire",
@@ -1774,6 +1867,21 @@
       ],
       "dependencies": [
         "radix-ui"
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
+      "name": "relative-time-card",
+      "type": "registry:ui",
+      "title": "RelativeTimeCard",
+      "description": "The RelativeTimeCard component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/RelativeTimeCard.tsx",
+          "type": "registry:ui"
+        }
       ],
       "registryDependencies": [
         "@aura/class-names"
@@ -1864,6 +1972,39 @@
       ],
       "dependencies": [
         "radix-ui"
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
+      "name": "scroll-spy",
+      "type": "registry:ui",
+      "title": "ScrollSpy",
+      "description": "The ScrollSpy component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/ScrollSpy.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
+      "name": "scroller",
+      "type": "registry:ui",
+      "title": "Scroller",
+      "description": "The Scroller component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Scroller.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-icons"
       ],
       "registryDependencies": [
         "@aura/class-names"
@@ -2142,6 +2283,21 @@
       ]
     },
     {
+      "name": "stack",
+      "type": "registry:ui",
+      "title": "Stack",
+      "description": "The Stack component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Stack.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "stat",
       "type": "registry:ui",
       "title": "Stat",
@@ -2158,6 +2314,24 @@
       "registryDependencies": [
         "@aura/class-names",
         "@aura/separator"
+      ]
+    },
+    {
+      "name": "status",
+      "type": "registry:ui",
+      "title": "Status",
+      "description": "The Status component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Status.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
       ]
     },
     {
@@ -2243,6 +2417,21 @@
       "files": [
         {
           "path": "registry/default/components/ui/Textarea.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
+      "name": "timeline",
+      "type": "registry:ui",
+      "title": "Timeline",
+      "description": "The Timeline component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Timeline.tsx",
           "type": "registry:ui"
         }
       ],
