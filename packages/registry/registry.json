@@ -1027,6 +1027,37 @@
       ]
     },
     {
+      "name": "color-picker",
+      "type": "registry:ui",
+      "title": "ColorPicker",
+      "description": "The ColorPicker component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/ColorPicker.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names",
+        "@aura/color-swatch"
+      ]
+    },
+    {
+      "name": "color-swatch",
+      "type": "registry:ui",
+      "title": "ColorSwatch",
+      "description": "The ColorSwatch component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/ColorSwatch.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "combobox",
       "type": "registry:ui",
       "title": "Combobox",
@@ -1467,6 +1498,21 @@
       ]
     },
     {
+      "name": "key-value",
+      "type": "registry:ui",
+      "title": "KeyValue",
+      "description": "The KeyValue component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/KeyValue.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "label",
       "type": "registry:ui",
       "title": "Label",
@@ -1474,6 +1520,21 @@
       "files": [
         {
           "path": "registry/default/components/ui/Label.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
+      "name": "listbox",
+      "type": "registry:ui",
+      "title": "Listbox",
+      "description": "The Listbox component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Listbox.tsx",
           "type": "registry:ui"
         }
       ],
@@ -1677,6 +1738,21 @@
       ]
     },
     {
+      "name": "phone-input",
+      "type": "registry:ui",
+      "title": "PhoneInput",
+      "description": "The PhoneInput component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/PhoneInput.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "popover",
       "type": "registry:ui",
       "title": "Popover",
@@ -1774,6 +1850,24 @@
       ],
       "dependencies": [
         "radix-ui"
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
+      "name": "rating",
+      "type": "registry:ui",
+      "title": "Rating",
+      "description": "The Rating component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Rating.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-icons"
       ],
       "registryDependencies": [
         "@aura/class-names"
@@ -2230,6 +2324,24 @@
       ],
       "dependencies": [
         "radix-ui"
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
+      "name": "tags-input",
+      "type": "registry:ui",
+      "title": "TagsInput",
+      "description": "The TagsInput component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/TagsInput.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-icons"
       ],
       "registryDependencies": [
         "@aura/class-names"

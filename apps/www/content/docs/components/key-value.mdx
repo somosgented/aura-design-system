@@ -1,0 +1,100 @@
+---
+title: Key Value
+description: A list of labels and values.
+---
+
+import { ComponentPreview } from "@/components/ComponentPreview"
+import { ComponentSource } from "@/components/ComponentSource"
+import { Steps, Step } from "fumadocs-ui/components/steps"
+
+## Preview
+
+<ComponentPreview name="key-value-demo" description="A list of labels and values.">
+
+```tsx
+import { KeyValue, KeyValueItem } from "@/components/ui/KeyValue";
+
+export function KeyValueDemo() {
+  return (
+    <KeyValue>
+      <KeyValueItem label="Plan">Studio</KeyValueItem>
+      <KeyValueItem label="Seats">12</KeyValueItem>
+      <KeyValueItem label="Region">East</KeyValueItem>
+    </KeyValue>
+  );
+}
+```
+
+</ComponentPreview>
+
+## Installation
+Make sure that `namespace` is set in your component.json file. Namespace docs: [Learn more about namespaces](/docs/namespace)
+```bash
+pnpm dlx shadcn@latest add @aura/key-value
+```
+
+
+
+### Manual
+
+<Steps>
+  <Step>
+    Copy and paste the class names utility into your `utils/class-names.ts` file.
+
+```ts
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+
+```
+  </Step>
+  <Step>
+    Copy and paste the KeyValue component into your `components/ui/KeyValue.tsx` file.
+
+```tsx
+"use client";
+
+import * as React from "react";
+import { cn } from "@/utils/class-names";
+
+function KeyValue({ className, label = "Details", ...props }: React.ComponentProps<"dl"> & { label?: string }) {
+  return (
+    <dl
+      aria-label={label}
+      data-slot="key-value"
+      className={cn("flex w-full max-w-xl flex-col", className)}
+      {...props}
+    />
+  );
+}
+
+function KeyValueItem({
+  className,
+  label,
+  children,
+}: {
+  className?: string;
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div
+      data-slot="key-value-item"
+      className={cn("flex items-baseline justify-between gap-1 border-b border-gray-6 py-0.5", className)}
+    >
+      <dt className="text-gray-11">{label}</dt>
+      <dd className="m-0 text-gray-12">{children}</dd>
+    </div>
+  );
+}
+
+export { KeyValue, KeyValueItem };
+
+```
+  </Step>
+</Steps>
+
