@@ -29,6 +29,11 @@ import {
   AngleSliderDemoWithForm
 } from "./angle-slider-demo"
 import { 
+  AppBarDemo,
+  AppBarDemoMedium,
+  AppBarDemoLarge
+} from "./app-bar-demo"
+import { 
   AreaChartDemo,
   AreaChartDemoNatural,
   AreaChartDemoLinear,
@@ -197,6 +202,9 @@ import {
   EmptyDemoWithActions
 } from "./empty-demo"
 import { 
+  ExpressiveCarouselDemo
+} from "./expressive-carousel-demo"
+import { 
   FabDemo,
   FabDemoExtended
 } from "./fab-demo"
@@ -303,9 +311,16 @@ import {
   NativeSelectDemo
 } from "./native-select-demo"
 import { 
+  NavigationBarDemo
+} from "./navigation-bar-demo"
+import { 
   NavigationMenuDemoDefault,
   NavigationMenuDemo
 } from "./navigation-menu-demo"
+import { 
+  NavigationRailDemo,
+  NavigationRailDemoExpanded
+} from "./navigation-rail-demo"
 import { 
   PaginationDemo,
   PaginationDemoSimple,
@@ -390,6 +405,9 @@ import {
 import { 
   SheetDemo
 } from "./sheet-demo"
+import { 
+  SideSheetDemo
+} from "./side-sheet-demo"
 import { 
   SidebarDemo
 } from "./sidebar-demo"
@@ -534,6 +552,15 @@ export const Registry = {
   },
   "angle-slider-demo-with-form": {
     component: AngleSliderDemoWithForm,
+  },
+  "app-bar-demo": {
+    component: AppBarDemo,
+  },
+  "app-bar-demo-medium": {
+    component: AppBarDemoMedium,
+  },
+  "app-bar-demo-large": {
+    component: AppBarDemoLarge,
   },
   "area-chart-demo": {
     component: AreaChartDemo,
@@ -865,6 +892,9 @@ export const Registry = {
   "empty-demo-with-actions": {
     component: EmptyDemoWithActions,
   },
+  "expressive-carousel-demo": {
+    component: ExpressiveCarouselDemo,
+  },
   "fab-demo": {
     component: FabDemo,
   },
@@ -1063,11 +1093,20 @@ export const Registry = {
   "native-select-demo": {
     component: NativeSelectDemo,
   },
+  "navigation-bar-demo": {
+    component: NavigationBarDemo,
+  },
   "navigation-menu-demo": {
     component: NavigationMenuDemoDefault,
   },
   "navigation-menu-demo-navigation-menu-demo": {
     component: NavigationMenuDemo,
+  },
+  "navigation-rail-demo": {
+    component: NavigationRailDemo,
+  },
+  "navigation-rail-demo-expanded": {
+    component: NavigationRailDemoExpanded,
   },
   "pagination-demo": {
     component: PaginationDemo,
@@ -1224,6 +1263,9 @@ export const Registry = {
   },
   "sheet-demo": {
     component: SheetDemo,
+  },
+  "side-sheet-demo": {
+    component: SideSheetDemo,
   },
   "sidebar-demo": {
     component: SidebarDemo,
