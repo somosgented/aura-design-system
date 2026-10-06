@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/Stepper";
 import { cn } from "@/utils/class-names";
 
-function SingleQuestionShell({
+function Question({
   title,
   description,
   step,
@@ -90,14 +90,14 @@ function Questionnaire({
           value={question.value}
           className="grid gap-1"
         >
-          <SingleQuestionShell
+          <Question
             title={question.title}
             description={question.description}
             step={index + 1}
             total={questions.length}
           >
             {question.content}
-          </SingleQuestionShell>
+          </Question>
           <div className="flex items-center gap-1">
             <StepperPrev asChild>
               <Button type="button" variant="pill">
@@ -116,5 +116,5 @@ function Questionnaire({
   );
 }
 
-export { Questionnaire, SingleQuestionShell };
+export { Questionnaire, Question };
 export type { QuestionnaireQuestion };

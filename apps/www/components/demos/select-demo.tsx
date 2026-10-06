@@ -19,7 +19,7 @@ import {
 import { Label } from "@/components/ui/Label";
 
 export const SelectDemo = () => {
-  const [value, setValue] = useState("apple");
+  const [value, setValue] = useState("apricot");
 
   return (
     <div className="space-y-1">
@@ -32,8 +32,8 @@ export const SelectDemo = () => {
           <SelectContent>
             <SelectScrollUpButton />
             <SelectViewport>
-              <SelectItem value="apple">
-                <SelectItemText>Apple</SelectItemText>
+              <SelectItem value="apricot">
+                <SelectItemText>Apricot</SelectItemText>
                 <SelectItemIndicator />
               </SelectItem>
               <SelectItem value="banana">
@@ -72,8 +72,8 @@ export const SelectDemoWithDefaultValue = () => {
         </SelectTrigger>
           <SelectContent>
             <SelectViewport>
-              <SelectItem value="apple">
-                <SelectItemText>Apple</SelectItemText>
+              <SelectItem value="apricot">
+                <SelectItemText>Apricot</SelectItemText>
                 <SelectItemIndicator />
               </SelectItem>
               <SelectItem value="banana">
@@ -163,7 +163,7 @@ export const SelectDemoWithGroups = () => {
 };
 
 export const SelectDemoWithDisabledItems = () => {
-  const [value, setValue] = useState("apple");
+  const [value, setValue] = useState("apricot");
 
   return (
     <div className="space-y-1">
@@ -175,8 +175,8 @@ export const SelectDemoWithDisabledItems = () => {
         </SelectTrigger>
           <SelectContent>
             <SelectViewport>
-              <SelectItem value="apple">
-                <SelectItemText>Apple</SelectItemText>
+              <SelectItem value="apricot">
+                <SelectItemText>Apricot</SelectItemText>
                 <SelectItemIndicator />
               </SelectItem>
               <SelectItem value="banana" disabled>
@@ -213,8 +213,8 @@ export const SelectDemoDisabled = () => {
         </SelectTrigger>
           <SelectContent>
             <SelectViewport>
-              <SelectItem value="apple">
-                <SelectItemText>Apple</SelectItemText>
+              <SelectItem value="apricot">
+                <SelectItemText>Apricot</SelectItemText>
                 <SelectItemIndicator />
               </SelectItem>
               <SelectItem value="banana">
@@ -233,10 +233,10 @@ export const SelectDemoDisabled = () => {
 };
 
 export const SelectDemoWithLongList = () => {
-  const [value, setValue] = useState("apple");
+  const [value, setValue] = useState("apricot");
 
   const fruits = [
-    "Apple",
+    "Apricot",
     "Banana",
     "Orange",
     "Pineapple",

@@ -379,6 +379,14 @@ function ChartArea({
   );
 }
 
+// Recharts identifies series by display name, reads axis ids from defaultProps,
+// and skips a child that does not implement getComposedData.
+Object.assign(ChartArea, {
+  displayName: "Area",
+  defaultProps: Area.defaultProps,
+  getComposedData: Area.getComposedData,
+});
+
 function getPayloadConfigFromPayload(
   config: ChartConfig,
   payload: unknown,

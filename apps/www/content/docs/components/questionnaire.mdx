@@ -15,7 +15,7 @@ import { Steps, Step } from "fumadocs-ui/components/steps"
 import { Input } from "@/components/ui/Input";
 import {
   Questionnaire,
-  SingleQuestionShell,
+  Question,
 } from "@/components/ui/Questionnaire";
 
 export function QuestionnaireDemo() {
@@ -1498,7 +1498,7 @@ import {
 } from "@/components/ui/Stepper";
 import { cn } from "@/utils/class-names";
 
-function SingleQuestionShell({
+function Question({
   title,
   description,
   step,
@@ -1569,14 +1569,14 @@ function Questionnaire({
           value={question.value}
           className="grid gap-1"
         >
-          <SingleQuestionShell
+          <Question
             title={question.title}
             description={question.description}
             step={index + 1}
             total={questions.length}
           >
             {question.content}
-          </SingleQuestionShell>
+          </Question>
           <div className="flex items-center gap-1">
             <StepperPrev asChild>
               <Button type="button" variant="pill">
@@ -1595,7 +1595,7 @@ function Questionnaire({
   );
 }
 
-export { Questionnaire, SingleQuestionShell };
+export { Questionnaire, Question };
 export type { QuestionnaireQuestion };
 
 ```
@@ -1609,14 +1609,14 @@ export type { QuestionnaireQuestion };
 ```tsx
 export const Shell = () => {
   return (
-    <SingleQuestionShell
+    <Question
       title="How are you sleeping?"
       description="Pick the answer that fits this week."
       step={1}
       total={3}
     >
       <Input aria-label="Sleep" placeholder="About 7 hours" />
-    </SingleQuestionShell>
+    </Question>
   );
 };
 ```

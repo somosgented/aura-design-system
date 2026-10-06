@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/Input";
 import {
   Questionnaire,
-  SingleQuestionShell,
+  Question,
 } from "@/components/ui/Questionnaire";
 
 export const QuestionnaireDemo = () => {
@@ -31,13 +31,13 @@ export const QuestionnaireDemo = () => {
 
 export const QuestionnaireDemoShell = () => {
   return (
-    <SingleQuestionShell
+    <Question
       title="How are you sleeping?"
       description="Pick the answer that fits this week."
       step={1}
       total={3}
     >
       <Input aria-label="Sleep" placeholder="About 7 hours" />
-    </SingleQuestionShell>
+    </Question>
   );
 };

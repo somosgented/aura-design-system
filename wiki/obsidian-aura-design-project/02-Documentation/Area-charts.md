@@ -11,4 +11,4 @@ Aura charts use Recharts, the same library as shadcn’s chart blocks (`recharts
 - Implementation Path: `packages/registry/registry/default/components/ui/Chart.tsx`, `packages/registry/registry/default/components/ui/AreaChart.tsx`, `packages/registry/registry/default/styles/chart.css`
 
 ## Why this shape
-One installable component with variants matches Aura’s registry better than ten copy-paste blocks. Shadcn’s `--chart-1` hex scale is not used. Motion is 250ms and `prefers-reduced-motion` disables the area animation. Bar, line, pie, radar, and radial charts are still out of scope.
+One installable component with variants matches Aura’s registry better than ten copy-paste blocks. Shadcn’s `--chart-1` hex scale is not used. Motion is 250ms and `prefers-reduced-motion` disables the area animation. Recharts only paints a series whose child type is named `Area` and implements `getComposedData`, so `ChartArea` forwards those statics. Bar, line, pie, radar, and radial charts are still out of scope.
