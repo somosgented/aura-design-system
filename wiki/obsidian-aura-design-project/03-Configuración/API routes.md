@@ -6,7 +6,7 @@ HTTP handlers for the docs app live under **`apps/www/app/api/`**. There is **no
 
 | Method | Path | Source | Behavior |
 |--------|------|--------|----------|
-| `GET` | `/api/quick-links` | `apps/www/app/api/quick-links/route.ts` | Returns JSON array (max 10) of `{ value, label, url, description? }` from Fumadocs `source` pages (single-segment slugs or `components/*`). **`revalidate = 3600`**. On error, responds **500** with `[]`. |
+| `GET` | `/api/quick-links` | `apps/www/app/api/quick-links/route.ts` | Returns JSON array (max 10) of `{ value, label, url, description? }` from Fumadocs `source` pages (single-segment slugs, `components/*`, or `utils/*`). **`revalidate = 3600`**. On error, responds **500** with `[]`. |
 | `GET` | `/api/search` | `apps/www/app/api/search/route.ts` | Fumadocs `createFromSource` (`language: 'english'`). Query param **`query`**. Catalog mirrors of component pages are removed (see [[Docs search]]). `content` may include `<mark>` highlights. |
 | `GET` | `/llms.txt` | `apps/www/app/llms.txt/route.ts` | Docs index for LLMs (`docsLlms.index()`). |
 | `GET` | `/llms-full.txt` | `apps/www/app/llms-full.txt/route.ts` | Full docs Markdown joined (`docsLlms.full()`). |
