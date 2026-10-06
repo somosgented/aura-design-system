@@ -1,0 +1,132 @@
+---
+title: Color
+description: Aura’s 12-step accent and gray scales, alpha variants, status pairs, and the semantic tokens that point at them.
+icon: Palette
+---
+
+Color in Aura is two 12-step scales — **accent** and **gray** — plus alpha twins and a short list of semantic names. Components consume the tokens. Hex samples in this page are the values shipped in `packages/registry/styles/globals.css` and the theme switcher defaults. They are a theme, not a license to hard-code a swatch in a component.
+
+`@shadcn/lint` rule `shadcn/no-raw-colors` rejects raw palette classes (`bg-pink-500` and similar) when a token exists.
+
+## Step roles
+
+The same step means the same job in light and dark. Only the hex changes.
+
+| Step | Use |
+| --- | --- |
+| 1–2 | App background, cards, sidebars, canvas |
+| 3 | Default UI fill |
+| 4 | Hover fill |
+| 5 | Active or selected fill |
+| 6 | Subtle borders, separators, headers |
+| 7 | Interactive borders |
+| 8 | Strong borders and focus rings |
+| 9 | Solid brand surfaces |
+| 10 | Hover on a step-9 surface |
+| 11 | Secondary text |
+| 12 | Primary text and headings |
+
+On a transparent default, hover may use step 3. `--primary` maps to `--accent-9`. Text on that fill uses `--primary-foreground`, which aliases `--accent-contrast`.
+
+Steps 11 and 12 are chosen so APCA **Lc 60** and **Lc 90** hold on a step 2 background.
+
+## Shipped accent scale
+
+In `globals.css`, the accent scale is the same under `:root` and inside `@media (prefers-color-scheme: dark)`. Gray is what changes with the scheme. See [Theming](/docs/foundations/theming).
+
+| Token | Value |
+| --- | --- |
+| `--accent-1` | `#17121c` |
+| `--accent-2` | `#1c1524` |
+| `--accent-3` | `#2e1d3d` |
+| `--accent-4` | `#3b2351` |
+| `--accent-5` | `#462b5e` |
+| `--accent-6` | `#52356b` |
+| `--accent-7` | `#634381` |
+| `--accent-8` | `#7d55a2` |
+| `--accent-9` | `#bf91ec` |
+| `--accent-10` | `#b486e0` |
+| `--accent-11` | `#cea0fc` |
+| `--accent-12` | `#e9dbf9` |
+| `--accent-contrast` | `#fff` |
+| `--accent-surface` | `#2c181e80` |
+| `--accent-indicator`, `--accent-track` | `#bf91ec` |
+
+Alpha steps `--accent-a1` through `--accent-a12` are defined beside the solid scale in the same file. Tailwind reads them as `accent-1` … `accent-a12` through the `@theme inline` color mappings (`--color-accent-9: var(--accent-9)`, and the same pattern for every step).
+
+Semantic aliases in that file:
+
+```css
+--primary: var(--accent-9);
+--primary-foreground: var(--accent-contrast);
+--secundary: var(--accent-8);
+--secundary-foreground: var(--accent-contrast);
+```
+
+The token is spelled `--secundary` in source. `--aura-accents-primary` and `--aura-accents-secondary` both point at `--accent-9`. `--aura-bg` is `--gray-1`. `--aura-text-primary` is `--accent-12` in this theme file.
+
+`ThemeColorSwitcher` uses a different accent seed, `#964CE1`, for both light and dark, with gray `#16204e` and backgrounds `#fcfcfc` / `#0c122b`. `DESIGN.md` cites `#964ce1` as a marketing sample. The switcher generates a scale with `generateRadixColors` and stores it under `aura-theme-colors`. Production components still read the CSS variables, not those seeds.
+
+## Shipped gray scale
+
+Light (`:root`):
+
+| Token | Value |
+| --- | --- |
+| `--gray-1` | `#f6f9ff` |
+| `--gray-2` | `#f0f6ff` |
+| `--gray-3` | `#e3ecff` |
+| `--gray-4` | `#d7e4ff` |
+| `--gray-5` | `#ccdcff` |
+| `--gray-6` | `#c2d4ff` |
+| `--gray-7` | `#b4c8ff` |
+| `--gray-8` | `#99b3ff` |
+| `--gray-9` | `#6d84d5` |
+| `--gray-10` | `#647ac5` |
+| `--gray-11` | `#4b5c9a` |
+| `--gray-12` | `#121b48` |
+
+Dark (`prefers-color-scheme: dark`):
+
+| Token | Value |
+| --- | --- |
+| `--gray-1` | `#0c122a` |
+| `--gray-2` | `#131931` |
+| `--gray-3` | `#182043` |
+| `--gray-4` | `#1b2554` |
+| `--gray-5` | `#1f2b62` |
+| `--gray-6` | `#243275` |
+| `--gray-7` | `#2e3f8b` |
+| `--gray-8` | `#455aa9` |
+| `--gray-9` | `#5268b8` |
+| `--gray-10` | `#5f75c7` |
+| `--gray-11` | `#94afff` |
+| `--gray-12` | `#e5eeff` |
+
+`--gray-contrast` is `#ffffff` in both schemes. `--gray-surface` is `rgba(0, 0, 0, 0.05)`. `--gray-indicator` and `--gray-track` are `#5268b8`. Alpha steps `--gray-a1` … `--gray-a12` sit next to the solid scale. Light `--gray-a1` through `--gray-a8` currently repeat the solid hexes; `--gray-a9` onward are translucent.
+
+Body copy uses the gray scale. `DESIGN.md` tells you to reach for `gray-12` and leave pure `#000` out of text.
+
+## Status pairs
+
+`@theme inline` in `globals.css`:
+
+| Role | Surface | Contrast |
+| --- | --- | --- |
+| Info | `--info: #e8ebfe` | `--info-contrast: #0927ec` |
+| Success | `--success: #e8fef7` | `--success-contrast: #045d3c` |
+| Danger | `--danger: #feefe8` | `--danger-contrast: #8e3106` |
+| Warning | `--warning: #fefbe8` | `--warning-contrast: #5d5104` |
+
+`.dark` overrides those four pairs (info `#0D2157` / `#8CB4FF`, success `#0B2E1E` / `#67CF9D`, danger `#3C1405` / `#FF9469`, warning `#2A2402` / `#EFE08E`).
+
+Stylus still paints status through older names. `packages/styled-system/src/tokens/_root.styl` sets `--aura-accents-success: #045D3C`, `--aura-accents-info: #0927EC`, `--aura-accents-danger: #8E3106`, and a warning darkened from yellow. `fundations/_colors.styl` loops `warning`, `info`, `danger`, and `success` into `.{state}` background classes. The compiled `main.css` still emits `.warning`, `.info`, `.danger`, `.success` against `--aura-accents-*-bg`.
+
+## Related
+
+- [Color rules](/docs/rules/fundations-colors)
+- [Theming](/docs/foundations/theming)
+- [Taste](/docs/taste)
+- [Lint](/docs/lint)
+- `packages/registry/styles/globals.css`
+- `packages/registry/registry/default/components/ThemeColorSwitcher.tsx`

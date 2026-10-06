@@ -1,0 +1,30 @@
+---
+title: Foundations
+description: Aura’s visual foundations — color, type, layout, icons, motion, accessibility, theming, and the categories we have not specified yet.
+icon: Layers
+---
+
+Foundations are the rules Aura already encodes: tokens in CSS, Stylus variables in the styled system, component behavior, the visual lint, and the written philosophy in `DESIGN.md` and the [rules](/docs/rules).
+
+This section follows the same category list as the [Apple entry on designsystems.surf](https://designsystems.surf/design-systems/apple). Each page below is Aura’s version of that category. Where Aura has no rule yet, the page says so and stops. It does not borrow Apple’s guidance.
+
+The [Handbook](/docs/handbook) shows how styles and composition are wired in this site. The [Rules](/docs/rules) are the same constraints, packaged for agents. Foundations are the reading copy of both.
+
+## Pages
+
+| Foundation | Status |
+| --- | --- |
+| [Accessibility](/docs/foundations/accessibility) | Specified. Perceivable, operable UI, APCA targets, focus, 17px fields, reduced motion. |
+| [Color](/docs/foundations/color) | Specified. 12-step accent and gray scales, status pairs, semantic aliases. |
+| [Components](/docs/foundations/components) | Specified. Registry ownership, variants, and the rule against restyling primitives at the call site. |
+| [Data visualization](/docs/foundations/data-visualization) | Not defined yet. |
+| [Figma](/docs/foundations/figma) | Not defined yet. Aura ships source, not a Figma library. |
+| [Icons](/docs/foundations/icons) | Specified. Radix icons as type, `icon` class, gap on the container. |
+| [International design](/docs/foundations/international) | Not defined yet. A few components accept `dir`; there is no layout spec. |
+| [Layout](/docs/foundations/layout) | Specified. 13px grid, containers, `.aureole`. |
+| [Depth and elevation](/docs/foundations/elevation) | Specified in Aura. Radius tied to spacing, tonal sheets, borders at steps 6–8. The reference catalog folds this into layout and theming; Aura keeps it as its own page because `DESIGN.md` §6 is a real system. |
+| [Motion](/docs/foundations/motion) | Specified. CSS tokens, compositor-friendly properties, reduced motion. |
+| [Patterns](/docs/foundations/patterns) | Specified. `asChild` composition, form wiring, section rhythm. |
+| [Theming](/docs/foundations/theming) | Specified. `prefers-color-scheme`, `.dark` status colors, theme color switcher. |
+| [Typography](/docs/foundations/typography) | Specified. Fluid `clamp()` scale, Inter, 17px root and form floor. |
+| [Voice and tone](/docs/foundations/voice) | Not defined yet. Consistency asks for one voice; a writing guide does not exist. |

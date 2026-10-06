@@ -1,0 +1,50 @@
+---
+title: Icons
+description: Radix icons sized as type, spaced with gap on the container, one icon library per project.
+icon: Aperture
+---
+
+Icons are type. They inherit font size, sit on the text baseline, and take their distance from the label via the parent’s gap. Aura’s default library is `@radix-ui/react-icons`. A project keeps a single icon library. If a second library is already present, the pair is Radix plus that one other set (for example `lucide-react`). New icons still come from the designated library.
+
+## Best practices
+
+- Import from `@radix-ui/react-icons`.
+- Set `className="icon"`. Leave off `size`, `width`, and `height`.
+- To scale an icon, add a typography class: `icon` for body size, `icon h4` for a medium mark, `icon h1` for a large one.
+- Space an icon from a label with `gap` on the flex container. `gap-0.5` is 6.5px. `gap-2` is 26px on this grid.
+- Inside `Button` and `Badge`, add no margin and no extra gap. The control already owns it (`--aura-button-gap` on `.button` and its variants; `gap-0.5` on `Badge`).
+- `ml-auto` and `mr-auto` may push a trailing chevron to the end. They are layout, not a substitute for gap.
+- `aura/no-icon-margin` reports `ml-*`, `mr-*`, `mx-*`, `ms-*`, and `me-*` on an icon inside a control that already has a gap.
+
+```tsx
+import { CheckIcon } from "@radix-ui/react-icons";
+
+<CheckIcon className="icon" />
+<CheckIcon className="icon h1" />
+<Button><CheckIcon className="icon" />Save</Button>
+<div className="flex items-center gap-0.5"><CheckIcon className="icon" />Saved</div>
+```
+
+## The `icon` class
+
+From `packages/registry/styles/main.css` (and `packages/styled-system/src/atoms/_icon.styl`):
+
+```css
+.icon {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  line-height: 1em;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+```
+
+Because width and height are `1em`, an icon inside `.h4` matches that heading’s computed size. The fluid type scale on `.h1`–`.h6` is what makes `icon h1` large.
+
+## Related
+
+- [Icon rules](/docs/rules/fundation-icons)
+- [Components](/docs/foundations/components)
+- [Lint](/docs/lint)
+- `DESIGN.md` §1 and §4

@@ -1,0 +1,63 @@
+---
+title: Typography
+description: Fluid clamp scale, Inter, a 17px root, and the floor on editable form controls.
+icon: Type
+---
+
+Primary type is fluid. Each heading and the body paragraph set `--min`, `--val`, and `--max`, and the element uses `clamp()`. Tailwind `text-xl`, `text-2xl`, and the rest of that ramp are for something else; they are not the Aura heading scale. Small fixed UI text may use `text-sm` (0.875rem) or `text-xs` (0.75rem), and those two utilities stay off editable fields.
+
+## Scale
+
+Shipped in `packages/registry/styles/main.css`. `--val` is `4.03vw` (the file writes `4.029999999999999vw`).
+
+| Element | `--min` | `--val` | `--max` |
+| --- | --- | --- | --- |
+| `h1`, `.h1` | `1.9838rem` | `4.03vw` | `3.052rem` |
+| `h2`, `.h2` | `1.58665rem` | `4.03vw` | `2.441rem` |
+| `h3`, `.h3` | `1.482rem` | `4.03vw` | `2.28rem` |
+| `h4`, `.h4`, `blockquote` | `1.26945rem` | `4.03vw` | `1.953rem` |
+| `h5`, `.h5` | `1.17225rem` | `4.03vw` | `1.563rem` |
+| `h6`, `.h6` | `1.0625rem` | `4.03vw` | `1.25rem` |
+| `p`, `.p` | `1rem` | `4.03vw` | `1rem` |
+
+The clamp selector lists `body h1` through `body h6`, `body p`, and `body .h1` through `body .h6`. Class `.p` declares the same custom properties for a paragraph-sized node that is not a `p`.
+
+Stylus (`fundations/_typo.styl`) still computes `--min` as a fraction of the visual scale (`h1`–`h4` at 0.65, `h5` at 0.75, `h6` at 0.85) and sets `--val` to `3.03vw + 1rem`. The maxes match the CSS table (`tokens/_typography.styl`: `visualScale-h1 = 3.052rem` down to `visualScale-base = 1rem`). The compiled registry CSS is what consumers load; its `--val` is `4.03vw` without the extra `1rem`.
+
+`--min` and `--max` are `rem`, so they follow the user’s browser font size. Heading line-height should stay between 1.1 and 1.3. `html` sets `line-height: 1.21053`.
+
+## Fonts
+
+```css
+--font-sans: Inter, sans-serif;
+--aura-font-stack: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+  "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+  "Helvetica Neue", sans-serif;
+--aura-font-quotes: serif;
+```
+
+`html` and `pre` use `--aura-font-stack`. `blockquote` uses `--aura-font-quotes`, uppercase, weight 600, and the `h4` clamp. Paragraphs take `margin: var(--aura) 0` (13px). `ul:not(.default)` drops list markers and padding. `html` also sets `-webkit-font-smoothing: antialiased`, `text-size-adjust: 100%`, and `text-rendering: optimizelegibility`.
+
+The base layer sets `html { font-size: 17px; }`. That is why `1rem` on a control already meets the mobile floor.
+
+## Roles
+
+| Role | Treatment |
+| --- | --- |
+| Display / statement | `.h1`–`.h3`. Optional `letter-spacing: -0.02em` on the largest display, line-height still 1.1–1.3 |
+| Section titles | `.h4`–`.h6` |
+| Dense cells | `text-sm` (0.875rem) |
+| Micro-labels and column headers | `text-xs` or `text-sm`, uppercase, `letter-spacing: 0.05em` |
+| Identifiers | `ui-monospace` (or the app’s monospace stack) |
+
+## Form floor
+
+Editable `input`, `textarea`, and `select` use `font-size: max(1rem, 17px)` in an unlayered rule in both `globals.css` and `main.css`. Checkbox, radio, range, file, hidden, button, submit, reset, image, and color inputs are exempt. `text-sm` and `text-xs` on an editable control are a lint and a product failure: iOS Safari zooms on focus below about 16–17px.
+
+## Related
+
+- [Typography rules](/docs/rules/fundations-typography)
+- [Accessibility](/docs/foundations/accessibility)
+- [Icons](/docs/foundations/icons)
+- `packages/styled-system/src/tokens/_typography.styl`
+- `DESIGN.md` §3

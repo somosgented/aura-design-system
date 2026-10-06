@@ -1,0 +1,48 @@
+---
+title: Patterns
+description: Composition with asChild, form wiring, and the section rhythm Aura already specifies.
+icon: Shapes
+---
+
+Patterns in Aura are the ways components combine, not a separate visual language. Three are specified: Radix composition, the form system, and the spacing rhythm for sections and dense data. A pattern library of named page templates is not defined beyond that.
+
+## Compose with asChild
+
+Components sit on Radix primitives. `asChild` merges the primitive’s behavior onto your element instead of rendering the default one. The child has two jobs: spread incoming props onto the DOM node, and forward the ref. You can nest primitives (a tooltip and a dialog on one trigger) when each child still forwards both.
+
+Changing the element means you keep it operable. A trigger that becomes a link still needs to be focusable and respond to keyboard and pointer.
+
+The full walkthrough, including nested primitives, is the [composition handbook](/docs/handbook/composition).
+
+## Forms
+
+Forms are a pattern with a single error channel:
+
+1. Hold state with `useFormDynamic(initialValues, formRef?)`.
+2. Wrap fields in `<Form ref={formRef} onSubmit={...} errors={errors} id="...">`. Errors are not passed per field. `Form` matches `instancePath` to `field.name`.
+3. Validate with `validateFormData(schema, formData.getValues())`. On failure, call `touchForm()` and pass `errors` to `Form`.
+4. Submit with `<FormSubmit form={id} fetchStatus={...}>`.
+5. For Select, Combobox, Editor, SignaturePad, and SortableList, write changes through `field.setValue`.
+
+That contract is the [form rule](/docs/rules/components-forms) and `DESIGN.md` appendix B.
+
+## Section rhythm
+
+| Situation | Pattern |
+| --- | --- |
+| Major sections | Container (`.smish` … `.smesh`) plus `gap-3.5` or `gap-4` |
+| Editorial separation | Background step change (`gray-1` canvas, `gray-2` / `gray-3` bands) before a full-width rule |
+| Controls and dialogs | Borders at steps 6–8, focus via `--aura-outline` |
+| Data rows | `text-sm` cells, uppercase tracked headers, `px-1` or `px-1.5`, `ui-monospace` for ids |
+| Empty collections | `@aura/empty`: dashed `gray-6`, `gray-2` fill, title at `.h5`, primary `Button variant="fill"` |
+| Narrow navigation | Sidebar collapses into sheet or drawer |
+
+Asymmetric overlap — a `rounded-xl` panel with a negative margin and a stacking order — is described in `DESIGN.md` §5 as an editorial option. It is not a component.
+
+## Related
+
+- [Handbook — Composition](/docs/handbook/composition)
+- [Handbook — Customization](/docs/handbook/customization)
+- [Components](/docs/foundations/components)
+- [Layout](/docs/foundations/layout)
+- `DESIGN.md` §4 and §5

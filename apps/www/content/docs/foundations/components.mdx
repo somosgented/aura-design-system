@@ -1,0 +1,57 @@
+---
+title: Components
+description: How Aura components are owned, varianted, and kept on tokens — the registry model behind the component catalog.
+icon: Boxes
+---
+
+Aura is a registry, distributed in shadcn mode. You copy the source into your app and own it. Items are addressed as `@aura/<name>` once `components.json` points `registries["@aura"]` at the registry. The catalog of installed components lives at [Components](/docs/components). This page is the foundation those components share.
+
+## Best practices
+
+- Change appearance through **variants and sizes** on the component. `shadcn/no-restyle` rejects padding, color, and typography overrides passed through `className` on a design-system primitive. Layout and width at the call site are fine.
+- Form controls own their padding. `Input`, `Textarea`, `SelectTrigger`, `MaskInput`, and `SegmentedInput` take layout and width only. A different padding is a new size or variant on the component.
+- Compose with Radix `asChild`. The child spreads props and forwards a ref. See [Patterns](/docs/foundations/patterns).
+- Icons inside `Button` and `Badge` get the `icon` class and nothing else for spacing. The control already sets the gap. See [Icons](/docs/foundations/icons).
+- Keep one paved path. Public APIs grow by additive props and variants. Renames and removals are breaking changes and belong in the PR notes.
+
+## What a component is made of
+
+Registry source is `packages/registry/registry/default/components/`. Styles that travel with a component live in `packages/registry/registry/default/styles/`. Shared layout, type, and the `icon` class live in `packages/registry/styles/main.css`. Theme tokens live in `packages/registry/styles/globals.css`.
+
+`Button` is the reference shape. Variants in `Button.tsx` map onto classes in `main.css`:
+
+| Variant | Class | Treatment in `main.css` |
+| --- | --- | --- |
+| `default` / `fill` | `button-fill` | Solid `--aura-accents-primary`, 2px border, inverse text |
+| `pill` | `button-pill` | Transparent fill, border and text from `--aura-link` |
+| `link` | `button-link` | No border, underline |
+| `menu` | `button-menu` | No border, bold, tighter padding |
+
+Shared button metrics from `globals.css` and `main.css`:
+
+| Token or property | Value |
+| --- | --- |
+| `--aura-button-radius` | `6.5px` |
+| `--aura-button-gap` | `6.5px` |
+| Height | `calc(var(--aura) * 4)` → 52px |
+| Padding | `0 calc(var(--aura) * 2)` → 0 26px |
+| Border | `2px solid` |
+| Label weight | `600` |
+
+`Card` defaults to `bg-gray-2`, `border-gray-6`, and `rounded-md`, with a `border-t border-gray-6` footer. `Empty` is a centered column, dashed `gray-6` border, `gray-2` fill, `p-2` on the 13px grid.
+
+Install with:
+
+```bash
+pnpm dlx shadcn@latest add @aura/<registry-name>
+```
+
+`aura init` wraps that CLI and applies Aura fixtures. Upstream updates are a fresh copy of the source you already own.
+
+## Related
+
+- [Components catalog](/docs/components)
+- [Patterns](/docs/foundations/patterns)
+- [Registry](/docs/registry)
+- [Lint](/docs/lint)
+- `DESIGN.md` §4
