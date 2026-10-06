@@ -1,0 +1,3 @@
+header:
+  description: A floating button for a screen's main action, with an optional label.
+extends: _templates/content.yml
