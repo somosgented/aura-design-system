@@ -1,0 +1,141 @@
+---
+title: Tags Input
+description: A field that collects tags. Enter adds one, Backspace removes the last.
+---
+
+import { ComponentPreview } from "@/components/ComponentPreview"
+import { ComponentSource } from "@/components/ComponentSource"
+import { Steps, Step } from "fumadocs-ui/components/steps"
+
+## Preview
+
+<ComponentPreview name="tags-input-demo" description="A field that collects tags. Enter adds one, Backspace removes the last.">
+
+```tsx
+import { TagsInput } from "@/components/ui/TagsInput";
+
+export function TagsInputDemo() {
+  return <TagsInput defaultValue={["Design", "Tokens"]} />;
+}
+```
+
+</ComponentPreview>
+
+## Installation
+Make sure that `namespace` is set in your component.json file. Namespace docs: [Learn more about namespaces](/docs/namespace)
+```bash
+pnpm dlx shadcn@latest add @aura/tags-input
+```
+
+
+
+### Manual
+
+<Steps>
+  <Step>
+    Install the following dependencies:
+
+    ```bash
+pnpm install @radix-ui/react-icons
+    ```
+  </Step>
+  <Step>
+    Copy and paste the class names utility into your `utils/class-names.ts` file.
+
+```ts
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+
+```
+  </Step>
+  <Step>
+    Copy and paste the TagsInput component into your `components/ui/TagsInput.tsx` file.
+
+```tsx
+"use client";
+
+import * as React from "react";
+import { Cross2Icon } from "@radix-ui/react-icons";
+import { cn } from "@/utils/class-names";
+
+function TagsInput({
+  className,
+  value,
+  defaultValue = [],
+  onValueChange,
+  label = "Tags",
+  placeholder = "Add a tag",
+}: {
+  className?: string;
+  value?: string[];
+  defaultValue?: string[];
+  onValueChange?: (value: string[]) => void;
+  label?: string;
+  placeholder?: string;
+}) {
+  const [uncontrolled, setUncontrolled] = React.useState(defaultValue);
+  const [draft, setDraft] = React.useState("");
+  const tags = value ?? uncontrolled;
+  const id = React.useId();
+
+  const commit = (next: string[]) => {
+    if (value === undefined) setUncontrolled(next);
+    onValueChange?.(next);
+  };
+
+  const add = (raw: string) => {
+    const next = raw.trim();
+    if (!next || tags.includes(next)) return;
+    commit([...tags, next]);
+    setDraft("");
+  };
+
+  return (
+    <div data-slot="tags-input" className={cn("flex w-full max-w-xl flex-col gap-0.5", className)}>
+      <label htmlFor={id}>{label}</label>
+      <div className="flex flex-wrap items-center gap-0.5 rounded-sm border border-gray-7 bg-gray-1 p-0.5">
+        {tags.map((tag) => (
+          <span key={tag} className="inline-flex items-center gap-0.5 rounded-full bg-gray-3 px-1 py-0.5">
+            {tag}
+            <button
+              type="button"
+              aria-label={`Remove ${tag}`}
+              className="inline-flex size-2 items-center justify-center rounded-full hover:bg-gray-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8"
+              onClick={() => commit(tags.filter((item) => item !== tag))}
+            >
+              <Cross2Icon className="icon" />
+            </button>
+          </span>
+        ))}
+        <input
+          id={id}
+          value={draft}
+          placeholder={placeholder}
+          className="min-w-16 flex-1 border-0 bg-transparent px-0.5 py-0.5 text-gray-12 focus-visible:outline-none"
+          onChange={(event) => setDraft(event.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" || event.key === ",") {
+              event.preventDefault();
+              add(draft);
+            } else if (event.key === "Backspace" && draft === "" && tags.length) {
+              commit(tags.slice(0, -1));
+            }
+          }}
+          onBlur={() => add(draft)}
+        />
+      </div>
+    </div>
+  );
+}
+
+export { TagsInput };
+
+```
+  </Step>
+</Steps>
+

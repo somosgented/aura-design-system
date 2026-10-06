@@ -152,6 +152,12 @@ import {
   CollapsibleDemo
 } from "@/components/demos/collapsible-demo"
 import { 
+  ColorPickerDemo
+} from "@/components/demos/color-picker-demo"
+import { 
+  ColorSwatchDemo
+} from "@/components/demos/color-swatch-demo"
+import { 
   ComboboxDemo,
   ComboboxDemoWithClearButton,
   ComboboxDemoWithTriggerButton,
@@ -276,8 +282,14 @@ import {
   KbdDemoGroup
 } from "@/components/demos/kbd-demo"
 import { 
+  KeyValueDemo
+} from "@/components/demos/key-value-demo"
+import { 
   LabelDemo
 } from "@/components/demos/label-demo"
+import { 
+  ListboxDemo
+} from "@/components/demos/listbox-demo"
 import { 
   LoadingIndicatorDemo
 } from "@/components/demos/loading-indicator-demo"
@@ -337,6 +349,9 @@ import {
   PaginationDemoWithEllipsis
 } from "@/components/demos/pagination-demo"
 import { 
+  PhoneInputDemo
+} from "@/components/demos/phone-input-demo"
+import { 
   PopoverDemo,
   PopoverDemoWithCloseButton,
   PopoverDemoWithArrow,
@@ -367,6 +382,9 @@ import {
   RadioGroupDemoNotificationPreferences,
   RadioGroupDemoHorizontal
 } from "@/components/demos/radio-group-demo"
+import { 
+  RatingDemo
+} from "@/components/demos/rating-demo"
 import { 
   ResizableDemo,
   ResizableDemoVertical
@@ -497,6 +515,9 @@ import {
 import { 
   TabsDemo
 } from "@/components/demos/tabs-demo"
+import { 
+  TagsInputDemo
+} from "@/components/demos/tags-input-demo"
 import { 
   TextareaDemo
 } from "@/components/demos/textarea-demo"
@@ -815,6 +836,12 @@ export const Registry = {
   "collapsible-demo": {
     component: CollapsibleDemo,
   },
+  "color-picker-demo": {
+    component: ColorPickerDemo,
+  },
+  "color-swatch-demo": {
+    component: ColorSwatchDemo,
+  },
   "combobox-demo": {
     component: ComboboxDemo,
   },
@@ -1043,8 +1070,14 @@ export const Registry = {
   "kbd-demo-group": {
     component: KbdDemoGroup,
   },
+  "key-value-demo": {
+    component: KeyValueDemo,
+  },
   "label-demo": {
     component: LabelDemo,
+  },
+  "listbox-demo": {
+    component: ListboxDemo,
   },
   "loading-indicator-demo": {
     component: LoadingIndicatorDemo,
@@ -1148,6 +1181,9 @@ export const Registry = {
   "pagination-demo-with-ellipsis": {
     component: PaginationDemoWithEllipsis,
   },
+  "phone-input-demo": {
+    component: PhoneInputDemo,
+  },
   "popover-demo": {
     component: PopoverDemo,
   },
@@ -1210,6 +1246,9 @@ export const Registry = {
   },
   "radio-group-demo-horizontal": {
     component: RadioGroupDemoHorizontal,
+  },
+  "rating-demo": {
+    component: RatingDemo,
   },
   "resizable-demo": {
     component: ResizableDemo,
@@ -1438,6 +1477,9 @@ export const Registry = {
   },
   "tabs-demo": {
     component: TabsDemo,
+  },
+  "tags-input-demo": {
+    component: TagsInputDemo,
   },
   "textarea-demo": {
     component: TextareaDemo,

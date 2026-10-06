@@ -1,0 +1,3 @@
+header:
+  description: A list of options with arrow-key selection.
+extends: _templates/content.yml
