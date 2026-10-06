@@ -1,4 +1,5 @@
 status: new
 header:
   description: A visually hidden input that mirrors a control for form submission.
+group: utils
 extends: _templates/content.yml

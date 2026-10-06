@@ -1,3 +1,4 @@
 header:
   description: Renders children into another element.
+group: utils
 extends: _templates/content.yml

@@ -4,7 +4,7 @@ date: 2026-10-06
 tags: [dev-log, logic]
 ---
 ## Summary
-The action, navigation, indicator, input, collection, and media component batches are on `canary` through PRs #96–#101. Shared docs indexes (`all.txt`, demos, registry JSON, component index) were regenerated on each merge so every component kept its entry. Toast and Typography remain docs-only pages.
+Utility primitives are a separate **Utils** docs section (`/docs/utils`) so they are no longer mixed into the Components sidebar. Metadata `group: utils` drives generate-docs output. Next: verify the docs sidebar after `docs:generate`.
 
 ## Context
 - Related: [[Media-Utilities]] [[Collection-Display]] [[Input-Controls]]

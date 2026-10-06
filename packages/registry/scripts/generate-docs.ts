@@ -14,6 +14,11 @@ const DOCS_OUTPUT_PATH = path.join(
   __dirname,
   "../../../apps/www/content/docs/components"
 );
+const UTILS_DOCS_OUTPUT_PATH = path.join(
+  __dirname,
+  "../../../apps/www/content/docs/utils"
+);
+const UTILS_GROUP = "utils";
 const METADATA_PATH = path.join(__dirname, "../metadata");
 const STORIES_PATH = path.join(__dirname, "../src");
 const DEMOS_OUTPUT_PATH = path.join(
@@ -73,6 +78,8 @@ interface Metadata {
   };
   /** Sidebar status badge (`new` | `beta` | `deprecated` | `experimental`). */
   status?: string;
+  /** Docs sidebar group. `utils` pages live under `/docs/utils`. */
+  group?: string;
   content?: MetadataContent[];
 }
 
@@ -210,6 +217,12 @@ function parseMetadata(componentName: string): Metadata | null {
     const statusMatch = yamlContent.match(/^status:\s*(.+)$/m);
     if (statusMatch) {
       metadata.status = statusMatch[1].trim();
+    }
+
+    // Parse docs sidebar group (e.g. group: utils)
+    const groupMatch = yamlContent.match(/^group:\s*(.+)$/m);
+    if (groupMatch) {
+      metadata.group = groupMatch[1].trim();
     }
 
     // Parse links section
@@ -2377,12 +2390,30 @@ function getUIComponentFiles(): { name: string; path: string }[] {
 /**
  * Generate documentation files for all UI components
  */
-function generateDocs() {
-  // Ensure output directory exists
-  if (!fs.existsSync(DOCS_OUTPUT_PATH)) {
-    fs.mkdirSync(DOCS_OUTPUT_PATH, { recursive: true });
-    console.log(`[INFO] Created documentation directory: ${DOCS_OUTPUT_PATH}`);
+function docsDirForGroup(group?: string) {
+  return group === UTILS_GROUP ? UTILS_DOCS_OUTPUT_PATH : DOCS_OUTPUT_PATH;
+}
+
+function ensureDocsDir(dir: string, label: string) {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+    console.log(`[INFO] Created ${label} directory: ${dir}`);
   }
+}
+
+function removeStaleDoc(kebabName: string, keepDir: string) {
+  const otherDir =
+    keepDir === UTILS_DOCS_OUTPUT_PATH ? DOCS_OUTPUT_PATH : UTILS_DOCS_OUTPUT_PATH;
+  const stalePath = path.join(otherDir, `${kebabName}.mdx`);
+  if (fs.existsSync(stalePath)) {
+    fs.unlinkSync(stalePath);
+    console.log(`[INFO] Removed stale doc ${stalePath}`);
+  }
+}
+
+function generateDocs() {
+  ensureDocsDir(DOCS_OUTPUT_PATH, "documentation");
+  ensureDocsDir(UTILS_DOCS_OUTPUT_PATH, "utils documentation");
 
   const components = getUIComponentFiles();
   let created = 0;
@@ -2396,17 +2427,18 @@ function generateDocs() {
   for (const component of components) {
     const kebabName = toKebabCase(component.name);
     const mdxFileName = `${kebabName}.mdx`;
-    const mdxFilePath = path.join(DOCS_OUTPUT_PATH, mdxFileName);
-
-    // Parse metadata
     const metadata = parseMetadata(component.name);
-    
+
     // Skip components without metadata
     if (!metadata) {
       console.log(`[SKIP] Skipping ${mdxFileName} - no metadata file found`);
       skipped++;
       continue;
     }
+
+    const outputDir = docsDirForGroup(metadata.group);
+    const mdxFilePath = path.join(outputDir, mdxFileName);
+    removeStaleDoc(kebabName, outputDir);
     
     // Always try to extract Default story (for auto-preview generation)
     let defaultStory: string | null = null;
@@ -2456,54 +2488,92 @@ function generateDocs() {
   console.log(`  Skipped:              ${skipped}\n`);
 }
 
-/**
- * Generate components index page listing all components
- */
-function generateComponentsIndex() {
-  const components = getUIComponentFiles();
-  
-  // Get metadata for each component and create index entries
-  const indexEntries: Array<{ name: string; title: string; description: string; kebabName: string }> = [];
-  
-  for (const component of components) {
-    const kebabName = toKebabCase(component.name);
+type IndexEntry = {
+  name: string;
+  title: string;
+  description: string;
+  kebabName: string;
+};
+
+function collectIndexEntries(group?: string): IndexEntry[] {
+  const entries: IndexEntry[] = [];
+
+  for (const component of getUIComponentFiles()) {
     const metadata = parseMetadata(component.name);
-    const title = toTitleCase(component.name);
-    const description = metadata?.header?.description || DEFAULT_DESCRIPTION;
-    
-    indexEntries.push({
+    if (group === UTILS_GROUP) {
+      if (metadata?.group !== UTILS_GROUP) continue;
+    } else if (metadata?.group === UTILS_GROUP) {
+      continue;
+    }
+
+    const kebabName = toKebabCase(component.name);
+    entries.push({
       name: component.name,
-      title: title,
-      description: description,
-      kebabName: kebabName,
+      title: toTitleCase(component.name),
+      description: metadata?.header?.description || DEFAULT_DESCRIPTION,
+      kebabName,
     });
   }
-  
-  // Sort alphabetically by title
-  indexEntries.sort((a, b) => a.title.localeCompare(b.title));
-  
-  // Generate MDX content
+
+  entries.sort((a, b) => a.title.localeCompare(b.title));
+  return entries;
+}
+
+function writeCatalogIndex(options: {
+  dir: string;
+  title: string;
+  description: string;
+  heading: string;
+  intro: string;
+  linkPrefix: string;
+  entries: IndexEntry[];
+  label: string;
+}) {
   let indexContent = `---
-title: All Components
-description: A comprehensive list of all available components in the Aura Design System.
+title: ${options.title}
+description: ${options.description}
 ---
 
-## All Components
+## ${options.heading}
 
-Here is a complete list of all available components in the Aura Design System:
+${options.intro}
 
 `;
 
-  // Generate list of components with links
-  for (const entry of indexEntries) {
-    indexContent += `### [${entry.title}](./components/${entry.kebabName})\n\n`;
+  for (const entry of options.entries) {
+    indexContent += `### [${entry.title}](${options.linkPrefix}${entry.kebabName})\n\n`;
     indexContent += `${entry.description}\n\n`;
   }
-  
-  // Write to index.mdx
-  const indexFilePath = path.join(DOCS_OUTPUT_PATH, "index.mdx");
-  fs.writeFileSync(indexFilePath, indexContent);
-  console.log(`[SUCCESS] Generated components index.mdx with ${indexEntries.length} components\n`);
+
+  fs.writeFileSync(path.join(options.dir, "index.mdx"), indexContent);
+  console.log(`[SUCCESS] Generated ${options.label} with ${options.entries.length} entries\n`);
+}
+
+function generateComponentsIndex() {
+  writeCatalogIndex({
+    dir: DOCS_OUTPUT_PATH,
+    title: "All Components",
+    description: "A comprehensive list of all available components in the Aura Design System.",
+    heading: "All Components",
+    intro: "Here is a complete list of all available components in the Aura Design System:",
+    linkPrefix: "./components/",
+    entries: collectIndexEntries(),
+    label: "components index.mdx",
+  });
+}
+
+function generateUtilsIndex() {
+  ensureDocsDir(UTILS_DOCS_OUTPUT_PATH, "utils documentation");
+  writeCatalogIndex({
+    dir: UTILS_DOCS_OUTPUT_PATH,
+    title: "Utils",
+    description: "Headless helpers and primitives that support Aura components.",
+    heading: "Utils",
+    intro: "These utilities render little or no chrome of their own. Use them to compose accessible, client-safe, and directional UI.",
+    linkPrefix: "./",
+    entries: collectIndexEntries(UTILS_GROUP),
+    label: "utils index.mdx",
+  });
 }
 
 /**
@@ -2536,6 +2606,9 @@ generateDocs();
 
 // Generate components index page
 generateComponentsIndex();
+
+// Generate utils index page
+generateUtilsIndex();
 
 // Generate all.txt file
 generateAllTxt();
