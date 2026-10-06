@@ -1,0 +1,418 @@
+---
+title: Search
+description: A search bar that expands into a results view.
+---
+
+import { ComponentPreview } from "@/components/ComponentPreview"
+import { ComponentSource } from "@/components/ComponentSource"
+import { Steps, Step } from "fumadocs-ui/components/steps"
+
+## Preview
+
+<ComponentPreview name="search-demo" description="A search bar that expands into a results view.">
+
+```tsx
+import { Search } from "@/components/ui/Search";
+
+export function SearchDemo() {
+  return <Search items={items} placeholder="Search foundations" defaultExpanded />;
+}
+```
+
+</ComponentPreview>
+
+## Installation
+Make sure that `namespace` is set in your component.json file. Namespace docs: [Learn more about namespaces](/docs/namespace)
+```bash
+pnpm dlx shadcn@latest add @aura/search
+```
+
+
+
+### Manual
+
+<Steps>
+  <Step>
+    Copy and paste the class names utility into your `utils/class-names.ts` file.
+
+```ts
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+
+```
+  </Step>
+  <Step>
+    Copy and paste the command component into your `components/ui/Command.tsx` file.
+
+```tsx
+"use client";
+
+import { Dialog as CommandDialogPrimitive } from "@base-ui/react/dialog";
+import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import * as React from "react";
+import { cn } from "@/utils/class-names";
+import {
+  Autocomplete,
+  AutocompleteCollection,
+  AutocompleteEmpty,
+  AutocompleteGroup,
+  AutocompleteGroupLabel,
+  AutocompleteInput,
+  AutocompleteItem,
+  AutocompleteList,
+  AutocompleteSeparator,
+} from "@/components/ui/Autocomplete";
+
+const CommandInputContext = React.createContext<{
+  inputRef: React.RefObject<HTMLInputElement | null> | null;
+}>({
+  inputRef: null,
+});
+
+const CommandDialog = CommandDialogPrimitive.Root;
+
+const CommandDialogPortal = CommandDialogPrimitive.Portal;
+
+function CommandDialogTrigger(props: CommandDialogPrimitive.Trigger.Props) {
+  return (
+    <CommandDialogPrimitive.Trigger
+      data-slot="command-dialog-trigger"
+      {...props}
+    />
+  );
+}
+
+function CommandDialogBackdrop({
+  className,
+  ...props
+}: CommandDialogPrimitive.Backdrop.Props) {
+  return (
+    <CommandDialogPrimitive.Backdrop
+      className={cn(
+        "fixed inset-0 z-50 bg-gray-9a backdrop-blur-xs",
+        className,
+      )}
+      data-slot="command-dialog-backdrop"
+      {...props}
+    />
+  );
+}
+
+function CommandDialogViewport({
+  className,
+  ...props
+}: CommandDialogPrimitive.Viewport.Props) {
+  return (
+    <CommandDialogPrimitive.Viewport
+      className={cn(
+        "fixed inset-0 z-50 flex flex-col items-center px-2 py-[max(--spacing(4),4vh)] sm:py-[10vh]",
+        className,
+      )}
+      data-slot="command-dialog-viewport"
+      {...props}
+    />
+  );
+}
+
+function CommandDialogPopup({
+  className,
+  children,
+  ...props
+}: CommandDialogPrimitive.Popup.Props) {
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
+  return (
+    <CommandDialogPortal>
+      <CommandDialogBackdrop />
+      <CommandDialogViewport>
+        <CommandDialogPrimitive.Popup
+          className={cn(
+            "relative row-start-2 flex max-h-100 min-h-0 w-full min-w-0 max-w-xl flex-col rounded-2xl border border-gray-a6 bg-gray-1 bg-clip-padding text-gray-12 shadow-lg before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-2xl)-1px)] before:bg-gray-a2 data-nested-dialog-open:origin-top **:data-[slot=scroll-area-viewport]:data-has-overflow-y:pe-1",
+            className,
+          )}
+          data-slot="command-dialog-popup"
+          initialFocus={inputRef}
+          {...props}
+        >
+          <CommandInputContext.Provider value={{ inputRef }}>
+            {children}
+          </CommandInputContext.Provider>
+        </CommandDialogPrimitive.Popup>
+      </CommandDialogViewport>
+    </CommandDialogPortal>
+  );
+}
+
+function Command({
+  autoHighlight = "always",
+  keepHighlight = true,
+  open = true,
+  ...props
+}: React.ComponentProps<typeof Autocomplete>) {
+  return (
+    <Autocomplete
+      autoHighlight={autoHighlight}
+      keepHighlight={keepHighlight}
+      open={open}
+      {...props}
+    />
+  );
+}
+
+function CommandInput({
+  className,
+  placeholder = undefined,
+  ...props
+}: React.ComponentProps<typeof AutocompleteInput>) {
+  const { inputRef } = React.useContext(CommandInputContext);
+
+  return (
+    <div className="px-1.5 py-0.5">
+      <AutocompleteInput
+        className={cn(
+          "border-transparent! bg-transparent shadow-none before:hidden has-focus-visible:ring-0 pl-5",
+          className,
+        )}
+        placeholder={placeholder}
+        ref={inputRef}
+        size="lg"
+        startAddon={<MagnifyingGlassIcon />}
+        {...props}
+      />
+    </div>
+  );
+}
+
+function CommandList({
+  className,
+  ...props
+}: React.ComponentProps<typeof AutocompleteList>) {
+  return (
+    <AutocompleteList
+      className={cn("not-empty:scroll-py-2 not-empty:p-2", className)}
+      data-slot="command-list"
+      {...props}
+    />
+  );
+}
+
+function CommandEmpty({
+  className,
+  ...props
+}: React.ComponentProps<typeof AutocompleteEmpty>) {
+  return (
+    <AutocompleteEmpty
+      className={cn("empty:hidden not-empty:py-6", className)}
+      data-slot="command-empty"
+      {...props}
+    />
+  );
+}
+
+function CommandPanel({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      className="-mx-px relative min-h-0 rounded-t-xl border border-gray-a6 bg-gray-1 bg-clip-padding [clip-path:inset(0_1px)] before:pointer-events-none before:absolute before:inset-0 before:rounded-t-[calc(var(--radius-xl)-1px)] **:data-[slot=scroll-area-scrollbar]:mt-2"
+      {...props}
+    />
+  );
+}
+
+function CommandGroup({
+  className,
+  ...props
+}: React.ComponentProps<typeof AutocompleteGroup>) {
+  return (
+    <AutocompleteGroup
+      className={className}
+      data-slot="command-group"
+      {...props}
+    />
+  );
+}
+
+function CommandGroupLabel({
+  className,
+  ...props
+}: React.ComponentProps<typeof AutocompleteGroupLabel>) {
+  return (
+    <AutocompleteGroupLabel
+      className={className}
+      data-slot="command-group-label"
+      {...props}
+    />
+  );
+}
+
+function CommandCollection({
+  ...props
+}: React.ComponentProps<typeof AutocompleteCollection>) {
+  return <AutocompleteCollection data-slot="command-collection" {...props} />;
+}
+
+function CommandItem({
+  className,
+  ...props
+}: React.ComponentProps<typeof AutocompleteItem>) {
+  return (
+    <AutocompleteItem
+      className={cn("py-1.5", className)}
+      data-slot="command-item"
+      {...props}
+    />
+  );
+}
+
+function CommandSeparator({
+  className,
+  ...props
+}: React.ComponentProps<typeof AutocompleteSeparator>) {
+  return (
+    <AutocompleteSeparator
+      className={cn("my-2", className)}
+      data-slot="command-separator"
+      {...props}
+    />
+  );
+}
+
+function CommandShortcut({ className, ...props }: React.ComponentProps<"kbd">) {
+  return (
+    <span
+      className={cn(
+        "ms-auto font-medium text-gray-11 text-xs tracking-widest",
+        className,
+      )}
+      data-slot="command-shortcut"
+      {...props}
+    />
+  );
+}
+
+function CommandFooter({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      className={cn(
+        "flex items-center justify-between gap-1 rounded-b-[calc(var(--radius-2xl)-1px)] border-t border-gray-a6 bg-gray-2 px-2 py-1 text-gray-11 text-xs z-10",
+        className,
+      )}
+      data-slot="command-footer"
+      {...props}
+    />
+  );
+}
+
+export {
+  Command,
+  CommandCollection,
+  CommandDialog,
+  CommandDialogPopup,
+  CommandDialogTrigger,
+  CommandEmpty,
+  CommandFooter,
+  CommandGroup,
+  CommandGroupLabel,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandPanel,
+  CommandSeparator,
+  CommandShortcut,
+};
+
+```
+  </Step>
+  <Step>
+    Copy and paste the Search component into your `components/ui/Search.tsx` file.
+
+```tsx
+"use client";
+
+import * as React from "react";
+import { cn } from "@/utils/class-names";
+import {
+  Command,
+  CommandCollection,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandPanel,
+} from "@/components/ui/Command";
+
+type SearchItem = {
+  value: string;
+  label: string;
+};
+
+function Search({
+  className,
+  items,
+  placeholder = "Search",
+  label = "Search",
+  empty = "No results.",
+  defaultExpanded = false,
+}: {
+  className?: string;
+  items: SearchItem[];
+  placeholder?: string;
+  label?: string;
+  empty?: string;
+  defaultExpanded?: boolean;
+}) {
+  const [expanded, setExpanded] = React.useState(defaultExpanded);
+  return (
+    <div
+      data-slot="search"
+      data-expanded={expanded ? "true" : "false"}
+      className={cn("w-full max-w-xl rounded-sm border border-gray-6 bg-gray-1", className)}
+    >
+      <Command items={[{ value: "Results", items }]} open={expanded} onOpenChange={setExpanded}>
+        <CommandInput
+          aria-label={label}
+          placeholder={placeholder}
+          onFocus={() => setExpanded(true)}
+          onKeyDown={(event) => {
+            if (event.key === "Escape") setExpanded(false);
+          }}
+        />
+        {expanded ? (
+          <CommandPanel>
+            <CommandEmpty>{empty}</CommandEmpty>
+            <CommandList>
+              {(group: { value: string; items: SearchItem[] }) => (
+                <CommandGroup key={group.value} items={group.items}>
+                  <CommandCollection>
+                    {(item: SearchItem) => (
+                      <CommandItem
+                        key={item.value}
+                        value={item.value}
+                        onClick={() => setExpanded(false)}
+                      >
+                        {item.label}
+                      </CommandItem>
+                    )}
+                  </CommandCollection>
+                </CommandGroup>
+              )}
+            </CommandList>
+          </CommandPanel>
+        ) : null}
+      </Command>
+    </div>
+  );
+}
+
+export { Search };
+export type { SearchItem };
+
+```
+  </Step>
+</Steps>
+

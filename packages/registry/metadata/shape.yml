@@ -1,0 +1,3 @@
+header:
+  description: A set of shapes that can mask an image and morph between each other.
+extends: _templates/content.yml

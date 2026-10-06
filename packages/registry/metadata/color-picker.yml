@@ -1,0 +1,3 @@
+header:
+  description: A color field with a picker, a typed hex value, and swatches.
+extends: _templates/content.yml

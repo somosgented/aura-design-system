@@ -29,6 +29,11 @@ import {
   AngleSliderDemoWithForm
 } from "./angle-slider-demo"
 import { 
+  AppBarDemo,
+  AppBarDemoMedium,
+  AppBarDemoLarge
+} from "./app-bar-demo"
+import { 
   AreaChartDemo,
   AreaChartDemoNatural,
   AreaChartDemoLinear,
@@ -144,8 +149,17 @@ import {
   ChipDemoInput
 } from "./chip-demo"
 import { 
+  CircularProgressDemo
+} from "./circular-progress-demo"
+import { 
   CollapsibleDemo
 } from "./collapsible-demo"
+import { 
+  ColorPickerDemo
+} from "./color-picker-demo"
+import { 
+  ColorSwatchDemo
+} from "./color-swatch-demo"
 import { 
   ComboboxDemo,
   ComboboxDemoWithClearButton,
@@ -200,6 +214,9 @@ import {
   EmptyDemoWithActions
 } from "./empty-demo"
 import { 
+  ExpressiveCarouselDemo
+} from "./expressive-carousel-demo"
+import { 
   FabDemo,
   FabDemoExtended
 } from "./fab-demo"
@@ -242,6 +259,9 @@ import {
   HoverCardDemo
 } from "./hover-card-demo"
 import { 
+  IconDemo
+} from "./icon-demo"
+import { 
   InputDemo
 } from "./input-demo"
 import { 
@@ -271,8 +291,17 @@ import {
   KbdDemoGroup
 } from "./kbd-demo"
 import { 
+  KeyValueDemo
+} from "./key-value-demo"
+import { 
   LabelDemo
 } from "./label-demo"
+import { 
+  ListboxDemo
+} from "./listbox-demo"
+import { 
+  LoadingIndicatorDemo
+} from "./loading-indicator-demo"
 import { 
   MarkerDemo,
   MarkerDemoVariants,
@@ -318,15 +347,25 @@ import {
   NativeSelectDemo
 } from "./native-select-demo"
 import { 
+  NavigationBarDemo
+} from "./navigation-bar-demo"
+import { 
   NavigationMenuDemoDefault,
   NavigationMenuDemo
 } from "./navigation-menu-demo"
+import { 
+  NavigationRailDemo,
+  NavigationRailDemoExpanded
+} from "./navigation-rail-demo"
 import { 
   PaginationDemo,
   PaginationDemoSimple,
   PaginationDemoIconsOnly,
   PaginationDemoWithEllipsis
 } from "./pagination-demo"
+import { 
+  PhoneInputDemo
+} from "./phone-input-demo"
 import { 
   PopoverDemo,
   PopoverDemoWithCloseButton,
@@ -362,6 +401,9 @@ import {
   RadioGroupDemoHorizontal
 } from "./radio-group-demo"
 import { 
+  RatingDemo
+} from "./rating-demo"
+import { 
   RelativeTimeCardDemo
 } from "./relative-time-card-demo"
 import { 
@@ -386,6 +428,9 @@ import {
 import { 
   ScrollerDemo
 } from "./scroller-demo"
+import { 
+  SearchDemo
+} from "./search-demo"
 import { 
   SectionDemo
 } from "./section-demo"
@@ -415,8 +460,15 @@ import {
   SeparatorDemo
 } from "./separator-demo"
 import { 
+  ShapeDemo,
+  ShapeDemoMask
+} from "./shape-demo"
+import { 
   SheetDemo
 } from "./sheet-demo"
+import { 
+  SideSheetDemo
+} from "./side-sheet-demo"
 import { 
   SidebarDemo
 } from "./sidebar-demo"
@@ -497,8 +549,14 @@ import {
   TabsDemo
 } from "./tabs-demo"
 import { 
+  TagsInputDemo
+} from "./tags-input-demo"
+import { 
   TextareaDemo
 } from "./textarea-demo"
+import { 
+  TimePickerDemo
+} from "./time-picker-demo"
 import { 
   TimelineDemo
 } from "./timeline-demo"
@@ -570,6 +628,15 @@ export const Registry = {
   },
   "angle-slider-demo-with-form": {
     component: AngleSliderDemoWithForm,
+  },
+  "app-bar-demo": {
+    component: AppBarDemo,
+  },
+  "app-bar-demo-medium": {
+    component: AppBarDemoMedium,
+  },
+  "app-bar-demo-large": {
+    component: AppBarDemoLarge,
   },
   "area-chart-demo": {
     component: AreaChartDemo,
@@ -802,8 +869,17 @@ export const Registry = {
   "chip-demo-input": {
     component: ChipDemoInput,
   },
+  "circular-progress-demo": {
+    component: CircularProgressDemo,
+  },
   "collapsible-demo": {
     component: CollapsibleDemo,
+  },
+  "color-picker-demo": {
+    component: ColorPickerDemo,
+  },
+  "color-swatch-demo": {
+    component: ColorSwatchDemo,
   },
   "combobox-demo": {
     component: ComboboxDemo,
@@ -904,6 +980,9 @@ export const Registry = {
   "empty-demo-with-actions": {
     component: EmptyDemoWithActions,
   },
+  "expressive-carousel-demo": {
+    component: ExpressiveCarouselDemo,
+  },
   "fab-demo": {
     component: FabDemo,
   },
@@ -982,6 +1061,9 @@ export const Registry = {
   "hover-card-demo": {
     component: HoverCardDemo,
   },
+  "icon-demo": {
+    component: IconDemo,
+  },
   "input-demo": {
     component: InputDemo,
   },
@@ -1033,8 +1115,17 @@ export const Registry = {
   "kbd-demo-group": {
     component: KbdDemoGroup,
   },
+  "key-value-demo": {
+    component: KeyValueDemo,
+  },
   "label-demo": {
     component: LabelDemo,
+  },
+  "listbox-demo": {
+    component: ListboxDemo,
+  },
+  "loading-indicator-demo": {
+    component: LoadingIndicatorDemo,
   },
   "marker-demo": {
     component: MarkerDemo,
@@ -1114,11 +1205,20 @@ export const Registry = {
   "native-select-demo": {
     component: NativeSelectDemo,
   },
+  "navigation-bar-demo": {
+    component: NavigationBarDemo,
+  },
   "navigation-menu-demo": {
     component: NavigationMenuDemoDefault,
   },
   "navigation-menu-demo-navigation-menu-demo": {
     component: NavigationMenuDemo,
+  },
+  "navigation-rail-demo": {
+    component: NavigationRailDemo,
+  },
+  "navigation-rail-demo-expanded": {
+    component: NavigationRailDemoExpanded,
   },
   "pagination-demo": {
     component: PaginationDemo,
@@ -1131,6 +1231,9 @@ export const Registry = {
   },
   "pagination-demo-with-ellipsis": {
     component: PaginationDemoWithEllipsis,
+  },
+  "phone-input-demo": {
+    component: PhoneInputDemo,
   },
   "popover-demo": {
     component: PopoverDemo,
@@ -1198,6 +1301,9 @@ export const Registry = {
   "radio-group-demo-horizontal": {
     component: RadioGroupDemoHorizontal,
   },
+  "rating-demo": {
+    component: RatingDemo,
+  },
   "relative-time-card-demo": {
     component: RelativeTimeCardDemo,
   },
@@ -1230,6 +1336,9 @@ export const Registry = {
   },
   "scroller-demo": {
     component: ScrollerDemo,
+  },
+  "search-demo": {
+    component: SearchDemo,
   },
   "section-demo": {
     component: SectionDemo,
@@ -1285,8 +1394,17 @@ export const Registry = {
   "separator-demo": {
     component: SeparatorDemo,
   },
+  "shape-demo": {
+    component: ShapeDemo,
+  },
+  "shape-demo-mask": {
+    component: ShapeDemoMask,
+  },
   "sheet-demo": {
     component: SheetDemo,
+  },
+  "side-sheet-demo": {
+    component: SideSheetDemo,
   },
   "sidebar-demo": {
     component: SidebarDemo,
@@ -1429,8 +1547,14 @@ export const Registry = {
   "tabs-demo": {
     component: TabsDemo,
   },
+  "tags-input-demo": {
+    component: TagsInputDemo,
+  },
   "textarea-demo": {
     component: TextareaDemo,
+  },
+  "time-picker-demo": {
+    component: TimePickerDemo,
   },
   "timeline-demo": {
     component: TimelineDemo,

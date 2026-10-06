@@ -1,0 +1,3 @@
+header:
+  description: A star rating that works with the keyboard.
+extends: _templates/content.yml

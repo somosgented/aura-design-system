@@ -531,7 +531,8 @@
         "@aura/custom-color-functions",
         "@aura/input",
         "@aura/label",
-        "@aura/popover"
+        "@aura/popover",
+        "@aura/scheme-from-seed"
       ]
     },
     {
@@ -664,6 +665,24 @@
         "@aura/use-isomorphic-layout-effect",
         "@aura/use-lazy-ref",
         "@aura/visually-hidden-input"
+      ]
+    },
+    {
+      "name": "app-bar",
+      "type": "registry:ui",
+      "title": "AppBar",
+      "description": "The AppBar component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/AppBar.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
       ]
     },
     {
@@ -1036,6 +1055,21 @@
       ]
     },
     {
+      "name": "circular-progress",
+      "type": "registry:ui",
+      "title": "CircularProgress",
+      "description": "The CircularProgress component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/CircularProgress.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "collapsible",
       "type": "registry:ui",
       "title": "Collapsible",
@@ -1058,6 +1092,37 @@
       },
       "dependencies": [
         "radix-ui"
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
+      "name": "color-picker",
+      "type": "registry:ui",
+      "title": "ColorPicker",
+      "description": "The ColorPicker component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/ColorPicker.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names",
+        "@aura/color-swatch"
+      ]
+    },
+    {
+      "name": "color-swatch",
+      "type": "registry:ui",
+      "title": "ColorSwatch",
+      "description": "The ColorSwatch component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/ColorSwatch.tsx",
+          "type": "registry:ui"
+        }
       ],
       "registryDependencies": [
         "@aura/class-names"
@@ -1295,6 +1360,21 @@
       ]
     },
     {
+      "name": "expressive-carousel",
+      "type": "registry:ui",
+      "title": "ExpressiveCarousel",
+      "description": "The ExpressiveCarousel component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/ExpressiveCarousel.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "fab",
       "type": "registry:ui",
       "title": "Fab",
@@ -1466,6 +1546,21 @@
       ]
     },
     {
+      "name": "icon",
+      "type": "registry:ui",
+      "title": "Icon",
+      "description": "The Icon component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Icon.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "input",
       "type": "registry:ui",
       "title": "Input",
@@ -1571,6 +1666,21 @@
       ]
     },
     {
+      "name": "key-value",
+      "type": "registry:ui",
+      "title": "KeyValue",
+      "description": "The KeyValue component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/KeyValue.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "label",
       "type": "registry:ui",
       "title": "Label",
@@ -1583,6 +1693,37 @@
       ],
       "registryDependencies": [
         "@aura/class-names"
+      ]
+    },
+    {
+      "name": "listbox",
+      "type": "registry:ui",
+      "title": "Listbox",
+      "description": "The Listbox component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Listbox.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
+      "name": "loading-indicator",
+      "type": "registry:ui",
+      "title": "LoadingIndicator",
+      "description": "The LoadingIndicator component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/LoadingIndicator.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names",
+        "@aura/shape"
       ]
     },
     {
@@ -1764,6 +1905,21 @@
       ]
     },
     {
+      "name": "navigation-bar",
+      "type": "registry:ui",
+      "title": "NavigationBar",
+      "description": "The NavigationBar component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/NavigationBar.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "navigation-menu",
       "type": "registry:ui",
       "title": "NavigationMenu",
@@ -1792,6 +1948,21 @@
       ]
     },
     {
+      "name": "navigation-rail",
+      "type": "registry:ui",
+      "title": "NavigationRail",
+      "description": "The NavigationRail component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/NavigationRail.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "pagination",
       "type": "registry:ui",
       "title": "Pagination",
@@ -1807,6 +1978,21 @@
       ],
       "registryDependencies": [
         "@aura/button",
+        "@aura/class-names"
+      ]
+    },
+    {
+      "name": "phone-input",
+      "type": "registry:ui",
+      "title": "PhoneInput",
+      "description": "The PhoneInput component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/PhoneInput.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
         "@aura/class-names"
       ]
     },
@@ -1923,6 +2109,24 @@
       ],
       "dependencies": [
         "radix-ui"
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
+      "name": "rating",
+      "type": "registry:ui",
+      "title": "Rating",
+      "description": "The Rating component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Rating.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-icons"
       ],
       "registryDependencies": [
         "@aura/class-names"
@@ -2067,6 +2271,22 @@
       ]
     },
     {
+      "name": "search",
+      "type": "registry:ui",
+      "title": "Search",
+      "description": "The Search component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Search.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names",
+        "@aura/command"
+      ]
+    },
+    {
       "name": "section",
       "type": "registry:ui",
       "title": "Section",
@@ -2183,6 +2403,21 @@
       ]
     },
     {
+      "name": "shape",
+      "type": "registry:ui",
+      "title": "Shape",
+      "description": "The Shape component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Shape.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "sheet",
       "type": "registry:ui",
       "title": "Sheet",
@@ -2209,6 +2444,21 @@
       ],
       "registryDependencies": [
         "@aura/button",
+        "@aura/class-names"
+      ]
+    },
+    {
+      "name": "side-sheet",
+      "type": "registry:ui",
+      "title": "SideSheet",
+      "description": "The SideSheet component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/SideSheet.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
         "@aura/class-names"
       ]
     },
@@ -2516,6 +2766,24 @@
       ]
     },
     {
+      "name": "tags-input",
+      "type": "registry:ui",
+      "title": "TagsInput",
+      "description": "The TagsInput component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/TagsInput.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-icons"
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "textarea",
       "type": "registry:ui",
       "title": "Textarea",
@@ -2523,6 +2791,21 @@
       "files": [
         {
           "path": "registry/default/components/ui/Textarea.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
+      "name": "time-picker",
+      "type": "registry:ui",
+      "title": "TimePicker",
+      "description": "The TimePicker component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/TimePicker.tsx",
           "type": "registry:ui"
         }
       ],
@@ -2735,6 +3018,9 @@
           "path": "registry/default/utils/create-icon.tsx",
           "type": "registry:lib"
         }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
       ]
     },
     {
@@ -2751,6 +3037,21 @@
       "dependencies": [
         "@radix-ui/colors",
         "bezier-easing",
+        "colorjs.io"
+      ]
+    },
+    {
+      "name": "scheme-from-seed",
+      "type": "registry:lib",
+      "title": "scheme-from-seed",
+      "description": "Utility: scheme-from-seed",
+      "files": [
+        {
+          "path": "registry/default/utils/scheme-from-seed.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
         "colorjs.io"
       ]
     },

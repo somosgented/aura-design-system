@@ -1,0 +1,155 @@
+"use client";
+
+import * as React from "react";
+import { cn } from "@/utils/class-names";
+
+type TimeValue = {
+  hour: number;
+  minute: number;
+};
+
+function pad(value: number) {
+  return String(value).padStart(2, "0");
+}
+
+function parseTime(value: string): TimeValue | null {
+  const match = /^(\d{1,2}):(\d{2})$/.exec(value.trim());
+  if (!match) return null;
+  const hour = Number(match[1]);
+  const minute = Number(match[2]);
+  if (hour > 23 || minute > 59) return null;
+  return { hour, minute };
+}
+
+function formatTime(value: TimeValue) {
+  return `${pad(value.hour)}:${pad(value.minute)}`;
+}
+
+function TimePicker({
+  className,
+  value,
+  defaultValue = "09:30",
+  onValueChange,
+  label = "Time",
+}: {
+  className?: string;
+  value?: string;
+  defaultValue?: string;
+  onValueChange?: (value: string) => void;
+  label?: string;
+}) {
+  const parsedDefault = parseTime(defaultValue) ?? { hour: 9, minute: 30 };
+  const [uncontrolled, setUncontrolled] = React.useState(parsedDefault);
+  const [text, setText] = React.useState(defaultValue);
+  const [selecting, setSelecting] = React.useState<"hour" | "minute">("hour");
+  const current = value ? parseTime(value) ?? uncontrolled : uncontrolled;
+
+  React.useEffect(() => {
+    if (value && parseTime(value)) setText(value);
+  }, [value]);
+
+  const commit = (next: TimeValue) => {
+    if (value === undefined) setUncontrolled(next);
+    const formatted = formatTime(next);
+    setText(formatted);
+    onValueChange?.(formatted);
+  };
+
+  const hour12 = current.hour % 12 || 12;
+  const isPm = current.hour >= 12;
+
+  const dial =
+    selecting === "hour"
+      ? Array.from({ length: 12 }, (_, index) => index + 1)
+      : [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
+
+  return (
+    <div data-slot="time-picker" className={cn("flex w-fit flex-col gap-1", className)}>
+      <label className="flex flex-col gap-0.5">
+        <span>{label}</span>
+        <input
+          value={text}
+          inputMode="numeric"
+          className="w-12 rounded-sm border border-gray-7 bg-gray-1 px-1 py-0.5 text-gray-12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8"
+          onChange={(event) => {
+            const next = event.target.value;
+            setText(next);
+            const parsed = parseTime(next);
+            if (parsed) commit(parsed);
+          }}
+        />
+      </label>
+      <div className="flex gap-0.5">
+        <button
+          type="button"
+          aria-pressed={selecting === "hour"}
+          className="rounded-sm px-1 py-0.5 aria-pressed:bg-accent-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8"
+          onClick={() => setSelecting("hour")}
+        >
+          Hour
+        </button>
+        <button
+          type="button"
+          aria-pressed={selecting === "minute"}
+          className="rounded-sm px-1 py-0.5 aria-pressed:bg-accent-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8"
+          onClick={() => setSelecting("minute")}
+        >
+          Minute
+        </button>
+        <button
+          type="button"
+          className="rounded-sm px-1 py-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8"
+          onClick={() => commit({ hour: (current.hour + 12) % 24, minute: current.minute })}
+        >
+          {isPm ? "PM" : "AM"}
+        </button>
+      </div>
+      <div
+        role="group"
+        aria-label={selecting === "hour" ? "Hour dial" : "Minute dial"}
+        className="relative size-16 rounded-full border border-gray-6 bg-gray-2"
+        onKeyDown={(event) => {
+          if (event.key !== "ArrowUp" && event.key !== "ArrowDown") return;
+          event.preventDefault();
+          const delta = event.key === "ArrowUp" ? 1 : -1;
+          if (selecting === "hour") {
+            commit({ hour: (current.hour + delta + 24) % 24, minute: current.minute });
+          } else {
+            commit({ hour: current.hour, minute: (current.minute + delta + 60) % 60 });
+          }
+        }}
+      >
+        {dial.map((mark, index) => {
+          const angle = (index / 12) * Math.PI * 2 - Math.PI / 2;
+          const selected = selecting === "hour" ? mark === hour12 : mark === current.minute;
+          return (
+            <button
+              key={mark}
+              type="button"
+              aria-label={selecting === "hour" ? `${mark}` : `${pad(mark)} minutes`}
+              aria-pressed={selected}
+              className="absolute inline-flex size-3 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full hover:bg-gray-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8 aria-pressed:bg-accent-9 aria-pressed:text-accent-contrast"
+              style={{
+                left: `${50 + Math.cos(angle) * 38}%`,
+                top: `${50 + Math.sin(angle) * 38}%`,
+              }}
+              onClick={() => {
+                if (selecting === "hour") {
+                  const nextHour = isPm ? (mark % 12) + 12 : mark % 12;
+                  commit({ hour: nextHour, minute: current.minute });
+                  setSelecting("minute");
+                } else {
+                  commit({ hour: current.hour, minute: mark });
+                }
+              }}
+            >
+              {selecting === "hour" ? mark : pad(mark)}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+export { TimePicker };

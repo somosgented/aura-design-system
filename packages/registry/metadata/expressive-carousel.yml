@@ -1,0 +1,3 @@
+header:
+  description: A carousel whose items resize as you scroll.
+extends: _templates/content.yml

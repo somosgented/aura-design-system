@@ -1,0 +1,168 @@
+---
+title: Navigation Rail
+description: Side navigation for tablet and desktop, collapsed or expanded.
+---
+
+import { ComponentPreview } from "@/components/ComponentPreview"
+import { ComponentSource } from "@/components/ComponentSource"
+import { Steps, Step } from "fumadocs-ui/components/steps"
+
+## Preview
+
+<ComponentPreview name="navigation-rail-demo" description="Side navigation for tablet and desktop, collapsed or expanded.">
+
+```tsx
+import { HomeIcon, PersonIcon, GearIcon } from "@radix-ui/react-icons";
+import {
+  NavigationRail,
+  NavigationRailItem,
+  NavigationRailLabel,
+} from "@/components/ui/NavigationRail";
+
+export function NavigationRailDemo() {
+  return (
+    <div className="h-24 overflow-hidden rounded-sm border border-gray-6">
+      <NavigationRail>
+        <NavigationRailItem active>
+          <HomeIcon className="icon" />
+          <NavigationRailLabel>Home</NavigationRailLabel>
+        </NavigationRailItem>
+        <NavigationRailItem>
+          <PersonIcon className="icon" />
+          <NavigationRailLabel>People</NavigationRailLabel>
+        </NavigationRailItem>
+        <NavigationRailItem>
+          <GearIcon className="icon" />
+          <NavigationRailLabel>Settings</NavigationRailLabel>
+        </NavigationRailItem>
+      </NavigationRail>
+    </div>
+  );
+}
+```
+
+</ComponentPreview>
+
+## Installation
+Make sure that `namespace` is set in your component.json file. Namespace docs: [Learn more about namespaces](/docs/namespace)
+```bash
+pnpm dlx shadcn@latest add @aura/navigation-rail
+```
+
+
+
+### Manual
+
+<Steps>
+  <Step>
+    Copy and paste the class names utility into your `utils/class-names.ts` file.
+
+```ts
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+
+```
+  </Step>
+  <Step>
+    Copy and paste the NavigationRail component into your `components/ui/NavigationRail.tsx` file.
+
+```tsx
+"use client";
+
+import * as React from "react";
+import { cn } from "@/utils/class-names";
+
+function NavigationRail({
+  className,
+  expanded = false,
+  label = "Primary",
+  ...props
+}: React.ComponentProps<"nav"> & { expanded?: boolean; label?: string }) {
+  return (
+    <nav
+      aria-label={label}
+      data-slot="navigation-rail"
+      data-expanded={expanded ? "true" : "false"}
+      className={cn(
+        "group flex h-full flex-col gap-0.5 border-e border-gray-6 bg-gray-1 p-0.5",
+        expanded ? "w-16" : "w-5",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+function NavigationRailItem({
+  className,
+  active,
+  children,
+  ...props
+}: React.ComponentProps<"button"> & { active?: boolean }) {
+  return (
+    <button
+      type="button"
+      data-slot="navigation-rail-item"
+      aria-current={active ? "page" : undefined}
+      className={cn(
+        "inline-flex items-center gap-0.5 rounded-sm px-1 py-0.5 text-gray-11 hover:bg-gray-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8 aria-[current=page]:bg-accent-3 aria-[current=page]:text-accent-11",
+        className,
+      )}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+}
+
+function NavigationRailLabel({
+  className,
+  ...props
+}: React.ComponentProps<"span">) {
+  return (
+    <span
+      data-slot="navigation-rail-label"
+      className={cn("group-data-[expanded=false]:sr-only", className)}
+      {...props}
+    />
+  );
+}
+
+export { NavigationRail, NavigationRailItem, NavigationRailLabel };
+
+```
+  </Step>
+</Steps>
+
+## Usage
+
+### Expanded
+
+```tsx
+export const Expanded = () => {
+  return (
+    <div className="h-24 overflow-hidden rounded-sm border border-gray-6">
+      <NavigationRail expanded>
+        <NavigationRailItem active>
+          <HomeIcon className="icon" />
+          <NavigationRailLabel>Home</NavigationRailLabel>
+        </NavigationRailItem>
+        <NavigationRailItem>
+          <PersonIcon className="icon" />
+          <NavigationRailLabel>People</NavigationRailLabel>
+        </NavigationRailItem>
+        <NavigationRailItem>
+          <GearIcon className="icon" />
+          <NavigationRailLabel>Settings</NavigationRailLabel>
+        </NavigationRailItem>
+      </NavigationRail>
+    </div>
+  );
+};
+```
+

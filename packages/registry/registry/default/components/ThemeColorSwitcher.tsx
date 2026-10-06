@@ -5,6 +5,7 @@ import { useTheme } from "next-themes";
 import { MixerHorizontalIcon, DownloadIcon } from "@radix-ui/react-icons";
 
 import { generateRadixColors } from "@/utils/custom-color-functions";
+import { schemeFromSeed, seedFromImage } from "@/utils/scheme-from-seed";
 import { cn } from "@/utils/class-names";
 import {
   Popover,
@@ -108,6 +109,12 @@ export function ThemeColorSwitcher() {
   const resetDefaults = () => {
     setThemeColors(DEFAULT_THEME_COLORS);
     localStorage.removeItem(STORAGE_KEY);
+  };
+
+  const applySeed = (seed: string) => {
+    if (!/^#?([0-9A-F]{3}){1,2}$/i.test(seed)) return;
+    const normalized = seed.startsWith("#") ? seed : `#${seed}`;
+    setThemeColors(schemeFromSeed(normalized));
   };
 
   const generateCSSContent = () => {
@@ -450,6 +457,33 @@ ${generateExtraVars("gray", darkColors)}
               >
                 Dark
               </button>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-0.5">
+            <Label htmlFor="theme-seed">Seed color</Label>
+            <div className="flex items-center gap-0.5">
+              <input
+                id="theme-seed"
+                type="color"
+                defaultValue={currentColors.accent}
+                aria-label="Seed color"
+                className="size-4 shrink-0 cursor-pointer bg-transparent"
+                onChange={(event) => applySeed(event.target.value)}
+              />
+              <label className="inline-flex items-center gap-0.5">
+                From image
+                <input
+                  type="file"
+                  accept="image/*"
+                  aria-label="Generate a scheme from an image"
+                  onChange={async (event) => {
+                    const file = event.target.files?.[0];
+                    if (!file) return;
+                    applySeed(await seedFromImage(file));
+                  }}
+                />
+              </label>
             </div>
           </div>
 

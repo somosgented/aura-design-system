@@ -1,0 +1,3 @@
+header:
+  description: A search bar that expands into a results view.
+extends: _templates/content.yml

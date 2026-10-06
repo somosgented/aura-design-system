@@ -1,0 +1,96 @@
+---
+title: Color Swatch
+description: A selectable color sample.
+---
+
+import { ComponentPreview } from "@/components/ComponentPreview"
+import { ComponentSource } from "@/components/ComponentSource"
+import { Steps, Step } from "fumadocs-ui/components/steps"
+
+## Preview
+
+<ComponentPreview name="color-swatch-demo" description="A selectable color sample.">
+
+```tsx
+import { ColorSwatch } from "@/components/ui/ColorSwatch";
+
+export function ColorSwatchDemo() {
+  return (
+    <div className="flex items-center gap-0.5">
+      <ColorSwatch color="#964CE1" label="Violet" selected />
+      <ColorSwatch color="#3D63DD" label="Blue" />
+      <ColorSwatch color="#30A46C" label="Green" />
+    </div>
+  );
+}
+```
+
+</ComponentPreview>
+
+## Installation
+Make sure that `namespace` is set in your component.json file. Namespace docs: [Learn more about namespaces](/docs/namespace)
+```bash
+pnpm dlx shadcn@latest add @aura/color-swatch
+```
+
+
+
+### Manual
+
+<Steps>
+  <Step>
+    Copy and paste the class names utility into your `utils/class-names.ts` file.
+
+```ts
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+
+```
+  </Step>
+  <Step>
+    Copy and paste the ColorSwatch component into your `components/ui/ColorSwatch.tsx` file.
+
+```tsx
+"use client";
+
+import * as React from "react";
+import { cn } from "@/utils/class-names";
+
+function ColorSwatch({
+  className,
+  color,
+  label,
+  selected,
+  ...props
+}: React.ComponentProps<"button"> & {
+  color: string;
+  label: string;
+  selected?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      aria-pressed={selected}
+      data-slot="color-swatch"
+      className={cn(
+        "inline-flex size-3 items-center justify-center rounded-full border border-gray-7 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8 aria-pressed:ring-2 aria-pressed:ring-accent-9",
+        className,
+      )}
+      style={{ backgroundColor: color }}
+      {...props}
+    />
+  );
+}
+
+export { ColorSwatch };
+
+```
+  </Step>
+</Steps>
+
