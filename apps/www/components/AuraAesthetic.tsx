@@ -335,7 +335,7 @@ function LinksExample({ muted = false }: { muted?: boolean }) {
           </div>
         </HoverCardContent>
       </HoverCard>{" "}
-      elements and typefaces for the first Apple Macintosh.
+      elements and typefaces for the first graphical desktop.
     </blockquote>
   );
 }
