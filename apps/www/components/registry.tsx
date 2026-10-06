@@ -46,6 +46,9 @@ import {
   AspectRatioDemo
 } from "@/components/demos/aspect-ratio-demo"
 import { 
+  AttachmentDemo
+} from "@/components/demos/attachment-demo"
+import { 
   AutocompleteDemo
 } from "@/components/demos/autocomplete-demo"
 import { 
@@ -76,6 +79,9 @@ import {
   BadgeOverflowDemoCustomOverflow,
   BadgeOverflowDemoInteractiveTags
 } from "@/components/demos/badge-overflow-demo"
+import { 
+  BreadcrumbDemo
+} from "@/components/demos/breadcrumb-demo"
 import { 
   BubbleDemo,
   BubbleDemoVariants,
@@ -154,9 +160,16 @@ import {
   ContextMenuDemoComplexMenu
 } from "@/components/demos/context-menu-demo"
 import { 
+  DatePickerDemo
+} from "@/components/demos/date-picker-demo"
+import { 
   DialogDemo,
   DialogDemoCustomContent
 } from "@/components/demos/dialog-demo"
+import { 
+  DirectionDemo,
+  DirectionDemoRtl
+} from "@/components/demos/direction-demo"
 import { 
   DrawerDemo
 } from "@/components/demos/drawer-demo"
@@ -178,6 +191,9 @@ import {
   EmptyDemo,
   EmptyDemoWithActions
 } from "@/components/demos/empty-demo"
+import { 
+  FieldDemo
+} from "@/components/demos/field-demo"
 import { 
   FileUploadDemo,
   FileUploadDemoWithValidation,
@@ -218,6 +234,12 @@ import {
   InputGroupDemoBlockStart,
   InputGroupDemoTextareaWithFooter
 } from "@/components/demos/input-group-demo"
+import { 
+  InputOTPDemo
+} from "@/components/demos/input-otp-demo"
+import { 
+  ItemDemo
+} from "@/components/demos/item-demo"
 import { 
   KbdDemo,
   KbdDemoSingleKey,
@@ -266,6 +288,9 @@ import {
   MessageScrollerDemoAnchoredTurns
 } from "@/components/demos/message-scroller-demo"
 import { 
+  NativeSelectDemo
+} from "@/components/demos/native-select-demo"
+import { 
   NavigationMenuDemoDefault,
   NavigationMenuDemo
 } from "@/components/demos/navigation-menu-demo"
@@ -294,6 +319,10 @@ import {
   ProgressDemoSimulated
 } from "@/components/demos/progress-demo"
 import { 
+  QuestionnaireDemo,
+  QuestionnaireDemoShell
+} from "@/components/demos/questionnaire-demo"
+import { 
   RadioGroupDemo,
   RadioGroupDemoWithDefaultValue,
   RadioGroupDemoDisabled,
@@ -302,6 +331,10 @@ import {
   RadioGroupDemoNotificationPreferences,
   RadioGroupDemoHorizontal
 } from "@/components/demos/radio-group-demo"
+import { 
+  ResizableDemo,
+  ResizableDemoVertical
+} from "@/components/demos/resizable-demo"
 import { 
   ResponsiveDialogDemo,
   ResponsiveDialogDemoConfirmation,
@@ -383,6 +416,9 @@ import {
   SortableDemoMixedOrientation,
   SortableDemoWithOnMove
 } from "@/components/demos/sortable-demo"
+import { 
+  SpinnerDemo
+} from "@/components/demos/spinner-demo"
 import { 
   StatDemo,
   StatDemoIndicatorVariants,
@@ -514,6 +550,9 @@ export const Registry = {
   "aspect-ratio-demo-aspect-ratio-demo": {
     component: AspectRatioDemo,
   },
+  "attachment-demo": {
+    component: AttachmentDemo,
+  },
   "autocomplete-demo": {
     component: AutocompleteDemo,
   },
@@ -576,6 +615,9 @@ export const Registry = {
   },
   "badge-overflow-demo-interactive-tags": {
     component: BadgeOverflowDemoInteractiveTags,
+  },
+  "breadcrumb-demo": {
+    component: BreadcrumbDemo,
   },
   "bubble-demo": {
     component: BubbleDemo,
@@ -736,11 +778,20 @@ export const Registry = {
   "context-menu-demo-complex-menu": {
     component: ContextMenuDemoComplexMenu,
   },
+  "date-picker-demo": {
+    component: DatePickerDemo,
+  },
   "dialog-demo": {
     component: DialogDemo,
   },
   "dialog-demo-custom-content": {
     component: DialogDemoCustomContent,
+  },
+  "direction-demo": {
+    component: DirectionDemo,
+  },
+  "direction-demo-rtl": {
+    component: DirectionDemoRtl,
   },
   "drawer-demo": {
     component: DrawerDemo,
@@ -780,6 +831,9 @@ export const Registry = {
   },
   "empty-demo-with-actions": {
     component: EmptyDemoWithActions,
+  },
+  "field-demo": {
+    component: FieldDemo,
   },
   "file-upload-demo": {
     component: FileUploadDemo,
@@ -864,6 +918,12 @@ export const Registry = {
   },
   "input-group-demo-textarea-with-footer": {
     component: InputGroupDemoTextareaWithFooter,
+  },
+  "input-otp-demo": {
+    component: InputOTPDemo,
+  },
+  "item-demo": {
+    component: ItemDemo,
   },
   "kbd-demo": {
     component: KbdDemo,
@@ -958,6 +1018,9 @@ export const Registry = {
   "message-scroller-demo-anchored-turns": {
     component: MessageScrollerDemoAnchoredTurns,
   },
+  "native-select-demo": {
+    component: NativeSelectDemo,
+  },
   "navigation-menu-demo": {
     component: NavigationMenuDemoDefault,
   },
@@ -1012,6 +1075,12 @@ export const Registry = {
   "progress-demo-simulated": {
     component: ProgressDemoSimulated,
   },
+  "questionnaire-demo": {
+    component: QuestionnaireDemo,
+  },
+  "questionnaire-demo-shell": {
+    component: QuestionnaireDemoShell,
+  },
   "radio-group-demo": {
     component: RadioGroupDemo,
   },
@@ -1032,6 +1101,12 @@ export const Registry = {
   },
   "radio-group-demo-horizontal": {
     component: RadioGroupDemoHorizontal,
+  },
+  "resizable-demo": {
+    component: ResizableDemo,
+  },
+  "resizable-demo-vertical": {
+    component: ResizableDemoVertical,
   },
   "responsive-dialog-demo": {
     component: ResponsiveDialogDemo,
@@ -1191,6 +1266,9 @@ export const Registry = {
   },
   "sortable-demo-with-on-move": {
     component: SortableDemoWithOnMove,
+  },
+  "spinner-demo": {
+    component: SpinnerDemo,
   },
   "stat-demo": {
     component: StatDemo,

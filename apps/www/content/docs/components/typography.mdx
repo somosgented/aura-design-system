@@ -1,0 +1,46 @@
+---
+title: Typography
+description: The fluid type scale as CSS classes. Aura does not ship a Typography component.
+---
+
+Aura sets type in CSS. Headings and paragraphs use `clamp()` from custom properties on the element. A Typography component would only repeat those classes, so this page is the specimen.
+
+The full rules, the 17px form floor, and the font stacks are on [Typography](/docs/foundations/typography).
+
+## Scale
+
+| Class | Also on | Role |
+| --- | --- | --- |
+| `.h1` | `h1` | Display |
+| `.h2` | `h2` | Page title |
+| `.h3` | `h3` | Section |
+| `.h4` | `h4`, `blockquote` | Subsection |
+| `.h5` | `h5` | Minor heading |
+| `.h6` | `h6` | Label heading |
+| `.p` | `p` | Body |
+
+`text-sm` and `text-xs` are the only Tailwind sizes for small UI text. They stay off `input`, `textarea`, and `select`.
+
+## Specimen
+
+<h1>Heading one</h1>
+
+<h2>Heading two</h2>
+
+<h3>Heading three</h3>
+
+<h4>Heading four</h4>
+
+<h5>Heading five</h5>
+
+<h6>Heading six</h6>
+
+<p>Body copy uses the paragraph clamp. The root font size is 17px, so 1rem already meets the mobile floor.</p>
+
+<p className="h4">A non-heading can take <code>.h4</code> when the outline should stay flat and the size should match a fourth-level heading.</p>
+
+<blockquote>Editorial emphasis uses the same fluid size as h4.</blockquote>
+
+<p className="text-sm">Small utility text uses text-sm.</p>
+
+<p className="text-xs">Micro labels use text-xs.</p>

@@ -704,6 +704,26 @@
       ]
     },
     {
+      "name": "attachment",
+      "type": "registry:ui",
+      "title": "Attachment",
+      "description": "The Attachment component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Attachment.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-icons"
+      ],
+      "registryDependencies": [
+        "@aura/button",
+        "@aura/class-names",
+        "@aura/spinner"
+      ]
+    },
+    {
       "name": "autocomplete",
       "type": "registry:ui",
       "title": "Autocomplete",
@@ -800,6 +820,25 @@
       ]
     },
     {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "title": "Breadcrumb",
+      "description": "The Breadcrumb component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Breadcrumb.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-icons",
+        "@radix-ui/react-slot"
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "bubble",
       "type": "registry:ui",
       "title": "Bubble",
@@ -834,7 +873,8 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
-        "@aura/class-names"
+        "@aura/class-names",
+        "@aura/spinner"
       ]
     },
     {
@@ -1064,6 +1104,27 @@
       ]
     },
     {
+      "name": "date-picker",
+      "type": "registry:ui",
+      "title": "DatePicker",
+      "description": "The DatePicker component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/DatePicker.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-icons"
+      ],
+      "registryDependencies": [
+        "@aura/button",
+        "@aura/calendar",
+        "@aura/class-names",
+        "@aura/popover"
+      ]
+    },
+    {
       "name": "dialog",
       "type": "registry:ui",
       "title": "Dialog",
@@ -1091,6 +1152,21 @@
       "registryDependencies": [
         "@aura/button",
         "@aura/class-names"
+      ]
+    },
+    {
+      "name": "direction",
+      "type": "registry:ui",
+      "title": "Direction",
+      "description": "The Direction component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Direction.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "radix-ui"
       ]
     },
     {
@@ -1182,6 +1258,25 @@
       ]
     },
     {
+      "name": "field",
+      "type": "registry:ui",
+      "title": "Field",
+      "description": "The Field component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Field.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "@aura/class-names",
+        "@aura/separator"
+      ]
+    },
+    {
       "name": "file-upload",
       "type": "registry:ui",
       "title": "FileUpload",
@@ -1233,6 +1328,7 @@
         "@aura/checkbox",
         "@aura/class-names",
         "@aura/radio-group",
+        "@aura/spinner",
         "@aura/switch",
         "@aura/use-dynamic-form"
       ]
@@ -1314,6 +1410,45 @@
         "@aura/class-names",
         "@aura/input",
         "@aura/textarea"
+      ]
+    },
+    {
+      "name": "input-otp",
+      "type": "registry:ui",
+      "title": "InputOTP",
+      "description": "The InputOTP component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/InputOTP.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-icons"
+      ],
+      "registryDependencies": [
+        "@aura/class-names",
+        "@aura/segmented-input"
+      ]
+    },
+    {
+      "name": "item",
+      "type": "registry:ui",
+      "title": "Item",
+      "description": "The Item component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Item.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-slot",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "@aura/class-names",
+        "@aura/separator"
       ]
     },
     {
@@ -1477,6 +1612,24 @@
       ]
     },
     {
+      "name": "native-select",
+      "type": "registry:ui",
+      "title": "NativeSelect",
+      "description": "The NativeSelect component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/NativeSelect.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-icons"
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "navigation-menu",
       "type": "registry:ui",
       "title": "NavigationMenu",
@@ -1592,6 +1745,23 @@
       ]
     },
     {
+      "name": "questionnaire",
+      "type": "registry:ui",
+      "title": "Questionnaire",
+      "description": "The Questionnaire component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Questionnaire.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/button",
+        "@aura/class-names",
+        "@aura/stepper"
+      ]
+    },
+    {
       "name": "radio-group",
       "type": "registry:ui",
       "title": "RadioGroup",
@@ -1604,6 +1774,25 @@
       ],
       "dependencies": [
         "radix-ui"
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
+      "name": "resizable",
+      "type": "registry:ui",
+      "title": "Resizable",
+      "description": "The Resizable component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Resizable.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-icons",
+        "react-resizable-panels@2.1.9"
       ],
       "registryDependencies": [
         "@aura/class-names"
@@ -1932,6 +2121,24 @@
         "@dnd-kit/sortable",
         "@dnd-kit/utilities",
         "@radix-ui/react-slot"
+      ]
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "title": "Spinner",
+      "description": "The Spinner component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Spinner.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-icons"
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
       ]
     },
     {

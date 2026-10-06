@@ -1,0 +1,3 @@
+header:
+  description: A native select with the same field chrome as other inputs.
+extends: _templates/content.yml

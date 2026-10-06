@@ -1,0 +1,3 @@
+header:
+  description: A single date chosen from Calendar inside a Popover.
+extends: _templates/content.yml
