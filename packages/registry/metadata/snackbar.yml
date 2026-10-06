@@ -1,0 +1,3 @@
+header:
+  description: A short message at the bottom of the screen with one optional action.
+extends: _templates/content.yml
