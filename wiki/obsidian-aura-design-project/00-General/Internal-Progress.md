@@ -4,9 +4,9 @@ date: 2026-10-06
 tags: [dev-log, logic]
 ---
 ## Summary
-Docs now include a Foundations section (`/docs/foundations`) with one page per designsystems.surf Apple category, written from Aura tokens and rules. Stubs: data visualization, Figma, international design, voice and tone. Depth and elevation is an extra page from `DESIGN.md` §6.
+Area charts are in the registry as `@aura/chart` and `@aura/area-chart` (Recharts 2.15.4). Series tokens `--chart-1`–`--chart-5` alias accent and status contrast. Docs previews live at `/docs/area-chart`. The data-visualization foundation page now records those tokens.
 
 ## Context
-- Related: [[Foundations docs]] [[Design md]] [[Site and docs app]] [[gdp-ts proofs]]
-- Implementation Path: `apps/www/content/docs/foundations/`, `apps/www/content/docs/meta.json`
-- Next: fill a stub only after the repo gains a real rule for that category. Confirm the docs build prerenders `/docs/foundations` and each child route.
+- Related: [[Area charts]] [[Foundations docs]] [[Design md]]
+- Implementation Path: `packages/registry/registry/default/components/ui/AreaChart.tsx`, `apps/www/content/docs/components/area-chart.mdx`
+- Next: other chart families (bar, line, pie, radar, radial) only when we add them the same way.

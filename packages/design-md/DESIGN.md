@@ -179,6 +179,10 @@ Beyond the public docs “All Components” list, the registry also ships **data
 - **Tables / data-grid:** Prefer **`text-sm`** for cell body copy; **uppercase, tracked** headers (§3) for scan lines. Specs often cite **~16px** horizontal row padding; Aura allows **half-step** spacing only (**`1`**, **`1.5`**, **`2`**, … × **13px**). Use **`px-1`** (13px) for a tighter scan line or **`px-1.5`** (19.5px) for a roomier registry row—there is **no** authorized **`1.25`** step on this scale.
 - **Serials, IDs, codes:** Use **`ui-monospace`** in cells and dense forms for a technical, registry-appropriate voice.
 
+### Charts
+
+Area charts (`@aura/chart`, `@aura/area-chart`) draw series with Recharts and Aura tokens. `--chart-1` is `--accent-9` / `--primary`. `--chart-2` through `--chart-5` are the info, success, warning, and danger **contrast** colors, so `.dark` and `prefers-color-scheme: dark` keep strokes visible. Grid lines are gray step 6. Tick labels are gray step 11 at 13px. The area draw is **250ms** `ease-out` and turns off when `prefers-reduced-motion: reduce`. Focus on the plot uses accent step 8.
+
 ---
 
 ## 5. Layout Principles
@@ -321,7 +325,7 @@ pnpm dlx shadcn@latest add @aura/<registry-name>
 
 **Core UI (docs “All Components”):** accordion, alert, alert-dialog, aspect-ratio, autocomplete, avatar, badge, button, button-group, card, carousel, checkbox, collapsible, combobox, command, context-menu, dialog, drawer, dropdown-menu, empty, form, grid, hover-card, input, kbd, label, menubar, navigation-menu, popover, progress, radio-group, scroll-area, section, select, separator, sheet, sidebar, signature-pad, skeleton, slider, sortable, stepper, switch, tabs, toggle, toggle-group, tooltip.
 
-**Additional registry items:** textarea, calendar, data-grid, editor, editor-00, combobox-single, combobox-multiple, alert-status, theme-color-switcher, form-field-combobox, form-field-editor, form-field-select, form-field-signature-pad, form-field-sortable-list.
+**Additional registry items:** textarea, calendar, data-grid, chart, area-chart, editor, editor-00, combobox-single, combobox-multiple, alert-status, theme-color-switcher, form-field-combobox, form-field-editor, form-field-select, form-field-signature-pad, form-field-sortable-list.
 
 **Utilities / rules:** class-names, colors, web-validation, use-dynamic-form, css-main, rules (bundle), rule-principles, rule-fundations-colors, rule-fundations-typography, rule-fundations-layout-spacing, rule-fundation-icons, rule-fundation-animations, rule-components-forms, and other hooks listed in **`packages/registry/registry.json`**.
 

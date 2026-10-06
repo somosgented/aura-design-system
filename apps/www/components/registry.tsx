@@ -29,6 +29,19 @@ import {
   AngleSliderDemoWithForm
 } from "@/components/demos/angle-slider-demo"
 import { 
+  AreaChartDemo,
+  AreaChartDemoNatural,
+  AreaChartDemoLinear,
+  AreaChartDemoStep,
+  AreaChartDemoStacked,
+  AreaChartDemoExpanded,
+  AreaChartDemoLegend,
+  AreaChartDemoIcons,
+  AreaChartDemoGradient,
+  AreaChartDemoAxes,
+  AreaChartDemoInteractive
+} from "@/components/demos/area-chart-demo"
+import { 
   AspectRatioDemoDefault,
   AspectRatioDemo
 } from "@/components/demos/aspect-ratio-demo"
@@ -53,7 +66,7 @@ import {
   AvatarGroupDemoCustomOverflow,
   AvatarGroupDemoWithIcons
 } from "@/components/demos/avatar-group-demo"
-import {
+import { 
   BadgeDemo
 } from "@/components/demos/badge-demo"
 import { 
@@ -104,6 +117,9 @@ import {
 import { 
   CarouselDemo
 } from "@/components/demos/carousel-demo"
+import { 
+  ChartDemo
+} from "@/components/demos/chart-demo"
 import { 
   CheckboxDemo,
   CheckboxDemoChecked,
@@ -191,7 +207,7 @@ import {
 import { 
   HoverCardDemo
 } from "@/components/demos/hover-card-demo"
-import {
+import { 
   InputDemo
 } from "@/components/demos/input-demo"
 import { 
@@ -211,7 +227,7 @@ import {
   KbdDemoComplexShortcuts,
   KbdDemoGroup
 } from "@/components/demos/kbd-demo"
-import {
+import { 
   LabelDemo
 } from "@/components/demos/label-demo"
 import { 
@@ -384,13 +400,13 @@ import {
   SwitchDemoWithDescription,
   SwitchGroupDemo
 } from "@/components/demos/switch-demo"
-import {
+import { 
   TableDemo
 } from "@/components/demos/table-demo"
 import { 
   TabsDemo
 } from "@/components/demos/tabs-demo"
-import {
+import { 
   TextareaDemo
 } from "@/components/demos/textarea-demo"
 import { 
@@ -403,7 +419,7 @@ import {
 import { 
   TooltipDemo
 } from "@/components/demos/tooltip-demo"
-import {
+import { 
   VisuallyHiddenInputDemo
 } from "@/components/demos/visually-hidden-input-demo"
 
@@ -458,6 +474,39 @@ export const Registry = {
   },
   "angle-slider-demo-with-form": {
     component: AngleSliderDemoWithForm,
+  },
+  "area-chart-demo": {
+    component: AreaChartDemo,
+  },
+  "area-chart-demo-natural": {
+    component: AreaChartDemoNatural,
+  },
+  "area-chart-demo-linear": {
+    component: AreaChartDemoLinear,
+  },
+  "area-chart-demo-step": {
+    component: AreaChartDemoStep,
+  },
+  "area-chart-demo-stacked": {
+    component: AreaChartDemoStacked,
+  },
+  "area-chart-demo-expanded": {
+    component: AreaChartDemoExpanded,
+  },
+  "area-chart-demo-legend": {
+    component: AreaChartDemoLegend,
+  },
+  "area-chart-demo-icons": {
+    component: AreaChartDemoIcons,
+  },
+  "area-chart-demo-gradient": {
+    component: AreaChartDemoGradient,
+  },
+  "area-chart-demo-axes": {
+    component: AreaChartDemoAxes,
+  },
+  "area-chart-demo-interactive": {
+    component: AreaChartDemoInteractive,
   },
   "aspect-ratio-demo": {
     component: AspectRatioDemoDefault,
@@ -614,6 +663,9 @@ export const Registry = {
   },
   "carousel-demo": {
     component: CarouselDemo,
+  },
+  "chart-demo": {
+    component: ChartDemo,
   },
   "checkbox-demo": {
     component: CheckboxDemo,

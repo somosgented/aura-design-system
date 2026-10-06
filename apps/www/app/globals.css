@@ -25,6 +25,11 @@
   --color-success: var(--success);
   --color-info-contrast: var(--info-contrast);
   --color-info: var(--info);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
   --secundary-foreground: var(--secundary-foreground);
   --secundary: var(--secundary);
   --primary-foreground: var(--primary-foreground);
@@ -190,6 +195,12 @@
   --primary-foreground: var(--accent-contrast);
   --secundary: var(--accent-8);
   --secundary-foreground: var(--accent-contrast);
+
+  --chart-1: var(--accent-9);
+  --chart-2: var(--info-contrast);
+  --chart-3: var(--success-contrast);
+  --chart-4: var(--warning-contrast);
+  --chart-5: var(--danger-contrast);
   --padding-left: calc(var(--spacing) * 1);
   --padding-right: calc(var(--spacing) * 1);
 }
@@ -321,6 +332,7 @@ select {
   @import "../styles/dialog.css" ;
   @import "../../../packages/registry/registry/default/styles/responsive-dropdown-menu.css";
   @import "../../../packages/registry/registry/default/styles/selection-toolbar.css";
+  @import "../../../packages/registry/registry/default/styles/chart.css";
 
   .fd-step:before {
     width: 39px!important;
