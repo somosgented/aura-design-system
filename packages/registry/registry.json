@@ -668,6 +668,24 @@
       ]
     },
     {
+      "name": "app-bar",
+      "type": "registry:ui",
+      "title": "AppBar",
+      "description": "The AppBar component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/AppBar.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "area-chart",
       "type": "registry:ui",
       "title": "AreaChart",
@@ -1293,6 +1311,21 @@
       ]
     },
     {
+      "name": "expressive-carousel",
+      "type": "registry:ui",
+      "title": "ExpressiveCarousel",
+      "description": "The ExpressiveCarousel component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/ExpressiveCarousel.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "fab",
       "type": "registry:ui",
       "title": "Fab",
@@ -1733,6 +1766,21 @@
       ]
     },
     {
+      "name": "navigation-bar",
+      "type": "registry:ui",
+      "title": "NavigationBar",
+      "description": "The NavigationBar component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/NavigationBar.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "navigation-menu",
       "type": "registry:ui",
       "title": "NavigationMenu",
@@ -1755,6 +1803,21 @@
       },
       "dependencies": [
         "radix-ui"
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
+      "name": "navigation-rail",
+      "type": "registry:ui",
+      "title": "NavigationRail",
+      "description": "The NavigationRail component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/NavigationRail.tsx",
+          "type": "registry:ui"
+        }
       ],
       "registryDependencies": [
         "@aura/class-names"
@@ -2146,6 +2209,21 @@
       ],
       "registryDependencies": [
         "@aura/button",
+        "@aura/class-names"
+      ]
+    },
+    {
+      "name": "side-sheet",
+      "type": "registry:ui",
+      "title": "SideSheet",
+      "description": "The SideSheet component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/SideSheet.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
         "@aura/class-names"
       ]
     },
