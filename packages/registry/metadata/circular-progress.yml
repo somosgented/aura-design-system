@@ -1,0 +1,3 @@
+header:
+  description: Determinate progress drawn as a circle.
+extends: _templates/content.yml

@@ -1,0 +1,3 @@
+header:
+  description: A clock dial paired with a typed time field.
+extends: _templates/content.yml
