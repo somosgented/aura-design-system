@@ -1,0 +1,3 @@
+header:
+  description: A two-column layout that keeps items intact.
+extends: _templates/content.yml

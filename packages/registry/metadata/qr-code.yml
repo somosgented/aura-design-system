@@ -1,0 +1,3 @@
+header:
+  description: A square code for a short string, up to 17 bytes.
+extends: _templates/content.yml

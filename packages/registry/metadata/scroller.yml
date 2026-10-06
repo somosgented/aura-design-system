@@ -1,0 +1,3 @@
+header:
+  description: A horizontal strip with back and forward controls.
+extends: _templates/content.yml
