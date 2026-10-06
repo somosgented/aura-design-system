@@ -1,3 +1,4 @@
 header:
   description: Hides text visually while keeping it available to assistive tech.
+group: utils
 extends: _templates/content.yml

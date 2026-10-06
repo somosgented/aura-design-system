@@ -24,6 +24,24 @@ const config: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  async redirects() {
+    const utils = [
+      "client-only",
+      "direction",
+      "hitbox",
+      "pending",
+      "portal",
+      "presence",
+      "visually-hidden",
+      "visually-hidden-input",
+    ];
+
+    return utils.map((slug) => ({
+      source: `/docs/components/${slug}`,
+      destination: `/docs/utils/${slug}`,
+      permanent: true,
+    }));
+  },
   async rewrites() {
     return [
       {

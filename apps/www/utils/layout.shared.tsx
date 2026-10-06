@@ -31,7 +31,11 @@ export function baseOptions(): BaseLayoutProps {
         url: "/docs/components/accordion",
         active: "nested-url",
       },
-     
+      {
+        text: "Utils",
+        url: "/docs/utils",
+        active: "nested-url",
+      },
       {
         text: "Forms",
         url: "/docs/forms",

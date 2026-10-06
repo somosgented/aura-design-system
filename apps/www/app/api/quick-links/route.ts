@@ -14,7 +14,7 @@ export async function GET() {
         const slugs = page.slugs;
         return (
           slugs.length === 1 || // Main pages like index, installation, etc.
-          (slugs.length === 2 && slugs[0] === 'components') // Component pages
+          (slugs.length === 2 && (slugs[0] === "components" || slugs[0] === "utils"))
         );
       })
       .map((page) => ({
