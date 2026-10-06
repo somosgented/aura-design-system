@@ -1,0 +1,3 @@
+header:
+  description: Switches between two views in place.
+extends: _templates/content.yml

@@ -1,0 +1,3 @@
+header:
+  description: Expands the hit area around a control without changing its look.
+extends: _templates/content.yml

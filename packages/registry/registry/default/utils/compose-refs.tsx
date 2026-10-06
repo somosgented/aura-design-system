@@ -63,4 +63,21 @@ function useComposedRefs<T>(...refs: PossibleRef<T>[]): React.RefCallback<T> {
   return React.useCallback(composeRefs(...refs), refs);
 }
  
-export { composeRefs, useComposedRefs };
+/**
+ * Runs both event handlers. The second handler is skipped when the first
+ * already prevented the default, unless checkForDefaultPrevented is false.
+ */
+function composeEventHandlers<E extends { defaultPrevented: boolean }>(
+  originalEventHandler?: (event: E) => void,
+  ourEventHandler?: (event: E) => void,
+  { checkForDefaultPrevented = true } = {},
+) {
+  return function handleEvent(event: E) {
+    originalEventHandler?.(event);
+    if (checkForDefaultPrevented === false || !event.defaultPrevented) {
+      return ourEventHandler?.(event);
+    }
+  };
+}
+
+export { composeRefs, useComposedRefs, composeEventHandlers };

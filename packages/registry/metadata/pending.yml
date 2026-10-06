@@ -1,0 +1,3 @@
+header:
+  description: Marks content as busy and shows a spinner while work is in progress.
+extends: _templates/content.yml

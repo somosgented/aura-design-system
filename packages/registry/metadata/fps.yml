@@ -1,0 +1,3 @@
+header:
+  description: A live frames-per-second meter.
+extends: _templates/content.yml

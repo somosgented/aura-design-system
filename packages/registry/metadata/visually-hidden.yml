@@ -1,0 +1,3 @@
+header:
+  description: Hides text visually while keeping it available to assistive tech.
+extends: _templates/content.yml

@@ -1,0 +1,3 @@
+header:
+  description: Keeps content mounted while it fades out.
+extends: _templates/content.yml

@@ -1,0 +1,3 @@
+header:
+  description: Renders children into another element.
+extends: _templates/content.yml
