@@ -1,0 +1,3 @@
+header:
+  description: A floating button that opens a stack of actions. Same parts as the floating action menu.
+extends: _templates/content.yml

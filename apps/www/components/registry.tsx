@@ -141,6 +141,11 @@ import {
   CheckboxDemoIndeterminate
 } from "@/components/demos/checkbox-demo"
 import { 
+  ChipDemo,
+  ChipDemoFilter,
+  ChipDemoInput
+} from "@/components/demos/chip-demo"
+import { 
   CollapsibleDemo
 } from "@/components/demos/collapsible-demo"
 import { 
@@ -199,6 +204,13 @@ import {
 import { 
   ExpressiveCarouselDemo
 } from "@/components/demos/expressive-carousel-demo"
+import { 
+  FabDemo,
+  FabDemoExtended
+} from "@/components/demos/fab-demo"
+import { 
+  FabMenuDemo
+} from "@/components/demos/fab-menu-demo"
 import { 
   FieldDemo
 } from "@/components/demos/field-demo"
@@ -421,6 +433,9 @@ import {
   SliderDemoWithSteps
 } from "@/components/demos/slider-demo"
 import { 
+  SnackbarDemo
+} from "@/components/demos/snackbar-demo"
+import { 
   SortableDemo,
   SortableDemoHorizontal,
   SortableDemoWithHandle,
@@ -435,8 +450,14 @@ import {
   SortableDemoWithOnMove
 } from "@/components/demos/sortable-demo"
 import { 
+  SpeedDialDemo
+} from "@/components/demos/speed-dial-demo"
+import { 
   SpinnerDemo
 } from "@/components/demos/spinner-demo"
+import { 
+  SplitButtonDemo
+} from "@/components/demos/split-button-demo"
 import { 
   StatDemo,
   StatDemoIndicatorVariants,
@@ -470,6 +491,9 @@ import {
 import { 
   ToggleGroupDemo
 } from "@/components/demos/toggle-group-demo"
+import { 
+  ToolbarDemo
+} from "@/components/demos/toolbar-demo"
 import { 
   TooltipDemo
 } from "@/components/demos/tooltip-demo"
@@ -757,6 +781,15 @@ export const Registry = {
   "checkbox-demo-indeterminate": {
     component: CheckboxDemoIndeterminate,
   },
+  "chip-demo": {
+    component: ChipDemo,
+  },
+  "chip-demo-filter": {
+    component: ChipDemoFilter,
+  },
+  "chip-demo-input": {
+    component: ChipDemoInput,
+  },
   "collapsible-demo": {
     component: CollapsibleDemo,
   },
@@ -861,6 +894,15 @@ export const Registry = {
   },
   "expressive-carousel-demo": {
     component: ExpressiveCarouselDemo,
+  },
+  "fab-demo": {
+    component: FabDemo,
+  },
+  "fab-demo-extended": {
+    component: FabDemoExtended,
+  },
+  "fab-menu-demo": {
+    component: FabMenuDemo,
   },
   "field-demo": {
     component: FieldDemo,
@@ -1273,6 +1315,9 @@ export const Registry = {
   "slider-demo-with-steps": {
     component: SliderDemoWithSteps,
   },
+  "snackbar-demo": {
+    component: SnackbarDemo,
+  },
   "sortable-demo": {
     component: SortableDemo,
   },
@@ -1309,8 +1354,14 @@ export const Registry = {
   "sortable-demo-with-on-move": {
     component: SortableDemoWithOnMove,
   },
+  "speed-dial-demo": {
+    component: SpeedDialDemo,
+  },
   "spinner-demo": {
     component: SpinnerDemo,
+  },
+  "split-button-demo": {
+    component: SplitButtonDemo,
   },
   "stat-demo": {
     component: StatDemo,
@@ -1362,6 +1413,9 @@ export const Registry = {
   },
   "toggle-group-demo": {
     component: ToggleGroupDemo,
+  },
+  "toolbar-demo": {
+    component: ToolbarDemo,
   },
   "tooltip-demo": {
     component: TooltipDemo,
