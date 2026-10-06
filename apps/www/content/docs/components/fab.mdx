@@ -1,0 +1,146 @@
+---
+title: Fab
+description: A floating button for a screen's main action, with an optional label.
+---
+
+import { ComponentPreview } from "@/components/ComponentPreview"
+import { ComponentSource } from "@/components/ComponentSource"
+import { Steps, Step } from "fumadocs-ui/components/steps"
+
+## Preview
+
+<ComponentPreview name="fab-demo" description="A floating button for a screen's main action, with an optional label.">
+
+```tsx
+import { PlusIcon } from "@radix-ui/react-icons";
+import { Fab } from "@/components/ui/Fab";
+
+export function FabDemo() {
+  return (
+    <div className="relative h-16 w-full rounded-sm border border-gray-6 bg-gray-2">
+      <Fab position="absolute" aria-label="Create">
+        <PlusIcon className="icon" />
+      </Fab>
+    </div>
+  );
+}
+```
+
+</ComponentPreview>
+
+## Installation
+Make sure that `namespace` is set in your component.json file. Namespace docs: [Learn more about namespaces](/docs/namespace)
+```bash
+pnpm dlx shadcn@latest add @aura/fab
+```
+
+
+
+### Manual
+
+<Steps>
+  <Step>
+    Install the following dependencies:
+
+    ```bash
+pnpm install class-variance-authority
+    ```
+  </Step>
+  <Step>
+    Copy and paste the class names utility into your `utils/class-names.ts` file.
+
+```ts
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+
+```
+  </Step>
+  <Step>
+    Copy and paste the Fab component into your `components/ui/Fab.tsx` file.
+
+```tsx
+"use client";
+
+import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/utils/class-names";
+
+const fabVariants = cva(
+  "inline-flex items-center justify-center gap-0.5 rounded-full bg-accent-9 text-accent-contrast shadow-md transition hover:bg-accent-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8 motion-reduce:transition-none",
+  {
+    variants: {
+      size: {
+        default: "size-4",
+        sm: "size-3",
+        lg: "h-5 min-w-5 px-1.5",
+      },
+      position: {
+        fixed: "fixed end-2 bottom-2 z-40",
+        absolute: "absolute end-2 bottom-2 z-10",
+        inline: "relative",
+      },
+    },
+    defaultVariants: {
+      size: "default",
+      position: "fixed",
+    },
+  },
+);
+
+function Fab({
+  className,
+  size,
+  position,
+  label,
+  children,
+  ...props
+}: React.ComponentProps<"button"> &
+  VariantProps<typeof fabVariants> & { label?: string }) {
+  const extended = Boolean(label);
+  return (
+    <button
+      type="button"
+      data-slot="fab"
+      data-extended={extended ? "" : undefined}
+      className={cn(
+        fabVariants({
+          size: extended ? "lg" : size,
+          position,
+        }),
+        className,
+      )}
+      {...props}
+    >
+      {children}
+      {label ? <span>{label}</span> : null}
+    </button>
+  );
+}
+
+export { Fab, fabVariants };
+
+```
+  </Step>
+</Steps>
+
+## Usage
+
+### Extended
+
+```tsx
+export const Extended = () => {
+  return (
+    <div className="relative h-16 w-full rounded-sm border border-gray-6 bg-gray-2">
+      <Fab position="absolute" label="Create">
+        <PlusIcon className="icon" />
+      </Fab>
+    </div>
+  );
+};
+```
+
