@@ -1,0 +1,109 @@
+---
+title: Marquee
+description: A looping row of items that pauses for reduced motion.
+---
+
+import { ComponentPreview } from "@/components/ComponentPreview"
+import { ComponentSource } from "@/components/ComponentSource"
+import { Steps, Step } from "fumadocs-ui/components/steps"
+
+## Preview
+
+<ComponentPreview name="marquee-demo" description="A looping row of items that pauses for reduced motion.">
+
+```tsx
+import { Marquee } from "@/components/ui/Marquee";
+
+export function MarqueeDemo() {
+  return (
+  <Marquee>
+    <span className="rounded-sm bg-accent-3 px-1 py-0.5">Color</span>
+    <span className="rounded-sm bg-gray-3 px-1 py-0.5">Type</span>
+    <span className="rounded-sm bg-accent-3 px-1 py-0.5">Space</span>
+    <span className="rounded-sm bg-gray-3 px-1 py-0.5">Motion</span>
+  </Marquee>
+)
+}
+```
+
+</ComponentPreview>
+
+## Installation
+Make sure that `namespace` is set in your component.json file. Namespace docs: [Learn more about namespaces](/docs/namespace)
+```bash
+pnpm dlx shadcn@latest add @aura/marquee
+```
+
+
+
+### Manual
+
+<Steps>
+  <Step>
+    Copy and paste the class names utility into your `utils/class-names.ts` file.
+
+```ts
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+
+```
+  </Step>
+  <Step>
+    Copy and paste the Marquee component into your `components/ui/Marquee.tsx` file.
+
+```tsx
+"use client";
+
+import * as React from "react";
+import { cn } from "@/utils/class-names";
+
+function Marquee({
+  className,
+  children,
+  label = "Marquee",
+}: {
+  className?: string;
+  children: React.ReactNode;
+  label?: string;
+}) {
+  const reduced = useReduced();
+  return (
+    <div
+      data-slot="marquee"
+      aria-label={label}
+      className={cn("overflow-hidden", className)}
+    >
+      <div data-animate={reduced ? undefined : "marquee"} className="flex w-max gap-2">
+        <div className="flex gap-2">{children}</div>
+        <div className="flex gap-2" aria-hidden>
+          {children}
+        </div>
+      </div>
+      <style>{`@keyframes aura-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } } [data-slot="marquee"] [data-animate="marquee"] { animation: aura-marquee 12s linear infinite; } @media (prefers-reduced-motion: reduce) { [data-slot="marquee"] [data-animate="marquee"] { animation: none; } }`}</style>
+    </div>
+  );
+}
+
+function useReduced() {
+  const [reduced, setReduced] = React.useState(false);
+  React.useEffect(() => {
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReduced(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+  return reduced;
+}
+
+export { Marquee };
+
+```
+  </Step>
+</Steps>
+

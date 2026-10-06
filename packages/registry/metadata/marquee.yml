@@ -1,0 +1,3 @@
+header:
+  description: A looping row of items that pauses for reduced motion.
+extends: _templates/content.yml

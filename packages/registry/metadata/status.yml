@@ -1,0 +1,3 @@
+header:
+  description: A short status label with a tone dot.
+extends: _templates/content.yml

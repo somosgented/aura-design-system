@@ -1,0 +1,117 @@
+---
+title: Status
+description: A short status label with a tone dot.
+---
+
+import { ComponentPreview } from "@/components/ComponentPreview"
+import { ComponentSource } from "@/components/ComponentSource"
+import { Steps, Step } from "fumadocs-ui/components/steps"
+
+## Preview
+
+<ComponentPreview name="status-demo" description="A short status label with a tone dot.">
+
+```tsx
+import { Status } from "@/components/ui/Status";
+
+export function StatusDemo() {
+  return (
+  <div className="flex flex-col gap-0.5">
+    <Status tone="online">Online</Status>
+    <Status tone="away">Away</Status>
+    <Status tone="busy">Busy</Status>
+    <Status tone="offline">Offline</Status>
+  </div>
+)
+}
+```
+
+</ComponentPreview>
+
+## Installation
+Make sure that `namespace` is set in your component.json file. Namespace docs: [Learn more about namespaces](/docs/namespace)
+```bash
+pnpm dlx shadcn@latest add @aura/status
+```
+
+
+
+### Manual
+
+<Steps>
+  <Step>
+    Install the following dependencies:
+
+    ```bash
+pnpm install class-variance-authority
+    ```
+  </Step>
+  <Step>
+    Copy and paste the class names utility into your `utils/class-names.ts` file.
+
+```ts
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+
+```
+  </Step>
+  <Step>
+    Copy and paste the Status component into your `components/ui/Status.tsx` file.
+
+```tsx
+"use client";
+
+import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/utils/class-names";
+
+const statusVariants = cva("inline-flex items-center gap-0.5", {
+  variants: {
+    tone: {
+      online: "text-gray-12",
+      away: "text-gray-12",
+      busy: "text-gray-12",
+      offline: "text-gray-11",
+    },
+  },
+  defaultVariants: { tone: "online" },
+});
+
+const dot = {
+  online: "bg-accent-9",
+  away: "bg-gray-9",
+  busy: "bg-gray-12",
+  offline: "bg-gray-7",
+} as const;
+
+function Status({
+  className,
+  tone = "online",
+  children,
+  ...props
+}: React.ComponentProps<"span"> & VariantProps<typeof statusVariants>) {
+  const current = tone ?? "online";
+  return (
+    <span
+      data-slot="status"
+      data-tone={current}
+      className={cn(statusVariants({ tone: current }), className)}
+      {...props}
+    >
+      <span aria-hidden className={cn("size-1 rounded-full", dot[current])} />
+      {children}
+    </span>
+  );
+}
+
+export { Status };
+
+```
+  </Step>
+</Steps>
+

@@ -1,0 +1,3 @@
+header:
+  description: A relative time with the absolute date beside it.
+extends: _templates/content.yml

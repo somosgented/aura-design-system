@@ -85,6 +85,9 @@ import {
   BadgeOverflowDemoInteractiveTags
 } from "./badge-overflow-demo"
 import { 
+  BannerDemo
+} from "./banner-demo"
+import { 
   BreadcrumbDemo
 } from "./breadcrumb-demo"
 import { 
@@ -247,6 +250,9 @@ import {
   FormDemoWithEditor
 } from "./form-demo"
 import { 
+  GaugeDemo
+} from "./gauge-demo"
+import { 
   GridDemo
 } from "./grid-demo"
 import { 
@@ -272,6 +278,9 @@ import {
 import { 
   ItemDemo
 } from "./item-demo"
+import { 
+  KanbanDemo
+} from "./kanban-demo"
 import { 
   KbdDemo,
   KbdDemoSingleKey,
@@ -303,12 +312,18 @@ import {
   MarkerDemoAsLink
 } from "./marker-demo"
 import { 
+  MarqueeDemo
+} from "./marquee-demo"
+import { 
   MaskInputDemo,
   MaskInputDemoBuiltInPatterns,
   MaskInputDemoCustomPattern,
   MaskInputDemoValidationModes,
   MaskInputDemoCardInformation
 } from "./mask-input-demo"
+import { 
+  MasonryDemo
+} from "./masonry-demo"
 import { 
   MentionDemo,
   MentionDemoCustomTrigger,
@@ -370,6 +385,9 @@ import {
   ProgressDemoSimulated
 } from "./progress-demo"
 import { 
+  QrCodeDemo
+} from "./qr-code-demo"
+import { 
   QuestionnaireDemo,
   QuestionnaireDemoShell
 } from "./questionnaire-demo"
@@ -386,6 +404,9 @@ import {
   RatingDemo
 } from "./rating-demo"
 import { 
+  RelativeTimeCardDemo
+} from "./relative-time-card-demo"
+import { 
   ResizableDemo,
   ResizableDemoVertical
 } from "./resizable-demo"
@@ -401,6 +422,12 @@ import {
 import { 
   ScrollAreaDemo
 } from "./scroll-area-demo"
+import { 
+  ScrollSpyDemo
+} from "./scroll-spy-demo"
+import { 
+  ScrollerDemo
+} from "./scroller-demo"
 import { 
   SearchDemo
 } from "./search-demo"
@@ -493,11 +520,17 @@ import {
   SplitButtonDemo
 } from "./split-button-demo"
 import { 
+  StackDemo
+} from "./stack-demo"
+import { 
   StatDemo,
   StatDemoIndicatorVariants,
   StatDemoTrends,
   StatDemoWithDescription
 } from "./stat-demo"
+import { 
+  StatusDemo
+} from "./status-demo"
 import { 
   StepperDemo
 } from "./stepper-demo"
@@ -524,6 +557,9 @@ import {
 import { 
   TimePickerDemo
 } from "./time-picker-demo"
+import { 
+  TimelineDemo
+} from "./timeline-demo"
 import { 
   ToggleDemo,
   ToggleIconsDemo
@@ -706,6 +742,9 @@ export const Registry = {
   },
   "badge-overflow-demo-interactive-tags": {
     component: BadgeOverflowDemoInteractiveTags,
+  },
+  "banner-demo": {
+    component: BannerDemo,
   },
   "breadcrumb-demo": {
     component: BreadcrumbDemo,
@@ -1013,6 +1052,9 @@ export const Registry = {
   "form-demo-with-editor": {
     component: FormDemoWithEditor,
   },
+  "gauge-demo": {
+    component: GaugeDemo,
+  },
   "grid-demo": {
     component: GridDemo,
   },
@@ -1048,6 +1090,9 @@ export const Registry = {
   },
   "item-demo": {
     component: ItemDemo,
+  },
+  "kanban-demo": {
+    component: KanbanDemo,
   },
   "kbd-demo": {
     component: KbdDemo,
@@ -1103,6 +1148,9 @@ export const Registry = {
   "marker-demo-as-link": {
     component: MarkerDemoAsLink,
   },
+  "marquee-demo": {
+    component: MarqueeDemo,
+  },
   "mask-input-demo": {
     component: MaskInputDemo,
   },
@@ -1117,6 +1165,9 @@ export const Registry = {
   },
   "mask-input-demo-card-information": {
     component: MaskInputDemoCardInformation,
+  },
+  "masonry-demo": {
+    component: MasonryDemo,
   },
   "mention-demo": {
     component: MentionDemo,
@@ -1220,6 +1271,9 @@ export const Registry = {
   "progress-demo-simulated": {
     component: ProgressDemoSimulated,
   },
+  "qr-code-demo": {
+    component: QrCodeDemo,
+  },
   "questionnaire-demo": {
     component: QuestionnaireDemo,
   },
@@ -1250,6 +1304,9 @@ export const Registry = {
   "rating-demo": {
     component: RatingDemo,
   },
+  "relative-time-card-demo": {
+    component: RelativeTimeCardDemo,
+  },
   "resizable-demo": {
     component: ResizableDemo,
   },
@@ -1273,6 +1330,12 @@ export const Registry = {
   },
   "scroll-area-demo": {
     component: ScrollAreaDemo,
+  },
+  "scroll-spy-demo": {
+    component: ScrollSpyDemo,
+  },
+  "scroller-demo": {
+    component: ScrollerDemo,
   },
   "search-demo": {
     component: SearchDemo,
@@ -1439,6 +1502,9 @@ export const Registry = {
   "split-button-demo": {
     component: SplitButtonDemo,
   },
+  "stack-demo": {
+    component: StackDemo,
+  },
   "stat-demo": {
     component: StatDemo,
   },
@@ -1450,6 +1516,9 @@ export const Registry = {
   },
   "stat-demo-with-description": {
     component: StatDemoWithDescription,
+  },
+  "status-demo": {
+    component: StatusDemo,
   },
   "stepper-demo": {
     component: StepperDemo,
@@ -1486,6 +1555,9 @@ export const Registry = {
   },
   "time-picker-demo": {
     component: TimePickerDemo,
+  },
+  "timeline-demo": {
+    component: TimelineDemo,
   },
   "toggle-demo": {
     component: ToggleDemo,
