@@ -4,9 +4,9 @@ date: 2026-10-06
 tags: [dev-log, logic]
 ---
 ## Summary
-Utility primitives are a separate **Utils** docs section (`/docs/utils`) so they are no longer mixed into the Components sidebar. Metadata `group: utils` drives generate-docs output. Next: verify the docs sidebar after `docs:generate`.
+Fixed InputOTP / SegmentedInput caret overflow: items now opt out of legacy `input:not(.default)` styles and set `py-0 leading-none`. Utils docs section remains separate under `/docs/utils`.
 
 ## Context
-- Related: [[Media-Utilities]] [[Collection-Display]] [[Input-Controls]]
-- Implementation Path: `packages/registry/registry/default/components/ui/`
-- Next: watch docs CI on `canary`; do not reopen cancelled ports.
+- Related: [[Segmented-Input]] [[Media-Utilities]] [[Collection-Display]] [[Input-Controls]]
+- Implementation Path: `packages/registry/registry/default/components/ui/SegmentedInput.tsx`
+- Next: confirm focus caret sits inside cells in Ladle `input-otp` story; watch docs CI on `canary`.
