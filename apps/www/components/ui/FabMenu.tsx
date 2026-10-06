@@ -135,4 +135,18 @@ function FabMenuTrigger({
   );
 }
 
-export { FabMenu, FabMenuList, FabMenuItem, FabMenuTrigger };
+const SpeedDial = FabMenu;
+const SpeedDialList = FabMenuList;
+const SpeedDialItem = FabMenuItem;
+const SpeedDialTrigger = FabMenuTrigger;
+
+export {
+  FabMenu,
+  FabMenuList,
+  FabMenuItem,
+  FabMenuTrigger,
+  SpeedDial,
+  SpeedDialList,
+  SpeedDialItem,
+  SpeedDialTrigger,
+};

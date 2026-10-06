@@ -432,6 +432,9 @@ import {
   SortableDemoWithOnMove
 } from "./sortable-demo"
 import { 
+  SpeedDialDemo
+} from "./speed-dial-demo"
+import { 
   SpinnerDemo
 } from "./spinner-demo"
 import { 
@@ -1308,6 +1311,9 @@ export const Registry = {
   },
   "sortable-demo-with-on-move": {
     component: SortableDemoWithOnMove,
+  },
+  "speed-dial-demo": {
+    component: SpeedDialDemo,
   },
   "spinner-demo": {
     component: SpinnerDemo,
