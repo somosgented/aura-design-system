@@ -1,6 +1,6 @@
 # @aura-design/cli
 
-Aura Design System CLI (`aura`). Bootstraps Next.js apps with Aura registries and tokens, regenerates theme CSS, migrates Tailwind spacing to the 13px scale, and scaffolds optional wiki / image / Sonar tooling.
+Aura Design System CLI (`aura`). Bootstraps Next.js apps with Aura registries and tokens, regenerates theme CSS, migrates Tailwind spacing to the 13px scale, and scaffolds wiki / image / Sonar tooling plus gdp-ts proof-carrying authz.
 
 ## Usage
 

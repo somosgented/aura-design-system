@@ -41,7 +41,7 @@ Creates a Next.js app with `create-next-app`, then applies Aura to the new (or c
 1. Writes `components.json` with `@aura` and `@aura-dev` registries
 2. Generates light/dark Radix scales into `globals.css`
 3. Runs `shadcn add` for `@aura/class-names`, `@aura/page-get-starter`, `@aura/css-main`, `@aura/rules`, and `@aura/skills`
-4. Runs the same scaffolding as [`blueprint`](#blueprint)
+4. Runs the same scaffolding as [`blueprint`](#blueprint), including [gdp-ts](/docs/gdp-ts) proofs
 
 ```bash
 pnpm dlx @aura-design/cli@latest init
@@ -81,6 +81,7 @@ Scaffolds Aura project tooling into any repo with a `package.json`:
 - `scripts/preflight.ts`
 - `sonar-project.properties` plus Sonar-related scripts / devDependencies
 - `.gitignore` and `.env.example` entries for Sonar / Gemini keys
+- [gdp-ts](/docs/gdp-ts): `@gdp-ts/core`, the ESLint preset, the agent skill, a `typecheck` script when one is missing, and starter proofs (`session`, org role, project role, plan entitlement, and `deleteProject`)
 
 Also runs automatically at the end of `init` and `setup`.
 
@@ -151,3 +152,4 @@ There is no Aura command that adds every component. Use the newline-delimited li
 - [Namespace](/docs/namespace) — `@aura` vs `@aura-dev` in `components.json`
 - [MCP](/docs/mcp) — browse and install registries from Cursor
 - [Agent blueprint](/docs/mcp-agent-blueprint) — agent runbook for existing projects
+- [gdp-ts](/docs/gdp-ts) — proof-carrying authz installed by `init` and `blueprint`

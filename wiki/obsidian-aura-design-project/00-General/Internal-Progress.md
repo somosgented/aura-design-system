@@ -1,12 +1,12 @@
 ---
 title: Internal progress
-date: 2026-10-01
+date: 2026-10-06
 tags: [dev-log, logic]
 ---
 ## Summary
-Cloud Run production deploys follow next-sgd: push to `deploy/production` only, via `.github/workflows/cloud-run-prod.yml`. Services are `aura-www`, `aura-stories`, and `aura-design-md`. Custom domains stay on Vercel until cutover.
+`aura blueprint` (and therefore `init` / `setup`) now installs gdp-ts: package, ESLint preset, Cursor skill, and starter proofs for a session, an org role, a project role, and a plan entitlement. `deleteProject` requires the session, project-role, and plan proofs. Public practice page is `/docs/gdp-ts`, audited from the agent blueprint as section F.
 
 ## Context
-- Related: [[Cloud Run]] [[Site and docs app]] [[Design md]] [[Registry]]
-- Implementation Path: `.github/workflows/cloud-run-prod.yml`
-- Next: add GitHub secrets `CLOUD_RUN_CREDENTIALS` and `CLOUD_RUN_PROJECT_ID`, merge to `deploy/production`, then confirm with `gcloud run services list --project sgd-marketing-bellatrix --region us-central1`.
+- Related: [[gdp-ts proofs]] [[CLI]] [[MCP and skills]] [[Cloud Run]]
+- Implementation Path: `packages/cli/commands/gdp.ts`, `apps/www/content/docs/gdp-ts.mdx`
+- Next: confirm a consumer `aura blueprint` on a real Next app, then keep strict mode off until that app no longer needs unrelated `as` casts.

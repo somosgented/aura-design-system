@@ -1,6 +1,6 @@
 ---
 title: Agent blueprint
-description: Paste this URL to an agent with “Ejecuta” — audit and install MCP, rules, skills, DESIGN.md, lint, and optional pstack / poteto-mode on an existing Aura project.
+description: Paste this URL to an agent with “Ejecuta” — audit and install MCP, rules, skills, DESIGN.md, lint, gdp-ts proofs, and optional pstack / poteto-mode on an existing Aura project.
 icon: Bot
 ---
 
@@ -12,7 +12,7 @@ Ejecuta https://auradesignsystem.com/docs/mcp-agent-blueprint
 
 (Local docs: `http://localhost:4000/docs/mcp-agent-blueprint`.)
 
-This page is an **agent runbook**, not the CLI command `aura blueprint`. The runbook may invoke that command when the project is missing its wiki, image-generation command, preflight, or Sonar scaffolding.
+This page is an **agent runbook**, not the CLI command `aura blueprint`. The runbook may invoke that command when the project is missing its wiki, image-generation command, preflight, Sonar scaffolding, or gdp-ts proofs.
 
 ---
 
@@ -45,6 +45,10 @@ Check and record **present / missing** for each:
 | `@shadcn/lint` | Dep `@shadcn/lint` present; `eslint.config.*` registers `shadcn/*` rules; optional `eslint.aura-shadcn.mjs` + `.cursor/rules/shadcn-lint.mdc` |
 | pstack / `/poteto-mode` | Marketplace plugin **pstack** enabled for this Cursor workspace **or** project has a usable poteto-mode entry (e.g. `.cursor/skills/poteto-mode/SKILL.md` or `AGENTS.md` explicitly requiring `/poteto-mode`). Record: `plugin` / `repo-skill` / `missing` |
 | pstack model setup (optional) | User-level `~/.cursor/rules/pstack-models.mdc` exists after `/setup-pstack` — note present/missing; do **not** fail the Aura blueprint if missing |
+| `@gdp-ts/core` | `dependencies` or `devDependencies` in `package.json` |
+| gdp-ts ESLint preset | An `eslint.config.*` file references `@gdp-ts/core/lint/eslint`, or `eslint.gdp-ts.mjs` exists and the flat config spreads it |
+| gdp-ts skill | `.agents/skills/gdp-ts/SKILL.md` or `.cursor/skills/gdp-ts/SKILL.md` |
+| gdp-ts proofs | `proofs/session-is-valid.ts`, `proofs/user-has-project-role.ts`, `proofs/plan-includes-entitlement.ts`, and `data/delete-project.ts` (project root or `src/`, wherever `@/` points) |
 | Package manager | Prefer `pnpm`; fall back to npm/yarn if that is what the repo uses |
 
 Also note: Tailwind/Aura CSS already applied? (`globals.css` with accent/gray scales, or prior `aura setup` / `init`).
@@ -179,6 +183,28 @@ Additive **agent-rigor** layer (verification + playbooks). It does **not** repla
 
 **Do not:** `git clone` pstack into `node_modules` or app `src/`; do not replace Aura lint/rules with pstack principles.
 
+#### F. gdp-ts (proof-carrying authz)
+
+Every sensitive function takes a typed proof that the check already ran for those ids. Proofs are never cast. CI is `pnpm typecheck` and `pnpm lint`. This does **not** replace a policy engine, Aura rules, `@shadcn/lint`, or pstack. See [gdp-ts](/docs/gdp-ts).
+
+**When to install:** Whenever `@gdp-ts/core`, the ESLint preset, the skill, or the starter proofs are missing. Skip only if the user said “no gdp-ts”.
+
+`aura init` and `aura setup` already run this. On an existing app, re-run blueprint (it skips files that exist):
+
+```bash
+pnpm dlx @aura-design/cli@latest blueprint .
+```
+
+That installs `@gdp-ts/core`, spreads `@gdp-ts/core/lint/eslint` into the flat ESLint config, runs:
+
+```bash
+npx skills add rauchg/gdp-ts --skill gdp-ts -a cursor -y --copy
+```
+
+and writes `lib/ids.ts`, `lib/authz-store.ts`, `proofs/*`, and `data/delete-project.ts` (plus the handler and `data/mistakes.ts`) under the `@/` root.
+
+**Do not:** vendor the skill into the Aura registry, cast `as Proof`, export a prover, or call `defineProof` outside `proofs/`. The default preset is not strict mode; do not turn on `strict: true` in an app that still uses `as` for unrelated code. Replace `lib/authz-store.ts` with the real database before shipping. The in-memory maps are a stand-in, and handlers must not write roles into them.
+
 ### 3. Verify
 
 Confirm after installs:
@@ -194,6 +220,7 @@ Confirm after installs:
 - `@shadcn/lint` installed; `eslint.config.*` spreads `createAuraShadcnLintConfig` (or equivalent); `eslint.aura-shadcn.mjs` / `shadcn-lint` rule present when using the registry item
 - pstack available: `/poteto-mode` resolves in this environment **or** documented missing with reason (local plugin / cloud gap / user skipped)
 - If installed (or install was offered): agent can state that `/setup-pstack` was offered or completed
+- `@gdp-ts/core` is installed; the ESLint preset is spread into the flat config (or `eslint.gdp-ts.mjs` exists and the gap is named); `.agents/skills/gdp-ts/SKILL.md` or `.cursor/skills/gdp-ts/SKILL.md` exists; `data/delete-project.ts` demands session, project-role, and plan proofs
 
 Optional smoke: `pnpm dlx shadcn@latest add @aura/button` only if the user asked to install a component; do not add random UI.
 
@@ -207,6 +234,7 @@ Optional smoke: `pnpm dlx shadcn@latest add @aura/button` only if the user asked
 - **Mobile form UX (critical):** `input` / `textarea` / `select` font-size **MUST be ≥ 17px**. Never put `text-sm` or `text-xs` on editable fields—iOS Safari zooms on focus below that size. Keep `html { font-size: 17px; }` and the global floor in `styles/main.css` (`font-size: max(1rem, 17px)`). See [Typography rules](/docs/rules/fundations-typography) and `DESIGN.md`.
 - **Design lint:** after UI edits, run `pnpm lint` (or the app’s lint script) and clear `@shadcn/lint` warnings. Form controls own padding — add a size/variant on the component if spacing must change.
 - **Hard engineering / multi-step changes:** prefer `/poteto-mode` (pstack) with an explicit **Done means** check. Keep Aura skills for porting components (`port-component-to-aura`), brand images, and `DESIGN.md`. Use `@shadcn/lint` + Aura rules as the **Gardener** gates; use pstack for playbooks + verification. After UI edits still run `pnpm lint`.
+- **Sensitive APIs:** follow the gdp-ts skill. A function that reads or changes something only some callers may touch takes a proof about its named arguments. Never cast a proof. After authz edits, run `pnpm typecheck` and `pnpm lint`.
 - **Verification skill (optional):** `/create-verification-skill` is **project-local**. Inside the Aura monorepo it should target Aura surfaces (Ladle stories, token docs, package exports) — not product-app flows unless the consumer asks.
 - Concepts: [MCP overview](/docs/mcp) · [Rules](/docs/rules) · [Installation](/docs/installation)
 
@@ -230,6 +258,10 @@ Optional smoke: `pnpm dlx shadcn@latest add @aura/button` only if the user asked
 | @shadcn/lint + Aura eslint fragment | … | … | … |
 | pstack / poteto-mode | … | … | … |
 | pstack-models setup (optional) | … | … | … |
+| @gdp-ts/core | … | … | … |
+| gdp-ts ESLint preset | … | … | … |
+| gdp-ts skill | … | … | … |
+| gdp-ts proofs (`deleteProject`) | … | … | … |
 
 **Manual step for you:** enable shadcn MCP in Cursor
 Settings (if not already green). If pstack was offered,
@@ -250,8 +282,9 @@ Stop when the table is accurate. Do not claim MCP is connected if the user still
 ## Related
 
 - [pstack](/docs/pstack) — what `/poteto-mode` is, why Aura uses it, easy install
+- [gdp-ts](/docs/gdp-ts) — proof-carrying authz, starter proofs, CI typecheck + lint
 - [Lint](/docs/lint) — `@shadcn/lint` setup and Aura policy
 - [MCP](/docs/mcp) — what MCP/skills/rules are
 - [Rules](/docs/rules) — install `@aura/rules`
 - [Installation](/docs/installation) — `aura` CLI init
-- CLI `aura blueprint` — separate; wiki/preflight/Sonar only
+- CLI `aura blueprint` — wiki, preflight, Sonar, and gdp-ts scaffolding (not this runbook)

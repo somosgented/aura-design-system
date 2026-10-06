@@ -13,6 +13,7 @@
       "mcp",
       "mcp-agent-blueprint",
       "pstack",
+      "gdp-ts",
       "lint",
       "---Handbook---",
       "handbook/index",

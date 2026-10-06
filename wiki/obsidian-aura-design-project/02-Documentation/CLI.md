@@ -1,6 +1,6 @@
 ---
 title: CLI
-date: 2026-09-12
+date: 2026-10-06
 tags: [dev-log, documentation, architecture]
 ---
 ## Summary
@@ -18,10 +18,10 @@ tags: [dev-log, documentation, architecture]
 
 ## Commands
 
-- **`aura init`** — `create-next-app`, then `components.json`, Radix `globals.css`, `shadcn add` for `@aura/class-names` / `page-get-starter` / `css-main` / `rules` / `skills`, then blueprint scaffolding.
+- **`aura init`** — `create-next-app`, then `components.json`, Radix `globals.css`, `shadcn add` for `@aura/class-names` / `page-get-starter` / `css-main` / `rules` / `skills`, then blueprint scaffolding (including [[gdp-ts proofs]]).
 - **`aura setup [--dir]`** — Same Aura apply as `init` on an existing Next app (no `create-next-app`).
 - **`aura link [-o]`** — Downloads canonical Aura `components.json` from the docs-site raw URL.
-- **`aura blueprint [projectDir]`** — Wiki (Bruno + Obsidian), `generate-brand-images` skill, `preflight.ts`, Sonar scripts/config, `.gitignore` / `.env.example`. Options: `--force`, `--suffix`.
+- **`aura blueprint [projectDir]`** — Wiki (Bruno + Obsidian), `generate-brand-images` skill, `preflight.ts`, Sonar scripts/config, `.gitignore` / `.env.example`, and gdp-ts (`@gdp-ts/core`, ESLint preset, skill, starter proofs). Options: `--force`, `--suffix`.
 - **`aura colors`** — `--accent` / `--gray` / `--background` (or prompts); overwrites `globals.css`.
 - **`aura typography generate`** — Interactive fluid `typography.css`.
 - **`aura spacing [target]`** — Remap Tailwind spacing utilities in `.tsx` from 4px to closest 13px token (`--dir`).

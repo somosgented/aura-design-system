@@ -207,6 +207,9 @@ async function checkDatabase(): Promise<CheckResult> {
   }
 
   try {
+    // `pg` is optional. A bare specifier fails `tsc` in apps that have not
+    // installed it; the directive keeps blueprint's typecheck green.
+    // @ts-expect-error optional dependency — present only when the app installs pg
     const { Client } = await import("pg");
     const client = new Client({ connectionString: url });
     await client.connect();

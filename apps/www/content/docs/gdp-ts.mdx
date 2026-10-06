@@ -1,0 +1,121 @@
+---
+title: gdp-ts
+description: How Aura bootstraps Ghosts of Departed Proofs — install, starter proofs, and the rule that sensitive APIs demand a proof.
+icon: Lock
+---
+
+# gdp-ts
+
+How Aura uses Guillermo Rauch’s **gdp-ts** so a sensitive function cannot be called unless the authorization check for those exact ids already happened.
+
+Aura already gives agents a **visual contract** ([rules](/docs/rules), `DESIGN.md`, [`@shadcn/lint`](/docs/lint)), **procedures** (skills, the [Agent blueprint](/docs/mcp-agent-blueprint)), and **engineering playbooks** ([pstack](/docs/pstack)). **gdp-ts** is a different gate: proof-carrying authorization. The typechecker rejects a call that skipped the check, used a check about a different user or project, or passed a raw id.
+
+This page is the practice. Install and audit steps for a whole project live in the [Agent blueprint](/docs/mcp-agent-blueprint) and in `aura init` / `aura blueprint`.
+
+## What gdp-ts is
+
+**gdp-ts** ([`rauchg/gdp-ts`](https://github.com/rauchg/gdp-ts)) is a small TypeScript library, an ESLint (and Oxlint) preset, and an agent skill. The package on npm is [`@gdp-ts/core`](https://www.npmjs.com/package/@gdp-ts/core). It needs TypeScript 5.4 or newer.
+
+The library exports `name`, `defineProof`, `Named`, and `Proof`. There is no runtime policy engine inside it.
+
+1. **Name values.** `name(sessionId, userId, projectId, (session, user, project) => …)` gives each value a compile-time name that exists only inside the callback. `name` accepts one, two, or three values.
+2. **Prove facts in `proofs/`.** A trusted module calls `defineProof` (not exported) and returns `Proof<"…", [names]>` or `null`. At runtime a proof is a frozen `{ kind }` object.
+3. **Demand proofs.** The sensitive function takes `Named` arguments plus those proof types. The wrong proof, a proof about another value, a raw id, or no proof is a compile error.
+
+The skill (`npx skills add rauchg/gdp-ts`) is the longer manual: recipe, patterns, error readings, and where to stop.
+
+## What it does not replace
+
+| Layer | Job |
+| --- | --- |
+| Policy engines (CASL, Oso, Cerbos, Permit, OpenFGA) | Decide whether a subject may act |
+| Branded ids (`lib/ids.ts`) | Say what *kind* of id a string is |
+| zod / valibot / ArkType | Prove the *shape* of data at the edge |
+| [`@shadcn/lint`](/docs/lint) + Aura rules | Visual contract for UI |
+| [pstack](/docs/pstack) | How agents investigate, implement, and show evidence |
+
+gdp-ts only guarantees that a decision reaches the function that depends on it, about the right values. Call your policy engine inside a proof function and return a proof. It does not stop a stale proof, a bug inside the trusted module, or a forged proof if someone disables the linter. Those limits are spelled out in the upstream skill (`references/limits.md`).
+
+## The practice
+
+1. **Every sensitive API requires a proof** about its exact arguments: a valid session, a role on that org or project, a plan entitlement, or whatever fact the operation trusts. Middleware may authenticate. The check itself runs in the handler, next to the call.
+2. **Proofs are never cast.** Do not write `as SomeProof`, `as Proof`, `as Named`, or `any` to satisfy a proof parameter. If the honest path needs an assertion, the signature is wrong or the code is outside `proofs/`. The one intentional `as` in the library is inside `prove`.
+3. **CI is typecheck plus lint.** `pnpm typecheck` (`tsc --noEmit`) rejects a missing or mismatched proof. `pnpm lint` runs the `@gdp-ts/core/lint/eslint` preset, which rejects what the typechecker cannot see:
+   - `gdp-ts/no-define-proof` outside `proofs/`
+   - `gdp-ts/no-exported-prover` inside `proofs/`
+   - `gdp-ts/no-proof-assertion` (`{} as UserHasProjectRole<U, P>`)
+   - In strict mode only: every other `as`, and every `any`
+
+Aura wires the **default** preset (not strict). Default mode only flags code that touches proofs, so it can land in an existing Next.js app. Strict mode also bans `as` and `any` outside `proofs/` and `lib/ids.ts`. Turn that on when the codebase is clean. Brand constructors in `lib/ids.ts` are the allowed `as`.
+
+Keep each trusted module small and test the function that returns `null`. Everything downstream is the compiler’s job. Add a line under `// @ts-expect-error` in `data/mistakes.ts` when a call site almost slipped through.
+
+## What `aura init` scaffolds
+
+`aura init` and `aura setup` call `aura blueprint`. Blueprint does four things, matching the upstream install (`pnpm add @gdp-ts/core`, then `npx skills add rauchg/gdp-ts`):
+
+1. Adds `@gdp-ts/core` (and ESLint 9+ / TypeScript 5.4+ when the app does not already have them).
+2. Spreads the ESLint preset into `eslint.config.mjs` (or `.js` / `.ts`). If that file is not a flat array or `tseslint.config(...)` call, it writes `eslint.gdp-ts.mjs` and prints the one spread to add. CommonJS configs are left untouched for the same reason: the preset is ESM.
+3. Installs the skill for Cursor, non-interactively:
+
+```bash
+npx skills add rauchg/gdp-ts --skill gdp-ts -a cursor -y --copy
+```
+
+The skills CLI puts a Cursor project skill at `.agents/skills/gdp-ts/`. `--copy` writes real files so the skill can be committed. The README’s command is the same install without those flags; the flags only skip prompts and avoid a symlink.
+
+4. Writes a starter module under the directory `@/` points at (`src/` when the tsconfig maps `@/*` to `./src/*`, otherwise the project root):
+
+| File | Fact |
+| --- | --- |
+| `lib/ids.ts` | Branded `UserId`, `SessionId`, `OrgId`, `ProjectId` |
+| `lib/authz-store.ts` | In-memory stand-in. Replace with your database. Handlers must not write roles here. |
+| `proofs/session-is-valid.ts` | This session belongs to this user |
+| `proofs/user-has-org-role.ts` | Owner or Member of this org |
+| `proofs/user-has-project-role.ts` | Owner or Member of this project |
+| `proofs/plan-includes-entitlement.ts` | Pro or Enterprise includes API project deletion |
+| `data/delete-project.ts` | Demands session, project role, and plan proofs for those ids |
+| `data/delete-project-handler.ts` | Names the three ids, turns `null` into 401/403, then calls `deleteProject` |
+| `data/mistakes.ts` | `@ts-expect-error` lines that must keep failing |
+
+`name` takes at most three values, so `deleteProject` names the session, the user, and the project. The org-role proof is the same pattern for an org-scoped function (name the user and the org). Demo rows in the store: `sess_demo`, `user_demo`, `prj_demo` (pro). `prj_hobby` stays on the hobby plan so the entitlement check returns `null`.
+
+Re-running blueprint skips files that already exist. `--force` overwrites the starter proofs and reinstalls the skill.
+
+## Install on an existing app
+
+```bash
+pnpm dlx @aura-design/cli@latest blueprint .
+```
+
+Or the upstream commands, then copy the starter from a fresh blueprint if you want the example module:
+
+```bash
+pnpm add @gdp-ts/core
+npx skills add rauchg/gdp-ts --skill gdp-ts -a cursor -y --copy
+```
+
+```js
+import gdp from "@gdp-ts/core/lint/eslint";
+
+export default [
+  ...yourExistingConfig,
+  ...gdp({ proofs: ["**/proofs/**"] }),
+];
+```
+
+Oxlint (no TypeScript compiler API, so it also runs on TypeScript 7) is the other preset upstream ships: `import gdp from "@gdp-ts/core/lint/oxlint"`. Aura’s Next.js path uses the ESLint preset.
+
+The agent runbook audits this the same way it audits pstack. Paste:
+
+```text
+Ejecuta https://auradesignsystem.com/docs/mcp-agent-blueprint
+```
+
+## Related
+
+- [Agent blueprint](/docs/mcp-agent-blueprint) — audit + install, including gdp-ts
+- [CLI](/docs/cli) — `aura init`, `setup`, and `blueprint`
+- [pstack](/docs/pstack) — verification playbooks; it does not check authorization proofs
+- [Lint](/docs/lint) — `@shadcn/lint` for UI tokens
+- Upstream: [rauchg/gdp-ts](https://github.com/rauchg/gdp-ts)

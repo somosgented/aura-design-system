@@ -42,8 +42,13 @@ Aura is a **design system monorepo**: tokens, UI components, Ladle stories, docs
 - Project skills: `.cursor/skills/aura-constraints/`, `.cursor/skills/aura-verification/`, plus existing port / brand-image skills.
 - Registry-synced consumer skills are listed in `packages/registry/scripts/sync-skills.ts` — **agent-constraint skills stay local** and are not added to that list unless intentionally published.
 
+## Proof-carrying authz (gdp-ts)
+
+`aura init`, `aura setup`, and `aura blueprint` install [`@gdp-ts/core`](https://github.com/rauchg/gdp-ts), its ESLint preset, the `rauchg/gdp-ts` skill, and a starter `proofs/` module (session, org role, project role, plan entitlement, and `deleteProject`). Sensitive functions demand those proofs. Do not cast them. CI is typecheck plus lint. Do not vendor the skill into the registry; the CLI installs it with `npx skills add`. Docs: `apps/www/content/docs/gdp-ts.mdx`.
+
 ## Out of scope
 
 - Vendoring or cloning `backnotprop/pstack` or copying its full skill set.
+- Vendoring the gdp-ts skill into `packages/registry` or `sync-skills.ts`.
 - Modifying `next-famity-care` or any Famity paths (they are not this repo).
 - Product runtime features unrelated to the design system, docs, or agent guidance.
