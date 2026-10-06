@@ -1,0 +1,60 @@
+---
+title: Toast
+description: Install sileo and style it with Aura tokens. Aura does not ship a Toast component.
+---
+
+Aura does not include a Toast component. Apps that need toasts use [sileo](https://github.com/hiaaryan/sileo), the library next-famity-care uses. Mount `<Toaster />` once, then call `sileo`.
+
+## Install
+
+```bash
+pnpm add sileo
+```
+
+## Mount
+
+Put the toaster at the root of the app. `offset` is 13 so the toast sits on Aura’s spacing grid. `theme="system"` follows light and dark. `fill` is the toast surface. `styles` values are class names.
+
+```tsx
+import { sileo, Toaster } from "sileo";
+
+export function AppToaster() {
+  return (
+    <Toaster
+      position="top-right"
+      theme="system"
+      offset={13}
+      options={{
+        fill: "var(--gray-1)",
+        styles: {
+          title: "text-gray-12",
+          description: "text-gray-11",
+        },
+      }}
+    />
+  );
+}
+```
+
+## Call
+
+```tsx
+sileo.success({
+  title: "Saved",
+  description: "The care plan is up to date.",
+});
+
+sileo.error({
+  title: "Could not save",
+  description: "Check the connection and try again.",
+});
+
+const id = sileo.info({ title: "Working", description: "This stays until you dismiss it.", duration: null });
+sileo.dismiss(id);
+```
+
+`sileo` also exposes `warning`, `action`, `promise`, and `clear`. States are `success`, `loading`, `error`, `warning`, `info`, and `action`.
+
+## Data grid
+
+`DataGrid` still imports `toast` from `sonner` in `DataGridCellVariants.tsx`, `DataGridContextMenu.tsx`, and `use-data-grid.ts`. That call is unchanged here. The follow-up is to point those three call sites at `sileo` so the grid and the rest of the app share one toaster.

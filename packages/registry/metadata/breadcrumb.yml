@@ -1,0 +1,3 @@
+header:
+  description: A navigation trail for the current page.
+extends: _templates/content.yml

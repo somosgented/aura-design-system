@@ -1,0 +1,111 @@
+---
+title: Direction
+description: Sets reading direction for a subtree and Radix primitives.
+---
+
+import { ComponentPreview } from "@/components/ComponentPreview"
+import { ComponentSource } from "@/components/ComponentSource"
+import { Steps, Step } from "fumadocs-ui/components/steps"
+
+## Preview
+
+<ComponentPreview name="direction-demo" description="Sets reading direction for a subtree and Radix primitives.">
+
+```tsx
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/Breadcrumb";
+import { DirectionProvider } from "@/components/ui/Direction";
+
+export function DirectionDemo() {
+  return (
+    <DirectionProvider dir="ltr" className="w-full">
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="#home">Home</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>Direction</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+    </DirectionProvider>
+  );
+}
+```
+
+</ComponentPreview>
+
+## Installation
+Make sure that `namespace` is set in your component.json file. Namespace docs: [Learn more about namespaces](/docs/namespace)
+```bash
+pnpm dlx shadcn@latest add @aura/direction
+```
+
+
+
+### Manual
+
+<Steps>
+  <Step>
+    Install the following dependencies:
+
+    ```bash
+pnpm install radix-ui
+    ```
+  </Step>
+  <Step>
+    Copy and paste the Direction component into your `components/ui/Direction.tsx` file.
+
+```tsx
+"use client";
+/**
+ * @description Sets reading direction for Radix primitives and the subtree.
+ */
+import * as React from "react";
+import { Direction } from "radix-ui";
+
+function DirectionProvider({
+  dir = "ltr",
+  children,
+  className,
+  ...props
+}: React.ComponentProps<typeof Direction.Provider> & {
+  className?: string;
+}) {
+  return (
+    <Direction.Provider dir={dir} {...props}>
+      <div dir={dir} data-slot="direction" className={className}>
+        {children}
+      </div>
+    </Direction.Provider>
+  );
+}
+
+export { DirectionProvider };
+
+```
+  </Step>
+</Steps>
+
+## Usage
+
+### Rtl
+
+```tsx
+export const Rtl = () => {
+  return (
+    <DirectionProvider dir="rtl" className="w-full">
+      <p className="text-gray-12">القراءة من اليمين إلى اليسار</p>
+    </DirectionProvider>
+  );
+};
+```
+

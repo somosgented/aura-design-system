@@ -1,11 +1,12 @@
 import * as React from "react";
 import { ErrorObject } from "ajv";
 import { Form as FormRadix } from "radix-ui";
-import { ChevronDownIcon, SymbolIcon } from "@radix-ui/react-icons";
+import { ChevronDownIcon } from "@radix-ui/react-icons";
 
 import { FieldProps } from "@/hooks/use-dynamic-form";
 import AlertStatus from "@/components/AlertStatus";
 import Button, { ButtonProps } from "@/components/ui/Button";
+import { Spinner } from "@/components/ui/Spinner";
 import { cn } from "@/utils/class-names";
 import {
   Checkbox,
@@ -75,12 +76,7 @@ export const FormSubmit = React.forwardRef<HTMLButtonElement, FormSubmitProps>(
         <Button
           {...buttonProps}
           isLoading={fetchStatus === "loading"}
-          isLoadingText={
-            <>
-              {/* Loading spinner: Tailwind `animate-spin` is an allowed exception (infinite rotation). */}
-              <SymbolIcon className="icon animate-spin" />
-            </>
-          }
+          isLoadingText={<Spinner label="Loading" />}
           className="min-w-10"
         />
       </FormRadix.Submit>

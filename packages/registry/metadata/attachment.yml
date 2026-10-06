@@ -1,0 +1,3 @@
+header:
+  description: A file row with idle, uploading, success, and error states.
+extends: _templates/content.yml

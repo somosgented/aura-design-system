@@ -1,0 +1,3 @@
+header:
+  description: Panels that resize by drag or keyboard.
+extends: _templates/content.yml

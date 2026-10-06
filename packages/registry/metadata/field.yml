@@ -1,0 +1,3 @@
+header:
+  description: Standalone field layout that sits beside Form.
+extends: _templates/content.yml
