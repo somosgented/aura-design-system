@@ -4,9 +4,9 @@ date: 2026-10-06
 tags: [dev-log, logic]
 ---
 ## Summary
-`aura blueprint` (and therefore `init` / `setup`) now installs gdp-ts: package, ESLint preset, Cursor skill, and starter proofs for a session, an org role, a project role, and a plan entitlement. `deleteProject` requires the session, project-role, and plan proofs. Public practice page is `/docs/gdp-ts`, audited from the agent blueprint as section F.
+Docs now include a Foundations section (`/docs/foundations`) with one page per designsystems.surf Apple category, written from Aura tokens and rules. Stubs: data visualization, Figma, international design, voice and tone. Depth and elevation is an extra page from `DESIGN.md` §6.
 
 ## Context
-- Related: [[gdp-ts proofs]] [[CLI]] [[MCP and skills]] [[Cloud Run]]
-- Implementation Path: `packages/cli/commands/gdp.ts`, `apps/www/content/docs/gdp-ts.mdx`
-- Next: confirm a consumer `aura blueprint` on a real Next app, then keep strict mode off until that app no longer needs unrelated `as` casts.
+- Related: [[Foundations docs]] [[Design md]] [[Site and docs app]] [[gdp-ts proofs]]
+- Implementation Path: `apps/www/content/docs/foundations/`, `apps/www/content/docs/meta.json`
+- Next: fill a stub only after the repo gains a real rule for that category. Confirm the docs build prerenders `/docs/foundations` and each child route.

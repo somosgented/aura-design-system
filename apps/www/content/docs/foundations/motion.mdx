@@ -1,0 +1,67 @@
+---
+title: Motion
+description: CSS animation tokens, compositor-friendly properties, and prefers-reduced-motion as shipped in the registry.
+icon: Move
+---
+
+Motion clarifies cause and effect. It is interruptible and driven by input. Aura prefers CSS (`@theme` animation tokens and `@keyframes` in `@layer components`) over the Web Animations API, and that API over a JS animation library. Properties that run on the compositor — `transform` and `opacity` — are the ones to animate. Height is the documented exception, and only for accordion and collapsible content, from `0` to the Radix content-height variable.
+
+## Best practices
+
+- Provide a reduced-motion variant. Shipped overlay styles set `animation: none` under `@media (prefers-reduced-motion: reduce)`.
+- Enter and exit content with opacity plus `transform: scale()`. Scrims can be opacity alone.
+- Interactive hover and active states use scale. Buttons in `main.css` go to `scale(1.03)` on hover and `scale(0.97)` on active.
+- Durations step in **250ms** where the foundation rule applies. Easing follows the kind of change: `ease-in-out` for tooltips in the written rule, `cubic-bezier(0.16, 1, 0.3, 1)` for dialogs, `ease` for collapsible and accordion in the written rule, `cubic-bezier(0.4, 0, 0.6, 1)` for button color transitions in the written rule.
+- Skip autoplay that is not a skeleton or a similarly quiet loading state. The Stylus `.floating` keyframe (3s, infinite, `ease-in-out`, 15px vertical travel) and `.skeleton` (1s linear alternate between `--aura-skeleton-start` and `--aura-skeleton-end`) are the two looping animations in the foundation stylesheet.
+
+The tables below are the values in the stylesheets. They do not all match the 250ms rule. When you add motion, follow the rule. When you read an installed component, trust the file that component imports.
+
+## Dialog and alert dialog
+
+`packages/registry/registry/default/styles/dialog.css` and `alert-dialog.css` share:
+
+| Token | Duration | Easing | From → to |
+| --- | --- | --- | --- |
+| `--animate-overlay-show` | 150ms | `cubic-bezier(0.16, 1, 0.3, 1)` | opacity 0 → 1 |
+| `--animate-content-show` | 150ms | `cubic-bezier(0.16, 1, 0.3, 1)` | opacity 0 and `scale(0.96)` → opacity 1 and `scale(1)` |
+
+Tooltip uses the same curve: show 150ms, hide 120ms, both scaling from `0.96` (`tooltip.css`). The docs-site copies under `apps/www/styles/` match the dialog pair.
+
+## Accordion and collapsible
+
+Registry files:
+
+| Token | File | Duration | Easing |
+| --- | --- | --- | --- |
+| `--animate-accordion-open` / `--animate-accordion-closed` | `styles/accordion.css` | 200ms | `cubic-bezier(0.645, 0.045, 0.355, 1)` |
+| Accordion chevron | same file | 200ms, rotate to 180deg when open | same curve |
+| `--animate-collapsible-down` | `styles/collapsible.css` | 250ms | `cubic-bezier(0.645, 0.045, 0.355, 1)` |
+| `--animate-collapsible-up` | `styles/collapsible.css` | 200ms | same curve |
+
+The copies in `apps/www/styles/` differ: accordion open and closed are **250ms `ease-in-out`**, and both collapsible directions are **500ms `ease`**. The [Handbook animations](/docs/handbook/animations) page documents those docs-site copies. The registry files are what `shadcn add` ships.
+
+Both implementations animate `height` to `var(--radix-accordion-content-height)` or `var(--radix-collapsible-content-height)`, which is the allowed layout exception.
+
+## Buttons
+
+`.button` and its variants in `main.css` declare two `transition` lines. The second replaces the first, so the transition that applies is:
+
+```css
+transition: transform 250ms cubic-bezier(0.2, 0.8, 0.4, 1);
+```
+
+The earlier line, `300ms background cubic-bezier(0.4, 0, 0.6, 1)`, is the easing the animation rule names for buttons. It does not win in the current stylesheet because it is overwritten.
+
+Hover (when not disabled): `transform: scale(1.03)`. Active: `transform: scale(0.97)` and `outline: var(--aura-outline)`.
+
+## Reduced motion
+
+Dialog, alert dialog, accordion, collapsible, tooltip, popover, sheet, sidebar, command, selection toolbar, action bar, file upload, mention, and the responsive dropdown each ship a `prefers-reduced-motion: reduce` block. Accordion also shortens the chevron transition to `0.01ms` under that query. `MessageScroller` uses `motion-reduce:transition-none` on its jump control.
+
+## Related
+
+- [Animation rules](/docs/rules/fundation-animations)
+- [Handbook — Animations](/docs/handbook/animations)
+- [Accessibility](/docs/foundations/accessibility)
+- `packages/styled-system/src/fundations/_animation.styl`
+- `DESIGN.md` §1 and §7

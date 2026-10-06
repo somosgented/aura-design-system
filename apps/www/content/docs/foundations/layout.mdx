@@ -1,0 +1,70 @@
+---
+title: Layout
+description: The 13px spacing grid, named containers, and the aureole column system.
+icon: LayoutGrid
+---
+
+Layout in Aura starts from one length: **13px**. Tailwind v4 reads `--spacing: 13px`, and the same length is the Stylus unit `aura` and the custom property `--aura`. Every spacing utility is that unit times the number in the class. `p-4` is 52px. `gap-0.5` is 6.5px. `p-1.5` is 19.5px.
+
+Depth, radius, and surface stacking are specified separately in [Depth and elevation](/docs/foundations/elevation). They share this grid.
+
+## Spacing
+
+Use half steps only: `1`, `1.5`, `2`, `2.5`, `3`, `3.5`, and so on. Increments such as `0.2`, `0.4`, or `p-1.2` are outside the scale. Arbitrary values such as `p-[16px]` are outside it too. A request for roughly 20px maps to `1.5` (19.5px).
+
+| Utility | Result |
+| --- | --- |
+| `1` | 13px |
+| `1.5` | 19.5px |
+| `2` | 26px |
+| `2.5` | 32.5px |
+| `3` | 39px |
+| `3.5` | 45.5px |
+| `4` | 52px |
+
+`shadcn/no-arbitrary-values` enforces the scale in lint. Affected utilities include margin, padding, gap, `space-x`, `space-y`, and the size family (`h`, `w`, `min-h`, `max-w`, `size`, and the rest).
+
+Major sections use a large vertical gap: `gap-3.5` (45.5px) or `gap-4` (52px). Dense registry rows use `px-1` (13px) or `px-1.5` (19.5px). There is no `1.25` step.
+
+Stylus helpers in `packages/styled-system/src/fundations/_spacing.styl` (`.pad`, `.aura`, `.mb13`, `.mt13`, `.ml13`, `.mr13`) are the older names for the same unit. `.pad` is `aura * 3.5` on top (45.5px), `var(--aura)` on the sides, and `aura * 1.5` on the bottom, collapsing to `aura * 2` on top below 767px. The compiled `.pad` in `main.css` matches those pixel values.
+
+## Containers
+
+Every section sits in a container that has padding, margin, and a max-width. A project keeps at most five container types. The registry set is five widths plus the shared centering class:
+
+| Class | Max width | Source |
+| --- | --- | --- |
+| `.smish` | 250px | `tokens/_container.styl`, `main.css` |
+| `.smosh` | 440px | same |
+| `.smash` | 740px | same |
+| `.smush` | 1032px | same |
+| `.smesh` | 1600px | same |
+
+`.aura-container`, `.smish`, `.smosh`, `.smash`, and `.smush` are `margin: 0 auto`. `.smesh` sets max-width only in the compiled CSS.
+
+Breakpoints in Stylus are `$small = 767px` and `$large = 1155px`. `body` has `min-width: 320px`.
+
+## Grid
+
+`.aureole` is the page grid.
+
+```css
+.aureole {
+  display: grid;
+  grid-gap: var(--aura);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+```
+
+Column counts are modifier classes: `.one`, `.two`, `.four`, `.five`, `.six`, `.twelve`. Spans are `.span-1` through `.span-12`. Below 767px, `.aureole:not(.fixed)` becomes one column, and spans that are not `.fixed` become `span 1`. From 767px up, `.aureole.reverse .one` and `.two` swap order.
+
+The Stylus grid (`layout/_grid.styl`) also defines `.aureole.blog` (`2fr 1fr`) and `.aureole.docs` (`1fr 4fr`). Those two templates are not in the compiled `packages/registry/styles/main.css`. Use the classes the CSS file actually emits unless you are compiling the Stylus source yourself.
+
+`.halo` is a wrapping row flex, full width. `.reverse` sets `flex-direction: row-reverse`.
+
+## Related
+
+- [Layout and spacing rules](/docs/rules/fundations-layout-spacing)
+- [Depth and elevation](/docs/foundations/elevation)
+- [Handbook — Styling](/docs/handbook/styling)
+- `DESIGN.md` §5 and §8

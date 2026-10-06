@@ -1,0 +1,13 @@
+---
+title: International design
+description: Placeholder. Aura has not defined a right-to-left or international layout foundation.
+icon: Languages
+---
+
+Not defined yet.
+
+The Apple catalog uses this category for right-to-left layout. Aura has no written spec for mirroring, locale-specific typography, bidirectional text, or international layout grids.
+
+A few components already accept a `dir` prop or render under Radix direction context (`SegmentedInput`, `Editable`, `FileUpload`, `AvatarGroup`, `AngleSlider`, `ActionBar`). Calendar, carousel, and pagination put `cn-rtl-flip` on directional chevrons, and calendar adds RTL rotate utilities for its previous and next icons. There is no `.cn-rtl-flip` rule in `main.css` or the styled system, and no foundation that says when a layout must mirror.
+
+Those call sites are component details. They are not an international design system. A future page should define the rule first, then point at the components that follow it.
