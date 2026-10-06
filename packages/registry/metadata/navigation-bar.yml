@@ -1,0 +1,3 @@
+header:
+  description: Bottom navigation for phones.
+extends: _templates/content.yml

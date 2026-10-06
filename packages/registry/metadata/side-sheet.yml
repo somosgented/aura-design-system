@@ -1,0 +1,3 @@
+header:
+  description: A side panel that sits beside the content, with no overlay.
+extends: _templates/content.yml

@@ -531,7 +531,8 @@
         "@aura/custom-color-functions",
         "@aura/input",
         "@aura/label",
-        "@aura/popover"
+        "@aura/popover",
+        "@aura/scheme-from-seed"
       ]
     },
     {
@@ -664,6 +665,24 @@
         "@aura/use-isomorphic-layout-effect",
         "@aura/use-lazy-ref",
         "@aura/visually-hidden-input"
+      ]
+    },
+    {
+      "name": "app-bar",
+      "type": "registry:ui",
+      "title": "AppBar",
+      "description": "The AppBar component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/AppBar.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
       ]
     },
     {
@@ -1018,6 +1037,21 @@
       ]
     },
     {
+      "name": "circular-progress",
+      "type": "registry:ui",
+      "title": "CircularProgress",
+      "description": "The CircularProgress component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/CircularProgress.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "collapsible",
       "type": "registry:ui",
       "title": "Collapsible",
@@ -1308,6 +1342,21 @@
       ]
     },
     {
+      "name": "expressive-carousel",
+      "type": "registry:ui",
+      "title": "ExpressiveCarousel",
+      "description": "The ExpressiveCarousel component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/ExpressiveCarousel.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "fab",
       "type": "registry:ui",
       "title": "Fab",
@@ -1464,6 +1513,21 @@
       ]
     },
     {
+      "name": "icon",
+      "type": "registry:ui",
+      "title": "Icon",
+      "description": "The Icon component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Icon.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "input",
       "type": "registry:ui",
       "title": "Input",
@@ -1596,6 +1660,22 @@
       ],
       "registryDependencies": [
         "@aura/class-names"
+      ]
+    },
+    {
+      "name": "loading-indicator",
+      "type": "registry:ui",
+      "title": "LoadingIndicator",
+      "description": "The LoadingIndicator component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/LoadingIndicator.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names",
+        "@aura/shape"
       ]
     },
     {
@@ -1747,6 +1827,21 @@
       ]
     },
     {
+      "name": "navigation-bar",
+      "type": "registry:ui",
+      "title": "NavigationBar",
+      "description": "The NavigationBar component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/NavigationBar.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "navigation-menu",
       "type": "registry:ui",
       "title": "NavigationMenu",
@@ -1769,6 +1864,21 @@
       },
       "dependencies": [
         "radix-ui"
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
+      "name": "navigation-rail",
+      "type": "registry:ui",
+      "title": "NavigationRail",
+      "description": "The NavigationRail component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/NavigationRail.tsx",
+          "type": "registry:ui"
+        }
       ],
       "registryDependencies": [
         "@aura/class-names"
@@ -2020,6 +2130,22 @@
       ]
     },
     {
+      "name": "search",
+      "type": "registry:ui",
+      "title": "Search",
+      "description": "The Search component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Search.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names",
+        "@aura/command"
+      ]
+    },
+    {
       "name": "section",
       "type": "registry:ui",
       "title": "Section",
@@ -2136,6 +2262,21 @@
       ]
     },
     {
+      "name": "shape",
+      "type": "registry:ui",
+      "title": "Shape",
+      "description": "The Shape component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Shape.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "sheet",
       "type": "registry:ui",
       "title": "Sheet",
@@ -2162,6 +2303,21 @@
       ],
       "registryDependencies": [
         "@aura/button",
+        "@aura/class-names"
+      ]
+    },
+    {
+      "name": "side-sheet",
+      "type": "registry:ui",
+      "title": "SideSheet",
+      "description": "The SideSheet component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/SideSheet.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
         "@aura/class-names"
       ]
     },
@@ -2469,6 +2625,21 @@
       ]
     },
     {
+      "name": "time-picker",
+      "type": "registry:ui",
+      "title": "TimePicker",
+      "description": "The TimePicker component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/TimePicker.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "toggle",
       "type": "registry:ui",
       "title": "Toggle",
@@ -2658,6 +2829,9 @@
           "path": "registry/default/utils/create-icon.tsx",
           "type": "registry:lib"
         }
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
       ]
     },
     {
@@ -2674,6 +2848,21 @@
       "dependencies": [
         "@radix-ui/colors",
         "bezier-easing",
+        "colorjs.io"
+      ]
+    },
+    {
+      "name": "scheme-from-seed",
+      "type": "registry:lib",
+      "title": "scheme-from-seed",
+      "description": "Utility: scheme-from-seed",
+      "files": [
+        {
+          "path": "registry/default/utils/scheme-from-seed.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
         "colorjs.io"
       ]
     },

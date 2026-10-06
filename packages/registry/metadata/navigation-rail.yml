@@ -1,0 +1,3 @@
+header:
+  description: Side navigation for tablet and desktop, collapsed or expanded.
+extends: _templates/content.yml
