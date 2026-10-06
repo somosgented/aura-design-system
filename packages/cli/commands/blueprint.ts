@@ -2,6 +2,7 @@ import { Command } from "commander";
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "fs";
 import { dirname, join, resolve } from "path";
 import { fileURLToPath } from "url";
+import { applyGdpToProject } from "./gdp.js";
 
 const SCRIPTS_TO_MERGE: Record<string, string> = {
   preflight: "tsx scripts/preflight.ts",
@@ -9,6 +10,7 @@ const SCRIPTS_TO_MERGE: Record<string, string> = {
     "node .cursor/skills/generate-brand-images/generate-images.mjs",
   "dev:server": "next dev",
   dev: "pnpm run preflight && pnpm run dev:server",
+  typecheck: "tsc --noEmit",
   "sonar:up":
     "docker start sonarqube 2>/dev/null || docker run -d --name sonarqube -p 9000:9000 sonarqube:lts",
   "sonar:setup":
@@ -293,11 +295,11 @@ export type ApplyBlueprintOptions = {
   suffix?: string;
 };
 
-/** Scaffold the wiki, image-generation skill, preflight, and Sonar config. */
-export function applyBlueprintToProject(
+/** Scaffold the wiki, image-generation skill, preflight, Sonar config, and gdp-ts. */
+export async function applyBlueprintToProject(
   projectRoot: string,
   options: ApplyBlueprintOptions = {},
-): void {
+): Promise<void> {
   const pkgPath = join(projectRoot, "package.json");
   if (!existsSync(pkgPath)) {
     throw new Error(`No package.json at ${projectRoot}`);
@@ -323,6 +325,7 @@ export function applyBlueprintToProject(
   scaffoldSonarProperties(projectRoot, force);
   ensureGitignoreLines(projectRoot);
   ensureEnvExample(projectRoot);
+  await applyGdpToProject(projectRoot, force);
   mergePackageJson(projectRoot);
 
   console.log("\n✓ Blueprint scaffolding complete.\n");
@@ -332,7 +335,7 @@ export function registerBlueprintCommand(program: Command) {
   program
     .command("blueprint [projectDir]")
     .description(
-      "Scaffold wiki, identity-aware image generation, preflight, and Sonar config",
+      "Scaffold wiki, identity-aware image generation, preflight, Sonar config, and gdp-ts proofs",
     )
     .option(
       "-f, --force",
@@ -346,7 +349,7 @@ export function registerBlueprintCommand(program: Command) {
     .action(async (projectDir: string | undefined, options) => {
       const root = resolve(process.cwd(), projectDir ?? ".");
       try {
-        applyBlueprintToProject(root, {
+        await applyBlueprintToProject(root, {
           force: Boolean(options.force),
           suffix:
             typeof options.suffix === "string" && options.suffix.length > 0

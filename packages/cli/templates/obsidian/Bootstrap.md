@@ -25,6 +25,10 @@ You are helping maintain internal documentation for this repository.
 
 If no Gemini key is configured, ask whether the user wants to add one, use the agent's native image-generation capability when available, or continue with placeholders. Never create or expose a secret on the user's behalf.
 
+## Proof-carrying authorization
+
+Sensitive functions (delete a project, change a password, charge) take a gdp-ts proof that the check already ran for those exact ids. Do not cast a proof (`as SomeProof` or `as Proof`). Mint proofs only in `proofs/`, with the prover kept private. CI is `pnpm typecheck` and `pnpm lint` (the `@gdp-ts/core/lint/eslint` preset). The agent skill is `.agents/skills/gdp-ts/SKILL.md`. This does not replace a policy engine; it carries that engine's decision to the function.
+
 ## Outputs
 
 - New notes under sensible folders (see [[Welcome]]).

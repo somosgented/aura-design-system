@@ -67,3 +67,7 @@ For interactive components, before finishing:
 ## Humans + pstack
 
 Full pstack / poteto workflow stays in Cursor desktop (`/setup-pstack`, `/poteto-mode`). This repo only carries Aura-specific paved-path constraints.
+
+## gdp-ts
+
+Proof-carrying authz is a consumer-project concern. `aura blueprint` (also run by `init` / `setup`) installs `@gdp-ts/core`, the lint preset, and the upstream skill. Do not add that skill to `sync-skills.ts` or copy it into the registry.

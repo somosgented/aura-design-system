@@ -7,7 +7,7 @@ export function registerSetupCommand(program: Command) {
   program
     .command("setup")
     .description(
-      "Apply Aura to an existing Next.js project (skips create-next-app; updates components.json, globals.css, adds registry packages, and runs blueprint)",
+      "Apply Aura to an existing Next.js project (skips create-next-app; updates components.json, globals.css, adds registry packages, and runs blueprint, including gdp-ts)",
     )
     .option(
       "-d, --dir <path>",

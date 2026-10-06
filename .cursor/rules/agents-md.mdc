@@ -8,3 +8,4 @@ alwaysApply: true
 * **MUST**: Use project skills `.cursor/skills/aura-constraints/` and `.cursor/skills/aura-verification/` when editing or verifying design-system packages.
 * **SHOULD**: Treat `.cursor/rules/*` foundation rules as the visual/token law; do not invent a conflicting parallel design policy.
 * **SHOULD**: Keep full pstack / poteto workflows in Cursor desktop (`/setup-pstack`, `/poteto-mode`); this repo does not vendor that plugin.
+* **SHOULD**: Treat gdp-ts as consumer scaffolding (`aura blueprint` installs `@gdp-ts/core`, the lint preset, and the upstream skill). Do not vendor that skill into the registry.
