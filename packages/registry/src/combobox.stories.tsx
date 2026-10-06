@@ -24,7 +24,7 @@ import { Label } from "../registry/default/components/ui/Label";
 import { CheckIcon, Cross2Icon, ChevronDownIcon } from "@radix-ui/react-icons";
 
 const fruits = [
-  "Apple",
+  "Apricot",
   "Banana",
   "Orange",
   "Pineapple",
@@ -77,7 +77,7 @@ export const Default = () => {
         <div className="flex items-center gap-0.5 border border-gray-6 rounded-sm px-2 py-1.5 focus-within:ring-2 focus-within:ring-gray-8">
           <ComboboxInput
             id={id}
-            placeholder="e.g. Apple"
+            placeholder="e.g. Apricot"
             className="flex-1 outline-none bg-transparent"
           />
           <div className="flex items-center gap-0.5">
@@ -300,7 +300,7 @@ export const WithGroups = () => {
 
 export const WithSeparator = () => {
   const id = useId();
-  const popularFruits = ["Apple", "Banana", "Orange", "Grape"];
+  const popularFruits = ["Apricot", "Banana", "Orange", "Grape"];
   const otherFruits = fruits.filter((f) => !popularFruits.includes(f));
 
   return (
@@ -310,7 +310,7 @@ export const WithSeparator = () => {
         <div className="flex items-center gap-0.5 border border-gray-6 rounded-sm px-2 py-1.5 focus-within:ring-2 focus-within:ring-gray-8">
           <ComboboxInput
             id={id}
-            placeholder="e.g. Apple"
+            placeholder="e.g. Apricot"
             className="flex-1 outline-none bg-transparent"
           />
           <div className="flex items-center gap-0.5">
@@ -380,7 +380,7 @@ export const Controlled = () => {
         <div className="flex items-center gap-0.5 border border-gray-6 rounded-sm px-2 py-1.5 focus-within:ring-2 focus-within:ring-gray-8">
           <ComboboxInput
             id={id}
-            placeholder="e.g. Apple"
+            placeholder="e.g. Apricot"
             className="flex-1 outline-none bg-transparent"
           />
           <div className="flex items-center gap-0.5">
@@ -437,7 +437,7 @@ export const Disabled = () => {
         <div className="flex items-center gap-0.5 border border-gray-6 rounded-sm px-2 py-1.5 opacity-50 cursor-not-allowed">
           <ComboboxInput
             id={id}
-            placeholder="e.g. Apple"
+            placeholder="e.g. Apricot"
             className="flex-1 outline-none bg-transparent"
             disabled
           />
@@ -494,7 +494,7 @@ export const Positioning = () => {
             <div className="flex items-center gap-0.5 border border-gray-6 rounded-sm px-2 py-1.5 focus-within:ring-2 focus-within:ring-gray-8">
               <ComboboxInput
                 id={id}
-                placeholder="e.g. Apple"
+                placeholder="e.g. Apricot"
                 className="flex-1 outline-none bg-transparent"
               />
               <div className="flex items-center gap-0.5">

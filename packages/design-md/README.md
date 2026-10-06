@@ -9,7 +9,7 @@ Content is derived from the public documentation dump (`llms-full.txt`), the reg
 | File | Description |
 |------|-------------|
 | `DESIGN.md` | Design system for agents (9 sections + registry and forms summary) |
-| `preview.html` | Catálogo extenso (nav, hero, 12×2 escalas de color, tipografía fluida, botones, badges, alertas, cards, formularios, spacing 13px, radios, elevación) — paridad de alcance con awesome-design-md Apple |
+| `preview.html` | Catálogo extenso (nav, hero, 12×2 escalas de color, tipografía fluida, botones, badges, alertas, cards, formularios, spacing 13px, radios, elevación) |
 | `preview-dark.html` | Misma estructura con grises y semántica del modo oscuro del registry |
 
 ## Full documentation for LLMs

@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/Autocomplete";
 
 const items = [
-  { label: "Apple", value: "apple" },
+  { label: "Apricot", value: "apricot" },
   { label: "Banana", value: "banana" },
   { label: "Orange", value: "orange" },
   { label: "Grape", value: "grape" },
