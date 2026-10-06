@@ -1,0 +1,3 @@
+header:
+  description: A loading status that morphs between shapes.
+extends: _templates/content.yml

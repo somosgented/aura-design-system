@@ -1,0 +1,3 @@
+header:
+  description: A wrapper for icons, including marks built with createIcon.
+extends: _templates/content.yml
