@@ -1,0 +1,3 @@
+header:
+  description: A field that collects tags. Enter adds one, Backspace removes the last.
+extends: _templates/content.yml

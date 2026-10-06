@@ -1,0 +1,3 @@
+header:
+  description: A selectable color sample.
+extends: _templates/content.yml
