@@ -1,0 +1,63 @@
+---
+title: Client Only
+description: Renders children only after the client has mounted.
+---
+
+import { ComponentPreview } from "@/components/ComponentPreview"
+import { ComponentSource } from "@/components/ComponentSource"
+import { Steps, Step } from "fumadocs-ui/components/steps"
+
+## Preview
+
+<ComponentPreview name="client-only-demo" description="Renders children only after the client has mounted.">
+
+```tsx
+import { ClientOnly } from "@/components/ui/ClientOnly";
+
+export function ClientOnlyDemo() {
+  return (
+  <ClientOnly fallback={<span>Waiting for the client</span>}>
+    <span>Ready on the client</span>
+  </ClientOnly>
+)
+```
+
+</ComponentPreview>
+
+## Installation
+Make sure that `namespace` is set in your component.json file. Namespace docs: [Learn more about namespaces](/docs/namespace)
+```bash
+pnpm dlx shadcn@latest add @aura/client-only
+```
+
+
+
+### Manual
+
+<Steps>
+  <Step>
+    Copy and paste the ClientOnly component into your `components/ui/ClientOnly.tsx` file.
+
+```tsx
+"use client";
+
+import * as React from "react";
+
+function ClientOnly({
+  children,
+  fallback = null,
+}: {
+  children: React.ReactNode;
+  fallback?: React.ReactNode;
+}) {
+  const [ready, setReady] = React.useState(false);
+  React.useEffect(() => setReady(true), []);
+  return ready ? children : fallback;
+}
+
+export { ClientOnly };
+
+```
+  </Step>
+</Steps>
+

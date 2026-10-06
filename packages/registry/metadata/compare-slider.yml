@@ -1,0 +1,3 @@
+header:
+  description: A slider that reveals one view over another.
+extends: _templates/content.yml

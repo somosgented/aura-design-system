@@ -1,0 +1,3 @@
+header:
+  description: A short stepped guide that highlights one target at a time.
+extends: _templates/content.yml

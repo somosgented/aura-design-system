@@ -1,0 +1,107 @@
+---
+title: Presence
+description: Keeps content mounted while it fades out.
+---
+
+import { ComponentPreview } from "@/components/ComponentPreview"
+import { ComponentSource } from "@/components/ComponentSource"
+import { Steps, Step } from "fumadocs-ui/components/steps"
+
+## Preview
+
+<ComponentPreview name="presence-demo" description="Keeps content mounted while it fades out.">
+
+```tsx
+import { Presence } from "@/components/ui/Presence";
+
+export function PresenceDemo() {
+  return (
+  <Presence present>
+    <div className="rounded-sm bg-accent-3 p-1">Visible while present</div>
+  </Presence>
+)
+}
+```
+
+</ComponentPreview>
+
+## Installation
+Make sure that `namespace` is set in your component.json file. Namespace docs: [Learn more about namespaces](/docs/namespace)
+```bash
+pnpm dlx shadcn@latest add @aura/presence
+```
+
+
+
+### Manual
+
+<Steps>
+  <Step>
+    Copy and paste the class names utility into your `utils/class-names.ts` file.
+
+```ts
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+
+```
+  </Step>
+  <Step>
+    Copy and paste the Presence component into your `components/ui/Presence.tsx` file.
+
+```tsx
+"use client";
+
+import * as React from "react";
+import { cn } from "@/utils/class-names";
+
+function Presence({
+  className,
+  present,
+  children,
+}: {
+  className?: string;
+  present: boolean;
+  children?: React.ReactNode;
+}) {
+  const [shown, setShown] = React.useState(present);
+
+  React.useEffect(() => {
+    if (present) {
+      setShown(true);
+      return;
+    }
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) setShown(false);
+  }, [present]);
+
+  if (!shown) return null;
+
+  return (
+    <div
+      data-slot="presence"
+      data-present={present ? "" : undefined}
+      className={cn(
+        "transition duration-300 motion-reduce:transition-none",
+        present ? "scale-100 opacity-100" : "scale-95 opacity-0",
+        className,
+      )}
+      onTransitionEnd={() => {
+        if (!present) setShown(false);
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+export { Presence };
+
+```
+  </Step>
+</Steps>
+

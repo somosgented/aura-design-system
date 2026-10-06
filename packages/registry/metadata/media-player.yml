@@ -1,0 +1,3 @@
+header:
+  description: Play, pause, seek, and mute controls for an audio source.
+extends: _templates/content.yml

@@ -1,0 +1,3 @@
+header:
+  description: A draggable crop region you can also nudge with the arrow keys.
+extends: _templates/content.yml

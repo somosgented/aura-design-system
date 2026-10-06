@@ -152,6 +152,9 @@ import {
   CircularProgressDemo
 } from "./circular-progress-demo"
 import { 
+  ClientOnlyDemo
+} from "./client-only-demo"
+import { 
   CollapsibleDemo
 } from "./collapsible-demo"
 import { 
@@ -175,12 +178,18 @@ import {
   CommandDemo
 } from "./command-demo"
 import { 
+  CompareSliderDemo
+} from "./compare-slider-demo"
+import { 
   ContextMenuDemo,
   ContextMenuDemoWithSubmenu,
   ContextMenuDemoWithCheckboxes,
   ContextMenuDemoWithRadioGroup,
   ContextMenuDemoComplexMenu
 } from "./context-menu-demo"
+import { 
+  CropperDemo
+} from "./cropper-demo"
 import { 
   DatePickerDemo
 } from "./date-picker-demo"
@@ -250,11 +259,17 @@ import {
   FormDemoWithEditor
 } from "./form-demo"
 import { 
+  FpsDemo
+} from "./fps-demo"
+import { 
   GaugeDemo
 } from "./gauge-demo"
 import { 
   GridDemo
 } from "./grid-demo"
+import { 
+  HitboxDemo
+} from "./hitbox-demo"
 import { 
   HoverCardDemo
 } from "./hover-card-demo"
@@ -325,6 +340,9 @@ import {
   MasonryDemo
 } from "./masonry-demo"
 import { 
+  MediaPlayerDemo
+} from "./media-player-demo"
+import { 
   MentionDemo,
   MentionDemoCustomTrigger,
   MentionDemoCustomFilter
@@ -364,6 +382,9 @@ import {
   PaginationDemoWithEllipsis
 } from "./pagination-demo"
 import { 
+  PendingDemo
+} from "./pending-demo"
+import { 
   PhoneInputDemo
 } from "./phone-input-demo"
 import { 
@@ -374,6 +395,12 @@ import {
   PopoverDemoWithAnchor,
   PopoverDemoPositioning
 } from "./popover-demo"
+import { 
+  PortalDemo
+} from "./portal-demo"
+import { 
+  PresenceDemo
+} from "./presence-demo"
 import { 
   PresentationDemo,
   PresentationDemoEditing
@@ -535,6 +562,9 @@ import {
   StepperDemo
 } from "./stepper-demo"
 import { 
+  SwapDemo
+} from "./swap-demo"
+import { 
   SwitchDemo,
   SwitchDemoChecked,
   SwitchDemoUnchecked,
@@ -573,6 +603,12 @@ import {
 import { 
   TooltipDemo
 } from "./tooltip-demo"
+import { 
+  TourDemo
+} from "./tour-demo"
+import { 
+  VisuallyHiddenDemo
+} from "./visually-hidden-demo"
 import { 
   VisuallyHiddenInputDemo
 } from "./visually-hidden-input-demo"
@@ -872,6 +908,9 @@ export const Registry = {
   "circular-progress-demo": {
     component: CircularProgressDemo,
   },
+  "client-only-demo": {
+    component: ClientOnlyDemo,
+  },
   "collapsible-demo": {
     component: CollapsibleDemo,
   },
@@ -911,6 +950,9 @@ export const Registry = {
   "command-demo": {
     component: CommandDemo,
   },
+  "compare-slider-demo": {
+    component: CompareSliderDemo,
+  },
   "context-menu-demo": {
     component: ContextMenuDemo,
   },
@@ -925,6 +967,9 @@ export const Registry = {
   },
   "context-menu-demo-complex-menu": {
     component: ContextMenuDemoComplexMenu,
+  },
+  "cropper-demo": {
+    component: CropperDemo,
   },
   "date-picker-demo": {
     component: DatePickerDemo,
@@ -1052,11 +1097,17 @@ export const Registry = {
   "form-demo-with-editor": {
     component: FormDemoWithEditor,
   },
+  "fps-demo": {
+    component: FpsDemo,
+  },
   "gauge-demo": {
     component: GaugeDemo,
   },
   "grid-demo": {
     component: GridDemo,
+  },
+  "hitbox-demo": {
+    component: HitboxDemo,
   },
   "hover-card-demo": {
     component: HoverCardDemo,
@@ -1169,6 +1220,9 @@ export const Registry = {
   "masonry-demo": {
     component: MasonryDemo,
   },
+  "media-player-demo": {
+    component: MediaPlayerDemo,
+  },
   "mention-demo": {
     component: MentionDemo,
   },
@@ -1232,6 +1286,9 @@ export const Registry = {
   "pagination-demo-with-ellipsis": {
     component: PaginationDemoWithEllipsis,
   },
+  "pending-demo": {
+    component: PendingDemo,
+  },
   "phone-input-demo": {
     component: PhoneInputDemo,
   },
@@ -1252,6 +1309,12 @@ export const Registry = {
   },
   "popover-demo-positioning": {
     component: PopoverDemoPositioning,
+  },
+  "portal-demo": {
+    component: PortalDemo,
+  },
+  "presence-demo": {
+    component: PresenceDemo,
   },
   "presentation-demo": {
     component: PresentationDemo,
@@ -1523,6 +1586,9 @@ export const Registry = {
   "stepper-demo": {
     component: StepperDemo,
   },
+  "swap-demo": {
+    component: SwapDemo,
+  },
   "switch-demo": {
     component: SwitchDemo,
   },
@@ -1573,6 +1639,12 @@ export const Registry = {
   },
   "tooltip-demo": {
     component: TooltipDemo,
+  },
+  "tour-demo": {
+    component: TourDemo,
+  },
+  "visually-hidden-demo": {
+    component: VisuallyHiddenDemo,
   },
   "visually-hidden-input-demo": {
     component: VisuallyHiddenInputDemo,
