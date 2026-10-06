@@ -1,0 +1,494 @@
+---
+title: Split Button
+description: A main action paired with a menu of related actions.
+---
+
+import { ComponentPreview } from "@/components/ComponentPreview"
+import { ComponentSource } from "@/components/ComponentSource"
+import { Steps, Step } from "fumadocs-ui/components/steps"
+
+## Preview
+
+<ComponentPreview name="split-button-demo" description="A main action paired with a menu of related actions.">
+
+```tsx
+import { Pencil2Icon, TrashIcon } from "@radix-ui/react-icons";
+import { SplitButton, SplitButtonAction, SplitButtonMenu } from "@/components/ui/SplitButton";
+import { DropdownMenuItem } from "@/components/ui/DropdownMenu";
+
+export function SplitButtonDemo() {
+  return (
+    <SplitButton>
+      <SplitButtonAction>Save</SplitButtonAction>
+      <SplitButtonMenu>
+        <DropdownMenuItem>
+          <Pencil2Icon className="icon" />
+          Save as draft
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <TrashIcon className="icon" />
+          Discard
+        </DropdownMenuItem>
+      </SplitButtonMenu>
+    </SplitButton>
+  );
+}
+```
+
+</ComponentPreview>
+
+## Installation
+Make sure that `namespace` is set in your component.json file. Namespace docs: [Learn more about namespaces](/docs/namespace)
+```bash
+pnpm dlx shadcn@latest add @aura/split-button
+```
+
+
+
+### Manual
+
+<Steps>
+  <Step>
+    Install the following dependencies:
+
+    ```bash
+pnpm install @radix-ui/react-icons
+    ```
+  </Step>
+  <Step>
+    Copy and paste the button component into your `components/ui/Button.tsx` file.
+
+```tsx
+/**
+ * @description Displays a button or a component that looks like a button.
+ */
+import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
+
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/utils/class-names";
+import { Spinner } from "@/components/ui/Spinner";
+
+const buttonVariants = cva("button", {
+  variants: {
+    variant: {
+      default: "button-fill",
+      fill: "button-fill",
+      pill: "button-pill border border-gray-6 text-gray-11 bg-gray-2 hover:bg-gray-3",
+      link: "button-link",
+      menu: "button-menu",
+    },
+    size: {
+      default: "h-4",
+      xs: "h-2.5",
+      sm: "h-3",
+      md: "h-4",
+      lg: "h-5",
+      xl: "h-6",
+      icon: "w-3 h-3 p-0",
+      "icon-md": "w-4 h-4 p-0",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+    size: "default",
+  },
+});
+
+interface ButtonProps
+  extends React.ComponentProps<"button">,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean;
+  isDisabled?: boolean;
+  isLoading?: boolean;
+  isLoadingText?: string | React.ReactNode;
+  mode?: VariantProps<typeof buttonVariants>["variant"];
+  label?: string | React.ReactNode;
+}
+
+
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  (props: ButtonProps, ref) => {
+    const {
+      className,
+      variant,
+      mode,
+      size,
+      asChild = false,
+      isDisabled,
+      isLoading,
+      isLoadingText,
+      children,
+      label,
+      ...rest
+    } = props;
+    const Comp = asChild ? Slot : "button";
+    const disabled = isDisabled || isLoading || props.disabled;
+    const effectiveVariant = variant ?? mode;
+
+    return (
+      <Comp
+        data-slot="button"
+        className={cn(
+          buttonVariants({ variant: effectiveVariant, size, className }),
+          disabled && "opacity-50 cursor-not-allowed"
+        )}
+        ref={ref}
+        disabled={disabled}
+        {...rest}
+      >
+        {asChild ? (
+          children
+        ) : (
+          <>
+      
+            {isLoading && isLoadingText ? (
+              isLoadingText
+            ) : (
+              <>
+                {isLoading ? <Spinner /> : null}
+                {label}
+                {children}
+              </>
+            )}
+          </>
+        )}
+      </Comp>
+    );
+  }
+);
+
+Button.displayName = "Button";
+
+export { Button, buttonVariants };
+export type { ButtonProps };
+export default Button;
+
+```
+  </Step>
+  <Step>
+    Copy and paste the class names utility into your `utils/class-names.ts` file.
+
+```ts
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+
+```
+  </Step>
+  <Step>
+    Copy and paste the dropdown menu component into your `components/ui/DropdownMenu.tsx` file.
+
+```tsx
+"use client";
+/**
+ * @description Displays a menu of actions or options triggered by a button.
+ */
+import * as React from "react";
+import { DropdownMenu as DropdownMenuRadix } from "radix-ui";
+import {
+  CheckIcon,
+  ChevronRightIcon,
+  CircleIcon,
+  DotFilledIcon,
+} from "@radix-ui/react-icons";
+
+import { cn } from "@/utils/class-names";
+
+function DropdownMenu({
+  ...props
+}: React.ComponentProps<typeof DropdownMenuRadix.Root>) {
+  return <DropdownMenuRadix.Root data-slot="dropdown-menu" {...props} />;
+}
+
+function DropdownMenuPortal({
+  ...props
+}: React.ComponentProps<typeof DropdownMenuRadix.Portal>) {
+  return (
+    <DropdownMenuRadix.Portal data-slot="dropdown-menu-portal" {...props} />
+  );
+}
+
+function DropdownMenuTrigger({
+  className,
+  ...props
+}: React.ComponentProps<typeof DropdownMenuRadix.Trigger>) {
+  return (
+    <DropdownMenuRadix.Trigger
+      data-slot="dropdown-menu-trigger"
+      className={cn(className)}
+      {...props}
+    />
+  );
+}
+
+function DropdownMenuContent({
+  className,
+  ...props
+}: React.ComponentProps<typeof DropdownMenuRadix.Content>) {
+  return (
+    <DropdownMenuRadix.Portal>
+      <DropdownMenuRadix.Content
+        data-slot="dropdown-menu-content"
+        collisionPadding={8}
+        className={cn(
+          className,
+          "z-50 origin-(--radix-dropdown-menu-content-transform-origin) bg-gray-1 border border-gray-a6 rounded-sm relative shadow-md data-[state=open]:animate-popover-show data-[state=closed]:animate-popover-hide"
+        )}
+        {...props}
+      />
+    </DropdownMenuRadix.Portal>
+  );
+}
+
+function DropdownMenuGroup({
+  ...props
+}: React.ComponentProps<typeof DropdownMenuRadix.Group>) {
+  return <DropdownMenuRadix.Group data-slot="dropdown-menu-group" {...props} />;
+}
+
+function DropdownMenuItem({
+  className,
+  ...props
+}: React.ComponentProps<typeof DropdownMenuRadix.Item>) {
+  return (
+    <DropdownMenuRadix.Item
+      data-slot="dropdown-menu-item"
+      className={cn(
+        className,
+        "p-0.5 px-2 hover:bg-accent-3 flex relative cursor-pointer"
+      )}
+      {...props}
+    />
+  );
+}
+
+function DropdownMenuCheckboxItem({
+  children,
+  className,
+  ...props
+}: React.ComponentProps<typeof DropdownMenuRadix.CheckboxItem>) {
+  return (
+    <DropdownMenuRadix.CheckboxItem
+      data-slot="dropdown-menu-checkbox-item"
+      className={cn(
+        className,
+        "p-0.5 px-2 hover:bg-accent-3 flex relative cursor-pointer"
+      )}
+      {...props}
+    >
+      <span className="absolute left-0.5 top-0 bottom-0 items-center flex justify-center">
+        <DropdownMenuRadix.ItemIndicator>
+          <CheckIcon className="text-accent-9" />
+        </DropdownMenuRadix.ItemIndicator>
+      </span>
+      {children}
+    </DropdownMenuRadix.CheckboxItem>
+  );
+}
+
+function DropdownMenuRadioGroup({
+  className,
+  ...props
+}: React.ComponentProps<typeof DropdownMenuRadix.RadioGroup>) {
+  return (
+    <DropdownMenuRadix.RadioGroup
+      data-slot="dropdown-menu-radio-group"
+      className={cn(className)}
+      {...props}
+    />
+  );
+}
+
+function DropdownMenuRadioItem({
+  children,
+  className,
+  ...props
+}: React.ComponentProps<typeof DropdownMenuRadix.RadioItem>) {
+  return (
+    <DropdownMenuRadix.RadioItem
+      data-slot="dropdown-menu-radio-item"
+      className={cn(
+        className,
+        "p-0.5 px-2 hover:bg-accent-3 flex relative cursor-pointer"
+      )}
+      {...props}
+    >
+      <span className="absolute left-0.5 top-0 bottom-0 items-center flex justify-center">
+        <DropdownMenuRadix.ItemIndicator>
+          <DotFilledIcon className="fill-current text-accent-9" />
+        </DropdownMenuRadix.ItemIndicator>
+      </span>
+      {children}
+    </DropdownMenuRadix.RadioItem>
+  );
+}
+
+function DropdownMenuLabel({
+  className,
+  ...props
+}: React.ComponentProps<typeof DropdownMenuRadix.Label>) {
+  return (
+    <DropdownMenuRadix.Label
+      data-slot="dropdown-menu-label"
+      className={cn(className, "p-0.5 px-2 text-gray-12")}
+      {...props}
+    />
+  );
+}
+
+function DropdownMenuSeparator({
+  className,
+  ...props
+}: React.ComponentProps<typeof DropdownMenuRadix.Separator>) {
+  return (
+    <DropdownMenuRadix.Separator
+      data-slot="dropdown-menu-separator"
+      className={cn(className, "m-0.6 h-px bg-gray-a6")}
+      {...props}
+    />
+  );
+}
+
+function DropdownMenuShortcut({ ...props }: React.ComponentProps<"span">) {
+  return <span data-slot="dropdown-menu-shortcut" {...props} />;
+}
+
+function DropdownMenuSub({
+  ...props
+}: React.ComponentProps<typeof DropdownMenuRadix.Sub>) {
+  return <DropdownMenuRadix.Sub data-slot="dropdown-menu-sub" {...props} />;
+}
+
+function DropdownMenuSubTrigger({
+  children,
+  className,
+  ...props
+}: React.ComponentProps<typeof DropdownMenuRadix.SubTrigger>) {
+  return (
+    <DropdownMenuRadix.SubTrigger
+      data-slot="dropdown-menu-sub-trigger"
+      className={cn(
+        className,
+        "p-0.5 px-2 hover:bg-accent-3 flex relative cursor-pointer"
+      )}
+      {...props}
+    >
+      {children}
+      <div className="absolute right-0.5 top-0 bottom-0 items-center flex justify-center">
+        <ChevronRightIcon />
+      </div>
+    </DropdownMenuRadix.SubTrigger>
+  );
+}
+
+function DropdownMenuSubContent({
+  className,
+  ...props
+}: React.ComponentProps<typeof DropdownMenuRadix.SubContent>) {
+  return (
+    <DropdownMenuRadix.SubContent
+      data-slot="dropdown-menu-sub-content"
+      className={cn(
+        className,
+        "z-50 origin-(--radix-dropdown-menu-content-transform-origin) bg-gray-1 border border-gray-a6 rounded-sm relative shadow-md data-[state=open]:animate-popover-show data-[state=closed]:animate-popover-hide"
+      )}
+      {...props}
+    />
+  );
+}
+
+export {
+  DropdownMenu,
+  DropdownMenuPortal,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuLabel,
+  DropdownMenuItem,
+  DropdownMenuCheckboxItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+};
+
+```
+  </Step>
+  <Step>
+    Copy and paste the SplitButton component into your `components/ui/SplitButton.tsx` file.
+
+```tsx
+"use client";
+
+import * as React from "react";
+import { ChevronDownIcon } from "@radix-ui/react-icons";
+import { cn } from "@/utils/class-names";
+import { Button, type ButtonProps } from "@/components/ui/Button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/DropdownMenu";
+
+function SplitButton({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      role="group"
+      data-slot="split-button"
+      className={cn(
+        "inline-flex items-stretch overflow-hidden rounded-sm",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+function SplitButtonAction({ className, ...props }: ButtonProps) {
+  return (
+    <Button
+      data-slot="split-button-action"
+      className={cn("rounded-r-none", className)}
+      {...props}
+    />
+  );
+}
+
+function SplitButtonMenu({
+  className,
+  label = "More actions",
+  children,
+  ...props
+}: React.ComponentProps<typeof DropdownMenuContent> & { label?: string }) {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          data-slot="split-button-menu"
+          aria-label={label}
+          className="w-4 rounded-none border-l border-accent-a7 px-0"
+        >
+          <ChevronDownIcon className="icon" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className={className} {...props}>
+        {children}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+export { SplitButton, SplitButtonAction, SplitButtonMenu };
+
+```
+  </Step>
+</Steps>
+

@@ -1,0 +1,71 @@
+---
+title: Speed Dial
+description: A floating button that opens a stack of actions. Same parts as the floating action menu.
+---
+
+import { ComponentPreview } from "@/components/ComponentPreview"
+import { ComponentSource } from "@/components/ComponentSource"
+import { Steps, Step } from "fumadocs-ui/components/steps"
+
+## Preview
+
+<ComponentPreview name="speed-dial-demo" description="A floating button that opens a stack of actions. Same parts as the floating action menu.">
+
+```tsx
+import { ImageIcon, Link2Icon } from "@radix-ui/react-icons";
+import {
+  SpeedDial,
+  SpeedDialItem,
+  SpeedDialList,
+  SpeedDialTrigger,
+} from "@/components/ui/SpeedDial";
+
+export function SpeedDialDemo() {
+  return (
+    <SpeedDial defaultOpen>
+      <div className="relative h-24 w-full rounded-sm border border-gray-6 bg-gray-2">
+        <SpeedDialList position="absolute">
+          <SpeedDialItem label="Image">
+            <ImageIcon className="icon" />
+          </SpeedDialItem>
+          <SpeedDialItem label="Link">
+            <Link2Icon className="icon" />
+          </SpeedDialItem>
+        </SpeedDialList>
+        <SpeedDialTrigger position="absolute" />
+      </div>
+    </SpeedDial>
+  );
+}
+```
+
+</ComponentPreview>
+
+## Installation
+Make sure that `namespace` is set in your component.json file. Namespace docs: [Learn more about namespaces](/docs/namespace)
+```bash
+pnpm dlx shadcn@latest add @aura/speed-dial
+```
+
+
+
+### Manual
+
+<Steps>
+  <Step>
+    Copy and paste the SpeedDial component into your `components/ui/SpeedDial.tsx` file.
+
+```tsx
+"use client";
+
+export {
+  SpeedDial,
+  SpeedDialItem,
+  SpeedDialList,
+  SpeedDialTrigger,
+} from "@/components/ui/FabMenu";
+
+```
+  </Step>
+</Steps>
+

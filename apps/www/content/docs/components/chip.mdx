@@ -1,0 +1,171 @@
+---
+title: Chip
+description: Standalone assist, filter, and input chips.
+---
+
+import { ComponentPreview } from "@/components/ComponentPreview"
+import { ComponentSource } from "@/components/ComponentSource"
+import { Steps, Step } from "fumadocs-ui/components/steps"
+
+## Preview
+
+<ComponentPreview name="chip-demo" description="Standalone assist, filter, and input chips.">
+
+```tsx
+import { Chip } from "@/components/ui/Chip";
+
+export function ChipDemo() {
+  return <Chip>Suggest a reply</Chip>;
+}
+```
+
+</ComponentPreview>
+
+## Installation
+Make sure that `namespace` is set in your component.json file. Namespace docs: [Learn more about namespaces](/docs/namespace)
+```bash
+pnpm dlx shadcn@latest add @aura/chip
+```
+
+
+
+### Manual
+
+<Steps>
+  <Step>
+    Install the following dependencies:
+
+    ```bash
+pnpm install @radix-ui/react-icons class-variance-authority
+    ```
+  </Step>
+  <Step>
+    Copy and paste the class names utility into your `utils/class-names.ts` file.
+
+```ts
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+
+```
+  </Step>
+  <Step>
+    Copy and paste the Chip component into your `components/ui/Chip.tsx` file.
+
+```tsx
+"use client";
+
+import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
+import { CheckIcon, Cross2Icon } from "@radix-ui/react-icons";
+import { cn } from "@/utils/class-names";
+
+const chipVariants = cva(
+  "inline-flex items-center gap-0.5 rounded-full border px-1.5 py-0.5 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8 motion-reduce:transition-none",
+  {
+    variants: {
+      variant: {
+        assist:
+          "border-gray-6 bg-gray-1 text-gray-12 hover:bg-gray-3",
+        filter:
+          "border-gray-6 bg-gray-2 text-gray-12 hover:bg-gray-3 data-[selected=true]:border-transparent data-[selected=true]:bg-gray-12 data-[selected=true]:text-gray-1",
+        input: "border-gray-6 bg-gray-3 text-gray-12",
+      },
+    },
+    defaultVariants: {
+      variant: "assist",
+    },
+  },
+);
+
+type ChipProps = React.ComponentProps<"button"> &
+  VariantProps<typeof chipVariants> & {
+    selected?: boolean;
+    onRemove?: () => void;
+    removeLabel?: string;
+  };
+
+function Chip({
+  className,
+  variant = "assist",
+  selected,
+  onRemove,
+  removeLabel = "Remove",
+  children,
+  ...props
+}: ChipProps) {
+  if (variant === "input") {
+    return (
+      <span
+        data-slot="chip"
+        data-variant="input"
+        className={cn(chipVariants({ variant }), className)}
+      >
+        <span>{children}</span>
+        <button
+          type="button"
+          aria-label={removeLabel}
+          className="inline-flex size-2 items-center justify-center rounded-full hover:bg-gray-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8"
+          onClick={onRemove}
+        >
+          <Cross2Icon className="icon" />
+        </button>
+      </span>
+    );
+  }
+
+  return (
+    <button
+      type="button"
+      data-slot="chip"
+      data-variant={variant}
+      data-selected={selected ? "true" : "false"}
+      aria-pressed={variant === "filter" ? Boolean(selected) : undefined}
+      className={cn(chipVariants({ variant }), className)}
+      {...props}
+    >
+      {variant === "filter" && selected ? <CheckIcon className="icon" /> : null}
+      {children}
+    </button>
+  );
+}
+
+export { Chip, chipVariants };
+
+```
+  </Step>
+</Steps>
+
+## Usage
+
+### Filter
+
+```tsx
+export const Filter = () => {
+  return (
+    <div className="flex flex-wrap gap-0.5">
+      <Chip variant="filter" selected>
+        Open
+      </Chip>
+      <Chip variant="filter">Closed</Chip>
+    </div>
+  );
+};
+```
+
+### Input
+
+```tsx
+export const Input = () => {
+  return (
+    <Chip variant="input" removeLabel="Remove design">
+      Design
+    </Chip>
+  );
+};
+```
+
