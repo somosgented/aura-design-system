@@ -1,0 +1,3 @@
+header:
+  description: A status spinner reused by Button and FormSubmit.
+extends: _templates/content.yml

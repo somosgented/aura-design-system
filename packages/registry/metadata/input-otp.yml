@@ -1,0 +1,3 @@
+header:
+  description: A one-time code built from SegmentedInput.
+extends: _templates/content.yml

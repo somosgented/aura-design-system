@@ -1,0 +1,3 @@
+header:
+  description: Sets reading direction for a subtree and Radix primitives.
+extends: _templates/content.yml

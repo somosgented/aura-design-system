@@ -407,6 +407,46 @@ export { RadioGroup, RadioGroupItem };
 ```
   </Step>
   <Step>
+    Copy and paste the spinner component into your `components/ui/Spinner.tsx` file.
+
+```tsx
+"use client";
+/**
+ * @description A status spinner. Buttons reuse it while a submit is in flight.
+ */
+import * as React from "react";
+import { SymbolIcon } from "@radix-ui/react-icons";
+
+import { cn } from "@/utils/class-names";
+
+function Spinner({
+  className,
+  label,
+  ...props
+}: React.ComponentProps<"span"> & {
+  label?: string;
+}) {
+  return (
+    <span
+      data-slot="spinner"
+      role={label ? "status" : undefined}
+      className={cn("inline-flex", className)}
+      {...props}
+    >
+      <SymbolIcon
+        className="icon animate-spin motion-reduce:animate-none"
+        aria-hidden
+      />
+      {label ? <span className="sr-only">{label}</span> : null}
+    </span>
+  );
+}
+
+export { Spinner };
+
+```
+  </Step>
+  <Step>
     Copy and paste the switch component into your `components/ui/Switch.tsx` file.
 
 ```tsx
@@ -723,11 +763,12 @@ export const useFormDynamic = (
 import * as React from "react";
 import { ErrorObject } from "ajv";
 import { Form as FormRadix } from "radix-ui";
-import { ChevronDownIcon, SymbolIcon } from "@radix-ui/react-icons";
+import { ChevronDownIcon } from "@radix-ui/react-icons";
 
 import { FieldProps } from "@/hooks/use-dynamic-form";
 import AlertStatus from "@/components/AlertStatus";
 import Button, { ButtonProps } from "@/components/ui/Button";
+import { Spinner } from "@/components/ui/Spinner";
 import { cn } from "@/utils/class-names";
 import {
   Checkbox,
@@ -797,12 +838,7 @@ export const FormSubmit = React.forwardRef<HTMLButtonElement, FormSubmitProps>(
         <Button
           {...buttonProps}
           isLoading={fetchStatus === "loading"}
-          isLoadingText={
-            <>
-              {/* Loading spinner: Tailwind `animate-spin` is an allowed exception (infinite rotation). */}
-              <SymbolIcon className="icon animate-spin" />
-            </>
-          }
+          isLoadingText={<Spinner label="Loading" />}
           className="min-w-10"
         />
       </FormRadix.Submit>

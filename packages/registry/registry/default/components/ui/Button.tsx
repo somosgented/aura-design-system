@@ -6,6 +6,7 @@ import { Slot } from "@radix-ui/react-slot";
 
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/utils/class-names";
+import { Spinner } from "@/components/ui/Spinner";
 
 const buttonVariants = cva("button", {
   variants: {
@@ -80,7 +81,15 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ) : (
           <>
       
-            {isLoading && isLoadingText ? isLoadingText : <>{label}{children}</>}
+            {isLoading && isLoadingText ? (
+              isLoadingText
+            ) : (
+              <>
+                {isLoading ? <Spinner /> : null}
+                {label}
+                {children}
+              </>
+            )}
           </>
         )}
       </Comp>

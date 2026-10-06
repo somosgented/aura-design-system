@@ -98,7 +98,13 @@ function extractDependencies(filePath: string): string[] {
       packageName = importPath.split('/')[0];
     }
     
-    dependencies.add(packageName === "recharts" ? "recharts@2.15.4" : packageName);
+    dependencies.add(
+      packageName === "react-resizable-panels"
+        ? "react-resizable-panels@2.1.9"
+        : packageName === "recharts"
+          ? "recharts@2.15.4"
+          : packageName,
+    );
   }
   
   return Array.from(dependencies).sort();

@@ -38,7 +38,7 @@ export function ControlCenter() {
           </div>
           <div>
             <div className="font-medium text-sm">Living Room</div>
-            <div className="text-xs text-gray-11">Apple TV</div>
+            <div className="text-xs text-gray-11">Television</div>
           </div>
         </Card>
         <Card className="p-1.5 bg-gray-3 border-gray-6 flex flex-col justify-between cursor-pointer hover:bg-gray-4 transition-colors">

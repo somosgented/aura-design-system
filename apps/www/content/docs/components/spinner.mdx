@@ -1,0 +1,97 @@
+---
+title: Spinner
+description: A status spinner reused by Button and FormSubmit.
+---
+
+import { ComponentPreview } from "@/components/ComponentPreview"
+import { ComponentSource } from "@/components/ComponentSource"
+import { Steps, Step } from "fumadocs-ui/components/steps"
+
+## Preview
+
+<ComponentPreview name="spinner-demo" description="A status spinner reused by Button and FormSubmit.">
+
+```tsx
+import { Spinner } from "@/components/ui/Spinner";
+
+export function SpinnerDemo() {
+  return <Spinner label="Loading" />;
+}
+```
+
+</ComponentPreview>
+
+## Installation
+Make sure that `namespace` is set in your component.json file. Namespace docs: [Learn more about namespaces](/docs/namespace)
+```bash
+pnpm dlx shadcn@latest add @aura/spinner
+```
+
+
+
+### Manual
+
+<Steps>
+  <Step>
+    Install the following dependencies:
+
+    ```bash
+pnpm install @radix-ui/react-icons
+    ```
+  </Step>
+  <Step>
+    Copy and paste the class names utility into your `utils/class-names.ts` file.
+
+```ts
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+
+```
+  </Step>
+  <Step>
+    Copy and paste the Spinner component into your `components/ui/Spinner.tsx` file.
+
+```tsx
+"use client";
+/**
+ * @description A status spinner. Buttons reuse it while a submit is in flight.
+ */
+import * as React from "react";
+import { SymbolIcon } from "@radix-ui/react-icons";
+
+import { cn } from "@/utils/class-names";
+
+function Spinner({
+  className,
+  label,
+  ...props
+}: React.ComponentProps<"span"> & {
+  label?: string;
+}) {
+  return (
+    <span
+      data-slot="spinner"
+      role={label ? "status" : undefined}
+      className={cn("inline-flex", className)}
+      {...props}
+    >
+      <SymbolIcon
+        className="icon animate-spin motion-reduce:animate-none"
+        aria-hidden
+      />
+      {label ? <span className="sr-only">{label}</span> : null}
+    </span>
+  );
+}
+
+export { Spinner };
+
+```
+  </Step>
+</Steps>
+

@@ -1,0 +1,3 @@
+header:
+  description: A list row with media, title, description, and actions.
+extends: _templates/content.yml

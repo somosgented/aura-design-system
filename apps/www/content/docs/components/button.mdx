@@ -45,7 +45,7 @@ pnpm dlx shadcn@latest add @aura/button
     Install the following dependencies:
 
     ```bash
-pnpm install @radix-ui/react-slot class-variance-authority
+pnpm install @radix-ui/react-icons @radix-ui/react-slot class-variance-authority
     ```
   </Step>
   <Step>
@@ -63,6 +63,46 @@ export function cn(...inputs: ClassValue[]) {
 ```
   </Step>
   <Step>
+    Copy and paste the spinner component into your `components/ui/Spinner.tsx` file.
+
+```tsx
+"use client";
+/**
+ * @description A status spinner. Buttons reuse it while a submit is in flight.
+ */
+import * as React from "react";
+import { SymbolIcon } from "@radix-ui/react-icons";
+
+import { cn } from "@/utils/class-names";
+
+function Spinner({
+  className,
+  label,
+  ...props
+}: React.ComponentProps<"span"> & {
+  label?: string;
+}) {
+  return (
+    <span
+      data-slot="spinner"
+      role={label ? "status" : undefined}
+      className={cn("inline-flex", className)}
+      {...props}
+    >
+      <SymbolIcon
+        className="icon animate-spin motion-reduce:animate-none"
+        aria-hidden
+      />
+      {label ? <span className="sr-only">{label}</span> : null}
+    </span>
+  );
+}
+
+export { Spinner };
+
+```
+  </Step>
+  <Step>
     Copy and paste the Button component into your `components/ui/Button.tsx` file.
 
 ```tsx
@@ -74,6 +114,7 @@ import { Slot } from "@radix-ui/react-slot";
 
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/utils/class-names";
+import { Spinner } from "@/components/ui/Spinner";
 
 const buttonVariants = cva("button", {
   variants: {
@@ -148,7 +189,15 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ) : (
           <>
       
-            {isLoading && isLoadingText ? isLoadingText : <>{label}{children}</>}
+            {isLoading && isLoadingText ? (
+              isLoadingText
+            ) : (
+              <>
+                {isLoading ? <Spinner /> : null}
+                {label}
+                {children}
+              </>
+            )}
           </>
         )}
       </Comp>
