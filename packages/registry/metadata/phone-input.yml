@@ -1,0 +1,3 @@
+header:
+  description: A phone field with a calling code and a typed number.
+extends: _templates/content.yml

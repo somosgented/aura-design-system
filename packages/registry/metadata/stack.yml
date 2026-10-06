@@ -1,0 +1,3 @@
+header:
+  description: Overlapping panels offset from one another.
+extends: _templates/content.yml

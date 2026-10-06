@@ -1,0 +1,3 @@
+header:
+  description: Columns of cards that move backward and forward.
+extends: _templates/content.yml

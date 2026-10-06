@@ -1,0 +1,111 @@
+---
+title: Timeline
+description: A vertical list of titled moments.
+---
+
+import { ComponentPreview } from "@/components/ComponentPreview"
+import { ComponentSource } from "@/components/ComponentSource"
+import { Steps, Step } from "fumadocs-ui/components/steps"
+
+## Preview
+
+<ComponentPreview name="timeline-demo" description="A vertical list of titled moments.">
+
+```tsx
+import { Timeline, TimelineItem } from "@/components/ui/Timeline";
+
+export function TimelineDemo() {
+  return (
+  <Timeline>
+    <TimelineItem title="Seed" time="09:00">
+      Pick a single color.
+    </TimelineItem>
+    <TimelineItem title="Scale" time="09:10">
+      Build the twelve steps.
+    </TimelineItem>
+    <TimelineItem title="Ship" time="09:30">
+      Components read the same tokens.
+    </TimelineItem>
+  </Timeline>
+)
+}
+```
+
+</ComponentPreview>
+
+## Installation
+Make sure that `namespace` is set in your component.json file. Namespace docs: [Learn more about namespaces](/docs/namespace)
+```bash
+pnpm dlx shadcn@latest add @aura/timeline
+```
+
+
+
+### Manual
+
+<Steps>
+  <Step>
+    Copy and paste the class names utility into your `utils/class-names.ts` file.
+
+```ts
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+
+```
+  </Step>
+  <Step>
+    Copy and paste the Timeline component into your `components/ui/Timeline.tsx` file.
+
+```tsx
+"use client";
+
+import * as React from "react";
+import { cn } from "@/utils/class-names";
+
+function Timeline({ className, label = "Timeline", ...props }: React.ComponentProps<"ol"> & { label?: string }) {
+  return (
+    <ol
+      aria-label={label}
+      data-slot="timeline"
+      className={cn("flex flex-col gap-1", className)}
+      {...props}
+    />
+  );
+}
+
+function TimelineItem({
+  className,
+  title,
+  time,
+  children,
+}: {
+  className?: string;
+  title: string;
+  time?: string;
+  children?: React.ReactNode;
+}) {
+  return (
+    <li data-slot="timeline-item" className={cn("flex gap-1", className)}>
+      <span aria-hidden className="mt-0.5 size-1 shrink-0 rounded-full bg-accent-9" />
+      <div className="flex flex-col gap-0.5">
+        <div className="flex items-baseline gap-0.5">
+          <span className="font-medium">{title}</span>
+          {time ? <time className="text-gray-11">{time}</time> : null}
+        </div>
+        {children ? <p className="m-0 text-gray-11">{children}</p> : null}
+      </div>
+    </li>
+  );
+}
+
+export { Timeline, TimelineItem };
+
+```
+  </Step>
+</Steps>
+

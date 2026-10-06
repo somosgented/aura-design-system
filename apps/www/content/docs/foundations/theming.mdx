@@ -38,6 +38,8 @@ Light status values live on `@theme inline` and are listed on the color page. `.
 
 Those seeds are the switcher’s defaults, stored under `aura-theme-colors`. They are not the `:root` values in `globals.css` (`--accent-9` there is `#bf91ec`). `generateRadixColors` turns a seed into a 12-step scale. Components keep reading `--accent-*` and `--gray-*`.
 
+A single seed color can fill accent, gray, and background for both light and dark. `schemeFromSeed` keeps the seed hue, lowers chroma for the gray companion, and sets a light and a dark background. The switcher applies that scheme immediately and still lets light and dark be edited on their own. An image can supply the seed: the switcher averages the image’s pixels and runs the same scheme.
+
 Ladle preview colors in the same `globals.css` file (`--ladle-bg-color-primary`, `--ladle-color-primary`, and the rest) point at gray steps and `--primary`, so the story canvas follows the theme.
 
 ## What theming does not cover

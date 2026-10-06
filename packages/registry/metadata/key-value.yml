@@ -1,0 +1,3 @@
+header:
+  description: A list of labels and values.
+extends: _templates/content.yml

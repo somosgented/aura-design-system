@@ -1,0 +1,139 @@
+---
+title: Shape
+description: A set of shapes that can mask an image and morph between each other.
+---
+
+import { ComponentPreview } from "@/components/ComponentPreview"
+import { ComponentSource } from "@/components/ComponentSource"
+import { Steps, Step } from "fumadocs-ui/components/steps"
+
+## Preview
+
+<ComponentPreview name="shape-demo" description="A set of shapes that can mask an image and morph between each other.">
+
+```tsx
+import { Shape } from "@/components/ui/Shape";
+
+export function ShapeDemo() {
+  return (
+    <div className="flex flex-wrap items-center gap-1">
+      <Shape name="circle" />
+      <Shape name="square" />
+      <Shape name="diamond" />
+      <Shape name="arch" />
+      <Shape name="pill" />
+    </div>
+  );
+}
+```
+
+</ComponentPreview>
+
+## Installation
+Make sure that `namespace` is set in your component.json file. Namespace docs: [Learn more about namespaces](/docs/namespace)
+```bash
+pnpm dlx shadcn@latest add @aura/shape
+```
+
+
+
+### Manual
+
+<Steps>
+  <Step>
+    Copy and paste the class names utility into your `utils/class-names.ts` file.
+
+```ts
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+
+```
+  </Step>
+  <Step>
+    Copy and paste the Shape component into your `components/ui/Shape.tsx` file.
+
+```tsx
+"use client";
+
+import * as React from "react";
+import { cn } from "@/utils/class-names";
+
+const shapePaths = {
+  circle: "circle(50% at 50% 50%)",
+  square: "inset(0% round 12%)",
+  diamond: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)",
+  arch: "polygon(0% 100%, 0% 42%, 18% 14%, 50% 0%, 82% 14%, 100% 42%, 100% 100%)",
+  pill: "inset(18% 0% round 999px)",
+} as const;
+
+type ShapeName = keyof typeof shapePaths;
+
+function Shape({
+  className,
+  name = "circle",
+  size = "default",
+  ...props
+}: React.ComponentProps<"div"> & {
+  name?: ShapeName;
+  size?: "sm" | "default" | "lg";
+}) {
+  return (
+    <div
+      data-slot="shape"
+      data-shape={name}
+      data-size={size}
+      style={{ clipPath: shapePaths[name] }}
+      className={cn(
+        "bg-accent-9 transition duration-300 ease-in-out motion-reduce:transition-none",
+        size === "sm" && "size-3",
+        size === "default" && "size-8",
+        size === "lg" && "size-12",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+function ShapeMorph({
+  names = ["circle", "diamond", "arch", "pill", "square"],
+  interval = 900,
+}: {
+  names?: ShapeName[];
+  interval?: number;
+}) {
+  const [index, setIndex] = React.useState(0);
+  React.useEffect(() => {
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (query.matches) return;
+    const timer = window.setInterval(() => {
+      setIndex((current) => (current + 1) % names.length);
+    }, interval);
+    return () => window.clearInterval(timer);
+  }, [interval, names.length]);
+
+  return <Shape name={names[index]} size="sm" />;
+}
+
+export { Shape, ShapeMorph, shapePaths };
+export type { ShapeName };
+
+```
+  </Step>
+</Steps>
+
+## Usage
+
+### Mask
+
+```tsx
+export const Mask = () => {
+  return <Shape name="arch" size="lg" role="img" aria-label="Arch mask" />;
+};
+```
+

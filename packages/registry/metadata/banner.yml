@@ -1,0 +1,3 @@
+header:
+  description: A full-width notice with an optional action and dismiss button.
+extends: _templates/content.yml
