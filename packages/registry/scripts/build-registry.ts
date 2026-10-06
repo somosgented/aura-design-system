@@ -98,7 +98,7 @@ function extractDependencies(filePath: string): string[] {
       packageName = importPath.split('/')[0];
     }
     
-    dependencies.add(packageName);
+    dependencies.add(packageName === "recharts" ? "recharts@2.15.4" : packageName);
   }
   
   return Array.from(dependencies).sort();

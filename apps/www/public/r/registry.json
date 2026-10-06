@@ -667,6 +667,28 @@
       ]
     },
     {
+      "name": "area-chart",
+      "type": "registry:ui",
+      "title": "AreaChart",
+      "description": "The AreaChart component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/AreaChart.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-icons",
+        "recharts@2.15.4"
+      ],
+      "registryDependencies": [
+        "@aura/card",
+        "@aura/chart",
+        "@aura/class-names",
+        "@aura/select"
+      ]
+    },
+    {
       "name": "aspect-ratio",
       "type": "registry:ui",
       "title": "AspectRatio",
@@ -886,6 +908,34 @@
       ],
       "registryDependencies": [
         "@aura/button",
+        "@aura/class-names"
+      ]
+    },
+    {
+      "name": "chart",
+      "type": "registry:ui",
+      "title": "Chart",
+      "description": "The Chart component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Chart.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/default/styles/chart.css",
+          "type": "registry:component",
+          "target": "./styles/chart.css"
+        }
+      ],
+      "css": {
+        "@layer components": {
+          "@import \"../styles/chart.css\"": {}
+        }
+      },
+      "dependencies": [
+        "recharts@2.15.4"
+      ],
+      "registryDependencies": [
         "@aura/class-names"
       ]
     },

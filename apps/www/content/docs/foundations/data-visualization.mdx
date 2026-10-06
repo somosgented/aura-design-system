@@ -1,13 +1,53 @@
 ---
 title: Data visualization
-description: Placeholder. Aura has not defined a charting or data-visualization foundation.
+description: Chart series tokens for Aura charts — accent and status contrast, gray grid and ticks, 250ms motion.
 icon: ChartColumn
 ---
 
-Not defined yet.
+Charts use the same color, type, and motion rules as the rest of Aura. The first family is the [area chart](/docs/components/area-chart), drawn with Recharts and the `@aura/chart` container.
 
-The Apple catalog links this category to Human Interface Guidelines charting guidance. Aura has no chart palette, axis type scale, series order, or annotation rule in tokens, Stylus, lint, or `DESIGN.md`.
+## Series
 
-`@aura/data-grid` is a table component for dense records. It is documented with the component catalog and with the type and spacing rules for cells (`text-sm` body, uppercase tracked headers, `px-1` or `px-1.5` row padding, `ui-monospace` for identifiers). Those are grid rules, not a visualization system.
+Five series tokens live on `:root` in `packages/registry/styles/globals.css`. They point at colors that already exist, so a theme change retints the chart.
 
-When a chart foundation exists, it should land here as tokens and rules taken from the codebase, the same way [Color](/docs/foundations/color) and [Typography](/docs/foundations/typography) do.
+| Token | Points at | Role |
+| --- | --- | --- |
+| `--chart-1` | `--accent-9` (`--primary`) | First series, brand |
+| `--chart-2` | `--info-contrast` | Second series |
+| `--chart-3` | `--success-contrast` | Third series |
+| `--chart-4` | `--warning-contrast` | Fourth series |
+| `--chart-5` | `--danger-contrast` | Fifth series |
+
+Under `prefers-color-scheme: dark`, `--chart-2` through `--chart-5` use the lighter status-contrast values (`#8cb4ff`, `#67cf9d`, `#efe08e`, `#ff9469`) so strokes stay visible on the dark gray canvas. `--chart-1` keeps following `--accent-9`.
+
+A chart config passes those tokens through. The container writes `--color-<series>` for the plot. Colors that are not a `var(--token)` are ignored.
+
+## Axes, grid, and surface
+
+| Part | Rule |
+| --- | --- |
+| Grid | Gray step 6, solid |
+| Tick labels | Gray step 11, 13px (`text-xs` is the utility size; ticks are set at 13px) |
+| Tooltip | `gray-1` surface, gray step 6 border, `rounded-sm`. Values use `font-mono` |
+| Plot focus | Accent step 8, 2px outline |
+| Card | The area chart sits in `Card`: `gray-2` fill, gray step 6 border, `rounded-md` |
+
+There is no separate annotation, axis-title, or chart-palette scale beyond these five series.
+
+## Motion
+
+`ChartArea` animates for **250ms** with `ease-out`. `prefers-reduced-motion: reduce` sets `isAnimationActive` to false. The chart stylesheet also shortens CSS animation and transitions on the plot.
+
+## What is still open
+
+Bar, line, pie, radar, and radial charts are not in the registry yet. `@aura/data-grid` remains a table, with its own type and spacing rules, and is not this chart system.
+
+## Related
+
+- [Area chart](/docs/components/area-chart)
+- [Chart](/docs/components/chart)
+- [Color](/docs/foundations/color)
+- [Theming](/docs/foundations/theming)
+- [Motion](/docs/foundations/motion)
+- `packages/registry/registry/default/components/ui/Chart.tsx`
+- `packages/registry/registry/default/styles/chart.css`

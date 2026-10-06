@@ -1,0 +1,3 @@
+header:
+  description: Chart container, tooltip, and legend. Series colors use Aura chart tokens.
+extends: _templates/content.yml

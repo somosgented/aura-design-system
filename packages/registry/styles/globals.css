@@ -24,6 +24,11 @@
   --color-success: var(--success);
   --color-info-contrast: var(--info-contrast);
   --color-info: var(--info);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
   --secundary-foreground: var(--secundary-foreground);
   --secundary: var(--secundary);
   --primary-foreground: var(--primary-foreground);
@@ -155,6 +160,13 @@
   --secundary: var(--accent-8);
   --secundary-foreground: var(--accent-contrast);
 
+  /* Chart series. Step 9 brand, then status contrast so .dark and the theme switcher retint them. */
+  --chart-1: var(--accent-9);
+  --chart-2: var(--info-contrast);
+  --chart-3: var(--success-contrast);
+  --chart-4: var(--warning-contrast);
+  --chart-5: var(--danger-contrast);
+
   /* Ladle tokens */
   --ladle-bg-color-primary: var(--gray-1);
   --ladle-bg-color-secondary: var(--gray-2);
@@ -262,7 +274,10 @@
     --gray-indicator: #5268b8;
     --gray-track: #5268b8;
 
-
+    --chart-2: #8cb4ff;
+    --chart-3: #67cf9d;
+    --chart-4: #efe08e;
+    --chart-5: #ff9469;
   }
 }
 
@@ -285,6 +300,7 @@
   @import "../registry/default/styles/tooltip.css";
   @import "../registry/default/styles/selection-toolbar.css";
   @import "../registry/default/styles/file-upload.css";
+  @import "../registry/default/styles/chart.css";
 
   html {
     font-size: 17px;
