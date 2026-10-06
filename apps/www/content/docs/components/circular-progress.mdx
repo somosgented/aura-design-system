@@ -1,0 +1,108 @@
+---
+title: Circular Progress
+description: Determinate progress drawn as a circle.
+---
+
+import { ComponentPreview } from "@/components/ComponentPreview"
+import { ComponentSource } from "@/components/ComponentSource"
+import { Steps, Step } from "fumadocs-ui/components/steps"
+
+## Preview
+
+<ComponentPreview name="circular-progress-demo" description="Determinate progress drawn as a circle.">
+
+```tsx
+import { CircularProgress } from "@/components/ui/CircularProgress";
+
+export function CircularProgressDemo() {
+  return <CircularProgress value={64} label="Upload" />;
+}
+```
+
+</ComponentPreview>
+
+## Installation
+Make sure that `namespace` is set in your component.json file. Namespace docs: [Learn more about namespaces](/docs/namespace)
+```bash
+pnpm dlx shadcn@latest add @aura/circular-progress
+```
+
+
+
+### Manual
+
+<Steps>
+  <Step>
+    Copy and paste the class names utility into your `utils/class-names.ts` file.
+
+```ts
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+
+```
+  </Step>
+  <Step>
+    Copy and paste the CircularProgress component into your `components/ui/CircularProgress.tsx` file.
+
+```tsx
+"use client";
+
+import * as React from "react";
+import { cn } from "@/utils/class-names";
+
+function CircularProgress({
+  className,
+  value = 0,
+  max = 100,
+  label = "Progress",
+  ...props
+}: React.ComponentProps<"div"> & {
+  value?: number;
+  max?: number;
+  label?: string;
+}) {
+  const safeMax = max > 0 ? max : 100;
+  const ratio = Math.min(1, Math.max(0, value / safeMax));
+  const radius = 16;
+  const circumference = 2 * Math.PI * radius;
+  return (
+    <div
+      role="progressbar"
+      aria-label={label}
+      aria-valuemin={0}
+      aria-valuemax={safeMax}
+      aria-valuenow={Math.round(value)}
+      data-slot="circular-progress"
+      className={cn("relative inline-flex size-4 items-center justify-center", className)}
+      {...props}
+    >
+      <svg viewBox="0 0 40 40" className="size-4 -rotate-90" aria-hidden="true">
+        <circle cx="20" cy="20" r={radius} fill="none" strokeWidth="3" className="stroke-gray-4" />
+        <circle
+          cx="20"
+          cy="20"
+          r={radius}
+          fill="none"
+          strokeWidth="3"
+          strokeLinecap="round"
+          className="stroke-accent-9"
+          strokeDasharray={circumference}
+          strokeDashoffset={circumference * (1 - ratio)}
+        />
+      </svg>
+      <span className="absolute text-xs text-gray-12">{Math.round(ratio * 100)}</span>
+    </div>
+  );
+}
+
+export { CircularProgress };
+
+```
+  </Step>
+</Steps>
+

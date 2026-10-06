@@ -136,6 +136,9 @@ import {
   CheckboxDemoIndeterminate
 } from "@/components/demos/checkbox-demo"
 import { 
+  CircularProgressDemo
+} from "@/components/demos/circular-progress-demo"
+import { 
   CollapsibleDemo
 } from "@/components/demos/collapsible-demo"
 import { 
@@ -224,6 +227,9 @@ import {
   HoverCardDemo
 } from "@/components/demos/hover-card-demo"
 import { 
+  IconDemo
+} from "@/components/demos/icon-demo"
+import { 
   InputDemo
 } from "@/components/demos/input-demo"
 import { 
@@ -252,6 +258,9 @@ import {
 import { 
   LabelDemo
 } from "@/components/demos/label-demo"
+import { 
+  LoadingIndicatorDemo
+} from "@/components/demos/loading-indicator-demo"
 import { 
   MarkerDemo,
   MarkerDemoVariants,
@@ -348,6 +357,9 @@ import {
   ScrollAreaDemo
 } from "@/components/demos/scroll-area-demo"
 import { 
+  SearchDemo
+} from "@/components/demos/search-demo"
+import { 
   SectionDemo
 } from "@/components/demos/section-demo"
 import { 
@@ -375,6 +387,10 @@ import {
 import { 
   SeparatorDemo
 } from "@/components/demos/separator-demo"
+import { 
+  ShapeDemo,
+  ShapeDemoMask
+} from "@/components/demos/shape-demo"
 import { 
   SheetDemo
 } from "@/components/demos/sheet-demo"
@@ -445,6 +461,9 @@ import {
 import { 
   TextareaDemo
 } from "@/components/demos/textarea-demo"
+import { 
+  TimePickerDemo
+} from "@/components/demos/time-picker-demo"
 import { 
   ToggleDemo,
   ToggleIconsDemo
@@ -730,6 +749,9 @@ export const Registry = {
   "checkbox-demo-indeterminate": {
     component: CheckboxDemoIndeterminate,
   },
+  "circular-progress-demo": {
+    component: CircularProgressDemo,
+  },
   "collapsible-demo": {
     component: CollapsibleDemo,
   },
@@ -898,6 +920,9 @@ export const Registry = {
   "hover-card-demo": {
     component: HoverCardDemo,
   },
+  "icon-demo": {
+    component: IconDemo,
+  },
   "input-demo": {
     component: InputDemo,
   },
@@ -948,6 +973,9 @@ export const Registry = {
   },
   "label-demo": {
     component: LabelDemo,
+  },
+  "loading-indicator-demo": {
+    component: LoadingIndicatorDemo,
   },
   "marker-demo": {
     component: MarkerDemo,
@@ -1126,6 +1154,9 @@ export const Registry = {
   "scroll-area-demo": {
     component: ScrollAreaDemo,
   },
+  "search-demo": {
+    component: SearchDemo,
+  },
   "section-demo": {
     component: SectionDemo,
   },
@@ -1179,6 +1210,12 @@ export const Registry = {
   },
   "separator-demo": {
     component: SeparatorDemo,
+  },
+  "shape-demo": {
+    component: ShapeDemo,
+  },
+  "shape-demo-mask": {
+    component: ShapeDemoMask,
   },
   "sheet-demo": {
     component: SheetDemo,
@@ -1311,6 +1348,9 @@ export const Registry = {
   },
   "textarea-demo": {
     component: TextareaDemo,
+  },
+  "time-picker-demo": {
+    component: TimePickerDemo,
   },
   "toggle-demo": {
     component: ToggleDemo,
