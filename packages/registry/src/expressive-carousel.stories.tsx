@@ -3,7 +3,7 @@ import {
   ExpressiveCarouselItem,
 } from "../registry/default/components/ui/ExpressiveCarousel";
 
-const tones = ["bg-accent-4", "bg-accent-5", "bg-accent-6", "bg-accent-7", "bg-accent-8"];
+const tones = ["bg-accent-3", "bg-accent-4", "bg-accent-5", "bg-gray-3", "bg-gray-4"];
 
 export const Default = () => {
   return (

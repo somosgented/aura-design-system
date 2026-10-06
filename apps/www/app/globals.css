@@ -333,6 +333,7 @@ select {
   @import "../../../packages/registry/registry/default/styles/responsive-dropdown-menu.css";
   @import "../../../packages/registry/registry/default/styles/selection-toolbar.css";
   @import "../../../packages/registry/registry/default/styles/chart.css";
+  @import "../../../packages/registry/registry/default/styles/marquee.animation.css";
 
   .fd-step:before {
     width: 39px!important;

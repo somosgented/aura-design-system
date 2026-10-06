@@ -23,18 +23,13 @@ function CompareSlider({
       <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - value}% 0 0)` }}>
         {before}
       </div>
-      <div
-        aria-hidden
-        className="absolute inset-y-0 w-0.5 bg-gray-12"
-        style={{ left: `${value}%` }}
-      />
       <input
         type="range"
         min={0}
         max={100}
         value={value}
         aria-label={label}
-        className="absolute inset-x-1 bottom-1"
+        className="compare-range"
         onChange={(event) => setValue(Number(event.target.value))}
       />
     </div>

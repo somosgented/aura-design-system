@@ -39,7 +39,7 @@ function TagsInput({
   return (
     <div data-slot="tags-input" className={cn("flex w-full max-w-xl flex-col gap-0.5", className)}>
       <label htmlFor={id}>{label}</label>
-      <div className="flex flex-wrap items-center gap-0.5 rounded-sm border border-gray-7 bg-gray-1 p-0.5">
+      <div className="flex flex-wrap items-center gap-0.5 rounded-sm border border-gray-7 bg-gray-1 p-0.5 focus-within:ring-2 focus-within:ring-accent-8">
         {tags.map((tag) => (
           <span key={tag} className="inline-flex items-center gap-0.5 rounded-full bg-gray-3 px-1 py-0.5">
             {tag}
@@ -57,7 +57,7 @@ function TagsInput({
           id={id}
           value={draft}
           placeholder={placeholder}
-          className="min-w-16 flex-1 border-0 bg-transparent px-0.5 py-0.5 text-gray-12 focus-visible:outline-none"
+          className="default min-w-16 flex-1 border-0 bg-transparent px-0.5 py-0.5 text-gray-12 focus-visible:outline-none"
           onChange={(event) => setDraft(event.target.value)}
           onKeyDown={(event) => {
             if (event.key === "Enter" || event.key === ",") {

@@ -24,11 +24,11 @@ function SplitButton({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-function SplitButtonAction({ className, ...props }: ButtonProps) {
+function SplitButtonAction({ variant, ...props }: ButtonProps) {
   return (
     <Button
       data-slot="split-button-action"
-      className={cn("rounded-r-none", className)}
+      variant={variant ?? "split"}
       {...props}
     />
   );
@@ -45,8 +45,8 @@ function SplitButtonMenu({
       <DropdownMenuTrigger asChild>
         <Button
           data-slot="split-button-menu"
+          variant="splitMenu"
           aria-label={label}
-          className="w-4 rounded-none border-l border-accent-a7 px-0"
         >
           <ChevronDownIcon className="icon" />
         </Button>

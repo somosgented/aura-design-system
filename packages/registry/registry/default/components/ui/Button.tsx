@@ -16,6 +16,8 @@ const buttonVariants = cva("button", {
       pill: "button-pill border border-gray-6 text-gray-11 bg-gray-2 hover:bg-gray-3",
       link: "button-link",
       menu: "button-menu",
+      split: "button-fill button-split-action",
+      splitMenu: "button-fill button-split-menu",
     },
     size: {
       default: "h-4",

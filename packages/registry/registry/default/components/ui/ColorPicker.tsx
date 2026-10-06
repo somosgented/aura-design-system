@@ -38,14 +38,14 @@ function ColorPicker({
           type="color"
           aria-label={`${label} picker`}
           value={current}
-          className="size-4 shrink-0 cursor-pointer bg-transparent"
+          className="size-4 shrink-0 cursor-pointer bg-transparent p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8"
           onChange={(event) => commit(event.target.value)}
         />
         <input
           id={id}
           value={text}
           spellCheck={false}
-          className="w-12 rounded-sm border border-gray-7 bg-gray-1 px-1 py-0.5 text-gray-12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8"
+          className="default w-12 rounded-sm border border-gray-7 bg-gray-1 px-1 py-0.5 text-gray-12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8"
           onChange={(event) => {
             const next = event.target.value;
             setText(next);

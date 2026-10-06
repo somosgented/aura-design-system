@@ -18,8 +18,8 @@ const statusVariants = cva("inline-flex items-center gap-0.5", {
 
 const dot = {
   online: "bg-accent-9",
-  away: "bg-gray-9",
-  busy: "bg-gray-12",
+  away: "bg-warning-contrast",
+  busy: "bg-danger-contrast",
   offline: "bg-gray-7",
 } as const;
 

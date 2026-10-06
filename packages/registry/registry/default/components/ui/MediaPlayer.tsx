@@ -78,6 +78,7 @@ function MediaPlayer({
         step={0.1}
         value={Math.min(time, duration || 0)}
         aria-label="Seek"
+        className="w-full"
         onChange={(event) => {
           const next = Number(event.target.value);
           if (media.current) media.current.currentTime = next;
