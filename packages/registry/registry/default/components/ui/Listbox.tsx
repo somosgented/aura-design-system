@@ -27,32 +27,36 @@ function Listbox({
   const [uncontrolled, setUncontrolled] = React.useState(defaultValue ?? items[0]?.value);
   const current = value ?? uncontrolled;
   const enabled = items.filter((item) => !item.disabled);
+  const refs = React.useRef(new Map<string, HTMLButtonElement>());
 
   const select = (next: string) => {
     if (value === undefined) setUncontrolled(next);
     onValueChange?.(next);
+    refs.current.get(next)?.focus();
+  };
+
+  const move = (delta: number) => {
+    const index = enabled.findIndex((item) => item.value === current);
+    const next = enabled[(index + delta + enabled.length) % enabled.length];
+    if (next) select(next.value);
   };
 
   return (
     <div
       role="listbox"
       aria-label={label}
-      tabIndex={0}
       data-slot="listbox"
       className={cn(
-        "flex w-full max-w-xl flex-col rounded-sm border border-gray-6 bg-gray-1 p-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8",
+        "flex w-full max-w-xl flex-col rounded-sm border border-gray-6 bg-gray-1 p-0.5",
         className,
       )}
       onKeyDown={(event) => {
-        const index = enabled.findIndex((item) => item.value === current);
         if (event.key === "ArrowDown") {
           event.preventDefault();
-          const next = enabled[(index + 1) % enabled.length];
-          if (next) select(next.value);
+          move(1);
         } else if (event.key === "ArrowUp") {
           event.preventDefault();
-          const next = enabled[(index - 1 + enabled.length) % enabled.length];
-          if (next) select(next.value);
+          move(-1);
         }
       }}
     >
@@ -61,8 +65,13 @@ function Listbox({
         return (
           <button
             key={item.value}
+            ref={(node) => {
+              if (node) refs.current.set(item.value, node);
+              else refs.current.delete(item.value);
+            }}
             type="button"
             role="option"
+            tabIndex={selected ? 0 : -1}
             aria-selected={selected}
             disabled={item.disabled}
             className="rounded-sm px-1 py-0.5 text-start text-gray-12 hover:bg-gray-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8 disabled:opacity-50 aria-selected:bg-accent-3"

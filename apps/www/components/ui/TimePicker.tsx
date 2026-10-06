@@ -70,7 +70,7 @@ function TimePicker({
         <input
           value={text}
           inputMode="numeric"
-          className="w-12 rounded-sm border border-gray-7 bg-gray-1 px-1 py-0.5 text-gray-12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8"
+          className="default w-12 rounded-sm border border-gray-7 bg-gray-1 px-1 py-0.5 text-gray-12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8"
           onChange={(event) => {
             const next = event.target.value;
             setText(next);
@@ -98,7 +98,8 @@ function TimePicker({
         </button>
         <button
           type="button"
-          className="rounded-sm px-1 py-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8"
+          aria-pressed={isPm}
+          className="rounded-sm px-1 py-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8 aria-pressed:bg-accent-3"
           onClick={() => commit({ hour: (current.hour + 12) % 24, minute: current.minute })}
         >
           {isPm ? "PM" : "AM"}
@@ -106,8 +107,9 @@ function TimePicker({
       </div>
       <div
         role="group"
+        tabIndex={0}
         aria-label={selecting === "hour" ? "Hour dial" : "Minute dial"}
-        className="relative size-16 rounded-full border border-gray-6 bg-gray-2"
+        className="relative size-20 rounded-full border border-gray-6 bg-gray-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8"
         onKeyDown={(event) => {
           if (event.key !== "ArrowUp" && event.key !== "ArrowDown") return;
           event.preventDefault();
@@ -128,10 +130,11 @@ function TimePicker({
               type="button"
               aria-label={selecting === "hour" ? `${mark}` : `${pad(mark)} minutes`}
               aria-pressed={selected}
-              className="absolute inline-flex size-3 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full hover:bg-gray-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8 aria-pressed:bg-accent-9 aria-pressed:text-accent-contrast"
+              tabIndex={-1}
+              className="absolute inline-flex size-2.5 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full hover:bg-gray-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8 aria-pressed:bg-accent-9 aria-pressed:text-accent-contrast"
               style={{
-                left: `${50 + Math.cos(angle) * 38}%`,
-                top: `${50 + Math.sin(angle) * 38}%`,
+                left: `${50 + Math.cos(angle) * 32}%`,
+                top: `${50 + Math.sin(angle) * 32}%`,
               }}
               onClick={() => {
                 if (selecting === "hour") {

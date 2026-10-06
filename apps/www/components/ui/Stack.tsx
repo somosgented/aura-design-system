@@ -11,7 +11,9 @@ function Stack({ className, children, ...props }: React.ComponentProps<"div">) {
         <div
           key={index}
           className="absolute inset-0 rounded-sm border border-gray-6 bg-gray-1 p-1 shadow-sm"
-          style={{ transform: `translate(${index * 8}px, ${index * 8}px)` }}
+          style={{
+            transform: `translate(calc(var(--aura) * 0.5 * ${index}), calc(var(--aura) * 0.5 * ${index}))`,
+          }}
         >
           {child}
         </div>

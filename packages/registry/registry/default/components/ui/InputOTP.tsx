@@ -60,9 +60,11 @@ function InputOTP({
         <React.Fragment key={group[0]}>
           {groupIndex > 0 ? <MinusIcon className="icon" aria-hidden /> : null}
           <SegmentedInput
+            center
             disabled={disabled}
             invalid={invalid}
             aria-label="One-time code"
+            className="gap-0.5"
           >
             {group.map((index) => (
               <SegmentedInputItem
@@ -78,7 +80,8 @@ function InputOTP({
                 spellCheck={false}
                 aria-label={`Digit ${index + 1} of ${length}`}
                 maxLength={length}
-                className="w-3 flex-none text-center"
+                position="isolated"
+                className="w-3 flex-none"
                 onChange={(event) => {
                   const raw = event.target.value.replace(/\D/g, "");
                   if (!raw) {

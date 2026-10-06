@@ -1,0 +1,24 @@
+@theme animatons {
+  --animate-marquee: aura-marquee 12s linear infinite;
+}
+@layer components {
+  @keyframes aura-marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  [data-slot="marquee"]:hover [data-animate="marquee"],
+  [data-slot="marquee"]:focus-within [data-animate="marquee"] {
+    animation: var(--animate-marquee);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-slot="marquee"] [data-animate="marquee"] {
+      animation: none;
+    }
+  }
+}

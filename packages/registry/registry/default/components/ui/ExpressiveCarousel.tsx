@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { cn } from "@/utils/class-names";
+import { Button } from "@/components/ui/Button";
 
 function useReducedMotion() {
   const [reduced, setReduced] = React.useState(false);
@@ -45,7 +46,25 @@ function ExpressiveCarousel({
     layout();
   }, [layout, children]);
 
+  const scrollByDir = (direction: number) => {
+    const root = scroller.current;
+    if (!root) return;
+    root.scrollBy({
+      left: direction * root.clientWidth * 0.6,
+      behavior: reduced ? "auto" : "smooth",
+    });
+  };
+
   return (
+    <div data-slot="expressive-carousel-frame" className="flex flex-col gap-0.5">
+      <div className="flex items-center justify-end gap-0.5">
+        <Button type="button" variant="pill" size="sm" onClick={() => scrollByDir(-1)}>
+          Previous
+        </Button>
+        <Button type="button" size="sm" onClick={() => scrollByDir(1)}>
+          Next
+        </Button>
+      </div>
     <div
       ref={scroller}
       role="region"
@@ -78,6 +97,7 @@ function ExpressiveCarousel({
       }}
     >
       {children}
+    </div>
     </div>
   );
 }

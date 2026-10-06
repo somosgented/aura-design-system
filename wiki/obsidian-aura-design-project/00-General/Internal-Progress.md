@@ -4,9 +4,9 @@ date: 2026-10-06
 tags: [dev-log, logic]
 ---
 ## Summary
-Fixed InputOTP / SegmentedInput caret overflow: items now opt out of legacy `input:not(.default)` styles and set `py-0 leading-none`. Utils docs section remains separate under `/docs/utils`.
+The 21 recent-component audit fails are fixed in registry components, docs demos, and the legacy field rule. Notes live in [[Recent-Components-Audit]]. SegmentedInput keeps full side borders and `py-0 leading-none` so the caret stays inside the cells.
 
 ## Context
-- Related: [[Segmented-Input]] [[Media-Utilities]] [[Collection-Display]] [[Input-Controls]]
-- Implementation Path: `packages/registry/registry/default/components/ui/SegmentedInput.tsx`
-- Next: confirm focus caret sits inside cells in Ladle `input-otp` story; watch docs CI on `canary`.
+- Related: [[Recent-Components-Audit]] [[Segmented-Input]] [[Media-Utilities]] [[Collection-Display]] [[Input-Controls]]
+- Implementation Path: `packages/registry/registry/default/components/ui/`
+- Next: keep the input rule limited to text fields. Do not put text-field height back on range or color inputs.

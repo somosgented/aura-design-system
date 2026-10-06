@@ -28,6 +28,7 @@ interface SegmentedInputContextValue {
   disabled?: boolean;
   invalid?: boolean;
   required?: boolean;
+  center?: boolean;
 }
 
 const SegmentedInputContext =
@@ -49,6 +50,7 @@ interface SegmentedInputProps extends React.ComponentProps<"div"> {
   disabled?: boolean;
   invalid?: boolean;
   required?: boolean;
+  center?: boolean;
 }
 
 function SegmentedInput(props: SegmentedInputProps) {
@@ -62,6 +64,7 @@ function SegmentedInput(props: SegmentedInputProps) {
     disabled,
     invalid,
     required,
+    center = false,
     ...rootProps
   } = props;
 
@@ -75,8 +78,9 @@ function SegmentedInput(props: SegmentedInputProps) {
       disabled,
       invalid,
       required,
+      center,
     }),
-    [dir, orientation, size, disabled, invalid, required],
+    [dir, orientation, size, disabled, invalid, required, center],
   );
 
   const childrenArray = React.Children.toArray(children);
@@ -160,6 +164,10 @@ const segmentedInputItemVariants = cva(
         default: "h-3 px-1 py-0 leading-none",
         lg: "h-4 px-1.5 py-0 leading-none",
       },
+      center: {
+        true: "text-center",
+        false: "",
+      },
     },
     compoundVariants: [
       {
@@ -182,6 +190,7 @@ const segmentedInputItemVariants = cva(
       position: "isolated",
       orientation: "horizontal",
       size: "default",
+      center: false,
     },
   },
 );
@@ -221,6 +230,7 @@ function SegmentedInputItem(props: SegmentedInputItemProps) {
           position,
           orientation: context.orientation,
           size: context.size,
+          center: context.center,
           className,
         }),
       )}

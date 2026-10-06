@@ -1,6 +1,6 @@
 ---
 title: Icon
-description: A wrapper for icons, including marks built with createIcon.
+description: A wrapper for Radix icons.
 ---
 
 import { ComponentPreview } from "@/components/ComponentPreview"
@@ -9,12 +9,11 @@ import { Steps, Step } from "fumadocs-ui/components/steps"
 
 ## Preview
 
-<ComponentPreview name="icon-demo" description="A wrapper for icons, including marks built with createIcon.">
+<ComponentPreview name="icon-demo" description="Radix icons inside the icon wrapper.">
 
 ```tsx
-import { CheckIcon } from "@radix-ui/react-icons";
+import { CheckIcon, StarFilledIcon } from "@radix-ui/react-icons";
 import { Icon } from "@/components/ui/Icon";
-import { createIcon } from "@/utils/create-icon";
 
 export function IconDemo() {
   return (
@@ -22,8 +21,8 @@ export function IconDemo() {
       <Icon label="Saved">
         <CheckIcon className="icon" />
       </Icon>
-      <Icon size="lg">
-        <Mark />
+      <Icon size="lg" label="Favorite">
+        <StarFilledIcon className="icon" />
       </Icon>
     </div>
   );
