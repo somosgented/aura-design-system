@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "field-control-variants",
+  "type": "registry:lib",
+  "title": "field-control-variants",
+  "description": "Utility: field-control-variants",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "files": [
+    {
+      "path": "registry/default/utils/field-control-variants.ts",
+      "content": "import { cva, type VariantProps } from \"class-variance-authority\";\n\n/**\n * Closed-field chrome shared by native controls.\n * `default` opts out of the legacy select height so the 48px tap target applies.\n * Focus uses the accent step reserved for focus rings.\n */\nconst fieldControlVariants = cva(\"\", {\n  variants: {\n    variant: {\n      primary:\n        \"default w-full appearance-none rounded-md border border-gray-7 bg-gray-3 p text-gray-12 shadow-none transition placeholder:text-gray-11 hover:border-gray-8 hover:bg-gray-4 focus-visible:border-accent-8 focus-visible:bg-gray-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8/25 disabled:cursor-not-allowed disabled:opacity-60\",\n      shell:\n        \"naked h-auto min-h-0 w-full border-0 bg-transparent p-0 p text-gray-12 shadow-none placeholder:font-normal placeholder:text-gray-11 focus-visible:outline-none focus-visible:ring-0\",\n      chip:\n        \"default h-auto min-h-0 w-auto cursor-pointer rounded-sm border border-gray-7 bg-gray-3 px-1 py-0.5 p text-gray-12 hover:bg-gray-4 focus-visible:border-accent-8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8/25\",\n    },\n    size: {\n      md: \"\",\n      sm: \"\",\n    },\n  },\n  compoundVariants: [\n    {\n      variant: \"primary\",\n      size: \"md\",\n      // eslint-disable-next-line shadcn/no-arbitrary-values -- 48px tap target is required and is not a 13px step\n      className: \"h-[48px] min-h-[48px] px-1.5 py-1\",\n    },\n    {\n      variant: \"primary\",\n      size: \"sm\",\n      // eslint-disable-next-line shadcn/no-arbitrary-values -- 48px tap target and 44px compact height are required and are not 13px steps\n      className: \"h-[48px] min-h-[48px] px-1 py-0.5 sm:h-[44px] sm:min-h-[44px] sm:px-1.5 sm:py-1\",\n    },\n  ],\n  defaultVariants: {\n    variant: \"primary\",\n    size: \"md\",\n  },\n});\n\ntype FieldControlVariantProps = VariantProps<typeof fieldControlVariants>;\n\nexport { fieldControlVariants };\nexport type { FieldControlVariantProps };\n",
+      "type": "registry:lib"
+    }
+  ]
+}

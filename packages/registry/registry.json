@@ -1626,7 +1626,8 @@
         "@radix-ui/react-icons"
       ],
       "registryDependencies": [
-        "@aura/class-names"
+        "@aura/class-names",
+        "@aura/field-control-variants"
       ]
     },
     {
@@ -1757,8 +1758,7 @@
       ],
       "registryDependencies": [
         "@aura/button",
-        "@aura/class-names",
-        "@aura/stepper"
+        "@aura/class-names"
       ]
     },
     {
@@ -2442,6 +2442,21 @@
         "@radix-ui/colors",
         "bezier-easing",
         "colorjs.io"
+      ]
+    },
+    {
+      "name": "field-control-variants",
+      "type": "registry:lib",
+      "title": "field-control-variants",
+      "description": "Utility: field-control-variants",
+      "files": [
+        {
+          "path": "registry/default/utils/field-control-variants.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority"
       ]
     },
     {

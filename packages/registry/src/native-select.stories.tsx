@@ -15,3 +15,12 @@ export const Default = () => {
     </NativeSelect>
   );
 };
+
+export const Small = () => {
+  return (
+    <NativeSelect aria-label="Meal" size="sm" defaultValue="lunch">
+      <NativeSelectOption value="breakfast">Breakfast</NativeSelectOption>
+      <NativeSelectOption value="lunch">Lunch</NativeSelectOption>
+    </NativeSelect>
+  );
+};

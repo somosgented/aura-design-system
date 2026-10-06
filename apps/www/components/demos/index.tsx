@@ -288,7 +288,8 @@ import {
   MessageScrollerDemoAnchoredTurns
 } from "./message-scroller-demo"
 import { 
-  NativeSelectDemo
+  NativeSelectDemo,
+  NativeSelectDemoSmall
 } from "./native-select-demo"
 import { 
   NavigationMenuDemoDefault,
@@ -1020,6 +1021,9 @@ export const Registry = {
   },
   "native-select-demo": {
     component: NativeSelectDemo,
+  },
+  "native-select-demo-small": {
+    component: NativeSelectDemoSmall,
   },
   "navigation-menu-demo": {
     component: NavigationMenuDemoDefault,

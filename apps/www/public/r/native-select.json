@@ -8,12 +8,13 @@
     "@radix-ui/react-icons"
   ],
   "registryDependencies": [
-    "@aura/class-names"
+    "@aura/class-names",
+    "@aura/field-control-variants"
   ],
   "files": [
     {
       "path": "registry/default/components/ui/NativeSelect.tsx",
-      "content": "\"use client\";\n/**\n * @description A native select. The closed control uses the same field chrome as other inputs.\n */\nimport * as React from \"react\";\nimport { ChevronDownIcon } from \"@radix-ui/react-icons\";\n\nimport { cn } from \"@/utils/class-names\";\n\nfunction NativeSelect({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<\"select\">) {\n  return (\n    <div data-slot=\"native-select\" className=\"relative w-full\">\n      <select className={cn(\"w-full pe-4\", className)} {...props}>\n        {children}\n      </select>\n      <span className=\"pointer-events-none absolute inset-y-0 end-1 flex items-center\">\n        <ChevronDownIcon className=\"icon\" aria-hidden />\n      </span>\n    </div>\n  );\n}\n\nfunction NativeSelectGroup(props: React.ComponentProps<\"optgroup\">) {\n  return <optgroup data-slot=\"native-select-group\" {...props} />;\n}\n\nfunction NativeSelectOption(props: React.ComponentProps<\"option\">) {\n  return <option data-slot=\"native-select-option\" {...props} />;\n}\n\nexport { NativeSelect, NativeSelectGroup, NativeSelectOption };\n",
+      "content": "\"use client\";\n/**\n * @description A native select. The closed control uses the same field chrome as other inputs.\n */\nimport * as React from \"react\";\nimport { ChevronDownIcon } from \"@radix-ui/react-icons\";\n\nimport { cn } from \"@/utils/class-names\";\nimport {\n  fieldControlVariants,\n  type FieldControlVariantProps,\n} from \"@/utils/field-control-variants\";\n\ntype NativeSelectProps = Omit<React.ComponentProps<\"select\">, \"size\"> &\n  FieldControlVariantProps;\n\nfunction NativeSelect({\n  className,\n  children,\n  variant = \"primary\",\n  size = \"md\",\n  ...props\n}: NativeSelectProps) {\n  return (\n    <div\n      data-slot=\"native-select-wrapper\"\n      className=\"relative w-full min-w-0 has-[select:disabled]:opacity-60\"\n    >\n      <select\n        data-slot=\"native-select\"\n        className={cn(\n          fieldControlVariants({ variant, size }),\n          \"pe-3\",\n          className,\n        )}\n        {...props}\n      >\n        {children}\n      </select>\n      <span className=\"pointer-events-none absolute inset-y-0 end-1 flex items-center\">\n        <ChevronDownIcon className=\"icon\" aria-hidden />\n      </span>\n    </div>\n  );\n}\n\nNativeSelect.displayName = \"NativeSelect\";\n\nfunction NativeSelectGroup(props: React.ComponentProps<\"optgroup\">) {\n  return <optgroup data-slot=\"native-select-group\" {...props} />;\n}\n\nfunction NativeSelectOption(props: React.ComponentProps<\"option\">) {\n  return <option data-slot=\"native-select-option\" {...props} />;\n}\n\nexport { NativeSelect, NativeSelectGroup, NativeSelectOption };\n",
       "type": "registry:ui"
     }
   ]

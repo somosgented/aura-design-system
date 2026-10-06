@@ -1,6 +1,6 @@
 ---
 title: Native Select
-description: A native select with the same field chrome as other inputs.
+description: A native select with a 48px field, accent focus, and the same chrome as other inputs.
 ---
 
 import { ComponentPreview } from "@/components/ComponentPreview"
@@ -9,7 +9,7 @@ import { Steps, Step } from "fumadocs-ui/components/steps"
 
 ## Preview
 
-<ComponentPreview name="native-select-demo" description="A native select with the same field chrome as other inputs.">
+<ComponentPreview name="native-select-demo" description="A native select with a 48px field, accent focus, and the same chrome as other inputs.">
 
 ```tsx
 import {
@@ -66,6 +66,59 @@ export function cn(...inputs: ClassValue[]) {
 ```
   </Step>
   <Step>
+    Copy and paste the field control variants utility into your `utils/field-control-variants.ts` file.
+
+```ts
+import { cva, type VariantProps } from "class-variance-authority";
+
+/**
+ * Closed-field chrome shared by native controls.
+ * `default` opts out of the legacy select height so the 48px tap target applies.
+ * Focus uses the accent step reserved for focus rings.
+ */
+const fieldControlVariants = cva("", {
+  variants: {
+    variant: {
+      primary:
+        "default w-full appearance-none rounded-md border border-gray-7 bg-gray-3 p text-gray-12 shadow-none transition placeholder:text-gray-11 hover:border-gray-8 hover:bg-gray-4 focus-visible:border-accent-8 focus-visible:bg-gray-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8/25 disabled:cursor-not-allowed disabled:opacity-60",
+      shell:
+        "naked h-auto min-h-0 w-full border-0 bg-transparent p-0 p text-gray-12 shadow-none placeholder:font-normal placeholder:text-gray-11 focus-visible:outline-none focus-visible:ring-0",
+      chip:
+        "default h-auto min-h-0 w-auto cursor-pointer rounded-sm border border-gray-7 bg-gray-3 px-1 py-0.5 p text-gray-12 hover:bg-gray-4 focus-visible:border-accent-8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8/25",
+    },
+    size: {
+      md: "",
+      sm: "",
+    },
+  },
+  compoundVariants: [
+    {
+      variant: "primary",
+      size: "md",
+      // eslint-disable-next-line shadcn/no-arbitrary-values -- 48px tap target is required and is not a 13px step
+      className: "h-[48px] min-h-[48px] px-1.5 py-1",
+    },
+    {
+      variant: "primary",
+      size: "sm",
+      // eslint-disable-next-line shadcn/no-arbitrary-values -- 48px tap target and 44px compact height are required and are not 13px steps
+      className: "h-[48px] min-h-[48px] px-1 py-0.5 sm:h-[44px] sm:min-h-[44px] sm:px-1.5 sm:py-1",
+    },
+  ],
+  defaultVariants: {
+    variant: "primary",
+    size: "md",
+  },
+});
+
+type FieldControlVariantProps = VariantProps<typeof fieldControlVariants>;
+
+export { fieldControlVariants };
+export type { FieldControlVariantProps };
+
+```
+  </Step>
+  <Step>
     Copy and paste the NativeSelect component into your `components/ui/NativeSelect.tsx` file.
 
 ```tsx
@@ -77,15 +130,35 @@ import * as React from "react";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 
 import { cn } from "@/utils/class-names";
+import {
+  fieldControlVariants,
+  type FieldControlVariantProps,
+} from "@/utils/field-control-variants";
+
+type NativeSelectProps = Omit<React.ComponentProps<"select">, "size"> &
+  FieldControlVariantProps;
 
 function NativeSelect({
   className,
   children,
+  variant = "primary",
+  size = "md",
   ...props
-}: React.ComponentProps<"select">) {
+}: NativeSelectProps) {
   return (
-    <div data-slot="native-select" className="relative w-full">
-      <select className={cn("w-full pe-4", className)} {...props}>
+    <div
+      data-slot="native-select-wrapper"
+      className="relative w-full min-w-0 has-[select:disabled]:opacity-60"
+    >
+      <select
+        data-slot="native-select"
+        className={cn(
+          fieldControlVariants({ variant, size }),
+          "pe-3",
+          className,
+        )}
+        {...props}
+      >
         {children}
       </select>
       <span className="pointer-events-none absolute inset-y-0 end-1 flex items-center">
@@ -94,6 +167,8 @@ function NativeSelect({
     </div>
   );
 }
+
+NativeSelect.displayName = "NativeSelect";
 
 function NativeSelectGroup(props: React.ComponentProps<"optgroup">) {
   return <optgroup data-slot="native-select-group" {...props} />;
@@ -108,4 +183,19 @@ export { NativeSelect, NativeSelectGroup, NativeSelectOption };
 ```
   </Step>
 </Steps>
+
+## Usage
+
+### Small
+
+```tsx
+export const Small = () => {
+  return (
+    <NativeSelect aria-label="Meal" size="sm" defaultValue="lunch">
+      <NativeSelectOption value="breakfast">Breakfast</NativeSelectOption>
+      <NativeSelectOption value="lunch">Lunch</NativeSelectOption>
+    </NativeSelect>
+  );
+};
+```
 

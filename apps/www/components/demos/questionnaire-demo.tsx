@@ -18,6 +18,7 @@ export const QuestionnaireDemo = () => {
           value: "city",
           title: "Which city are you in?",
           content: <Input aria-label="City" placeholder="Lisbon" />,
+          skippable: true,
         },
         {
           value: "confirm",
@@ -34,8 +35,9 @@ export const QuestionnaireDemoShell = () => {
     <SingleQuestionShell
       title="How are you sleeping?"
       description="Pick the answer that fits this week."
-      step={1}
+      step={2}
       total={3}
+      skippable
     >
       <Input aria-label="Sleep" placeholder="About 7 hours" />
     </SingleQuestionShell>
