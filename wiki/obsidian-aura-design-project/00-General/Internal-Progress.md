@@ -4,9 +4,9 @@ date: 2026-10-06
 tags: [dev-log, logic]
 ---
 ## Summary
-Area charts are in the registry as `@aura/chart` and `@aura/area-chart` (Recharts 2.15.4). `ChartArea` must expose Recharts’ `displayName`, `defaultProps`, and `getComposedData`, or the plot draws axes and skips the series. Docs previews live at `/docs/components/area-chart`.
+The action, navigation, indicator, input, collection, and media component batches are on `canary` through PRs #96–#101. Shared docs indexes (`all.txt`, demos, registry JSON, component index) were regenerated on each merge so every component kept its entry. Toast and Typography remain docs-only pages.
 
 ## Context
-- Related: [[Area charts]] [[Foundations docs]] [[Design md]]
-- Implementation Path: `packages/registry/registry/default/components/ui/AreaChart.tsx`, `apps/www/content/docs/components/area-chart.mdx`
-- Next: other chart families (bar, line, pie, radar, radial) only when we add them the same way.
+- Related: [[Media-Utilities]] [[Collection-Display]] [[Input-Controls]]
+- Implementation Path: `packages/registry/registry/default/components/ui/`
+- Next: watch docs CI on `canary`; do not reopen cancelled ports.
