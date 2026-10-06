@@ -2198,6 +2198,18 @@
       ]
     },
     {
+      "name": "speed-dial",
+      "type": "registry:ui",
+      "title": "SpeedDial",
+      "description": "The SpeedDial component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/SpeedDial.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "spinner",
       "type": "registry:ui",
       "title": "Spinner",
