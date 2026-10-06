@@ -4,7 +4,7 @@ date: 2026-10-06
 tags: [dev-log, logic, architecture]
 ---
 ## Summary
-The docs site has a Foundations section written from Aura tokens and rules in `DESIGN.md`, registry CSS, Stylus, and the Cursor rules. Data visualization, Figma, international design, and voice and tone are stubs because the repo does not define them. Depth and elevation is its own page because Aura specifies it in `DESIGN.md` §6.
+The docs site has a Foundations section written from Aura tokens and rules in `DESIGN.md`, registry CSS, Stylus, and the Cursor rules. Data visualization records the area-chart series tokens. Figma, international design, and voice and tone are stubs because the repo does not define them. Depth and elevation is its own page because Aura specifies it in `DESIGN.md` §6.
 
 ## Context
 - Related: [[Design md]] [[Site and docs app]] [[Styled system]] [[Internal progress]]

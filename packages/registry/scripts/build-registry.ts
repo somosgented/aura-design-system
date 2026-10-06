@@ -101,7 +101,9 @@ function extractDependencies(filePath: string): string[] {
     dependencies.add(
       packageName === "react-resizable-panels"
         ? "react-resizable-panels@2.1.9"
-        : packageName,
+        : packageName === "recharts"
+          ? "recharts@2.15.4"
+          : packageName,
     );
   }
   

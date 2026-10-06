@@ -4,9 +4,9 @@ date: 2026-10-06
 tags: [dev-log, logic]
 ---
 ## Summary
-The shadcn component gaps are in the registry: breadcrumb, native select, item, resizable, field, input OTP, attachment, spinner, date picker, direction, and questionnaire. Typography and toast are docs pages. Chart is not in this branch.
+Area charts are in the registry as `@aura/chart` and `@aura/area-chart` (Recharts 2.15.4). Series tokens `--chart-1`–`--chart-5` alias accent and status contrast. Docs previews live at `/docs/components/area-chart`. The data-visualization foundation page now records those tokens.
 
 ## Context
-- Related: [[Shadcn component gaps]] [[Foundations docs]]
-- Implementation Path: `packages/registry/registry/default/components/ui/`
-- Next: point DataGrid’s sonner calls at sileo when that change is in scope.
+- Related: [[Area charts]] [[Foundations docs]] [[Design md]]
+- Implementation Path: `packages/registry/registry/default/components/ui/AreaChart.tsx`, `apps/www/content/docs/components/area-chart.mdx`
+- Next: other chart families (bar, line, pie, radar, radial) only when we add them the same way.

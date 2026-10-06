@@ -29,6 +29,19 @@ import {
   AngleSliderDemoWithForm
 } from "./angle-slider-demo"
 import { 
+  AreaChartDemo,
+  AreaChartDemoNatural,
+  AreaChartDemoLinear,
+  AreaChartDemoStep,
+  AreaChartDemoStacked,
+  AreaChartDemoExpanded,
+  AreaChartDemoLegend,
+  AreaChartDemoIcons,
+  AreaChartDemoGradient,
+  AreaChartDemoAxes,
+  AreaChartDemoInteractive
+} from "./area-chart-demo"
+import { 
   AspectRatioDemoDefault,
   AspectRatioDemo
 } from "./aspect-ratio-demo"
@@ -110,6 +123,9 @@ import {
 import { 
   CarouselDemo
 } from "./carousel-demo"
+import { 
+  ChartDemo
+} from "./chart-demo"
 import { 
   CheckboxDemo,
   CheckboxDemoChecked,
@@ -495,6 +511,39 @@ export const Registry = {
   "angle-slider-demo-with-form": {
     component: AngleSliderDemoWithForm,
   },
+  "area-chart-demo": {
+    component: AreaChartDemo,
+  },
+  "area-chart-demo-natural": {
+    component: AreaChartDemoNatural,
+  },
+  "area-chart-demo-linear": {
+    component: AreaChartDemoLinear,
+  },
+  "area-chart-demo-step": {
+    component: AreaChartDemoStep,
+  },
+  "area-chart-demo-stacked": {
+    component: AreaChartDemoStacked,
+  },
+  "area-chart-demo-expanded": {
+    component: AreaChartDemoExpanded,
+  },
+  "area-chart-demo-legend": {
+    component: AreaChartDemoLegend,
+  },
+  "area-chart-demo-icons": {
+    component: AreaChartDemoIcons,
+  },
+  "area-chart-demo-gradient": {
+    component: AreaChartDemoGradient,
+  },
+  "area-chart-demo-axes": {
+    component: AreaChartDemoAxes,
+  },
+  "area-chart-demo-interactive": {
+    component: AreaChartDemoInteractive,
+  },
   "aspect-ratio-demo": {
     component: AspectRatioDemoDefault,
   },
@@ -656,6 +705,9 @@ export const Registry = {
   },
   "carousel-demo": {
     component: CarouselDemo,
+  },
+  "chart-demo": {
+    component: ChartDemo,
   },
   "checkbox-demo": {
     component: CheckboxDemo,
