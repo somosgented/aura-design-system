@@ -1,0 +1,3 @@
+header:
+  description: Standalone assist, filter, and input chips.
+extends: _templates/content.yml

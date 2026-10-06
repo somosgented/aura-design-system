@@ -999,6 +999,25 @@
       ]
     },
     {
+      "name": "chip",
+      "type": "registry:ui",
+      "title": "Chip",
+      "description": "The Chip component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Chip.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "collapsible",
       "type": "registry:ui",
       "title": "Collapsible",
@@ -1286,6 +1305,43 @@
       ],
       "registryDependencies": [
         "@aura/class-names"
+      ]
+    },
+    {
+      "name": "fab",
+      "type": "registry:ui",
+      "title": "Fab",
+      "description": "The Fab component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Fab.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
+      "name": "fab-menu",
+      "type": "registry:ui",
+      "title": "FabMenu",
+      "description": "The FabMenu component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/FabMenu.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-icons"
+      ],
+      "registryDependencies": [
+        "@aura/class-names",
+        "@aura/fab"
       ]
     },
     {
@@ -2199,6 +2255,24 @@
       ]
     },
     {
+      "name": "snackbar",
+      "type": "registry:ui",
+      "title": "Snackbar",
+      "description": "The Snackbar component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Snackbar.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-icons"
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "sortable",
       "type": "registry:ui",
       "title": "Sortable",
@@ -2218,6 +2292,18 @@
       ]
     },
     {
+      "name": "speed-dial",
+      "type": "registry:ui",
+      "title": "SpeedDial",
+      "description": "The SpeedDial component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/SpeedDial.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "spinner",
       "type": "registry:ui",
       "title": "Spinner",
@@ -2233,6 +2319,26 @@
       ],
       "registryDependencies": [
         "@aura/class-names"
+      ]
+    },
+    {
+      "name": "split-button",
+      "type": "registry:ui",
+      "title": "SplitButton",
+      "description": "The SplitButton component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/SplitButton.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-icons"
+      ],
+      "registryDependencies": [
+        "@aura/button",
+        "@aura/class-names",
+        "@aura/dropdown-menu"
       ]
     },
     {
@@ -2395,6 +2501,21 @@
       "dependencies": [
         "class-variance-authority",
         "radix-ui"
+      ],
+      "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
+      "name": "toolbar",
+      "type": "registry:ui",
+      "title": "Toolbar",
+      "description": "The Toolbar component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/Toolbar.tsx",
+          "type": "registry:ui"
+        }
       ],
       "registryDependencies": [
         "@aura/class-names"

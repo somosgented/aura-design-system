@@ -136,6 +136,11 @@ import {
   CheckboxDemoIndeterminate
 } from "./checkbox-demo"
 import { 
+  ChipDemo,
+  ChipDemoFilter,
+  ChipDemoInput
+} from "./chip-demo"
+import { 
   CollapsibleDemo
 } from "./collapsible-demo"
 import { 
@@ -197,6 +202,13 @@ import {
   EmptyDemo,
   EmptyDemoWithActions
 } from "./empty-demo"
+import { 
+  FabDemo,
+  FabDemoExtended
+} from "./fab-demo"
+import { 
+  FabMenuDemo
+} from "./fab-menu-demo"
 import { 
   FieldDemo
 } from "./field-demo"
@@ -421,6 +433,9 @@ import {
   SliderDemoWithSteps
 } from "./slider-demo"
 import { 
+  SnackbarDemo
+} from "./snackbar-demo"
+import { 
   SortableDemo,
   SortableDemoHorizontal,
   SortableDemoWithHandle,
@@ -435,8 +450,14 @@ import {
   SortableDemoWithOnMove
 } from "./sortable-demo"
 import { 
+  SpeedDialDemo
+} from "./speed-dial-demo"
+import { 
   SpinnerDemo
 } from "./spinner-demo"
+import { 
+  SplitButtonDemo
+} from "./split-button-demo"
 import { 
   StatDemo,
   StatDemoIndicatorVariants,
@@ -473,6 +494,9 @@ import {
 import { 
   ToggleGroupDemo
 } from "./toggle-group-demo"
+import { 
+  ToolbarDemo
+} from "./toolbar-demo"
 import { 
   TooltipDemo
 } from "./tooltip-demo"
@@ -751,6 +775,15 @@ export const Registry = {
   "checkbox-demo-indeterminate": {
     component: CheckboxDemoIndeterminate,
   },
+  "chip-demo": {
+    component: ChipDemo,
+  },
+  "chip-demo-filter": {
+    component: ChipDemoFilter,
+  },
+  "chip-demo-input": {
+    component: ChipDemoInput,
+  },
   "collapsible-demo": {
     component: CollapsibleDemo,
   },
@@ -858,6 +891,15 @@ export const Registry = {
   },
   "empty-demo-with-actions": {
     component: EmptyDemoWithActions,
+  },
+  "fab-demo": {
+    component: FabDemo,
+  },
+  "fab-demo-extended": {
+    component: FabDemoExtended,
+  },
+  "fab-menu-demo": {
+    component: FabMenuDemo,
   },
   "field-demo": {
     component: FieldDemo,
@@ -1270,6 +1312,9 @@ export const Registry = {
   "slider-demo-with-steps": {
     component: SliderDemoWithSteps,
   },
+  "snackbar-demo": {
+    component: SnackbarDemo,
+  },
   "sortable-demo": {
     component: SortableDemo,
   },
@@ -1306,8 +1351,14 @@ export const Registry = {
   "sortable-demo-with-on-move": {
     component: SortableDemoWithOnMove,
   },
+  "speed-dial-demo": {
+    component: SpeedDialDemo,
+  },
   "spinner-demo": {
     component: SpinnerDemo,
+  },
+  "split-button-demo": {
+    component: SplitButtonDemo,
   },
   "stat-demo": {
     component: StatDemo,
@@ -1362,6 +1413,9 @@ export const Registry = {
   },
   "toggle-group-demo": {
     component: ToggleGroupDemo,
+  },
+  "toolbar-demo": {
+    component: ToolbarDemo,
   },
   "tooltip-demo": {
     component: TooltipDemo,

@@ -1,0 +1,3 @@
+header:
+  description: A main action paired with a menu of related actions.
+extends: _templates/content.yml
