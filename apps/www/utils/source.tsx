@@ -13,8 +13,8 @@ function StatusBadge({ status }: { status: string }) {
     return (
       <span
         className="ms-0.5 inline-block size-0.5 shrink-0 self-center rounded-full bg-accent-9"
-        title="New this week"
-        aria-label="New this week"
+        title="Recently added"
+        aria-label="Recently added"
       />
     );
   }
