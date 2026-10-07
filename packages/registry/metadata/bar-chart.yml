@@ -1,0 +1,5 @@
+header:
+  description: Bar chart family — vertical, horizontal, multiple, stacked, labels, mixed, active, and negative.
+status: new
+group: charts
+extends: _templates/content.yml

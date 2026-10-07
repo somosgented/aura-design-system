@@ -1,0 +1,5 @@
+header:
+  description: Pie chart family — pie, joined slices, labels, legend, donut, active slice, center total, and stacked rings.
+status: new
+group: charts
+extends: _templates/content.yml

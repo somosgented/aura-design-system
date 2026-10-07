@@ -1,12 +1,12 @@
 ---
 title: Internal progress
-date: 2026-10-06
+date: 2026-10-07
 tags: [dev-log, logic]
 ---
 ## Summary
-Utility primitives are a separate **Utils** docs section (`/docs/utils`) so they are no longer mixed into the Components sidebar. Metadata `group: utils` drives generate-docs output. Next: verify the docs sidebar after `docs:generate`.
+Chart families (bar, line, pie, radar, radial, tooltips) plus the existing area chart are a separate **Charts** docs section (`/docs/charts`). Metadata `group: charts` drives generate-docs. The Chart primitive stays under Components.
 
 ## Context
-- Related: [[Media-Utilities]] [[Collection-Display]] [[Input-Controls]]
+- Related: [[Charts]] [[Area-charts]]
 - Implementation Path: `packages/registry/registry/default/components/ui/`
-- Next: watch docs CI on `canary`; do not reopen cancelled ports.
+- Next: confirm the Charts sidebar and a couple chart pages in the docs site.

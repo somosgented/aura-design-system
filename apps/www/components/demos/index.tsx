@@ -88,6 +88,18 @@ import {
   BannerDemo
 } from "./banner-demo"
 import { 
+  BarChartDemo,
+  BarChartDemoVertical,
+  BarChartDemoHorizontal,
+  BarChartDemoMultiple,
+  BarChartDemoStacked,
+  BarChartDemoLabel,
+  BarChartDemoCustomLabel,
+  BarChartDemoMixed,
+  BarChartDemoActive,
+  BarChartDemoNegative
+} from "./bar-chart-demo"
+import { 
   BreadcrumbDemo
 } from "./breadcrumb-demo"
 import { 
@@ -134,6 +146,17 @@ import {
 import { 
   ChartDemo
 } from "./chart-demo"
+import { 
+  ChartTooltipsDemo,
+  ChartTooltipsDemoDot,
+  ChartTooltipsDemoLine,
+  ChartTooltipsDemoDashed,
+  ChartTooltipsDemoNoIndicator,
+  ChartTooltipsDemoLabel,
+  ChartTooltipsDemoIcons,
+  ChartTooltipsDemoFormatter,
+  ChartTooltipsDemoMultiple
+} from "./chart-tooltips-demo"
 import { 
   CheckboxDemo,
   CheckboxDemoChecked,
@@ -312,6 +335,17 @@ import {
   LabelDemo
 } from "./label-demo"
 import { 
+  LineChartDemo,
+  LineChartDemoNatural,
+  LineChartDemoLinear,
+  LineChartDemoStep,
+  LineChartDemoMultiple,
+  LineChartDemoDots,
+  LineChartDemoCustomDots,
+  LineChartDemoLabel,
+  LineChartDemoInteractive
+} from "./line-chart-demo"
+import { 
   ListboxDemo
 } from "./listbox-demo"
 import { 
@@ -388,6 +422,17 @@ import {
   PhoneInputDemo
 } from "./phone-input-demo"
 import { 
+  PieChartDemo,
+  PieChartDemoPie,
+  PieChartDemoJoined,
+  PieChartDemoLabel,
+  PieChartDemoLegend,
+  PieChartDemoDonut,
+  PieChartDemoActive,
+  PieChartDemoText,
+  PieChartDemoStacked
+} from "./pie-chart-demo"
+import { 
   PopoverDemo,
   PopoverDemoWithCloseButton,
   PopoverDemoWithArrow,
@@ -418,6 +463,26 @@ import {
   QuestionnaireDemo,
   QuestionnaireDemoShell
 } from "./questionnaire-demo"
+import { 
+  RadarChartDemo,
+  RadarChartDemoDefaultGrid,
+  RadarChartDemoDots,
+  RadarChartDemoLines,
+  RadarChartDemoMultiple,
+  RadarChartDemoLegend,
+  RadarChartDemoCircle,
+  RadarChartDemoFilled,
+  RadarChartDemoIcons
+} from "./radar-chart-demo"
+import { 
+  RadialChartDemo,
+  RadialChartDemoRings,
+  RadialChartDemoLabel,
+  RadialChartDemoGrid,
+  RadialChartDemoText,
+  RadialChartDemoShape,
+  RadialChartDemoStacked
+} from "./radial-chart-demo"
 import { 
   RadioGroupDemo,
   RadioGroupDemoWithDefaultValue,
@@ -782,6 +847,36 @@ export const Registry = {
   "banner-demo": {
     component: BannerDemo,
   },
+  "bar-chart-demo": {
+    component: BarChartDemo,
+  },
+  "bar-chart-demo-vertical": {
+    component: BarChartDemoVertical,
+  },
+  "bar-chart-demo-horizontal": {
+    component: BarChartDemoHorizontal,
+  },
+  "bar-chart-demo-multiple": {
+    component: BarChartDemoMultiple,
+  },
+  "bar-chart-demo-stacked": {
+    component: BarChartDemoStacked,
+  },
+  "bar-chart-demo-label": {
+    component: BarChartDemoLabel,
+  },
+  "bar-chart-demo-custom-label": {
+    component: BarChartDemoCustomLabel,
+  },
+  "bar-chart-demo-mixed": {
+    component: BarChartDemoMixed,
+  },
+  "bar-chart-demo-active": {
+    component: BarChartDemoActive,
+  },
+  "bar-chart-demo-negative": {
+    component: BarChartDemoNegative,
+  },
   "breadcrumb-demo": {
     component: BreadcrumbDemo,
   },
@@ -874,6 +969,33 @@ export const Registry = {
   },
   "chart-demo": {
     component: ChartDemo,
+  },
+  "chart-tooltips-demo": {
+    component: ChartTooltipsDemo,
+  },
+  "chart-tooltips-demo-dot": {
+    component: ChartTooltipsDemoDot,
+  },
+  "chart-tooltips-demo-line": {
+    component: ChartTooltipsDemoLine,
+  },
+  "chart-tooltips-demo-dashed": {
+    component: ChartTooltipsDemoDashed,
+  },
+  "chart-tooltips-demo-no-indicator": {
+    component: ChartTooltipsDemoNoIndicator,
+  },
+  "chart-tooltips-demo-label": {
+    component: ChartTooltipsDemoLabel,
+  },
+  "chart-tooltips-demo-icons": {
+    component: ChartTooltipsDemoIcons,
+  },
+  "chart-tooltips-demo-formatter": {
+    component: ChartTooltipsDemoFormatter,
+  },
+  "chart-tooltips-demo-multiple": {
+    component: ChartTooltipsDemoMultiple,
   },
   "checkbox-demo": {
     component: CheckboxDemo,
@@ -1172,6 +1294,33 @@ export const Registry = {
   "label-demo": {
     component: LabelDemo,
   },
+  "line-chart-demo": {
+    component: LineChartDemo,
+  },
+  "line-chart-demo-natural": {
+    component: LineChartDemoNatural,
+  },
+  "line-chart-demo-linear": {
+    component: LineChartDemoLinear,
+  },
+  "line-chart-demo-step": {
+    component: LineChartDemoStep,
+  },
+  "line-chart-demo-multiple": {
+    component: LineChartDemoMultiple,
+  },
+  "line-chart-demo-dots": {
+    component: LineChartDemoDots,
+  },
+  "line-chart-demo-custom-dots": {
+    component: LineChartDemoCustomDots,
+  },
+  "line-chart-demo-label": {
+    component: LineChartDemoLabel,
+  },
+  "line-chart-demo-interactive": {
+    component: LineChartDemoInteractive,
+  },
   "listbox-demo": {
     component: ListboxDemo,
   },
@@ -1292,6 +1441,33 @@ export const Registry = {
   "phone-input-demo": {
     component: PhoneInputDemo,
   },
+  "pie-chart-demo": {
+    component: PieChartDemo,
+  },
+  "pie-chart-demo-pie": {
+    component: PieChartDemoPie,
+  },
+  "pie-chart-demo-joined": {
+    component: PieChartDemoJoined,
+  },
+  "pie-chart-demo-label": {
+    component: PieChartDemoLabel,
+  },
+  "pie-chart-demo-legend": {
+    component: PieChartDemoLegend,
+  },
+  "pie-chart-demo-donut": {
+    component: PieChartDemoDonut,
+  },
+  "pie-chart-demo-active": {
+    component: PieChartDemoActive,
+  },
+  "pie-chart-demo-text": {
+    component: PieChartDemoText,
+  },
+  "pie-chart-demo-stacked": {
+    component: PieChartDemoStacked,
+  },
   "popover-demo": {
     component: PopoverDemo,
   },
@@ -1342,6 +1518,54 @@ export const Registry = {
   },
   "questionnaire-demo-shell": {
     component: QuestionnaireDemoShell,
+  },
+  "radar-chart-demo": {
+    component: RadarChartDemo,
+  },
+  "radar-chart-demo-default-grid": {
+    component: RadarChartDemoDefaultGrid,
+  },
+  "radar-chart-demo-dots": {
+    component: RadarChartDemoDots,
+  },
+  "radar-chart-demo-lines": {
+    component: RadarChartDemoLines,
+  },
+  "radar-chart-demo-multiple": {
+    component: RadarChartDemoMultiple,
+  },
+  "radar-chart-demo-legend": {
+    component: RadarChartDemoLegend,
+  },
+  "radar-chart-demo-circle": {
+    component: RadarChartDemoCircle,
+  },
+  "radar-chart-demo-filled": {
+    component: RadarChartDemoFilled,
+  },
+  "radar-chart-demo-icons": {
+    component: RadarChartDemoIcons,
+  },
+  "radial-chart-demo": {
+    component: RadialChartDemo,
+  },
+  "radial-chart-demo-rings": {
+    component: RadialChartDemoRings,
+  },
+  "radial-chart-demo-label": {
+    component: RadialChartDemoLabel,
+  },
+  "radial-chart-demo-grid": {
+    component: RadialChartDemoGrid,
+  },
+  "radial-chart-demo-text": {
+    component: RadialChartDemoText,
+  },
+  "radial-chart-demo-shape": {
+    component: RadialChartDemoShape,
+  },
+  "radial-chart-demo-stacked": {
+    component: RadialChartDemoStacked,
   },
   "radio-group-demo": {
     component: RadioGroupDemo,

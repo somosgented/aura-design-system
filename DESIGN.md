@@ -181,7 +181,7 @@ Beyond the public docs “All Components” list, the registry also ships **data
 
 ### Charts
 
-Area charts (`@aura/chart`, `@aura/area-chart`) draw series with Recharts and Aura tokens. `--chart-1` is `--accent-9` / `--primary`. `--chart-2` through `--chart-5` are the info, success, warning, and danger **contrast** colors, so `.dark` and `prefers-color-scheme: dark` keep strokes visible. Grid lines are gray step 6. Tick labels are gray step 11 at 13px. The area draw is **250ms** `ease-out` and turns off when `prefers-reduced-motion: reduce`. Focus on the plot uses accent step 8.
+Charts (`@aura/chart`, plus area, bar, line, pie, radar, radial, and tooltip families) draw series with Recharts and Aura tokens. `--chart-1` is `--accent-9` / `--primary`. `--chart-2` through `--chart-5` are the info, success, warning, and danger **contrast** colors, so `.dark` and `prefers-color-scheme: dark` keep strokes visible. Grid lines are gray step 6. Tick labels are gray step 11 at 13px. Series draw for **250ms** `ease-out` and turn off when `prefers-reduced-motion: reduce`. Focus on the plot uses accent step 8.
 
 ---
 
@@ -325,7 +325,7 @@ pnpm dlx shadcn@latest add @aura/<registry-name>
 
 **Core UI (docs “All Components”):** accordion, alert, alert-dialog, aspect-ratio, autocomplete, avatar, badge, button, button-group, card, carousel, checkbox, collapsible, combobox, command, context-menu, dialog, drawer, dropdown-menu, empty, form, grid, hover-card, input, kbd, label, menubar, navigation-menu, popover, progress, radio-group, scroll-area, section, select, separator, sheet, sidebar, signature-pad, skeleton, slider, sortable, stepper, switch, tabs, toggle, toggle-group, tooltip.
 
-**Additional registry items:** textarea, calendar, data-grid, chart, area-chart, editor, editor-00, combobox-single, combobox-multiple, alert-status, theme-color-switcher, form-field-combobox, form-field-editor, form-field-select, form-field-signature-pad, form-field-sortable-list.
+**Additional registry items:** textarea, calendar, data-grid, chart, area-chart, bar-chart, line-chart, pie-chart, radar-chart, radial-chart, chart-tooltips, editor, editor-00, combobox-single, combobox-multiple, alert-status, theme-color-switcher, form-field-combobox, form-field-editor, form-field-select, form-field-signature-pad, form-field-sortable-list.
 
 **Utilities / rules:** class-names, colors, web-validation, use-dynamic-form, css-main, rules (bundle), rule-principles, rule-fundations-colors, rule-fundations-typography, rule-fundations-layout-spacing, rule-fundation-icons, rule-fundation-animations, rule-components-forms, and other hooks listed in **`packages/registry/registry.json`**.
 

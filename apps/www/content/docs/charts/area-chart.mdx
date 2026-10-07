@@ -1,0 +1,1397 @@
+---
+title: Area Chart
+description: Area chart family — natural, linear, step, stacked, expanded, legend, icons, gradient, axes, and an interactive range.
+---
+
+import { ComponentPreview } from "@/components/ComponentPreview"
+import { ComponentSource } from "@/components/ComponentSource"
+import { Steps, Step } from "fumadocs-ui/components/steps"
+
+## Preview
+
+<ComponentPreview name="area-chart-demo" description="Area chart family — natural, linear, step, stacked, expanded, legend, icons, gradient, axes, and an interactive range.">
+
+```tsx
+import { AreaChart } from "@/components/ui/AreaChart";
+
+export function AreaChartDemo() {
+  return (
+  <div className="flex w-full flex-col gap-2">
+    {variants.map((variant) => (
+      <AreaChart key={variant} variant={variant} />
+    ))}
+  </div>
+)
+```
+
+</ComponentPreview>
+
+## Installation
+Make sure that `namespace` is set in your component.json file. Namespace docs: [Learn more about namespaces](/docs/namespace)
+```bash
+pnpm dlx shadcn@latest add @aura/area-chart
+```
+
+
+
+### Manual
+
+<Steps>
+  <Step>
+    Install the following dependencies:
+
+    ```bash
+pnpm install @radix-ui/react-icons recharts@2.15.4
+    ```
+  </Step>
+  <Step>
+    Copy and paste the card component into your `components/ui/Card.tsx` file.
+
+```tsx
+/**
+ * @description Displays a card with header, content, and footer sections.
+ */
+import * as React from "react";
+
+import { cn } from "@/utils/class-names";
+
+function Card({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card"
+      className={cn(
+        "bg-gray-2 border border-gray-6 rounded-md overflow-hidden",
+        className
+      )}
+      {...props}
+    />
+  );
+}
+
+function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card-header"
+      className={cn("flex flex-col gap-0.5 p-1 pb-0", className)}
+      {...props}
+    />
+  );
+}
+
+function CardTitle({ className, ...props }: React.ComponentProps<"h3">) {
+  return (
+    <h3
+      data-slot="card-title"
+      className={cn("text-gray-12 font-semibold leading-none", className)}
+      {...props}
+    />
+  );
+}
+
+function CardDescription({ className, ...props }: React.ComponentProps<"p">) {
+  return (
+    <p
+      data-slot="card-description"
+      className={cn("text-gray-11", className)}
+      {...props}
+    />
+  );
+}
+
+function CardAction({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card-action"
+      className={cn("flex items-center gap-0.5", className)}
+      {...props}
+    />
+  );
+}
+
+function CardContent({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div data-slot="card-content" className={cn("p-1 pt-0", className)} {...props} />
+  );
+}
+
+function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card-footer"
+      className={cn(
+        "flex items-center gap-0.5 p-1 border-t border-gray-6",
+        className
+      )}
+      {...props}
+    />
+  );
+}
+
+export {
+  Card,
+  CardHeader,
+  CardFooter,
+  CardTitle,
+  CardAction,
+  CardDescription,
+  CardContent,
+};
+
+```
+  </Step>
+  <Step>
+    Copy and paste the chart component into your `components/ui/Chart.tsx` file.
+
+```tsx
+"use client";
+/**
+ * @description Chart container, tooltip, legend, and series wrappers for Recharts, colored with Aura series tokens.
+ */
+import * as React from "react";
+import {
+  Area,
+  Bar,
+  Legend,
+  Line,
+  Pie,
+  Radar,
+  RadialBar,
+  ResponsiveContainer,
+  Tooltip,
+} from "recharts";
+
+import { cn } from "@/utils/class-names";
+
+const THEMES = { light: "", dark: ".dark" } as const;
+
+type SeriesColor = {
+  color?: string;
+  theme?: never;
+} | {
+  color?: never;
+  theme: Partial<Record<keyof typeof THEMES, string>>;
+};
+
+export type ChartConfig = {
+  [key: string]: {
+    label?: React.ReactNode;
+    icon?: React.ComponentType<{ className?: string }>;
+  } & SeriesColor;
+};
+
+type ChartTooltipItem = {
+  type?: string;
+  dataKey?: string | number;
+  name?: string;
+  value?: number | string;
+  color?: string;
+  payload?: Record<string, unknown> & { fill?: string };
+  fill?: string;
+};
+
+type ChartContextValue = {
+  config: ChartConfig;
+  reducedMotion: boolean;
+};
+
+const ChartContext = React.createContext<ChartContextValue | null>(null);
+
+function usePrefersReducedMotion() {
+  return React.useSyncExternalStore(
+    (onStoreChange) => {
+      const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+      media.addEventListener("change", onStoreChange);
+      return () => media.removeEventListener("change", onStoreChange);
+    },
+    () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+    () => false
+  );
+}
+
+function useChart() {
+  const context = React.useContext(ChartContext);
+  if (!context) {
+    throw new Error("useChart must be used within a <ChartContainer />");
+  }
+  return context;
+}
+
+function tokenColor(color: string | undefined) {
+  if (!color) return undefined;
+  const value = color.trim();
+  if (/^var\(--[a-zA-Z0-9-_]+\)$/.test(value)) return value;
+  return undefined;
+}
+
+function ChartContainer({
+  id,
+  className,
+  children,
+  config,
+  label,
+  ...props
+}: React.ComponentProps<"div"> & {
+  config: ChartConfig;
+  children: React.ComponentProps<typeof ResponsiveContainer>["children"];
+  label?: string;
+}) {
+  const uniqueId = React.useId();
+  const chartId = `chart-${id || uniqueId.replace(/:/g, "")}`;
+  const reducedMotion = usePrefersReducedMotion();
+
+  return (
+    <ChartContext.Provider value={{ config, reducedMotion }}>
+      <div
+        data-slot="chart"
+        data-chart={chartId}
+        className={cn(
+          "flex aspect-video w-full justify-center text-xs text-gray-11",
+          className
+        )}
+        aria-label={label}
+        {...props}
+      >
+        <ChartStyle id={chartId} config={config} />
+        <ResponsiveContainer>{children}</ResponsiveContainer>
+      </div>
+    </ChartContext.Provider>
+  );
+}
+
+function ChartStyle({ id, config }: { id: string; config: ChartConfig }) {
+  const colorConfig = Object.entries(config).filter(
+    ([, item]) => item.theme || item.color
+  );
+
+  if (!colorConfig.length) return null;
+
+  const css = Object.entries(THEMES)
+    .map(([theme, prefix]) => {
+      const lines = colorConfig
+        .map(([key, item]) => {
+          const color =
+            tokenColor(
+              item.theme?.[theme as keyof typeof item.theme] || item.color
+            ) ?? undefined;
+          return color ? `  --color-${key}: ${color};` : null;
+        })
+        .filter(Boolean)
+        .join("\n");
+      if (!lines) return "";
+      return `${prefix} [data-chart=${id}] {\n${lines}\n}`;
+    })
+    .filter(Boolean)
+    .join("\n");
+
+  if (!css) return null;
+
+  return <style dangerouslySetInnerHTML={{ __html: css }} />;
+}
+
+const ChartTooltip = Tooltip;
+
+function formatChartValue(value: number | string | undefined) {
+  if (value == null || value === "") return null;
+  const numeric = typeof value === "number" ? value : Number(value);
+  if (Number.isFinite(numeric)) return numeric.toLocaleString();
+  return String(value);
+}
+
+function ChartTooltipContent({
+  active,
+  payload,
+  className,
+  indicator = "dot",
+  hideLabel = false,
+  hideIndicator = false,
+  label,
+  labelFormatter,
+  labelClassName,
+  formatter,
+  color,
+  nameKey,
+  labelKey,
+}: {
+  active?: boolean;
+  payload?: ChartTooltipItem[];
+  className?: string;
+  indicator?: "line" | "dot" | "dashed";
+  hideLabel?: boolean;
+  hideIndicator?: boolean;
+  label?: React.ReactNode;
+  labelFormatter?: (
+    value: React.ReactNode,
+    payload: ChartTooltipItem[]
+  ) => React.ReactNode;
+  labelClassName?: string;
+  formatter?: (
+    value: number | string,
+    name: string,
+    item: ChartTooltipItem,
+    index: number,
+    payload: Record<string, unknown>
+  ) => React.ReactNode;
+  color?: string;
+  nameKey?: string;
+  labelKey?: string;
+}) {
+  const { config } = useChart();
+
+  const tooltipLabel = React.useMemo(() => {
+    if (hideLabel || !payload?.length) return null;
+
+    const [item] = payload;
+    const key = `${labelKey || item?.dataKey || item?.name || "value"}`;
+    const itemConfig = getPayloadConfigFromPayload(config, item, key);
+    const value =
+      !labelKey && typeof label === "string"
+        ? config[label]?.label || label
+        : itemConfig?.label;
+
+    if (labelFormatter) {
+      return (
+        <div className={cn("font-medium text-gray-12", labelClassName)}>
+          {labelFormatter(value, payload)}
+        </div>
+      );
+    }
+
+    if (!value) return null;
+
+    return <div className={cn("font-medium text-gray-12", labelClassName)}>{value}</div>;
+  }, [label, labelFormatter, payload, hideLabel, labelClassName, config, labelKey]);
+
+  if (!active || !payload?.length) return null;
+
+  const nestLabel = payload.length === 1 && indicator !== "dot";
+
+  return (
+    <div
+      className={cn(
+        "grid min-w-10 items-start gap-0.5 rounded-sm border border-gray-6 bg-gray-1 px-1 py-0.5 text-xs text-gray-12",
+        className
+      )}
+    >
+      {!nestLabel ? tooltipLabel : null}
+      <div className="grid gap-0.5">
+        {payload
+          .filter((item) => item.type !== "none")
+          .map((item, index) => {
+            const key = `${nameKey || item.name || item.dataKey || "value"}`;
+            const itemConfig = getPayloadConfigFromPayload(config, item, key);
+            const indicatorColor = color || item.payload?.fill || item.color;
+            const Icon = itemConfig?.icon;
+            const formatted = formatChartValue(item.value);
+
+            return (
+              <div
+                key={String(item.dataKey)}
+                className={cn(
+                  "flex w-full items-center gap-0.5",
+                  indicator === "dot" && "items-center"
+                )}
+              >
+                {formatter && item.value != null && item.name ? (
+                  formatter(
+                    item.value,
+                    item.name,
+                    item,
+                    index,
+                    item.payload ?? {}
+                  )
+                ) : (
+                  <>
+                    {Icon ? (
+                      <Icon className="icon" />
+                    ) : (
+                      !hideIndicator && (
+                        <div
+                          className={cn(
+                            "shrink-0 rounded-sm",
+                            indicator === "dot" && "size-0.5",
+                            indicator === "line" && "h-1 w-px",
+                            indicator === "dashed" &&
+                              "h-1 w-0 border border-dashed bg-transparent"
+                          )}
+                          style={
+                            {
+                              backgroundColor:
+                                indicator === "dashed" ? "transparent" : indicatorColor,
+                              borderColor: indicatorColor,
+                            } as React.CSSProperties
+                          }
+                        />
+                      )
+                    )}
+                    <div
+                      className={cn(
+                        "flex flex-1 justify-between gap-1 leading-none",
+                        nestLabel ? "items-end" : "items-center"
+                      )}
+                    >
+                      <div className="grid gap-0.5">
+                        {nestLabel ? tooltipLabel : null}
+                        <span className="text-gray-11">
+                          {itemConfig?.label || item.name}
+                        </span>
+                      </div>
+                      {formatted ? (
+                        <span className="font-mono font-medium tabular-nums text-gray-12">
+                          {formatted}
+                        </span>
+                      ) : null}
+                    </div>
+                  </>
+                )}
+              </div>
+            );
+          })}
+      </div>
+    </div>
+  );
+}
+
+const ChartLegend = Legend;
+
+function ChartLegendContent({
+  className,
+  hideIcon = false,
+  payload,
+  verticalAlign = "bottom",
+  nameKey,
+}: React.ComponentProps<"div"> & {
+  hideIcon?: boolean;
+  payload?: Array<{
+    type?: string;
+    dataKey?: string | number;
+    value?: string;
+    color?: string;
+  }>;
+  verticalAlign?: "top" | "bottom" | "middle";
+  nameKey?: string;
+}) {
+  const { config } = useChart();
+
+  if (!payload?.length) return null;
+
+  return (
+    <div
+      className={cn(
+        "flex items-center justify-center gap-1 text-xs text-gray-12",
+        verticalAlign === "top" ? "pb-1" : "pt-1",
+        className
+      )}
+    >
+      {payload
+        .filter((item) => item.type !== "none")
+        .map((item) => {
+          const key = `${nameKey || item.dataKey || "value"}`;
+          const itemConfig = getPayloadConfigFromPayload(config, item, key);
+          const Icon = itemConfig?.icon;
+          const swatch =
+            item.color && !String(item.color).startsWith("url")
+              ? item.color
+              : `var(--color-${key})`;
+
+          return (
+            <div key={String(item.value)} className="flex items-center gap-0.5">
+              {Icon && !hideIcon ? (
+                <Icon className="icon" />
+              ) : (
+                <div
+                  className="size-0.5 shrink-0 rounded-sm"
+                  style={{ backgroundColor: swatch }}
+                />
+              )}
+              {itemConfig?.label}
+            </div>
+          );
+        })}
+    </div>
+  );
+}
+
+type SeriesSource = {
+  displayName?: string;
+  defaultProps?: object;
+  getComposedData?: (...args: never[]) => unknown;
+};
+
+function useChartMotion(isAnimationActive?: boolean, animationDuration = 250) {
+  const { reducedMotion } = useChart();
+
+  return {
+    animationDuration,
+    animationEasing: "ease-out" as const,
+    isAnimationActive: isAnimationActive ?? !reducedMotion,
+  };
+}
+
+function bindRechartsSeries(
+  component: object,
+  source: SeriesSource,
+  displayName: string,
+) {
+  const bound: Record<string, unknown> = { displayName };
+  if (source.defaultProps) bound.defaultProps = source.defaultProps;
+  if (typeof source.getComposedData === "function") {
+    bound.getComposedData = source.getComposedData;
+  }
+  Object.assign(component, bound);
+}
+
+function ChartArea({
+  isAnimationActive,
+  animationDuration = 250,
+  ...props
+}: Omit<React.ComponentProps<typeof Area>, "ref">) {
+  return <Area {...props} {...useChartMotion(isAnimationActive, animationDuration)} />;
+}
+
+function ChartBar({
+  isAnimationActive,
+  animationDuration = 250,
+  ...props
+}: Omit<React.ComponentProps<typeof Bar>, "ref">) {
+  return <Bar {...props} {...useChartMotion(isAnimationActive, animationDuration)} />;
+}
+
+function ChartLine({
+  isAnimationActive,
+  animationDuration = 250,
+  ...props
+}: Omit<React.ComponentProps<typeof Line>, "ref">) {
+  return <Line {...props} {...useChartMotion(isAnimationActive, animationDuration)} />;
+}
+
+function ChartPie({
+  isAnimationActive,
+  animationDuration = 250,
+  ...props
+}: Omit<React.ComponentProps<typeof Pie>, "ref">) {
+  return <Pie {...props} {...useChartMotion(isAnimationActive, animationDuration)} />;
+}
+
+function ChartRadar({
+  isAnimationActive,
+  animationDuration = 250,
+  ...props
+}: Omit<React.ComponentProps<typeof Radar>, "ref">) {
+  return <Radar {...props} {...useChartMotion(isAnimationActive, animationDuration)} />;
+}
+
+function ChartRadialBar({
+  isAnimationActive,
+  animationDuration = 250,
+  ...props
+}: Omit<React.ComponentProps<typeof RadialBar>, "ref">) {
+  return (
+    <RadialBar {...props} {...useChartMotion(isAnimationActive, animationDuration)} />
+  );
+}
+
+// Recharts identifies a series by displayName, reads axis ids from defaultProps,
+// and skips a composed child that does not implement getComposedData.
+bindRechartsSeries(ChartArea, Area, "Area");
+bindRechartsSeries(ChartBar, Bar, "Bar");
+bindRechartsSeries(ChartLine, Line, "Line");
+bindRechartsSeries(ChartPie, Pie, "Pie");
+bindRechartsSeries(ChartRadar, Radar, "Radar");
+bindRechartsSeries(ChartRadialBar, RadialBar, "RadialBar");
+
+function getPayloadConfigFromPayload(
+  config: ChartConfig,
+  payload: unknown,
+  key: string
+) {
+  if (typeof payload !== "object" || payload === null) return undefined;
+
+  const payloadPayload =
+    "payload" in payload &&
+    typeof payload.payload === "object" &&
+    payload.payload !== null
+      ? payload.payload
+      : undefined;
+
+  let configLabelKey = key;
+
+  if (key in payload && typeof payload[key as keyof typeof payload] === "string") {
+    configLabelKey = payload[key as keyof typeof payload] as string;
+  } else if (
+    payloadPayload &&
+    key in payloadPayload &&
+    typeof payloadPayload[key as keyof typeof payloadPayload] === "string"
+  ) {
+    configLabelKey = payloadPayload[key as keyof typeof payloadPayload] as string;
+  }
+
+  return configLabelKey in config ? config[configLabelKey] : config[key];
+}
+
+export {
+  ChartArea,
+  ChartBar,
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  ChartLine,
+  ChartPie,
+  ChartRadar,
+  ChartRadialBar,
+  ChartStyle,
+  ChartTooltip,
+  ChartTooltipContent,
+  useChart,
+};
+
+```
+  </Step>
+  <Step>
+    Copy and paste the class names utility into your `utils/class-names.ts` file.
+
+```ts
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+
+```
+  </Step>
+  <Step>
+    Copy and paste the select component into your `components/ui/Select.tsx` file.
+
+```tsx
+"use client";
+/**
+ * @description Displays a list of options for the user to pick from—triggered by a button.
+ */
+import * as React from "react";
+import { Select as SelectRadix } from "radix-ui";
+import {
+  CheckIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+} from "@radix-ui/react-icons";
+
+import { cn } from "@/utils/class-names";
+
+function Select({ ...props }: React.ComponentProps<typeof SelectRadix.Root>) {
+  return <SelectRadix.Root data-slot="select" {...props} />;
+}
+
+function SelectTrigger({
+  className,
+  ...props
+}: React.ComponentProps<typeof SelectRadix.Trigger>) {
+  return (
+    <SelectRadix.Trigger
+      data-slot="select-trigger"
+      className={cn(
+        "flex h-4 w-full items-center justify-between rounded-sm border border-gray-a6 bg-gray-2 px-2 text-gray-12 cursor-pointer focus:outline-2 focus:outline-accent-9 focus:outline-offset-0 disabled:cursor-not-allowed disabled:opacity-50",
+        className
+      )}
+      {...props}
+    />
+  );
+}
+
+function SelectValue({
+  className,
+  ...props
+}: React.ComponentProps<typeof SelectRadix.Value>) {
+  return (
+    <SelectRadix.Value
+      data-slot="select-value"
+      className={cn(className, "text-gray-12")}
+      {...props}
+    />
+  );
+}
+
+function SelectIcon({
+  className,
+  ...props
+}: React.ComponentProps<typeof SelectRadix.Icon>) {
+  return (
+    <SelectRadix.Icon
+      data-slot="select-icon"
+      className={cn(className, "text-gray-11")}
+      {...props}
+    >
+      <ChevronDownIcon className="icon" />
+    </SelectRadix.Icon>
+  );
+}
+
+function SelectPortal({
+  ...props
+}: React.ComponentProps<typeof SelectRadix.Portal>) {
+  return <SelectRadix.Portal data-slot="select-portal" {...props} />;
+}
+
+function SelectContent({
+  className,
+  ...props
+}: React.ComponentProps<typeof SelectRadix.Content>) {
+  return (
+    <SelectRadix.Portal>
+      <SelectRadix.Content
+        data-slot="select-content"
+        collisionPadding={8}
+        className={cn(
+          className,
+          "relative z-50 max-h-96 min-w-10 origin-(--radix-select-content-transform-origin) overflow-hidden rounded-sm border border-gray-a6 bg-gray-1 shadow-md data-[state=open]:animate-popover-show data-[state=closed]:animate-popover-hide"
+        )}
+        {...props}
+      />
+    </SelectRadix.Portal>
+  );
+}
+
+function SelectViewport({
+  className,
+  ...props
+}: React.ComponentProps<typeof SelectRadix.Viewport>) {
+  return (
+    <SelectRadix.Viewport
+      data-slot="select-viewport"
+      className={cn(className, "p-0")}
+      {...props}
+    />
+  );
+}
+
+function SelectItem({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof SelectRadix.Item>) {
+  return (
+    <SelectRadix.Item
+      data-slot="select-item"
+      className={cn(
+        className,
+        "relative flex w-full cursor-pointer select-none items-center p-0.5 px-2 text-gray-12 outline-none hover:bg-accent-3 focus:bg-accent-3 focus:text-accent-12 data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+      )}
+      {...props}
+    >
+      {children}
+    </SelectRadix.Item>
+  );
+}
+
+function SelectItemText({
+  className,
+  ...props
+}: React.ComponentProps<typeof SelectRadix.ItemText>) {
+  return (
+    <SelectRadix.ItemText
+      data-slot="select-item-text"
+      className={cn(className)}
+      {...props}
+    />
+  );
+}
+
+function SelectItemIndicator({
+  className,
+  ...props
+}: React.ComponentProps<typeof SelectRadix.ItemIndicator>) {
+  return (
+    <SelectRadix.ItemIndicator
+      data-slot="select-item-indicator"
+      className={cn(
+        className,
+        "absolute left-0.5 top-0 bottom-0 flex items-center justify-center"
+      )}
+      {...props}
+    >
+      <CheckIcon className="text-accent-9" />
+    </SelectRadix.ItemIndicator>
+  );
+}
+
+function SelectGroup({
+  ...props
+}: React.ComponentProps<typeof SelectRadix.Group>) {
+  return <SelectRadix.Group data-slot="select-group" {...props} />;
+}
+
+function SelectLabel({
+  className,
+  ...props
+}: React.ComponentProps<typeof SelectRadix.Label>) {
+  return (
+    <SelectRadix.Label
+      data-slot="select-label"
+      className={cn(className, "p-0.5 px-2 text-gray-12")}
+      {...props}
+    />
+  );
+}
+
+function SelectSeparator({
+  className,
+  ...props
+}: React.ComponentProps<typeof SelectRadix.Separator>) {
+  return (
+    <SelectRadix.Separator
+      data-slot="select-separator"
+      className={cn(className, "m-0.6 h-px bg-gray-a6")}
+      {...props}
+    />
+  );
+}
+
+function SelectScrollUpButton({
+  className,
+  ...props
+}: React.ComponentProps<typeof SelectRadix.ScrollUpButton>) {
+  return (
+    <SelectRadix.ScrollUpButton
+      data-slot="select-scroll-up-button"
+      className={cn(
+        className,
+        "flex cursor-default items-center justify-center p-0.5"
+      )}
+      {...props}
+    >
+      <ChevronUpIcon className="icon text-gray-11" />
+    </SelectRadix.ScrollUpButton>
+  );
+}
+
+function SelectScrollDownButton({
+  className,
+  ...props
+}: React.ComponentProps<typeof SelectRadix.ScrollDownButton>) {
+  return (
+    <SelectRadix.ScrollDownButton
+      data-slot="select-scroll-down-button"
+      className={cn(
+        className,
+        "flex cursor-default items-center justify-center p-0.5"
+      )}
+      {...props}
+    >
+      <ChevronDownIcon className="icon text-gray-11" />
+    </SelectRadix.ScrollDownButton>
+  );
+}
+
+function SelectArrow({
+  className,
+  ...props
+}: React.ComponentProps<typeof SelectRadix.Arrow>) {
+  return (
+    <SelectRadix.Arrow
+      data-slot="select-arrow"
+      className={cn(className, "fill-gray-1")}
+      {...props}
+    />
+  );
+}
+
+export {
+  Select,
+  SelectPortal,
+  SelectTrigger,
+  SelectValue,
+  SelectIcon,
+  SelectContent,
+  SelectViewport,
+  SelectItem,
+  SelectItemText,
+  SelectItemIndicator,
+  SelectGroup,
+  SelectLabel,
+  SelectSeparator,
+  SelectScrollUpButton,
+  SelectScrollDownButton,
+  SelectArrow,
+};
+
+```
+  </Step>
+  <Step>
+    Copy and paste the AreaChart component into your `components/ui/AreaChart.tsx` file.
+
+```tsx
+"use client";
+/**
+ * @description Area chart family: natural, linear, step, stacked, expanded, legend, icons, gradient, axes, and interactive.
+ */
+import * as React from "react";
+import {
+  ActivityLogIcon,
+  ArrowUpIcon,
+  DesktopIcon,
+  MobileIcon,
+} from "@radix-ui/react-icons";
+import { AreaChart as RechartsAreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
+
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/Card";
+import {
+  ChartArea,
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipContent,
+  type ChartConfig,
+} from "@/components/ui/Chart";
+import {
+  Select,
+  SelectContent,
+  SelectIcon,
+  SelectItem,
+  SelectItemIndicator,
+  SelectItemText,
+  SelectTrigger,
+  SelectValue,
+  SelectViewport,
+} from "@/components/ui/Select";
+import { cn } from "@/utils/class-names";
+
+export const areaChartVariants = [
+  "default",
+  "linear",
+  "step",
+  "stacked",
+  "expanded",
+  "legend",
+  "icons",
+  "gradient",
+  "axes",
+  "interactive",
+] as const;
+
+export type AreaChartVariant = (typeof areaChartVariants)[number];
+
+const monthVisitors = [
+  { month: "January", desktop: 186, mobile: 80, other: 45 },
+  { month: "February", desktop: 305, mobile: 200, other: 100 },
+  { month: "March", desktop: 237, mobile: 120, other: 150 },
+  { month: "April", desktop: 73, mobile: 190, other: 50 },
+  { month: "May", desktop: 209, mobile: 130, other: 100 },
+  { month: "June", desktop: 214, mobile: 140, other: 160 },
+];
+
+const interactiveVisitors = [
+  { date: "2024-04-01", desktop: 222, mobile: 150 },
+  { date: "2024-04-02", desktop: 97, mobile: 180 },
+  { date: "2024-04-03", desktop: 167, mobile: 120 },
+  { date: "2024-04-04", desktop: 242, mobile: 260 },
+  { date: "2024-04-05", desktop: 373, mobile: 290 },
+  { date: "2024-04-06", desktop: 301, mobile: 340 },
+  { date: "2024-04-07", desktop: 245, mobile: 180 },
+  { date: "2024-04-08", desktop: 409, mobile: 320 },
+  { date: "2024-04-09", desktop: 59, mobile: 110 },
+  { date: "2024-04-10", desktop: 261, mobile: 190 },
+  { date: "2024-04-11", desktop: 327, mobile: 350 },
+  { date: "2024-04-12", desktop: 292, mobile: 210 },
+  { date: "2024-04-13", desktop: 342, mobile: 380 },
+  { date: "2024-04-14", desktop: 137, mobile: 220 },
+  { date: "2024-04-15", desktop: 120, mobile: 170 },
+  { date: "2024-04-16", desktop: 138, mobile: 190 },
+  { date: "2024-04-17", desktop: 446, mobile: 360 },
+  { date: "2024-04-18", desktop: 364, mobile: 410 },
+  { date: "2024-04-19", desktop: 243, mobile: 180 },
+  { date: "2024-04-20", desktop: 89, mobile: 150 },
+  { date: "2024-04-21", desktop: 137, mobile: 200 },
+  { date: "2024-04-22", desktop: 224, mobile: 170 },
+  { date: "2024-04-23", desktop: 138, mobile: 230 },
+  { date: "2024-04-24", desktop: 387, mobile: 290 },
+  { date: "2024-04-25", desktop: 215, mobile: 250 },
+  { date: "2024-04-26", desktop: 75, mobile: 130 },
+  { date: "2024-04-27", desktop: 383, mobile: 420 },
+  { date: "2024-04-28", desktop: 122, mobile: 180 },
+  { date: "2024-04-29", desktop: 315, mobile: 240 },
+  { date: "2024-04-30", desktop: 454, mobile: 380 },
+  { date: "2024-05-01", desktop: 165, mobile: 220 },
+  { date: "2024-05-02", desktop: 293, mobile: 310 },
+  { date: "2024-05-03", desktop: 247, mobile: 190 },
+  { date: "2024-05-04", desktop: 385, mobile: 420 },
+  { date: "2024-05-05", desktop: 481, mobile: 390 },
+  { date: "2024-05-06", desktop: 498, mobile: 520 },
+  { date: "2024-05-07", desktop: 388, mobile: 300 },
+  { date: "2024-05-08", desktop: 149, mobile: 210 },
+  { date: "2024-05-09", desktop: 227, mobile: 180 },
+  { date: "2024-05-10", desktop: 293, mobile: 330 },
+  { date: "2024-05-11", desktop: 335, mobile: 270 },
+  { date: "2024-05-12", desktop: 197, mobile: 240 },
+  { date: "2024-05-13", desktop: 197, mobile: 160 },
+  { date: "2024-05-14", desktop: 448, mobile: 490 },
+  { date: "2024-05-15", desktop: 473, mobile: 380 },
+  { date: "2024-05-16", desktop: 338, mobile: 400 },
+  { date: "2024-05-17", desktop: 499, mobile: 420 },
+  { date: "2024-05-18", desktop: 315, mobile: 350 },
+  { date: "2024-05-19", desktop: 235, mobile: 180 },
+  { date: "2024-05-20", desktop: 177, mobile: 230 },
+  { date: "2024-05-21", desktop: 82, mobile: 140 },
+  { date: "2024-05-22", desktop: 81, mobile: 120 },
+  { date: "2024-05-23", desktop: 252, mobile: 290 },
+  { date: "2024-05-24", desktop: 294, mobile: 220 },
+  { date: "2024-05-25", desktop: 201, mobile: 250 },
+  { date: "2024-05-26", desktop: 213, mobile: 170 },
+  { date: "2024-05-27", desktop: 420, mobile: 460 },
+  { date: "2024-05-28", desktop: 233, mobile: 190 },
+  { date: "2024-05-29", desktop: 78, mobile: 130 },
+  { date: "2024-05-30", desktop: 340, mobile: 280 },
+  { date: "2024-05-31", desktop: 178, mobile: 230 },
+  { date: "2024-06-01", desktop: 178, mobile: 200 },
+  { date: "2024-06-02", desktop: 470, mobile: 410 },
+  { date: "2024-06-03", desktop: 103, mobile: 160 },
+  { date: "2024-06-04", desktop: 439, mobile: 380 },
+  { date: "2024-06-05", desktop: 88, mobile: 140 },
+  { date: "2024-06-06", desktop: 294, mobile: 250 },
+  { date: "2024-06-07", desktop: 323, mobile: 370 },
+  { date: "2024-06-08", desktop: 385, mobile: 320 },
+  { date: "2024-06-09", desktop: 438, mobile: 480 },
+  { date: "2024-06-10", desktop: 155, mobile: 200 },
+  { date: "2024-06-11", desktop: 92, mobile: 150 },
+  { date: "2024-06-12", desktop: 492, mobile: 420 },
+  { date: "2024-06-13", desktop: 81, mobile: 130 },
+  { date: "2024-06-14", desktop: 426, mobile: 380 },
+  { date: "2024-06-15", desktop: 307, mobile: 350 },
+  { date: "2024-06-16", desktop: 371, mobile: 310 },
+  { date: "2024-06-17", desktop: 475, mobile: 520 },
+  { date: "2024-06-18", desktop: 107, mobile: 170 },
+  { date: "2024-06-19", desktop: 341, mobile: 290 },
+  { date: "2024-06-20", desktop: 408, mobile: 450 },
+  { date: "2024-06-21", desktop: 169, mobile: 210 },
+  { date: "2024-06-22", desktop: 317, mobile: 270 },
+  { date: "2024-06-23", desktop: 480, mobile: 530 },
+  { date: "2024-06-24", desktop: 132, mobile: 180 },
+  { date: "2024-06-25", desktop: 141, mobile: 190 },
+  { date: "2024-06-26", desktop: 434, mobile: 380 },
+  { date: "2024-06-27", desktop: 448, mobile: 490 },
+  { date: "2024-06-28", desktop: 149, mobile: 200 },
+  { date: "2024-06-29", desktop: 103, mobile: 160 },
+  { date: "2024-06-30", desktop: 446, mobile: 400 },
+]
+
+const axisTick = { fontSize: 13, fill: "var(--gray-11)" };
+
+const titles: Record<AreaChartVariant, string> = {
+  default: "Area chart",
+  linear: "Area chart — linear",
+  step: "Area chart — step",
+  stacked: "Area chart — stacked",
+  expanded: "Area chart — expanded",
+  legend: "Area chart — legend",
+  icons: "Area chart — icons",
+  gradient: "Area chart — gradient",
+  axes: "Area chart — axes",
+  interactive: "Area chart — interactive",
+};
+
+const curves = {
+  default: "natural",
+  linear: "linear",
+  step: "step",
+  stacked: "natural",
+  expanded: "natural",
+  legend: "natural",
+  icons: "natural",
+  gradient: "natural",
+  axes: "natural",
+  interactive: "natural",
+} as const;
+
+const rangeCopy = {
+  "90d": "the last 3 months",
+  "30d": "the last 30 days",
+  "7d": "the last 7 days",
+} as const;
+
+function seriesKeys(variant: AreaChartVariant) {
+  if (variant === "expanded") return ["other", "mobile", "desktop"] as const;
+  if (variant === "default" || variant === "linear" || variant === "step") {
+    return ["desktop"] as const;
+  }
+  return ["mobile", "desktop"] as const;
+}
+
+function buildConfig(variant: AreaChartVariant): ChartConfig {
+  return {
+    visitors: { label: "Visitors" },
+    desktop: {
+      label: "Desktop",
+      color: "var(--chart-1)",
+      icon:
+        variant === "icons"
+          ? DesktopIcon
+          : variant === "step"
+            ? ActivityLogIcon
+            : undefined,
+    },
+    mobile: {
+      label: "Mobile",
+      color: "var(--chart-2)",
+      icon: variant === "icons" ? MobileIcon : undefined,
+    },
+    other: {
+      label: "Other",
+      color: "var(--chart-3)",
+    },
+  };
+}
+
+function AreaChart({
+  variant = "default",
+  className,
+}: {
+  variant?: AreaChartVariant;
+  className?: string;
+}) {
+  const [timeRange, setTimeRange] = React.useState<keyof typeof rangeCopy>("90d");
+  const gradientId = React.useId().replace(/:/g, "");
+  const stacked = !["default", "linear", "step"].includes(variant);
+  const gradient = variant === "gradient" || variant === "interactive";
+  const keys = seriesKeys(variant);
+  const config = buildConfig(variant);
+  const title = titles[variant];
+
+  const plotted =
+    variant === "interactive"
+      ? interactiveVisitors.filter((item) => {
+          const date = new Date(item.date);
+          const start = new Date("2024-06-30");
+          const days = timeRange === "30d" ? 30 : timeRange === "7d" ? 7 : 90;
+          start.setDate(start.getDate() - days);
+          return date >= start;
+        })
+      : monthVisitors;
+
+  const description =
+    variant === "interactive"
+      ? `Showing total visitors for ${rangeCopy[timeRange]}`
+      : "Showing total visitors for the last 6 months";
+
+  return (
+    <Card className={cn("w-full", className)}>
+      <CardHeader>
+        {variant === "interactive" ? (
+          <div className="flex flex-wrap items-center justify-between gap-1">
+            <div className="grid gap-0.5">
+              <CardTitle>{title}</CardTitle>
+              <CardDescription>{description}</CardDescription>
+            </div>
+            <div className="w-14">
+              <Select value={timeRange} onValueChange={(value) => setTimeRange(value as keyof typeof rangeCopy)}>
+                <SelectTrigger aria-label="Time range">
+                  <SelectValue placeholder="Last 3 months" />
+                  <SelectIcon />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectViewport>
+                    <SelectItem value="90d">
+                      <SelectItemText>Last 3 months</SelectItemText>
+                      <SelectItemIndicator />
+                    </SelectItem>
+                    <SelectItem value="30d">
+                      <SelectItemText>Last 30 days</SelectItemText>
+                      <SelectItemIndicator />
+                    </SelectItem>
+                    <SelectItem value="7d">
+                      <SelectItemText>Last 7 days</SelectItemText>
+                      <SelectItemIndicator />
+                    </SelectItem>
+                  </SelectViewport>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        ) : (
+          <>
+            <CardTitle>{title}</CardTitle>
+            <CardDescription>{description}</CardDescription>
+          </>
+        )}
+      </CardHeader>
+      <CardContent>
+        <ChartContainer config={config} label={title}>
+          <RechartsAreaChart
+            accessibilityLayer
+            data={plotted}
+            margin={{ top: 13, right: 13, left: variant === "axes" ? 0 : 13, bottom: 0 }}
+            stackOffset={variant === "expanded" ? "expand" : "none"}
+          >
+            {gradient ? (
+              <defs>
+                {keys.map((key) => (
+                  <linearGradient
+                    key={key}
+                    id={`${gradientId}-${key}`}
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="1"
+                  >
+                    <stop offset="5%" stopColor={`var(--color-${key})`} stopOpacity={0.8} />
+                    <stop offset="95%" stopColor={`var(--color-${key})`} stopOpacity={0.1} />
+                  </linearGradient>
+                ))}
+              </defs>
+            ) : null}
+            <CartesianGrid vertical={false} stroke="var(--gray-6)" strokeDasharray="0" />
+            <XAxis
+              dataKey={variant === "interactive" ? "date" : "month"}
+              tickLine={false}
+              axisLine={false}
+              tickMargin={13}
+              minTickGap={variant === "interactive" ? 26 : 0}
+              tick={axisTick}
+              tickFormatter={(value: string) => {
+                if (variant === "interactive") {
+                  return new Date(value).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                  });
+                }
+                return value.slice(0, 3);
+              }}
+            />
+            {variant === "axes" ? (
+              <YAxis
+                tickLine={false}
+                axisLine={false}
+                tickMargin={13}
+                tickCount={3}
+                tick={axisTick}
+              />
+            ) : null}
+            <ChartTooltip
+              cursor={false}
+              content={
+                <ChartTooltipContent
+                  indicator={
+                    variant === "default" || variant === "expanded" ? "line" : "dot"
+                  }
+                  hideLabel={variant === "step"}
+                  labelFormatter={
+                    variant === "interactive"
+                      ? (value) =>
+                          new Date(String(value)).toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                          })
+                      : undefined
+                  }
+                />
+              }
+            />
+            {keys.map((key) => (
+              <ChartArea
+                key={key}
+                dataKey={key}
+                type={curves[variant]}
+                fill={gradient ? `url(#${gradientId}-${key})` : `var(--color-${key})`}
+                fillOpacity={
+                  variant === "interactive" ? 1 : key === "other" ? 0.1 : 0.4
+                }
+                stroke={`var(--color-${key})`}
+                strokeWidth={2}
+                stackId={stacked ? "a" : undefined}
+              />
+            ))}
+            {variant === "legend" || variant === "icons" || variant === "interactive" ? (
+              <ChartLegend content={<ChartLegendContent />} />
+            ) : null}
+          </RechartsAreaChart>
+        </ChartContainer>
+      </CardContent>
+      {variant === "interactive" ? null : (
+        <CardFooter>
+          <div className="grid gap-0.5">
+            <div className="flex items-center gap-0.5 font-medium text-sm text-gray-12">
+              Trending up by 5.2% this month
+              <ArrowUpIcon className="icon" />
+            </div>
+            <p className="text-sm text-gray-11">January – June 2024</p>
+          </div>
+        </CardFooter>
+      )}
+    </Card>
+  );
+}
+
+export { AreaChart };
+
+```
+  </Step>
+</Steps>
+
+## Usage
+
+### Natural
+
+```tsx
+export const Natural = () => <AreaChart variant="default" />;
+```
+
+### Linear
+
+```tsx
+export const Linear = () => <AreaChart variant="linear" />;
+```
+
+### Step
+
+```tsx
+export const Step = () => <AreaChart variant="step" />;
+```
+
+### Stacked
+
+```tsx
+export const Stacked = () => <AreaChart variant="stacked" />;
+```
+
+### Expanded
+
+```tsx
+export const Expanded = () => <AreaChart variant="expanded" />;
+```
+
+### Legend
+
+```tsx
+export const Legend = () => <AreaChart variant="legend" />;
+```
+
+### Icons
+
+```tsx
+export const Icons = () => <AreaChart variant="icons" />;
+```
+
+### Gradient
+
+```tsx
+export const Gradient = () => <AreaChart variant="gradient" />;
+```
+
+### Axes
+
+```tsx
+export const Axes = () => <AreaChart variant="axes" />;
+```
+
+### Interactive
+
+```tsx
+export const Interactive = () => <AreaChart variant="interactive" />;
+```
+

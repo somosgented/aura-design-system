@@ -1,0 +1,5 @@
+header:
+  description: Line chart family — natural, linear, step, multiple, dots, custom dots, labels, and an interactive range.
+status: new
+group: charts
+extends: _templates/content.yml
