@@ -28,6 +28,7 @@ interface SegmentedInputContextValue {
   disabled?: boolean;
   invalid?: boolean;
   required?: boolean;
+  center?: boolean;
 }
 
 const SegmentedInputContext =
@@ -49,6 +50,7 @@ interface SegmentedInputProps extends React.ComponentProps<"div"> {
   disabled?: boolean;
   invalid?: boolean;
   required?: boolean;
+  center?: boolean;
 }
 
 function SegmentedInput(props: SegmentedInputProps) {
@@ -62,6 +64,7 @@ function SegmentedInput(props: SegmentedInputProps) {
     disabled,
     invalid,
     required,
+    center = false,
     ...rootProps
   } = props;
 
@@ -75,8 +78,9 @@ function SegmentedInput(props: SegmentedInputProps) {
       disabled,
       invalid,
       required,
+      center,
     }),
-    [dir, orientation, size, disabled, invalid, required],
+    [dir, orientation, size, disabled, invalid, required, center],
   );
 
   const childrenArray = React.Children.toArray(children);
@@ -131,7 +135,9 @@ function SegmentedInput(props: SegmentedInputProps) {
 
 const segmentedInputItemVariants = cva(
   [
-    "relative min-w-0 flex-1 rounded-md border border-gray-7 bg-gray-1 text-gray-12 transition-colors outline-none",
+    // `default` opts out of legacy main.css `input:not(.default)` (padding/outline
+    // that otherwise leave 26px top/bottom and push the caret above the field).
+    "default relative min-w-0 flex-1 rounded-md border border-gray-7 bg-gray-1 text-gray-12 transition-colors outline-none",
     "selection:bg-accent-4 selection:text-gray-12 placeholder:text-gray-11",
     "focus-visible:z-10 focus-visible:border-gray-8 focus-visible:ring-2 focus-visible:ring-gray-8",
     "disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
@@ -142,8 +148,10 @@ const segmentedInputItemVariants = cva(
       position: {
         isolated: "",
         first: "rounded-e-none",
-        middle: "-ms-px rounded-none border-l-0",
-        last: "-ms-px rounded-s-none border-l-0",
+        // Keep all side borders; -ms-px overlaps the shared edge so focus
+        // still shows a full box (border-l-0 left the middle cell open).
+        middle: "-ms-px rounded-none",
+        last: "-ms-px rounded-s-none",
       },
       orientation: {
         horizontal: "",
@@ -151,32 +159,38 @@ const segmentedInputItemVariants = cva(
       },
       size: {
         // Aura --spacing 13px: avoid text-xs/text-sm on editable inputs (iOS zoom)
-        sm: "h-2.5 px-1",
-        default: "h-3 px-1",
-        lg: "h-4 px-1.5",
+        // py-0 + leading-none: px-* alone does not clear legacy vertical padding
+        sm: "h-2.5 px-1 py-0 leading-none",
+        default: "h-3 px-1 py-0 leading-none",
+        lg: "h-4 px-1.5 py-0 leading-none",
+      },
+      center: {
+        true: "text-center",
+        false: "",
       },
     },
     compoundVariants: [
       {
         position: "first",
         orientation: "vertical",
-        class: "ms-0 rounded-e-md rounded-b-none border-l",
+        class: "ms-0 rounded-e-md rounded-b-none",
       },
       {
         position: "middle",
         orientation: "vertical",
-        class: "ms-0 -mt-px rounded-none border-t-0 border-l",
+        class: "ms-0 -mt-px rounded-none",
       },
       {
         position: "last",
         orientation: "vertical",
-        class: "ms-0 -mt-px rounded-s-md rounded-t-none border-t-0 border-l",
+        class: "ms-0 -mt-px rounded-s-md rounded-t-none",
       },
     ],
     defaultVariants: {
       position: "isolated",
       orientation: "horizontal",
       size: "default",
+      center: false,
     },
   },
 );
@@ -216,6 +230,7 @@ function SegmentedInputItem(props: SegmentedInputItemProps) {
           position,
           orientation: context.orientation,
           size: context.size,
+          center: context.center,
           className,
         }),
       )}

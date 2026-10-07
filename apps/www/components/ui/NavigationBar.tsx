@@ -33,7 +33,7 @@ function NavigationBarItem({
       data-slot="navigation-bar-item"
       aria-current={active ? "page" : undefined}
       className={cn(
-        "inline-flex min-w-0 flex-1 flex-col items-center gap-0.5 px-0.5 py-0.5 text-gray-11 hover:bg-gray-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8 aria-[current=page]:text-accent-11",
+        "inline-flex min-w-0 flex-1 flex-col items-center gap-0.5 px-0.5 py-0.5 text-gray-11 hover:bg-gray-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8 aria-[current=page]:bg-accent-3 aria-[current=page]:text-accent-11",
         className,
       )}
       {...props}

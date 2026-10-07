@@ -663,6 +663,9 @@ import {
   ToggleGroupDemo
 } from "./toggle-group-demo"
 import { 
+  ToastDemo
+} from "./toast-demo"
+import { 
   ToolbarDemo
 } from "./toolbar-demo"
 import { 
@@ -1857,6 +1860,9 @@ export const Registry = {
   },
   "toggle-group-demo": {
     component: ToggleGroupDemo,
+  },
+  "toast-demo": {
+    component: ToastDemo,
   },
   "toolbar-demo": {
     component: ToolbarDemo,

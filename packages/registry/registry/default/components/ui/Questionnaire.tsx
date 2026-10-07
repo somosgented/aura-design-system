@@ -47,7 +47,7 @@ function Question({
           Question {step} of {total}
         </p>
       ) : null}
-      <h2 id={titleId}>{title}</h2>
+      <h2 id={titleId} className="h6">{title}</h2>
       {description ? <p className="text-gray-11">{description}</p> : null}
       <div className="grid gap-1">{children}</div>
     </section>

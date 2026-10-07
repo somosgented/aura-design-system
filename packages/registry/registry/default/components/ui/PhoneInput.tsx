@@ -4,11 +4,11 @@ import * as React from "react";
 import { cn } from "@/utils/class-names";
 
 const callingCodes = [
-  { value: "1", label: "+1" },
-  { value: "34", label: "+34" },
-  { value: "44", label: "+44" },
-  { value: "52", label: "+52" },
-  { value: "81", label: "+81" },
+  { value: "1", label: "United States +1" },
+  { value: "34", label: "Spain +34" },
+  { value: "44", label: "United Kingdom +44" },
+  { value: "52", label: "Mexico +52" },
+  { value: "81", label: "Japan +81" },
 ];
 
 function PhoneInput({
@@ -34,7 +34,7 @@ function PhoneInput({
         <select
           aria-label="Calling code"
           value={currentCode}
-          className="rounded-sm border border-gray-7 bg-gray-1 px-1 text-gray-12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8"
+          className="default w-auto shrink-0 rounded-sm border border-gray-7 bg-gray-1 px-1 text-gray-12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8"
           onChange={(event) => {
             if (code === undefined) setUncontrolledCode(event.target.value);
             onCodeChange?.(event.target.value);
@@ -51,7 +51,7 @@ function PhoneInput({
           type="tel"
           inputMode="tel"
           autoComplete="tel-national"
-          className="min-w-0 flex-1 rounded-sm border border-gray-7 bg-gray-1 px-1 py-0.5 text-gray-12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8"
+          className="default min-w-0 flex-1 rounded-sm border border-gray-7 bg-gray-1 px-1 py-0.5 text-gray-12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8"
           {...props}
         />
       </div>
