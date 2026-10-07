@@ -3,8 +3,8 @@
 # Custom domains stay on Vercel until cutover.
 #
 # Required GitHub secrets:
-#   CLOUD_RUN_CREDENTIALS — service account JSON key
-#   CLOUD_RUN_PROJECT_ID  — GCP project (sgd-marketing-bellatrix)
+#   CLOUD_RUN_CREDENTIALS — service account JSON key for sgd-aura
+# Note: PROJECT_ID is the GCP project ID (`sgd-aura`), not the display name.
 name: Cloud Run (production)
 
 on:
@@ -21,7 +21,7 @@ permissions:
 
 env:
   GAR_LOCATION: us-central1
-  PROJECT_ID: ${{ secrets.CLOUD_RUN_PROJECT_ID }}
+  PROJECT_ID: sgd-aura
   REPOSITORY: aura-design-system
 
 jobs:
