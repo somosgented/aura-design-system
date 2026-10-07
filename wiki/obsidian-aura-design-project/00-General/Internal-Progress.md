@@ -13,3 +13,5 @@ The 21 recent-component audit fails are fixed in registry components, docs demos
 - Implementation Path: `packages/registry/registry/default/components/ui/`
 - Next: confirm the Charts sidebar and a couple chart pages in the docs site.
 - Next: keep the input rule limited to text fields. Do not put text-field height back on range or color inputs.
+
+Docs sidebar `status: new` (accent dot in `apps/www/utils/source.tsx`) now covers only component, chart, and util pages whose docs were added 2026-09-29 through 2026-10-07. September pages such as Bubble, Stat, and Visually Hidden Input no longer carry the flag. Section index pages stay unmarked.
