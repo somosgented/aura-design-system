@@ -68,15 +68,22 @@ jobs:
       - name: Ensure Artifact Registry repository
         run: |
           set -euo pipefail
-          if ! gcloud artifacts repositories describe "${REPOSITORY}" \
+          # Matrix jobs race on first create — treat "already exists" as success.
+          if gcloud artifacts repositories describe "${REPOSITORY}" \
             --location="${GAR_LOCATION}" \
             --project="${PROJECT_ID}" >/dev/null 2>&1; then
-            gcloud artifacts repositories create "${REPOSITORY}" \
-              --repository-format=docker \
-              --location="${GAR_LOCATION}" \
-              --project="${PROJECT_ID}" \
-              --description="Aura Design System container images"
+            exit 0
           fi
+          if gcloud artifacts repositories create "${REPOSITORY}" \
+            --repository-format=docker \
+            --location="${GAR_LOCATION}" \
+            --project="${PROJECT_ID}" \
+            --description="Aura Design System container images"; then
+            exit 0
+          fi
+          gcloud artifacts repositories describe "${REPOSITORY}" \
+            --location="${GAR_LOCATION}" \
+            --project="${PROJECT_ID}"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3

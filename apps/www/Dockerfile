@@ -51,6 +51,7 @@ COPY --from=pruner /app/out/full/ .
 # dependencies, so turbo prune leaves them out.
 COPY packages/registry/registry/default/styles/responsive-dropdown-menu.css \
      packages/registry/registry/default/styles/selection-toolbar.css \
+     packages/registry/registry/default/styles/chart.css \
      ./packages/registry/registry/default/styles/
 
 # Run postinstall scripts now that source is available, then build
