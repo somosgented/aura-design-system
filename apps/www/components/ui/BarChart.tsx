@@ -146,35 +146,26 @@ function BarChart({
       ))}
     </ChartBar>
   ) : (
-    <>
-      <ChartBar
-        dataKey="desktop"
-        fill="var(--color-desktop)"
-        radius={stacked ? [0, 0, 0, 0] : 4}
-        stackId={stacked ? "a" : undefined}
-      >
-        {variant === "label" ? (
-          <LabelList
-            dataKey="desktop"
-            position="top"
-            offset={6.5}
-            fontSize={13}
-            fill="var(--gray-11)"
-          />
-        ) : null}
-        {variant === "custom" ? (
-          <LabelList dataKey="month" content={MonthLabel} />
-        ) : null}
-      </ChartBar>
-      {multi ? (
-        <ChartBar
-          dataKey="mobile"
-          fill="var(--color-mobile)"
-          radius={4}
-          stackId={stacked ? "a" : undefined}
+    <ChartBar
+      dataKey="desktop"
+      fill="var(--color-desktop)"
+      radius={stacked ? [0, 0, 0, 0] : 4}
+      layout={horizontal ? "vertical" : "horizontal"}
+      stackId={stacked ? "a" : undefined}
+    >
+      {variant === "label" ? (
+        <LabelList
+          dataKey="desktop"
+          position="top"
+          offset={6.5}
+          fontSize={13}
+          fill="var(--gray-11)"
         />
       ) : null}
-    </>
+      {variant === "custom" ? (
+        <LabelList dataKey="month" content={MonthLabel} />
+      ) : null}
+    </ChartBar>
   );
 
   const plot = variant === "mixed" ? (
@@ -210,21 +201,9 @@ function BarChart({
       layout={horizontal ? "vertical" : "horizontal"}
       margin={{ top: variant === "label" || variant === "custom" ? 26 : 13, right: 13, left: 13, bottom: 0 }}
     >
-      <CartesianGrid vertical={false} stroke="var(--gray-6)" />
+      <CartesianGrid vertical={horizontal} stroke="var(--gray-6)" />
       {horizontal ? (
-        <>
-          <XAxis type="number" tickLine={false} axisLine={false} tickMargin={13} tick={axisTick} />
-          <YAxis
-            type="category"
-            dataKey="month"
-            tickLine={false}
-            axisLine={false}
-            tickMargin={13}
-            width={78}
-            tick={axisTick}
-            tickFormatter={(value: string) => value.slice(0, 3)}
-          />
-        </>
+        <XAxis type="number" dataKey="desktop" tickLine={false} axisLine={false} tickMargin={13} tick={axisTick} />
       ) : (
         <XAxis
           dataKey="month"
@@ -235,6 +214,18 @@ function BarChart({
           tickFormatter={(value: string) => value.slice(0, 3)}
         />
       )}
+      {horizontal ? (
+        <YAxis
+          type="category"
+          dataKey="month"
+          tickLine={false}
+          axisLine={false}
+          tickMargin={13}
+          width={78}
+          tick={axisTick}
+          tickFormatter={(value: string) => value.slice(0, 3)}
+        />
+      ) : null}
       <ChartTooltip
         content={
           <ChartTooltipContent
@@ -244,6 +235,15 @@ function BarChart({
         }
       />
       {bars}
+      {multi ? (
+        <ChartBar
+          dataKey="mobile"
+          fill="var(--color-mobile)"
+          radius={4}
+          layout={horizontal ? "vertical" : "horizontal"}
+          stackId={stacked ? "a" : undefined}
+        />
+      ) : null}
       {showLegend ? <ChartLegend content={<ChartLegendContent />} /> : null}
     </RechartsBarChart>
   );
