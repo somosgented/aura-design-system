@@ -1,0 +1,5 @@
+header:
+  description: Radar chart family — default, dots, lines, multiple series, legend, circle grid, filled grid, and icons.
+status: new
+group: charts
+extends: _templates/content.yml

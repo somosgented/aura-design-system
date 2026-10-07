@@ -15,6 +15,20 @@
   stroke: var(--gray-7);
 }
 
+[data-slot="chart"] .recharts-polar-grid-concentric-polygon,
+[data-slot="chart"] .recharts-polar-grid-concentric-circle,
+[data-slot="chart"] .recharts-polar-grid-angle line,
+[data-slot="chart"] .recharts-radial-bar-background-sector {
+  stroke: var(--gray-6);
+}
+
+[data-slot="chart"] .recharts-polar-angle-axis-tick text,
+[data-slot="chart"] .recharts-polar-radius-axis-tick text,
+[data-slot="chart"] .recharts-pie-label-text,
+[data-slot="chart"] .recharts-radial-bar-label {
+  fill: var(--gray-11);
+}
+
 [data-slot="chart"] .recharts-surface:focus,
 [data-slot="chart"] .recharts-surface:focus-visible {
   outline: 2px solid var(--accent-8);

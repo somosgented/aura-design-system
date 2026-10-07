@@ -1,3 +1,4 @@
 header:
   description: Area chart family — natural, linear, step, stacked, expanded, legend, icons, gradient, axes, and an interactive range.
+group: charts
 extends: _templates/content.yml

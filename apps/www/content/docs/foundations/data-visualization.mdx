@@ -4,7 +4,7 @@ description: Chart series tokens for Aura charts — accent and status contrast,
 icon: ChartColumn
 ---
 
-Charts use the same color, type, and motion rules as the rest of Aura. The first family is the [area chart](/docs/components/area-chart), drawn with Recharts and the `@aura/chart` container.
+Charts use the same color, type, and motion rules as the rest of Aura. Families live in the [Charts](/docs/charts) section: [area](/docs/charts/area-chart), [bar](/docs/charts/bar-chart), [line](/docs/charts/line-chart), [pie](/docs/charts/pie-chart), [radar](/docs/charts/radar-chart), [radial](/docs/charts/radial-chart), and [tooltips](/docs/charts/chart-tooltips). They are drawn with Recharts and the `@aura/chart` container.
 
 ## Series
 
@@ -30,21 +30,21 @@ A chart config passes those tokens through. The container writes `--color-<serie
 | Tick labels | Gray step 11, 13px (`text-xs` is the utility size; ticks are set at 13px) |
 | Tooltip | `gray-1` surface, gray step 6 border, `rounded-sm`. Values use `font-mono` |
 | Plot focus | Accent step 8, 2px outline |
-| Card | The area chart sits in `Card`: `gray-2` fill, gray step 6 border, `rounded-md` |
+| Card | Chart families sit in `Card`: `gray-2` fill, gray step 6 border, `rounded-md` |
 
 There is no separate annotation, axis-title, or chart-palette scale beyond these five series.
 
 ## Motion
 
-`ChartArea` animates for **250ms** with `ease-out`. `prefers-reduced-motion: reduce` sets `isAnimationActive` to false. The chart stylesheet also shortens CSS animation and transitions on the plot.
+`ChartArea`, `ChartBar`, `ChartLine`, `ChartPie`, `ChartRadar`, and `ChartRadialBar` animate for **250ms** with `ease-out`. `prefers-reduced-motion: reduce` sets `isAnimationActive` to false. The chart stylesheet also shortens CSS animation and transitions on the plot.
 
 ## What is still open
 
-Bar, line, pie, radar, and radial charts are not in the registry yet. `@aura/data-grid` remains a table, with its own type and spacing rules, and is not this chart system.
+`@aura/data-grid` remains a table, with its own type and spacing rules, and is not this chart system.
 
 ## Related
 
-- [Area chart](/docs/components/area-chart)
+- [Charts](/docs/charts)
 - [Chart](/docs/components/chart)
 - [Color](/docs/foundations/color)
 - [Theming](/docs/foundations/theming)

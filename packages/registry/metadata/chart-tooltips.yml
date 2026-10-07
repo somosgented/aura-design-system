@@ -1,0 +1,6 @@
+header:
+  title: Tooltips
+  description: Tooltip indicators, labels, icons, and value formatting for Aura charts.
+status: new
+group: charts
+extends: _templates/content.yml

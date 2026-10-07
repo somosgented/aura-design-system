@@ -1,11 +1,16 @@
 "use client";
 /**
- * @description Chart container, tooltip, and legend for Recharts, colored with Aura series tokens.
+ * @description Chart container, tooltip, legend, and series wrappers for Recharts, colored with Aura series tokens.
  */
 import * as React from "react";
 import {
   Area,
+  Bar,
   Legend,
+  Line,
+  Pie,
+  Radar,
+  RadialBar,
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
@@ -102,7 +107,7 @@ function ChartContainer({
         {...props}
       >
         <ChartStyle id={chartId} config={config} />
-        <ResponsiveContainer>{children}</ResponsiveContainer>
+        <ResponsiveContainer minWidth={0}>{children}</ResponsiveContainer>
       </div>
     </ChartContext.Provider>
   );
@@ -361,31 +366,93 @@ function ChartLegendContent({
   );
 }
 
+type SeriesSource = {
+  displayName?: string;
+  defaultProps?: object;
+  getComposedData?: (...args: never[]) => unknown;
+};
+
+function useChartMotion(isAnimationActive?: boolean, animationDuration = 250) {
+  const { reducedMotion } = useChart();
+
+  return {
+    animationDuration,
+    animationEasing: "ease-out" as const,
+    isAnimationActive: isAnimationActive ?? !reducedMotion,
+  };
+}
+
+function bindRechartsSeries(
+  component: object,
+  source: SeriesSource,
+  displayName: string,
+) {
+  const bound: Record<string, unknown> = { displayName };
+  if (source.defaultProps) bound.defaultProps = source.defaultProps;
+  if (typeof source.getComposedData === "function") {
+    bound.getComposedData = source.getComposedData;
+  }
+  Object.assign(component, bound);
+}
+
 function ChartArea({
   isAnimationActive,
   animationDuration = 250,
-  animationEasing = "ease-out",
   ...props
 }: Omit<React.ComponentProps<typeof Area>, "ref">) {
-  const { reducedMotion } = useChart();
+  return <Area {...props} {...useChartMotion(isAnimationActive, animationDuration)} />;
+}
 
+function ChartBar({
+  isAnimationActive,
+  animationDuration = 250,
+  ...props
+}: Omit<React.ComponentProps<typeof Bar>, "ref">) {
+  return <Bar {...props} {...useChartMotion(isAnimationActive, animationDuration)} />;
+}
+
+function ChartLine({
+  isAnimationActive,
+  animationDuration = 250,
+  ...props
+}: Omit<React.ComponentProps<typeof Line>, "ref">) {
+  return <Line {...props} {...useChartMotion(isAnimationActive, animationDuration)} />;
+}
+
+function ChartPie({
+  isAnimationActive,
+  animationDuration = 250,
+  ...props
+}: Omit<React.ComponentProps<typeof Pie>, "ref">) {
+  return <Pie {...props} {...useChartMotion(isAnimationActive, animationDuration)} />;
+}
+
+function ChartRadar({
+  isAnimationActive,
+  animationDuration = 250,
+  ...props
+}: Omit<React.ComponentProps<typeof Radar>, "ref">) {
+  return <Radar {...props} {...useChartMotion(isAnimationActive, animationDuration)} />;
+}
+
+function ChartRadialBar({
+  isAnimationActive,
+  animationDuration = 250,
+  ...props
+}: Omit<React.ComponentProps<typeof RadialBar>, "ref">) {
   return (
-    <Area
-      {...props}
-      animationDuration={animationDuration}
-      animationEasing={animationEasing}
-      isAnimationActive={isAnimationActive ?? !reducedMotion}
-    />
+    <RadialBar {...props} {...useChartMotion(isAnimationActive, animationDuration)} />
   );
 }
 
-// Recharts identifies series by display name, reads axis ids from defaultProps,
-// and skips a child that does not implement getComposedData.
-Object.assign(ChartArea, {
-  displayName: "Area",
-  defaultProps: Area.defaultProps,
-  getComposedData: Area.getComposedData,
-});
+// Recharts identifies a series by displayName, reads axis ids from defaultProps,
+// and skips a composed child that does not implement getComposedData.
+bindRechartsSeries(ChartArea, Area, "Area");
+bindRechartsSeries(ChartBar, Bar, "Bar");
+bindRechartsSeries(ChartLine, Line, "Line");
+bindRechartsSeries(ChartPie, Pie, "Pie");
+bindRechartsSeries(ChartRadar, Radar, "Radar");
+bindRechartsSeries(ChartRadialBar, RadialBar, "RadialBar");
 
 function getPayloadConfigFromPayload(
   config: ChartConfig,
@@ -418,9 +485,14 @@ function getPayloadConfigFromPayload(
 
 export {
   ChartArea,
+  ChartBar,
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
+  ChartLine,
+  ChartPie,
+  ChartRadar,
+  ChartRadialBar,
   ChartStyle,
   ChartTooltip,
   ChartTooltipContent,

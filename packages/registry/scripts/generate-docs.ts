@@ -18,7 +18,22 @@ const UTILS_DOCS_OUTPUT_PATH = path.join(
   __dirname,
   "../../../apps/www/content/docs/utils"
 );
+const CHARTS_DOCS_OUTPUT_PATH = path.join(
+  __dirname,
+  "../../../apps/www/content/docs/charts"
+);
 const UTILS_GROUP = "utils";
+const CHARTS_GROUP = "charts";
+const SIDEBAR_GROUPS = new Set([UTILS_GROUP, CHARTS_GROUP]);
+const CHART_PAGE_ORDER = [
+  "area-chart",
+  "bar-chart",
+  "line-chart",
+  "pie-chart",
+  "radar-chart",
+  "radial-chart",
+  "chart-tooltips",
+];
 const METADATA_PATH = path.join(__dirname, "../metadata");
 const STORIES_PATH = path.join(__dirname, "../src");
 const DEMOS_OUTPUT_PATH = path.join(
@@ -71,6 +86,7 @@ interface ComponentProp {
 interface Metadata {
   header?: {
     description?: string;
+    title?: string;
   };
   links?: {
     doc?: string;
@@ -205,12 +221,16 @@ function parseMetadata(componentName: string): Metadata | null {
     const yamlContent = fs.readFileSync(yamlFilePath, "utf-8");
     const metadata: Metadata = {};
 
-    // Parse header.description
-    const headerMatch = yamlContent.match(/^header:\s*\n\s+description:\s*(.+)$/m);
-    if (headerMatch) {
-      metadata.header = {
-        description: headerMatch[1].trim(),
-      };
+    // Parse header.description and optional header.title
+    const headerBlock = yamlContent.match(/^header:\s*\n((?:[ \t]+[^\n]+\n)+)/m);
+    if (headerBlock) {
+      const description = headerBlock[1].match(/^[ \t]+description:\s*(.+)$/m);
+      const title = headerBlock[1].match(/^[ \t]+title:\s*(.+)$/m);
+      metadata.header = {};
+      if (description) metadata.header.description = description[1].trim();
+      if (title) {
+        metadata.header.title = title[1].trim().replace(/^["']|["']$/g, "");
+      }
     }
 
     // Parse sidebar status badge (e.g. status: new)
@@ -1432,7 +1452,7 @@ function generateMdxContent(
   defaultStory: string | null,
   allStories: Story[] | null
 ): string {
-  const title = toTitleCase(componentName);
+  const title = metadata?.header?.title || toTitleCase(componentName);
   const kebabName = toKebabCase(componentName);
   const description =
     metadata?.header?.description || DEFAULT_DESCRIPTION;
@@ -2391,7 +2411,9 @@ function getUIComponentFiles(): { name: string; path: string }[] {
  * Generate documentation files for all UI components
  */
 function docsDirForGroup(group?: string) {
-  return group === UTILS_GROUP ? UTILS_DOCS_OUTPUT_PATH : DOCS_OUTPUT_PATH;
+  if (group === UTILS_GROUP) return UTILS_DOCS_OUTPUT_PATH;
+  if (group === CHARTS_GROUP) return CHARTS_DOCS_OUTPUT_PATH;
+  return DOCS_OUTPUT_PATH;
 }
 
 function ensureDocsDir(dir: string, label: string) {
@@ -2402,18 +2424,20 @@ function ensureDocsDir(dir: string, label: string) {
 }
 
 function removeStaleDoc(kebabName: string, keepDir: string) {
-  const otherDir =
-    keepDir === UTILS_DOCS_OUTPUT_PATH ? DOCS_OUTPUT_PATH : UTILS_DOCS_OUTPUT_PATH;
-  const stalePath = path.join(otherDir, `${kebabName}.mdx`);
-  if (fs.existsSync(stalePath)) {
-    fs.unlinkSync(stalePath);
-    console.log(`[INFO] Removed stale doc ${stalePath}`);
+  for (const dir of [DOCS_OUTPUT_PATH, UTILS_DOCS_OUTPUT_PATH, CHARTS_DOCS_OUTPUT_PATH]) {
+    if (dir === keepDir) continue;
+    const stalePath = path.join(dir, `${kebabName}.mdx`);
+    if (fs.existsSync(stalePath)) {
+      fs.unlinkSync(stalePath);
+      console.log(`[INFO] Removed stale doc ${stalePath}`);
+    }
   }
 }
 
 function generateDocs() {
   ensureDocsDir(DOCS_OUTPUT_PATH, "documentation");
   ensureDocsDir(UTILS_DOCS_OUTPUT_PATH, "utils documentation");
+  ensureDocsDir(CHARTS_DOCS_OUTPUT_PATH, "charts documentation");
 
   const components = getUIComponentFiles();
   let created = 0;
@@ -2500,16 +2524,16 @@ function collectIndexEntries(group?: string): IndexEntry[] {
 
   for (const component of getUIComponentFiles()) {
     const metadata = parseMetadata(component.name);
-    if (group === UTILS_GROUP) {
-      if (metadata?.group !== UTILS_GROUP) continue;
-    } else if (metadata?.group === UTILS_GROUP) {
+    if (group) {
+      if (metadata?.group !== group) continue;
+    } else if (metadata?.group && SIDEBAR_GROUPS.has(metadata.group)) {
       continue;
     }
 
     const kebabName = toKebabCase(component.name);
     entries.push({
       name: component.name,
-      title: toTitleCase(component.name),
+      title: metadata?.header?.title || toTitleCase(component.name),
       description: metadata?.header?.description || DEFAULT_DESCRIPTION,
       kebabName,
     });
@@ -2549,7 +2573,34 @@ ${options.intro}
   console.log(`[SUCCESS] Generated ${options.label} with ${options.entries.length} entries\n`);
 }
 
+/** Docs pages that are not generated from a UI component file. */
+const MANUAL_COMPONENT_PAGES: IndexEntry[] = [
+  {
+    name: "Toast",
+    title: "Toast",
+    description:
+      "How to install sileo and style it with Aura tokens. Aura does not ship a Toast component.",
+    kebabName: "toast",
+  },
+  {
+    name: "Typography",
+    title: "Typography",
+    description:
+      "The fluid type scale as CSS classes. Aura does not ship a Typography component.",
+    kebabName: "typography",
+  },
+];
+
 function generateComponentsIndex() {
+  const entries = collectIndexEntries();
+  for (const page of MANUAL_COMPONENT_PAGES) {
+    const docPath = path.join(DOCS_OUTPUT_PATH, `${page.kebabName}.mdx`);
+    if (!fs.existsSync(docPath)) continue;
+    if (entries.some((entry) => entry.kebabName === page.kebabName)) continue;
+    entries.push(page);
+  }
+  entries.sort((a, b) => a.title.localeCompare(b.title));
+
   writeCatalogIndex({
     dir: DOCS_OUTPUT_PATH,
     title: "All Components",
@@ -2557,7 +2608,7 @@ function generateComponentsIndex() {
     heading: "All Components",
     intro: "Here is a complete list of all available components in the Aura Design System:",
     linkPrefix: "./components/",
-    entries: collectIndexEntries(),
+    entries,
     label: "components index.mdx",
   });
 }
@@ -2574,6 +2625,40 @@ function generateUtilsIndex() {
     entries: collectIndexEntries(UTILS_GROUP),
     label: "utils index.mdx",
   });
+}
+
+function generateChartsIndex() {
+  ensureDocsDir(CHARTS_DOCS_OUTPUT_PATH, "charts documentation");
+  const entries = collectIndexEntries(CHARTS_GROUP);
+  entries.sort((a, b) => {
+    const ai = CHART_PAGE_ORDER.indexOf(a.kebabName);
+    const bi = CHART_PAGE_ORDER.indexOf(b.kebabName);
+    const ao = ai === -1 ? CHART_PAGE_ORDER.length : ai;
+    const bo = bi === -1 ? CHART_PAGE_ORDER.length : bi;
+    if (ao !== bo) return ao - bo;
+    return a.title.localeCompare(b.title);
+  });
+
+  writeCatalogIndex({
+    dir: CHARTS_DOCS_OUTPUT_PATH,
+    title: "Charts",
+    description: "Area, bar, line, pie, radar, and radial charts, plus tooltip patterns.",
+    heading: "Charts",
+    intro: "Chart families sit in their own section. They share the chart container, tooltip, and legend from the Chart component.",
+    linkPrefix: "./",
+    entries,
+    label: "charts index.mdx",
+  });
+
+  const meta = {
+    title: "Charts",
+    pages: ["index", ...entries.map((entry) => entry.kebabName)],
+  };
+  fs.writeFileSync(
+    path.join(CHARTS_DOCS_OUTPUT_PATH, "meta.json"),
+    `${JSON.stringify(meta, null, 2)}\n`,
+  );
+  console.log(`[SUCCESS] Generated charts meta.json\n`);
 }
 
 /**
@@ -2609,6 +2694,9 @@ generateComponentsIndex();
 
 // Generate utils index page
 generateUtilsIndex();
+
+// Generate charts index page
+generateChartsIndex();
 
 // Generate all.txt file
 generateAllTxt();

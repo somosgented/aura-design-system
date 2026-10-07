@@ -857,6 +857,27 @@
       ]
     },
     {
+      "name": "bar-chart",
+      "type": "registry:ui",
+      "title": "BarChart",
+      "description": "The BarChart component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/BarChart.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-icons",
+        "recharts@2.15.4"
+      ],
+      "registryDependencies": [
+        "@aura/card",
+        "@aura/chart",
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "breadcrumb",
       "type": "registry:ui",
       "title": "Breadcrumb",
@@ -1013,6 +1034,27 @@
         "recharts@2.15.4"
       ],
       "registryDependencies": [
+        "@aura/class-names"
+      ]
+    },
+    {
+      "name": "chart-tooltips",
+      "type": "registry:ui",
+      "title": "ChartTooltips",
+      "description": "The ChartTooltips component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/ChartTooltips.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-icons",
+        "recharts@2.15.4"
+      ],
+      "registryDependencies": [
+        "@aura/card",
+        "@aura/chart",
         "@aura/class-names"
       ]
     },
@@ -1768,6 +1810,28 @@
       ]
     },
     {
+      "name": "line-chart",
+      "type": "registry:ui",
+      "title": "LineChart",
+      "description": "The LineChart component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/LineChart.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-icons",
+        "recharts@2.15.4"
+      ],
+      "registryDependencies": [
+        "@aura/card",
+        "@aura/chart",
+        "@aura/class-names",
+        "@aura/select"
+      ]
+    },
+    {
       "name": "listbox",
       "type": "registry:ui",
       "title": "Listbox",
@@ -2100,6 +2164,27 @@
       ]
     },
     {
+      "name": "pie-chart",
+      "type": "registry:ui",
+      "title": "PieChart",
+      "description": "The PieChart component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/PieChart.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-icons",
+        "recharts@2.15.4"
+      ],
+      "registryDependencies": [
+        "@aura/card",
+        "@aura/chart",
+        "@aura/class-names"
+      ]
+    },
+    {
       "name": "popover",
       "type": "registry:ui",
       "title": "Popover",
@@ -2224,6 +2309,48 @@
         "@aura/button",
         "@aura/class-names",
         "@aura/stepper"
+      ]
+    },
+    {
+      "name": "radar-chart",
+      "type": "registry:ui",
+      "title": "RadarChart",
+      "description": "The RadarChart component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/RadarChart.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-icons",
+        "recharts@2.15.4"
+      ],
+      "registryDependencies": [
+        "@aura/card",
+        "@aura/chart",
+        "@aura/class-names"
+      ]
+    },
+    {
+      "name": "radial-chart",
+      "type": "registry:ui",
+      "title": "RadialChart",
+      "description": "The RadialChart component.",
+      "files": [
+        {
+          "path": "registry/default/components/ui/RadialChart.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-icons",
+        "recharts@2.15.4"
+      ],
+      "registryDependencies": [
+        "@aura/card",
+        "@aura/chart",
+        "@aura/class-names"
       ]
     },
     {

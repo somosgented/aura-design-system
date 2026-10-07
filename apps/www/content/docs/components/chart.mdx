@@ -1,6 +1,6 @@
 ---
 title: Chart
-description: Chart container, tooltip, and legend. Series colors use Aura chart tokens.
+description: Chart container, tooltip, legend, and series wrappers. Series colors use Aura chart tokens.
 ---
 
 import { ComponentPreview } from "@/components/ComponentPreview"
@@ -9,7 +9,7 @@ import { Steps, Step } from "fumadocs-ui/components/steps"
 
 ## Preview
 
-<ComponentPreview name="chart-demo" description="Chart container, tooltip, and legend. Series colors use Aura chart tokens.">
+<ComponentPreview name="chart-demo" description="Chart container, tooltip, legend, and series wrappers. Series colors use Aura chart tokens.">
 
 ```tsx
 import { AreaChart, CartesianGrid, XAxis } from "recharts";
@@ -21,48 +21,31 @@ import {
   type ChartConfig,
 } from "@/components/ui/Chart";
 
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-];
-
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "var(--chart-1)",
-  },
-} satisfies ChartConfig;
-
 export function ChartDemo() {
   return (
-    <ChartContainer config={chartConfig} label="Desktop visitors" className="w-full">
-      <AreaChart accessibilityLayer data={chartData} margin={{ top: 13, right: 13, left: 13, bottom: 0 }}>
-        <CartesianGrid vertical={false} stroke="var(--gray-6)" strokeDasharray="0" />
-        <XAxis
-          dataKey="month"
-          tickLine={false}
-          axisLine={false}
-          tickMargin={13}
-          tick={{ fontSize: 13, fill: "var(--gray-11)" }}
-          tickFormatter={(value: string) => value.slice(0, 3)}
-        />
-        <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
-        <ChartArea
-          dataKey="desktop"
-          type="natural"
-          fill="var(--color-desktop)"
-          fillOpacity={0.4}
-          stroke="var(--color-desktop)"
-          strokeWidth={2}
-        />
-      </AreaChart>
-    </ChartContainer>
-  );
-}
+  <ChartContainer config={chartConfig} label="Desktop visitors" className="w-full">
+    <AreaChart accessibilityLayer data={chartData} margin={{ top: 13, right: 13, left: 13, bottom: 0 }}>
+      <CartesianGrid vertical={false} stroke="var(--gray-6)" strokeDasharray="0" />
+      <XAxis
+        dataKey="month"
+        tickLine={false}
+        axisLine={false}
+        tickMargin={13}
+        tick={{ fontSize: 13, fill: "var(--gray-11)" }}
+        tickFormatter={(value: string) => value.slice(0, 3)}
+      />
+      <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
+      <ChartArea
+        dataKey="desktop"
+        type="natural"
+        fill="var(--color-desktop)"
+        fillOpacity={0.4}
+        stroke="var(--color-desktop)"
+        strokeWidth={2}
+      />
+    </AreaChart>
+  </ChartContainer>
+)
 ```
 
 </ComponentPreview>
@@ -105,12 +88,17 @@ export function cn(...inputs: ClassValue[]) {
 ```tsx
 "use client";
 /**
- * @description Chart container, tooltip, and legend for Recharts, colored with Aura series tokens.
+ * @description Chart container, tooltip, legend, and series wrappers for Recharts, colored with Aura series tokens.
  */
 import * as React from "react";
 import {
   Area,
+  Bar,
   Legend,
+  Line,
+  Pie,
+  Radar,
+  RadialBar,
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
@@ -207,7 +195,7 @@ function ChartContainer({
         {...props}
       >
         <ChartStyle id={chartId} config={config} />
-        <ResponsiveContainer>{children}</ResponsiveContainer>
+        <ResponsiveContainer minWidth={0}>{children}</ResponsiveContainer>
       </div>
     </ChartContext.Provider>
   );
@@ -466,23 +454,93 @@ function ChartLegendContent({
   );
 }
 
+type SeriesSource = {
+  displayName?: string;
+  defaultProps?: object;
+  getComposedData?: (...args: never[]) => unknown;
+};
+
+function useChartMotion(isAnimationActive?: boolean, animationDuration = 250) {
+  const { reducedMotion } = useChart();
+
+  return {
+    animationDuration,
+    animationEasing: "ease-out" as const,
+    isAnimationActive: isAnimationActive ?? !reducedMotion,
+  };
+}
+
+function bindRechartsSeries(
+  component: object,
+  source: SeriesSource,
+  displayName: string,
+) {
+  const bound: Record<string, unknown> = { displayName };
+  if (source.defaultProps) bound.defaultProps = source.defaultProps;
+  if (typeof source.getComposedData === "function") {
+    bound.getComposedData = source.getComposedData;
+  }
+  Object.assign(component, bound);
+}
+
 function ChartArea({
   isAnimationActive,
   animationDuration = 250,
-  animationEasing = "ease-out",
   ...props
 }: Omit<React.ComponentProps<typeof Area>, "ref">) {
-  const { reducedMotion } = useChart();
+  return <Area {...props} {...useChartMotion(isAnimationActive, animationDuration)} />;
+}
 
+function ChartBar({
+  isAnimationActive,
+  animationDuration = 250,
+  ...props
+}: Omit<React.ComponentProps<typeof Bar>, "ref">) {
+  return <Bar {...props} {...useChartMotion(isAnimationActive, animationDuration)} />;
+}
+
+function ChartLine({
+  isAnimationActive,
+  animationDuration = 250,
+  ...props
+}: Omit<React.ComponentProps<typeof Line>, "ref">) {
+  return <Line {...props} {...useChartMotion(isAnimationActive, animationDuration)} />;
+}
+
+function ChartPie({
+  isAnimationActive,
+  animationDuration = 250,
+  ...props
+}: Omit<React.ComponentProps<typeof Pie>, "ref">) {
+  return <Pie {...props} {...useChartMotion(isAnimationActive, animationDuration)} />;
+}
+
+function ChartRadar({
+  isAnimationActive,
+  animationDuration = 250,
+  ...props
+}: Omit<React.ComponentProps<typeof Radar>, "ref">) {
+  return <Radar {...props} {...useChartMotion(isAnimationActive, animationDuration)} />;
+}
+
+function ChartRadialBar({
+  isAnimationActive,
+  animationDuration = 250,
+  ...props
+}: Omit<React.ComponentProps<typeof RadialBar>, "ref">) {
   return (
-    <Area
-      {...props}
-      animationDuration={animationDuration}
-      animationEasing={animationEasing}
-      isAnimationActive={isAnimationActive ?? !reducedMotion}
-    />
+    <RadialBar {...props} {...useChartMotion(isAnimationActive, animationDuration)} />
   );
 }
+
+// Recharts identifies a series by displayName, reads axis ids from defaultProps,
+// and skips a composed child that does not implement getComposedData.
+bindRechartsSeries(ChartArea, Area, "Area");
+bindRechartsSeries(ChartBar, Bar, "Bar");
+bindRechartsSeries(ChartLine, Line, "Line");
+bindRechartsSeries(ChartPie, Pie, "Pie");
+bindRechartsSeries(ChartRadar, Radar, "Radar");
+bindRechartsSeries(ChartRadialBar, RadialBar, "RadialBar");
 
 function getPayloadConfigFromPayload(
   config: ChartConfig,
@@ -515,9 +573,14 @@ function getPayloadConfigFromPayload(
 
 export {
   ChartArea,
+  ChartBar,
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
+  ChartLine,
+  ChartPie,
+  ChartRadar,
+  ChartRadialBar,
   ChartStyle,
   ChartTooltip,
   ChartTooltipContent,
