@@ -8,7 +8,7 @@ FROM node:20-alpine AS prepare
 WORKDIR /src
 COPY packages/design-md/package.json ./package.json
 COPY packages/design-md/scripts ./scripts
-COPY packages/design-md/DESIGN.md packages/design-md/index.html packages/design-md/preview.html packages/design-md/preview-dark.html ./
+COPY packages/design-md/DESIGN.md packages/design-md/index.html packages/design-md/preview.html packages/design-md/preview-dark.html packages/design-md/favicon.ico packages/design-md/favicon.svg packages/design-md/apple-touch-icon.png ./
 RUN node scripts/prepare-public.cjs
 
 FROM nginx:1.27-alpine AS runner
