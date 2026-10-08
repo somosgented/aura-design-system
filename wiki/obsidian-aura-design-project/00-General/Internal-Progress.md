@@ -4,6 +4,8 @@ date: 2026-10-07
 tags: [dev-log, logic]
 ---
 ## Summary
+The shipped theme now uses the Somos Gente Digital dark ramp, with light mode generated from accent `#4015ca` and gray `#7254cb`. See [[Sgd-palette]]. The header Aura mark is `apps/www/public/brand/aura-mark.png`. The Made by Somos Gente lockup is unchanged aside from that mark.
+
 Chart families (bar, line, pie, radar, radial, tooltips) plus the existing area chart are a separate **Charts** docs section (`/docs/charts`). Metadata `group: charts` drives generate-docs. The Chart primitive stays under Components.
 
 The 21 recent-component audit fails are fixed in registry components, docs demos, and the legacy field rule. Notes live in [[Recent-Components-Audit]]. SegmentedInput keeps full side borders and `py-0 leading-none` so the caret stays inside the cells.

@@ -32,25 +32,46 @@ Steps 11 and 12 are chosen so APCA **Lc 60** and **Lc 90** hold on a step 2 back
 
 ## Shipped accent scale
 
-In `globals.css`, the accent scale is the same under `:root` and inside `@media (prefers-color-scheme: dark)`. Gray is what changes with the scheme. See [Theming](/docs/foundations/theming).
+Light lives on `:root`. Dark lives in `@media (prefers-color-scheme: dark)` on `:root:not(.light)` and on `.dark`. Step 9 is `#4015ca` in both schemes. See [Theming](/docs/foundations/theming).
+
+Light:
 
 | Token | Value |
 | --- | --- |
-| `--accent-1` | `#17121c` |
-| `--accent-2` | `#1c1524` |
-| `--accent-3` | `#2e1d3d` |
-| `--accent-4` | `#3b2351` |
-| `--accent-5` | `#462b5e` |
-| `--accent-6` | `#52356b` |
-| `--accent-7` | `#634381` |
-| `--accent-8` | `#7d55a2` |
-| `--accent-9` | `#bf91ec` |
-| `--accent-10` | `#b486e0` |
-| `--accent-11` | `#cea0fc` |
-| `--accent-12` | `#e9dbf9` |
+| `--accent-1` | `#fdfdff` |
+| `--accent-2` | `#f7f8ff` |
+| `--accent-3` | `#eef1ff` |
+| `--accent-4` | `#e2e7ff` |
+| `--accent-5` | `#d5dcff` |
+| `--accent-6` | `#c5cdff` |
+| `--accent-7` | `#b0b9ff` |
+| `--accent-8` | `#939bff` |
+| `--accent-9` | `#4015ca` |
+| `--accent-10` | `#3500b6` |
+| `--accent-11` | `#5446e1` |
+| `--accent-12` | `#272370` |
 | `--accent-contrast` | `#fff` |
-| `--accent-surface` | `#2c181e80` |
-| `--accent-indicator`, `--accent-track` | `#bf91ec` |
+| `--accent-surface` | `#f5f6ffcc` |
+| `--accent-indicator`, `--accent-track` | `#4015ca` |
+
+Dark (Somos Gente Digital scale, `#30a` written as `#3300aa`):
+
+| Token | Value |
+| --- | --- |
+| `--accent-1` | `#0b0c22` |
+| `--accent-2` | `#121331` |
+| `--accent-3` | `#1e1167` |
+| `--accent-4` | `#2b0096` |
+| `--accent-5` | `#3300aa` |
+| `--accent-6` | `#3b18bb` |
+| `--accent-7` | `#4626d4` |
+| `--accent-8` | `#542bfd` |
+| `--accent-9` | `#4015ca` |
+| `--accent-10` | `#3400ab` |
+| `--accent-11` | `#a3acff` |
+| `--accent-12` | `#d9dfff` |
+| `--accent-surface` | `#15175280` |
+| `--accent-indicator`, `--accent-track` | `#4015ca` |
 
 Alpha steps `--accent-a1` through `--accent-a12` are defined beside the solid scale in the same file. Tailwind reads them as `accent-1` … `accent-a12` through the `@theme inline` color mappings (`--color-accent-9: var(--accent-9)`, and the same pattern for every step).
 
@@ -65,7 +86,7 @@ Semantic aliases in that file:
 
 The token is spelled `--secundary` in source. `--aura-accents-primary` and `--aura-accents-secondary` both point at `--accent-9`. `--aura-bg` is `--gray-1`. `--aura-text-primary` is `--accent-12` in this theme file.
 
-`ThemeColorSwitcher` uses a different accent seed, `#964CE1`, for both light and dark, with gray `#16204e` and backgrounds `#fcfcfc` / `#0c122b`. `DESIGN.md` cites `#964ce1` as a marketing sample. The switcher generates a scale with `generateRadixColors` and stores it under `aura-theme-colors`. Production components still read the CSS variables, not those seeds.
+`ThemeColorSwitcher` seeds are accent `#4015ca`, gray `#7254cb`, and backgrounds `#ffffff` / `#100b21`. The switcher generates a scale with `generateRadixColors` and stores it under `aura-theme-colors`. The shipped dark scale in `globals.css` is the Somos Gente Digital ramp, not a fresh generator pass. Production components still read the CSS variables, not those seeds.
 
 ## Shipped gray scale
 
@@ -73,37 +94,37 @@ Light (`:root`):
 
 | Token | Value |
 | --- | --- |
-| `--gray-1` | `#f6f9ff` |
-| `--gray-2` | `#f0f6ff` |
-| `--gray-3` | `#e3ecff` |
-| `--gray-4` | `#d7e4ff` |
-| `--gray-5` | `#ccdcff` |
-| `--gray-6` | `#c2d4ff` |
-| `--gray-7` | `#b4c8ff` |
-| `--gray-8` | `#99b3ff` |
-| `--gray-9` | `#6d84d5` |
-| `--gray-10` | `#647ac5` |
-| `--gray-11` | `#4b5c9a` |
-| `--gray-12` | `#121b48` |
+| `--gray-1` | `#fcfaff` |
+| `--gray-2` | `#f9f6ff` |
+| `--gray-3` | `#f0ecff` |
+| `--gray-4` | `#e8e2ff` |
+| `--gray-5` | `#e0daff` |
+| `--gray-6` | `#d9d1ff` |
+| `--gray-7` | `#cfc4ff` |
+| `--gray-8` | `#bcabff` |
+| `--gray-9` | `#936cff` |
+| `--gray-10` | `#8863f2` |
+| `--gray-11` | `#6949bf` |
+| `--gray-12` | `#27005f` |
 
-Dark (`prefers-color-scheme: dark`):
+Dark (`prefers-color-scheme: dark` and `.dark`):
 
 | Token | Value |
 | --- | --- |
-| `--gray-1` | `#0c122a` |
-| `--gray-2` | `#131931` |
-| `--gray-3` | `#182043` |
-| `--gray-4` | `#1b2554` |
-| `--gray-5` | `#1f2b62` |
-| `--gray-6` | `#243275` |
-| `--gray-7` | `#2e3f8b` |
-| `--gray-8` | `#455aa9` |
-| `--gray-9` | `#5268b8` |
-| `--gray-10` | `#5f75c7` |
-| `--gray-11` | `#94afff` |
-| `--gray-12` | `#e5eeff` |
+| `--gray-1` | `#100b21` |
+| `--gray-2` | `#19152b` |
+| `--gray-3` | `#231d3c` |
+| `--gray-4` | `#2b214d` |
+| `--gray-5` | `#33265c` |
+| `--gray-6` | `#3c2d6c` |
+| `--gray-7` | `#4a3786` |
+| `--gray-8` | `#6548b6` |
+| `--gray-9` | `#7254cb` |
+| `--gray-10` | `#7f63d9` |
+| `--gray-11` | `#b5a2ff` |
+| `--gray-12` | `#eeecff` |
 
-`--gray-contrast` is `#ffffff` in both schemes. `--gray-surface` is `rgba(0, 0, 0, 0.05)`. `--gray-indicator` and `--gray-track` are `#5268b8`. Alpha steps `--gray-a1` … `--gray-a12` sit next to the solid scale. Light `--gray-a1` through `--gray-a8` currently repeat the solid hexes; `--gray-a9` onward are translucent.
+`--gray-contrast` is `#ffffff` in both schemes. Light `--gray-surface` is `#ffffffcc`. Dark `--gray-surface` is `rgba(0, 0, 0, 0.05)`. `--gray-indicator` and `--gray-track` follow step 9 (`#936cff` light, `#7254cb` dark). Alpha steps sit next to the solid scale. `--ecru` is `#debc7a` and paints `::selection`. Chart series are `--chart-1` through `--chart-5`, aliased to `--accent-9` and the four status contrast tokens, so they follow the scheme.
 
 Body copy uses the gray scale. `DESIGN.md` tells you to reach for `gray-12` and leave pure `#000` out of text.
 

@@ -8,11 +8,11 @@ A theme in Aura swaps hex values and keeps step roles. Step 9 is still the solid
 
 ## Scheme
 
-`packages/registry/styles/globals.css` sets the light scales on `:root`. `@media (prefers-color-scheme: dark)` reassigns the gray scale and the gray alpha steps. In that file the **accent** scale is repeated unchanged inside the dark query, so brand steps stay `#bf91ec` at `--accent-9` unless an app overwrites them.
+`packages/registry/styles/globals.css` sets the light scales on `:root`. `@media (prefers-color-scheme: dark)` reassigns accent and gray on `:root:not(.light)`. `.dark` repeats that same dark scale outside `@layer`, so a class toggle wins over the light `:root` values. Step 9 stays `#4015ca` in both schemes. The dark hexes are the Somos Gente Digital ramp. The light ramp is generated from accent `#4015ca`, gray `#7254cb`, and background `#ffffff`.
 
-`main` is always `background-color: var(--gray-1)`, which resolves to `#f6f9ff` in light and `#0c122a` in the dark query. Full tables are on the [Color](/docs/foundations/color) page.
+`main` is always `background-color: var(--gray-1)`, which resolves to `#fcfaff` in light and `#100b21` in dark. Full tables are on the [Color](/docs/foundations/color) page.
 
-Status pairs have a second override. Inside `@layer base`, `.dark` replaces info, success, danger, and warning:
+Status pairs change with the scheme. `.dark` and the dark media query set:
 
 | Token | `.dark` value |
 | --- | --- |
@@ -25,7 +25,7 @@ Status pairs have a second override. Inside `@layer base`, `.dark` replaces info
 | `--warning` | `#2A2402` |
 | `--warning-contrast` | `#EFE08E` |
 
-Light status values live on `@theme inline` and are listed on the color page. `.dark` is a class. The media query is the scheme switch for the gray scale. An app that toggles `.dark` without the media query still needs to set the gray steps itself; this stylesheet only redefines gray inside `prefers-color-scheme`.
+Light status values live on `:root` and on `@theme inline`. They are listed on the color page. An app that sets `.dark` gets the full Somos Gente Digital accent, gray, and status scales. `prefers-color-scheme: dark` does the same unless the root has class `light`.
 
 ## Theme color switcher
 
@@ -33,10 +33,10 @@ Light status values live on `@theme inline` and are listed on the color page. `.
 
 | | Accent | Gray | Background |
 | --- | --- | --- | --- |
-| Light | `#964CE1` | `#16204e` | `#fcfcfc` |
-| Dark | `#964CE1` | `#16204e` | `#0c122b` |
+| Light | `#4015ca` | `#7254cb` | `#ffffff` |
+| Dark | `#4015ca` | `#7254cb` | `#100b21` |
 
-Those seeds are the switcher’s defaults, stored under `aura-theme-colors`. They are not the `:root` values in `globals.css` (`--accent-9` there is `#bf91ec`). `generateRadixColors` turns a seed into a 12-step scale. Components keep reading `--accent-*` and `--gray-*`.
+Those seeds are the switcher’s defaults, stored under `aura-theme-colors`. Light `:root` in `globals.css` is that generator pass (`--accent-9` is `#4015ca`). Dark `globals.css` keeps the Somos Gente Digital hexes instead of a second generator pass. `generateRadixColors` turns a seed into a 12-step scale. Components keep reading `--accent-*` and `--gray-*`.
 
 A single seed color can fill accent, gray, and background for both light and dark. `schemeFromSeed` keeps the seed hue, lowers chroma for the gray companion, and sets a light and a dark background. The switcher applies that scheme immediately and still lets light and dark be edited on their own. An image can supply the seed: the switcher averages the image’s pixels and runs the same scheme.
 

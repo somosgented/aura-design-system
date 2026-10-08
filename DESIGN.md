@@ -59,7 +59,7 @@ Use paired surface + contrast tokens for alerts and badges: **`--info` / `--info
 
 ### Default light reference (illustrative)
 
-Exact values are theme-generated; typical marketing defaults in docs use a **violet accent** around **`#964ce1`** for `--accent-9` with light gray-violet neutrals. **Always consume tokens in code**—do not hard-code marketing samples in production components.
+Exact values are theme-generated. The shipped theme uses Somos Gente Digital indigo **`#4015ca`** for `--accent-9` in light and dark, with a violet-tinted gray ramp. **Always consume tokens in code**. Do not hard-code marketing samples in production components.
 
 ### Editorial ↔ Aura token bridge (illustrative)
 
@@ -68,7 +68,7 @@ External “editorial” specs often name concrete hexes or Material-like surfac
 | Editorial concept (example) | Aura mapping |
 |-----------------------------|--------------|
 | Primary ~`#7c2ec6` | Theme-dependent; typically near **`--accent-9`** / **`--primary`** |
-| Primary container ~`#964ce1` | **`--accent-10`** or lighter accent steps; pair with **`--accent-9`** in **gradients** |
+| Primary container ~`#3500b6` | **`--accent-10`** or lighter accent steps; pair with **`--accent-9`** in **gradients** |
 | Secondary / metadata ~`#565f6f` | **`gray-11`** (muted UI and secondary text) |
 | Soft surface ~`#fbf8ff` | **`gray-1`–`gray-2`** (exact tint is theme-generated) |
 | Layered “surface container” (low / lowest) | **Tonal lifts**: **`gray-2`–`gray-3`** on a **`gray-1`** canvas; lightest interactive cards often **`gray-2`** or **`gray-3`** on **`gray-1`** |

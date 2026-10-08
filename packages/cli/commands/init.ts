@@ -78,16 +78,16 @@ export async function applyAuraToProject(appDir: string): Promise<void> {
 
   const lightColors = generateRadixColors({
     appearance: "light",
-    accent: "#964CE1",
-    gray: "#6b7394",
+    accent: "#4015ca",
+    gray: "#7254cb",
     background: "#FFFFFF",
   });
 
   const darkColors = generateRadixColors({
     appearance: "dark",
-    accent: "#964CE1",
-    gray: "#6b7394",
-    background: "#0c122a",
+    accent: "#4015ca",
+    gray: "#7254cb",
+    background: "#100b21",
   });
 
   const globalsCSS = generateGlobalsCss(lightColors, darkColors);
