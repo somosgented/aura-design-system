@@ -274,33 +274,31 @@ export function SidebarContentMobile({
           onClick={() => setOpen(false)}
         />
       </Presence>
+      {/* Element children so Presence unmounts after exit (render-prop force-mounts). */}
       <Presence present={open}>
-        {({ present }) => (
-          <aside
-            id="nd-sidebar"
-            {...props}
-            data-state={state}
-            role="dialog"
-            aria-modal="true"
-            aria-label={props["aria-label"] ?? "Documentation"}
-            tabIndex={props.tabIndex ?? -1}
-            className={cn(
-              "fixed end-0 top-0 z-40 flex h-dvh w-full max-w-26 min-h-0 origin-right flex-col overflow-hidden border-s bg-gray-2 text-sm shadow-lg outline-none data-[state=open]:animate-fd-sidebar-in data-[state=closed]:animate-fd-sidebar-out motion-reduce:animate-none rtl:origin-left",
-              className
-            )}
-            hidden={!present}
-            style={style}
-            onClick={(event) => {
-              props.onClick?.(event);
-              if (event.defaultPrevented) return;
-              const target = event.target;
-              if (!(target instanceof Element)) return;
-              if (target.closest("a[href]")) setOpen(false);
-            }}
-          >
-            {children}
-          </aside>
-        )}
+        <aside
+          id="nd-sidebar"
+          {...props}
+          data-state={state}
+          role="dialog"
+          aria-modal="true"
+          aria-label={props["aria-label"] ?? "Documentation"}
+          tabIndex={props.tabIndex ?? -1}
+          className={cn(
+            "fixed end-0 top-0 z-40 flex h-dvh w-full max-w-26 min-h-0 origin-right flex-col overflow-hidden border-s bg-gray-2 text-sm shadow-lg outline-none data-[state=open]:animate-fd-sidebar-in data-[state=closed]:animate-fd-sidebar-out data-[state=closed]:pointer-events-none motion-reduce:animate-none rtl:origin-left",
+            className
+          )}
+          style={style}
+          onClick={(event) => {
+            props.onClick?.(event);
+            if (event.defaultPrevented) return;
+            const target = event.target;
+            if (!(target instanceof Element)) return;
+            if (target.closest("a[href]")) setOpen(false);
+          }}
+        >
+          {children}
+        </aside>
       </Presence>
     </>
   );
@@ -526,7 +524,7 @@ export function SidebarTrigger({
 }
 
 export function SidebarCollapseTrigger(props: ComponentProps<"button">) {
-  const { collapsed, setCollapsed, setOpen } = useSidebar();
+  const { collapsed, setCollapsed, open, setOpen } = useSidebar();
   const isMobile = useMediaQuery("(width < 768px)") ?? false;
 
   return (
@@ -535,12 +533,14 @@ export function SidebarCollapseTrigger(props: ComponentProps<"button">) {
       data-collapsed={collapsed}
       {...props}
       aria-label={
-        props["aria-label"] ?? (isMobile ? "Close sidebar" : "Collapse Sidebar")
+        props["aria-label"] ?? (isMobile || open ? "Close sidebar" : "Collapse Sidebar")
       }
       onClick={(event) => {
         props.onClick?.(event);
         if (event.defaultPrevented) return;
-        if (isMobile) setOpen(false);
+        // Prefer closing the overlay drawer when it is open (mobile), even if
+        // the media query briefly disagrees during resize/hydration.
+        if (isMobile || open) setOpen(false);
         else setCollapsed((prev) => !prev);
       }}
     >
