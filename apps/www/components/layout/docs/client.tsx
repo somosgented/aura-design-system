@@ -40,11 +40,14 @@ export function LayoutBody(props: ComponentProps<"main">) {
       {...props}
       className={cn(
         "flex flex-1 flex-col pt-(--fd-nav-height) transition-[padding] fd-default-layout",
-        !collapsed && "mx-(--fd-layout-offset)",
+        // Mobile uses an overlay drawer — never reserve sidebar gutter below md.
+        "max-md:[--fd-sidebar-width:0px]",
+        !collapsed && "md:mx-(--fd-layout-offset)",
         props.className
       )}
       style={{
         ...props.style,
+        // Below md, --fd-sidebar-width is forced to 0px so this resolves to 0.
         paddingInlineStart: collapsed
           ? "min(calc(100vw - var(--fd-page-width)), var(--fd-sidebar-width))"
           : "var(--fd-sidebar-width)",

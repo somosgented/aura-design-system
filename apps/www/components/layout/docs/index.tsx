@@ -116,7 +116,8 @@ export function DocsLayout({
   }, [tree, sidebarTabs]);
   const links = getLinks(props.links ?? [], props.githubUrl);
   const sidebarVariables = cn(
-    "md:[--fd-sidebar-width:268px] lg:[--fd-sidebar-width:286px] xl:[--fd-toc-width:268px]"
+    // Keep mobile at 0 so LayoutBody padding never reserves a desktop gutter.
+    "max-md:[--fd-sidebar-width:0px] md:[--fd-sidebar-width:268px] lg:[--fd-sidebar-width:286px] xl:[--fd-toc-width:268px]"
   );
 
   function sidebar() {
