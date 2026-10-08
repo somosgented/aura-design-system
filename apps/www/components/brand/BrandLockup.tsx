@@ -9,14 +9,26 @@ const linkClass =
   "rounded-sm outline-none transition-colors hover:text-accent-11 focus-visible:ring-2 focus-visible:ring-accent-8";
 
 function AuraMark() {
+  // Both tiles fill one fixed box. Visibility follows the `.dark` class that
+  // fumadocs' next-themes provider sets before paint, so the toggle does not
+  // branch in React (no hydration mismatch) and the box size stays fixed.
   return (
-    <img
-      src="/brand/aura-mark.png"
-      alt=""
-      width={96}
-      height={96}
-      className="h-1.5 w-1.5 shrink-0 sm:h-2 sm:w-2"
-    />
+    <span className="relative inline-block h-1.5 w-1.5 shrink-0 sm:h-2 sm:w-2">
+      <img
+        src="/brand/aura-mark-light.svg"
+        alt=""
+        width={96}
+        height={96}
+        className="aura-mark-light absolute inset-0 h-full w-full"
+      />
+      <img
+        src="/brand/aura-mark-dark.svg"
+        alt=""
+        width={96}
+        height={96}
+        className="aura-mark-dark absolute inset-0 h-full w-full"
+      />
+    </span>
   );
 }
 
