@@ -1,6 +1,7 @@
 @theme animatons {
   --animate-marquee: aura-marquee 12s linear infinite;
 }
+
 @layer components {
   @keyframes aura-marquee {
     from {
@@ -11,12 +12,13 @@
     }
   }
 
-  [data-slot="marquee"]:hover [data-animate="marquee"],
-  [data-slot="marquee"]:focus-within [data-animate="marquee"] {
+  [data-slot="marquee"] [data-animate="marquee"] {
     animation: var(--animate-marquee);
   }
+}
 
-  @media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce) {
+  @layer components {
     [data-slot="marquee"] [data-animate="marquee"] {
       animation: none;
     }

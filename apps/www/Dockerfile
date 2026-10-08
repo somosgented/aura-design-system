@@ -47,10 +47,9 @@ COPY --from=installer /app/ .
 # Copy source code from pruned workspace
 COPY --from=pruner /app/out/full/ .
 
-# globals.css imports these by relative path. They are not workspace
-# dependencies, so turbo prune leaves them out.
-COPY packages/registry/registry/default/styles/responsive-dropdown-menu.css \
-     packages/registry/registry/default/styles/selection-toolbar.css \
+# globals.css imports registry styles by relative path. turbo prune
+# leaves that folder out, so copy the whole styles dir (chart, marquee, …).
+COPY packages/registry/registry/default/styles/ \
      ./packages/registry/registry/default/styles/
 
 # Run postinstall scripts now that source is available, then build

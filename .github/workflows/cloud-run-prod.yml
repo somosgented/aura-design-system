@@ -3,8 +3,8 @@
 # Custom domains stay on Vercel until cutover.
 #
 # Required GitHub secrets:
-#   CLOUD_RUN_CREDENTIALS — service account JSON key
-#   CLOUD_RUN_PROJECT_ID  — GCP project (sgd-marketing-bellatrix)
+#   CLOUD_RUN_CREDENTIALS — service account JSON key for sgd-aura
+# Note: PROJECT_ID is the GCP project ID (`sgd-aura`), not the display name.
 name: Cloud Run (production)
 
 on:
@@ -21,7 +21,7 @@ permissions:
 
 env:
   GAR_LOCATION: us-central1
-  PROJECT_ID: ${{ secrets.CLOUD_RUN_PROJECT_ID }}
+  PROJECT_ID: sgd-aura
   REPOSITORY: aura-design-system
 
 jobs:
@@ -68,15 +68,22 @@ jobs:
       - name: Ensure Artifact Registry repository
         run: |
           set -euo pipefail
-          if ! gcloud artifacts repositories describe "${REPOSITORY}" \
+          # Matrix jobs race on first create — treat "already exists" as success.
+          if gcloud artifacts repositories describe "${REPOSITORY}" \
             --location="${GAR_LOCATION}" \
             --project="${PROJECT_ID}" >/dev/null 2>&1; then
-            gcloud artifacts repositories create "${REPOSITORY}" \
-              --repository-format=docker \
-              --location="${GAR_LOCATION}" \
-              --project="${PROJECT_ID}" \
-              --description="Aura Design System container images"
+            exit 0
           fi
+          if gcloud artifacts repositories create "${REPOSITORY}" \
+            --repository-format=docker \
+            --location="${GAR_LOCATION}" \
+            --project="${PROJECT_ID}" \
+            --description="Aura Design System container images"; then
+            exit 0
+          fi
+          gcloud artifacts repositories describe "${REPOSITORY}" \
+            --location="${GAR_LOCATION}" \
+            --project="${PROJECT_ID}"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
