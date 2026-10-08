@@ -487,3 +487,17 @@ select {
     );
   }
 }
+
+/* Header mark. `.dark` beats the default hide so this does not depend on
+   Tailwind's zero-specificity `:where(.dark)` variant. */
+.aura-mark-dark {
+  display: none;
+}
+
+.dark .aura-mark-light {
+  display: none;
+}
+
+.dark .aura-mark-dark {
+  display: block;
+}
