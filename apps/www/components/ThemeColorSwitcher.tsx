@@ -33,8 +33,8 @@ export function ThemeColorSwitcher() {
   };
 
   const DEFAULT_THEME_COLORS = {
-    light: { accent: "#964CE1", gray: "#16204e", background: "#fcfcfc" },
-    dark: { accent: "#964CE1", gray: "#16204e", background: "#0c122b" },
+    light: { accent: "#4015ca", gray: "#7254cb", background: "#ffffff" },
+    dark: { accent: "#4015ca", gray: "#7254cb", background: "#100b21" },
   };
 
   // Color state with defaults for both modes

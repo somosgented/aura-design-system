@@ -17,8 +17,8 @@ export type ThemeColorsByMode = {
 };
 
 export const DEFAULT_THEME_COLORS: ThemeColorsByMode = {
-  light: { accent: "#964ce1", gray: "#16204e", background: "#fcfcfc" },
-  dark: { accent: "#964ce1", gray: "#16204e", background: "#0c122b" },
+  light: { accent: "#4015ca", gray: "#7254cb", background: "#ffffff" },
+  dark: { accent: "#4015ca", gray: "#7254cb", background: "#100b21" },
 };
 
 const STORAGE_KEY = "aura-theme-colors";
@@ -185,7 +185,7 @@ export function normalizeHex(value: string) {
 }
 
 /** Native color inputs require `#rrggbb`; never pass short or invalid values. */
-export function toColorInputValue(value: string, fallback = "#964ce1") {
+export function toColorInputValue(value: string, fallback = "#4015ca") {
   if (!isValidHex(value)) return normalizeHex(fallback);
   return normalizeHex(value);
 }

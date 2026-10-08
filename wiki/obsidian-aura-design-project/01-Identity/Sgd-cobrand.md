@@ -9,5 +9,5 @@ Docs and marketing headers use an Aura mark, a vertical divider, then “Made by
 ## Context
 - Related: [[Site and docs app]] [[Foundations]] [[Vision]]
 - Implementation Path: `apps/www/components/brand/BrandLockup.tsx`
-- Logo: inline trace of `apps/www/public/brand/sgd-logo-on-light.svg` with `currentColor`, so the lockup inherits `gray-12` in light and dark. The faces-only mark stays in `public/brand/` for other uses.
+- Logo: the Aura mark is `apps/www/public/brand/aura-mark.png` (the indigo ring tile). The Somos Gente wordmark stays an inline trace of `apps/www/public/brand/sgd-logo-on-light.svg` with `currentColor`, so that half of the lockup inherits `gray-12` in light and dark. The faces-only mark stays in `public/brand/` for other uses.
 - The wordmark lives inside the logo, so the header no longer swaps “SGD” and “Somos Gente Digital” as HTML text. The docs sidebar passes `compact` only to shorten that same logo so “Made by” stays on one line.

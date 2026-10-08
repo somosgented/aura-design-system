@@ -191,7 +191,7 @@ function ColorField({
             onChange(event.target.value);
           }}
           className="h-4 w-full rounded-md border border-gray-6 bg-gray-1 px-1 pr-3.5 font-mono text-sm text-gray-12"
-          placeholder="#964CE1"
+          placeholder="#4015ca"
           spellCheck={false}
         />
         <Input

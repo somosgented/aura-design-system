@@ -13,7 +13,8 @@ export const docs = defineDocs({
   docs: {
     schema: frontmatterSchema.extend({
       /**
-       * Sidebar status badge. Use `new` for components that recently landed.
+       * Sidebar status badge. Use `new` for component, chart, and util docs
+       * added in the current and previous week. Older pages omit it.
        * Rendered by `statusBadgesPlugin` in `utils/source.tsx`.
        */
       status: z.enum(["new", "beta", "deprecated", "experimental"]).optional(),

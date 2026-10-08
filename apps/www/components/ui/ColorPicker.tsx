@@ -4,12 +4,12 @@ import * as React from "react";
 import { cn } from "@/utils/class-names";
 import { ColorSwatch } from "@/components/ui/ColorSwatch";
 
-const presets = ["#964CE1", "#3D63DD", "#30A46C", "#E54D2E", "#F5D90A", "#111111"];
+const presets = ["#4015ca", "#3D63DD", "#30A46C", "#E54D2E", "#F5D90A", "#111111"];
 
 function ColorPicker({
   className,
   value,
-  defaultValue = "#964CE1",
+  defaultValue = "#4015ca",
   onValueChange,
   label = "Color",
 }: {

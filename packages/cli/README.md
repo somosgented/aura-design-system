@@ -9,7 +9,7 @@ pnpm dlx @aura-design/cli@latest init
 pnpm dlx @aura-design/cli@latest setup
 pnpm dlx @aura-design/cli@latest link
 pnpm dlx @aura-design/cli@latest blueprint
-pnpm dlx @aura-design/cli@latest colors --accent "#964CE1" --gray "#6b7394" --background "#FFFFFF"
+pnpm dlx @aura-design/cli@latest colors --accent "#4015ca" --gray "#7254cb" --background "#FFFFFF"
 pnpm dlx @aura-design/cli@latest typography generate
 pnpm dlx @aura-design/cli@latest spacing
 ```
