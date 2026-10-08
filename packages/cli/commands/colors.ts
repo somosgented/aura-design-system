@@ -32,6 +32,12 @@ export function generateGlobalsCss(lightColors: any, darkColors: any) {
   --color-success: var(--success);
   --color-info-contrast: var(--info-contrast);
   --color-info: var(--info);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-ecru: var(--ecru);
   --secundary-foreground: var(--secundary-foreground);
   --secundary: var(--secundary);
   --primary-foreground: var(--primary-foreground);
@@ -163,6 +169,13 @@ export function generateGlobalsCss(lightColors: any, darkColors: any) {
   --primary-foreground: var(--accent-contrast);
   --secundary: var(--accent-8);
   --secundary-foreground: var(--accent-contrast);
+
+  --chart-1: var(--accent-9);
+  --chart-2: var(--info-contrast);
+  --chart-3: var(--success-contrast);
+  --chart-4: var(--warning-contrast);
+  --chart-5: var(--danger-contrast);
+  --ecru: #debc7a;
 
   /* Aura Design System - Root Tokens */
   --aura: 13px;

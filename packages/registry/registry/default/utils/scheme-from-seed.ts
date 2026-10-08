@@ -55,7 +55,7 @@ async function seedFromImage(file: Blob) {
     blue += data[index + 2];
     count += 1;
   }
-  if (!count) return "#964CE1";
+  if (!count) return "#4015ca";
   const channel = (value: number) =>
     Math.round(value / count)
       .toString(16)
