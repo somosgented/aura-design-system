@@ -9,6 +9,9 @@ const files = [
   "index.html",
   "preview.html",
   "preview-dark.html",
+  "favicon.ico",
+  "favicon.svg",
+  "apple-touch-icon.png",
 ];
 
 fs.mkdirSync(out, { recursive: true });
