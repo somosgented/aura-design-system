@@ -1,0 +1,19 @@
+<svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Aura Design">
+<rect width="96" height="96" rx="22" fill="#2B214D"/>
+<circle id="Halo" cx="48" cy="48" r="38" fill="url(#paint0_linear_85_36)"/>
+<circle id="Hueco" cx="48" cy="48" r="30" fill="#100B21"/>
+<circle id="Orbe" cx="48" cy="48" r="23" fill="url(#paint1_linear_85_36)"/>
+<ellipse id="Ecru" cx="37.5" cy="37.5" rx="3.5" ry="2.5" fill="#DEBC7A"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_85_36" x1="46.0144" y1="87.7802" x2="59.7081" y2="5.61802" gradientUnits="userSpaceOnUse">
+<stop stop-color="#F4F0FF"/>
+<stop offset="1" stop-color="#7058FE"/>
+</linearGradient>
+<linearGradient id="paint1_linear_85_36" x1="46.7982" y1="72.0775" x2="55.0865" y2="22.3477" gradientUnits="userSpaceOnUse">
+<stop stop-color="#F4F0FF"/>
+<stop offset="1" stop-color="#7058FE"/>
+</linearGradient>
+</defs>
+</svg>
