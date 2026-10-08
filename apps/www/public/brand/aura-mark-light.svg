@@ -1,0 +1,18 @@
+<svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0.5" y="0.5" width="95" height="95" rx="21.5" fill="white"/>
+<rect x="0.5" y="0.5" width="95" height="95" rx="21.5" stroke="#E4DCFF"/>
+<circle cx="48" cy="48" r="38" fill="url(#paint0_linear_94_314)"/>
+<circle cx="48" cy="48" r="30" fill="white"/>
+<circle cx="48" cy="48" r="23" fill="url(#paint1_linear_94_314)"/>
+<ellipse cx="37.5" cy="37.5" rx="3.5" ry="2.5" fill="#DEBC7A"/>
+<defs>
+<linearGradient id="paint0_linear_94_314" x1="46.0144" y1="87.7802" x2="59.7081" y2="5.61802" gradientUnits="userSpaceOnUse">
+<stop stop-color="#7058FE"/>
+<stop offset="1" stop-color="#2B214D"/>
+</linearGradient>
+<linearGradient id="paint1_linear_94_314" x1="46.7982" y1="72.0775" x2="55.0865" y2="22.3477" gradientUnits="userSpaceOnUse">
+<stop stop-color="#7058FE"/>
+<stop offset="1" stop-color="#2B214D"/>
+</linearGradient>
+</defs>
+</svg>
