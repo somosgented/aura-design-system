@@ -19,3 +19,5 @@ The 21 recent-component audit fails are fixed in registry components, docs demos
 Docs sidebar `status: new` (accent dot in `apps/www/utils/source.tsx`) now covers only component, chart, and util pages whose docs were added 2026-09-29 through 2026-10-07. September pages such as Bubble, Stat, and Visually Hidden Input no longer carry the flag. Section index pages stay unmarked.
 
 Mobile docs/home drawer: closed state no longer force-mounts the panel or reserves `--fd-sidebar-width` below `md`. See [[Site and docs app]].
+
+Desktop (`md+`): collapsing the docs sidebar no longer keeps a left gutter via `min(100vw - page-width, sidebar-width)`; `LayoutBody` uses `padding-inline-start: 0` when collapsed so content goes full width. Home (`/`) mounts the same `DocsLayout`, so it is covered without a separate `HomeLayout` change.
