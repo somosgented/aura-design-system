@@ -3,8 +3,9 @@
 import { useCallback, useLayoutEffect, useState, useSyncExternalStore } from "react";
 import { useTheme } from "next-themes";
 
-import { AURA_THEME_COLORS_KEY } from "@/lib/aura-theme-boot";
 import { generateRadixColors } from "@/utils/custom-color-functions";
+
+const AURA_THEME_COLORS_KEY = "aura-theme-colors";
 
 export type ThemeColors = {
   accent: string;
@@ -578,6 +579,16 @@ export function useAuraThemeColors() {
   useLayoutEffect(() => {
     setMounted(true);
   }, []);
+
+  useLayoutEffect(() => {
+    const mode = consumePaintAppearance(
+      mounted && (resolvedTheme === "light" || resolvedTheme === "dark")
+        ? resolvedTheme
+        : undefined
+    );
+    if (!mode) return;
+    injectThemeColors(mode, getSnapshot()[mode]);
+  }, [mounted, resolvedTheme, themeColors]);
 
   const domAppearance: "light" | "dark" | null =
     mounted && typeof document !== "undefined"

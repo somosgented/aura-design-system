@@ -2,9 +2,12 @@ import "@/app/globals.css";
 import { RootProvider } from "fumadocs-ui/provider/next";
 import { IBM_Plex_Sans } from "next/font/google";
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { SidebarProvider } from "@/components/layout/contexts/sidebar";
 import { DocsI18nProvider } from "@/components/layout/contexts/i18n";
+import { AuraThemeProvider } from "@/components/theme/AuraThemeProvider";
+import { AURA_THEME_BOOT_SCRIPT } from "@/lib/aura-theme-boot";
 import { siteDescription, siteName, siteOgImage } from "@/utils/site";
 
 const ibmPlexSans = IBM_Plex_Sans({
@@ -36,10 +39,15 @@ export default function Layout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${ibmPlexSans.className} flex flex-col min-h-screen`}>
+        <Script id="aura-theme-colors" strategy="beforeInteractive">
+          {AURA_THEME_BOOT_SCRIPT}
+        </Script>
         <RootProvider search={{ enabled: false }}>
-          <DocsI18nProvider>
-            <SidebarProvider>{children}</SidebarProvider>
-          </DocsI18nProvider>
+          <AuraThemeProvider>
+            <DocsI18nProvider>
+              <SidebarProvider>{children}</SidebarProvider>
+            </DocsI18nProvider>
+          </AuraThemeProvider>
         </RootProvider>
         <Analytics />
       </body>

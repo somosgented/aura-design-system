@@ -4,7 +4,7 @@ date: 2026-09-13
 tags: [dev-log, architecture, taste]
 ---
 ## Summary
-Home-page `AuraAesthetic` uses the same live preview as [[Theme Color Switcher]]: `useAuraThemeColors` injects `--accent-*` / `--gray-*` on `:root`. Swatches read CSS variables only—no separate Radix theme emulation in the section.
+Home-page `AuraAesthetic` and Theme Settings both call `useAuraThemeColors`. [[Shared-Theme-Store]] injects `--accent-*` / `--gray-*` on `:root` from the root layout. Swatches read CSS variables only.
 
 ## Context
 - Related: [[Taste]], [[Theme-Colors-Crash-Fix]], [[Internal-Progress]]
