@@ -518,6 +518,14 @@
         {
           "path": "registry/default/components/ThemeColorSwitcher.tsx",
           "type": "registry:component"
+        },
+        {
+          "path": "registry/default/hooks/use-aura-theme-colors.ts",
+          "type": "registry:hook"
+        },
+        {
+          "path": "registry/default/theme/presets.ts",
+          "type": "registry:lib"
         }
       ],
       "dependencies": [
@@ -529,6 +537,7 @@
         "@aura/button",
         "@aura/class-names",
         "@aura/custom-color-functions",
+        "@aura/file-upload",
         "@aura/input",
         "@aura/label",
         "@aura/popover",

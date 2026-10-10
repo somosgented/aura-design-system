@@ -1,9 +1,9 @@
 "use client";
 import { cva } from "class-variance-authority";
 import { Moon, Sun, Airplay } from "lucide-react";
-import { useTheme } from "next-themes";
-import { type HTMLAttributes, useLayoutEffect, useState } from "react";
+import { type HTMLAttributes } from "react";
 
+import { useAuraThemeColors } from "@/hooks/use-aura-theme-colors";
 import { cn } from "@/utils/class-names";
 
 const itemVariants = cva(
@@ -31,12 +31,7 @@ export function ThemeToggle({
 }: HTMLAttributes<HTMLElement> & {
   mode?: "light-dark" | "light-dark-system";
 }) {
-  const { setTheme, theme, resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useLayoutEffect(() => {
-    setMounted(true);
-  }, []);
+  const { setTheme, theme, resolvedTheme, mounted } = useAuraThemeColors();
 
   const container = cn(
     "inline-flex items-center rounded-full border p-0.5",
