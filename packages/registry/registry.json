@@ -1455,6 +1455,7 @@
         }
       ],
       "registryDependencies": [
+        "@aura/button",
         "@aura/class-names"
       ]
     },
@@ -3479,6 +3480,31 @@
       ]
     },
     {
+      "name": "marquee-animation",
+      "type": "registry:style",
+      "cssVars": {
+        "theme": {
+          "--animate-marquee": "aura-marquee 12s linear infinite"
+        }
+      },
+      "css": {
+        "@keyframes aura-marquee": {}
+      }
+    },
+    {
+      "name": "rule-aura-agent-surface",
+      "type": "registry:file",
+      "title": "Rule: Aura Agent Surface",
+      "description": "Aura rule: Aura Agent Surface. Install to .cursor/rules/ for Cursor AI guidance.",
+      "files": [
+        {
+          "path": "registry/default/rules/aura-agent-surface.mdc",
+          "type": "registry:file",
+          "target": ".cursor/rules/aura-agent-surface.mdc"
+        }
+      ]
+    },
+    {
       "name": "rule-components-forms",
       "type": "registry:file",
       "title": "Rule: Components Forms",
@@ -3625,6 +3651,11 @@
       "description": "All Aura Design System Cursor rules. Installs to .cursor/rules/ for AI guidance.",
       "files": [
         {
+          "path": "registry/default/rules/aura-agent-surface.mdc",
+          "type": "registry:file",
+          "target": ".cursor/rules/aura-agent-surface.mdc"
+        },
+        {
           "path": "registry/default/rules/components-forms.mdc",
           "type": "registry:file",
           "target": ".cursor/rules/components-forms.mdc"
@@ -3687,6 +3718,19 @@
       ]
     },
     {
+      "name": "skill-aura-forms",
+      "type": "registry:file",
+      "title": "Skill: Aura Forms",
+      "description": "Aura Cursor skill: Aura Forms. Installs to .cursor/skills/aura-forms/.",
+      "files": [
+        {
+          "path": "registry/default/skills/aura-forms/SKILL.md",
+          "type": "registry:file",
+          "target": ".cursor/skills/aura-forms/SKILL.md"
+        }
+      ]
+    },
+    {
       "name": "skill-generate-brand-images",
       "type": "registry:file",
       "title": "Skill: Generate Brand Images",
@@ -3718,11 +3762,42 @@
       ]
     },
     {
+      "name": "skill-update-project-brain",
+      "type": "registry:file",
+      "title": "Skill: Update Project Brain",
+      "description": "Aura Cursor skill: Update Project Brain. Installs to .cursor/skills/update-project-brain/.",
+      "files": [
+        {
+          "path": "registry/default/skills/update-project-brain/SKILL.md",
+          "type": "registry:file",
+          "target": ".cursor/skills/update-project-brain/SKILL.md"
+        }
+      ]
+    },
+    {
+      "name": "skill-verify-aura-ui",
+      "type": "registry:file",
+      "title": "Skill: Verify Aura Ui",
+      "description": "Aura Cursor skill: Verify Aura Ui. Installs to .cursor/skills/verify-aura-ui/.",
+      "files": [
+        {
+          "path": "registry/default/skills/verify-aura-ui/SKILL.md",
+          "type": "registry:file",
+          "target": ".cursor/skills/verify-aura-ui/SKILL.md"
+        }
+      ]
+    },
+    {
       "name": "skills",
       "type": "registry:file",
       "title": "Aura Skills",
       "description": "All Aura Design System Cursor skills. Installs to .cursor/skills/ for AI workflows.",
       "files": [
+        {
+          "path": "registry/default/skills/aura-forms/SKILL.md",
+          "type": "registry:file",
+          "target": ".cursor/skills/aura-forms/SKILL.md"
+        },
         {
           "path": "registry/default/skills/generate-brand-images/SKILL.md",
           "type": "registry:file",
@@ -3737,6 +3812,16 @@
           "path": "registry/default/skills/port-component-to-aura/SKILL.md",
           "type": "registry:file",
           "target": ".cursor/skills/port-component-to-aura/SKILL.md"
+        },
+        {
+          "path": "registry/default/skills/update-project-brain/SKILL.md",
+          "type": "registry:file",
+          "target": ".cursor/skills/update-project-brain/SKILL.md"
+        },
+        {
+          "path": "registry/default/skills/verify-aura-ui/SKILL.md",
+          "type": "registry:file",
+          "target": ".cursor/skills/verify-aura-ui/SKILL.md"
         }
       ]
     },

@@ -9,7 +9,8 @@ description: "Installs the Cursor rule and the project root DESIGN.md (narrative
 ```bash
 pnpm dlx shadcn@latest add @aura/rule-design-md
 ```
-This project includes **DESIGN.md** at the **repository root** (install the spec and this rule together via `pnpm dlx shadcn@latest add @aura/rule-design-md`, or only the markdown via `@aura/design-md`). It is the **narrative design specification** for Aura: visual theme, color roles, typography, the **13px spacing grid**, motion, and product principles.
+`DESIGN.md` at the repo root is the **narrative design specification** for Aura (theme, color roles, typography, 13px grid, motion, product principles).
 
-* **MUST**: When implementing UI, aligning with brand, or reasoning about Aura tokens, read and follow **`DESIGN.md`** at the project root together with `.cursor/rules/*` foundation rules.
-* **SHOULD**: Prefer tokens and patterns described in **DESIGN.md** over ad-hoc styling or one-off hex values.
+* **MUST**: When implementing UI, aligning with brand, or reasoning about Aura tokens, read and follow `DESIGN.md` together with foundation rules under `.cursor/rules/`.
+* **SHOULD**: Prefer tokens and patterns in `DESIGN.md` over ad-hoc styling or one-off hex values.
+* **MUST NOT**: Duplicate long design tables into rules or skills. Rules state guardrails; skills run procedures; `DESIGN.md` holds the narrative detail.

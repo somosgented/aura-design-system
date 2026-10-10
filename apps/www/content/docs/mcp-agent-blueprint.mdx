@@ -198,10 +198,11 @@ pnpm dlx @aura-design/cli@latest blueprint .
 That installs `@gdp-ts/core`, spreads `@gdp-ts/core/lint/eslint` into the flat ESLint config, runs:
 
 ```bash
+pnpm dlx skills add shadcn/ui -a cursor -y --copy
 npx skills add rauchg/gdp-ts --skill gdp-ts -a cursor -y --copy
 ```
 
-and writes `lib/ids.ts`, `lib/authz-store.ts`, `proofs/*`, and `data/delete-project.ts` (plus the handler and `data/mistakes.ts`) under the `@/` root.
+and writes `lib/ids.ts`, `lib/authz-store.ts`, `proofs/*`, and `data/delete-project.ts` (plus the handler and `data/mistakes.ts`) under the `@/` root. Aura Keep invariants in `.cursor/rules/` win when the upstream shadcn skill conflicts (icons, forms, 13px spacing, typography).
 
 **Do not:** vendor the skill into the Aura registry, cast `as Proof`, export a prover, or call `defineProof` outside `proofs/`. The default preset is not strict mode; do not turn on `strict: true` in an app that still uses `as` for unrelated code. Replace `lib/authz-store.ts` with the real database before shipping. The in-memory maps are a stand-in, and handlers must not write roles into them.
 
@@ -209,11 +210,13 @@ and writes `lib/ids.ts`, `lib/authz-store.ts`, `proofs/*`, and `data/delete-proj
 
 Confirm after installs:
 
-- `.cursor/rules/` has Aura foundation rules
+- `.cursor/rules/` has Aura foundation rules (including `aura-agent-surface.mdc` when installed via `@aura/rules`)
 - `.cursor/skills/port-component-to-aura/SKILL.md` exists
 - `.cursor/skills/generate-brand-images/SKILL.md` and its generator script exist
+- `.cursor/skills/verify-aura-ui/SKILL.md` and `.cursor/skills/update-project-brain/SKILL.md` exist when `@aura/skills` was added
+- `.agents/skills/shadcn/SKILL.md` exists (or document the gap)
 - `wiki/obsidian-*/01-Identity/Image-Identity.md` exists
-- `package.json` has `ai:image`; `.env.example` names `GOOGLE_API_KEY`
+- `package.json` has `ai:image` and `brain:progress`; `.env.example` names `GOOGLE_API_KEY`
 - Root `DESIGN.md` exists (or user declined design-md)
 - `components.json` includes `@aura`
 - `.cursor/mcp.json` has shadcn MCP (user must enable in UI)

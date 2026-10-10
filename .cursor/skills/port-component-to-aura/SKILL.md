@@ -48,7 +48,7 @@ Shared mapping rules apply in both scenarios. Deliverables differ.
 - Typography: fluid `.h1`–`.p`; no `text-xl` for primary copy; `text-sm` / `text-xs` OK for utility **except** editable `input` / `textarea` / `select` (MUST stay ≥ 17px for iOS)
 - Color: `--accent-*` / `--gray-*` steps 1–12; no one-off hex
 - Motion: `transform` + `opacity`; honor `prefers-reduced-motion`
-- Follow `DESIGN.md` and `.cursor/rules/` when present
+- Follow `DESIGN.md` and foundation rules under `.cursor/rules/`. After the port, run skill `verify-aura-ui`.
 
 ---
 

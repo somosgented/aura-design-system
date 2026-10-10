@@ -29,6 +29,14 @@ If no Gemini key is configured, ask whether the user wants to add one, use the a
 
 Sensitive functions (delete a project, change a password, charge) take a gdp-ts proof that the check already ran for those exact ids. Do not cast a proof (`as SomeProof` or `as Proof`). Mint proofs only in `proofs/`, with the prover kept private. CI is `pnpm typecheck` and `pnpm lint` (the `@gdp-ts/core/lint/eslint` preset). The agent skill is `.agents/skills/gdp-ts/SKILL.md`. This does not replace a policy engine; it carries that engine's decision to the function.
 
+## Agent surface
+
+- Rules under `.cursor/rules/` hold MUST/SHOULD/NEVER guardrails. `DESIGN.md` is the narrative design SoT.
+- Aura Keep invariants (13px spacing, accent/gray scales, fluid type, `className="icon"`, Project Brain) always win over conflicting upstream skill guidance.
+- Upstream shadcn skill: `.agents/skills/shadcn` (install: `pnpm dlx skills add shadcn/ui`). Use for CLI, registry search/docs, and composition discovery.
+- Write loops: `.cursor/skills/update-project-brain`, `.cursor/skills/verify-aura-ui`, `.cursor/skills/aura-forms`.
+- After each session advance, append one entry to [[Internal-Progress]] then run `pnpm brain:progress`.
+
 ## Outputs
 
 - New notes under sensible folders (see [[Welcome]]).

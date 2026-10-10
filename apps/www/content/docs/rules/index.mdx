@@ -10,43 +10,47 @@ These rules define foundations and principles for the Aura Design System. You ca
 ```bash
 pnpm dlx shadcn@latest add @aura/rules
 ```
-### [Animation Rules](/docs/rules/fundation-animations)
+### [Animation guardrails](/docs/rules/fundation-animations)
 
-Animation Rules
+Compositor-friendly motion, reduced-motion, theme animation tokens. Detail in DESIGN.md.
 
-### [Aura Form System](/docs/rules/components-forms)
+### [Aura agent surface](/docs/rules/aura-agent-surface)
 
-Form system — useFormDynamic, Form components, validation (validateFormData), and field composition.
+Rules hold guardrails; skills hold execution. DESIGN.md is narrative SoT. Upstream shadcn skill is subordinate to Aura Keep invariants.
 
-### [Color Rules](/docs/rules/fundations-colors)
+### [Color guardrails](/docs/rules/fundations-colors)
 
-Aura uses a 12-step color scale for both `accent` and `gray` scales. Each step has specific use cases.
+12-step accent/gray scale and APCA contrast roles. Detail in DESIGN.md §2.
 
 ### [DESIGN.md (narrative spec)](/docs/rules/design-md)
 
 Installs the Cursor rule and the project root DESIGN.md (narrative spec). Add with shadcn as @aura/rule-design-md.
 
-### [Icon Rules](/docs/rules/fundation-icons)
+### [Form guardrails](/docs/rules/components-forms)
 
-Icon Rules
+Form system guardrails — useFormDynamic, Form, validateFormData. Procedures in skill aura-forms.
 
-### [Layout & Spacing Rules (STRICT)](/docs/rules/fundations-layout-spacing)
+### [Icon guardrails](/docs/rules/fundation-icons)
 
-Enforce Aura Design System 13px spacing for Tailwind v4
+Radix icons via className="icon"; no horizontal margins inside gap-owning controls.
 
-### [Principles](/docs/rules/principles)
+### [Product principles](/docs/rules/principles)
 
-They are the fundamental basis of the paradigms and methodologies that will be applied throughout our system.
+Non-visual Aura product principles that constrain product and UX choices.
 
 ### [Self-documenting system](/docs/rules/self-documenting-system)
 
-Maintain a project wiki in Obsidian and keep Bruno API collections in sync with app and API changes.
+Guardrails for the Obsidian Project Brain and Bruno API parity. Write loops live in the update-project-brain skill.
 
 ### [shadcn lint](/docs/rules/shadcn-lint)
 
 Aura @shadcn/lint policy (no arbitrary values, no raw colors, no-restyle). Installs Cursor rule + eslint.aura-shadcn.mjs. Add with shadcn as @aura/rule-shadcn-lint or @aura/eslint-shadcn-lint.
 
-### [Typography Rules](/docs/rules/fundations-typography)
+### [Spacing guardrails](/docs/rules/fundations-layout-spacing)
 
-Typography Rules
+Enforce Aura 13px spacing for Tailwind v4
+
+### [Typography guardrails](/docs/rules/fundations-typography)
+
+Fluid clamp() type scale and 17px floor for editable form controls. Detail in DESIGN.md §3.
 
