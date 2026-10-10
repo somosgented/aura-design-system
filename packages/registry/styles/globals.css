@@ -93,7 +93,11 @@
 }
 
 :root {
-  /* Light scale. Accent step 9 is SGD #4015ca. Gray is the light ramp of SGD gray-9 #7254cb. */
+  /*
+   * Light scale: Aura generator from SGD seeds accent #4015ca, gray #7254cb, bg #ffffff.
+   * Dark scale (.dark / prefers-color-scheme): hand-set from SGD globals.css (Pablo 2026-10-10).
+   * Danger dark is opaque #3c1405 (source wrote #3c140550); accent-5 is #3300aa (source #30a).
+   */
   --accent-1: #fdfdff;
   --accent-2: #f7f8ff;
   --accent-3: #eef1ff;

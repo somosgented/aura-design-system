@@ -67,7 +67,7 @@ External “editorial” specs often name concrete hexes or Material-like surfac
 
 | Editorial concept (example) | Aura mapping |
 |-----------------------------|--------------|
-| Primary ~`#7c2ec6` | Theme-dependent; typically near **`--accent-9`** / **`--primary`** |
+| Primary ~`#4015ca` | Theme-dependent; typically near **`--accent-9`** / **`--primary`** |
 | Primary container ~`#3500b6` | **`--accent-10`** or lighter accent steps; pair with **`--accent-9`** in **gradients** |
 | Secondary / metadata ~`#565f6f` | **`gray-11`** (muted UI and secondary text) |
 | Soft surface ~`#fbf8ff` | **`gray-1`–`gray-2`** (exact tint is theme-generated) |

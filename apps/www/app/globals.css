@@ -127,7 +127,11 @@
   --aura-skeleton-end: var(--gray-5);
   --aura-input-border-color: var(--gray-a6);
 
-  /* Light scale. Same values as packages/registry/styles/globals.css. */
+  /*
+   * Light scale: Aura generator from SGD seeds accent #4015ca, gray #7254cb, bg #ffffff.
+   * Dark scale (.dark / prefers-color-scheme): hand-set from SGD globals.css (Pablo 2026-10-10).
+   * Same values as packages/registry/styles/globals.css.
+   */
   --accent-1: #fdfdff;
   --accent-2: #f7f8ff;
   --accent-3: #eef1ff;

@@ -22,25 +22,25 @@ const OUTPUTS = [
   path.resolve(__dirname, "../../../apps/www/public/fixtures/sample.pptx"),
 ];
 
-// Aura light theme tokens (apps/www/app/globals.css)
+// Aura light theme tokens (apps/www/app/globals.css) — SGD accent #4015ca
 const accent = {
-  3: "F1EAFE",
-  6: "D7C0FA",
-  9: "964CE1",
-  10: "8841CE",
-  11: "7D35C2",
-  12: "421A68",
+  3: "EEF1FF",
+  6: "C5CDFF",
+  9: "4015CA",
+  10: "3500B6",
+  11: "5446E1",
+  12: "272370",
   contrast: "FFFFFF",
 };
 
 const gray = {
-  1: "F6F9FF",
-  2: "F0F6FF",
-  3: "E3ECFF",
-  6: "C2D4FF",
-  9: "6D84D5",
-  11: "4B5C9A",
-  12: "121B48",
+  1: "FCFAFF",
+  2: "F9F6FF",
+  3: "F0ECFF",
+  6: "D9D1FF",
+  9: "936CFF",
+  11: "6949BF",
+  12: "27005F",
 };
 
 const SANS = "Inter";
@@ -158,18 +158,18 @@ function build(pptx: Pptx) {
   });
 
   const steps = [
-    "FAF9FC",
-    "F7F4FC",
-    "F1EAFE",
-    "EBDEFF",
-    "E2D1FE",
-    "D7C0FA",
-    "C9A9F5",
-    "B78CEF",
-    "964CE1",
-    "8841CE",
-    "7D35C2",
-    "421A68",
+    "FDFDFF",
+    "F7F8FF",
+    "EEF1FF",
+    "E2E7FF",
+    "D5DCFF",
+    "C5CDFF",
+    "B0B9FF",
+    "939BFF",
+    "4015CA",
+    "3500B6",
+    "5446E1",
+    "272370",
   ];
   const swatchW = 0.86;
   steps.forEach((hex, index) => {
@@ -349,10 +349,10 @@ function build(pptx: Pptx) {
   });
 
   const cards: [string, string, string, string][] = [
-    ["gray-1", "Canvas", "F6F9FF", gray[12]],
-    ["gray-2", "Card surface", "F0F6FF", gray[12]],
-    ["gray-3", "Lifted / hover", "E3ECFF", gray[12]],
-    ["accent-9", "Primary action", "964CE1", "FFFFFF"],
+    ["gray-1", "Canvas", "FCFAFF", gray[12]],
+    ["gray-2", "Card surface", "F9F6FF", gray[12]],
+    ["gray-3", "Lifted / hover", "F0ECFF", gray[12]],
+    ["accent-9", "Primary action", "4015CA", "FFFFFF"],
   ];
   cards.forEach(([token, label, fill, text], index) => {
     const x = MARGIN + index * 2.85;
