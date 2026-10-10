@@ -1,4 +1,5 @@
 import { Command } from "commander";
+import { execa } from "execa";
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "fs";
 import { dirname, join, resolve } from "path";
 import { fileURLToPath } from "url";
@@ -6,6 +7,7 @@ import { applyGdpToProject } from "./gdp.js";
 
 const SCRIPTS_TO_MERGE: Record<string, string> = {
   preflight: "tsx scripts/preflight.ts",
+  "brain:progress": "tsx scripts/brain-progress.ts",
   "ai:image":
     "node .cursor/skills/generate-brand-images/generate-images.mjs",
   "dev:server": "next dev",
@@ -21,6 +23,11 @@ const SCRIPTS_TO_MERGE: Record<string, string> = {
     "curl -u admin:$npm_package_name \"http://localhost:9000/api/issues/search?componentKeys=$npm_package_name&resolved=false\" | jq '[.issues[] | {message: .message, severity: .severity, component: .component, line: .line}]' > sonar-issues.json",
   "sonar:full": "pnpm run sonar:up && pnpm run sonar:setup && pnpm run sonar:scan",
 };
+
+const SHADCN_SKILL_MARKERS = [
+  ".agents/skills/shadcn/SKILL.md",
+  ".cursor/skills/shadcn/SKILL.md",
+];
 
 const DEV_DEPS_TO_ADD: Record<string, string> = {
   "sonarqube-scanner": "^4.3.5",
@@ -245,6 +252,18 @@ function scaffoldWiki(
     false,
     `wiki/${obsidianName}/01-Identity/Image-Identity.md`,
   );
+
+  mkdirSync(join(obsidianDir, "00-General"), { recursive: true });
+  const internalProgress = interpolate(
+    readTpl("obsidian/Internal-Progress.md"),
+    vars,
+  );
+  writeIfMissingOrForce(
+    join(obsidianDir, "00-General", "Internal-Progress.md"),
+    internalProgress,
+    force,
+    `wiki/${obsidianName}/00-General/Internal-Progress.md`,
+  );
 }
 
 function scaffoldImageSkill(projectRoot: string, force: boolean): void {
@@ -270,6 +289,45 @@ function scaffoldPreflight(projectRoot: string, force: boolean): void {
   const dest = join(scriptsDir, "preflight.ts");
   const body = readTpl("preflight.ts");
   writeIfMissingOrForce(dest, body, force, "scripts/preflight.ts");
+}
+
+function scaffoldBrainProgress(projectRoot: string, force: boolean): void {
+  const scriptsDir = join(projectRoot, "scripts");
+  mkdirSync(scriptsDir, { recursive: true });
+  writeIfMissingOrForce(
+    join(scriptsDir, "brain-progress.ts"),
+    readTpl("scripts/brain-progress.ts"),
+    force,
+    "scripts/brain-progress.ts",
+  );
+}
+
+async function installShadcnSkills(
+  projectRoot: string,
+  force: boolean,
+): Promise<void> {
+  const installed = SHADCN_SKILL_MARKERS.some((rel) =>
+    existsSync(join(projectRoot, rel)),
+  );
+  if (installed && !force) {
+    console.log("  shadcn/ui skills: already installed");
+    return;
+  }
+  console.log("\nInstalling shadcn/ui agent skills...");
+  await execa(
+    "npx",
+    ["--yes", "skills", "add", "shadcn/ui", "-a", "cursor", "-y", "--copy"],
+    { cwd: projectRoot, stdio: "inherit" },
+  );
+  const ok = SHADCN_SKILL_MARKERS.some((rel) =>
+    existsSync(join(projectRoot, rel)),
+  );
+  if (!ok) {
+    throw new Error(
+      "skills add finished without writing .agents/skills/shadcn/SKILL.md. Re-run: pnpm dlx skills add shadcn/ui -a cursor -y --copy",
+    );
+  }
+  console.log("  shadcn/ui skills: installed");
 }
 
 function scaffoldSonarProperties(projectRoot: string, force: boolean): void {
@@ -322,9 +380,11 @@ export async function applyBlueprintToProject(
   scaffoldWiki(projectRoot, suffix, packageName, force);
   scaffoldImageSkill(projectRoot, force);
   scaffoldPreflight(projectRoot, force);
+  scaffoldBrainProgress(projectRoot, force);
   scaffoldSonarProperties(projectRoot, force);
   ensureGitignoreLines(projectRoot);
   ensureEnvExample(projectRoot);
+  await installShadcnSkills(projectRoot, force);
   await applyGdpToProject(projectRoot, force);
   mergePackageJson(projectRoot);
 
@@ -335,7 +395,7 @@ export function registerBlueprintCommand(program: Command) {
   program
     .command("blueprint [projectDir]")
     .description(
-      "Scaffold wiki, identity-aware image generation, preflight, Sonar config, and gdp-ts proofs",
+      "Scaffold wiki, identity-aware image generation, preflight, brain:progress, Sonar config, shadcn/ui skills, and gdp-ts proofs",
     )
     .option(
       "-f, --force",

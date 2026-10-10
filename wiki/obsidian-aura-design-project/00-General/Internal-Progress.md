@@ -1,10 +1,12 @@
 ---
 title: Internal progress
-date: 2026-10-08
+date: 2026-10-09
 tags: [dev-log, logic]
 ---
 ## Summary
-The shipped theme now uses the Somos Gente Digital dark ramp, with light mode generated from accent `#4015ca` and gray `#7254cb`. See [[Sgd-palette]]. The header Aura mark swaps `aura-mark-light.svg` and `aura-mark-dark.svg` with the `.dark` class. See [[Sgd-cobrand]]. `public/favicon.ico` and `public/favicon.svg` now use that dark tile (same artwork as `aura-mark.png`), including the stories and design-md sites. The Made by Somos Gente lockup is unchanged aside from that mark.
+Agent surface is now rules-as-guardrails / skills-as-execution ([[Aura Agent Surface]]). Slimmed foundation rules ship with consumer skills `verify-aura-ui`, `update-project-brain`, and `aura-forms`. Upstream [shadcn/ui skills](https://ui.shadcn.com/docs/skills) install via `pnpm dlx skills add shadcn/ui` (`.agents/skills/shadcn`); Aura Keep wins on icons, forms, 13px spacing, and typography. `aura blueprint` also scaffolds `brain:progress` and Internal Progress.
+
+The shipped theme uses the Somos Gente Digital dark ramp, with light mode generated from accent `#4015ca` and gray `#7254cb`. See [[Sgd-palette]]. The header Aura mark swaps `aura-mark-light.svg` and `aura-mark-dark.svg` with the `.dark` class. See [[Sgd-cobrand]].
 
 Chart families (bar, line, pie, radar, radial, tooltips) plus the existing area chart are a separate **Charts** docs section (`/docs/charts`). Metadata `group: charts` drives generate-docs. The Chart primitive stays under Components.
 

@@ -1,53 +1,15 @@
 ---
-description: Enforce Aura Design System 13px spacing for Tailwind v4
+description: Enforce Aura 13px spacing for Tailwind v4
 globs: "**/*.{tsx,ts,jsx,js,html,css}"
 alwaysApply: true
+title: Spacing guardrails
 ---
 
-# Layout & Spacing Rules (STRICT)
+# Spacing guardrails
 
-## The Golden Rule
-You are working in a **Tailwind v4** environment where `--spacing` is globally set to `13px`. 
-**STOP AND CALCULATE:** Before writing any utility class ((^|[\s"'])((?:[^"'\s]*:)?)(m|p|mt|mb|mr|ml|mx|my|pt|pb|pr|pl|px|py|gap|space-x|space-y|h|min-h|max-h|w|min-w|max-w|size)-((?:\d+\.)?\d+|auto)(?=$|[\s"'])/g), perform this mental check:
-`Value * 13px = Final Pixel Result`.
+`--spacing` is **13px**. Before any `m`/`p`/`gap`/`h`/`w`/`size` utility, compute `unit * 13px` (so `p-4` = 52px, not 16px). Detail in `DESIGN.md`.
 
-## Spacing Reference Table
-| Utility | Aura Result (x13px) | Default Tailwind (x4px) | GAP/DIFFERENCE |
-| :--- | :--- | :--- | :--- |
-| `1` | **13px** | 4px | +9px |
-| `2` | **26px** | 8px | +18px |
-| `4` | **52px** | 16px | +36px |
-
-## Spacing System
-
-* **MUST**: Use 13px as the base spacing unit (NOT 4px like Tailwind default).
-* **MUST**: Define spacing in increments of 0.5 units (1, 1.5, 2, 2.5, 3, 3.5, etc.).
-* **NEVER**: Use partial increments (0.2, 0.4, 0.6, etc.).
-* **MUST**: Calculate spacing as `unit * 13px` (e.g., `1 = 13px`, `2 = 26px`, `2.5 = 32.5px`).
-
-
-## Tailwind Spacing Warning
-
-* **CRITICAL**: Tailwind defaults to 4px spacing units. Aura uses 13px.
-* **MUST**: When using Tailwind size classes, understand that values are multiplied by 13px, NOT 4px.
-* **AFFECTED CLASSES**: All size-related Tailwind utilities use 13px base:
-  - Margin: `m`, `mt`, `mb`, `mr`, `ml`, `mx`, `my`
-  - Padding: `p`, `pt`, `pb`, `pr`, `pl`, `px`, `py`
-  - Gap: `gap`, `space-x`, `space-y`
-  - Dimensions: `h`, `min-h`, `max-h`, `w`, `min-w`, `max-w`, `size`
-* **EXAMPLE**: `p-4` in Aura = `52px` (4 × 13px), NOT `16px` (4 × 4px).
-
-
-## Containers
-
-* **MUST**: All sections must use containers (no sections without containers allowed).
-* **MUST**: Each container has padding, margins, and max-width defined.
-* **MUST**: Maximum of 5 container types per project.
-* **SHOULD**: Avoid varying container configurations unless there's valid justification.
-* **MUST**: Containers follow CSS box model principles.
-
-
-## Critical Instructions
-* **NO ARBITRARY VALUES:** Never use `p-[16px]` or `m-[20px]` unless explicitly asked. Use the 13px scale.
-* **FORBIDDEN INCREMENTS:** Do not use `0.2`, `0.4`, or any non-0.5 increment (e.g., `p-1.2` is BANNED).
-* **CONVERSION LOGIC:** If a requirement asks for "roughly 20px", you MUST use `1.5` (19.5px). Do not use `2` (26px).
+* **MUST**: Use the 13px base and 0.5-unit increments only (`1`, `1.5`, `2`, …).
+* **NEVER**: Use non-0.5 increments (`0.2`, `1.2`, …) or arbitrary pixel spacing (`p-[16px]`) unless the human explicitly asks.
+* **MUST**: Convert “about 20px” to `1.5` (19.5px), not `2` (26px).
+* **MUST**: Sections use defined containers (padding, margins, max-width). Prefer ≤ 5 container types per project.

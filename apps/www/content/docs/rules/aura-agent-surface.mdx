@@ -1,0 +1,55 @@
+---
+title: "Aura agent surface"
+description: "Rules hold guardrails; skills hold execution. DESIGN.md is narrative SoT. Upstream shadcn skill is subordinate to Aura Keep invariants."
+---
+
+# Aura agent surface
+
+## Installation
+```bash
+pnpm dlx shadcn@latest add @aura/rule-aura-agent-surface
+```
+## Ownership
+
+| Layer | Owns | Does not own |
+| --- | --- | --- |
+| `DESIGN.md` | Narrative design SoT (tokens, theme, product voice) | Step-by-step agent procedures |
+| `.cursor/rules/*` | MUST / SHOULD / NEVER guardrails for agent behavior | Install recipes, long how-tos, wiki write loops |
+| `.cursor/skills/*` / `.agents/skills/*` | Persistence and technical execution | Soft product principles |
+
+## Invariants (Keep)
+
+These stay encoded in foundation rules and machine-checked where lint allows. Do not weaken them when editing rules or skills.
+
+* 12-step chromatic scale (`--accent-*`, `--gray-*`) with APCA contrast roles for steps 11–12 on step 2.
+* Fluid typography via `clamp()` and a global **≥ 17px** floor on editable form controls.
+* Strict **13px** spacing base (`unit * 13px`).
+* Icons use `className="icon"` only (type inheritance); no horizontal icon margins inside gap-owning controls.
+* Project Brain lives in `wiki/obsidian-{suffix}/` with `00-General/Internal-Progress.md` updated after each advance.
+
+## Upstream shadcn skill (merge)
+
+Installed via `pnpm dlx skills add shadcn/ui` into `.agents/skills/shadcn` (and `migrate-radix-to-base`). Use it for CLI, registry search/docs, composition discovery, and presets.
+
+When the shadcn skill conflicts with Aura Keep / foundation rules, **Aura wins**:
+
+| Topic | Prefer Aura | Use shadcn skill for |
+| --- | --- | --- |
+| Icons | `@radix-ui/react-icons` + `className="icon"`; no `ml-*`/`mr-*` on icons in `Button`/`Badge` | Component discovery; ignore `data-icon` / Lucide defaults unless the installed component API requires them |
+| Forms | `useFormDynamic` + `Form` / `FormField` + `validateFormData` (skill `aura-forms`) | `FieldGroup` / `Field` only when the Aura form stack is absent |
+| Spacing | 13px scale (`gap-0.5` = 6.5px, `gap-2` = 26px) | `gap-*` over `space-y-*` (aligned) |
+| Color | `--accent-*` / `--gray-*` (+ semantic) | No raw palette (aligned); map shadcn semantics onto Aura tokens |
+| Typography | Fluid `.h1`–`.p`; no `text-xl` on primary copy; inputs ≥ 17px | Layout/`cn()` patterns that do not fight the floor |
+| Restyle | Variants/sizes; `@shadcn/lint` `no-restyle` | `className` for layout/width only (aligned) |
+
+Do not vendor the shadcn skill into `packages/registry` / `sync-skills.ts`. Blueprint installs it the same way as gdp-ts.
+
+## Routing
+
+* UI token questions → `DESIGN.md`, then foundation rules under `.cursor/rules/fundation*`.
+* shadcn CLI / registry / presets / component docs → skill `shadcn` (`.agents/skills/shadcn`).
+* After UI edits → skill `verify-aura-ui` (`pnpm lint`, clear `@shadcn/lint` debt you introduced).
+* After structural or API advances → skill `update-project-brain`.
+* Porting external UI into Aura → skill `port-component-to-aura`.
+* Aura form composition → skill `aura-forms` (guardrails in `components-forms.mdc`).
+* Monorepo DS edits in this repo → skills `aura-constraints` / `aura-verification` + root `AGENTS.md`.
