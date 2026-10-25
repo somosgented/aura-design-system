@@ -242,12 +242,15 @@ function FieldSeparator({
   return (
     <div
       data-slot="field-separator"
-      className={cn("relative flex items-center", className)}
+      className={cn(
+        "relative flex w-full items-center justify-center",
+        className,
+      )}
       {...props}
     >
-      <Separator className="absolute inset-x-0" />
+      <Separator className="absolute inset-x-0 top-1/2 -translate-y-1/2" />
       {children ? (
-        <span className="relative bg-gray-1 px-1 text-sm text-gray-11">
+        <span className="relative bg-gray-2 px-1 text-sm text-gray-11">
           {children}
         </span>
       ) : null}
