@@ -817,7 +817,16 @@ export default function AuraAesthetic() {
               onChange={handleFieldChange("gray")}
             />
           </div>
-          <div className="flex shrink-0 flex-wrap items-center gap-1">
+          <div
+            role="group"
+            aria-label="Palette actions"
+            className={cn(
+              "flex w-full flex-col gap-1",
+              "max-sm:[&>*]:w-full",
+              "sm:w-auto sm:shrink-0 sm:flex-row sm:flex-wrap sm:items-center",
+              "[&>*]:focus-visible:relative [&>*]:focus-visible:z-10",
+            )}
+          >
             <Button type="button" variant="pill" onClick={resetDefaults}>
               Reset
             </Button>

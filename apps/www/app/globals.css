@@ -534,16 +534,54 @@ select {
   }
 }
 
-/* Header mark. `.dark` beats the default hide so this does not depend on
-   Tailwind's zero-specificity `:where(.dark)` variant. */
-.aura-mark-dark {
-  display: none;
+.aura-mark {
+  --aura-mark-plate: var(--gray-1);
+  --aura-mark-stroke: var(--gray-4);
+  --aura-mark-stroke-width: 1;
+  --aura-mark-hole: var(--gray-1);
+  --aura-mark-from: var(--accent-9);
+  --aura-mark-to: var(--gray-12);
+  --aura-mark-glint: var(--ecru);
 }
 
-.dark .aura-mark-light {
-  display: none;
+.aura-mark-plate {
+  fill: var(--aura-mark-plate);
+  stroke: var(--aura-mark-stroke);
+  stroke-width: var(--aura-mark-stroke-width);
 }
 
-.dark .aura-mark-dark {
-  display: block;
+.aura-mark-hole {
+  fill: var(--aura-mark-hole);
+}
+
+.aura-mark-glint {
+  fill: var(--aura-mark-glint);
+}
+
+.aura-mark-from {
+  stop-color: var(--aura-mark-from);
+}
+
+.aura-mark-to {
+  stop-color: var(--aura-mark-to);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) .aura-mark {
+    --aura-mark-plate: var(--gray-4);
+    --aura-mark-stroke: var(--gray-4);
+    --aura-mark-stroke-width: 0;
+    --aura-mark-hole: var(--gray-1);
+    --aura-mark-from: var(--gray-12);
+    --aura-mark-to: var(--accent-9);
+  }
+}
+
+.dark .aura-mark {
+  --aura-mark-plate: var(--gray-4);
+  --aura-mark-stroke: var(--gray-4);
+  --aura-mark-stroke-width: 0;
+  --aura-mark-hole: var(--gray-1);
+  --aura-mark-from: var(--gray-12);
+  --aura-mark-to: var(--accent-9);
 }

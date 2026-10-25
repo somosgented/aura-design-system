@@ -1,4 +1,4 @@
-import type { ComponentProps } from "react";
+import { useId, type ComponentProps } from "react";
 import Link from "fumadocs-core/link";
 
 import { cn } from "@/utils/class-names";
@@ -9,24 +9,60 @@ const linkClass =
   "rounded-sm outline-none transition-colors hover:text-accent-11 focus-visible:ring-2 focus-visible:ring-accent-8";
 
 function AuraMark() {
-  // fumadocs' next-themes provider sets before paint, so the toggle does not
+  const markId = useId().replace(/[^a-zA-Z0-9_-]/g, "");
+  const haloId = `${markId}-halo`;
+  const orbId = `${markId}-orb`;
+
   return (
-    <span className="relative inline-block h-1.5 w-1.5 shrink-0 sm:h-2 sm:w-2">
-      <img
-        src="/brand/aura-mark-light.svg"
-        alt=""
-        width={96}
-        height={96}
-        className="aura-mark-light absolute inset-0 h-full w-full"
+    <svg
+      className="aura-mark h-1.5 w-1.5 shrink-0 sm:h-2 sm:w-2"
+      viewBox="0 0 96 96"
+      fill="none"
+      aria-hidden="true"
+    >
+      <rect
+        className="aura-mark-plate"
+        x="0.5"
+        y="0.5"
+        width="95"
+        height="95"
+        rx="21.5"
       />
-      <img
-        src="/brand/aura-mark-dark.svg"
-        alt=""
-        width={96}
-        height={96}
-        className="aura-mark-dark absolute inset-0 h-full w-full"
+      <circle cx="48" cy="48" r="38" fill={`url(#${haloId})`} />
+      <circle className="aura-mark-hole" cx="48" cy="48" r="30" />
+      <circle cx="48" cy="48" r="23" fill={`url(#${orbId})`} />
+      <ellipse
+        className="aura-mark-glint"
+        cx="37.5"
+        cy="37.5"
+        rx="3.5"
+        ry="2.5"
       />
-    </span>
+      <defs>
+        <linearGradient
+          id={haloId}
+          x1="46.0144"
+          y1="87.7802"
+          x2="59.7081"
+          y2="5.61802"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop className="aura-mark-from" />
+          <stop className="aura-mark-to" offset="1" />
+        </linearGradient>
+        <linearGradient
+          id={orbId}
+          x1="46.7982"
+          y1="72.0775"
+          x2="55.0865"
+          y2="22.3477"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop className="aura-mark-from" />
+          <stop className="aura-mark-to" offset="1" />
+        </linearGradient>
+      </defs>
+    </svg>
   );
 }
 
