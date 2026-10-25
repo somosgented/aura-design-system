@@ -10,7 +10,7 @@ Generate image assets from the product identity in the blueprint Obsidian vault.
 ## 1. Read identity before designing
 
 1. Locate the vault at `wiki/obsidian-*/`.
-2. Read `Bootstrap.md`, then relevant notes in `01-Identity/`.
+2. Read `01-Identity/Image-Identity.md`.
 3. Treat image identity as ready only when the notes define at least:
    - visual medium or photographic/illustration style;
    - palette and lighting;
