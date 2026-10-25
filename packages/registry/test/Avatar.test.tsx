@@ -46,7 +46,13 @@ describe("Avatar", () => {
     );
     const fallback = container.querySelector('[data-slot="avatar-fallback"]');
     expect(fallback).toHaveClass("custom-fallback-class");
-    expect(fallback).toHaveClass("flex", "size-full", "bg-gray-3", "h6");
+    expect(fallback).toHaveClass(
+      "flex",
+      "size-full",
+      "bg-gray-3",
+      "text-gray-12",
+      "h6",
+    );
   });
 
   it("sets the size prop on the 13px scale", () => {
@@ -123,6 +129,8 @@ describe("Avatar", () => {
     );
     const fallback = container.querySelector('[data-slot="avatar-fallback"]');
     expect(fallback).toHaveClass("bg-accent-9", "text-white");
+    expect(fallback).not.toHaveClass("bg-gray-3");
+    expect(fallback).not.toHaveClass("text-gray-12");
   });
 
   it("renders multiple avatars independently", () => {
