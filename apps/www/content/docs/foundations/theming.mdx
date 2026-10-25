@@ -29,14 +29,16 @@ Light status values live on `:root` and on `@theme inline`. They are listed on t
 
 ## Theme color switcher
 
-`@aura/theme-color-switcher` (`ThemeColorSwitcher.tsx`) is the tool for generating a new accent scale. It reads `next-themes` (`resolvedTheme === "dark"` → dark appearance) and seeds:
+`@aura/theme-color-switcher` (`ThemeColorSwitcher.tsx`) opens from the Theme control in the docs header. The side sheet sits on the end of the viewport, wide enough to edit presets, and leaves the page visible. The docs sidebar keeps a separate light and dark toggle.
 
-| | Accent | Gray | Background |
-| --- | --- | --- | --- |
-| Light | `#4015ca` | `#7254cb` | `#ffffff` |
-| Dark | `#4015ca` | `#7254cb` | `#100b21` |
+Each named preset stores accent and gray for light and for dark. The same accent and gray stay in both modes so the brand identity holds. Canvases are derived from that gray, the same way `aura colors` derives them. Applying a preset writes both modes into `aura-theme-colors` and paints the active appearance. Light and Dark then switch appearance without dropping the other half.
 
-Those seeds are the switcher’s defaults, stored under `aura-theme-colors`. Light `:root` in `globals.css` is that generator pass (`--accent-9` is `#4015ca`). Dark `globals.css` keeps the Somos Gente Digital hexes instead of a second generator pass. `generateRadixColors` turns a seed into a 12-step scale. Components keep reading `--accent-*` and `--gray-*`.
+| Preset | Accent | Gray | Light canvas | Dark canvas |
+| --- | --- | --- | --- | --- |
+| Aura | `#4015ca` | `#7254cb` | `#faf9ff` | `#120e20` |
+| Coral | `#f84657` | `#8c7375` | `#fcf9f9` | `#141011` |
+
+Aura is the switcher’s default pair. Light `:root` in `globals.css` is still the generator pass from accent `#4015ca`, gray `#7254cb`, and background `#ffffff` (`--accent-9` is `#4015ca`). Dark `globals.css` keeps the Somos Gente Digital hexes. `generateRadixColors` turns the active mode into a 12-step scale. Components keep reading `--accent-*` and `--gray-*`.
 
 A single seed color can fill accent, gray, and background for both light and dark. `schemeFromSeed` keeps the seed hue, lowers chroma for the gray companion, and sets a light and a dark background. The switcher applies that scheme immediately and still lets light and dark be edited on their own. An image can supply the seed: the switcher averages the image’s pixels and runs the same scheme.
 
