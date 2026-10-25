@@ -230,6 +230,9 @@ function ColorUsageRange({ label }: { label: string }) {
   );
 }
 
+const paletteScaleClassName =
+  "grid grid-cols-6 gap-px overflow-hidden rounded-md border border-gray-a6 bg-gray-a6 bg-clip-padding sm:grid-cols-12";
+
 function ColorSwatch({
   scale,
   step,
@@ -244,9 +247,8 @@ function ColorSwatch({
       type="button"
       title={`${scale} ${step} (${varName})`}
       className={cn(
-        "relative aspect-[4/3] w-full outline-none transition-transform",
-        "hover:z-10 hover:scale-[1.04] focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-accent-8",
-        "border border-gray-a4 first:rounded-l-md last:rounded-r-md"
+        "relative aspect-[4/3] w-full border-0 outline-none transition-transform",
+        "hover:z-10 hover:scale-[1.04] focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent-8",
       )}
       style={{ backgroundColor: `var(${varName})` }}
       onClick={async () => {
@@ -268,7 +270,7 @@ function ColorSwatch({
 
 function ScaleRow({ scale }: { scale: "accent" | "gray" }) {
   return (
-    <div className="grid grid-cols-6 overflow-hidden rounded-md sm:grid-cols-12">
+    <div className={paletteScaleClassName}>
       {Array.from({ length: 12 }, (_, index) => (
         <ColorSwatch
           key={`${scale}-${index + 1}`}
