@@ -1,87 +1,69 @@
+import { canvasFromGray } from "@/utils/scheme-from-seed";
+
+export type ThemePresetMode = {
+  accent: string;
+  gray: string;
+  background?: string;
+};
+
 export type ThemePreset = {
   id: string;
   name: string;
+  light: ThemePresetMode;
+  dark: ThemePresetMode;
+};
+
+export type ResolvedThemeColors = {
   accent: string;
   gray: string;
   background: string;
 };
 
+function pairedPreset(
+  id: string,
+  name: string,
+  accent: string,
+  gray: string,
+): ThemePreset {
+  return {
+    id,
+    name,
+    light: { accent, gray },
+    dark: { accent, gray },
+  };
+}
+
 export const presets: ThemePreset[] = [
-  {
-    id: "aura",
-    name: "Aura",
-    accent: "#4015ca",
-    gray: "#7254cb",
-    background: "#100b21",
-  },
-  {
-    id: "iris",
-    name: "Iris",
-    accent: "#584dff",
-    gray: "#79767a",
-    background: "#000000",
-  },
-  {
-    id: "ember",
-    name: "Ember",
-    accent: "#f75000",
-    gray: "#54524e",
-    background: "#2a2823",
-  },
-  {
-    id: "cobalt",
-    name: "Cobalt",
-    accent: "#0040e6",
-    gray: "#858585",
-    background: "#0d0d0d",
-  },
-  {
-    id: "lime",
-    name: "Lime",
-    accent: "#aeff00",
-    gray: "#71706e",
-    background: "#f5f2ef",
-  },
-  {
-    id: "lagoon",
-    name: "Lagoon",
-    accent: "#43ceb9",
-    gray: "#8c8c8c",
-    background: "#ffffff",
-  },
-  {
-    id: "amber",
-    name: "Amber",
-    accent: "#c38133",
-    gray: "#b3b3b3",
-    background: "#ffffff",
-  },
-  {
-    id: "orchid",
-    name: "Orchid",
-    accent: "#8d30ad",
-    gray: "#86738c",
-    background: "#fafafa",
-  },
-  {
-    id: "signal",
-    name: "Signal",
-    accent: "#18f260",
-    gray: "#738c7b",
-    background: "#0a122a",
-  },
-  {
-    id: "sunbeam",
-    name: "Sunbeam",
-    accent: "#ffea28",
-    gray: "#757575",
-    background: "#f4f4f4",
-  },
-  {
-    id: "coral",
-    name: "Coral",
-    accent: "#f84657",
-    gray: "#8c7375",
-    background: "#1a131b",
-  },
+  pairedPreset("aura", "Aura", "#4015ca", "#7254cb"),
+  pairedPreset("iris", "Iris", "#584dff", "#79767a"),
+  pairedPreset("ember", "Ember", "#f75000", "#54524e"),
+  pairedPreset("cobalt", "Cobalt", "#0040e6", "#858585"),
+  pairedPreset("lime", "Lime", "#aeff00", "#71706e"),
+  pairedPreset("lagoon", "Lagoon", "#43ceb9", "#8c8c8c"),
+  pairedPreset("amber", "Amber", "#c38133", "#b3b3b3"),
+  pairedPreset("orchid", "Orchid", "#8d30ad", "#86738c"),
+  pairedPreset("signal", "Signal", "#18f260", "#738c7b"),
+  pairedPreset("sunbeam", "Sunbeam", "#ffea28", "#757575"),
+  pairedPreset("coral", "Coral", "#f84657", "#8c7375"),
 ];
+
+export function resolvePresetMode(
+  mode: ThemePresetMode,
+  appearance: "light" | "dark",
+): ResolvedThemeColors {
+  return {
+    accent: mode.accent,
+    gray: mode.gray,
+    background: mode.background ?? canvasFromGray(mode.gray, appearance),
+  };
+}
+
+export function resolvePreset(preset: ThemePreset): {
+  light: ResolvedThemeColors;
+  dark: ResolvedThemeColors;
+} {
+  return {
+    light: resolvePresetMode(preset.light, "light"),
+    dark: resolvePresetMode(preset.dark, "dark"),
+  };
+}

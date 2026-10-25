@@ -6,8 +6,26 @@ type ThemeTriple = {
   background: string;
 };
 
+const LIGHT_CANVAS = { l: 0.985, cMax: 0.015, cScale: 0.08 } as const;
+const DARK_CANVAS = { l: 0.18, cMax: 0.04, cScale: 0.2 } as const;
+
 function hex(color: Color) {
-  return color.to("srgb").toString({ format: "hex" });
+  return color.to("srgb").toString({ format: "hex" }).toLowerCase();
+}
+
+function finiteOrZero(value: number) {
+  return Number.isFinite(value) ? value : 0;
+}
+
+function canvasFromGray(gray: string, appearance: "light" | "dark") {
+  const parsed = gray.startsWith("#") ? gray : `#${gray}`;
+  const grayColor = new Color(parsed).to("oklch");
+  const chroma = finiteOrZero(grayColor.coords[1]);
+  const hue = finiteOrZero(grayColor.coords[2]);
+  const spec = appearance === "light" ? LIGHT_CANVAS : DARK_CANVAS;
+  return hex(
+    new Color("oklch", [spec.l, Math.min(spec.cMax, chroma * spec.cScale), hue]),
+  );
 }
 
 function schemeFromSeed(seed: string) {
@@ -63,5 +81,5 @@ async function seedFromImage(file: Blob) {
   return `#${channel(red)}${channel(green)}${channel(blue)}`;
 }
 
-export { schemeFromSeed, seedFromImage };
+export { canvasFromGray, schemeFromSeed, seedFromImage };
 export type { ThemeTriple };
