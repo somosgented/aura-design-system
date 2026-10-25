@@ -821,11 +821,9 @@ export default function AuraAesthetic() {
             role="group"
             aria-label="Palette actions"
             className={cn(
-              "flex w-full flex-col",
+              "flex w-full flex-col gap-1",
               "max-sm:[&>*]:w-full",
-              "max-sm:[&>*:not(:first-child)]:rounded-t-none max-sm:[&>*:not(:first-child)]:border-t-0",
-              "max-sm:[&>*:not(:last-child)]:rounded-b-none",
-              "sm:w-auto sm:shrink-0 sm:flex-row sm:flex-wrap sm:items-center sm:gap-1",
+              "sm:w-auto sm:shrink-0 sm:flex-row sm:flex-wrap sm:items-center",
               "[&>*]:focus-visible:relative [&>*]:focus-visible:z-10",
             )}
           >
