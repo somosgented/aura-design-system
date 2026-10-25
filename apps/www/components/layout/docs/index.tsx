@@ -36,6 +36,7 @@ import {
   SidebarTrigger,
   SidebarViewport,
 } from "@/components/Sidebar";
+import { ThemeColorSwitcher } from "@/components/ThemeColorSwitcher";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { buttonVariants } from "@/components/ui/Button";
 import {
@@ -145,7 +146,7 @@ export function DocsLayout({
             <BrandLockup
               href={nav.url ?? "/"}
               compact
-              className="me-auto min-w-0 max-md:hidden"
+              className="me-auto min-w-0 hidden"
             />
             {nav.children}
             {collapsible && (
@@ -230,25 +231,27 @@ export function DocsLayout({
       <NavProvider transparentMode={transparentMode}>
         {nav.enabled !== false &&
           (nav.component ?? (
-            <Navbar className="h-(--fd-nav-height) on-root:[--fd-nav-height:56px] md:on-root:[--fd-nav-height:0px] md:hidden">
+            <Navbar className="h-(--fd-nav-height) on-root:[--fd-nav-height:56px]">
               <BrandLockup href={nav.url ?? "/"} className="min-w-0" />
               <div className="min-w-0 flex-1">{nav.children}</div>
               <div className="flex shrink-0 items-center gap-0.5">
-              <SearchDialogTriggerIcon />
-             
-              {sidebarEnabled && (
-                <SidebarTrigger
-                  className={cn(
-                    buttonVariants({
-                      variant: "pill",
-                      size: "sm",
-                      className: "p-0.5 size-3",
-                    })
-                  )}
-                >
-                  <SidebarIcon className="icon" />
-                </SidebarTrigger>
-              )}
+                <div className="md:hidden">
+                  <SearchDialogTriggerIcon />
+                </div>
+                <ThemeColorSwitcher />
+                {sidebarEnabled && (
+                  <SidebarTrigger
+                    className={cn(
+                      buttonVariants({
+                        variant: "pill",
+                        size: "sm",
+                        className: "p-0.5 size-3 md:hidden",
+                      })
+                    )}
+                  >
+                    <SidebarIcon className="icon" />
+                  </SidebarTrigger>
+                )}
               </div>
             </Navbar>
           ))}

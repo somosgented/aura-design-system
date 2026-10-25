@@ -9,9 +9,24 @@ pnpm dlx @aura-design/cli@latest init
 pnpm dlx @aura-design/cli@latest setup
 pnpm dlx @aura-design/cli@latest link
 pnpm dlx @aura-design/cli@latest blueprint
-pnpm dlx @aura-design/cli@latest colors --accent "#4015ca" --gray "#7254cb" --background "#FFFFFF"
+pnpm dlx @aura-design/cli@latest colors --accent "#f84657" --gray "#8c7375"
 pnpm dlx @aura-design/cli@latest typography generate
 pnpm dlx @aura-design/cli@latest spacing
+```
+
+## colors
+
+`--accent` and `--gray` are the seeds. `--background` is an optional light canvas. The dark canvas is derived from the gray seed.
+
+When `--accent` or `--gray` is omitted, the command prompts for the missing seed. It does not prompt for a background.
+
+The command prints a WCAG report. When the report contains a `fail` line, the command exits 1 and does not write `globals.css`. When the report contains a `warn` line and no `fail` line, the command still writes the file.
+
+`:root:not(.light)` inside `@media (prefers-color-scheme: dark)` and `.dark` set the same custom properties.
+
+```bash
+pnpm dlx @aura-design/cli@latest colors --accent "#f84657" --gray "#8c7375"
+pnpm dlx @aura-design/cli@latest colors --accent "#4015ca" --gray "#7254cb"
 ```
 
 ## Third-party audits

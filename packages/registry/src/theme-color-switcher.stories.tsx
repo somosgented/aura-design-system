@@ -2,10 +2,10 @@ import { ThemeColorSwitcher } from "../registry/default/components/ThemeColorSwi
 
 export const Default = () => {
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex min-h-24 items-start gap-1">
       <ThemeColorSwitcher />
       <span className="inline-flex size-4 rounded-full bg-accent-9" />
-      <span>Seed a full scheme, then switch light and dark.</span>
+      <span>Open Theme, apply a preset, then switch light and dark.</span>
     </div>
   );
 };

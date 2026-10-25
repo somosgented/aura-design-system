@@ -540,8 +540,8 @@
         "@aura/file-upload",
         "@aura/input",
         "@aura/label",
-        "@aura/popover",
-        "@aura/scheme-from-seed"
+        "@aura/scheme-from-seed",
+        "@aura/side-sheet"
       ]
     },
     {

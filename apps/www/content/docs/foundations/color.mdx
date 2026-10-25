@@ -86,7 +86,7 @@ Semantic aliases in that file:
 
 The token is spelled `--secundary` in source. `--aura-accents-primary` and `--aura-accents-secondary` both point at `--accent-9`. `--aura-bg` is `--gray-1`. `--aura-text-primary` is `--accent-12` in this theme file.
 
-`ThemeColorSwitcher` seeds are accent `#4015ca`, gray `#7254cb`, and backgrounds `#ffffff` / `#100b21`. The switcher generates a scale with `generateRadixColors` and stores it under `aura-theme-colors`. The shipped dark scale in `globals.css` is the Somos Gente Digital ramp, not a fresh generator pass. Production components still read the CSS variables, not those seeds.
+`ThemeColorSwitcher` Aura seeds are accent `#4015ca` and gray `#7254cb` in both modes. Derived canvases are `#faf9ff` (light) and `#120e20` (dark). The switcher generates a scale with `generateRadixColors` and stores both modes under `aura-theme-colors`. The shipped dark scale in `globals.css` is the Somos Gente Digital ramp, not a fresh generator pass. Production components still read the CSS variables, not those seeds.
 
 ## Shipped gray scale
 
