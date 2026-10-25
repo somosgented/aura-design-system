@@ -131,4 +131,33 @@ describe("theme presets", () => {
     expect(saved.light.background).toBe("#fcf9f9");
     expect(saved.dark.background).toBe("#141011");
   });
+
+  it("derives the active canvas from gray and leaves the other mode alone", () => {
+    const { result } = renderHook(() => useAuraThemeColors(), {
+      wrapper: themeWrapper,
+    });
+    const darkBefore = result.current.themeColors.dark;
+
+    act(() => {
+      result.current.setColor("background", "#ffffff");
+      result.current.setColor("gray", "#86738c");
+    });
+
+    const derived = canvasFromGray("#86738c", "light");
+    expect(result.current.appearance).toBe("light");
+    expect(result.current.themeColors.light.gray).toBe("#86738c");
+    expect(result.current.themeColors.light.background).toBe(derived);
+    expect(derived).not.toBe("#ffffff");
+    expect(result.current.themeColors.dark).toEqual(darkBefore);
+
+    act(() => {
+      result.current.setColor("accent", "#159e8d");
+      result.current.setColor("gray", "nope");
+    });
+
+    expect(result.current.themeColors.light.accent).toBe("#159e8d");
+    expect(result.current.themeColors.light.gray).toBe("#86738c");
+    expect(result.current.themeColors.light.background).toBe(derived);
+    expect(result.current.themeColors.dark).toEqual(darkBefore);
+  });
 });

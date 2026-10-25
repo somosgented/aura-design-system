@@ -6,6 +6,7 @@ import { useTheme } from "next-themes";
 import { presets, resolvePreset, type ThemePreset } from "@/components/theme/presets";
 import { AURA_THEME_COLORS_KEY } from "@/lib/aura-theme-boot";
 import { generateRadixColors } from "@/utils/custom-color-functions";
+import { canvasFromGray } from "@/utils/scheme-from-seed";
 
 export type ThemeColors = {
   accent: string;
@@ -589,12 +590,17 @@ export function useAuraThemeColors() {
     (field: keyof ThemeColors, value: string) => {
       if (!isValidHex(value)) return;
       const current = getSnapshot();
+      const normalized = normalizeHex(value);
+      const nextMode: ThemeColors = {
+        ...current[appearance],
+        [field]: normalized,
+      };
+      if (field === "gray") {
+        nextMode.background = canvasFromGray(normalized, appearance);
+      }
       writeToStorage({
         ...current,
-        [appearance]: {
-          ...current[appearance],
-          [field]: normalizeHex(value),
-        },
+        [appearance]: nextMode,
       });
     },
     [appearance]
