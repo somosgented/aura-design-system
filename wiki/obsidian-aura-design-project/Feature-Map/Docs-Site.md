@@ -2,9 +2,9 @@
 feature: Docs site
 status: shipped
 area: www
-routes: [/docs, /llms.txt, /llms-full.txt, /api/search, /r]
-components: [apps/www/app/, apps/www/content/docs/, apps/www/components/]
-pr: https://github.com/somosgented/aura-design-system/pull/166
+routes: [/, /docs, /llms.txt, /llms-full.txt, /api/search, /r]
+components: [apps/www/app/, apps/www/content/docs/, apps/www/components/AuraAesthetic.tsx, apps/www/components/brand/BrandLockup.tsx]
+pr: https://github.com/somosgented/aura-design-system/pull/168
 updated: 2026-10-25
 ---
-The public docs and marketing site at auradesignsystem.com: Next.js and Fumadocs, MDX under `apps/www/content/docs/`, plus the built registry under `/r` and LLM text exports. The header Theme button opens a side sheet that edits accent and gray; the canvas is derived from the gray seed, and the sidebar keeps a separate light and dark toggle. The header Aura mark uses those same tokens, so light, dark, and preset changes repaint its tile, ring, and orb. On the homepage palette panel, Reset and Download CSS stack full width with a gap below the small breakpoint, each with its own rounded corners; from `sm` up they stay a row beside the color fields.
+The public docs and marketing site at auradesignsystem.com: Next.js and Fumadocs, MDX under `apps/www/content/docs/`, plus the built registry under `/r` and LLM text exports. The header Theme button opens a side sheet for accent and gray; the canvas comes from the gray seed, the sidebar keeps a separate light and dark toggle, and the Aura mark repaints its tile, ring, and orb from those tokens. On the homepage palette panel, Reset and Download CSS stack full width below the small breakpoint and sit in a row from `sm` up. The component preview includes a Sign up form at `/#sign-up`, composed from Aura Card, Field, Input, Button, and FieldSeparator.
