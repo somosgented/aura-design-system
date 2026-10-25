@@ -105,19 +105,26 @@ pnpm dlx @aura-design/cli@latest blueprint ./apps/web --force --suffix my-app
 
 ### `colors`
 
-Regenerates `globals.css` from accent, gray, and background hex values (Radix-style 12-step scales, light and dark). Pass flags or answer prompts.
+`--accent` and `--gray` are the seeds. `--background` is an optional light canvas. The dark canvas is derived from the gray seed.
+
+When `--accent` or `--gray` is omitted, the command prompts for the missing seed. It does not prompt for a background. When a flag value is not `#rgb` or `#rrggbb`, the command exits 1 and does not prompt.
+
+The command prints a WCAG report. When the report contains a `fail` line, the command exits 1 and does not write `globals.css`. When the report contains a `warn` line and no `fail` line, the command still writes the file.
+
+`:root:not(.light)` inside `@media (prefers-color-scheme: dark)` and `.dark` set the same custom properties.
 
 | Option | Description |
 | --- | --- |
-| `--accent <hex>` | Accent color |
-| `--gray <hex>` | Gray / neutral base |
-| `--background <hex>` | App background |
+| `--accent <hex>` | Accent seed |
+| `--gray <hex>` | Gray seed |
+| `--background <hex>` | Optional light canvas |
 
 ```bash
-pnpm dlx @aura-design/cli@latest colors --accent "#4015ca" --gray "#7254cb" --background "#FFFFFF"
+pnpm dlx @aura-design/cli@latest colors --accent "#f84657" --gray "#8c7375"
+pnpm dlx @aura-design/cli@latest colors --accent "#4015ca" --gray "#7254cb"
 ```
 
-Looks for `app/globals.css`, `src/app/globals.css`, `styles/globals.css`, or `src/styles/globals.css` (creates `app/globals.css` if none exist).
+The command writes the first of these files that exists. The candidates are `app/globals.css`, `src/app/globals.css`, `styles/globals.css`, and `src/styles/globals.css`. When none exist, it creates `app/globals.css`.
 
 ### `typography generate`
 

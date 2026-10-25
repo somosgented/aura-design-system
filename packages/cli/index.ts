@@ -18,4 +18,4 @@ registerSpacingCommand(program);
 registerBlueprintCommand(program);
 registerLinkCommand(program);
 
-program.parse(process.argv);
+await program.parseAsync(process.argv);
