@@ -31,7 +31,7 @@ Light status values live on `:root` and on `@theme inline`. They are listed on t
 
 `@aura/theme-color-switcher` (`ThemeColorSwitcher.tsx`) opens from the Theme control in the docs header. The side sheet sits on the end of the viewport, wide enough to edit presets, and leaves the page visible. The docs sidebar keeps a separate light and dark toggle.
 
-Each named preset stores accent and gray for light and for dark. The same accent and gray stay in both modes so the brand identity holds. Canvases are derived from that gray, the same way `aura colors` derives them. Applying a preset writes both modes into `aura-theme-colors` and paints the active appearance. Light and Dark then switch appearance without dropping the other half.
+Each named preset stores accent and gray for light and for dark. The same accent and gray stay in both modes so the brand identity holds. Canvases are derived from that gray, the same way `aura colors` derives them. The side sheet edits accent and gray only; it does not include a background control. Applying a preset writes both modes into `aura-theme-colors` and paints the active appearance. Light and Dark then switch appearance without dropping the other half.
 
 | Preset | Accent | Gray | Light canvas | Dark canvas |
 | --- | --- | --- | --- | --- |

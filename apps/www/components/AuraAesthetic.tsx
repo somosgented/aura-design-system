@@ -764,8 +764,8 @@ export default function AuraAesthetic() {
         <div className="mx-auto flex max-w-2xl flex-col items-center gap-1 text-center">
           <h2 className="font-bold text-gray-12">Create a custom palette</h2>
           <p className="text-balance text-gray-11">
-            Same live preview as the header color mixer: pick accent, gray, and
-            background, then download CSS for your app.
+            Same live preview as the header color mixer: pick accent and gray,
+            then download CSS for your app.
           </p>
 
           <div
@@ -803,7 +803,7 @@ export default function AuraAesthetic() {
         </div>
 
         <div className="mx-auto flex w-full max-w-4xl flex-col items-stretch gap-1 rounded-xl border border-gray-6 bg-gray-1 p-2 sm:flex-row sm:items-end sm:gap-1.5">
-          <div className="grid flex-1 grid-cols-1 gap-1 sm:grid-cols-3">
+          <div className="grid flex-1 grid-cols-1 gap-1 sm:grid-cols-2">
             <ColorField
               id="custom-accent"
               label="Accent"
@@ -815,12 +815,6 @@ export default function AuraAesthetic() {
               label="Gray"
               value={currentColors.gray}
               onChange={handleFieldChange("gray")}
-            />
-            <ColorField
-              id="custom-background"
-              label="Background"
-              value={currentColors.background}
-              onChange={handleFieldChange("background")}
             />
           </div>
           <div className="flex shrink-0 flex-wrap items-center gap-1">

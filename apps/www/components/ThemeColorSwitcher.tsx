@@ -65,16 +65,12 @@ export function ThemeColorSwitcher() {
   const seedId = useId();
   const accentId = useId();
   const grayId = useId();
-  const backgroundId = useId();
   const closeRef = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   const [accentInput, setAccentInput] = useState(currentColors.accent);
   const [grayInput, setGrayInput] = useState(currentColors.gray);
-  const [backgroundInput, setBackgroundInput] = useState(
-    currentColors.background
-  );
   const [imageFiles, setImageFiles] = useState<File[]>([]);
 
   useEffect(() => {
@@ -84,8 +80,7 @@ export function ThemeColorSwitcher() {
   useEffect(() => {
     setAccentInput(currentColors.accent);
     setGrayInput(currentColors.gray);
-    setBackgroundInput(currentColors.background);
-  }, [currentColors.accent, currentColors.gray, currentColors.background]);
+  }, [currentColors.accent, currentColors.gray]);
 
   useEffect(() => {
     if (!open) return;
@@ -99,10 +94,9 @@ export function ThemeColorSwitcher() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  const handleColorChange = (value: string, field: keyof ThemeColors) => {
+  const handleColorChange = (value: string, field: "accent" | "gray") => {
     if (field === "accent") setAccentInput(value);
     if (field === "gray") setGrayInput(value);
-    if (field === "background") setBackgroundInput(value);
     setColor(field, value);
   };
 
@@ -288,14 +282,6 @@ export function ThemeColorSwitcher() {
             placeholder="#7254cb"
             onChange={(value) => handleColorChange(value, "gray")}
           />
-          <ColorField
-            id={backgroundId}
-            label="Background Color"
-            value={backgroundInput}
-            color={currentColors.background}
-            placeholder="#faf9ff"
-            onChange={(value) => handleColorChange(value, "background")}
-          />
 
           <div className="grid grid-cols-2 gap-0.5">
             <Button
@@ -326,13 +312,13 @@ export function ThemeColorSwitcher() {
       <Button
         type="button"
         variant="pill"
-        size="sm"
+        size="icon"
+        aria-label="Theme"
         aria-expanded={open}
         aria-controls={open ? panelId : undefined}
         onClick={() => setOpen((value) => !value)}
       >
         <MixerHorizontalIcon className="icon" />
-        Theme
       </Button>
       {mounted && open ? createPortal(panel, document.body) : null}
     </>
