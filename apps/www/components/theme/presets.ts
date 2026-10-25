@@ -38,12 +38,12 @@ export const presets: ThemePreset[] = [
   pairedPreset("iris", "Iris", "#584dff", "#79767a"),
   pairedPreset("ember", "Ember", "#f75000", "#54524e"),
   pairedPreset("cobalt", "Cobalt", "#0040e6", "#858585"),
-  pairedPreset("lime", "Lime", "#aeff00", "#71706e"),
-  pairedPreset("lagoon", "Lagoon", "#43ceb9", "#8c8c8c"),
+  pairedPreset("lime", "Lime", "#699b09", "#71706e"),
+  pairedPreset("lagoon", "Lagoon", "#159e8d", "#8c8c8c"),
   pairedPreset("amber", "Amber", "#c38133", "#b3b3b3"),
   pairedPreset("orchid", "Orchid", "#8d30ad", "#86738c"),
-  pairedPreset("signal", "Signal", "#18f260", "#738c7b"),
-  pairedPreset("sunbeam", "Sunbeam", "#ffea28", "#757575"),
+  pairedPreset("signal", "Signal", "#04a53e", "#738c7b"),
+  pairedPreset("sunbeam", "Sunbeam", "#9f9107", "#757575"),
   pairedPreset("coral", "Coral", "#f84657", "#8c7375"),
 ];
 

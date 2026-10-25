@@ -73,6 +73,16 @@ describe("theme presets", () => {
     }
   });
 
+  it("keeps a deeper accent on the bright presets aura colors accepts", () => {
+    const accent = Object.fromEntries(
+      presets.map((preset) => [preset.id, preset.light.accent]),
+    );
+    expect(accent.lime).toBe("#699b09");
+    expect(accent.lagoon).toBe("#159e8d");
+    expect(accent.signal).toBe("#04a53e");
+    expect(accent.sunbeam).toBe("#9f9107");
+  });
+
   it("aligns Coral and the Aura default with derived canvases", () => {
     const coral = presets.find((preset) => preset.id === "coral");
     expect(coral?.light).toEqual({ accent: "#f84657", gray: "#8c7375" });
