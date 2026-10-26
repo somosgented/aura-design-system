@@ -1,11 +1,3 @@
-/**
- * Stand-in for the database the trusted proof modules read.
- * Replace these lookups with your session, membership, and billing queries.
- * Request handlers must not write here to grant themselves a role or a plan.
- *
- * The demo rows let `handleDeleteProject` succeed for sess_demo / user_demo /
- * prj_demo. Hobby plan `prj_hobby` is present so the entitlement check can fail.
- */
 export type OrgRole = "owner" | "member";
 export type ProjectRole = "owner" | "member" | "viewer";
 export type Plan = "hobby" | "pro" | "enterprise";

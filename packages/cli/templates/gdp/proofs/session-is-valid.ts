@@ -1,7 +1,3 @@
-/**
- * Trusted module. Do not export the prover. Only this file can mint
- * `SessionIsValid`.
- */
 import { defineProof, type Named, type Proof } from "@gdp-ts/core";
 import { userIdForSession } from "@/lib/authz-store";
 import type { SessionId, UserId } from "@/lib/ids";

@@ -3,6 +3,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSy
 import { dirname, join, relative } from "path";
 import { fileURLToPath } from "url";
 import { migrateLegacySkill } from "./rules-link.js";
+import { installerOptions } from "../utils/run.js";
 
 const GDP_PACKAGE = "@gdp-ts/core";
 const GDP_RANGE = "^0.1.0";
@@ -24,7 +25,6 @@ const GDP_ARRAY_SNIPPET = `...gdp({
 
 const GDP_ESLINT_CONFIG = `${GDP_IMPORT}import tseslint from "typescript-eslint";
 
-// typescript-eslint supplies the parser; the gdp-ts preset only adds rules, so it comes after.
 export default [
   ...tseslint.configs.recommended,
   ${GDP_ARRAY_SNIPPET}
@@ -32,7 +32,6 @@ export default [
 `;
 
 const GDP_ESLINT_FRAGMENT = `${GDP_IMPORT}
-/** Spread after typescript-eslint, which supplies the parser. */
 export function createGdpTsLintConfig() {
   return [
     ${GDP_ARRAY_SNIPPET}
@@ -125,7 +124,7 @@ async function ensureDependency(
 
   console.log(`\nInstalling ${name} (${pm} ${args.join(" ")})...`);
   try {
-    await execa(pm, args, { cwd: projectRoot, stdio: "inherit" });
+    await execa(pm, args, installerOptions(projectRoot));
   } catch (error) {
     recordDependency(projectRoot, name, range, dev);
     const message = error instanceof Error ? error.message : String(error);
@@ -149,7 +148,7 @@ export function appSourceRoot(projectRoot: string): string {
   return projectRoot;
 }
 
-function scaffoldProofs(projectRoot: string, force: boolean): void {
+export function scaffoldProofs(projectRoot: string): void {
   const source = join(templatesRoot(), "gdp");
   const destRoot = appSourceRoot(projectRoot);
   const files = walkFiles(source);
@@ -157,7 +156,7 @@ function scaffoldProofs(projectRoot: string, force: boolean): void {
     const rel = relative(source, abs);
     const dest = join(destRoot, rel);
     const label = relative(projectRoot, dest);
-    if (existsSync(dest) && !force) {
+    if (existsSync(dest)) {
       console.log(`  skip (exists): ${label}`);
       continue;
     }
@@ -238,7 +237,10 @@ export function patchEslintSource(src: string): string | null {
     const openIndex = match.index + match[0].length - 1;
     return insertSnippet(withImport, openIndex, GDP_ARRAY_SNIPPET);
   }
-  const call = /export default tseslint\.config\s*\(/g.exec(withImport);
+  const call =
+    /(?:export default|const eslintConfig\s*=|module\.exports\s*=)\s*(?:tseslint\.config|defineConfig|defineFlatConfig)\s*\(/g.exec(
+      withImport,
+    );
   if (call) {
     const openIndex = call.index + call[0].length - 1;
     return insertSnippet(withImport, openIndex, GDP_ARRAY_SNIPPET);
@@ -251,10 +253,10 @@ function writeEslintFragment(projectRoot: string): void {
   if (!existsSync(dest)) {
     writeFileSync(dest, GDP_ESLINT_FRAGMENT, "utf-8");
     console.log("  write: eslint.gdp-ts.mjs");
-    console.log(
-      "  eslint: spread createGdpTsLintConfig() into your flat config after typescript-eslint",
-    );
   }
+  console.log(
+    "  eslint: spread createGdpTsLintConfig() from eslint.gdp-ts.mjs into your flat config after typescript-eslint",
+  );
 }
 
 async function wireEslint(projectRoot: string): Promise<void> {
@@ -283,7 +285,7 @@ async function wireEslint(projectRoot: string): Promise<void> {
   const patched = patchEslintSource(src);
   if (!patched) {
     writeEslintFragment(projectRoot);
-    console.log(`  eslint: could not patch ${existingName} safely`);
+    console.log(`  eslint: left ${existingName} unchanged (could not patch it safely)`);
     return;
   }
   writeFileSync(path, patched, "utf-8");
@@ -315,7 +317,7 @@ async function installSkill(projectRoot: string, force: boolean): Promise<void> 
       "-y",
       "--copy",
     ],
-    { cwd: projectRoot, stdio: "inherit" },
+    installerOptions(projectRoot),
   );
   if (!skillInstalled(projectRoot)) {
     throw new Error(
@@ -327,7 +329,7 @@ async function installSkill(projectRoot: string, force: boolean): Promise<void> 
 
 export async function applyGdpToProject(projectRoot: string, force: boolean): Promise<void> {
   console.log("\ngdp-ts (proof-carrying authz)");
-  scaffoldProofs(projectRoot, force);
+  scaffoldProofs(projectRoot);
   await ensureDependency(projectRoot, GDP_PACKAGE, GDP_RANGE, false);
 
   const { pkg } = readPackageJson(projectRoot);
