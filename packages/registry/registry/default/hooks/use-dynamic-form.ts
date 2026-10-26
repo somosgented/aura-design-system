@@ -1,4 +1,9 @@
-import { useState } from "react";
+import {
+  useState,
+  type ChangeEvent,
+  type ChangeEventHandler,
+  type RefObject,
+} from "react";
 
 type FieldType = "text" | "textarea" | "select" | "checkbox";
 
@@ -43,13 +48,16 @@ export type FieldProps = {
   name: string;
   type: FieldType;
   value: string | boolean;
-  setValue: (value: string | boolean) => void;
+  setValue: (
+    value: string | boolean,
+    formRef?: RefObject<HTMLFormElement | null>
+  ) => void;
   onChange: (
-    event: React.ChangeEvent<
+    event: ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => void;
-  onCheckedChange: React.ChangeEventHandler<HTMLInputElement> &
+  onCheckedChange: ChangeEventHandler<HTMLInputElement> &
     ((checked: boolean) => void);
   touch: boolean;
   setTouch: (value: boolean) => void;
@@ -58,7 +66,7 @@ export type FieldProps = {
 
 export const useFormDynamic = (
   initialValues: useFormDynamicProps,
-  formGeneralRef?: React.RefObject<HTMLFormElement | null>
+  formGeneralRef?: RefObject<HTMLFormElement | null>
 ) => {
   const [fetchStatus, setFetchStatus] = useState<
     "idle" | "loading" | "success" | "error"
@@ -69,12 +77,15 @@ export const useFormDynamic = (
     name: string,
     updates: { value?: string | boolean; touch?: boolean }
   ) => {
-    fields.setValue((prev) => {
-      const newValues = { ...prev, [name]: updates.value };
-      return newValues;
-    });
+    if (updates.value !== undefined) {
+      const nextValue = updates.value;
+      fields.setValue((prev) => ({ ...prev, [name]: nextValue }));
+    }
 
-    fields.setTouch((prev) => ({ ...prev, [name]: updates.touch }));
+    if (updates.touch !== undefined) {
+      const nextTouch = updates.touch;
+      fields.setTouch((prev) => ({ ...prev, [name]: nextTouch }));
+    }
   };
 
   const field = (name: string): FieldProps => {
@@ -82,7 +93,7 @@ export const useFormDynamic = (
     const defaultValue = initialValueResolver[fieldType];
 
     const handleChange = (
-      event: React.ChangeEvent<
+      event: ChangeEvent<
         HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
       >
     ) => {
@@ -103,10 +114,9 @@ export const useFormDynamic = (
 
     const setFormFieldValue = (
       value: string | boolean,
-      formRef = formGeneralRef
+      formRef: RefObject<HTMLFormElement | null> | undefined = formGeneralRef
     ): void => {
       if (formRef) {
-
         const input = formRef?.current?.querySelector(`[name="${name}"]`) as
           | HTMLInputElement
           | HTMLTextAreaElement
@@ -133,7 +143,7 @@ export const useFormDynamic = (
       setValue: setFormFieldValue,
       onChange: handleChange,
       onCheckedChange:
-        handleOnCheckedChange as React.ChangeEventHandler<HTMLInputElement> &
+        handleOnCheckedChange as ChangeEventHandler<HTMLInputElement> &
           ((checked: boolean) => void),
       touch: fields.touch[name] ?? false,
       setTouch: (value: boolean) => updateField(name, { touch: value }),
@@ -156,16 +166,16 @@ export const useFormDynamic = (
   };
 
   const resetForm = (
-    formRef: React.RefObject<HTMLFormElement>,
+    formRef: RefObject<HTMLFormElement | null>,
     initialValues?: Record<string, string | boolean>
   ): void => {
     const fields = getFields();
 
     for (const field in fields) {
       fields[field].reset();
-      fields[field].setFormFieldValue(
-        formRef,
-        initialValues?.[field] ?? initialValueResolver[fields[field].type]
+      fields[field].setValue(
+        initialValues?.[field] ?? initialValueResolver[fields[field].type],
+        formRef
       );
     }
   };
