@@ -1,7 +1,10 @@
+"use client";
+
 import { type HTMLAttributes, useMemo } from "react";
 import { ChevronDown, Languages } from "lucide-react";
 import { NavProvider } from "@/components/layout/contexts/layout";
 import { BrandLockup } from "@/components/brand/BrandLockup";
+import { ThemeColorSwitcher } from "@/components/ThemeColorSwitcher";
 import type * as PageTree from "fumadocs-core/page-tree";
 import { TreeContextProvider } from "fumadocs-ui/contexts/tree";
 
@@ -129,6 +132,7 @@ export function Header({
       </ul>
       <div className="flex flex-row items-center justify-end gap-0.5 flex-1 max-lg:hidden">
         <SearchDialogTrigger />
+        <ThemeColorSwitcher />
 
         {themeSwitch.enabled !== false &&
           (themeSwitch.component ?? <ThemeToggle mode={themeSwitch?.mode} />)}

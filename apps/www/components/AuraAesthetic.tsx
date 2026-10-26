@@ -790,8 +790,8 @@ export default function AuraAesthetic() {
     };
 
   return (
-    <section className="overflow-x-clip border-t border-gray-6 bg-gray-2">
-      <div className="smesh pad flex flex-col gap-2.5 px-2 py-3 md:px-3">
+    <div>
+      <div className="flex flex-col gap-2.5">
         <div className="mx-auto flex max-w-2xl flex-col items-center gap-1 text-center">
           <h2 className="font-bold text-gray-12">Create a custom palette</h2>
           <p className="text-balance text-gray-11">
@@ -928,6 +928,6 @@ export default function AuraAesthetic() {
           </Button>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
