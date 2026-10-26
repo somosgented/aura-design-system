@@ -22,7 +22,7 @@ export default function HomePage() {
       />
       <HomeDocSection
         title="Rules"
-        description="Guardrails agents follow: 13px spacing, accent and gray steps, fluid type, icons, motion, and registry ownership."
+        description="Always-on process rules, plus the Aura skill for color, type, spacing, and composition."
         href="/docs/rules"
         icon={<MixerHorizontalIcon className="icon h4" />}
       />

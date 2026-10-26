@@ -16,10 +16,22 @@ pnpm dlx @aura-design/cli@latest init
 
 1. `components.json` with the `@aura` and `@aura-dev` registries
 2. Light and dark accent and gray scales in `globals.css`
-3. `@aura/class-names`, `@aura/page-get-starter`, `@aura/css-main`, `@aura/rules`, and `@aura/skills`
+3. `@aura/class-names`, `@aura/page-get-starter`, `@aura/css-main`, `@aura/rules`, `@aura/skill-aura`, and `@aura/skills`
 4. Blueprint scaffolding, including [gdp-ts](/docs/gdp-ts) proofs
 
-`@aura/rules` writes root `DESIGN.md` and the Cursor rules. `@aura/skills` writes the consumer skills under `.cursor/skills/`.
+`@aura/rules` writes root `DESIGN.md` and the always-on process rules into `.agents/rules/` (feature map, no comments, and the `DESIGN.md` pointer). `aura blueprint` symlinks `.cursor/rules` to that directory. `@aura/skill-aura` writes the design skill to `.agents/skills/aura/` (color, type, the 13px grid, icons, motion, forms, and lint). `@aura/skills` writes the procedure skills under `.cursor/skills/`.
+
+Install the design skill on its own with either command:
+
+```bash
+pnpm dlx shadcn@latest add @aura/skill-aura
+```
+
+```bash
+pnpm dlx skills add somosgented/aura-design-system --skill aura
+```
+
+See [Aura skill](/docs/rules/aura-skill) and [Get started](/docs).
 
 ## Existing app
 

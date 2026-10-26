@@ -42,12 +42,6 @@ import {
 } from "@/components/ui/Avatar";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/Card";
 import { Checkbox } from "@/components/ui/Checkbox";
 import {
   DropdownMenu,
@@ -404,100 +398,89 @@ function SignUpPreview() {
     <section
       id="sign-up"
       aria-labelledby={signupTitleId}
-      className="relative overflow-hidden rounded-xl border border-gray-6 bg-gray-2 px-1.5 py-2.5"
+      className="flex flex-col gap-1.5"
     >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-50"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 15% 10%, var(--accent-a4), transparent 42%), radial-gradient(circle at 85% 0%, var(--accent-a3), transparent 38%), linear-gradient(160deg, var(--gray-2), var(--gray-3))",
-        }}
-      />
-      <div className="relative mx-auto flex w-full flex-col gap-1.5">
-        <h3
-          id={signupTitleId}
-          className="small m-0 text-center font-semibold text-gray-12"
+      <h3
+        id={signupTitleId}
+        className="small m-0 font-semibold text-gray-12"
+      >
+        Sign up
+      </h3>
+      <form
+        aria-labelledby={accountTitleId}
+        className="flex flex-col gap-2"
+        onSubmit={keepPreviewOnPage}
+      >
+        <h4
+          id={accountTitleId}
+          className="small m-0 font-semibold text-gray-12"
         >
-          Sign up
-        </h3>
-        <Card>
-          <CardHeader>
-            <CardTitle id={accountTitleId}>Create account</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form
-              aria-labelledby={accountTitleId}
-              className="flex flex-col gap-2"
-              onSubmit={keepPreviewOnPage}
-            >
-              <FieldGroup>
-                <Field>
-                  <FieldLabel htmlFor={nameId}>Full name</FieldLabel>
-                  <Input
-                    id={nameId}
-                    name="name"
-                    autoComplete="name"
-                    placeholder="Enter your name"
-                    required
-                    size="sm"
-                  />
-                </Field>
-                <Field>
-                  <FieldLabel htmlFor={emailId}>Email</FieldLabel>
-                  <Input
-                    id={emailId}
-                    name="email"
-                    type="email"
-                    inputMode="email"
-                    autoComplete="email"
-                    autoCapitalize="none"
-                    spellCheck={false}
-                    placeholder="Enter your email address"
-                    required
-                    size="sm"
-                  />
-                </Field>
-                <Field>
-                  <FieldLabel htmlFor={passwordId}>Password</FieldLabel>
-                  <Input
-                    id={passwordId}
-                    name="password"
-                    type="password"
-                    autoComplete="new-password"
-                    autoCapitalize="none"
-                    spellCheck={false}
-                    placeholder="Enter your password"
-                    required
-                    size="sm"
-                  />
-                </Field>
-              </FieldGroup>
-              <div className="flex flex-col gap-1">
-                <Button type="submit" size="sm" className="w-full">
-                  Create account
-                </Button>
-                <FieldSeparator>OR</FieldSeparator>
-                <Button
-                  type="button"
-                  size="sm"
-                  variant="pill"
-                  className="w-full"
-                  onClick={() => {
-                    setNotice("This preview does not continue with GitHub.");
-                  }}
-                >
-                  <GitHubLogoIcon className="icon" aria-hidden="true" />
-                  Continue with GitHub
-                </Button>
-                <p role="status" className="small m-0 text-gray-11">
-                  {notice}
-                </p>
-              </div>
-            </form>
-          </CardContent>
-        </Card>
-      </div>
+          Create account
+        </h4>
+        <FieldGroup>
+          <Field>
+            <FieldLabel htmlFor={nameId}>Full name</FieldLabel>
+            <Input
+              id={nameId}
+              name="name"
+              autoComplete="name"
+              placeholder="Enter your name"
+              required
+              size="sm"
+            />
+          </Field>
+          <Field>
+            <FieldLabel htmlFor={emailId}>Email</FieldLabel>
+            <Input
+              id={emailId}
+              name="email"
+              type="email"
+              inputMode="email"
+              autoComplete="email"
+              autoCapitalize="none"
+              spellCheck={false}
+              placeholder="Enter your email address"
+              required
+              size="sm"
+            />
+          </Field>
+          <Field>
+            <FieldLabel htmlFor={passwordId}>Password</FieldLabel>
+            <Input
+              id={passwordId}
+              name="password"
+              type="password"
+              autoComplete="new-password"
+              autoCapitalize="none"
+              spellCheck={false}
+              placeholder="Enter your password"
+              required
+              size="sm"
+            />
+          </Field>
+        </FieldGroup>
+        <div className="flex flex-col gap-1">
+          <Button type="submit" size="sm" className="w-full">
+            Create account
+          </Button>
+          <FieldSeparator>OR</FieldSeparator>
+          <Button
+            type="button"
+            size="sm"
+            variant="pill"
+            className="w-full"
+            onClick={() => {
+              setNotice("This preview does not continue with GitHub.");
+            }}
+          >
+            <GitHubLogoIcon className="icon" aria-hidden="true" />
+            Continue with GitHub
+          </Button>
+          <p role="status" className="small m-0 text-gray-11">
+            {notice}
+          </p>
+        </div>
+      </form>
     </section>
   );
 }
@@ -551,7 +534,7 @@ function ComponentsShowcase() {
           </AlertContent>
         </Alert>
 
-        <div className="overflow-hidden rounded-md border border-gray-6 bg-gray-1">
+        <div className="flex flex-col">
           {[
             { icon: BoxIcon, label: "Box", indent: false },
             { icon: TokensIcon, label: "Grid", indent: false },
@@ -562,7 +545,7 @@ function ComponentsShowcase() {
             <div
               key={`${layer.label}-${index}`}
               className={cn(
-                "flex items-center gap-0.5 border-b border-gray-6 px-1 py-1 last:border-b-0 hover:bg-gray-3",
+                "flex items-center gap-0.5 py-0.5",
                 layer.indent && "pl-3"
               )}
             >
@@ -615,10 +598,8 @@ function ComponentsShowcase() {
               href="#profile"
               onClick={(event) => event.preventDefault()}
               className={cn(
-                "flex items-center gap-1 rounded-md border p-1 transition-colors hover:bg-gray-3",
-                surface
-                  ? "border-gray-6 bg-accent-surface"
-                  : "border-gray-6 bg-gray-1"
+                "flex items-center gap-1 py-0.5 transition-colors hover:bg-gray-3",
+                surface && "bg-accent-surface"
               )}
             >
               <Avatar className="size-3 shrink-0">
@@ -640,7 +621,7 @@ function ComponentsShowcase() {
 
       <div className="flex min-w-0 flex-col gap-1.5">
         <div className="hidden min-w-0 items-center gap-1 md:flex">
-          <div className="flex min-w-0 flex-1 items-center gap-0.5 overflow-x-auto rounded-md border border-gray-6 bg-gray-1 p-0.5">
+          <div className="flex min-w-0 flex-1 items-center gap-0.5 overflow-x-auto">
             {toolbarItems.map(([Icon, label], index) => (
               <div key={label} className="flex shrink-0 items-center">
                 {(index === 1 || index === 5 || index === 8) && (
@@ -787,9 +768,7 @@ function ComponentsShowcase() {
           <LinksExample muted />
         </div>
 
-        <div className="rounded-lg border border-gray-6 bg-gray-1 p-1.5">
-          <ToDoList items={todos} onItemsChange={setTodos} />
-        </div>
+        <ToDoList items={todos} onItemsChange={setTodos} />
       </div>
     </div>
   );

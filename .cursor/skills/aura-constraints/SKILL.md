@@ -3,7 +3,7 @@ name: aura-constraints
 description: >-
   Hard constraints when editing Aura design-system components, tokens, stories,
   or registry packages in this monorepo. Use when changing packages/registry,
-  packages/system, packages/styled-system, DESIGN.md, .cursor/rules, or apps/www
+  packages/system, packages/styled-system, DESIGN.md, .agents/skills/aura, .agents/rules, or apps/www
   docs that document components. Not for product apps (Famity, Labelo).
 ---
 
@@ -17,7 +17,7 @@ Read root `AGENTS.md` first. This skill is the operational checklist for **this*
 | --- | --- |
 | `packages/registry/**`, `packages/system/**`, `packages/styled-system/**`, `packages/design-md/**`, `packages/cli/**` | Famity Care, Labelo, or any product app |
 | `apps/www` docs / demos that document Aura | Vendoring pstack or marketplace skills |
-| `.cursor/rules`, `.cursor/skills`, root `DESIGN.md` | Unrelated dependency bumps |
+| `.agents/skills/aura`, `.agents/rules`, `.cursor/skills`, root `DESIGN.md` | Unrelated dependency bumps |
 
 If the task belongs in a product app, stop and say so — do not implement it here.
 
@@ -26,7 +26,7 @@ If the task belongs in a product app, stop and say so — do not implement it he
 1. Locate the source of truth: registry components under `packages/registry/registry/default/components/` (and related hooks/utils/styles).
 2. Open the matching Ladle story in `packages/registry/src/<name>.stories.tsx` if it exists.
 3. Skim public exports / props / variants actually used in stories and docs — prefer additive changes.
-4. Follow `.cursor/rules/*` and `DESIGN.md` (13px spacing, accent/gray steps, fluid typography, icons).
+4. Follow `.agents/skills/aura/` and `DESIGN.md` (13px spacing, accent/gray steps, fluid typography, icons). Process rules stay in `.agents/rules/`.
 
 ## Public API rules
 

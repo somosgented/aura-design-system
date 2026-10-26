@@ -330,7 +330,7 @@ pnpm dlx shadcn@latest add @aura/<registry-name>
 
 **Additional registry items:** textarea, calendar, data-grid, chart, area-chart, bar-chart, line-chart, pie-chart, radar-chart, radial-chart, chart-tooltips, editor, editor-00, combobox-single, combobox-multiple, alert-status, theme-color-switcher, form-field-combobox, form-field-editor, form-field-select, form-field-signature-pad, form-field-sortable-list.
 
-**Utilities / rules:** class-names, colors, web-validation, use-dynamic-form, css-main, rules (bundle), rule-principles, rule-fundations-colors, rule-fundations-typography, rule-fundations-layout-spacing, rule-fundation-icons, rule-fundation-animations, rule-components-forms, and other hooks listed in **`packages/registry/registry.json`**.
+**Utilities / agent install:** class-names, colors, web-validation, use-dynamic-form, css-main, rules (always-on process rules), skill-aura (design guardrails at `.agents/skills/aura/`), and other hooks listed in **`packages/registry/registry.json`**.
 
 ---
 

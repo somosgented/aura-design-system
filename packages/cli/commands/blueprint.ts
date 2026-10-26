@@ -5,6 +5,7 @@ import { dirname, join, resolve } from "path";
 import { fileURLToPath } from "url";
 import { installFormStack, syncFormAgentFiles } from "./forms-stack.js";
 import { applyGdpToProject } from "./gdp.js";
+import { linkCursorRulesToAgents } from "./rules-link.js";
 
 const SCRIPTS_TO_MERGE: Record<string, string> = {
   preflight: "tsx scripts/preflight.ts",
@@ -164,6 +165,7 @@ const LEGACY_BRAIN_SCRIPT = "tsx scripts/brain-progress.ts";
 
 const LEGACY_AGENT_PATHS = [
   ".cursor/rules/self-documenting-system.mdc",
+  ".agents/rules/self-documenting-system.mdc",
   ".cursor/skills/update-project-brain",
   "scripts/brain-progress.ts",
 ];
@@ -209,11 +211,12 @@ export function scaffoldFeatureMapAgentFiles(
   projectRoot: string,
   force: boolean,
 ): void {
+  linkCursorRulesToAgents(projectRoot);
   writeIfMissingOrForce(
-    join(projectRoot, ".cursor", "rules", "feature-map.mdc"),
-    readTpl("cursor/rules/feature-map.mdc"),
+    join(projectRoot, ".agents", "rules", "feature-map.mdc"),
+    readTpl("agents/rules/feature-map.mdc"),
     force,
-    ".cursor/rules/feature-map.mdc",
+    ".agents/rules/feature-map.mdc",
   );
   writeIfMissingOrForce(
     join(projectRoot, ".cursor", "skills", "update-feature-map", "SKILL.md"),
@@ -278,11 +281,12 @@ export function retireProjectBrain(projectRoot: string): void {
 }
 
 function scaffoldNoCommentsRule(projectRoot: string, force: boolean): void {
+  linkCursorRulesToAgents(projectRoot);
   writeIfMissingOrForce(
-    join(projectRoot, ".cursor", "rules", "no-comments.mdc"),
-    readTpl("cursor/rules/no-comments.mdc"),
+    join(projectRoot, ".agents", "rules", "no-comments.mdc"),
+    readTpl("agents/rules/no-comments.mdc"),
     force,
-    ".cursor/rules/no-comments.mdc",
+    ".agents/rules/no-comments.mdc",
   );
 }
 
@@ -386,6 +390,7 @@ export async function applyBlueprintToProject(
   console.log(`  vault suffix: ${suffix}\n`);
 
   retireProjectBrain(projectRoot);
+  linkCursorRulesToAgents(projectRoot);
   retireUpstreamSkills(projectRoot);
   scaffoldFeatureMap(projectRoot, suffix, force);
   scaffoldNoCommentsRule(projectRoot, force);
