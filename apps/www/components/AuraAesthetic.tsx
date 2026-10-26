@@ -914,9 +914,7 @@ export default function AuraAesthetic() {
               Aura components reinterpreting Radix UI, shown with your live palette.
             </p>
           </div>
-          <div className="rounded-xl border border-gray-6 bg-gray-1 p-2 md:p-3">
-            <ComponentsShowcase />
-          </div>
+          <ComponentsShowcase />
         </div>
 
         <div className="mx-auto flex max-w-xl flex-col items-center gap-1 pb-1 text-center">
