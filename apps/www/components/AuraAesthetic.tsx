@@ -533,19 +533,22 @@ function ComponentsShowcase() {
           </AlertContent>
         </Alert>
 
-        <div className="flex flex-col">
+        <div className="overflow-hidden rounded-md border border-gray-6 bg-gray-1">
           {[
-            { icon: BoxIcon, label: "Box", indent: false },
-            { icon: TokensIcon, label: "Grid", indent: false },
-            { icon: ImageIcon, label: "Image", indent: true },
-            { icon: ImageIcon, label: "Image", indent: true },
-            { icon: TextIcon, label: "Text", indent: true },
+            { icon: BoxIcon, label: "Box", depth: 0, selected: true },
+            { icon: TokensIcon, label: "Grid", depth: 1 },
+            { icon: ImageIcon, label: "Image", depth: 2 },
+            { icon: ImageIcon, label: "Image", depth: 2 },
+            { icon: TextIcon, label: "Text", depth: 2 },
           ].map((layer, index) => (
             <div
               key={`${layer.label}-${index}`}
               className={cn(
-                "flex items-center gap-0.5 py-0.5",
-                layer.indent && "pl-3"
+                "flex items-center gap-0.5 py-0.5 pr-1",
+                layer.selected && "bg-accent-3",
+                layer.depth === 0 && "pl-1",
+                layer.depth === 1 && "pl-2.5",
+                layer.depth === 2 && "pl-4",
               )}
             >
               <layer.icon className="icon text-gray-11" />
