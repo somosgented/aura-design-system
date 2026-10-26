@@ -41,6 +41,7 @@ Aura is a **design system monorepo**: tokens, UI components, Ladle stories, docs
 
 - Ownership map: `.agents/rules/aura-agent-surface.mdc` — `DESIGN.md` narrative SoT; `.agents/rules/*` guardrails; `.cursor/skills/*` / `.agents/skills/*` execution.
 - Foundation rules live in `.agents/rules/` (`alwaysApply` where marked). Cursor still loads project rules from `.cursor/rules`, which is a symlink to `../.agents/rules`, so there is one copy. Do not invent a second conflicting design policy.
+- Those rules stay project rules. Cursor discovers `.agents/skills/shadcn/SKILL.md` on demand; shadcn's `rules/*.md` files are references inside that skill, not always-on policy. Aura procedures stay skills. Guardrails stay `.mdc` rules.
 - Monorepo skills: `.cursor/skills/aura-constraints/`, `.cursor/skills/aura-verification/`.
 - Consumer skills (registry-synced): `aura-forms`, `verify-aura-ui`, `update-feature-map`, `port-component-to-aura`, `generate-brand-images` — see `packages/registry/scripts/sync-skills.ts`.
 - Upstream skills (blueprint / `skills add`, not registry): `.agents/skills/shadcn` (`pnpm dlx skills add shadcn/ui`) and gdp-ts.

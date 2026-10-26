@@ -7,6 +7,8 @@ description: Agent rules for the Aura Design System. Install them into .agents/r
 
 These rules define foundations and principles for the Aura Design System. Install them via the registry into `.agents/rules/`. Cursor loads project rules from `.cursor/rules`; `aura blueprint` links that path at `.agents/rules` so there is one copy.
 
+They stay project rules. The shadcn/ui skill at `.agents/skills/shadcn/` is a separate, on-demand procedure; its `rules/*.md` files are references inside that skill. Aura step-by-step work lives in skills (`@aura/skills`). Always-on guardrails live here.
+
 ```bash
 pnpm dlx shadcn@latest add @aura/rules
 ```

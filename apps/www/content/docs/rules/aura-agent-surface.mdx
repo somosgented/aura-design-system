@@ -14,8 +14,8 @@ pnpm dlx shadcn@latest add @aura/rule-aura-agent-surface
 | Layer | Owns | Does not own |
 | --- | --- | --- |
 | `DESIGN.md` | Narrative design SoT (tokens, theme, product voice) | Step-by-step agent procedures |
-| `.agents/rules/*` | MUST / SHOULD / NEVER guardrails for agent behavior | Install recipes, long how-tos, wiki write loops |
-| `.cursor/skills/*` / `.agents/skills/*` | Persistence and technical execution | Soft product principles |
+| `.agents/rules/*` | MUST / SHOULD / NEVER guardrails, loaded every turn as Cursor project rules | Install recipes, long how-tos, wiki write loops |
+| `.cursor/skills/*` / `.agents/skills/*` | On-demand procedures (`SKILL.md`) | Soft product principles, always-on guardrails |
 
 ## Invariants (Keep)
 
@@ -28,6 +28,12 @@ These stay encoded in foundation rules and machine-checked where lint allows. Do
 * Rules live in `.agents/rules/` only. `.cursor/rules` is a symlink to `../.agents/rules` because Cursor loads project rules from `.cursor/rules`.
 * The only project documentation is the feature map in `wiki/obsidian-{suffix}/Feature-Map/`, updated inside the PR that changes a feature. No progress logs. See `feature-map.mdc`.
 * No code comments except external constraints (with the reason), directives, licenses, and generated code. Fix the root cause instead. See `no-comments.mdc`.
+
+## Why this is not a shadcn-style skill
+
+`pnpm dlx skills add shadcn/ui` installs one skill at `.agents/skills/shadcn/SKILL.md`. Cursor discovers that folder when the skill description matches the task (shadcn CLI, registries, presets, `components.json`). The `rules/*.md` files beside it are reference notes the skill links to (Incorrect/Correct pairs). Cursor does not load them as project rules, and it does not include them on every turn.
+
+Aura foundation constraints stay `alwaysApply` project rules so spacing, color, type, icons, comments, and the feature map are in context for every edit. Procedures stay skills: `aura-forms`, `verify-aura-ui`, `port-component-to-aura`, `update-feature-map`, `generate-brand-images`, plus the upstream `shadcn` skill. Keep that split. Folding the foundation rules into a skill would load them only when a description matches.
 
 ## Upstream shadcn skill (merge)
 

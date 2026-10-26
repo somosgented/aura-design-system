@@ -81,7 +81,7 @@ Scaffolds Aura project tooling into any repo with a `package.json`:
 - `.cursor/skills/generate-brand-images/` (identity-aware Gemini landing images)
 - Third-party [audits](/docs/audits) are not installed. Re-running blueprint deletes the Emil and Vercel skill folders an older CLI copied into `.cursor/skills/` and `.agents/skills/`
 - The forms stack: `.agents/rules/components-forms.mdc`, `.cursor/skills/aura-forms/`, and the `@aura/form`, `@aura/field`, `@aura/use-dynamic-form`, and `@aura/web-validation` registry items (ajv, ajv-formats, ajv-errors). Missing rule and skill files are written, untouched older Aura copies are updated, and customized copies are kept unless you pass `--force`. Components are added only when missing and when `components.json` has the `@aura` registry
-- A Cursor link: `.cursor/rules` → `../.agents/rules`. Cursor loads project rules from `.cursor/rules`. Blueprint moves any real files already in that directory into `.agents/rules/` and replaces the directory with the symlink, so the rules stay one copy
+- A Cursor link: `.cursor/rules` → `../.agents/rules`. Cursor loads project rules from `.cursor/rules`. Blueprint moves any real files already in that directory into `.agents/rules/` and replaces the directory with the symlink, so the rules stay one copy. Those files stay project rules. The shadcn skill's `rules/*.md` notes are on-demand references inside `.agents/skills/shadcn/`, not a replacement for this set
 - `scripts/preflight.ts`
 - Upstream [shadcn/ui skills](https://ui.shadcn.com/docs/skills) via `pnpm dlx skills add shadcn/ui` (`.agents/skills/shadcn`)
 - `sonar-project.properties` plus Sonar-related scripts / devDependencies

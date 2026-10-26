@@ -91,6 +91,8 @@ Cursor loads project rules from `.cursor/rules`. After the registry files land, 
 ln -sfn ../.agents/rules .cursor/rules
 ```
 
+Leave the rules as project rules. `.agents/skills/shadcn/SKILL.md` is the on-demand shadcn procedure; its `rules/*.md` files are references that skill links to, and Cursor does not apply them every turn. `@aura/skills` is the same shape for Aura procedures (`port-component-to-aura`, `verify-aura-ui`, `aura-forms`). Always-on foundation guardrails stay in `.agents/rules/*.mdc`.
+
 If the feature map, `Image-Identity.md`, or `pnpm ai:image` is missing, scaffold those project capabilities without rewriting the Aura theme:
 
 ```bash
