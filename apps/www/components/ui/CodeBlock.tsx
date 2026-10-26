@@ -65,7 +65,7 @@ function CodeBlockHeader({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="code-block-header"
       className={cn(
-        "flex min-w-0 items-center gap-0.5 px-1 py-0.5 text-gray-11 group-data-[size=sm]/code-block:px-0.5",
+        "flex min-w-0 items-center gap-0.5 px-1 py-0.5 text-gray-11 group-data-[size=sm]/code-block:px-0.5 bg-gray-3 border-b border-gray-6",
         className
       )}
       {...props}
