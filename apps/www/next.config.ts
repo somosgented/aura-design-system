@@ -42,6 +42,11 @@ const config: NextConfig = {
         destination: "/docs/charts",
         permanent: true,
       },
+      ...["figma", "international", "voice"].map((slug) => ({
+        source: `/docs/foundations/${slug}`,
+        destination: "/docs/foundations",
+        permanent: true,
+      })),
       {
         source: "/docs/rules/self-documenting-system",
         destination: "/docs/rules/feature-map",

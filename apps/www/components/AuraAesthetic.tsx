@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useId, useState, type FormEvent, type ReactNode } from "react";
 import {
   AccessibilityIcon,
@@ -915,17 +914,6 @@ export default function AuraAesthetic() {
             </p>
           </div>
           <ComponentsShowcase />
-        </div>
-
-        <div className="mx-auto flex max-w-xl flex-col items-center gap-1 pb-1 text-center">
-          <p className="text-gray-11">
-            Start with great taste, finish with{" "}
-            <span className="text-gray-12">your own flavor</span>. The steps
-            above are the tokens. Build with them.
-          </p>
-          <Button asChild size="lg">
-            <Link href="/docs">Get started</Link>
-          </Button>
         </div>
       </div>
     </section>
