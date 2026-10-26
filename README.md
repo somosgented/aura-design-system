@@ -1,6 +1,6 @@
 # Aura Design System
 
-An open-source UI kit for accessible, consistent interfaces. Components are distributed in **shadcn-style**: you own the code—copy, adapt, and style it in your project.
+An agentic design system for product UI. People browse the docs and components. Coding agents read `DESIGN.md`, the rules, and the registry source. Components are distributed in **shadcn style**: you own the code.
 
 ## Official website
 

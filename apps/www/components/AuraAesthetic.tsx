@@ -816,8 +816,8 @@ export default function AuraAesthetic() {
         <div className="mx-auto flex max-w-2xl flex-col items-center gap-1 text-center">
           <h2 className="font-bold text-gray-12">Create a custom palette</h2>
           <p className="text-balance text-gray-11">
-            Same live preview as the header color mixer: pick accent and gray,
-            then download CSS for your app.
+            Twelve accent steps and twelve gray steps. Agents use these
+            tokens. Pick seeds, then download the CSS.
           </p>
 
           <div
@@ -942,11 +942,10 @@ export default function AuraAesthetic() {
 
         <div className="mx-auto flex max-w-xl flex-col items-center gap-1 pb-1 text-center">
           <p className="text-gray-11">
-            Start with great taste, finish with{" "}
-            <span className="text-gray-12">your own flavor</span>.
+            The steps above are the tokens. Build with them.
           </p>
           <Button asChild size="lg">
-            <Link href="/docs">Get Started</Link>
+            <Link href="/docs">Get started</Link>
           </Button>
         </div>
       </div>

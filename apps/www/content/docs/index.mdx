@@ -1,37 +1,174 @@
 ---
-title: Introduction
-description: An introduction to the Aura Design System, its philosophy, and how it differs from traditional libraries.
-icon: Album
+title: Get started
+description: Aura is an agentic design system. Install it as a person, or point an agent at DESIGN.md, the rules, the skills, and the CLI before it writes UI.
+icon: Compass
 ---
 
-## Do you?
+Aura is an **agentic design system** for product UI. People browse this site. Coding agents read the same decisions as files: `DESIGN.md`, Cursor rules, skills, and the registry source. The components are React, built on Radix primitives. The tokens are the CSS those components already use. An agent can build a screen by following those files.
 
-Building something different always comes with some friction. It requires a bit more work, more intention, sometimes even going against the grain. But that's what makes it worth it. Like cooking with your own spices, the end result is richer and more satisfying because it tastes uniquely yours.
+You own the code. Aura is distributed in shadcn mode: the CLI copies component source into your app. Registry items are addressed as `@aura/button`, `@aura/card`, and the rest of the catalog.
 
-This is not a component library in the traditional sense. It's a collection of components built from our team's experience, and we are distributing them using the 'shadcn mode'. It was built for our team, but you can use it too.
+Aura specifies product UI. A writing voice and a Figma library are not specified yet; those foundation pages say so and stop. Do not invent the missing part. Use the decisions that are written down.
 
-**What do you mean by not a component library?**
+`DESIGN.md` holds the narrative spec and the long tables. Rules are the short guardrails. Skills are the procedures. When they disagree, follow `DESIGN.md` and the component source, then fix the page that drifted.
 
-I mean you own the code. You can decide how the components are built and styled. You can copy and paste the code into your project and customize it to your needs.
+## What to open
 
-## FAQ
+The job picks the file.
 
-### How is this different from other component libraries?
+| Job | Open | Why this one |
+| --- | --- | --- |
+| Work in the Aura repository | Root [`AGENTS.md`](https://github.com/somosgented/aura-design-system/blob/canary/AGENTS.md), then root `DESIGN.md` | Monorepo policy: public APIs, stories, tokens, and the boundary of this repo. Consumer apps start at `DESIGN.md`. |
+| Work in an app that uses Aura | Root `DESIGN.md`, then `.cursor/rules/` | `init` and `setup` install both. `DESIGN.md` is the narrative source of truth. Rules are the MUST and NEVER lines. |
+| Those files are missing | [`@aura-design/cli`](/docs/cli) `setup`, or the [agent blueprint](/docs/mcp-agent-blueprint) | The blueprint is a runbook an agent can execute. It audits the workspace and installs what is missing. |
+| Install or retheme | [Installation](/docs/installation) and [CLI](/docs/cli) | `init` scaffolds a Next.js app. `setup` applies Aura to an app that already exists. `colors` writes accent and gray scales. |
+| Choose a color, size, or type step | `DESIGN.md` §2–§5, or [Foundations](/docs/foundations) | Foundations are the same rules, written so a person can read them. |
+| Change a screen | The matching [rule](/docs/rules), then the component's variants | Rules stop drift. Variants live on the component, so the next install does not wipe a call-site restyle. |
+| Run a procedure | A [skill](#skills) | A rule is a limit. A skill is the steps. |
+| Use a control | [Components](/docs/components) | Install the registry item. Match its variants and sizes. |
 
-Just the taste. It's one more design system for the web.
+## Install
+
+New Next.js app:
+
+```bash
+pnpm dlx @aura-design/cli@latest init
+```
+
+App that already has a `package.json`:
+
+```bash
+pnpm dlx @aura-design/cli@latest setup
+```
+
+Both commands write `components.json` with the `@aura` registry, generate light and dark accent and gray scales into `globals.css`, and add `@aura/class-names`, `@aura/page-get-starter`, `@aura/css-main`, `@aura/rules`, and `@aura/skills`. The rules bundle includes root `DESIGN.md`. Blueprint then scaffolds the feature map, the forms stack, the shadcn skill, and gdp-ts proofs.
+
+Add one component:
+
+```bash
+pnpm dlx shadcn@latest add @aura/button
+```
+
+There is no command that adds every component. Names are listed at [all.txt](https://auradesignsystem.com/all.txt). Command flags live on the [CLI](/docs/cli) page. The existing-app notes live on [Installation](/docs/installation).
+
+## How an agent starts
+
+Read before you write UI.
+
+1. In the Aura monorepo, open root `AGENTS.md`, then root `DESIGN.md`.
+2. In a consumer app, open root `DESIGN.md` and `.cursor/rules/`. If they are missing, run `pnpm dlx @aura-design/cli@latest setup` or follow the [agent blueprint](/docs/mcp-agent-blueprint).
+3. Pick the skill that matches the job. A rule is a limit. A skill is the steps. Follow both.
+4. Install the component (`pnpm dlx shadcn@latest add @aura/button`, swapping in the registry name) and use its variants. Layout and width at the call site are fine. Padding, color, and type belong on the component.
+5. After UI edits, run the project lint. `@shadcn/lint` flags spacing off the 13px scale, raw palette colors, and restyle of a design-system component. The `verify-aura-ui` skill is that loop.
+
+## Skills
+
+`@aura/skills` installs these under `.cursor/skills/`:
+
+| Skill | Use it when |
+| --- | --- |
+| `aura-forms` | Building a form. State is `useFormDynamic`. The UI is `Form` and `FormField`. Validation is `validateFormData` with an ajv JSON Schema. The server action re-validates with the same schema. |
+| `verify-aura-ui` | You just edited UI. Run lint and clear the `@shadcn/lint` findings on the files you touched. |
+| `port-component-to-aura` | Bringing an external component onto Aura tokens and the registry shape. |
+| `update-feature-map` | Opening a PR. The feature map is the only project doc. Update the note in that PR. |
+| `generate-brand-images` | Generating landing images from the vault's image identity. |
+
+Blueprint also installs the upstream `shadcn` skill at `.agents/skills/shadcn` and the `gdp-ts` skill. Use the shadcn skill for CLI, registry search, and presets. Aura rules win on icons, forms, spacing, typography, and restyle. gdp-ts is proof-carrying authz for sensitive functions. `aura-constraints` and `aura-verification` stay in this monorepo.
+
+## Rules
+
+These are the constraints already written in `DESIGN.md`, `AGENTS.md`, and `.cursor/rules`. The linked page is the full text.
+
+### Spacing
+
+`--spacing` is **13px**. A utility is the number times 13, so `p-4` is 52px and `gap-0.5` is 6.5px. Use half-step increments: `1`, `1.5`, `2`, `2.5`. Map about 20px to `1.5` (19.5px). Put every section in a container. Prefer five container types or fewer.
+
+The 4px Tailwind default is the wrong density for Aura, and a one-off pixel value leaves the scale.
+
+[Spacing rule](/docs/rules/fundations-layout-spacing) · [Layout](/docs/foundations/layout)
+
+### Color
+
+Parallel **accent** and **gray** scales, steps **1–12**, plus alpha variants `--accent-a1` through `--accent-a12` and the gray equivalents. Prefer a semantic token when one exists (`--primary`, `--accent-surface`, `--accent-contrast`).
+
+| Steps | Role |
+| --- | --- |
+| 1–2 | Backgrounds, cards, sidebars |
+| 3–5 | Interactive fills (default, hover, active) |
+| 6–8 | Borders, separators, focus |
+| 9–10 | Solid brand. `--primary` maps to `--accent-9`. Step 10 is the hover on that solid |
+| 11–12 | Text. Step 11 is secondary. Step 12 is primary |
+
+Steps 11 and 12 target **APCA Lc 60** and **Lc 90** on a step 2 background. On a transparent default, hover may use step 3. Production UI consumes tokens. Theme seeds stay in the theme file.
+
+[Color rule](/docs/rules/fundations-colors) · [Color foundations](/docs/foundations/color)
+
+### Typography
+
+Primary type uses `clamp()` of `--min`, `--val`, and `--max` through `h1`–`h6`, `.h1`–`.h6`, `p`, and `.p`. `blockquote` shares the `h4` scale. `--min` and `--max` are in `rem`. Large headings sit around a 1.1–1.3 line-height.
+
+`text-sm` and `text-xs` are for fixed utility and meta text. Editable `input`, `textarea`, and `select` stay at **17px** or larger. Docs set the root to 17px, so `1rem` already meets that floor. The floor is global CSS, because a field under about 16px makes mobile browsers zoom on focus.
+
+[Typography rule](/docs/rules/fundations-typography) · [Typography foundations](/docs/foundations/typography)
+
+### Icons
+
+Default library is `@radix-ui/react-icons`. Every icon gets `className="icon"`. Size follows the type (`icon`, `icon h4`, `icon h1`). The container's `gap` separates an icon from its label. Own rows use `gap-0.5`. `Button` and `Badge` already own that gap, so an icon inside them takes no extra gap and no horizontal margin. `ml-auto` and `mr-auto` are only for pushing an item to the far side.
+
+[Icon rule](/docs/rules/fundation-icons) · [Icons](/docs/foundations/icons)
+
+### Motion
+
+Honor `prefers-reduced-motion` with a reduced variant. Prefer CSS `@theme` animation tokens and `@keyframes` in `@layer components`. Animate `transform` and `opacity`. Accordion and collapsible height may use the Radix content-height variable. Enter and exit content with opacity and `scale()`. Overlays can use opacity alone. Set `transform-origin` where the motion physically starts. Hover and active may use `scale(1.03)` and `scale(0.97)`. Keep steps near 250ms: tooltips `ease-in-out`, dialogs `cubic-bezier(0.16, 1, 0.3, 1)`, accordion `ease`, buttons `cubic-bezier(0.4, 0, 0.6, 1)`. Motion should explain cause and effect.
+
+[Motion rule](/docs/rules/fundation-animations) · [Motion](/docs/foundations/motion)
+
+### Accessibility
+
+Interactive components ship keyboard operable, with a visible focus, an accessible name, and a correct role. Focus rings use step 8 or `--aura-outline`. The contrast targets are the color steps above. Touch targets use the 13px scale. Narrow navigation collapses into a sheet or drawer.
+
+[Accessibility](/docs/foundations/accessibility) · [Principles](/docs/rules/principles)
+
+### Registry and components
+
+Public component APIs grow by additive props and variants. A breaking change is named in the PR. Appearance changes go through variants and sizes. `className` on a design-system component is for layout and width. Form controls (`Input`, `Textarea`, `SelectTrigger`, `MaskInput`, `SegmentedInput`) own their padding. Compose triggers with Radix `asChild`. Keep the Ladle story in sync with the public API.
+
+`@shadcn/lint` checks this in the app: no arbitrary spacing, no raw palette colors, no restyle, no horizontal margin on an icon inside `Button` or `Badge`.
+
+[Components](/docs/foundations/components) · [Lint](/docs/lint) · [shadcn lint rule](/docs/rules/shadcn-lint)
+
+### Forms
+
+`useFormDynamic` for state, `Form` and `FormField` for UI, `validateFormData` for ajv JSON Schema. Submit to a server action that re-validates with the same schema.
+
+[Forms](/docs/forms) · [Form rule](/docs/rules/components-forms) · skill `aura-forms`
+
+### Product principles
+
+Build for perception and operability. One voice with the user. A component should save the next person from rebuilding it. The user can change their mind. Complex products should still feel familiar.
+
+[Principles](/docs/rules/principles)
+
+### Docs and comments
+
+The only project documentation is the feature map in the Obsidian vault, updated in the PR that changes a feature. Fix a workaround in the code. A comment is for an external constraint this repo cannot change, a directive, a license, or generated code.
+
+[Feature map](/docs/rules/feature-map) · [No comments](/docs/rules/no-comments)
+
+## Where to go next
+
+- [Handbook](/docs/handbook) — how styling, motion, composition, and customization are wired.
+- [Taste](/docs/taste) — spacing, color, and type tokens on one page.
+- [Namespaces](/docs/namespace) and [Registry](/docs/registry) — how `@aura/button` resolves.
+- [Lint](/docs/lint) — the `@shadcn/lint` policy Aura ships.
+- [gdp-ts](/docs/gdp-ts) — the proofs blueprint installs for sensitive functions.
+
+## Questions
 
 ### How do I pull upstream updates?
 
-The `@aura-design/cli init` command is a wrapper around the original `shadcn/ui` CLI. It includes some fixtures to adapt the components to the Aura Design System configuration.
+Add the component again with `pnpm dlx shadcn@latest add @aura/button`. Run [`setup`](/docs/cli) in an existing app to refresh `components.json`, the color scales, `DESIGN.md`, the rules, and the skills. You can also copy a file from the [GitHub repository](https://github.com/somosgented/aura-design-system).
 
-When you run `init`, it will ask you if you want to overwrite the existing components. You can say yes to get the latest updates.
+### Where do the numbers live?
 
-You can also manually copy and paste the code from the [GitHub repository](https://github.com/somosgented/aura-design-system).
-
-### What is the `@aura-design/cli init` command?
-
-The `init` command from `@aura-design/cli` is a wrapper around the original `shadcn/ui` CLI. It has been adapted with specific fixtures to seamlessly integrate with the Aura Design System's configuration. This ensures that when you initialize components, they are already set up to work within the Aura ecosystem, saving you time and effort in manual configuration.
-
-See the [CLI](/docs/cli) docs for `setup`, `link`, `blueprint`, `colors`, `typography`, and `spacing`.
-
-The visual rules — color steps, the 13px grid, type, icons, motion — are written up as [Foundations](/docs/foundations).
+[Foundations](/docs/foundations) for people. `DESIGN.md` and the [rules](/docs/rules) for agents. They describe one system.
