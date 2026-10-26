@@ -3734,12 +3734,12 @@
       "name": "skill-aura-forms",
       "type": "registry:file",
       "title": "Skill: Aura Forms",
-      "description": "Aura Cursor skill: Aura Forms. Installs to .cursor/skills/aura-forms/.",
+      "description": "Aura skill: Aura Forms. Installs to .agents/skills/aura-forms/.",
       "files": [
         {
           "path": "registry/default/skills/aura-forms/SKILL.md",
           "type": "registry:file",
-          "target": ".cursor/skills/aura-forms/SKILL.md"
+          "target": ".agents/skills/aura-forms/SKILL.md"
         }
       ]
     },
@@ -3747,17 +3747,17 @@
       "name": "skill-generate-brand-images",
       "type": "registry:file",
       "title": "Skill: Generate Brand Images",
-      "description": "Aura Cursor skill: Generate Brand Images. Installs to .cursor/skills/generate-brand-images/.",
+      "description": "Aura skill: Generate Brand Images. Installs to .agents/skills/generate-brand-images/.",
       "files": [
-        {
-          "path": "registry/default/skills/generate-brand-images/SKILL.md",
-          "type": "registry:file",
-          "target": ".cursor/skills/generate-brand-images/SKILL.md"
-        },
         {
           "path": "registry/default/skills/generate-brand-images/generate-images.mjs",
           "type": "registry:file",
-          "target": ".cursor/skills/generate-brand-images/generate-images.mjs"
+          "target": ".agents/skills/generate-brand-images/generate-images.mjs"
+        },
+        {
+          "path": "registry/default/skills/generate-brand-images/SKILL.md",
+          "type": "registry:file",
+          "target": ".agents/skills/generate-brand-images/SKILL.md"
         }
       ]
     },
@@ -3765,12 +3765,12 @@
       "name": "skill-port-component-to-aura",
       "type": "registry:file",
       "title": "Skill: Port Component To Aura",
-      "description": "Aura Cursor skill: Port Component To Aura. Installs to .cursor/skills/port-component-to-aura/.",
+      "description": "Aura skill: Port Component To Aura. Installs to .agents/skills/port-component-to-aura/.",
       "files": [
         {
           "path": "registry/default/skills/port-component-to-aura/SKILL.md",
           "type": "registry:file",
-          "target": ".cursor/skills/port-component-to-aura/SKILL.md"
+          "target": ".agents/skills/port-component-to-aura/SKILL.md"
         }
       ]
     },
@@ -3778,12 +3778,12 @@
       "name": "skill-update-feature-map",
       "type": "registry:file",
       "title": "Skill: Update Feature Map",
-      "description": "Aura Cursor skill: Update Feature Map. Installs to .cursor/skills/update-feature-map/.",
+      "description": "Aura skill: Update Feature Map. Installs to .agents/skills/update-feature-map/.",
       "files": [
         {
           "path": "registry/default/skills/update-feature-map/SKILL.md",
           "type": "registry:file",
-          "target": ".cursor/skills/update-feature-map/SKILL.md"
+          "target": ".agents/skills/update-feature-map/SKILL.md"
         }
       ]
     },
@@ -3791,12 +3791,12 @@
       "name": "skill-verify-aura-ui",
       "type": "registry:file",
       "title": "Skill: Verify Aura Ui",
-      "description": "Aura Cursor skill: Verify Aura Ui. Installs to .cursor/skills/verify-aura-ui/.",
+      "description": "Aura skill: Verify Aura Ui. Installs to .agents/skills/verify-aura-ui/.",
       "files": [
         {
           "path": "registry/default/skills/verify-aura-ui/SKILL.md",
           "type": "registry:file",
-          "target": ".cursor/skills/verify-aura-ui/SKILL.md"
+          "target": ".agents/skills/verify-aura-ui/SKILL.md"
         }
       ]
     },
@@ -3804,7 +3804,7 @@
       "name": "skills",
       "type": "registry:file",
       "title": "Aura Skills",
-      "description": "Aura skills. @aura/skill-aura installs to .agents/skills/aura/. Procedure skills install to .cursor/skills/.",
+      "description": "Aura skills. @aura/skill-aura and procedure skills install to .agents/skills/.",
       "files": [
         {
           "path": "registry/default/skills/aura/cli.md",
@@ -3869,32 +3869,32 @@
         {
           "path": "registry/default/skills/aura-forms/SKILL.md",
           "type": "registry:file",
-          "target": ".cursor/skills/aura-forms/SKILL.md"
-        },
-        {
-          "path": "registry/default/skills/generate-brand-images/SKILL.md",
-          "type": "registry:file",
-          "target": ".cursor/skills/generate-brand-images/SKILL.md"
+          "target": ".agents/skills/aura-forms/SKILL.md"
         },
         {
           "path": "registry/default/skills/generate-brand-images/generate-images.mjs",
           "type": "registry:file",
-          "target": ".cursor/skills/generate-brand-images/generate-images.mjs"
+          "target": ".agents/skills/generate-brand-images/generate-images.mjs"
+        },
+        {
+          "path": "registry/default/skills/generate-brand-images/SKILL.md",
+          "type": "registry:file",
+          "target": ".agents/skills/generate-brand-images/SKILL.md"
         },
         {
           "path": "registry/default/skills/port-component-to-aura/SKILL.md",
           "type": "registry:file",
-          "target": ".cursor/skills/port-component-to-aura/SKILL.md"
+          "target": ".agents/skills/port-component-to-aura/SKILL.md"
         },
         {
           "path": "registry/default/skills/update-feature-map/SKILL.md",
           "type": "registry:file",
-          "target": ".cursor/skills/update-feature-map/SKILL.md"
+          "target": ".agents/skills/update-feature-map/SKILL.md"
         },
         {
           "path": "registry/default/skills/verify-aura-ui/SKILL.md",
           "type": "registry:file",
-          "target": ".cursor/skills/verify-aura-ui/SKILL.md"
+          "target": ".agents/skills/verify-aura-ui/SKILL.md"
         }
       ]
     },

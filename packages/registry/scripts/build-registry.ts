@@ -550,8 +550,7 @@ function getSkillsItems(): RegistryItem[] {
       const skillMd = path.join(skillDir, "SKILL.md");
       if (!fs.existsSync(skillMd)) return null;
 
-      const installRoot =
-        entry.name === "aura" ? `.agents/skills/aura` : `.cursor/skills/${entry.name}`;
+      const installRoot = `.agents/skills/${entry.name}`;
 
       const files = listSkillFiles(skillDir).map((rel) => ({
         path: `registry/default/skills/${entry.name}/${rel}`,
@@ -567,7 +566,7 @@ function getSkillsItems(): RegistryItem[] {
       const description =
         entry.name === "aura"
           ? "Aura design-system skill (foundations, composition, lint). Installs to .agents/skills/aura/."
-          : `Aura Cursor skill: ${defaultTitle}. Installs to .cursor/skills/${entry.name}/.`;
+          : `Aura skill: ${defaultTitle}. Installs to .agents/skills/${entry.name}/.`;
 
       return {
         name: `skill-${entry.name}`,
@@ -834,7 +833,7 @@ function buildRegistry() {
     name: "skills",
     type: "registry:file",
     title: "Aura Skills",
-    description: "Aura skills. @aura/skill-aura installs to .agents/skills/aura/. Procedure skills install to .cursor/skills/.",
+    description: "Aura skills. @aura/skill-aura and procedure skills install to .agents/skills/.",
     files: skillsItems.flatMap((item) => item.files ?? []),
   };
   const customItems = getCustomItems();

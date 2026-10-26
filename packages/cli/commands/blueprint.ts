@@ -5,12 +5,12 @@ import { dirname, join, resolve } from "path";
 import { fileURLToPath } from "url";
 import { installFormStack, syncFormAgentFiles } from "./forms-stack.js";
 import { applyGdpToProject } from "./gdp.js";
-import { linkCursorRulesToAgents } from "./rules-link.js";
+import { ensureAgentsRules, migrateLegacySkill } from "./rules-link.js";
 
 const SCRIPTS_TO_MERGE: Record<string, string> = {
   preflight: "tsx scripts/preflight.ts",
   "ai:image":
-    "node .cursor/skills/generate-brand-images/generate-images.mjs",
+    "node .agents/skills/generate-brand-images/generate-images.mjs",
   "dev:server": "next dev",
   dev: "pnpm run preflight && pnpm run dev:server",
   typecheck: "tsc --noEmit",
@@ -25,10 +25,7 @@ const SCRIPTS_TO_MERGE: Record<string, string> = {
   "sonar:full": "pnpm run sonar:up && pnpm run sonar:setup && pnpm run sonar:scan",
 };
 
-const SHADCN_SKILL_MARKERS = [
-  ".agents/skills/shadcn/SKILL.md",
-  ".cursor/skills/shadcn/SKILL.md",
-];
+const SHADCN_SKILL = join(".agents", "skills", "shadcn", "SKILL.md");
 
 const DEV_DEPS_TO_ADD: Record<string, string> = {
   "sonarqube-scanner": "^4.3.5",
@@ -86,11 +83,17 @@ function mergePackageJson(projectRoot: string): void {
   };
 
   pkg.scripts = pkg.scripts ?? {};
+  const legacyImageScript =
+    "node .cursor/skills/generate-brand-images/generate-images.mjs";
   let scriptsAdded = 0;
   for (const [key, value] of Object.entries(SCRIPTS_TO_MERGE)) {
-    if (pkg.scripts[key] === undefined) {
-      pkg.scripts[key] = value;
-      scriptsAdded += 1;
+    const current = pkg.scripts[key];
+    const replaceLegacyImage = key === "ai:image" && current === legacyImageScript;
+    if (current === undefined || replaceLegacyImage) {
+      if (current !== value) {
+        pkg.scripts[key] = value;
+        scriptsAdded += 1;
+      }
     }
   }
 
@@ -211,18 +214,19 @@ export function scaffoldFeatureMapAgentFiles(
   projectRoot: string,
   force: boolean,
 ): void {
-  linkCursorRulesToAgents(projectRoot);
+  ensureAgentsRules(projectRoot);
   writeIfMissingOrForce(
     join(projectRoot, ".agents", "rules", "feature-map.mdc"),
     readTpl("agents/rules/feature-map.mdc"),
     force,
     ".agents/rules/feature-map.mdc",
   );
+  migrateLegacySkill(projectRoot, "update-feature-map");
   writeIfMissingOrForce(
-    join(projectRoot, ".cursor", "skills", "update-feature-map", "SKILL.md"),
-    readTpl("cursor/skills/update-feature-map/SKILL.md"),
+    join(projectRoot, ".agents", "skills", "update-feature-map", "SKILL.md"),
+    readTpl("agents/skills/update-feature-map/SKILL.md"),
     force,
-    ".cursor/skills/update-feature-map/SKILL.md",
+    ".agents/skills/update-feature-map/SKILL.md",
   );
 }
 
@@ -281,7 +285,7 @@ export function retireProjectBrain(projectRoot: string): void {
 }
 
 function scaffoldNoCommentsRule(projectRoot: string, force: boolean): void {
-  linkCursorRulesToAgents(projectRoot);
+  ensureAgentsRules(projectRoot);
   writeIfMissingOrForce(
     join(projectRoot, ".agents", "rules", "no-comments.mdc"),
     readTpl("agents/rules/no-comments.mdc"),
@@ -291,18 +295,19 @@ function scaffoldNoCommentsRule(projectRoot: string, force: boolean): void {
 }
 
 function scaffoldImageSkill(projectRoot: string, force: boolean): void {
+  migrateLegacySkill(projectRoot, "generate-brand-images");
   const skillDir = join(
     projectRoot,
-    ".cursor",
+    ".agents",
     "skills",
     "generate-brand-images",
   );
   for (const file of ["SKILL.md", "generate-images.mjs"]) {
     writeIfMissingOrForce(
       join(skillDir, file),
-      readTpl(`cursor/skills/generate-brand-images/${file}`),
+      readTpl(`agents/skills/generate-brand-images/${file}`),
       force,
-      `.cursor/skills/generate-brand-images/${file}`,
+      `.agents/skills/generate-brand-images/${file}`,
     );
   }
 }
@@ -319,10 +324,8 @@ async function installShadcnSkills(
   projectRoot: string,
   force: boolean,
 ): Promise<void> {
-  const installed = SHADCN_SKILL_MARKERS.some((rel) =>
-    existsSync(join(projectRoot, rel)),
-  );
-  if (installed && !force) {
+  migrateLegacySkill(projectRoot, "shadcn");
+  if (existsSync(join(projectRoot, SHADCN_SKILL)) && !force) {
     console.log("  shadcn/ui skills: already installed");
     return;
   }
@@ -332,10 +335,8 @@ async function installShadcnSkills(
     ["--yes", "skills", "add", "shadcn/ui", "-a", "cursor", "-y", "--copy"],
     { cwd: projectRoot, stdio: "inherit" },
   );
-  const ok = SHADCN_SKILL_MARKERS.some((rel) =>
-    existsSync(join(projectRoot, rel)),
-  );
-  if (!ok) {
+  migrateLegacySkill(projectRoot, "shadcn");
+  if (!existsSync(join(projectRoot, SHADCN_SKILL))) {
     throw new Error(
       "skills add finished without writing .agents/skills/shadcn/SKILL.md. Re-run: pnpm dlx skills add shadcn/ui -a cursor -y --copy",
     );
@@ -390,7 +391,7 @@ export async function applyBlueprintToProject(
   console.log(`  vault suffix: ${suffix}\n`);
 
   retireProjectBrain(projectRoot);
-  linkCursorRulesToAgents(projectRoot);
+  ensureAgentsRules(projectRoot);
   retireUpstreamSkills(projectRoot);
   scaffoldFeatureMap(projectRoot, suffix, force);
   scaffoldNoCommentsRule(projectRoot, force);

@@ -19,7 +19,7 @@ pnpm dlx @aura-design/cli@latest init
 3. `@aura/class-names`, `@aura/page-get-starter`, `@aura/css-main`, `@aura/rules`, `@aura/skill-aura`, and `@aura/skills`
 4. Blueprint scaffolding, including [gdp-ts](/docs/gdp-ts) proofs
 
-`@aura/rules` writes root `DESIGN.md` and the always-on process rules into `.agents/rules/` (feature map, no comments, and the `DESIGN.md` pointer). `aura blueprint` symlinks `.cursor/rules` to that directory. `@aura/skill-aura` writes the design skill to `.agents/skills/aura/` (color, type, the 13px grid, icons, motion, forms, and lint). `@aura/skills` writes the procedure skills under `.cursor/skills/`.
+`@aura/rules` writes root `DESIGN.md` and the always-on process rules into `.agents/rules/` (feature map, no comments, and the `DESIGN.md` pointer). Cursor reads that directory directly. `@aura/skill-aura` writes the design skill to `.agents/skills/aura/` (color, type, the 13px grid, icons, motion, forms, and lint). `@aura/skills` writes the procedure skills under `.agents/skills/`.
 
 Install the design skill on its own with either command:
 

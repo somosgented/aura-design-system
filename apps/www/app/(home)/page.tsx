@@ -47,7 +47,7 @@ const features = [
 const faqs = [
   {
     q: "Which file should an agent open first?",
-    a: "In this repository, AGENTS.md, then DESIGN.md. In an app, DESIGN.md, .cursor/rules, and the skill for the job. The CLI installs those files.",
+    a: "In this repository, AGENTS.md, then DESIGN.md. In an app, DESIGN.md, .agents/rules, and the skill for the job. The CLI installs those files.",
   },
   {
     q: "Does Aura replace shadcn?",

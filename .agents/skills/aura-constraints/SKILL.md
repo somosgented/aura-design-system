@@ -17,7 +17,7 @@ Read root `AGENTS.md` first. This skill is the operational checklist for **this*
 | --- | --- |
 | `packages/registry/**`, `packages/system/**`, `packages/styled-system/**`, `packages/design-md/**`, `packages/cli/**` | Famity Care, Labelo, or any product app |
 | `apps/www` docs / demos that document Aura | Vendoring pstack or marketplace skills |
-| `.agents/skills/aura`, `.agents/rules`, `.cursor/skills`, root `DESIGN.md` | Unrelated dependency bumps |
+| `.agents/skills`, `.agents/rules`, root `DESIGN.md` | Unrelated dependency bumps |
 
 If the task belongs in a product app, stop and say so — do not implement it here.
 
