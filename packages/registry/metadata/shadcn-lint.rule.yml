@@ -1,4 +1,0 @@
-# Rule metadata. Used by build-registry and generate-rules-docs.
-header:
-  title: shadcn lint
-  description: Aura @shadcn/lint policy (no arbitrary values, no raw colors, no-restyle). Installs the agent rule into .agents/rules plus eslint.aura-shadcn.mjs. Add with shadcn as @aura/rule-shadcn-lint or @aura/eslint-shadcn-lint.

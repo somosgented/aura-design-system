@@ -1,28 +1,17 @@
 ---
 title: Rules
-description: Agent rules for the Aura Design System. Install them into .agents/rules/.
+description: Always-on Aura process rules. Design guardrails live in the Aura skill.
 ---
 
 ## Rules
 
-These rules define foundations and principles for the Aura Design System. Install them via the registry into `.agents/rules/`. Cursor loads project rules from `.cursor/rules`; `aura blueprint` links that path at `.agents/rules` so there is one copy.
+These pages are the always-on process rules (`feature-map`, `no-comments`, `design-md`). Install them into `.agents/rules/`. Cursor loads project rules from `.cursor/rules`; `aura blueprint` links that path at `../.agents/rules`.
 
-They stay project rules. The shadcn/ui skill at `.agents/skills/shadcn/` is a separate, on-demand procedure; its `rules/*.md` files are references inside that skill. Aura step-by-step work lives in skills (`@aura/skills`). Always-on guardrails live here.
+Color, type, spacing, icons, motion, forms, lint, and product principles live in the Aura skill at `.agents/skills/aura/` (same layout as the shadcn skill: `SKILL.md` plus `rules/`). See [Aura skill](/docs/rules/aura-skill).
 
 ```bash
 pnpm dlx shadcn@latest add @aura/rules
 ```
-### [Animation guardrails](/docs/rules/fundation-animations)
-
-Compositor-friendly motion, reduced-motion, theme animation tokens. Detail in DESIGN.md.
-
-### [Aura agent surface](/docs/rules/aura-agent-surface)
-
-Rules hold guardrails; skills hold execution. DESIGN.md is narrative SoT. Upstream shadcn skill is subordinate to Aura Keep invariants.
-
-### [Color guardrails](/docs/rules/fundations-colors)
-
-12-step accent/gray scale and APCA contrast roles. Detail in DESIGN.md §2.
 
 ### [DESIGN.md (narrative spec)](/docs/rules/design-md)
 
@@ -32,31 +21,7 @@ Installs the agent rule into .agents/rules and the project root DESIGN.md (narra
 
 The only project documentation is a feature map in the Obsidian vault, updated in the PR that changes a feature. No progress logs.
 
-### [Form guardrails](/docs/rules/components-forms)
-
-Form and validation guardrails — useFormDynamic, Form, validateFormData (ajv), server actions. Procedures in skill aura-forms.
-
-### [Icon guardrails](/docs/rules/fundation-icons)
-
-Radix icons via className="icon"; no horizontal margins inside gap-owning controls.
-
 ### [No code comments](/docs/rules/no-comments)
 
 Fix the root cause instead of commenting on it. Only external constraints, directives, licenses, and generated code carry comments.
-
-### [Product principles](/docs/rules/principles)
-
-Non-visual Aura product principles that constrain product and UX choices.
-
-### [shadcn lint](/docs/rules/shadcn-lint)
-
-Aura @shadcn/lint policy (no arbitrary values, no raw colors, no-restyle). Installs the agent rule into .agents/rules plus eslint.aura-shadcn.mjs. Add with shadcn as @aura/rule-shadcn-lint or @aura/eslint-shadcn-lint.
-
-### [Spacing guardrails](/docs/rules/fundations-layout-spacing)
-
-Enforce Aura 13px spacing for Tailwind v4
-
-### [Typography guardrails](/docs/rules/fundations-typography)
-
-Fluid clamp() type scale and 17px floor for editable form controls. Detail in DESIGN.md §3.
 

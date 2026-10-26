@@ -40,7 +40,7 @@ Creates a Next.js app with `create-next-app`, then applies Aura to the new (or c
 
 1. Writes `components.json` with `@aura` and `@aura-dev` registries
 2. Generates light/dark Radix scales into `globals.css`
-3. Runs `shadcn add` for `@aura/class-names`, `@aura/page-get-starter`, `@aura/css-main`, `@aura/rules`, and `@aura/skills`
+3. Runs `shadcn add` for `@aura/class-names`, `@aura/page-get-starter`, `@aura/css-main`, `@aura/rules`, `@aura/skill-aura`, and `@aura/skills`
 4. Runs the same scaffolding as [`blueprint`](#blueprint), including [gdp-ts](/docs/gdp-ts) proofs
 
 ```bash
@@ -80,8 +80,8 @@ Scaffolds Aura project tooling into any repo with a `package.json`:
 - `wiki/obsidian-*/01-Identity/Image-Identity.md` for image generation
 - `.cursor/skills/generate-brand-images/` (identity-aware Gemini landing images)
 - Third-party [audits](/docs/audits) are not installed. Re-running blueprint deletes the Emil and Vercel skill folders an older CLI copied into `.cursor/skills/` and `.agents/skills/`
-- The forms stack: `.agents/rules/components-forms.mdc`, `.cursor/skills/aura-forms/`, and the `@aura/form`, `@aura/field`, `@aura/use-dynamic-form`, and `@aura/web-validation` registry items (ajv, ajv-formats, ajv-errors). Missing rule and skill files are written, untouched older Aura copies are updated, and customized copies are kept unless you pass `--force`. Components are added only when missing and when `components.json` has the `@aura` registry
-- A Cursor link: `.cursor/rules` → `../.agents/rules`. Cursor loads project rules from `.cursor/rules`. Blueprint moves any real files already in that directory into `.agents/rules/` and replaces the directory with the symlink, so the rules stay one copy. Those files stay project rules. The shadcn skill's `rules/*.md` notes are on-demand references inside `.agents/skills/shadcn/`, not a replacement for this set
+- The forms stack: `.agents/skills/aura/rules/forms.md`, `.cursor/skills/aura-forms/`, and the `@aura/form`, `@aura/field`, `@aura/use-dynamic-form`, and `@aura/web-validation` registry items (ajv, ajv-formats, ajv-errors). Missing skill files are written, untouched older Aura copies are updated, and customized copies are kept unless you pass `--force`. A previous Aura copy of `.agents/rules/components-forms.mdc` is removed. A customized copy of that file is left in place. Components are added only when missing and when `components.json` has the `@aura` registry
+- A Cursor link: `.cursor/rules` → `../.agents/rules`. Cursor loads project rules from `.cursor/rules`. Blueprint moves any real files already in that directory into `.agents/rules/` and replaces the directory with the symlink. What remains there is process policy (feature map, no comments, DESIGN.md pointer). Design guardrails live in `.agents/skills/aura/`, same layout as `.agents/skills/shadcn/` (`SKILL.md` plus `rules/*.md`)
 - `scripts/preflight.ts`
 - Upstream [shadcn/ui skills](https://ui.shadcn.com/docs/skills) via `pnpm dlx skills add shadcn/ui` (`.agents/skills/shadcn`)
 - `sonar-project.properties` plus Sonar-related scripts / devDependencies

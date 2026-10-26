@@ -37,13 +37,13 @@ Check and record **present / missing** for each:
 | --- | --- |
 | Aura `components.json` | File exists; `registries["@aura"]` points at Aura registry JSON |
 | `DESIGN.md` (root) | File at project root (or install via `@aura/rule-design-md` / `@aura/design-md`) |
-| Agent rules | `.agents/rules/*.mdc` (foundations, principles, design-md, etc.). `.cursor/rules` is a symlink to `../.agents/rules` |
+| Agent rules | Always-on process rules in `.agents/rules/*.mdc`. `.cursor/rules` is a symlink to `../.agents/rules`. Design guardrails in `.agents/skills/aura/` |
 | Cursor skills | `.cursor/skills/port-component-to-aura/SKILL.md` and `.cursor/skills/generate-brand-images/SKILL.md` |
 | Third-party audits | Not installed by Aura. Older Emil and Vercel copies under `.cursor/skills/` and `.agents/skills/` are gone after blueprint. See [Audits](/docs/audits) |
 | Image identity | `wiki/obsidian-*/01-Identity/Image-Identity.md`; `status: ready` only when style, palette, composition/motifs, and exclusions are concrete |
 | Gemini image env | `.env.example` names `GOOGLE_API_KEY`; only check whether `.env` has `GOOGLE_API_KEY` or `GEMINI_API_KEY`, never print its value |
 | shadcn MCP | `.cursor/mcp.json` (or user MCP) with `shadcn` → `npx shadcn@latest mcp` |
-| `@shadcn/lint` | Dep `@shadcn/lint` present; `eslint.config.*` registers `shadcn/*` rules; optional `eslint.aura-shadcn.mjs` + `.agents/rules/shadcn-lint.mdc` |
+| `@shadcn/lint` | Dep `@shadcn/lint` present; `eslint.config.*` registers `shadcn/*` rules; optional `eslint.aura-shadcn.mjs`. Policy text is `.agents/skills/aura/rules/lint.md` |
 | pstack / `/poteto-mode` | Marketplace plugin **pstack** enabled for this Cursor workspace **or** project has a usable poteto-mode entry (e.g. `.cursor/skills/poteto-mode/SKILL.md` or `AGENTS.md` explicitly requiring `/poteto-mode`). Record: `plugin` / `repo-skill` / `missing` |
 | pstack model setup (optional) | User-level `~/.cursor/rules/pstack-models.mdc` exists after `/setup-pstack` — note present/missing; do **not** fail the Aura blueprint if missing |
 | `@gdp-ts/core` | `dependencies` or `devDependencies` in `package.json` |
@@ -74,16 +74,24 @@ If the user only wants AI context (not full theme rewrite), skip `setup` and use
 
 ```bash
 pnpm dlx shadcn@latest add \
+  @aura/skill-aura \
   @aura/rules \
   @aura/skills \
   @aura/rule-design-md \
   @aura/eslint-shadcn-lint
 ```
 
-- `@aura/rules` → `.agents/rules/`
+Or install the design skill with the skills CLI:
+
+```bash
+pnpm dlx skills add somosgented/aura-design-system --skill aura
+```
+
+- `@aura/skill-aura` → `.agents/skills/aura/` (design guardrails)
+- `@aura/rules` → `.agents/rules/` (feature map, no comments, DESIGN.md pointer)
 - `@aura/skills` → `.cursor/skills/` (includes `port-component-to-aura` and `generate-brand-images`)
 - `@aura/rule-design-md` → rule + root `DESIGN.md`
-- `@aura/eslint-shadcn-lint` → `eslint.aura-shadcn.mjs` + `.agents/rules/shadcn-lint.mdc` (see **D** below)
+- `@aura/eslint-shadcn-lint` → `eslint.aura-shadcn.mjs` (see **D** below). Lint policy text is in the Aura skill
 
 Cursor loads project rules from `.cursor/rules`. After the registry files land, make that path a symlink to `../.agents/rules` (this is what `aura blueprint` does). If `.cursor/rules` is still a real directory, move each `*.mdc` into `.agents/rules/` when that name is not already there, remove the directory, then:
 
@@ -91,7 +99,7 @@ Cursor loads project rules from `.cursor/rules`. After the registry files land, 
 ln -sfn ../.agents/rules .cursor/rules
 ```
 
-Leave the rules as project rules. `.agents/skills/shadcn/SKILL.md` is the on-demand shadcn procedure; its `rules/*.md` files are references that skill links to, and Cursor does not apply them every turn. `@aura/skills` is the same shape for Aura procedures (`port-component-to-aura`, `verify-aura-ui`, `aura-forms`). Always-on foundation guardrails stay in `.agents/rules/*.mdc`.
+`.agents/skills/aura/SKILL.md` is the Aura design skill. Its `rules/*.md` files are references that skill links to, same as `.agents/skills/shadcn/`. Cursor does not apply those markdown files every turn. Always-on process rules stay in `.agents/rules/*.mdc`. `@aura/skills` installs procedure skills (`port-component-to-aura`, `verify-aura-ui`, `aura-forms`) to `.cursor/skills/`.
 
 If the feature map, `Image-Identity.md`, or `pnpm ai:image` is missing, scaffold those project capabilities without rewriting the Aura theme:
 
@@ -140,7 +148,7 @@ pnpm add -D @shadcn/lint
 pnpm dlx shadcn@latest add @aura/eslint-shadcn-lint
 ```
 
-(`@aura/rule-shadcn-lint` installs the same pair: Cursor rule + `eslint.aura-shadcn.mjs`.)
+That installs `eslint.aura-shadcn.mjs`. The matching agent text is `.agents/skills/aura/rules/lint.md` (`@aura/skill-aura`).
 
 Merge into the app’s `eslint.config.mjs` (do **not** replace an existing Next/ESLint setup):
 
@@ -217,7 +225,7 @@ pnpm dlx skills add shadcn/ui -a cursor -y --copy
 npx skills add rauchg/gdp-ts --skill gdp-ts -a cursor -y --copy
 ```
 
-and writes `lib/ids.ts`, `lib/authz-store.ts`, `proofs/*`, and `data/delete-project.ts` (plus the handler and `data/mistakes.ts`) under the `@/` root. Aura Keep invariants in `.agents/rules/` win when the upstream shadcn skill conflicts (icons, forms, 13px spacing, typography).
+and writes `lib/ids.ts`, `lib/authz-store.ts`, `proofs/*`, and `data/delete-project.ts` (plus the handler and `data/mistakes.ts`) under the `@/` root. Aura Keep invariants in `.agents/skills/aura/` win when the upstream shadcn skill conflicts (icons, forms, 13px spacing, typography).
 
 **Do not:** vendor the skill into the Aura registry, cast `as Proof`, export a prover, or call `defineProof` outside `proofs/`. The default preset is not strict mode; do not turn on `strict: true` in an app that still uses `as` for unrelated code. Replace `lib/authz-store.ts` with the real database before shipping. The in-memory maps are a stand-in, and handlers must not write roles into them.
 
@@ -225,20 +233,21 @@ and writes `lib/ids.ts`, `lib/authz-store.ts`, `proofs/*`, and `data/delete-proj
 
 Confirm after installs:
 
-- `.agents/rules/` has Aura foundation rules (including `aura-agent-surface.mdc` when installed via `@aura/rules`)
+- `.agents/skills/aura/SKILL.md` exists when `@aura/skill-aura` or `skills add` was used
+- `.agents/rules/` has the always-on process rules (`feature-map`, `no-comments`, `design-md`) when `@aura/rules` was installed
 - `.cursor/rules` is a symlink to `../.agents/rules`
 - `.cursor/skills/port-component-to-aura/SKILL.md` exists
 - `.cursor/skills/generate-brand-images/SKILL.md` and its generator script exist
 - `.cursor/skills/verify-aura-ui/SKILL.md` and `.cursor/skills/update-feature-map/SKILL.md` exist when `@aura/skills` was added
 - `.cursor/skills/` and `.agents/skills/` do not contain `emil-design-eng`, `react-best-practices`, or `vercel-react-best-practices` unless someone installed that audit for this task and has not committed it
-- `.agents/rules/components-forms.mdc`, `.cursor/skills/aura-forms/SKILL.md`, and the `form`, `field`, `use-dynamic-form`, and `web-validation` registry items exist
+- `.agents/skills/aura/rules/forms.md`, `.cursor/skills/aura-forms/SKILL.md`, and the `form`, `field`, `use-dynamic-form`, and `web-validation` registry items exist
 - `.agents/skills/shadcn/SKILL.md` exists (or document the gap)
 - `wiki/obsidian-*/01-Identity/Image-Identity.md` and `wiki/obsidian-*/Feature-Map/Feature-Map.base` exist
 - `package.json` has `ai:image` and no `brain:progress`; `.env.example` names `GOOGLE_API_KEY`
 - Root `DESIGN.md` exists (or user declined design-md)
 - `components.json` includes `@aura`
 - `.cursor/mcp.json` has shadcn MCP (user must enable in UI)
-- `@shadcn/lint` installed; `eslint.config.*` spreads `createAuraShadcnLintConfig` (or equivalent); `eslint.aura-shadcn.mjs` / `shadcn-lint` rule present when using the registry item
+- `@shadcn/lint` installed; `eslint.config.*` spreads `createAuraShadcnLintConfig` (or equivalent); `eslint.aura-shadcn.mjs` present when using the registry item
 - pstack available: `/poteto-mode` resolves in this environment **or** documented missing with reason (local plugin / cloud gap / user skipped)
 - If installed (or install was offered): agent can state that `/setup-pstack` was offered or completed
 - `@gdp-ts/core` is installed; the ESLint preset is spread into the flat config (or `eslint.gdp-ts.mjs` exists and the gap is named); `.agents/skills/gdp-ts/SKILL.md` or `.cursor/skills/gdp-ts/SKILL.md` exists; `data/delete-project.ts` demands session, project-role, and plan proofs
@@ -252,7 +261,7 @@ Optional smoke: `pnpm dlx shadcn@latest add @aura/button` only if the user asked
 - **Landing with images:** follow `generate-brand-images`. Read the blueprint `01-Identity` notes first. If image identity is undefined, ask focused identity questions and update `Image-Identity.md` before generating.
 - **Gemini access:** the bundled command reads `GOOGLE_API_KEY` or `GEMINI_API_KEY` directly from root `.env`. If absent, ask whether the user wants to add a key, use agent-native image generation when available, or continue with placeholders; never fabricate a key.
 - **Batch landing flow:** inspect the landing, create one manifest for the necessary image set, run `pnpm ai:image -- --manifest <path>`, integrate accepted local assets, then record their paths in the wiki.
-- **Mobile form UX (critical):** `input` / `textarea` / `select` font-size **MUST be ≥ 17px**. Never put `text-sm` or `text-xs` on editable fields—iOS Safari zooms on focus below that size. Keep `html { font-size: 17px; }` and the global floor in `styles/main.css` (`font-size: max(1rem, 17px)`). See [Typography rules](/docs/rules/fundations-typography) and `DESIGN.md`.
+- **Mobile form UX (critical):** `input` / `textarea` / `select` font-size **MUST be ≥ 17px**. Never put `text-sm` or `text-xs` on editable fields—iOS Safari zooms on focus below that size. Keep `html { font-size: 17px; }` and the global floor in `styles/main.css` (`font-size: max(1rem, 17px)`). See the [Aura skill](/docs/rules/aura-skill) and `DESIGN.md`.
 - **Design lint:** after UI edits, run `pnpm lint` (or the app’s lint script) and clear `@shadcn/lint` warnings. Form controls own padding — add a size/variant on the component if spacing must change.
 - **Hard engineering / multi-step changes:** prefer `/poteto-mode` (pstack) with an explicit **Done means** check. Keep Aura skills for porting components (`port-component-to-aura`), brand images, and `DESIGN.md`. Use `@shadcn/lint` + Aura rules as the **Gardener** gates; use pstack for playbooks + verification. After UI edits still run `pnpm lint`.
 - **Sensitive APIs:** follow the gdp-ts skill. A function that reads or changes something only some callers may touch takes a proof about its named arguments. Never cast a proof. After authz edits, run `pnpm typecheck` and `pnpm lint`.
@@ -271,10 +280,11 @@ Optional smoke: `pnpm dlx shadcn@latest add @aura/button` only if the user asked
 | --- | --- | --- | --- |
 | components.json @aura | … | … | … |
 | DESIGN.md | … | … | … |
+| .agents/skills/aura | … | … | … |
 | .agents/rules | … | … | … |
 | .cursor/skills | … | … | … |
 | Third-party audits | … | … | … |
-| Forms stack (rule, skill, components) | … | … | … |
+| Forms stack (forms.md, aura-forms, components) | … | … | … |
 | Blueprint image identity | … | … | … |
 | Gemini image command | … | … | … |
 | .cursor/mcp.json | … | … | … |

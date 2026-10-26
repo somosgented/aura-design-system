@@ -7,6 +7,7 @@ const __dirname = path.dirname(__filename);
 
 const WORKSPACE_ROOT = path.resolve(__dirname, "../../..");
 const CURSOR_SKILLS_PATH = path.join(WORKSPACE_ROOT, ".cursor/skills");
+const AURA_SKILL_PATH = path.join(WORKSPACE_ROOT, ".agents/skills/aura");
 const REGISTRY_SKILLS_PATH = path.join(__dirname, "../registry/default/skills");
 
 const SKILL_DIRS = [
@@ -41,6 +42,17 @@ function syncSkills() {
     console.log(`[sync-skills] Created ${REGISTRY_SKILLS_PATH}`);
   }
 
+  const auraDest = path.join(REGISTRY_SKILLS_PATH, "aura");
+  if (fs.existsSync(path.join(AURA_SKILL_PATH, "SKILL.md"))) {
+    if (fs.existsSync(auraDest)) {
+      fs.rmSync(auraDest, { recursive: true, force: true });
+    }
+    copyDir(AURA_SKILL_PATH, auraDest);
+    console.log(`[sync-skills] aura (.agents/skills/aura)`);
+  } else {
+    console.warn(`[sync-skills] Skip (missing SKILL.md): .agents/skills/aura`);
+  }
+
   let synced = 0;
   for (const dir of SKILL_DIRS) {
     const src = path.join(CURSOR_SKILLS_PATH, dir);
@@ -57,7 +69,7 @@ function syncSkills() {
       console.warn(`[sync-skills] Skip (missing SKILL.md): ${dir}`);
     }
   }
-  console.log(`[sync-skills] Synced ${synced}/${SKILL_DIRS.length} skills.\n`);
+  console.log(`[sync-skills] Synced aura + ${synced}/${SKILL_DIRS.length} procedure skills.\n`);
 }
 
 syncSkills();

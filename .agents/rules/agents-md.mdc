@@ -1,14 +1,14 @@
 ---
 alwaysApply: true
 title: Agent entrypoint
-description: Monorepo agents start at AGENTS.md; consumer Aura surface is aura-agent-surface plus foundation rules.
+description: Monorepo agents start at AGENTS.md; design guardrails live in the Aura skill.
 ---
 
 # Agent entrypoint
 
 * **MUST**: Read and follow root **`AGENTS.md`** for monorepo agent policy (scope, public APIs, tokens, stories, a11y, no product apps, no code comments).
 * **MUST**: Use project skills `.cursor/skills/aura-constraints/` and `.cursor/skills/aura-verification/` when editing or verifying design-system packages.
-* **MUST**: Treat `.agents/rules/aura-agent-surface.mdc` as the ownership map — rules are guardrails; skills are execution; `DESIGN.md` is narrative SoT.
-* **SHOULD**: Use `.agents/skills/shadcn` for shadcn CLI / registry / presets; Aura Keep invariants still win on icons, forms, spacing, typography, and restyle.
+* **MUST**: Treat `.agents/skills/aura/SKILL.md` as the design-system skill (color, type, spacing, icons, motion, forms, lint). Always-on process rules stay in `.agents/rules/` (`feature-map`, `no-comments`, `design-md`, this file). `DESIGN.md` is narrative SoT.
+* **SHOULD**: Use `.agents/skills/shadcn` for shadcn CLI / registry / presets; Aura Keep invariants in `.agents/skills/aura/` still win on icons, forms, spacing, typography, and restyle.
 * **SHOULD**: Keep full pstack / poteto workflows in Cursor desktop (`/setup-pstack`, `/poteto-mode`); this repo does not vendor that plugin.
 * **SHOULD**: Treat gdp-ts and shadcn/ui skills as consumer scaffolding (`aura blueprint` installs them). Do not add those upstream skills to `sync-skills.ts`.

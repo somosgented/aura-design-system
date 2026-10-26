@@ -10,18 +10,9 @@ const AGENTS_RULES_PATH = path.join(WORKSPACE_ROOT, ".agents/rules");
 const REGISTRY_RULES_PATH = path.join(__dirname, "../registry/default/rules");
 
 const RULE_FILES = [
-  "aura-agent-surface.mdc",
-  "components-forms.mdc",
   "design-md.mdc",
   "feature-map.mdc",
-  "fundation-animations.mdc",
-  "fundation-icons.mdc",
-  "fundations-colors.mdc",
-  "fundations-layout-spacing.mdc",
-  "fundations-typography.mdc",
   "no-comments.mdc",
-  "principles.mdc",
-  "shadcn-lint.mdc",
 ];
 
 function syncRules() {
@@ -33,6 +24,14 @@ function syncRules() {
   if (!fs.existsSync(REGISTRY_RULES_PATH)) {
     fs.mkdirSync(REGISTRY_RULES_PATH, { recursive: true });
     console.log(`[sync-rules] Created ${REGISTRY_RULES_PATH}`);
+  }
+
+  const keep = new Set(RULE_FILES);
+  for (const file of fs.readdirSync(REGISTRY_RULES_PATH)) {
+    if (file.endsWith(".mdc") && !keep.has(file)) {
+      fs.unlinkSync(path.join(REGISTRY_RULES_PATH, file));
+      console.log(`[sync-rules] removed ${file}`);
+    }
   }
 
   let synced = 0;

@@ -15,7 +15,7 @@ Aura is a **design system monorepo**: tokens, UI components, Ladle stories, docs
 | Design-md package | `packages/design-md/` |
 | CLI | `packages/cli/` |
 | Docs / marketing site | `apps/www/` |
-| Agent rules & project skills | `.agents/rules/` (Cursor loads them through the `.cursor/rules` symlink), `.cursor/skills/` |
+| Agent rules & project skills | `.agents/skills/aura/` (design skill), `.agents/rules/` (always-on process rules; Cursor loads them through the `.cursor/rules` symlink), `.cursor/skills/` |
 | Feature map (only docs; update on PR) | `wiki/obsidian-aura-design-project/Feature-Map/` |
 
 `apps/www/AGENTS.md` is Next.js / site lint guidance only. Prefer **this** file for repo-wide agent policy.
@@ -30,7 +30,7 @@ Aura is a **design system monorepo**: tokens, UI components, Ladle stories, docs
 ## Gardener constraints (hard)
 
 - **Public APIs** — Do not change public component APIs casually. Prefer additive props/variants. Document breaking changes explicitly in the PR.
-- **Tokens** — Respect design tokens and `.agents/rules/*` (13px spacing, accent/gray scales, typography). No hard-coded colors/spacing that bypass tokens when tokens exist. Follow root `DESIGN.md`.
+- **Tokens** — Respect design tokens and `.agents/skills/aura/` (13px spacing, accent/gray scales, typography). No hard-coded colors/spacing that bypass tokens when tokens exist. Follow root `DESIGN.md`.
 - **Stories** — Keep `packages/registry/src/*.stories.tsx` (and metadata/docs as needed) in sync with component API changes.
 - **Accessibility** — Do not ship interactive components without keyboard, focus, and basic a11y (roles, labels, focus rings).
 - **Scope** — No drive-by refactors outside the task. No unrelated package bumps.
@@ -39,12 +39,11 @@ Aura is a **design system monorepo**: tokens, UI components, Ladle stories, docs
 
 ## Cursor rules & skills
 
-- Ownership map: `.agents/rules/aura-agent-surface.mdc` — `DESIGN.md` narrative SoT; `.agents/rules/*` guardrails; `.cursor/skills/*` / `.agents/skills/*` execution.
-- Foundation rules live in `.agents/rules/` (`alwaysApply` where marked). Cursor still loads project rules from `.cursor/rules`, which is a symlink to `../.agents/rules`, so there is one copy. Do not invent a second conflicting design policy.
-- Those rules stay project rules. Cursor discovers `.agents/skills/shadcn/SKILL.md` on demand; shadcn's `rules/*.md` files are references inside that skill, not always-on policy. Aura procedures stay skills. Guardrails stay `.mdc` rules.
+- Design guardrails live in `.agents/skills/aura/` (`SKILL.md` plus `rules/*.md`, same layout as the shadcn skill). `DESIGN.md` is the narrative spec. Do not invent a second design policy.
+- Always-on process rules stay in `.agents/rules/`: `feature-map`, `no-comments`, `design-md`, and monorepo `agents-md`. Cursor loads project rules from `.cursor/rules`, which is a symlink to `../.agents/rules`, so there is one copy. Those files are not inside the skill.
 - Monorepo skills: `.cursor/skills/aura-constraints/`, `.cursor/skills/aura-verification/`.
-- Consumer skills (registry-synced): `aura-forms`, `verify-aura-ui`, `update-feature-map`, `port-component-to-aura`, `generate-brand-images` — see `packages/registry/scripts/sync-skills.ts`.
-- Upstream skills (blueprint / `skills add`, not registry): `.agents/skills/shadcn` (`pnpm dlx skills add shadcn/ui`) and gdp-ts.
+- Consumer skills (registry-synced): `aura` (to `.agents/skills/aura/`), plus `aura-forms`, `verify-aura-ui`, `update-feature-map`, `port-component-to-aura`, `generate-brand-images` (to `.cursor/skills/`) — see `packages/registry/scripts/sync-skills.ts`.
+- Upstream skills (blueprint / `skills add`, not registry): `.agents/skills/shadcn` (`pnpm dlx skills add shadcn/ui`) and gdp-ts. Aura Keep invariants in the Aura skill win on icons, forms, spacing, typography, and restyle.
 - Documentation: `.agents/rules/feature-map.mdc`. On PR, add or update the feature's note in the feature map. Do not read or write other wiki or progress files.
 - **Agent-constraint skills stay local** and are not added to `sync-skills.ts` unless intentionally published.
 

@@ -17,12 +17,7 @@ pnpm add -D @shadcn/lint
 pnpm dlx shadcn@latest add @aura/eslint-shadcn-lint
 ```
 
-That installs:
-
-- `eslint.aura-shadcn.mjs` — Aura policy fragment (`createAuraShadcnLintConfig`)
-- `.agents/rules/shadcn-lint.mdc` — agent guidance
-
-(`@aura/rule-shadcn-lint` installs the same pair.)
+That installs `eslint.aura-shadcn.mjs`, the Aura policy fragment (`createAuraShadcnLintConfig`). Agent guidance for the same policy is the Aura skill, `.agents/skills/aura/rules/lint.md`.
 
 Merge into your existing `eslint.config.mjs` — do **not** replace Next/ESLint presets:
 
@@ -54,7 +49,7 @@ Rules start at **`warn`**. Promote to **`error`** once the baseline is clean.
 
 `Input`, `Textarea`, `SelectTrigger`, `MaskInput`, and `SegmentedInput` **own their padding**. Use layout/width at the call site. If the design needs different padding, **add a size or variant on the component** — do not override padding with `className`.
 
-Never put `text-sm` / `text-xs` on editable controls (Aura floor is **17px**). See [Typography rules](/docs/rules/fundations-typography).
+Never put `text-sm` / `text-xs` on editable controls (Aura floor is **17px**). See the [Aura skill](/docs/rules/aura-skill).
 
 Form shells (`Form`, `FormField`, …) may use **layout + spacing** (e.g. gap around fields).
 
@@ -73,6 +68,6 @@ Upstream project and evals: [shadcn-ui/lint](https://github.com/shadcn-ui/lint).
 ## Related
 
 - [Agent blueprint](/docs/mcp-agent-blueprint) — install via `Ejecuta` runbook (§ D)
-- [Rules / shadcn lint](/docs/rules/shadcn-lint) — Cursor rule mirror
+- [Aura skill](/docs/rules/aura-skill) — design guardrails, including lint
 - [DESIGN.md rule](/docs/rules/design-md) — narrative design spec
 - [MCP](/docs/mcp) — registries and skills setup

@@ -62,10 +62,10 @@ describe("forms stack blueprint", () => {
     }
   });
 
-  it("forbids zod, widens the rule globs, and keeps the server action pattern", () => {
-    const rule = readFileSync(join(templates, "agents/rules/components-forms.mdc"), "utf8");
+  it("forbids zod, names the action and schema paths, and keeps the server action pattern", () => {
+    const rule = readFileSync(join(templates, "agents/skills/aura/rules/forms.md"), "utf8");
     assert.match(rule, new RegExp(NO_ZOD_LINE.replace(/[.*+?^${}()|[\]\\/]/g, "\\$&")));
-    for (const glob of ["**/actions.ts", "**/*-actions.ts", "app/**/route.ts", "**/validation/**", "**/*schema*"]) {
+    for (const glob of ["**/actions.ts", "**/*-actions.ts", "app/**/route.ts", "**/validation/**", "*schema*"]) {
       assert.ok(rule.includes(glob), glob);
     }
     assert.match(rule, /check auth and authorization/);
@@ -82,14 +82,20 @@ describe("forms stack blueprint", () => {
     writeFileSync(join(root, ".cursor/rules/components-forms.mdc"), "my team rule\n");
 
     const first = syncFormAgentFiles(root, false);
-    assert.deepEqual(first.map((r) => r.status), ["customized", "write"]);
-    assert.equal(readFileSync(join(root, rule.dest), "utf8"), "my team rule\n");
+    assert.deepEqual(first.map((r) => r.status), ["write", "write"]);
+    assert.equal(readFileSync(join(root, ".agents/rules/components-forms.mdc"), "utf8"), "my team rule\n");
     assert.equal(lstatSync(join(root, ".cursor/rules")).isSymbolicLink(), true);
     assert.equal(readlinkSync(join(root, ".cursor/rules")), "../.agents/rules");
+    assert.ok(existsSync(join(root, rule.dest)));
     assert.ok(existsSync(join(root, skill.dest)));
 
     const second = syncFormAgentFiles(root, false);
-    assert.deepEqual(second.map((r) => r.status), ["customized", "unchanged"]);
+    assert.deepEqual(second.map((r) => r.status), ["unchanged", "unchanged"]);
+
+    writeFileSync(join(root, rule.dest), "custom forms rule\n");
+    const kept = syncFormAgentFiles(root, false);
+    assert.deepEqual(kept.map((r) => r.status), ["customized", "unchanged"]);
+    assert.equal(readFileSync(join(root, rule.dest), "utf8"), "custom forms rule\n");
 
     const forced = syncFormAgentFiles(root, true);
     assert.deepEqual(forced.map((r) => r.status), ["update", "unchanged"]);

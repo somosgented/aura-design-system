@@ -139,18 +139,19 @@ ${bodyWithInstallation}
 function generateRulesIndex(rules: RuleDoc[]): string {
   let content = `---
 title: Rules
-description: Agent rules for the Aura Design System. Install them into .agents/rules/.
+description: Always-on Aura process rules. Design guardrails live in the Aura skill.
 ---
 
 ## Rules
 
-These rules define foundations and principles for the Aura Design System. Install them via the registry into \`.agents/rules/\`. Cursor loads project rules from \`.cursor/rules\`; \`aura blueprint\` links that path at \`.agents/rules\` so there is one copy.
+These pages are the always-on process rules (\`feature-map\`, \`no-comments\`, \`design-md\`). Install them into \`.agents/rules/\`. Cursor loads project rules from \`.cursor/rules\`; \`aura blueprint\` links that path at \`../.agents/rules\`.
 
-They stay project rules. The shadcn/ui skill at \`.agents/skills/shadcn/\` is a separate, on-demand procedure; its \`rules/*.md\` files are references inside that skill. Aura step-by-step work lives in skills (\`@aura/skills\`). Always-on guardrails live here.
+Color, type, spacing, icons, motion, forms, lint, and product principles live in the Aura skill at \`.agents/skills/aura/\` (same layout as the shadcn skill: \`SKILL.md\` plus \`rules/\`). See [Aura skill](/docs/rules/aura-skill).
 
 \`\`\`bash
 pnpm dlx shadcn@latest add @aura/rules
 \`\`\`
+
 `;
 
   for (const rule of rules) {

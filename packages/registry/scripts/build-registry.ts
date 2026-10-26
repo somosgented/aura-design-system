@@ -512,16 +512,7 @@ function getRulesItems(): RegistryItem[] {
                 target: "DESIGN.md",
               },
             ]
-          : file === "shadcn-lint.mdc"
-            ? [
-                ruleFile,
-                {
-                  path: "registry/default/lint/eslint.aura-shadcn.mjs",
-                  type: "registry:file" as const,
-                  target: "eslint.aura-shadcn.mjs",
-                },
-              ]
-            : [ruleFile];
+          : [ruleFile];
 
       return {
         name: `rule-${kebabName}`,
@@ -533,36 +524,56 @@ function getRulesItems(): RegistryItem[] {
     });
 }
 
+function listSkillFiles(dir: string): string[] {
+  const out: string[] = [];
+  const walk = (current: string) => {
+    const entries = fs.readdirSync(current, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name));
+    for (const entry of entries) {
+      const full = path.join(current, entry.name);
+      if (entry.isDirectory()) walk(full);
+      else if (entry.isFile()) out.push(path.relative(dir, full).split(path.sep).join("/"));
+    }
+  };
+  walk(dir);
+  return out;
+}
+
 function getSkillsItems(): RegistryItem[] {
   if (!fs.existsSync(SKILLS_PATH)) return [];
 
   return fs
     .readdirSync(SKILLS_PATH, { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
+    .sort((a, b) => a.name.localeCompare(b.name))
     .map((entry) => {
       const skillDir = path.join(SKILLS_PATH, entry.name);
       const skillMd = path.join(skillDir, "SKILL.md");
       if (!fs.existsSync(skillMd)) return null;
 
-      const files = fs
-        .readdirSync(skillDir, { withFileTypes: true })
-        .filter((f) => f.isFile())
-        .map((f) => ({
-          path: `registry/default/skills/${entry.name}/${f.name}`,
-          type: "registry:file" as const,
-          target: `.cursor/skills/${entry.name}/${f.name}`,
-        }));
+      const installRoot =
+        entry.name === "aura" ? `.agents/skills/aura` : `.cursor/skills/${entry.name}`;
+
+      const files = listSkillFiles(skillDir).map((rel) => ({
+        path: `registry/default/skills/${entry.name}/${rel}`,
+        type: "registry:file" as const,
+        target: `${installRoot}/${rel}`,
+      }));
 
       const defaultTitle = entry.name
         .split("-")
         .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
         .join(" ");
 
+      const description =
+        entry.name === "aura"
+          ? "Aura design-system skill (foundations, composition, lint). Installs to .agents/skills/aura/."
+          : `Aura Cursor skill: ${defaultTitle}. Installs to .cursor/skills/${entry.name}/.`;
+
       return {
         name: `skill-${entry.name}`,
         type: "registry:file" as const,
         title: `Skill: ${defaultTitle}`,
-        description: `Aura Cursor skill: ${defaultTitle}. Installs to .cursor/skills/${entry.name}/.`,
+        description,
         files,
       } satisfies RegistryItem;
     })
@@ -815,7 +826,7 @@ function buildRegistry() {
     name: "rules",
     type: "registry:file",
     title: "Aura Rules",
-    description: "All Aura Design System rules. Installs to .agents/rules/ for AI guidance.",
+    description: "Always-on Aura process rules (feature map, no comments, DESIGN.md). Design guardrails install with @aura/skill-aura to .agents/skills/aura/.",
     files: rulesItems.flatMap((item) => item.files ?? []),
   };
   const skillsItems = getSkillsItems();
@@ -823,7 +834,7 @@ function buildRegistry() {
     name: "skills",
     type: "registry:file",
     title: "Aura Skills",
-    description: "All Aura Design System Cursor skills. Installs to .cursor/skills/ for AI workflows.",
+    description: "Aura skills. @aura/skill-aura installs to .agents/skills/aura/. Procedure skills install to .cursor/skills/.",
     files: skillsItems.flatMap((item) => item.files ?? []),
   };
   const customItems = getCustomItems();

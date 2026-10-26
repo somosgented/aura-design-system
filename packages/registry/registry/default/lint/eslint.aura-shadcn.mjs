@@ -186,7 +186,7 @@ export function createAuraShadcnLintConfig(shadcnPlugin) {
       settings: {
         shadcn: {
           ui: "@/components/ui",
-          note: "See DESIGN.md and .agents/rules for Aura policy.",
+          note: "See DESIGN.md and .agents/skills/aura for Aura policy.",
         },
       },
       rules: {

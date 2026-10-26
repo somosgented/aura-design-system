@@ -1,24 +1,28 @@
 import { createHash } from "crypto";
 import { execa } from "execa";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
+import { existsSync, mkdirSync, readFileSync, unlinkSync, writeFileSync } from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 import { linkCursorRulesToAgents } from "./rules-link.js";
 
+const LEGACY_FORMS_RULE = ".agents/rules/components-forms.mdc";
+const LEGACY_FORMS_RULE_HASHES = [
+  "1419838024c4e1b3e80f660c0c677abe2e2654b310abc284cbdc4452c9e57892",
+  "a5bbfb0ff0db36e43105d67986de86b796d31138ba462f301382afe144fb9c37",
+];
+
 export const FORM_AGENT_FILES = [
   {
-    template: "agents/rules/components-forms.mdc",
-    dest: ".agents/rules/components-forms.mdc",
-    previousAuraHashes: [
-      "1419838024c4e1b3e80f660c0c677abe2e2654b310abc284cbdc4452c9e57892",
-      "a5bbfb0ff0db36e43105d67986de86b796d31138ba462f301382afe144fb9c37",
-    ],
+    template: "agents/skills/aura/rules/forms.md",
+    dest: ".agents/skills/aura/rules/forms.md",
+    previousAuraHashes: [],
   },
   {
     template: "cursor/skills/aura-forms/SKILL.md",
     dest: ".cursor/skills/aura-forms/SKILL.md",
     previousAuraHashes: [
       "5b5c66c36f98dae764ddb51d80621fb76c31355189b1d1ddc21e7ff8295c5ac8",
+      "062c50339376cd88045c0df00c5b2f3304a7e943f69cb92c11e488086b15c216",
     ],
   },
 ] as const;
@@ -60,6 +64,16 @@ export function syncFormAgentFiles(
   force: boolean,
 ): { dest: string; status: AgentFileStatus }[] {
   linkCursorRulesToAgents(projectRoot);
+  const legacyPath = join(projectRoot, LEGACY_FORMS_RULE);
+  if (existsSync(legacyPath)) {
+    const legacyHash = sha256(readFileSync(legacyPath));
+    if (LEGACY_FORMS_RULE_HASHES.includes(legacyHash)) {
+      unlinkSync(legacyPath);
+      console.log(`  forms: removed previous ${LEGACY_FORMS_RULE}`);
+    } else {
+      console.log(`  forms: keep customized ${LEGACY_FORMS_RULE}`);
+    }
+  }
   return FORM_AGENT_FILES.map(({ template, dest, previousAuraHashes }) => {
     const next = readFileSync(join(templatesRoot(), template));
     const abs = join(projectRoot, dest);
