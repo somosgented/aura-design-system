@@ -55,7 +55,8 @@ export default function HeroSection() {
       <div className="flex flex-col items-center text-center gap-1">
         <div className="flex max-w-3xl flex-col items-center gap-1">
           <h1 className="h1 font-bold tracking-tight text-gray-12">
-            An agentic design system
+            An agentic design system. <br className="hidden md:block" />
+            <span className="text-gray-11">With Aura, The Soul is Yours</span>
           </h1>
           <p className="p text-gray-11">
             Aura is a shared source of truth for people and coding agents.
