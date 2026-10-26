@@ -1,34 +1,36 @@
 import {
   BookmarkIcon,
+  Component1Icon,
   MixerHorizontalIcon,
-  Pencil1Icon,
 } from "@radix-ui/react-icons";
 
-import HeroSection from "@/components/HeroSection";
-import HomeDocSection from "@/components/HomeDocSection";
 import AuraAesthetic from "@/components/AuraAesthetic";
+import HeroSection from "@/components/HeroSection";
+import HomeAgentic from "@/components/HomeAgentic";
+import HomeDocSection from "@/components/HomeDocSection";
 
 export default function HomePage() {
   return (
     <main>
       <HeroSection />
+      <HomeAgentic />
       <HomeDocSection
-        title="Handbook"
-        description="Reference for styling, animations, composition, and customization when building with Aura."
-        href="/docs/handbook"
+        title="Get started"
+        description="Install Aura with the CLI, then see which file an agent should open before it writes UI."
+        href="/docs"
         icon={<BookmarkIcon className="icon h4" />}
       />
       <HomeDocSection
         title="Rules"
-        description="Cursor and AI rules for foundations and principles. Install via the registry or copy into .cursor/rules/."
+        description="Guardrails agents follow: 13px spacing, accent and gray steps, fluid type, icons, motion, and registry ownership."
         href="/docs/rules"
         icon={<MixerHorizontalIcon className="icon h4" />}
       />
       <HomeDocSection
-        title="Forms"
-        description="Declarative form state, validation, and UI with useFormDynamic and Form components."
-        href="/docs/forms"
-        icon={<Pencil1Icon className="icon h4" />}
+        title="Components"
+        description="React you install and own. Radix behavior, Aura tokens, and variants instead of one-off restyles."
+        href="/docs/components"
+        icon={<Component1Icon className="icon h4" />}
       />
       <AuraAesthetic />
     </main>

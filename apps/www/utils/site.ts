@@ -1,12 +1,12 @@
 export const siteName = "Aura Design System";
 
 export const siteDescription =
-  "A collection of components built from our team's experience, distributed using the 'shadcn mode'. Built for our team, but you can use it too.";
+  "Aura is an agentic design system: components, tokens, and written rules that people browse and coding agents follow.";
 
-export const siteOgTitle = "Another design system";
+export const siteOgTitle = "An agentic design system";
 
 export const siteOgDescription =
-  "With Aura, the soul is yours. Components built from our team's experience, distributed in shadcn mode.";
+  "A shared source of truth for people and coding agents. Real components, a 13px grid, and rules that record the decision.";
 
 export const siteOgImage = {
   url: "/og/home/image.png",
