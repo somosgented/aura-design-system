@@ -1,0 +1,50 @@
+---
+title: Aura skill
+description: Design guardrails for agents. One skill at .agents/skills/aura, same layout as the shadcn/ui skill.
+---
+
+# Aura skill
+
+Color, type, the 13px grid, icons, motion, forms, lint, and product principles live in **`.agents/skills/aura/`**. `SKILL.md` is the entry. `rules/*.md` holds Incorrect/Correct pairs. `DESIGN.md` at the repo root stays the narrative spec. `AGENTS.md` stays monorepo policy.
+
+Always-on process rules stay in `.agents/rules/` (`feature-map`, `no-comments`, `design-md`). Cursor loads those through the `.cursor/rules` symlink. They are not inside the skill.
+
+## Install
+
+From the Aura registry:
+
+```bash
+pnpm dlx shadcn@latest add @aura/skill-aura
+```
+
+That writes `.agents/skills/aura/`.
+
+Or with the skills CLI:
+
+```bash
+pnpm dlx skills add somosgented/aura-design-system --skill aura
+```
+
+Procedure skills (`aura-forms`, `verify-aura-ui`, `port-component-to-aura`, and the others) stay a separate install:
+
+```bash
+pnpm dlx shadcn@latest add @aura/skills
+```
+
+Those land in `.cursor/skills/`.
+
+## What the skill enforces
+
+| File | Guardrail |
+| --- | --- |
+| `rules/colors.md` | `--accent-*` / `--gray-*` steps, APCA Lc 60 / Lc 90 |
+| `rules/typography.md` | Fluid clamp scale, 17px floor on editable controls |
+| `rules/spacing.md` | 13px base, 0.5-unit steps |
+| `rules/icons.md` | `@radix-ui/react-icons`, `className="icon"`, no icon margin |
+| `rules/motion.md` | `transform` and `opacity`, reduced motion |
+| `rules/forms.md` | `useFormDynamic`, `Form`, ajv `validateFormData` |
+| `rules/lint.md` | `@shadcn/lint` after UI edits |
+| `rules/principles.md` | Accessibility, consistency, control, forgiveness |
+| `rules/surface.md` | Aura wins over the upstream shadcn skill |
+
+When the shadcn skill disagrees on icons, forms, spacing, color, type, or restyle, the Aura skill wins.

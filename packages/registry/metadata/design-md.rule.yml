@@ -1,4 +1,4 @@
 # Rule metadata. Used by build-registry and generate-rules-docs.
 header:
   title: DESIGN.md (narrative spec)
-  description: Installs the Cursor rule and the project root DESIGN.md (narrative spec). Add with shadcn as @aura/rule-design-md.
+  description: Installs the agent rule into .agents/rules and the project root DESIGN.md (narrative spec). Add with shadcn as @aura/rule-design-md.

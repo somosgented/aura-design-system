@@ -95,6 +95,7 @@ export async function applyAuraToProject(appDir: string): Promise<void> {
       "@aura/page-get-starter",
       "@aura/css-main",
       "@aura/rules",
+      "@aura/skill-aura",
       "@aura/skills",
     ],
     {

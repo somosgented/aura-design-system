@@ -3591,41 +3591,15 @@
       }
     },
     {
-      "name": "rule-aura-agent-surface",
-      "type": "registry:file",
-      "title": "Rule: Aura Agent Surface",
-      "description": "Aura rule: Aura Agent Surface. Install to .cursor/rules/ for Cursor AI guidance.",
-      "files": [
-        {
-          "path": "registry/default/rules/aura-agent-surface.mdc",
-          "type": "registry:file",
-          "target": ".cursor/rules/aura-agent-surface.mdc"
-        }
-      ]
-    },
-    {
-      "name": "rule-components-forms",
-      "type": "registry:file",
-      "title": "Rule: Components Forms",
-      "description": "Aura rule: Components Forms. Install to .cursor/rules/ for Cursor AI guidance.",
-      "files": [
-        {
-          "path": "registry/default/rules/components-forms.mdc",
-          "type": "registry:file",
-          "target": ".cursor/rules/components-forms.mdc"
-        }
-      ]
-    },
-    {
       "name": "rule-design-md",
       "type": "registry:file",
       "title": "Rule: DESIGN.md (narrative spec)",
-      "description": "Installs the Cursor rule and the project root DESIGN.md (narrative spec). Add with shadcn as @aura/rule-design-md.",
+      "description": "Installs the agent rule into .agents/rules and the project root DESIGN.md (narrative spec). Add with shadcn as @aura/rule-design-md.",
       "files": [
         {
           "path": "registry/default/rules/design-md.mdc",
           "type": "registry:file",
-          "target": ".cursor/rules/design-md.mdc"
+          "target": ".agents/rules/design-md.mdc"
         },
         {
           "path": "registry/default/design-md/DESIGN.md",
@@ -3638,77 +3612,12 @@
       "name": "rule-feature-map",
       "type": "registry:file",
       "title": "Rule: Feature Map",
-      "description": "Aura rule: Feature Map. Install to .cursor/rules/ for Cursor AI guidance.",
+      "description": "Aura rule: Feature Map. Install to .agents/rules/ for agent guidance.",
       "files": [
         {
           "path": "registry/default/rules/feature-map.mdc",
           "type": "registry:file",
-          "target": ".cursor/rules/feature-map.mdc"
-        }
-      ]
-    },
-    {
-      "name": "rule-fundation-animations",
-      "type": "registry:file",
-      "title": "Rule: Fundation Animations",
-      "description": "Aura rule: Fundation Animations. Install to .cursor/rules/ for Cursor AI guidance.",
-      "files": [
-        {
-          "path": "registry/default/rules/fundation-animations.mdc",
-          "type": "registry:file",
-          "target": ".cursor/rules/fundation-animations.mdc"
-        }
-      ]
-    },
-    {
-      "name": "rule-fundation-icons",
-      "type": "registry:file",
-      "title": "Rule: Fundation Icons",
-      "description": "Aura rule: Fundation Icons. Install to .cursor/rules/ for Cursor AI guidance.",
-      "files": [
-        {
-          "path": "registry/default/rules/fundation-icons.mdc",
-          "type": "registry:file",
-          "target": ".cursor/rules/fundation-icons.mdc"
-        }
-      ]
-    },
-    {
-      "name": "rule-fundations-colors",
-      "type": "registry:file",
-      "title": "Rule: Fundations Colors",
-      "description": "Aura rule: Fundations Colors. Install to .cursor/rules/ for Cursor AI guidance.",
-      "files": [
-        {
-          "path": "registry/default/rules/fundations-colors.mdc",
-          "type": "registry:file",
-          "target": ".cursor/rules/fundations-colors.mdc"
-        }
-      ]
-    },
-    {
-      "name": "rule-fundations-layout-spacing",
-      "type": "registry:file",
-      "title": "Rule: Fundations Layout Spacing",
-      "description": "Aura rule: Fundations Layout Spacing. Install to .cursor/rules/ for Cursor AI guidance.",
-      "files": [
-        {
-          "path": "registry/default/rules/fundations-layout-spacing.mdc",
-          "type": "registry:file",
-          "target": ".cursor/rules/fundations-layout-spacing.mdc"
-        }
-      ]
-    },
-    {
-      "name": "rule-fundations-typography",
-      "type": "registry:file",
-      "title": "Rule: Fundations Typography",
-      "description": "Aura rule: Fundations Typography. Install to .cursor/rules/ for Cursor AI guidance.",
-      "files": [
-        {
-          "path": "registry/default/rules/fundations-typography.mdc",
-          "type": "registry:file",
-          "target": ".cursor/rules/fundations-typography.mdc"
+          "target": ".agents/rules/feature-map.mdc"
         }
       ]
     },
@@ -3716,43 +3625,12 @@
       "name": "rule-no-comments",
       "type": "registry:file",
       "title": "Rule: No Comments",
-      "description": "Aura rule: No Comments. Install to .cursor/rules/ for Cursor AI guidance.",
+      "description": "Aura rule: No Comments. Install to .agents/rules/ for agent guidance.",
       "files": [
         {
           "path": "registry/default/rules/no-comments.mdc",
           "type": "registry:file",
-          "target": ".cursor/rules/no-comments.mdc"
-        }
-      ]
-    },
-    {
-      "name": "rule-principles",
-      "type": "registry:file",
-      "title": "Rule: Principles",
-      "description": "Aura rule: Principles. Install to .cursor/rules/ for Cursor AI guidance.",
-      "files": [
-        {
-          "path": "registry/default/rules/principles.mdc",
-          "type": "registry:file",
-          "target": ".cursor/rules/principles.mdc"
-        }
-      ]
-    },
-    {
-      "name": "rule-shadcn-lint",
-      "type": "registry:file",
-      "title": "Rule: shadcn lint",
-      "description": "Aura @shadcn/lint policy (no arbitrary values, no raw colors, no-restyle). Installs Cursor rule + eslint.aura-shadcn.mjs. Add with shadcn as @aura/rule-shadcn-lint or @aura/eslint-shadcn-lint.",
-      "files": [
-        {
-          "path": "registry/default/rules/shadcn-lint.mdc",
-          "type": "registry:file",
-          "target": ".cursor/rules/shadcn-lint.mdc"
-        },
-        {
-          "path": "registry/default/lint/eslint.aura-shadcn.mjs",
-          "type": "registry:file",
-          "target": "eslint.aura-shadcn.mjs"
+          "target": ".agents/rules/no-comments.mdc"
         }
       ]
     },
@@ -3760,22 +3638,12 @@
       "name": "rules",
       "type": "registry:file",
       "title": "Aura Rules",
-      "description": "All Aura Design System Cursor rules. Installs to .cursor/rules/ for AI guidance.",
+      "description": "Always-on Aura process rules (feature map, no comments, DESIGN.md). Design guardrails install with @aura/skill-aura to .agents/skills/aura/.",
       "files": [
-        {
-          "path": "registry/default/rules/aura-agent-surface.mdc",
-          "type": "registry:file",
-          "target": ".cursor/rules/aura-agent-surface.mdc"
-        },
-        {
-          "path": "registry/default/rules/components-forms.mdc",
-          "type": "registry:file",
-          "target": ".cursor/rules/components-forms.mdc"
-        },
         {
           "path": "registry/default/rules/design-md.mdc",
           "type": "registry:file",
-          "target": ".cursor/rules/design-md.mdc"
+          "target": ".agents/rules/design-md.mdc"
         },
         {
           "path": "registry/default/design-md/DESIGN.md",
@@ -3785,52 +3653,80 @@
         {
           "path": "registry/default/rules/feature-map.mdc",
           "type": "registry:file",
-          "target": ".cursor/rules/feature-map.mdc"
-        },
-        {
-          "path": "registry/default/rules/fundation-animations.mdc",
-          "type": "registry:file",
-          "target": ".cursor/rules/fundation-animations.mdc"
-        },
-        {
-          "path": "registry/default/rules/fundation-icons.mdc",
-          "type": "registry:file",
-          "target": ".cursor/rules/fundation-icons.mdc"
-        },
-        {
-          "path": "registry/default/rules/fundations-colors.mdc",
-          "type": "registry:file",
-          "target": ".cursor/rules/fundations-colors.mdc"
-        },
-        {
-          "path": "registry/default/rules/fundations-layout-spacing.mdc",
-          "type": "registry:file",
-          "target": ".cursor/rules/fundations-layout-spacing.mdc"
-        },
-        {
-          "path": "registry/default/rules/fundations-typography.mdc",
-          "type": "registry:file",
-          "target": ".cursor/rules/fundations-typography.mdc"
+          "target": ".agents/rules/feature-map.mdc"
         },
         {
           "path": "registry/default/rules/no-comments.mdc",
           "type": "registry:file",
-          "target": ".cursor/rules/no-comments.mdc"
+          "target": ".agents/rules/no-comments.mdc"
+        }
+      ]
+    },
+    {
+      "name": "skill-aura",
+      "type": "registry:file",
+      "title": "Skill: Aura",
+      "description": "Aura design-system skill (foundations, composition, lint). Installs to .agents/skills/aura/.",
+      "files": [
+        {
+          "path": "registry/default/skills/aura/cli.md",
+          "type": "registry:file",
+          "target": ".agents/skills/aura/cli.md"
         },
         {
-          "path": "registry/default/rules/principles.mdc",
+          "path": "registry/default/skills/aura/customization.md",
           "type": "registry:file",
-          "target": ".cursor/rules/principles.mdc"
+          "target": ".agents/skills/aura/customization.md"
         },
         {
-          "path": "registry/default/rules/shadcn-lint.mdc",
+          "path": "registry/default/skills/aura/rules/colors.md",
           "type": "registry:file",
-          "target": ".cursor/rules/shadcn-lint.mdc"
+          "target": ".agents/skills/aura/rules/colors.md"
         },
         {
-          "path": "registry/default/lint/eslint.aura-shadcn.mjs",
+          "path": "registry/default/skills/aura/rules/forms.md",
           "type": "registry:file",
-          "target": "eslint.aura-shadcn.mjs"
+          "target": ".agents/skills/aura/rules/forms.md"
+        },
+        {
+          "path": "registry/default/skills/aura/rules/icons.md",
+          "type": "registry:file",
+          "target": ".agents/skills/aura/rules/icons.md"
+        },
+        {
+          "path": "registry/default/skills/aura/rules/lint.md",
+          "type": "registry:file",
+          "target": ".agents/skills/aura/rules/lint.md"
+        },
+        {
+          "path": "registry/default/skills/aura/rules/motion.md",
+          "type": "registry:file",
+          "target": ".agents/skills/aura/rules/motion.md"
+        },
+        {
+          "path": "registry/default/skills/aura/rules/principles.md",
+          "type": "registry:file",
+          "target": ".agents/skills/aura/rules/principles.md"
+        },
+        {
+          "path": "registry/default/skills/aura/rules/spacing.md",
+          "type": "registry:file",
+          "target": ".agents/skills/aura/rules/spacing.md"
+        },
+        {
+          "path": "registry/default/skills/aura/rules/surface.md",
+          "type": "registry:file",
+          "target": ".agents/skills/aura/rules/surface.md"
+        },
+        {
+          "path": "registry/default/skills/aura/rules/typography.md",
+          "type": "registry:file",
+          "target": ".agents/skills/aura/rules/typography.md"
+        },
+        {
+          "path": "registry/default/skills/aura/SKILL.md",
+          "type": "registry:file",
+          "target": ".agents/skills/aura/SKILL.md"
         }
       ]
     },
@@ -3908,8 +3804,68 @@
       "name": "skills",
       "type": "registry:file",
       "title": "Aura Skills",
-      "description": "All Aura Design System Cursor skills. Installs to .cursor/skills/ for AI workflows.",
+      "description": "Aura skills. @aura/skill-aura installs to .agents/skills/aura/. Procedure skills install to .cursor/skills/.",
       "files": [
+        {
+          "path": "registry/default/skills/aura/cli.md",
+          "type": "registry:file",
+          "target": ".agents/skills/aura/cli.md"
+        },
+        {
+          "path": "registry/default/skills/aura/customization.md",
+          "type": "registry:file",
+          "target": ".agents/skills/aura/customization.md"
+        },
+        {
+          "path": "registry/default/skills/aura/rules/colors.md",
+          "type": "registry:file",
+          "target": ".agents/skills/aura/rules/colors.md"
+        },
+        {
+          "path": "registry/default/skills/aura/rules/forms.md",
+          "type": "registry:file",
+          "target": ".agents/skills/aura/rules/forms.md"
+        },
+        {
+          "path": "registry/default/skills/aura/rules/icons.md",
+          "type": "registry:file",
+          "target": ".agents/skills/aura/rules/icons.md"
+        },
+        {
+          "path": "registry/default/skills/aura/rules/lint.md",
+          "type": "registry:file",
+          "target": ".agents/skills/aura/rules/lint.md"
+        },
+        {
+          "path": "registry/default/skills/aura/rules/motion.md",
+          "type": "registry:file",
+          "target": ".agents/skills/aura/rules/motion.md"
+        },
+        {
+          "path": "registry/default/skills/aura/rules/principles.md",
+          "type": "registry:file",
+          "target": ".agents/skills/aura/rules/principles.md"
+        },
+        {
+          "path": "registry/default/skills/aura/rules/spacing.md",
+          "type": "registry:file",
+          "target": ".agents/skills/aura/rules/spacing.md"
+        },
+        {
+          "path": "registry/default/skills/aura/rules/surface.md",
+          "type": "registry:file",
+          "target": ".agents/skills/aura/rules/surface.md"
+        },
+        {
+          "path": "registry/default/skills/aura/rules/typography.md",
+          "type": "registry:file",
+          "target": ".agents/skills/aura/rules/typography.md"
+        },
+        {
+          "path": "registry/default/skills/aura/SKILL.md",
+          "type": "registry:file",
+          "target": ".agents/skills/aura/SKILL.md"
+        },
         {
           "path": "registry/default/skills/aura-forms/SKILL.md",
           "type": "registry:file",
@@ -3996,17 +3952,12 @@
       "name": "eslint-shadcn-lint",
       "type": "registry:file",
       "title": "ESLint @shadcn/lint (Aura)",
-      "description": "Aura Tailwind lint policy for agents: installs eslint.aura-shadcn.mjs and the shadcn-lint Cursor rule. Add @shadcn/lint as a dep, then merge createAuraShadcnLintConfig into eslint.config.",
+      "description": "Aura Tailwind lint policy for agents: installs eslint.aura-shadcn.mjs. Design guardrails live in the Aura skill at .agents/skills/aura/. Add @shadcn/lint as a dep, then merge createAuraShadcnLintConfig into eslint.config.",
       "files": [
         {
           "path": "registry/default/lint/eslint.aura-shadcn.mjs",
           "type": "registry:file",
           "target": "eslint.aura-shadcn.mjs"
-        },
-        {
-          "path": "registry/default/rules/shadcn-lint.mdc",
-          "type": "registry:file",
-          "target": ".cursor/rules/shadcn-lint.mdc"
         }
       ]
     }
