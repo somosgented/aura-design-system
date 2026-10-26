@@ -1,6 +1,6 @@
 # Forms
 
-Applies when editing forms, server actions (`**/actions.ts`, `**/*-actions.ts`, `app/**/route.ts`), and validation schemas (`**/validation/**`, `*schema*`). The end-to-end procedure is skill `aura-forms`.
+Applies when editing forms (`**/form.tsx`, `**/Form.tsx`, `**/use-dynamic-form.ts`), server actions (`**/actions.ts`, `**/Actions.ts`, `**/*-actions.ts`, `**/*Actions.ts`, `app/**/route.ts`), and validation schemas (`**/validation/**`, `**/Validation/**`, `**/*schema*`, `**/*Schema*`). The end-to-end procedure is skill `aura-forms`.
 
 Forms use **useFormDynamic** for state, **Form** for error distribution, and **validateFormData** from `@/utils/web-validation`. Schema property names match field names so errors match by `instancePath`.
 
