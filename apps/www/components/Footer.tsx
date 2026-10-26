@@ -1,3 +1,4 @@
+import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 
 import { StatusDot } from "@/components/ui/StatusDot";
@@ -35,12 +36,12 @@ const columns = [
     links: [
       {
         href: "https://github.com/somosgented/aura-design-system",
-        label: "GitHub ↗",
+        label: "GitHub",
         external: true,
       },
       {
         href: "https://design-md.auradesignsystem.com/",
-        label: "DESIGN.md ↗",
+        label: "DESIGN.md",
         external: true,
       },
     ],
@@ -83,9 +84,15 @@ export default function Footer() {
                       {...("external" in link && link.external
                         ? { target: "_blank", rel: "noopener noreferrer" }
                         : {})}
-                      className="home-footer-link text-sm"
+                      className="home-footer-link inline-flex items-center gap-0.5 text-sm"
                     >
                       {link.label}
+                      {"external" in link && link.external ? (
+                        <>
+                          <ExternalLinkIcon className="icon" aria-hidden />
+                          <span className="sr-only"> (opens in a new tab)</span>
+                        </>
+                      ) : null}
                     </Link>
                   </li>
                 ))}

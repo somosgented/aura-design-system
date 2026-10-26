@@ -155,6 +155,7 @@ export function Header({
       </div>
       <ul className="ms-auto flex shrink-0 flex-row items-center gap-0.5 lg:hidden">
         <SearchDialogTriggerIcon />
+        <ThemeColorSwitcher />
 
         {(tree || menuItems.length > 0 || navItems.length > 0) && (
           <NavigationMenuItem>
@@ -172,6 +173,26 @@ export function Header({
               <ChevronDown className="icon transition-transform duration-300 group-data-[state=open]:rotate-180" />
             </MobileNavigationMenuTrigger>
             <MobileNavigationMenuContent className="flex flex-col gap-1">
+              <div className="flex flex-row flex-wrap items-center gap-1">
+                {navItems.filter(isSecondary).map((item, i) => (
+                  <MobileNavigationMenuLinkItem
+                    key={i}
+                    item={item}
+                    className={cn(item.type === "icon" && "first:ms-0")}
+                  />
+                ))}
+                {i18n && (
+                  <LanguageToggle>
+                    <Languages className="size-5" />
+                    <LanguageToggleText />
+                    <ChevronDown className="size-1 text-fd-muted-foreground" />
+                  </LanguageToggle>
+                )}
+                {themeSwitch.enabled !== false &&
+                  (themeSwitch.component ?? (
+                    <ThemeToggle mode={themeSwitch?.mode} />
+                  ))}
+              </div>
               <ul className="flex flex-col gap-0.5">
                 {navItems
                   .filter((item) => !isSecondary(item))
@@ -192,28 +213,6 @@ export function Header({
                   }
                 />
               ) : null}
-
-              <div className="flex flex-row flex-wrap gap-1 mt-1">
-                {navItems.filter(isSecondary).map((item, i) => (
-                  <MobileNavigationMenuLinkItem
-                    key={i}
-                    item={item}
-                    className={cn(item.type === "icon" && "first:ms-0")}
-                  />
-                ))}
-
-                {i18n && (
-                  <LanguageToggle>
-                    <Languages className="size-5" />
-                    <LanguageToggleText />
-                    <ChevronDown className="size-1 text-fd-muted-foreground" />
-                  </LanguageToggle>
-                )}
-                {themeSwitch.enabled !== false &&
-                  (themeSwitch.component ?? (
-                    <ThemeToggle mode={themeSwitch?.mode} />
-                  ))}
-              </div>
             </MobileNavigationMenuContent>
           </NavigationMenuItem>
         )}

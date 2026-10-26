@@ -9,7 +9,7 @@
 | `.agents/rules/*` | Always-on process rules: `feature-map`, `no-comments`, `design-md`, monorepo `agents-md` | Color, type, spacing, icons, motion, forms, lint |
 | Other skills | Procedures (`aura-forms`, `verify-aura-ui`, `port-component-to-aura`, `update-feature-map`, `generate-brand-images`, upstream `shadcn`) | A second design policy |
 
-Cursor loads `.agents/rules/*.mdc` through the `.cursor/rules` → `../.agents/rules` symlink. The `rules/*.md` files in this skill are references linked from `SKILL.md`, same as the shadcn skill. They are not a second copy of the always-on rules.
+Cursor reads `.agents/rules/*.mdc` directly. The `rules/*.md` files in this skill are references linked from `SKILL.md`, same as the shadcn skill. They are not a second copy of the always-on rules.
 
 ## Keep
 

@@ -1,11 +1,9 @@
 import assert from "node:assert/strict";
 import {
   existsSync,
-  lstatSync,
   mkdirSync,
   mkdtempSync,
   readFileSync,
-  readlinkSync,
   rmSync,
   writeFileSync,
 } from "node:fs";
@@ -53,9 +51,7 @@ describe("forms stack blueprint", () => {
   it("keeps the template rule and skill identical to the monorepo and registry copies", () => {
     for (const { template } of FORM_AGENT_FILES) {
       const shipped = readFileSync(join(templates, template), "utf8");
-      const monorepoPath = template.startsWith("agents/")
-        ? template.replace(/^agents\//, ".agents/")
-        : template.replace(/^cursor\//, ".cursor/");
+      const monorepoPath = template.replace(/^agents\//, ".agents/");
       assert.equal(shipped, readFileSync(join(repoRoot, monorepoPath), "utf8"), template);
       const registryPath = template.replace(/^(agents|cursor)\//, "");
       assert.equal(shipped, readFileSync(join(registryRoot, registryPath), "utf8"), template);
@@ -69,7 +65,7 @@ describe("forms stack blueprint", () => {
       assert.ok(rule.includes(glob), glob);
     }
     assert.match(rule, /check auth and authorization/);
-    const skill = readFileSync(join(templates, "cursor/skills/aura-forms/SKILL.md"), "utf8");
+    const skill = readFileSync(join(templates, "agents/skills/aura-forms/SKILL.md"), "utf8");
     assert.match(skill, /do not add zod, yup or valibot/);
     assert.match(skill, /"use server"/);
     assert.match(skill, /lib\/validation\/profile\.schema\.ts/);
@@ -84,8 +80,7 @@ describe("forms stack blueprint", () => {
     const first = syncFormAgentFiles(root, false);
     assert.deepEqual(first.map((r) => r.status), ["write", "write"]);
     assert.equal(readFileSync(join(root, ".agents/rules/components-forms.mdc"), "utf8"), "my team rule\n");
-    assert.equal(lstatSync(join(root, ".cursor/rules")).isSymbolicLink(), true);
-    assert.equal(readlinkSync(join(root, ".cursor/rules")), "../.agents/rules");
+    assert.equal(existsSync(join(root, ".cursor/rules")), false);
     assert.ok(existsSync(join(root, rule.dest)));
     assert.ok(existsSync(join(root, skill.dest)));
 

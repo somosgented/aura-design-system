@@ -22,6 +22,6 @@ Define this product's source-of-truth direction for photography, illustration, a
 ## Context
 - Related: [[Bootstrap]]
 - Generated assets: `public/generated/`
-- Generator: `.cursor/skills/generate-brand-images/generate-images.mjs`
+- Generator: `.agents/skills/generate-brand-images/generate-images.mjs`
 
 Set `status: ready` only after the direction is concrete enough to judge whether a generated image belongs to this product.

@@ -8,7 +8,7 @@ pnpm dlx @aura-design/cli@latest setup
 pnpm dlx @aura-design/cli@latest blueprint
 ```
 
-`init` scaffolds a Next.js app, Aura tokens, and the blueprint. `setup` applies Aura to an existing Next.js app. `blueprint` writes the feature map, the always-on process rules, the forms stack, and links `.cursor/rules` to `../.agents/rules`.
+`init` scaffolds a Next.js app, Aura tokens, and the blueprint. `setup` applies Aura to an existing Next.js app. `blueprint` writes the feature map, the always-on process rules, and the forms stack under `.agents/`.
 
 Registry items:
 
@@ -17,7 +17,7 @@ pnpm dlx shadcn@latest add @aura/skill-aura
 pnpm dlx shadcn@latest add @aura/rules @aura/skills @aura/rule-design-md
 ```
 
-`@aura/skill-aura` installs this directory to `.agents/skills/aura/`. `@aura/rules` installs the always-on process rules to `.agents/rules/`. `@aura/skills` installs procedure skills to `.cursor/skills/`.
+`@aura/skill-aura` installs this directory to `.agents/skills/aura/`. `@aura/rules` installs the always-on process rules to `.agents/rules/`. `@aura/skills` installs procedure skills to `.agents/skills/`.
 
 Consumers can also install this skill, once the repo is the source the skills CLI reads, with:
 

@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const WORKSPACE_ROOT = path.resolve(__dirname, "../../..");
-const CURSOR_SKILLS_PATH = path.join(WORKSPACE_ROOT, ".cursor/skills");
+const AGENTS_SKILLS_PATH = path.join(WORKSPACE_ROOT, ".agents/skills");
 const AURA_SKILL_PATH = path.join(WORKSPACE_ROOT, ".agents/skills/aura");
 const REGISTRY_SKILLS_PATH = path.join(__dirname, "../registry/default/skills");
 
@@ -32,8 +32,8 @@ function copyDir(src: string, dest: string) {
 }
 
 function syncSkills() {
-  if (!fs.existsSync(CURSOR_SKILLS_PATH)) {
-    console.warn(`[sync-skills] Source not found: ${CURSOR_SKILLS_PATH}`);
+  if (!fs.existsSync(AGENTS_SKILLS_PATH)) {
+    console.warn(`[sync-skills] Source not found: ${AGENTS_SKILLS_PATH}`);
     return;
   }
 
@@ -55,7 +55,7 @@ function syncSkills() {
 
   let synced = 0;
   for (const dir of SKILL_DIRS) {
-    const src = path.join(CURSOR_SKILLS_PATH, dir);
+    const src = path.join(AGENTS_SKILLS_PATH, dir);
     const dest = path.join(REGISTRY_SKILLS_PATH, dir);
     const skillMd = path.join(src, "SKILL.md");
     if (fs.existsSync(skillMd)) {
