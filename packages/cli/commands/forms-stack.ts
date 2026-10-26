@@ -4,6 +4,7 @@ import { existsSync, mkdirSync, readFileSync, unlinkSync, writeFileSync } from "
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 import { ensureAgentsRules, migrateLegacySkill } from "./rules-link.js";
+import { installerOptions } from "../utils/run.js";
 
 const LEGACY_FORMS_RULE = ".agents/rules/components-forms.mdc";
 const LEGACY_FORMS_RULE_HASHES = [
@@ -131,8 +132,8 @@ export function missingFormStackItems(projectRoot: string): string[] | null {
 const shadcnAdd: RegistryAdd = async (projectRoot, items) => {
   await execa(
     "pnpm",
-    ["dlx", "shadcn@latest", "add", ...items.map((name) => `@aura/${name}`)],
-    { cwd: projectRoot, stdio: "inherit" },
+    ["dlx", "shadcn@latest", "add", "--yes", ...items.map((name) => `@aura/${name}`)],
+    installerOptions(projectRoot),
   );
 };
 
