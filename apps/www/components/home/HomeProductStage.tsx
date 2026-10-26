@@ -57,7 +57,7 @@ const files = [
 
 export default function HomeProductStage() {
   return (
-    <div className="relative flex flex-col gap-2 pt-3">
+    <div className="relative flex flex-col gap-2 pt-5">
       <div className="absolute top-0 left-1/2 z-10 -translate-x-1/2">
         <Button variant="pill" size="sm" asChild>
           <Link href="/docs/components">
