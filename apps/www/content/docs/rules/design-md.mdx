@@ -1,6 +1,6 @@
 ---
 title: "DESIGN.md (narrative spec)"
-description: "Installs the Cursor rule and the project root DESIGN.md (narrative spec). Add with shadcn as @aura/rule-design-md."
+description: "Installs the agent rule into .agents/rules and the project root DESIGN.md (narrative spec). Add with shadcn as @aura/rule-design-md."
 ---
 
 # Aura DESIGN.md
@@ -11,6 +11,6 @@ pnpm dlx shadcn@latest add @aura/rule-design-md
 ```
 `DESIGN.md` at the repo root is the **narrative design specification** for Aura (theme, color roles, typography, 13px grid, motion, product principles).
 
-* **MUST**: When implementing UI, aligning with brand, or reasoning about Aura tokens, read and follow `DESIGN.md` together with foundation rules under `.cursor/rules/`.
+* **MUST**: When implementing UI, aligning with brand, or reasoning about Aura tokens, read and follow `DESIGN.md` together with foundation rules under `.agents/rules/`.
 * **SHOULD**: Prefer tokens and patterns in `DESIGN.md` over ad-hoc styling or one-off hex values.
 * **MUST NOT**: Duplicate long design tables into rules or skills. Rules state guardrails; skills run procedures; `DESIGN.md` holds the narrative detail.

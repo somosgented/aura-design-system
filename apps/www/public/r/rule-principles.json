@@ -3,13 +3,13 @@
   "name": "rule-principles",
   "type": "registry:file",
   "title": "Rule: Principles",
-  "description": "Aura rule: Principles. Install to .cursor/rules/ for Cursor AI guidance.",
+  "description": "Aura rule: Principles. Install to .agents/rules/ for agent guidance.",
   "files": [
     {
       "path": "registry/default/rules/principles.mdc",
       "content": "---\nalwaysApply: true\ntitle: Product principles\ndescription: Non-visual Aura product principles that constrain product and UX choices.\n---\n\n# Product principles\n\nThese constrain product and UX choices. Visual tokens stay in `DESIGN.md` and foundation rules.\n\n### Accessibility\n\nProducts must be usable by any user. Build for perception and operability.\n\n### Consistency\n\nTeams share one objective and one voice with the user, visual and written.\n\n### Reusable\n\nAn hour spent on a component should prevent someone else from rebuilding it.\n\n### Shareable\n\nBuild with tools that let the team share the work.\n\n### User control\n\nThe user must feel in control of the product.\n\n### Forgiveness\n\nThe user must be able to change their mind or repeat a process.\n\n### Perception of stability\n\nEven on complex platforms, processes should feel simple and familiar.\n",
       "type": "registry:file",
-      "target": ".cursor/rules/principles.mdc"
+      "target": ".agents/rules/principles.mdc"
     }
   ]
 }

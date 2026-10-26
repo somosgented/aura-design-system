@@ -3,11 +3,12 @@ import { execa } from "execa";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
+import { linkCursorRulesToAgents } from "./rules-link.js";
 
 export const FORM_AGENT_FILES = [
   {
-    template: "cursor/rules/components-forms.mdc",
-    dest: ".cursor/rules/components-forms.mdc",
+    template: "agents/rules/components-forms.mdc",
+    dest: ".agents/rules/components-forms.mdc",
     previousAuraHashes: [
       "1419838024c4e1b3e80f660c0c677abe2e2654b310abc284cbdc4452c9e57892",
       "a5bbfb0ff0db36e43105d67986de86b796d31138ba462f301382afe144fb9c37",
@@ -58,6 +59,7 @@ export function syncFormAgentFiles(
   projectRoot: string,
   force: boolean,
 ): { dest: string; status: AgentFileStatus }[] {
+  linkCursorRulesToAgents(projectRoot);
   return FORM_AGENT_FILES.map(({ template, dest, previousAuraHashes }) => {
     const next = readFileSync(join(templatesRoot(), template));
     const abs = join(projectRoot, dest);

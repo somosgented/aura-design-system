@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const WORKSPACE_ROOT = path.resolve(__dirname, "../../..");
-const CURSOR_RULES_PATH = path.join(WORKSPACE_ROOT, ".cursor/rules");
+const AGENTS_RULES_PATH = path.join(WORKSPACE_ROOT, ".agents/rules");
 const REGISTRY_RULES_PATH = path.join(__dirname, "../registry/default/rules");
 
 const RULE_FILES = [
@@ -25,8 +25,8 @@ const RULE_FILES = [
 ];
 
 function syncRules() {
-  if (!fs.existsSync(CURSOR_RULES_PATH)) {
-    console.warn(`[sync-rules] Source not found: ${CURSOR_RULES_PATH}`);
+  if (!fs.existsSync(AGENTS_RULES_PATH)) {
+    console.warn(`[sync-rules] Source not found: ${AGENTS_RULES_PATH}`);
     return;
   }
 
@@ -37,7 +37,7 @@ function syncRules() {
 
   let synced = 0;
   for (const file of RULE_FILES) {
-    const src = path.join(CURSOR_RULES_PATH, file);
+    const src = path.join(AGENTS_RULES_PATH, file);
     const dest = path.join(REGISTRY_RULES_PATH, file);
     if (fs.existsSync(src)) {
       fs.copyFileSync(src, dest);

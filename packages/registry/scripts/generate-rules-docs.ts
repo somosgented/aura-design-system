@@ -139,12 +139,12 @@ ${bodyWithInstallation}
 function generateRulesIndex(rules: RuleDoc[]): string {
   let content = `---
 title: Rules
-description: Cursor and AI rules for the Aura Design System. Use these in .cursor/rules/ for consistent guidance.
+description: Agent rules for the Aura Design System. Install them into .agents/rules/.
 ---
 
 ## Rules
 
-These rules define foundations and principles for the Aura Design System. You can install them via the registry or copy them into your project's \`.cursor/rules/\` directory.
+These rules define foundations and principles for the Aura Design System. Install them via the registry into \`.agents/rules/\`. Cursor loads project rules from \`.cursor/rules\`; \`aura blueprint\` links that path at \`.agents/rules\` so there is one copy.
 
 \`\`\`bash
 pnpm dlx shadcn@latest add @aura/rules

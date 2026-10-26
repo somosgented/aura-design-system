@@ -1,9 +1,11 @@
 import assert from "node:assert/strict";
 import {
   existsSync,
+  lstatSync,
   mkdirSync,
   mkdtempSync,
   readFileSync,
+  readlinkSync,
   rmSync,
   writeFileSync,
 } from "node:fs";
@@ -51,15 +53,17 @@ describe("forms stack blueprint", () => {
   it("keeps the template rule and skill identical to the monorepo and registry copies", () => {
     for (const { template } of FORM_AGENT_FILES) {
       const shipped = readFileSync(join(templates, template), "utf8");
-      const monorepoPath = template.replace(/^cursor\//, ".cursor/");
+      const monorepoPath = template.startsWith("agents/")
+        ? template.replace(/^agents\//, ".agents/")
+        : template.replace(/^cursor\//, ".cursor/");
       assert.equal(shipped, readFileSync(join(repoRoot, monorepoPath), "utf8"), template);
-      const registryPath = template.replace(/^cursor\//, "");
+      const registryPath = template.replace(/^(agents|cursor)\//, "");
       assert.equal(shipped, readFileSync(join(registryRoot, registryPath), "utf8"), template);
     }
   });
 
   it("forbids zod, widens the rule globs, and keeps the server action pattern", () => {
-    const rule = readFileSync(join(templates, "cursor/rules/components-forms.mdc"), "utf8");
+    const rule = readFileSync(join(templates, "agents/rules/components-forms.mdc"), "utf8");
     assert.match(rule, new RegExp(NO_ZOD_LINE.replace(/[.*+?^${}()|[\]\\/]/g, "\\$&")));
     for (const glob of ["**/actions.ts", "**/*-actions.ts", "app/**/route.ts", "**/validation/**", "**/*schema*"]) {
       assert.ok(rule.includes(glob), glob);
@@ -75,11 +79,13 @@ describe("forms stack blueprint", () => {
   it("writes missing files, upgrades untouched Aura copies, and keeps customized ones", withProject((root) => {
     const [rule, skill] = FORM_AGENT_FILES;
     mkdirSync(join(root, ".cursor/rules"), { recursive: true });
-    writeFileSync(join(root, rule.dest), "my team rule\n");
+    writeFileSync(join(root, ".cursor/rules/components-forms.mdc"), "my team rule\n");
 
     const first = syncFormAgentFiles(root, false);
     assert.deepEqual(first.map((r) => r.status), ["customized", "write"]);
     assert.equal(readFileSync(join(root, rule.dest), "utf8"), "my team rule\n");
+    assert.equal(lstatSync(join(root, ".cursor/rules")).isSymbolicLink(), true);
+    assert.equal(readlinkSync(join(root, ".cursor/rules")), "../.agents/rules");
     assert.ok(existsSync(join(root, skill.dest)));
 
     const second = syncFormAgentFiles(root, false);

@@ -1,9 +1,11 @@
 import assert from "node:assert/strict";
 import {
   existsSync,
+  lstatSync,
   mkdirSync,
   mkdtempSync,
   readFileSync,
+  readlinkSync,
   rmSync,
   writeFileSync,
 } from "node:fs";
@@ -36,8 +38,8 @@ function withProject(run: (root: string) => void): void {
 describe("feature map blueprint", () => {
   it("keeps the template rule and skill identical to the monorepo copies", () => {
     assert.equal(
-      readFileSync(join(templates, "cursor/rules/feature-map.mdc"), "utf8"),
-      readFileSync(join(repoRoot, ".cursor/rules/feature-map.mdc"), "utf8"),
+      readFileSync(join(templates, "agents/rules/feature-map.mdc"), "utf8"),
+      readFileSync(join(repoRoot, ".agents/rules/feature-map.mdc"), "utf8"),
     );
     assert.equal(
       readFileSync(join(templates, "cursor/skills/update-feature-map/SKILL.md"), "utf8"),
@@ -54,7 +56,13 @@ describe("feature map blueprint", () => {
       assert.match(base, /file\.inFolder\("Feature-Map"\)/);
       assert.match(base, /type: table/);
       assert.ok(existsSync(join(vault, "01-Identity", "Image-Identity.md")));
-      assert.ok(existsSync(join(root, ".cursor/rules/feature-map.mdc")));
+      assert.ok(existsSync(join(root, ".agents/rules/feature-map.mdc")));
+      assert.equal(lstatSync(join(root, ".cursor/rules")).isSymbolicLink(), true);
+      assert.equal(readlinkSync(join(root, ".cursor/rules")), "../.agents/rules");
+      assert.equal(
+        readFileSync(join(root, ".cursor/rules/feature-map.mdc"), "utf8"),
+        readFileSync(join(root, ".agents/rules/feature-map.mdc"), "utf8"),
+      );
       assert.ok(existsSync(join(root, ".cursor/skills/update-feature-map/SKILL.md")));
       assert.equal(existsSync(join(vault, "00-General", "Internal-Progress.md")), false);
       assert.equal(existsSync(join(root, "wiki", "bruno-shop")), false);
@@ -71,6 +79,8 @@ describe("feature map blueprint", () => {
       mkdirSync(join(root, "scripts"), { recursive: true });
       mkdirSync(join(root, "wiki/obsidian-shop/00-General"), { recursive: true });
       writeFileSync(join(root, ".cursor/rules/self-documenting-system.mdc"), "x");
+      mkdirSync(join(root, ".agents/rules"), { recursive: true });
+      writeFileSync(join(root, ".agents/rules/self-documenting-system.mdc"), "y");
       writeFileSync(join(root, ".cursor/skills/update-project-brain/SKILL.md"), "x");
       writeFileSync(join(root, "scripts/brain-progress.ts"), "x");
       writeFileSync(join(root, "wiki/obsidian-shop/00-General/Internal-Progress.md"), "kept");
@@ -85,6 +95,7 @@ describe("feature map blueprint", () => {
       retireProjectBrain(root);
 
       assert.equal(existsSync(join(root, ".cursor/rules/self-documenting-system.mdc")), false);
+      assert.equal(existsSync(join(root, ".agents/rules/self-documenting-system.mdc")), false);
       assert.equal(existsSync(join(root, ".cursor/skills/update-project-brain")), false);
       assert.equal(existsSync(join(root, "scripts/brain-progress.ts")), false);
       assert.ok(existsSync(join(root, "wiki/obsidian-shop/00-General/Internal-Progress.md")));

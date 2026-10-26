@@ -15,7 +15,7 @@ Aura is a **design system monorepo**: tokens, UI components, Ladle stories, docs
 | Design-md package | `packages/design-md/` |
 | CLI | `packages/cli/` |
 | Docs / marketing site | `apps/www/` |
-| Cursor rules & project skills | `.cursor/rules/`, `.cursor/skills/` |
+| Agent rules & project skills | `.agents/rules/` (Cursor loads them through the `.cursor/rules` symlink), `.cursor/skills/` |
 | Feature map (only docs; update on PR) | `wiki/obsidian-aura-design-project/Feature-Map/` |
 
 `apps/www/AGENTS.md` is Next.js / site lint guidance only. Prefer **this** file for repo-wide agent policy.
@@ -30,21 +30,21 @@ Aura is a **design system monorepo**: tokens, UI components, Ladle stories, docs
 ## Gardener constraints (hard)
 
 - **Public APIs** — Do not change public component APIs casually. Prefer additive props/variants. Document breaking changes explicitly in the PR.
-- **Tokens** — Respect design tokens and `.cursor/rules/*` (13px spacing, accent/gray scales, typography). No hard-coded colors/spacing that bypass tokens when tokens exist. Follow root `DESIGN.md`.
+- **Tokens** — Respect design tokens and `.agents/rules/*` (13px spacing, accent/gray scales, typography). No hard-coded colors/spacing that bypass tokens when tokens exist. Follow root `DESIGN.md`.
 - **Stories** — Keep `packages/registry/src/*.stories.tsx` (and metadata/docs as needed) in sync with component API changes.
 - **Accessibility** — Do not ship interactive components without keyboard, focus, and basic a11y (roles, labels, focus rings).
 - **Scope** — No drive-by refactors outside the task. No unrelated package bumps.
 - **No product apps** — Do not add Famity Care, Labelo, or other product-app code here. This repo is the design system only.
-- **No code comments** — Agents replicate existing patterns, so a workaround comment legitimizes the hack and spreads it. Fix the root cause instead, and express intent through names, types, and tests. Encode "do not remove" constraints as a type, test, or lint rule. Unjustified lint or TypeScript suppressions are workarounds too. The only allowed comments are external constraints we cannot change (browser quirks, library bugs, platform or spec limits) with the reason stated, functional directives, license headers, and generated code. See `.cursor/rules/no-comments.mdc`.
+- **No code comments** — Agents replicate existing patterns, so a workaround comment legitimizes the hack and spreads it. Fix the root cause instead, and express intent through names, types, and tests. Encode "do not remove" constraints as a type, test, or lint rule. Unjustified lint or TypeScript suppressions are workarounds too. The only allowed comments are external constraints we cannot change (browser quirks, library bugs, platform or spec limits) with the reason stated, functional directives, license headers, and generated code. See `.agents/rules/no-comments.mdc`.
 
 ## Cursor rules & skills
 
-- Ownership map: `.cursor/rules/aura-agent-surface.mdc` — `DESIGN.md` narrative SoT; `.cursor/rules/*` guardrails; `.cursor/skills/*` / `.agents/skills/*` execution.
-- Foundation rules live in `.cursor/rules/` (`alwaysApply` where marked). Do not invent a second conflicting design policy.
+- Ownership map: `.agents/rules/aura-agent-surface.mdc` — `DESIGN.md` narrative SoT; `.agents/rules/*` guardrails; `.cursor/skills/*` / `.agents/skills/*` execution.
+- Foundation rules live in `.agents/rules/` (`alwaysApply` where marked). Cursor still loads project rules from `.cursor/rules`, which is a symlink to `../.agents/rules`, so there is one copy. Do not invent a second conflicting design policy.
 - Monorepo skills: `.cursor/skills/aura-constraints/`, `.cursor/skills/aura-verification/`.
 - Consumer skills (registry-synced): `aura-forms`, `verify-aura-ui`, `update-feature-map`, `port-component-to-aura`, `generate-brand-images` — see `packages/registry/scripts/sync-skills.ts`.
 - Upstream skills (blueprint / `skills add`, not registry): `.agents/skills/shadcn` (`pnpm dlx skills add shadcn/ui`) and gdp-ts.
-- Documentation: `.cursor/rules/feature-map.mdc`. On PR, add or update the feature's note in the feature map. Do not read or write other wiki or progress files.
+- Documentation: `.agents/rules/feature-map.mdc`. On PR, add or update the feature's note in the feature map. Do not read or write other wiki or progress files.
 - **Agent-constraint skills stay local** and are not added to `sync-skills.ts` unless intentionally published.
 
 ## Third-party audits

@@ -8,7 +8,7 @@ description: >-
 
 # Verify Aura UI
 
-Guardrails live in `.cursor/rules/shadcn-lint.mdc` and foundation rules. This skill is the verify/fix loop.
+Guardrails live in `.agents/rules/shadcn-lint.mdc` and foundation rules. This skill is the verify/fix loop.
 
 ## After every UI change
 
@@ -41,7 +41,7 @@ Skip when `eslint.aura-shadcn.mjs` already exists and is merged into `eslint.con
 5. `settings.shadcn.ui` → `@/components/ui` (or the app alias).
 6. Keep `no-restyle` / `no-arbitrary-values` **off** under `components/ui/**`.
 7. Start severities at `warn`; promote to `error` as debt clears.
-8. Point `settings.shadcn.note` at `DESIGN.md` and `.cursor/rules` when possible.
+8. Point `settings.shadcn.note` at `DESIGN.md` and `.agents/rules` when possible.
 
 Upstream: [shadcn-ui/lint](https://github.com/shadcn-ui/lint).
 

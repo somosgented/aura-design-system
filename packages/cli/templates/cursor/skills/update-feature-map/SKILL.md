@@ -8,7 +8,7 @@ description: >-
 
 # Update feature map
 
-Run once per PR, after the code is final. Guardrails live in `.cursor/rules/feature-map.mdc`.
+Run once per PR, after the code is final. Guardrails live in `.agents/rules/feature-map.mdc`.
 
 ## Steps
 

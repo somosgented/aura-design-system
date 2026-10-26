@@ -37,13 +37,13 @@ Check and record **present / missing** for each:
 | --- | --- |
 | Aura `components.json` | File exists; `registries["@aura"]` points at Aura registry JSON |
 | `DESIGN.md` (root) | File at project root (or install via `@aura/rule-design-md` / `@aura/design-md`) |
-| Cursor rules | `.cursor/rules/*.mdc` (foundations, principles, design-md, etc.) |
+| Agent rules | `.agents/rules/*.mdc` (foundations, principles, design-md, etc.). `.cursor/rules` is a symlink to `../.agents/rules` |
 | Cursor skills | `.cursor/skills/port-component-to-aura/SKILL.md` and `.cursor/skills/generate-brand-images/SKILL.md` |
 | Third-party audits | Not installed by Aura. Older Emil and Vercel copies under `.cursor/skills/` and `.agents/skills/` are gone after blueprint. See [Audits](/docs/audits) |
 | Image identity | `wiki/obsidian-*/01-Identity/Image-Identity.md`; `status: ready` only when style, palette, composition/motifs, and exclusions are concrete |
 | Gemini image env | `.env.example` names `GOOGLE_API_KEY`; only check whether `.env` has `GOOGLE_API_KEY` or `GEMINI_API_KEY`, never print its value |
 | shadcn MCP | `.cursor/mcp.json` (or user MCP) with `shadcn` → `npx shadcn@latest mcp` |
-| `@shadcn/lint` | Dep `@shadcn/lint` present; `eslint.config.*` registers `shadcn/*` rules; optional `eslint.aura-shadcn.mjs` + `.cursor/rules/shadcn-lint.mdc` |
+| `@shadcn/lint` | Dep `@shadcn/lint` present; `eslint.config.*` registers `shadcn/*` rules; optional `eslint.aura-shadcn.mjs` + `.agents/rules/shadcn-lint.mdc` |
 | pstack / `/poteto-mode` | Marketplace plugin **pstack** enabled for this Cursor workspace **or** project has a usable poteto-mode entry (e.g. `.cursor/skills/poteto-mode/SKILL.md` or `AGENTS.md` explicitly requiring `/poteto-mode`). Record: `plugin` / `repo-skill` / `missing` |
 | pstack model setup (optional) | User-level `~/.cursor/rules/pstack-models.mdc` exists after `/setup-pstack` — note present/missing; do **not** fail the Aura blueprint if missing |
 | `@gdp-ts/core` | `dependencies` or `devDependencies` in `package.json` |
@@ -80,10 +80,16 @@ pnpm dlx shadcn@latest add \
   @aura/eslint-shadcn-lint
 ```
 
-- `@aura/rules` → `.cursor/rules/`
+- `@aura/rules` → `.agents/rules/`
 - `@aura/skills` → `.cursor/skills/` (includes `port-component-to-aura` and `generate-brand-images`)
 - `@aura/rule-design-md` → rule + root `DESIGN.md`
-- `@aura/eslint-shadcn-lint` → `eslint.aura-shadcn.mjs` + `.cursor/rules/shadcn-lint.mdc` (see **D** below)
+- `@aura/eslint-shadcn-lint` → `eslint.aura-shadcn.mjs` + `.agents/rules/shadcn-lint.mdc` (see **D** below)
+
+Cursor loads project rules from `.cursor/rules`. After the registry files land, make that path a symlink to `../.agents/rules` (this is what `aura blueprint` does). If `.cursor/rules` is still a real directory, move each `*.mdc` into `.agents/rules/` when that name is not already there, remove the directory, then:
+
+```bash
+ln -sfn ../.agents/rules .cursor/rules
+```
 
 If the feature map, `Image-Identity.md`, or `pnpm ai:image` is missing, scaffold those project capabilities without rewriting the Aura theme:
 
@@ -209,7 +215,7 @@ pnpm dlx skills add shadcn/ui -a cursor -y --copy
 npx skills add rauchg/gdp-ts --skill gdp-ts -a cursor -y --copy
 ```
 
-and writes `lib/ids.ts`, `lib/authz-store.ts`, `proofs/*`, and `data/delete-project.ts` (plus the handler and `data/mistakes.ts`) under the `@/` root. Aura Keep invariants in `.cursor/rules/` win when the upstream shadcn skill conflicts (icons, forms, 13px spacing, typography).
+and writes `lib/ids.ts`, `lib/authz-store.ts`, `proofs/*`, and `data/delete-project.ts` (plus the handler and `data/mistakes.ts`) under the `@/` root. Aura Keep invariants in `.agents/rules/` win when the upstream shadcn skill conflicts (icons, forms, 13px spacing, typography).
 
 **Do not:** vendor the skill into the Aura registry, cast `as Proof`, export a prover, or call `defineProof` outside `proofs/`. The default preset is not strict mode; do not turn on `strict: true` in an app that still uses `as` for unrelated code. Replace `lib/authz-store.ts` with the real database before shipping. The in-memory maps are a stand-in, and handlers must not write roles into them.
 
@@ -217,12 +223,13 @@ and writes `lib/ids.ts`, `lib/authz-store.ts`, `proofs/*`, and `data/delete-proj
 
 Confirm after installs:
 
-- `.cursor/rules/` has Aura foundation rules (including `aura-agent-surface.mdc` when installed via `@aura/rules`)
+- `.agents/rules/` has Aura foundation rules (including `aura-agent-surface.mdc` when installed via `@aura/rules`)
+- `.cursor/rules` is a symlink to `../.agents/rules`
 - `.cursor/skills/port-component-to-aura/SKILL.md` exists
 - `.cursor/skills/generate-brand-images/SKILL.md` and its generator script exist
 - `.cursor/skills/verify-aura-ui/SKILL.md` and `.cursor/skills/update-feature-map/SKILL.md` exist when `@aura/skills` was added
 - `.cursor/skills/` and `.agents/skills/` do not contain `emil-design-eng`, `react-best-practices`, or `vercel-react-best-practices` unless someone installed that audit for this task and has not committed it
-- `.cursor/rules/components-forms.mdc`, `.cursor/skills/aura-forms/SKILL.md`, and the `form`, `field`, `use-dynamic-form`, and `web-validation` registry items exist
+- `.agents/rules/components-forms.mdc`, `.cursor/skills/aura-forms/SKILL.md`, and the `form`, `field`, `use-dynamic-form`, and `web-validation` registry items exist
 - `.agents/skills/shadcn/SKILL.md` exists (or document the gap)
 - `wiki/obsidian-*/01-Identity/Image-Identity.md` and `wiki/obsidian-*/Feature-Map/Feature-Map.base` exist
 - `package.json` has `ai:image` and no `brain:progress`; `.env.example` names `GOOGLE_API_KEY`
@@ -262,7 +269,7 @@ Optional smoke: `pnpm dlx shadcn@latest add @aura/button` only if the user asked
 | --- | --- | --- | --- |
 | components.json @aura | … | … | … |
 | DESIGN.md | … | … | … |
-| .cursor/rules | … | … | … |
+| .agents/rules | … | … | … |
 | .cursor/skills | … | … | … |
 | Third-party audits | … | … | … |
 | Forms stack (rule, skill, components) | … | … | … |

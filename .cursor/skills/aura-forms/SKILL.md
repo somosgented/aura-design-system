@@ -9,7 +9,7 @@ description: >-
 
 # Aura forms
 
-Guardrails live in `.cursor/rules/components-forms.mdc`. This skill is the composition procedure.
+Guardrails live in `.agents/rules/components-forms.mdc`. This skill is the composition procedure.
 
 Validate with ajv via `validateFormData` / JSON Schema; do not add zod, yup or valibot.
 

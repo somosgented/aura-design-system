@@ -494,12 +494,12 @@ function getRulesItems(): RegistryItem[] {
       const meta = loadRuleMetadata(name);
       const title = meta.title ?? defaultTitle;
       const description =
-        meta.description ?? `Aura rule: ${title}. Install to .cursor/rules/ for Cursor AI guidance.`;
+        meta.description ?? `Aura rule: ${title}. Install to .agents/rules/ for agent guidance.`;
 
       const ruleFile = {
         path: `registry/default/rules/${file}`,
         type: "registry:file" as const,
-        target: `.cursor/rules/${file}`,
+        target: `.agents/rules/${file}`,
       };
 
       const files =
@@ -815,7 +815,7 @@ function buildRegistry() {
     name: "rules",
     type: "registry:file",
     title: "Aura Rules",
-    description: "All Aura Design System Cursor rules. Installs to .cursor/rules/ for AI guidance.",
+    description: "All Aura Design System rules. Installs to .agents/rules/ for AI guidance.",
     files: rulesItems.flatMap((item) => item.files ?? []),
   };
   const skillsItems = getSkillsItems();

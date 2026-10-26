@@ -11,7 +11,7 @@ description: Rules hold guardrails; skills hold execution. DESIGN.md is narrativ
 | Layer | Owns | Does not own |
 | --- | --- | --- |
 | `DESIGN.md` | Narrative design SoT (tokens, theme, product voice) | Step-by-step agent procedures |
-| `.cursor/rules/*` | MUST / SHOULD / NEVER guardrails for agent behavior | Install recipes, long how-tos, wiki write loops |
+| `.agents/rules/*` | MUST / SHOULD / NEVER guardrails for agent behavior | Install recipes, long how-tos, wiki write loops |
 | `.cursor/skills/*` / `.agents/skills/*` | Persistence and technical execution | Soft product principles |
 
 ## Invariants (Keep)
@@ -22,6 +22,7 @@ These stay encoded in foundation rules and machine-checked where lint allows. Do
 * Fluid typography via `clamp()` and a global **≥ 17px** floor on editable form controls.
 * Strict **13px** spacing base (`unit * 13px`).
 * Icons use `className="icon"` only (type inheritance); no horizontal icon margins inside gap-owning controls.
+* Rules live in `.agents/rules/` only. `.cursor/rules` is a symlink to `../.agents/rules` because Cursor loads project rules from `.cursor/rules`.
 * The only project documentation is the feature map in `wiki/obsidian-{suffix}/Feature-Map/`, updated inside the PR that changes a feature. No progress logs. See `feature-map.mdc`.
 * No code comments except external constraints (with the reason), directives, licenses, and generated code. Fix the root cause instead. See `no-comments.mdc`.
 
@@ -44,8 +45,8 @@ Do not vendor the shadcn skill into `packages/registry` / `sync-skills.ts`. Blue
 
 ## Routing
 
-* Code comments and workarounds → `.cursor/rules/no-comments.mdc`.
-* UI token questions → `DESIGN.md`, then foundation rules under `.cursor/rules/fundation*`.
+* Code comments and workarounds → `.agents/rules/no-comments.mdc`.
+* UI token questions → `DESIGN.md`, then foundation rules under `.agents/rules/fundation*`.
 * shadcn CLI / registry / presets / component docs → skill `shadcn` (`.agents/skills/shadcn`).
 * After UI edits → skill `verify-aura-ui` (`pnpm lint`, clear `@shadcn/lint` debt you introduced).
 * Opening or updating a PR → skill `update-feature-map`.

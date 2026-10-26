@@ -3,13 +3,13 @@
   "name": "rule-fundations-typography",
   "type": "registry:file",
   "title": "Rule: Fundations Typography",
-  "description": "Aura rule: Fundations Typography. Install to .cursor/rules/ for Cursor AI guidance.",
+  "description": "Aura rule: Fundations Typography. Install to .agents/rules/ for agent guidance.",
   "files": [
     {
       "path": "registry/default/rules/fundations-typography.mdc",
       "content": "---\nalwaysApply: true\ntitle: Typography guardrails\ndescription: Fluid clamp() type scale and 17px floor for editable form controls. Detail in DESIGN.md §3.\n---\n\n# Typography guardrails\n\nScale tables and formula live in `DESIGN.md` §3. This rule only constrains agent behavior.\n\n* **MUST**: Size primary type with `clamp(var(--min), var(--val), var(--max))` via `h1`–`h6` / `.h1`–`.h6` / `p` / `.p`.\n* **NEVER**: Use Tailwind `text-xl`, `text-2xl`, `text-4xl`, etc. for primary copy.\n* **EXCEPTION**: `text-sm` / `text-xs` for fixed utility/meta text only — **never** on editable `input` / `textarea` / `select`.\n* **MUST**: Editable form controls stay **≥ 17px** (`max(1rem, 17px)` or inherit the 17px root). Enforce globally in CSS (`styles/main.css` / unlayered globals), not only per component.\n* **SHOULD**: Keep `html { font-size: 17px; }` so `1rem` already meets the floor.\n* **MUST**: Use `rem` for `--min` / `--max`. Large headings SHOULD use line-height about 1.1–1.3. `blockquote` shares the `h4` scale.\n",
       "type": "registry:file",
-      "target": ".cursor/rules/fundations-typography.mdc"
+      "target": ".agents/rules/fundations-typography.mdc"
     }
   ]
 }
