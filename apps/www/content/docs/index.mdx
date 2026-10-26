@@ -1,6 +1,6 @@
 ---
 title: Get started
-description: Aura is an agentic design system. Install it as a person, or point an agent at DESIGN.md, the rules, the skills, and the CLI before it writes UI.
+description: Aura is an agentic design system. Install it as a person, or point an agent at the harness — DESIGN.md, rules, Aura skills, Poteto mode, gdp-ts, and the CLI.
 icon: Compass
 ---
 
@@ -24,7 +24,7 @@ The job picks the file.
 | Install or retheme | [Installation](/docs/installation) and [CLI](/docs/cli) | `init` scaffolds a Next.js app. `setup` applies Aura to an app that already exists. `colors` writes accent and gray scales. |
 | Choose a color, size, or type step | `DESIGN.md` §2–§5, or [Foundations](/docs/foundations) | Foundations are the same rules, written so a person can read them. |
 | Change a screen | The matching [rule](/docs/rules), then the component's variants | Rules stop drift. Variants live on the component, so the next install does not wipe a call-site restyle. |
-| Run a procedure | A [skill](#skills) | A rule is a limit. A skill is the steps. |
+| Pick a playbook, skill, or audit | The [agent harness](#agent-harness) | Aura files ship with the kit. Poteto mode and third-party audits stay outside the repo. |
 | Use a control | [Components](/docs/components) | Install the registry item. Match its variants and sizes. |
 
 ## Install
@@ -57,23 +57,131 @@ Read before you write UI.
 
 1. In the Aura monorepo, open root `AGENTS.md`, then root `DESIGN.md`.
 2. In a consumer app, open root `DESIGN.md` and `.cursor/rules/`. If they are missing, run `pnpm dlx @aura-design/cli@latest setup` or follow the [agent blueprint](/docs/mcp-agent-blueprint).
-3. Pick the skill that matches the job. A rule is a limit. A skill is the steps. Follow both.
+3. Open the [agent harness](#agent-harness) and pick the layer for the job. A rule is a limit. A skill is the steps. Follow both.
 4. Install the component (`pnpm dlx shadcn@latest add @aura/button`, swapping in the registry name) and use its variants. Layout and width at the call site are fine. Padding, color, and type belong on the component.
 5. After UI edits, run the project lint. `@shadcn/lint` flags spacing off the 13px scale, raw palette colors, and restyle of a design-system component. The `verify-aura-ui` skill is that loop.
 
-## Skills
+## Agent harness
 
-`@aura/skills` installs these under `.cursor/skills/`:
+The harness is what an agent reads before it edits. Aura's own files and skills ship with the kit. Poteto mode comes from the Cursor marketplace. Design, motion, and React performance audits are installed for a review and left uncommitted. Where an audit disagrees with `DESIGN.md` or a foundation rule, Aura wins.
+
+| Layer | Job | Where it lives |
+| --- | --- | --- |
+| [Own files](#own-files) | Policy, narrative spec, and guardrails | `AGENTS.md` in this repo, root `DESIGN.md`, `.cursor/rules/` |
+| [Consumer skills](#consumer-skills) | Procedures an app can install | `@aura/skills` writes `.cursor/skills/` |
+| [Monorepo skills](#monorepo-skills) | How to edit this repository | `.cursor/skills/aura-constraints`, `.cursor/skills/aura-verification` |
+| [Poteto mode](#poteto-mode) | Multi-step engineering playbooks | Marketplace plugin. `/setup-pstack` and `/poteto-mode` are not in this repo |
+| [gdp-ts](#gdp-ts) | Proof-carrying authorization | `aura blueprint` installs `@gdp-ts/core` and the `rauchg/gdp-ts` skill |
+| [Feature map](#feature-map) | The only project note | `wiki/obsidian-*/Feature-Map/`, skill `update-feature-map` |
+| [Brand images](#brand-images) | Gemini images from the vault identity | Consumer skill `generate-brand-images` |
+| [Audits](#audits-you-install) | Design, motion, and React performance reviews | `npx skills add` when you want the audit. Do not commit the folders |
+| [Visual lint](#visual-lint) | Machine check of spacing, color, and restyle | `@shadcn/lint` and skill `verify-aura-ui` |
+
+### Own files
+
+| File | Who it is for |
+| --- | --- |
+| Root [`AGENTS.md`](https://github.com/somosgented/aura-design-system/blob/canary/AGENTS.md) | Agents in this monorepo. Public APIs, stories, tokens, and the boundary of the repo. Consumer apps start at `DESIGN.md`. |
+| Root `DESIGN.md` | Everyone. Narrative source of truth: color steps, the 13px grid, type, icons, motion. `@aura/rules` installs it. |
+| `.cursor/rules/*.mdc` | Agents, on every edit. Short MUST and NEVER lines. The long tables stay in `DESIGN.md`. |
+| [Foundations](/docs/foundations) and [Rules](/docs/rules) | People reading the same constraints on this site. |
+
+Blueprint also installs the upstream shadcn skill at `.agents/skills/shadcn` (`pnpm dlx skills add shadcn/ui`). Use it for the CLI, registry search, and presets. Aura rules win on icons, forms, spacing, typography, and restyle.
+
+### Consumer skills
+
+`@aura/skills` installs these under `.cursor/skills/`. They are the procedures a consumer app gets from the registry.
 
 | Skill | Use it when |
 | --- | --- |
 | `aura-forms` | Building a form. State is `useFormDynamic`. The UI is `Form` and `FormField`. Validation is `validateFormData` with an ajv JSON Schema. The server action re-validates with the same schema. |
-| `verify-aura-ui` | You just edited UI. Run lint and clear the `@shadcn/lint` findings on the files you touched. |
+| `verify-aura-ui` | You just edited UI. Run `pnpm lint` and clear the `@shadcn/lint` findings on the files you touched. |
 | `port-component-to-aura` | Bringing an external component onto Aura tokens and the registry shape. |
-| `update-feature-map` | Opening a PR. The feature map is the only project doc. Update the note in that PR. |
-| `generate-brand-images` | Generating landing images from the vault's image identity. |
+| `update-feature-map` | Opening a PR. Update that feature's note in the same PR. |
+| `generate-brand-images` | A landing page needs images. Read the vault identity, then generate with Gemini. Detail under [Brand images](#brand-images). |
 
-Blueprint also installs the upstream `shadcn` skill at `.agents/skills/shadcn` and the `gdp-ts` skill. Use the shadcn skill for CLI, registry search, and presets. Aura rules win on icons, forms, spacing, typography, and restyle. gdp-ts is proof-carrying authz for sensitive functions. `aura-constraints` and `aura-verification` stay in this monorepo.
+### Monorepo skills
+
+These two stay in this repository. They are not part of `@aura/skills`, and `sync-skills` does not publish them.
+
+| Skill | Use it when |
+| --- | --- |
+| `aura-constraints` | Editing `packages/registry`, `packages/system`, `packages/styled-system`, `DESIGN.md`, `.cursor/rules`, or docs that document a component. Public APIs stay additive. Tokens and stories stay in sync. |
+| `aura-verification` | Checking that work inside this monorepo: Ladle stories, typecheck, lint, registry generate scripts. Product-app end-to-end tests are out of scope. |
+
+### Poteto mode
+
+Poteto mode is Lauren Tan's pstack workflow: playbooks for a bug, a feature, a refactor, or an investigation, with a visible task list and evidence before the work is called done. The entry points are `/setup-pstack` and `/poteto-mode`.
+
+Both commands come from the Cursor marketplace plugin. They are not vendored in this repo, and `aura blueprint` does not install them. Humans enable the plugin in Cursor desktop (`/add-plugin pstack`, then `/setup-pstack`). A cloud agent may not see the plugin. Aura rules, `DESIGN.md`, and lint still apply inside a `/poteto-mode` run.
+
+Install, the trust model, and example prompts: [pstack](/docs/pstack).
+
+### gdp-ts
+
+gdp-ts is Guillermo Rauch's proof-carrying authorization. A sensitive function demands a proof about the exact ids it receives. The typechecker rejects a missing proof, a proof about a different user or project, or a raw id.
+
+`aura init`, `aura setup`, and `aura blueprint` install it. Blueprint adds `@gdp-ts/core`, spreads the ESLint preset, installs the skill with `npx skills add rauchg/gdp-ts --skill gdp-ts -a cursor -y --copy` (it lands at `.agents/skills/gdp-ts/`), and writes starter proofs: session, org role, project role, plan entitlement, and `deleteProject`. The skill is not in the Aura registry. Do not cast a proof. CI is typecheck plus lint.
+
+Practice and the starter files: [gdp-ts](/docs/gdp-ts).
+
+### Feature map
+
+The feature map is the only project documentation. One short note per feature lives under `wiki/obsidian-*/Feature-Map/`, shown as a table by `Feature-Map.base`. The folder suffix is the `package.json` name with its first segment stripped. Aura's vault is `wiki/obsidian-aura-design-project/Feature-Map/`.
+
+The rule is `.cursor/rules/feature-map.mdc`. The procedure is skill `update-feature-map`. When you open or update a PR, update the note of each feature that PR changes, inside that PR. Code is the source of truth while you work. Do not keep a progress log, and do not write secrets into notes. Name environment variables only.
+
+Blueprint creates the vault, the rule, and the skill.
+
+### Brand images
+
+`generate-brand-images` is the Gemini skill in `@aura/skills`. Use it when a landing page, hero, or marketing page needs images that match the product identity.
+
+It reads `wiki/obsidian-*/Bootstrap.md` and `01-Identity/`. Image identity is ready only when the notes name a medium, a palette and lighting, composition or motifs, and exclusions. The script reads `GOOGLE_API_KEY` or `GEMINI_API_KEY` from `.env`. Name those variables. Do not print or commit the value. Blueprint writes a starter `01-Identity/Image-Identity.md` and the skill.
+
+### Audits you install
+
+Emil Kowalski's design and animation reviews, and Vercel's React performance review, are not part of Aura. Nothing in `init`, `setup`, or `blueprint` installs them, and no Aura rule loads them. Install one from upstream when you want that audit, run it, apply the findings you accept, and leave the folder uncommitted. `aura blueprint` deletes the Emil and Vercel copies an older CLI wrote into `.cursor/skills/` and `.agents/skills/`.
+
+Design and motion, from [emilkowalski/skills](https://github.com/emilkowalski/skills):
+
+```bash
+npx skills add emilkowalski/skills \
+  --skill emil-design-eng \
+  --skill review-animations \
+  --skill improve-animations \
+  --skill find-animation-opportunities \
+  -a cursor -y --copy
+```
+
+| Skill | What it checks |
+| --- | --- |
+| `emil-design-eng` | UI polish and design-engineering decisions |
+| `review-animations` | Motion in a diff: curves, durations, springs |
+| `improve-animations` | Motion across the codebase, with a fix plan per finding |
+| `find-animation-opportunities` | Where a screen should and should not animate |
+
+Invoke one by name, for example `/review-animations` on the current diff. The audit returns findings. It does not edit the code.
+
+React performance, from [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills). The installed name is `vercel-react-best-practices`. It checks waterfalls, bundle size, server work, and re-renders. In an Aura app, form validation stays `validateFormData` with an ajv JSON Schema.
+
+```bash
+npx skills add vercel-labs/agent-skills --skill vercel-react-best-practices -a cursor -y --copy
+```
+
+```text
+/vercel-react-best-practices Audit this screen and its server actions.
+```
+
+This is a separate gate from Aura's visual lint. Full catalog, the findings shape, and how to remove a skill: [Audits](/docs/audits). The WorkOS skill is the same kind of optional audit. That page has its install command.
+
+### Visual lint
+
+`@shadcn/lint` is the machine check for Aura's Tailwind policy: spacing on the 13px scale, accent and gray tokens instead of a raw palette, and no restyle of a design-system component from the call site. Rules and `DESIGN.md` say what to do. Lint names the fix.
+
+The rules bundle can install `eslint.aura-shadcn.mjs` and `.cursor/rules/shadcn-lint.mdc`. You can also add `@aura/eslint-shadcn-lint`. After UI edits, run the project's `pnpm lint`. Skill `verify-aura-ui` is that loop. This lint ships with Aura. It is not the Vercel performance skill above.
+
+Detail: [Lint](/docs/lint).
 
 ## Rules
 

@@ -40,14 +40,47 @@ const routes = [
     href: "/docs/rules",
   },
   {
-    job: "Run a procedure",
-    open: "The matching skill",
-    href: "/docs#skills",
+    job: "Pick a playbook, skill, or audit",
+    open: "The agent harness",
+    href: "/docs#agent-harness",
   },
   {
     job: "Use a control",
     open: "The registry component",
     href: "/docs/components",
+  },
+] as const;
+
+const harness = [
+  {
+    title: "Aura files",
+    body: "AGENTS.md in this repo, DESIGN.md, and .cursor/rules.",
+    href: "/docs#own-files",
+  },
+  {
+    title: "Aura skills",
+    body: "Forms, visual lint, porting, the feature map, and Gemini brand images.",
+    href: "/docs#consumer-skills",
+  },
+  {
+    title: "Poteto mode",
+    body: "Lauren Tan’s pstack playbooks. Marketplace plugin. /setup-pstack and /poteto-mode are not in this repo.",
+    href: "/docs#poteto-mode",
+  },
+  {
+    title: "gdp-ts",
+    body: "Proof-carrying authz. Blueprint installs @gdp-ts/core and the Rauch skill.",
+    href: "/docs#gdp-ts",
+  },
+  {
+    title: "Feature map",
+    body: "The only project note. Update it in the PR that changes the feature.",
+    href: "/docs#feature-map",
+  },
+  {
+    title: "Audits",
+    body: "Emil’s design and motion reviews, and Vercel’s React performance review. Install for the audit. Leave them uncommitted.",
+    href: "/docs#audits-you-install",
   },
 ] as const;
 
@@ -121,14 +154,29 @@ export default function HomeAgentic() {
               </tbody>
             </table>
           </div>
+          <h3 className="h4 font-bold text-gray-12">Agent harness</h3>
+          <div className="grid gap-1 md:grid-cols-2">
+            {harness.map((layer) => (
+              <Link
+                key={layer.title}
+                href={layer.href}
+                className="flex flex-col gap-0.5 rounded-md border border-gray-6 bg-gray-2 p-1 hover:bg-gray-3"
+              >
+                <span className="text-sm font-semibold text-gray-12">
+                  {layer.title}
+                </span>
+                <span className="text-sm text-gray-11">{layer.body}</span>
+              </Link>
+            ))}
+          </div>
           <p className="p text-gray-11">
             <Link
-              href="/docs"
+              href="/docs#agent-harness"
               className="text-accent-11 underline underline-offset-2"
             >
               Get started
             </Link>{" "}
-            has the install commands and the rule list on one page.
+            has the install commands, the harness, and the rule list on one page.
           </p>
         </div>
       </div>
