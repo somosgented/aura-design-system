@@ -198,13 +198,19 @@ export function DocsLayout({
                   {item.icon}
                 </BaseLinkItem>
               ))}
-              {themeSwitch.enabled !== false &&
-                (themeSwitch.component ?? (
-                  <ThemeToggle
-                    className="ms-auto p-0"
-                    mode={themeSwitch.mode}
-                  />
-                ))}
+              {themeSwitch.enabled !== false && (
+                <>
+                  <div className="md:hidden">
+                    <ThemeColorSwitcher />
+                  </div>
+                  {themeSwitch.component ?? (
+                    <ThemeToggle
+                      className="ms-auto p-0"
+                      mode={themeSwitch.mode}
+                    />
+                  )}
+                </>
+              )}
             </div>
             {footer}
           </SidebarFooter>

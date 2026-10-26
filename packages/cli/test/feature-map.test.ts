@@ -5,8 +5,8 @@ import {
   mkdirSync,
   mkdtempSync,
   readFileSync,
-  readlinkSync,
   rmSync,
+  symlinkSync,
   writeFileSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
@@ -42,8 +42,8 @@ describe("feature map blueprint", () => {
       readFileSync(join(repoRoot, ".agents/rules/feature-map.mdc"), "utf8"),
     );
     assert.equal(
-      readFileSync(join(templates, "cursor/skills/update-feature-map/SKILL.md"), "utf8"),
-      readFileSync(join(repoRoot, ".cursor/skills/update-feature-map/SKILL.md"), "utf8"),
+      readFileSync(join(templates, "agents/skills/update-feature-map/SKILL.md"), "utf8"),
+      readFileSync(join(repoRoot, ".agents/skills/update-feature-map/SKILL.md"), "utf8"),
     );
   });
 
@@ -57,18 +57,32 @@ describe("feature map blueprint", () => {
       assert.match(base, /type: table/);
       assert.ok(existsSync(join(vault, "01-Identity", "Image-Identity.md")));
       assert.ok(existsSync(join(root, ".agents/rules/feature-map.mdc")));
-      assert.equal(lstatSync(join(root, ".cursor/rules")).isSymbolicLink(), true);
-      assert.equal(readlinkSync(join(root, ".cursor/rules")), "../.agents/rules");
-      assert.equal(
-        readFileSync(join(root, ".cursor/rules/feature-map.mdc"), "utf8"),
-        readFileSync(join(root, ".agents/rules/feature-map.mdc"), "utf8"),
-      );
-      assert.ok(existsSync(join(root, ".cursor/skills/update-feature-map/SKILL.md")));
+      assert.equal(existsSync(join(root, ".cursor/rules")), false);
+      assert.ok(existsSync(join(root, ".agents/skills/update-feature-map/SKILL.md")));
       assert.equal(existsSync(join(vault, "00-General", "Internal-Progress.md")), false);
       assert.equal(existsSync(join(root, "wiki", "bruno-shop")), false);
       assert.equal(existsSync(join(root, "scripts", "brain-progress.ts")), false);
       const plugins = JSON.parse(readFileSync(join(vault, ".obsidian", "core-plugins.json"), "utf8"));
       assert.equal(plugins.bases, true);
+    });
+  });
+
+  it("moves a legacy .cursor/rules directory into .agents/rules and removes a symlink", () => {
+    withProject((root) => {
+      mkdirSync(join(root, ".agents/rules"), { recursive: true });
+      writeFileSync(join(root, ".agents/rules/feature-map.mdc"), "kept\n");
+      mkdirSync(join(root, ".cursor/rules"), { recursive: true });
+      writeFileSync(join(root, ".cursor/rules/team.mdc"), "team\n");
+      scaffoldFeatureMapAgentFiles(root, false);
+      assert.equal(existsSync(join(root, ".cursor/rules")), false);
+      assert.equal(readFileSync(join(root, ".agents/rules/team.mdc"), "utf8"), "team\n");
+      assert.equal(readFileSync(join(root, ".agents/rules/feature-map.mdc"), "utf8"), "kept\n");
+
+      mkdirSync(join(root, ".cursor"), { recursive: true });
+      symlinkSync("../.agents/rules", join(root, ".cursor/rules"));
+      scaffoldFeatureMapAgentFiles(root, false);
+      assert.equal(existsSync(join(root, ".cursor/rules")), false);
+      assert.equal(lstatSync(join(root, ".agents/rules")).isDirectory(), true);
     });
   });
 

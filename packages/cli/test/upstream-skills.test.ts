@@ -18,7 +18,7 @@ import {
 
 const repoRoot = fileURLToPath(new URL("../../../", import.meta.url));
 const templates = fileURLToPath(
-  new URL("../templates/cursor/skills/", import.meta.url),
+  new URL("../templates/agents/skills/", import.meta.url),
 );
 
 describe("retired upstream skills", () => {

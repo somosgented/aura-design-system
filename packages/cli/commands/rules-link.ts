@@ -3,16 +3,13 @@ import {
   lstatSync,
   mkdirSync,
   readdirSync,
-  readlinkSync,
   renameSync,
   rmSync,
-  symlinkSync,
 } from "fs";
-import { join } from "path";
+import { dirname, join } from "path";
 
 export const AGENTS_RULES_DIR = join(".agents", "rules");
-export const CURSOR_RULES_LINK = join(".cursor", "rules");
-const CURSOR_RULES_LINK_TARGET = "../.agents/rules";
+const LEGACY_CURSOR_RULES = join(".cursor", "rules");
 
 function pathExists(path: string): boolean {
   try {
@@ -23,41 +20,45 @@ function pathExists(path: string): boolean {
   }
 }
 
-export function linkCursorRulesToAgents(projectRoot: string): void {
+export function ensureAgentsRules(projectRoot: string): void {
   const agentsDir = join(projectRoot, AGENTS_RULES_DIR);
-  const cursorDir = join(projectRoot, CURSOR_RULES_LINK);
+  const legacyDir = join(projectRoot, LEGACY_CURSOR_RULES);
   mkdirSync(agentsDir, { recursive: true });
-  mkdirSync(join(projectRoot, ".cursor"), { recursive: true });
 
-  if (pathExists(cursorDir)) {
-    const stat = lstatSync(cursorDir);
-    if (stat.isSymbolicLink()) {
-      if (readlinkSync(cursorDir) === CURSOR_RULES_LINK_TARGET) return;
-      rmSync(cursorDir);
-    } else if (stat.isDirectory()) {
-      for (const name of readdirSync(cursorDir)) {
-        const from = join(cursorDir, name);
-        const to = join(agentsDir, name);
-        if (!existsSync(to)) {
-          renameSync(from, to);
-          console.log(`  move: .cursor/rules/${name} -> .agents/rules/${name}`);
-        } else {
-          rmSync(from, { recursive: true, force: true });
-          console.log(
-            `  drop duplicate .cursor/rules/${name} (.agents/rules/${name} already exists)`,
-          );
-        }
-      }
-      rmSync(cursorDir, { recursive: true, force: true });
+  if (!pathExists(legacyDir)) return;
+
+  const stat = lstatSync(legacyDir);
+  if (stat.isSymbolicLink()) {
+    rmSync(legacyDir);
+    console.log("  remove: .cursor/rules (Cursor reads .agents/rules)");
+    return;
+  }
+
+  if (!stat.isDirectory()) {
+    throw new Error(`${LEGACY_CURSOR_RULES} exists and is not a directory`);
+  }
+
+  for (const name of readdirSync(legacyDir)) {
+    const from = join(legacyDir, name);
+    const to = join(agentsDir, name);
+    if (!existsSync(to)) {
+      renameSync(from, to);
+      console.log(`  move: .cursor/rules/${name} -> .agents/rules/${name}`);
     } else {
-      throw new Error(`${CURSOR_RULES_LINK} exists and is not a directory`);
+      rmSync(from, { recursive: true, force: true });
+      console.log(
+        `  drop duplicate .cursor/rules/${name} (.agents/rules/${name} already exists)`,
+      );
     }
   }
+  rmSync(legacyDir, { recursive: true, force: true });
+}
 
-  if (process.platform === "win32") {
-    symlinkSync(agentsDir, cursorDir, "junction");
-  } else {
-    symlinkSync(CURSOR_RULES_LINK_TARGET, cursorDir);
-  }
-  console.log(`  link: .cursor/rules -> ${CURSOR_RULES_LINK_TARGET}`);
+export function migrateLegacySkill(projectRoot: string, name: string): void {
+  const from = join(projectRoot, ".cursor", "skills", name);
+  const to = join(projectRoot, ".agents", "skills", name);
+  if (!existsSync(from) || existsSync(to)) return;
+  mkdirSync(dirname(to), { recursive: true });
+  renameSync(from, to);
+  console.log(`  move: .cursor/skills/${name} -> .agents/skills/${name}`);
 }

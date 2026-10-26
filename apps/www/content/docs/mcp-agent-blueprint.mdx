@@ -37,18 +37,18 @@ Check and record **present / missing** for each:
 | --- | --- |
 | Aura `components.json` | File exists; `registries["@aura"]` points at Aura registry JSON |
 | `DESIGN.md` (root) | File at project root (or install via `@aura/rule-design-md` / `@aura/design-md`) |
-| Agent rules | Always-on process rules in `.agents/rules/*.mdc`. `.cursor/rules` is a symlink to `../.agents/rules`. Design guardrails in `.agents/skills/aura/` |
-| Cursor skills | `.cursor/skills/port-component-to-aura/SKILL.md` and `.cursor/skills/generate-brand-images/SKILL.md` |
+| Agent rules | Always-on process rules in `.agents/rules/*.mdc`. Cursor reads that directory directly. Design guardrails in `.agents/skills/aura/` |
+| Cursor skills | `.agents/skills/port-component-to-aura/SKILL.md` and `.agents/skills/generate-brand-images/SKILL.md` |
 | Third-party audits | Not installed by Aura. Older Emil and Vercel copies under `.cursor/skills/` and `.agents/skills/` are gone after blueprint. See [Audits](/docs/audits) |
 | Image identity | `wiki/obsidian-*/01-Identity/Image-Identity.md`; `status: ready` only when style, palette, composition/motifs, and exclusions are concrete |
 | Gemini image env | `.env.example` names `GOOGLE_API_KEY`; only check whether `.env` has `GOOGLE_API_KEY` or `GEMINI_API_KEY`, never print its value |
 | shadcn MCP | `.cursor/mcp.json` (or user MCP) with `shadcn` → `npx shadcn@latest mcp` |
 | `@shadcn/lint` | Dep `@shadcn/lint` present; `eslint.config.*` registers `shadcn/*` rules; optional `eslint.aura-shadcn.mjs`. Policy text is `.agents/skills/aura/rules/lint.md` |
-| pstack / `/poteto-mode` | Marketplace plugin **pstack** enabled for this Cursor workspace **or** project has a usable poteto-mode entry (e.g. `.cursor/skills/poteto-mode/SKILL.md` or `AGENTS.md` explicitly requiring `/poteto-mode`). Record: `plugin` / `repo-skill` / `missing` |
+| pstack / `/poteto-mode` | Marketplace plugin **pstack** enabled for this Cursor workspace **or** project has a usable poteto-mode entry (e.g. `.agents/skills/poteto-mode/SKILL.md` or `AGENTS.md` explicitly requiring `/poteto-mode`). Record: `plugin` / `repo-skill` / `missing` |
 | pstack model setup (optional) | User-level `~/.cursor/rules/pstack-models.mdc` exists after `/setup-pstack` — note present/missing; do **not** fail the Aura blueprint if missing |
 | `@gdp-ts/core` | `dependencies` or `devDependencies` in `package.json` |
 | gdp-ts ESLint preset | An `eslint.config.*` file references `@gdp-ts/core/lint/eslint`, or `eslint.gdp-ts.mjs` exists and the flat config spreads it |
-| gdp-ts skill | `.agents/skills/gdp-ts/SKILL.md` or `.cursor/skills/gdp-ts/SKILL.md` |
+| gdp-ts skill | `.agents/skills/gdp-ts/SKILL.md` |
 | gdp-ts proofs | `proofs/session-is-valid.ts`, `proofs/user-has-project-role.ts`, `proofs/plan-includes-entitlement.ts`, and `data/delete-project.ts` (project root or `src/`, wherever `@/` points) |
 | Package manager | Prefer `pnpm`; fall back to npm/yarn if that is what the repo uses |
 
@@ -89,17 +89,13 @@ pnpm dlx skills add somosgented/aura-design-system --skill aura
 
 - `@aura/skill-aura` → `.agents/skills/aura/` (design guardrails)
 - `@aura/rules` → `.agents/rules/` (feature map, no comments, DESIGN.md pointer)
-- `@aura/skills` → `.cursor/skills/` (includes `port-component-to-aura` and `generate-brand-images`)
+- `@aura/skills` → `.agents/skills/` (includes `port-component-to-aura` and `generate-brand-images`)
 - `@aura/rule-design-md` → rule + root `DESIGN.md`
 - `@aura/eslint-shadcn-lint` → `eslint.aura-shadcn.mjs` (see **D** below). Lint policy text is in the Aura skill
 
-Cursor loads project rules from `.cursor/rules`. After the registry files land, make that path a symlink to `../.agents/rules` (this is what `aura blueprint` does). If `.cursor/rules` is still a real directory, move each `*.mdc` into `.agents/rules/` when that name is not already there, remove the directory, then:
+Cursor reads project rules from `.agents/rules`. `aura blueprint` writes them there. If `.cursor/rules` is a symlink, blueprint removes it. If it is still a real directory, blueprint moves each file into `.agents/rules/` when that name is not already there, then removes the directory.
 
-```bash
-ln -sfn ../.agents/rules .cursor/rules
-```
-
-`.agents/skills/aura/SKILL.md` is the Aura design skill. Its `rules/*.md` files are references that skill links to, same as `.agents/skills/shadcn/`. Cursor does not apply those markdown files every turn. Always-on process rules stay in `.agents/rules/*.mdc`. `@aura/skills` installs procedure skills (`port-component-to-aura`, `verify-aura-ui`, `aura-forms`) to `.cursor/skills/`.
+`.agents/skills/aura/SKILL.md` is the Aura design skill. Its `rules/*.md` files are references that skill links to, same as `.agents/skills/shadcn/`. Cursor does not apply those markdown files every turn. Always-on process rules stay in `.agents/rules/*.mdc`. `@aura/skills` installs procedure skills (`port-component-to-aura`, `verify-aura-ui`, `aura-forms`) to `.agents/skills/`.
 
 If the feature map, `Image-Identity.md`, or `pnpm ai:image` is missing, scaffold those project capabilities without rewriting the Aura theme:
 
@@ -192,9 +188,9 @@ Additive **agent-rigor** layer (verification + playbooks). It does **not** repla
 5. Smoke: /poteto-mode <small read-only task>. Done means <checkable>. Do not edit unless asked.
 ```
 
-**Aura monorepo:** if scenario is `aura-monorepo`, link root [`AGENTS.md`](https://github.com/somosgented/aura-design-system/blob/canary/AGENTS.md) (and `.cursor/skills/aura-constraints/`, `.cursor/skills/aura-verification/`) — do **not** duplicate a full pstack vendor into the registry.
+**Aura monorepo:** if scenario is `aura-monorepo`, link root [`AGENTS.md`](https://github.com/somosgented/aura-design-system/blob/canary/AGENTS.md) (and `.agents/skills/aura-constraints/`, `.agents/skills/aura-verification/`) — do **not** duplicate a full pstack vendor into the registry.
 
-**Cloud agent note:** If `/poteto-mode` is not found on a cloud agent, say so in the result table. Workarounds: (1) open [cursor.com/agents](https://cursor.com/agents) and prompt “use /poteto-mode (pstack) …”; (2) optional thin `.cursor/skills/poteto-mode/SKILL.md` committed only when the team opts in — do **not** auto-vendor the full plugin.
+**Cloud agent note:** If `/poteto-mode` is not found on a cloud agent, say so in the result table. Workarounds: (1) open [cursor.com/agents](https://cursor.com/agents) and prompt “use /poteto-mode (pstack) …”; (2) optional thin `.agents/skills/poteto-mode/SKILL.md` committed only when the team opts in — do **not** auto-vendor the full plugin.
 
 **Grok Bot note:** Account install of marketplace plugin `9717366` enables pstack skills for Grok Bots; still run `/setup-pstack` in Cursor IDE for local model roles.
 
@@ -235,12 +231,12 @@ Confirm after installs:
 
 - `.agents/skills/aura/SKILL.md` exists when `@aura/skill-aura` or `skills add` was used
 - `.agents/rules/` has the always-on process rules (`feature-map`, `no-comments`, `design-md`) when `@aura/rules` was installed
-- `.cursor/rules` is a symlink to `../.agents/rules`
-- `.cursor/skills/port-component-to-aura/SKILL.md` exists
-- `.cursor/skills/generate-brand-images/SKILL.md` and its generator script exist
-- `.cursor/skills/verify-aura-ui/SKILL.md` and `.cursor/skills/update-feature-map/SKILL.md` exist when `@aura/skills` was added
+- `.cursor/rules` is absent (Cursor reads `.agents/rules` directly)
+- `.agents/skills/port-component-to-aura/SKILL.md` exists
+- `.agents/skills/generate-brand-images/SKILL.md` and its generator script exist
+- `.agents/skills/verify-aura-ui/SKILL.md` and `.agents/skills/update-feature-map/SKILL.md` exist when `@aura/skills` was added
 - `.cursor/skills/` and `.agents/skills/` do not contain `emil-design-eng`, `react-best-practices`, or `vercel-react-best-practices` unless someone installed that audit for this task and has not committed it
-- `.agents/skills/aura/rules/forms.md`, `.cursor/skills/aura-forms/SKILL.md`, and the `form`, `field`, `use-dynamic-form`, and `web-validation` registry items exist
+- `.agents/skills/aura/rules/forms.md`, `.agents/skills/aura-forms/SKILL.md`, and the `form`, `field`, `use-dynamic-form`, and `web-validation` registry items exist
 - `.agents/skills/shadcn/SKILL.md` exists (or document the gap)
 - `wiki/obsidian-*/01-Identity/Image-Identity.md` and `wiki/obsidian-*/Feature-Map/Feature-Map.base` exist
 - `package.json` has `ai:image` and no `brain:progress`; `.env.example` names `GOOGLE_API_KEY`
@@ -250,7 +246,7 @@ Confirm after installs:
 - `@shadcn/lint` installed; `eslint.config.*` spreads `createAuraShadcnLintConfig` (or equivalent); `eslint.aura-shadcn.mjs` present when using the registry item
 - pstack available: `/poteto-mode` resolves in this environment **or** documented missing with reason (local plugin / cloud gap / user skipped)
 - If installed (or install was offered): agent can state that `/setup-pstack` was offered or completed
-- `@gdp-ts/core` is installed; the ESLint preset is spread into the flat config (or `eslint.gdp-ts.mjs` exists and the gap is named); `.agents/skills/gdp-ts/SKILL.md` or `.cursor/skills/gdp-ts/SKILL.md` exists; `data/delete-project.ts` demands session, project-role, and plan proofs
+- `@gdp-ts/core` is installed; the ESLint preset is spread into the flat config (or `eslint.gdp-ts.mjs` exists and the gap is named); `.agents/skills/gdp-ts/SKILL.md` exists; `data/delete-project.ts` demands session, project-role, and plan proofs
 
 Optional smoke: `pnpm dlx shadcn@latest add @aura/button` only if the user asked to install a component; do not add random UI.
 
@@ -282,7 +278,7 @@ Optional smoke: `pnpm dlx shadcn@latest add @aura/button` only if the user asked
 | DESIGN.md | … | … | … |
 | .agents/skills/aura | … | … | … |
 | .agents/rules | … | … | … |
-| .cursor/skills | … | … | … |
+| .agents/skills | … | … | … |
 | Third-party audits | … | … | … |
 | Forms stack (forms.md, aura-forms, components) | … | … | … |
 | Blueprint image identity | … | … | … |

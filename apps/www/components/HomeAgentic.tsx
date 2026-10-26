@@ -33,7 +33,7 @@ const readers = [
   {
     title: "Agents",
     icon: FileTextIcon,
-    body: "Start from a file. In this repository, open AGENTS.md, then DESIGN.md. In an app, open DESIGN.md, .cursor/rules, and the skill for the job. The CLI installs those files.",
+    body: "Start from a file. In this repository, open AGENTS.md, then DESIGN.md. In an app, open DESIGN.md, .agents/rules, and the skill for the job. The CLI installs those files.",
   },
   {
     title: "One kit",
@@ -73,7 +73,7 @@ const routes = [
 const harness = [
   {
     title: "Aura files",
-    body: "AGENTS.md in this repo, DESIGN.md, and .cursor/rules.",
+    body: "AGENTS.md in this repo, DESIGN.md, and .agents/rules.",
     href: "/docs#own-files",
   },
   {

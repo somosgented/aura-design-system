@@ -8,7 +8,7 @@ Aura is an **agentic design system** for product UI. People browse this site. Co
 
 You own the code. Aura is distributed in shadcn mode: the CLI copies component source into your app. Registry items are addressed as `@aura/button`, `@aura/card`, and the rest of the catalog.
 
-`DESIGN.md` holds the narrative spec and the long tables. The Aura skill at `.agents/skills/aura/` holds the design guardrails. Always-on process rules live in `.agents/rules/` and load through the `.cursor/rules` symlink. Other skills are the procedures. When they disagree, follow `DESIGN.md` and the component source, then fix the page that drifted.
+`DESIGN.md` holds the narrative spec and the long tables. The Aura skill at `.agents/skills/aura/` holds the design guardrails. Always-on process rules live in `.agents/rules/`. Cursor reads that directory directly. Other skills are the procedures. When they disagree, follow `DESIGN.md` and the component source, then fix the page that drifted.
 
 ## What to open
 
@@ -64,7 +64,7 @@ There is no command that adds every component. Names are listed at [all.txt](htt
 Read before you write UI.
 
 1. In the Aura monorepo, open root `AGENTS.md`, then root `DESIGN.md`.
-2. In a consumer app, open root `DESIGN.md` and `.agents/skills/aura/SKILL.md`. Always-on process rules are in `.cursor/rules/` (a symlink to `.agents/rules/`). If they are missing, run `pnpm dlx @aura-design/cli@latest setup` or follow the [agent blueprint](/docs/mcp-agent-blueprint).
+2. In a consumer app, open root `DESIGN.md` and `.agents/skills/aura/SKILL.md`. Always-on process rules are in `.agents/rules/`. If they are missing, run `pnpm dlx @aura-design/cli@latest setup` or follow the [agent blueprint](/docs/mcp-agent-blueprint).
 3. Open the [agent harness](#agent-harness) and pick the layer for the job. A rule is a limit. A skill is the steps. Follow both.
 4. Install the component (`pnpm dlx shadcn@latest add @aura/button`, swapping in the registry name) and use its variants. Layout and width at the call site are fine. Padding, color, and type belong on the component.
 5. After UI edits, run the project lint. `@shadcn/lint` flags spacing off the 13px scale, raw palette colors, and restyle of a design-system component. The `verify-aura-ui` skill is that loop.
@@ -76,8 +76,8 @@ The harness is what an agent reads before it edits. Aura's own files and skills 
 | Layer | Job | Where it lives |
 | --- | --- | --- |
 | [Own files](#own-files) | Policy, narrative spec, design skill, and process rules | `AGENTS.md` in this repo, root `DESIGN.md`, `.agents/skills/aura/`, `.agents/rules/` |
-| [Consumer skills](#consumer-skills) | Procedures an app can install | `@aura/skills` writes `.cursor/skills/` |
-| [Monorepo skills](#monorepo-skills) | How to edit this repository | `.cursor/skills/aura-constraints`, `.cursor/skills/aura-verification` |
+| [Consumer skills](#consumer-skills) | Procedures an app can install | `@aura/skills` writes `.agents/skills/` |
+| [Monorepo skills](#monorepo-skills) | How to edit this repository | `.agents/skills/aura-constraints`, `.agents/skills/aura-verification` |
 | [Poteto mode](#poteto-mode) | Multi-step engineering playbooks | Marketplace plugin. `/setup-pstack` and `/poteto-mode` are not in this repo |
 | [gdp-ts](#gdp-ts) | Proof-carrying authorization | `aura blueprint` installs `@gdp-ts/core` and the `rauchg/gdp-ts` skill |
 | [Feature map](#feature-map) | The only project note | `wiki/obsidian-*/Feature-Map/`, skill `update-feature-map` |
@@ -92,14 +92,14 @@ The harness is what an agent reads before it edits. Aura's own files and skills 
 | Root [`AGENTS.md`](https://github.com/somosgented/aura-design-system/blob/canary/AGENTS.md) | Agents in this monorepo. Public APIs, stories, tokens, and the boundary of the repo. Consumer apps start at `DESIGN.md`. |
 | Root `DESIGN.md` | Everyone. Narrative source of truth: color steps, the 13px grid, type, icons, motion. `@aura/rules` installs it. |
 | `.agents/skills/aura/` | Agents, when the task is UI. `SKILL.md` plus `rules/*.md`, same layout as the shadcn skill. `@aura/skill-aura` installs it. Also: `pnpm dlx skills add somosgented/aura-design-system --skill aura`. |
-| `.cursor/rules/*.mdc` | Agents, on every edit. Always-on process rules only: feature map, no comments, and the `DESIGN.md` pointer. Blueprint symlinks this path to `.agents/rules/`. |
+| `.agents/rules/*.mdc` | Agents, on every edit. Always-on process rules only: feature map, no comments, and the `DESIGN.md` pointer. Cursor reads this directory directly. |
 | [Foundations](/docs/foundations), [Aura skill](/docs/rules/aura-skill), and [Rules](/docs/rules) | People reading the same constraints on this site. |
 
 Blueprint also installs the upstream shadcn skill at `.agents/skills/shadcn` (`pnpm dlx skills add shadcn/ui`). Use it for the CLI, registry search, and presets. The Aura skill wins on icons, forms, spacing, typography, and restyle.
 
 ### Consumer skills
 
-`@aura/skills` installs these under `.cursor/skills/`. They are the procedures a consumer app gets from the registry.
+`@aura/skills` installs these under `.agents/skills/`. They are the procedures a consumer app gets from the registry.
 
 | Skill | Use it when |
 | --- | --- |
@@ -138,7 +138,7 @@ Practice and the starter files: [gdp-ts](/docs/gdp-ts).
 
 The feature map is the only project documentation. One short note per feature lives under `wiki/obsidian-*/Feature-Map/`, shown as a table by `Feature-Map.base`. The folder suffix is the `package.json` name with its first segment stripped. Aura's vault is `wiki/obsidian-aura-design-project/Feature-Map/`.
 
-The rule is `.agents/rules/feature-map.mdc`, loaded through the `.cursor/rules` symlink. The procedure is skill `update-feature-map`. When you open or update a PR, update the note of each feature that PR changes, inside that PR. Code is the source of truth while you work. Do not keep a progress log, and do not write secrets into notes. Name environment variables only.
+The rule is `.agents/rules/feature-map.mdc`. Cursor reads that directory directly. The procedure is skill `update-feature-map`. When you open or update a PR, update the note of each feature that PR changes, inside that PR. Code is the source of truth while you work. Do not keep a progress log, and do not write secrets into notes. Name environment variables only.
 
 Blueprint creates the vault, the rule, and the skill.
 

@@ -181,7 +181,7 @@ pnpm dlx shadcn@latest add @aura/skill-port-component-to-aura
 pnpm dlx shadcn@latest add @aura/skills
 ```
 
-→ `.cursor/skills/port-component-to-aura/SKILL.md`
+→ `.agents/skills/port-component-to-aura/SKILL.md`
 
 ## Example prompts
 

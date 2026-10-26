@@ -3,7 +3,7 @@ import { execa } from "execa";
 import { existsSync, mkdirSync, readFileSync, unlinkSync, writeFileSync } from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
-import { linkCursorRulesToAgents } from "./rules-link.js";
+import { ensureAgentsRules, migrateLegacySkill } from "./rules-link.js";
 
 const LEGACY_FORMS_RULE = ".agents/rules/components-forms.mdc";
 const LEGACY_FORMS_RULE_HASHES = [
@@ -18,8 +18,8 @@ export const FORM_AGENT_FILES = [
     previousAuraHashes: [],
   },
   {
-    template: "cursor/skills/aura-forms/SKILL.md",
-    dest: ".cursor/skills/aura-forms/SKILL.md",
+    template: "agents/skills/aura-forms/SKILL.md",
+    dest: ".agents/skills/aura-forms/SKILL.md",
     previousAuraHashes: [
       "5b5c66c36f98dae764ddb51d80621fb76c31355189b1d1ddc21e7ff8295c5ac8",
       "062c50339376cd88045c0df00c5b2f3304a7e943f69cb92c11e488086b15c216",
@@ -63,7 +63,8 @@ export function syncFormAgentFiles(
   projectRoot: string,
   force: boolean,
 ): { dest: string; status: AgentFileStatus }[] {
-  linkCursorRulesToAgents(projectRoot);
+  ensureAgentsRules(projectRoot);
+  migrateLegacySkill(projectRoot, "aura-forms");
   const legacyPath = join(projectRoot, LEGACY_FORMS_RULE);
   if (existsSync(legacyPath)) {
     const legacyHash = sha256(readFileSync(legacyPath));

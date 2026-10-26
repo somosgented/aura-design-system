@@ -29,6 +29,10 @@ pnpm dlx @aura-design/cli@latest colors --accent "#f84657" --gray "#8c7375"
 pnpm dlx @aura-design/cli@latest colors --accent "#4015ca" --gray "#7254cb"
 ```
 
+## Agent files
+
+`blueprint` writes skills and rules under `.agents/`. Cursor reads that directory directly. A legacy `.cursor/rules` symlink is removed. A real `.cursor/rules` directory is moved into `.agents/rules/`, and a procedure skill still under `.cursor/skills/<name>` is moved to `.agents/skills/<name>` when that destination is missing.
+
 ## Third-party audits
 
 Emil Kowalski’s skills, Vercel’s `vercel-react-best-practices`, and WorkOS’s `workos` skill are not part of Aura. Install them from upstream when you want an audit. Blueprint removes the Emil and Vercel folders older versions copied into `.cursor/skills/` and `.agents/skills/`. See [auradesignsystem.com/docs/audits](https://auradesignsystem.com/docs/audits).

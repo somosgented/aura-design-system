@@ -8,7 +8,7 @@ user-invocable: true
 
 A registry-first design system. Components are copied into the app and updated with the Aura CLI and the `@aura` shadcn registry. Narrative tokens live in root `DESIGN.md`. Monorepo policy lives in root `AGENTS.md`. This skill is the design guardrail agents load when the task is UI.
 
-Always-on process rules stay outside this skill, in `.agents/rules/` (`feature-map`, `no-comments`, `design-md`, and in this monorepo `agents-md`). Cursor loads those through the `.cursor/rules` symlink. Do not fold them into this folder.
+Always-on process rules stay outside this skill, in `.agents/rules/` (`feature-map`, `no-comments`, `design-md`, and in this monorepo `agents-md`). Cursor reads that directory directly. Do not fold them into this folder.
 
 ## Principles
 
