@@ -2,9 +2,9 @@
 feature: Docs site
 status: shipped
 area: www
-routes: [/, /docs, /llms.txt, /llms-full.txt, /api/search, /r]
-components: [apps/www/app/, apps/www/content/docs/, apps/www/components/AuraAesthetic.tsx, apps/www/components/brand/BrandLockup.tsx]
-pr: https://github.com/somosgented/aura-design-system/pull/168
-updated: 2026-10-25
+routes: [/, /docs, /docs/installation, /llms.txt, /llms-full.txt, /api/search, /r]
+components: [apps/www/app/(home)/page.tsx, apps/www/components/HeroSection.tsx, apps/www/components/HomeAgentic.tsx, apps/www/components/AuraAesthetic.tsx, apps/www/components/brand/BrandLockup.tsx, apps/www/components/theme/ThemeBootScript.tsx, apps/www/components/theme/AuraThemeProvider.tsx, apps/www/lib/aura-theme-boot.ts, apps/www/content/docs/index.mdx, apps/www/content/docs/installation.mdx, apps/www/utils/site.ts]
+pr: https://github.com/somosgented/aura-design-system/pull/172
+updated: 2026-10-26
 ---
-The public docs and marketing site at auradesignsystem.com: Next.js and Fumadocs, MDX under `apps/www/content/docs/`, plus the built registry under `/r` and LLM text exports. The header Theme button opens a side sheet for accent and gray; the canvas comes from the gray seed, the sidebar keeps a separate light and dark toggle, and the Aura mark repaints its tile, ring, and orb from those tokens. On the homepage palette panel, Reset and Download CSS stack full width below the small breakpoint and sit in a row from `sm` up. The component preview includes a Sign up form at `/#sign-up`, composed from Aura Card, Field, Input, Button, and FieldSeparator.
+The public site presents Aura as an agentic design system: one source of truth for people and coding agents. The homepage states that, routes each job, and lists the agent harness. Get started at `/docs` teaches the install, how an agent should start, the harness (Aura files and skills, Poteto mode, gdp-ts, the feature map, Gemini brand images, and optional Emil and Vercel audits), and the spacing, color, type, icon, motion, and registry rules. The palette scales share one gray-a6 hairline, a head script paints the saved theme before the first frame and a theme change eases the color tokens, the preview shows Aura reinterpreting Radix UI (including the Sign up form at `/#sign-up`), and `/docs/installation` stays the install reference.

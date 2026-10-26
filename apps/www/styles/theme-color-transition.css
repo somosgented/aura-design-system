@@ -1,0 +1,492 @@
+@property --accent-1 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #fdfdff;
+}
+
+@property --accent-2 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #f7f8ff;
+}
+
+@property --accent-3 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #eef1ff;
+}
+
+@property --accent-4 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #e2e7ff;
+}
+
+@property --accent-5 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #d5dcff;
+}
+
+@property --accent-6 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #c5cdff;
+}
+
+@property --accent-7 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #b0b9ff;
+}
+
+@property --accent-8 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #939bff;
+}
+
+@property --accent-9 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #4015ca;
+}
+
+@property --accent-10 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #3500b6;
+}
+
+@property --accent-11 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #5446e1;
+}
+
+@property --accent-12 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #272370;
+}
+
+@property --accent-a1 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #0000ff02;
+}
+
+@property --accent-a2 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #0020ff08;
+}
+
+@property --accent-a3 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #002dff11;
+}
+
+@property --accent-a4 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #002cff1d;
+}
+
+@property --accent-a5 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #002bff2a;
+}
+
+@property --accent-a6 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #0024ff3a;
+}
+
+@property --accent-a7 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #001eff4f;
+}
+
+@property --accent-a8 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #0013ff6c;
+}
+
+@property --accent-a9 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #2f00c5ea;
+}
+
+@property --accent-a10 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #3500b6;
+}
+
+@property --accent-a11 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #1300d6b9;
+}
+
+@property --accent-a12 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #050059dc;
+}
+
+@property --accent-contrast {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #fff;
+}
+
+@property --accent-surface {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #f5f6ffcc;
+}
+
+@property --accent-indicator {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #4015ca;
+}
+
+@property --accent-track {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #4015ca;
+}
+
+@property --gray-1 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #fcfaff;
+}
+
+@property --gray-2 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #f9f6ff;
+}
+
+@property --gray-3 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #f0ecff;
+}
+
+@property --gray-4 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #e8e2ff;
+}
+
+@property --gray-5 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #e0daff;
+}
+
+@property --gray-6 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #d9d1ff;
+}
+
+@property --gray-7 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #cfc4ff;
+}
+
+@property --gray-8 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #bcabff;
+}
+
+@property --gray-9 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #936cff;
+}
+
+@property --gray-10 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #8863f2;
+}
+
+@property --gray-11 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #6949bf;
+}
+
+@property --gray-12 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #27005f;
+}
+
+@property --gray-a1 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #6600ff05;
+}
+
+@property --gray-a2 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #5500ff09;
+}
+
+@property --gray-a3 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #3600ff13;
+}
+
+@property --gray-a4 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #3500ff1d;
+}
+
+@property --gray-a5 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #2a00ff25;
+}
+
+@property --gray-a6 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #2d00ff2e;
+}
+
+@property --gray-a7 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #3001ff3b;
+}
+
+@property --gray-a8 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #3400ff54;
+}
+
+@property --gray-a9 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #4400ff93;
+}
+
+@property --gray-a10 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #3d00ea9c;
+}
+
+@property --gray-a11 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #2d00a6b6;
+}
+
+@property --gray-a12 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #27005f;
+}
+
+@property --gray-contrast {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #ffffff;
+}
+
+@property --gray-surface {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #ffffffcc;
+}
+
+@property --gray-indicator {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #936cff;
+}
+
+@property --gray-track {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #936cff;
+}
+
+@property --info {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #e8ebfe;
+}
+
+@property --info-contrast {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #0927ec;
+}
+
+@property --success {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #e8fef7;
+}
+
+@property --success-contrast {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #045d3c;
+}
+
+@property --danger {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #feefe8;
+}
+
+@property --danger-contrast {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #8e3106;
+}
+
+@property --warning {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #fefbe8;
+}
+
+@property --warning-contrast {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #5d5104;
+}
+
+@property --aura-status-dot-queued {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #eaeaea;
+}
+
+@property --aura-status-dot-building {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #f5a623;
+}
+
+@property --aura-status-dot-error {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #ee0000;
+}
+
+@property --aura-status-dot-ready {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #50e3c2;
+}
+
+@property --aura-status-dot-canceled {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #eaeaea;
+}
+
+@property --chart-1 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #4015ca;
+}
+
+@property --aura-mark-plate {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #fcfaff;
+}
+
+@property --aura-mark-stroke {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #e8e2ff;
+}
+
+@property --aura-mark-hole {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #fcfaff;
+}
+
+@property --aura-mark-from {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #4015ca;
+}
+
+@property --aura-mark-to {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #27005f;
+}
+
+html[data-theme-transition] {
+  transition-property: --accent-1, --accent-2, --accent-3, --accent-4,
+    --accent-5, --accent-6, --accent-7, --accent-8, --accent-9, --accent-10,
+    --accent-11, --accent-12, --accent-a1, --accent-a2, --accent-a3, --accent-a4,
+    --accent-a5, --accent-a6, --accent-a7, --accent-a8, --accent-a9,
+    --accent-a10, --accent-a11, --accent-a12, --accent-contrast,
+    --accent-surface, --accent-indicator, --accent-track, --gray-1, --gray-2,
+    --gray-3, --gray-4, --gray-5, --gray-6, --gray-7, --gray-8, --gray-9,
+    --gray-10, --gray-11, --gray-12, --gray-a1, --gray-a2, --gray-a3, --gray-a4,
+    --gray-a5, --gray-a6, --gray-a7, --gray-a8, --gray-a9, --gray-a10,
+    --gray-a11, --gray-a12, --gray-contrast, --gray-surface, --gray-indicator,
+    --gray-track, --info, --info-contrast, --success, --success-contrast,
+    --danger, --danger-contrast, --warning, --warning-contrast,
+    --aura-status-dot-queued, --aura-status-dot-building,
+    --aura-status-dot-error, --aura-status-dot-ready, --aura-status-dot-canceled,
+    --chart-1;
+  transition-duration: var(--theme-color-transition, 250ms);
+  transition-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+html[data-theme-transition] .aura-mark {
+  transition-property: --aura-mark-plate, --aura-mark-stroke, --aura-mark-hole,
+    --aura-mark-from, --aura-mark-to;
+  transition-duration: var(--theme-color-transition, 250ms);
+  transition-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+html[data-theme-transition] .shiki,
+html[data-theme-transition] .shiki span {
+  transition-property: background-color, color;
+  transition-duration: var(--theme-color-transition, 250ms);
+  transition-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme-transition],
+  html[data-theme-transition] .aura-mark,
+  html[data-theme-transition] .shiki,
+  html[data-theme-transition] .shiki span {
+    transition: none;
+  }
+}

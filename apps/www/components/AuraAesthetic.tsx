@@ -230,6 +230,9 @@ function ColorUsageRange({ label }: { label: string }) {
   );
 }
 
+const paletteScaleClassName =
+  "grid grid-cols-6 gap-px overflow-hidden rounded-md border border-gray-a6 bg-gray-a6 bg-clip-padding sm:grid-cols-12";
+
 function ColorSwatch({
   scale,
   step,
@@ -244,9 +247,8 @@ function ColorSwatch({
       type="button"
       title={`${scale} ${step} (${varName})`}
       className={cn(
-        "relative aspect-[4/3] w-full outline-none transition-transform",
-        "hover:z-10 hover:scale-[1.04] focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-accent-8",
-        "border border-gray-a4 first:rounded-l-md last:rounded-r-md"
+        "relative aspect-[4/3] w-full border-0 outline-none transition-transform",
+        "hover:z-10 hover:scale-[1.04] focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent-8",
       )}
       style={{ backgroundColor: `var(${varName})` }}
       onClick={async () => {
@@ -268,7 +270,7 @@ function ColorSwatch({
 
 function ScaleRow({ scale }: { scale: "accent" | "gray" }) {
   return (
-    <div className="grid grid-cols-6 overflow-hidden rounded-md sm:grid-cols-12">
+    <div className={paletteScaleClassName}>
       {Array.from({ length: 12 }, (_, index) => (
         <ColorSwatch
           key={`${scale}-${index + 1}`}
@@ -814,8 +816,8 @@ export default function AuraAesthetic() {
         <div className="mx-auto flex max-w-2xl flex-col items-center gap-1 text-center">
           <h2 className="font-bold text-gray-12">Create a custom palette</h2>
           <p className="text-balance text-gray-11">
-            Same live preview as the header color mixer: pick accent and gray,
-            then download CSS for your app.
+            Twelve accent steps and twelve gray steps. Agents use these
+            tokens. Pick seeds, then download the CSS.
           </p>
 
           <div
@@ -930,7 +932,7 @@ export default function AuraAesthetic() {
               Component preview
             </h3>
             <p className="text-xs text-gray-11">
-              Aura components using your live palette.
+              Aura components reinterpreting Radix UI, shown with your live palette.
             </p>
           </div>
           <div className="rounded-xl border border-gray-6 bg-gray-1 p-2 md:p-3">
@@ -940,11 +942,10 @@ export default function AuraAesthetic() {
 
         <div className="mx-auto flex max-w-xl flex-col items-center gap-1 pb-1 text-center">
           <p className="text-gray-11">
-            Start with great taste, finish with{" "}
-            <span className="text-gray-12">your own flavor</span>.
+            The steps above are the tokens. Build with them.
           </p>
           <Button asChild size="lg">
-            <Link href="/docs">Get Started</Link>
+            <Link href="/docs">Get started</Link>
           </Button>
         </div>
       </div>

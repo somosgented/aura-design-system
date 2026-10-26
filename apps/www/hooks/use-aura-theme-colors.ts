@@ -1,10 +1,23 @@
 "use client";
 
-import { useCallback, useLayoutEffect, useState, useSyncExternalStore } from "react";
+import {
+  useCallback,
+  useLayoutEffect,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import { useTheme } from "next-themes";
 
-import { presets, resolvePreset, type ThemePreset } from "@/components/theme/presets";
-import { AURA_THEME_COLORS_KEY } from "@/lib/aura-theme-boot";
+import {
+  presets,
+  resolvePreset,
+  type ThemePreset,
+} from "@/components/theme/presets";
+import {
+  AURA_THEME_COLORS_KEY,
+  AURA_THEME_MODE_KEY,
+  THEME_COLOR_TRANSITION_MS,
+} from "@/lib/aura-theme-boot";
 import { generateRadixColors } from "@/utils/custom-color-functions";
 import { canvasFromGray } from "@/utils/scheme-from-seed";
 
@@ -24,7 +37,8 @@ if (!auraPreset) {
   throw new Error("Missing Aura theme preset.");
 }
 
-export const DEFAULT_THEME_COLORS: ThemeColorsByMode = resolvePreset(auraPreset);
+export const DEFAULT_THEME_COLORS: ThemeColorsByMode =
+  resolvePreset(auraPreset);
 
 const STORAGE_KEY = AURA_THEME_COLORS_KEY;
 const CHANGE_EVENT = "aura-theme-colors-change";
@@ -53,9 +67,7 @@ function sameThemeColors(a: ThemeColors, b: ThemeColors) {
 }
 
 function sameThemeColorsByMode(a: ThemeColorsByMode, b: ThemeColorsByMode) {
-  return (
-    sameThemeColors(a.light, b.light) && sameThemeColors(a.dark, b.dark)
-  );
+  return sameThemeColors(a.light, b.light) && sameThemeColors(a.dark, b.dark);
 }
 
 function isValidThemeColors(value: unknown): value is ThemeColors {
@@ -81,8 +93,7 @@ function clearCorruptStorage() {
   if (typeof window === "undefined") return;
   try {
     localStorage.removeItem(STORAGE_KEY);
-  } catch {
-  }
+  } catch {}
 }
 
 function toNormalizedThemeColors(colors: ThemeColors): ThemeColors {
@@ -119,7 +130,7 @@ function readFromStorage(): ThemeColorsByMode {
   return memoryStore;
 }
 
-function writeToStorage(next: ThemeColorsByMode) {
+function writeToStorage(next: ThemeColorsByMode, transition = false) {
   const safeNext = isValidThemeColorsByMode(next)
     ? {
         light: toNormalizedThemeColors(next.light),
@@ -127,12 +138,12 @@ function writeToStorage(next: ThemeColorsByMode) {
       }
     : DEFAULT_THEME_COLORS;
   if (sameThemeColorsByMode(memoryStore, safeNext)) return;
+  if (transition) requestThemeTransition();
   memoryStore = safeNext;
   if (typeof window !== "undefined") {
     try {
       localStorage.setItem(STORAGE_KEY, serializeTheme(safeNext));
-    } catch {
-    }
+    } catch {}
   }
   emitChange();
 }
@@ -142,10 +153,11 @@ export function pinAppearance(mode: "light" | "dark") {
 }
 
 export function consumePaintAppearance(
-  resolved: string | undefined
+  resolved: string | undefined,
 ): "light" | "dark" | null {
   if (resolved === "light" || resolved === "dark") {
-    if (pinnedAppearance && pinnedAppearance !== resolved) return pinnedAppearance;
+    if (pinnedAppearance && pinnedAppearance !== resolved)
+      return pinnedAppearance;
     pinnedAppearance = null;
     return resolved;
   }
@@ -239,13 +251,9 @@ export function backgroundLuminance(hex: string) {
   const normalized = normalizeHex(hex).slice(1);
   const channel = (start: number) => {
     const value = parseInt(normalized.slice(start, start + 2), 16) / 255;
-    return value <= 0.04045
-      ? value / 12.92
-      : ((value + 0.055) / 1.055) ** 2.4;
+    return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
   };
-  return (
-    0.2126 * channel(0) + 0.7152 * channel(2) + 0.0722 * channel(4)
-  );
+  return 0.2126 * channel(0) + 0.7152 * channel(2) + 0.0722 * channel(4);
 }
 
 export function appearanceForBackground(hex: string): "light" | "dark" {
@@ -256,7 +264,7 @@ export function appearanceForBackground(hex: string): "light" | "dark" {
 
 export function themeColorVariables(
   appearance: "light" | "dark",
-  colors: ThemeColors
+  colors: ThemeColors,
 ) {
   const generated = safeGenerateRadixColors({
     appearance,
@@ -325,20 +333,107 @@ function serializeTheme(colors: ThemeColorsByMode) {
 
 export function injectThemeColors(
   appearance: "light" | "dark",
-  colors: ThemeColors
+  colors: ThemeColors,
 ) {
   if (typeof document === "undefined") return null;
   const vars = themeColorVariables(appearance, colors);
   if (!vars) return null;
   const rootElement = document.documentElement;
   for (const [name, value] of Object.entries(vars)) {
+    if (rootElement.style.getPropertyValue(name) === value) continue;
     rootElement.style.setProperty(name, value);
   }
   return vars;
 }
 
+function isInjectedThemeProperty(name: string) {
+  return (
+    name.startsWith("--accent-") ||
+    name.startsWith("--gray-") ||
+    name === "--primary" ||
+    name.startsWith("--primary-") ||
+    name === "--secundary" ||
+    name.startsWith("--secundary-")
+  );
+}
+
+function clearInlineThemeColors(root: HTMLElement) {
+  const names: string[] = [];
+  for (let index = 0; index < root.style.length; index += 1) {
+    const name = root.style.item(index);
+    if (isInjectedThemeProperty(name)) names.push(name);
+  }
+  for (const name of names) root.style.removeProperty(name);
+}
+
+let themeTransitionRequested = false;
+let themeTransitionTimer = 0;
+
+export function requestThemeTransition() {
+  themeTransitionRequested = true;
+}
+
+export function consumeThemeTransitionRequest() {
+  const requested = themeTransitionRequested;
+  themeTransitionRequested = false;
+  return requested;
+}
+
+export function armThemeColorTransition() {
+  if (typeof document === "undefined") return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const root = document.documentElement;
+  const alreadyArmed = root.hasAttribute("data-theme-transition");
+  root.style.setProperty(
+    "--theme-color-transition",
+    `${THEME_COLOR_TRANSITION_MS}ms`,
+  );
+  root.setAttribute("data-theme-transition", "");
+  if (!alreadyArmed) {
+    void root.offsetWidth;
+  }
+  window.clearTimeout(themeTransitionTimer);
+  themeTransitionTimer = window.setTimeout(() => {
+    root.removeAttribute("data-theme-transition");
+  }, THEME_COLOR_TRANSITION_MS + 50);
+}
+
+export function readStoredAppearance(): "light" | "dark" | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const stored = localStorage.getItem(AURA_THEME_MODE_KEY) || "system";
+    if (stored === "light" || stored === "dark") return stored;
+    if (stored !== "system") return null;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  } catch {
+    return null;
+  }
+}
+
+export function syncDocumentTheme(
+  mode: "light" | "dark",
+  themeColors: ThemeColorsByMode,
+) {
+  if (typeof document === "undefined") return;
+  const root = document.documentElement;
+  const hasMode = root.classList.contains(mode);
+  const hasOther = root.classList.contains(mode === "dark" ? "light" : "dark");
+  if (!hasMode || hasOther) {
+    root.classList.remove("light", "dark");
+    root.classList.add(mode);
+  }
+  if (root.style.colorScheme !== mode) root.style.colorScheme = mode;
+  if (sameThemeColorsByMode(themeColors, DEFAULT_THEME_COLORS)) {
+    clearInlineThemeColors(root);
+    return;
+  }
+  injectThemeColors(mode, themeColors[mode]);
+}
+
 export function generateGlobalsCssContent(
-  themeColors: ThemeColorsByMode
+  themeColors: ThemeColorsByMode,
 ): string {
   const lightColors =
     safeGenerateRadixColors({
@@ -371,7 +466,7 @@ export function generateGlobalsCssContent(
   const generateScaleVars = (
     name: string,
     scale: string[],
-    alphaScale: string[]
+    alphaScale: string[],
   ) => {
     let css = "";
     scale.forEach((val, i) => {
@@ -386,7 +481,7 @@ export function generateGlobalsCssContent(
 
   const generateExtraVars = (
     name: string,
-    colors: ReturnType<typeof generateRadixColors>
+    colors: ReturnType<typeof generateRadixColors>,
   ) => {
     const contrast = name === "accent" ? colors.accentContrast : "#ffffff";
     const surface =
@@ -558,12 +653,12 @@ ${generateExtraVars("gray", darkColors)}
 }
 
 export function useAuraThemeColors() {
-  const { setTheme, theme, resolvedTheme } = useTheme();
+  const { setTheme: setThemeMode, theme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const themeColors = useSyncExternalStore(
     subscribe,
     getSnapshot,
-    getServerSnapshot
+    getServerSnapshot,
   );
 
   useLayoutEffect(() => {
@@ -603,7 +698,7 @@ export function useAuraThemeColors() {
         [appearance]: nextMode,
       });
     },
-    [appearance]
+    [appearance],
   );
 
   const applyScheme = useCallback((scheme: ThemeColorsByMode) => {
@@ -614,22 +709,28 @@ export function useAuraThemeColors() {
     });
   }, []);
 
-  const applyPreset = useCallback(
-    (preset: ThemePreset) => {
-      const scheme = resolvePreset(preset);
-      if (!isValidThemeColorsByMode(scheme)) return;
-      const normalized: ThemeColorsByMode = {
-        light: toNormalizedThemeColors(scheme.light),
-        dark: toNormalizedThemeColors(scheme.dark),
-      };
-      writeToStorage(normalized);
-      injectThemeColors(appearance, normalized[appearance]);
+  const applyPreset = useCallback((preset: ThemePreset) => {
+    const scheme = resolvePreset(preset);
+    if (!isValidThemeColorsByMode(scheme)) return;
+    const normalized: ThemeColorsByMode = {
+      light: toNormalizedThemeColors(scheme.light),
+      dark: toNormalizedThemeColors(scheme.dark),
+    };
+    writeToStorage(normalized, true);
+  }, []);
+
+  const setTheme = useCallback(
+    (value: string | ((theme: string) => string)) => {
+      const next =
+        typeof value === "function" ? value(theme ?? "system") : value;
+      if (next !== (theme ?? "system")) requestThemeTransition();
+      setThemeMode(value);
     },
-    [appearance]
+    [setThemeMode, theme],
   );
 
   const resetDefaults = useCallback(() => {
-    writeToStorage(DEFAULT_THEME_COLORS);
+    writeToStorage(DEFAULT_THEME_COLORS, true);
   }, []);
 
   const downloadCSS = useCallback(() => {
