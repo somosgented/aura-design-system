@@ -3,8 +3,8 @@ import { execa } from "execa";
 import { readFileSync, existsSync, readdirSync, statSync, writeFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
-import { generateGlobalsCss } from "./colors.js";
-import { generateRadixColors } from "../utils/color-utils.js";
+import { writeGlobalsCss } from "./colors.js";
+import { createAuraColorTheme, generateGlobalsCss } from "../utils/color-theme.js";
 import { applyBlueprintToProject } from "./blueprint.js";
 
 export async function applyAuraToProject(appDir: string): Promise<void> {
@@ -75,36 +75,11 @@ export async function applyAuraToProject(appDir: string): Promise<void> {
     `\n✓ components.json has been updated with Aura Design System configuration`,
   );
 
-  const lightColors = generateRadixColors({
-    appearance: "light",
+  const theme = createAuraColorTheme({
     accent: "#4015ca",
     gray: "#7254cb",
-    background: "#FFFFFF",
   });
-
-  const darkColors = generateRadixColors({
-    appearance: "dark",
-    accent: "#4015ca",
-    gray: "#7254cb",
-    background: "#100b21",
-  });
-
-  const globalsCSS = generateGlobalsCss(lightColors, darkColors);
-
-  const possibleGlobalsPaths = [
-    join(appDir, "app/globals.css"),
-    join(appDir, "src/app/globals.css"),
-    join(appDir, "styles/globals.css"),
-    join(appDir, "src/styles/globals.css"),
-  ];
-
-  let globalsPath = possibleGlobalsPaths.find((p) => existsSync(p));
-
-  if (!globalsPath) {
-    globalsPath = join(appDir, "app/globals.css");
-  }
-
-  writeFileSync(globalsPath, globalsCSS.trim() + "\n", "utf-8");
+  writeGlobalsCss(appDir, generateGlobalsCss(theme));
   console.log(
     `\n✓ globals.css has been updated with Aura Design System styles`,
   );
@@ -120,6 +95,7 @@ export async function applyAuraToProject(appDir: string): Promise<void> {
       "@aura/page-get-starter",
       "@aura/css-main",
       "@aura/rules",
+      "@aura/skill-aura",
       "@aura/skills",
     ],
     {

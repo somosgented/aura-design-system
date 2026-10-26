@@ -40,7 +40,7 @@ Creates a Next.js app with `create-next-app`, then applies Aura to the new (or c
 
 1. Writes `components.json` with `@aura` and `@aura-dev` registries
 2. Generates light/dark Radix scales into `globals.css`
-3. Runs `shadcn add` for `@aura/class-names`, `@aura/page-get-starter`, `@aura/css-main`, `@aura/rules`, and `@aura/skills`
+3. Runs `shadcn add` for `@aura/class-names`, `@aura/page-get-starter`, `@aura/css-main`, `@aura/rules`, `@aura/skill-aura`, and `@aura/skills`
 4. Runs the same scaffolding as [`blueprint`](#blueprint), including [gdp-ts](/docs/gdp-ts) proofs
 
 ```bash
@@ -76,11 +76,12 @@ pnpm dlx @aura-design/cli@latest link --output ./apps/web/components.json
 
 Scaffolds Aura project tooling into any repo with a `package.json`:
 
-- The feature map: `wiki/obsidian-*/Feature-Map/Feature-Map.base` (suffix from the package name, first segment stripped), plus `.cursor/rules/feature-map.mdc` and `.cursor/skills/update-feature-map/`. It is the only project documentation: one note per feature, updated in the PR that changes it. There is no progress log
+- The feature map: `wiki/obsidian-*/Feature-Map/Feature-Map.base` (suffix from the package name, first segment stripped), plus `.agents/rules/feature-map.mdc` and `.agents/skills/update-feature-map/`. It is the only project documentation: one note per feature, updated in the PR that changes it. There is no progress log
 - `wiki/obsidian-*/01-Identity/Image-Identity.md` for image generation
-- `.cursor/skills/generate-brand-images/` (identity-aware Gemini landing images)
+- `.agents/skills/generate-brand-images/` (identity-aware Gemini landing images)
 - Third-party [audits](/docs/audits) are not installed. Re-running blueprint deletes the Emil and Vercel skill folders an older CLI copied into `.cursor/skills/` and `.agents/skills/`
-- The forms stack: `.cursor/rules/components-forms.mdc`, `.cursor/skills/aura-forms/`, and the `@aura/form`, `@aura/field`, `@aura/use-dynamic-form`, and `@aura/web-validation` registry items (ajv, ajv-formats, ajv-errors). Missing rule and skill files are written, untouched older Aura copies are updated, and customized copies are kept unless you pass `--force`. Components are added only when missing and when `components.json` has the `@aura` registry
+- The forms stack: `.agents/skills/aura/rules/forms.md`, `.agents/skills/aura-forms/`, and the `@aura/form`, `@aura/field`, `@aura/use-dynamic-form`, and `@aura/web-validation` registry items (ajv, ajv-formats, ajv-errors). Missing skill files are written, untouched older Aura copies are updated, and customized copies are kept unless you pass `--force`. A previous Aura copy of `.agents/rules/components-forms.mdc` is removed. A customized copy of that file is left in place. Components are added only when missing and when `components.json` has the `@aura` registry
+- Agent files under `.agents/`. Cursor reads `.agents/rules` directly. If `.cursor/rules` is still a symlink, blueprint removes it. If it is a real directory, blueprint moves each file into `.agents/rules/` when that name is not already there, then removes the directory. What remains in `.agents/rules/` is process policy (feature map, no comments, DESIGN.md pointer). Design guardrails live in `.agents/skills/aura/`, same layout as `.agents/skills/shadcn/` (`SKILL.md` plus `rules/*.md`). A procedure skill that still sits in `.cursor/skills/<name>` is moved to `.agents/skills/<name>` when that destination is missing
 - `scripts/preflight.ts`
 - Upstream [shadcn/ui skills](https://ui.shadcn.com/docs/skills) via `pnpm dlx skills add shadcn/ui` (`.agents/skills/shadcn`)
 - `sonar-project.properties` plus Sonar-related scripts / devDependencies
@@ -89,7 +90,7 @@ Scaffolds Aura project tooling into any repo with a `package.json`:
 
 Also runs automatically at the end of `init` and `setup`.
 
-On repos bootstrapped by an older CLI, blueprint removes the Project Brain agent files it used to install: `.cursor/rules/self-documenting-system.mdc`, `.cursor/skills/update-project-brain/`, `scripts/brain-progress.ts`, and the `brain:progress` script when it still has the Aura value. Existing wiki notes stay where they are. It also deletes the Emil skill folders and `react-best-practices` / `vercel-react-best-practices` from `.cursor/skills/` and `.agents/skills/`.
+On repos bootstrapped by an older CLI, blueprint removes the Project Brain agent files it used to install: `.cursor/rules/self-documenting-system.mdc`, `.agents/rules/self-documenting-system.mdc`, `.cursor/skills/update-project-brain/`, `scripts/brain-progress.ts`, and the `brain:progress` script when it still has the Aura value. Existing wiki notes stay where they are. It also deletes the Emil skill folders and `react-best-practices` / `vercel-react-best-practices` from `.cursor/skills/` and `.agents/skills/`.
 
 | Option | Description |
 | --- | --- |
@@ -105,19 +106,26 @@ pnpm dlx @aura-design/cli@latest blueprint ./apps/web --force --suffix my-app
 
 ### `colors`
 
-Regenerates `globals.css` from accent, gray, and background hex values (Radix-style 12-step scales, light and dark). Pass flags or answer prompts.
+`--accent` and `--gray` are the seeds. `--background` is an optional light canvas. The dark canvas is derived from the gray seed.
+
+When `--accent` or `--gray` is omitted, the command prompts for the missing seed. It does not prompt for a background. When a flag value is not `#rgb` or `#rrggbb`, the command exits 1 and does not prompt.
+
+The command prints a WCAG report. When the report contains a `fail` line, the command exits 1 and does not write `globals.css`. When the report contains a `warn` line and no `fail` line, the command still writes the file.
+
+`:root:not(.light)` inside `@media (prefers-color-scheme: dark)` and `.dark` set the same custom properties.
 
 | Option | Description |
 | --- | --- |
-| `--accent <hex>` | Accent color |
-| `--gray <hex>` | Gray / neutral base |
-| `--background <hex>` | App background |
+| `--accent <hex>` | Accent seed |
+| `--gray <hex>` | Gray seed |
+| `--background <hex>` | Optional light canvas |
 
 ```bash
-pnpm dlx @aura-design/cli@latest colors --accent "#4015ca" --gray "#7254cb" --background "#FFFFFF"
+pnpm dlx @aura-design/cli@latest colors --accent "#f84657" --gray "#8c7375"
+pnpm dlx @aura-design/cli@latest colors --accent "#4015ca" --gray "#7254cb"
 ```
 
-Looks for `app/globals.css`, `src/app/globals.css`, `styles/globals.css`, or `src/styles/globals.css` (creates `app/globals.css` if none exist).
+The command writes the first of these files that exists. The candidates are `app/globals.css`, `src/app/globals.css`, `styles/globals.css`, and `src/styles/globals.css`. When none exist, it creates `app/globals.css`.
 
 ### `typography generate`
 

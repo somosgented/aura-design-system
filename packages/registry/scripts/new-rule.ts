@@ -78,7 +78,7 @@ header:
 
   console.log("\nNext steps:");
   console.log("  1. Edit the rule content in registry/default/rules/" + name + ".mdc");
-  console.log("  2. Run pnpm sync:rules to copy from .cursor/rules if you edit there");
+  console.log("  2. Run pnpm sync:rules to copy from .agents/rules if you edit there");
   console.log("  3. Run pnpm registry:generate to update the registry");
   console.log("  4. Run pnpm docs:generate to regenerate rules docs");
 }

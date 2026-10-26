@@ -1,0 +1,13 @@
+---
+alwaysApply: true
+title: DESIGN.md
+description: Point agents at DESIGN.md as the Aura narrative design specification.
+---
+
+# Aura DESIGN.md
+
+`DESIGN.md` at the repo root is the **narrative design specification** for Aura (theme, color roles, typography, 13px grid, motion, product principles).
+
+* **MUST**: When implementing UI, aligning with brand, or reasoning about Aura tokens, read and follow `DESIGN.md` together with the Aura skill at `.agents/skills/aura/`.
+* **SHOULD**: Prefer tokens and patterns in `DESIGN.md` over ad-hoc styling or one-off hex values.
+* **MUST NOT**: Duplicate long design tables into rules or skills. Always-on rules state process policy; the Aura skill holds design guardrails; `DESIGN.md` holds the narrative detail.

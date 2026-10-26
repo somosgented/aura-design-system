@@ -1,37 +1,109 @@
+import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
-import Section from "@/components/Section";
-import { Button } from "@/components/ui/Button";
+
+import { StatusDot } from "@/components/ui/StatusDot";
+
+const columns = [
+  {
+    title: "Product",
+    links: [
+      { href: "/docs", label: "Get started" },
+      { href: "/docs/cli", label: "CLI" },
+      { href: "/docs/components", label: "Components" },
+      { href: "/docs/forms", label: "Forms" },
+    ],
+  },
+  {
+    title: "Guides",
+    links: [
+      { href: "/docs/handbook", label: "Handbook" },
+      { href: "/docs/rules", label: "Rules" },
+      { href: "/docs/foundations", label: "Foundations" },
+      { href: "/docs/utils", label: "Utils" },
+    ],
+  },
+  {
+    title: "Agents",
+    links: [
+      { href: "/docs#agent-harness", label: "Harness" },
+      { href: "/docs#own-files", label: "Files" },
+      { href: "/docs#gdp-ts", label: "gdp-ts" },
+      { href: "/docs#feature-map", label: "Feature map" },
+    ],
+  },
+  {
+    title: "Source",
+    links: [
+      {
+        href: "https://github.com/somosgented/aura-design-system",
+        label: "GitHub",
+        external: true,
+      },
+      {
+        href: "https://design-md.auradesignsystem.com/",
+        label: "DESIGN.md",
+        external: true,
+      },
+    ],
+  },
+] as const;
 
 export default function Footer() {
   return (
-    <footer className="border-t border-gray-6 bg-gray-1">
-      <Section className="p-1">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-1 text-sm text-gray-11">
-          <p>
-            © {new Date().getFullYear()} Aura Design System. All rights
-            reserved.
-          </p>
-          <div className="flex items-center gap-4">
-            <Button variant="pill" size="icon" asChild>
-              <Link
-                href="https://github.com/somosgented/aura-design-system"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub"
-              >
-                <svg
-                  className="icon"
-                  viewBox="0 0 16 16"
-                  fill="currentColor"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
-                </svg>
-              </Link>
-            </Button>
+    <footer className="home-footer bg-accent-9 text-accent-contrast">
+      <div className="home-column">
+        <div className="home-footer-grid">
+          <div className="home-footer-cell flex flex-col gap-1 p-2">
+            <h4 className="h6 text-accent-contrast">
+              Aura Design System © {new Date().getFullYear()}
+            </h4>
+            <div className="flex flex-col gap-1 text-sm">
+              <span>
+                <Link href="/docs" className="home-footer-link">
+                  Get started
+                </Link>
+                {" · "}
+                <Link href="/docs/rules" className="home-footer-link">
+                  Rules
+                </Link>
+              </span>
+              <div className="flex items-center gap-0.5">
+                <StatusDot state="ready" />
+                <span>Registry nominal</span>
+              </div>
+            </div>
           </div>
+          {columns.map((column) => (
+            <div key={column.title} className="home-footer-cell p-2">
+              <h4 className="h6 mb-1 text-accent-contrast">{column.title}</h4>
+              <ul className="flex flex-col gap-1">
+                {column.links.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      {...("external" in link && link.external
+                        ? { target: "_blank", rel: "noopener noreferrer" }
+                        : {})}
+                      className="home-footer-link inline-flex items-center gap-0.5 text-sm"
+                    >
+                      {link.label}
+                      {"external" in link && link.external ? (
+                        <>
+                          <ExternalLinkIcon className="icon" aria-hidden />
+                          <span className="sr-only"> (opens in a new tab)</span>
+                        </>
+                      ) : null}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
-      </Section>
+        <div className="home-hatch home-wordmark" aria-hidden>
+          Aura
+        </div>
+      </div>
     </footer>
   );
 }

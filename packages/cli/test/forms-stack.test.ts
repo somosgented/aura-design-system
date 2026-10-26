@@ -51,21 +51,21 @@ describe("forms stack blueprint", () => {
   it("keeps the template rule and skill identical to the monorepo and registry copies", () => {
     for (const { template } of FORM_AGENT_FILES) {
       const shipped = readFileSync(join(templates, template), "utf8");
-      const monorepoPath = template.replace(/^cursor\//, ".cursor/");
+      const monorepoPath = template.replace(/^agents\//, ".agents/");
       assert.equal(shipped, readFileSync(join(repoRoot, monorepoPath), "utf8"), template);
-      const registryPath = template.replace(/^cursor\//, "");
+      const registryPath = template.replace(/^(agents|cursor)\//, "");
       assert.equal(shipped, readFileSync(join(registryRoot, registryPath), "utf8"), template);
     }
   });
 
-  it("forbids zod, widens the rule globs, and keeps the server action pattern", () => {
-    const rule = readFileSync(join(templates, "cursor/rules/components-forms.mdc"), "utf8");
+  it("forbids zod, names the action and schema paths, and keeps the server action pattern", () => {
+    const rule = readFileSync(join(templates, "agents/skills/aura/rules/forms.md"), "utf8");
     assert.match(rule, new RegExp(NO_ZOD_LINE.replace(/[.*+?^${}()|[\]\\/]/g, "\\$&")));
-    for (const glob of ["**/actions.ts", "**/*-actions.ts", "app/**/route.ts", "**/validation/**", "**/*schema*"]) {
+    for (const glob of ["**/actions.ts", "**/*-actions.ts", "app/**/route.ts", "**/validation/**", "*schema*"]) {
       assert.ok(rule.includes(glob), glob);
     }
     assert.match(rule, /check auth and authorization/);
-    const skill = readFileSync(join(templates, "cursor/skills/aura-forms/SKILL.md"), "utf8");
+    const skill = readFileSync(join(templates, "agents/skills/aura-forms/SKILL.md"), "utf8");
     assert.match(skill, /do not add zod, yup or valibot/);
     assert.match(skill, /"use server"/);
     assert.match(skill, /lib\/validation\/profile\.schema\.ts/);
@@ -75,15 +75,22 @@ describe("forms stack blueprint", () => {
   it("writes missing files, upgrades untouched Aura copies, and keeps customized ones", withProject((root) => {
     const [rule, skill] = FORM_AGENT_FILES;
     mkdirSync(join(root, ".cursor/rules"), { recursive: true });
-    writeFileSync(join(root, rule.dest), "my team rule\n");
+    writeFileSync(join(root, ".cursor/rules/components-forms.mdc"), "my team rule\n");
 
     const first = syncFormAgentFiles(root, false);
-    assert.deepEqual(first.map((r) => r.status), ["customized", "write"]);
-    assert.equal(readFileSync(join(root, rule.dest), "utf8"), "my team rule\n");
+    assert.deepEqual(first.map((r) => r.status), ["write", "write"]);
+    assert.equal(readFileSync(join(root, ".agents/rules/components-forms.mdc"), "utf8"), "my team rule\n");
+    assert.equal(existsSync(join(root, ".cursor/rules")), false);
+    assert.ok(existsSync(join(root, rule.dest)));
     assert.ok(existsSync(join(root, skill.dest)));
 
     const second = syncFormAgentFiles(root, false);
-    assert.deepEqual(second.map((r) => r.status), ["customized", "unchanged"]);
+    assert.deepEqual(second.map((r) => r.status), ["unchanged", "unchanged"]);
+
+    writeFileSync(join(root, rule.dest), "custom forms rule\n");
+    const kept = syncFormAgentFiles(root, false);
+    assert.deepEqual(kept.map((r) => r.status), ["customized", "unchanged"]);
+    assert.equal(readFileSync(join(root, rule.dest), "utf8"), "custom forms rule\n");
 
     const forced = syncFormAgentFiles(root, true);
     assert.deepEqual(forced.map((r) => r.status), ["update", "unchanged"]);

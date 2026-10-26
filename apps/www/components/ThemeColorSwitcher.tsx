@@ -1,9 +1,14 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
-import { DownloadIcon, MixerHorizontalIcon, UploadIcon } from "@radix-ui/react-icons";
+import { useEffect, useId, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import {
+  Cross2Icon,
+  DownloadIcon,
+  MixerHorizontalIcon,
+  UploadIcon,
+} from "@radix-ui/react-icons";
 
-import { presets } from "@/components/theme/presets";
 import { Button } from "@/components/ui/Button";
 import {
   FileUpload,
@@ -11,34 +16,42 @@ import {
 } from "@/components/ui/FileUpload";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/Popover";
+import { SideSheet, SideSheetPanel } from "@/components/ui/SideSheet";
 import {
   normalizeHex,
   toColorInputValue,
   useAuraThemeColors,
   type ThemeColors,
+  type ThemeColorsByMode,
 } from "@/hooks/use-aura-theme-colors";
+import {
+  presets,
+  resolvePreset,
+  type ThemePreset,
+} from "@/components/theme/presets";
 import { cn } from "@/utils/class-names";
 import { schemeFromSeed, seedFromImage } from "@/utils/scheme-from-seed";
 
-function colorsMatch(
-  current: ThemeColors,
-  preset: { accent: string; gray: string; background: string }
-) {
+function colorsMatch(current: ThemeColors, next: ThemeColors) {
   return (
-    normalizeHex(current.accent) === normalizeHex(preset.accent) &&
-    normalizeHex(current.gray) === normalizeHex(preset.gray) &&
-    normalizeHex(current.background) === normalizeHex(preset.background)
+    normalizeHex(current.accent) === normalizeHex(next.accent) &&
+    normalizeHex(current.gray) === normalizeHex(next.gray) &&
+    normalizeHex(current.background) === normalizeHex(next.background)
+  );
+}
+
+function presetMatches(themeColors: ThemeColorsByMode, preset: ThemePreset) {
+  const resolved = resolvePreset(preset);
+  return (
+    colorsMatch(themeColors.light, resolved.light) &&
+    colorsMatch(themeColors.dark, resolved.dark)
   );
 }
 
 export function ThemeColorSwitcher() {
   const {
     appearance,
+    themeColors,
     currentColors,
     setTheme,
     setColor,
@@ -48,56 +61,90 @@ export function ThemeColorSwitcher() {
     downloadCSS,
   } = useAuraThemeColors();
   const presetsLabelId = useId();
+  const panelId = useId();
   const seedId = useId();
   const accentId = useId();
   const grayId = useId();
-  const backgroundId = useId();
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   const [accentInput, setAccentInput] = useState(currentColors.accent);
   const [grayInput, setGrayInput] = useState(currentColors.gray);
-  const [backgroundInput, setBackgroundInput] = useState(
-    currentColors.background
-  );
   const [imageFiles, setImageFiles] = useState<File[]>([]);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     setAccentInput(currentColors.accent);
     setGrayInput(currentColors.gray);
-    setBackgroundInput(currentColors.background);
-  }, [currentColors.accent, currentColors.gray, currentColors.background]);
+  }, [currentColors.accent, currentColors.gray]);
 
-  const handleColorChange = (value: string, field: keyof ThemeColors) => {
+  useEffect(() => {
+    if (!open) return;
+    closeRef.current?.focus();
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      event.preventDefault();
+      setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  const handleColorChange = (value: string, field: "accent" | "gray") => {
     if (field === "accent") setAccentInput(value);
     if (field === "gray") setGrayInput(value);
-    if (field === "background") setBackgroundInput(value);
     setColor(field, value);
   };
 
-  return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button
-          aria-label="Customize colors"
-          type="button"
-          size="icon"
-          variant="pill"
-        >
-          <MixerHorizontalIcon className="icon" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent
-        className="w-24 max-w-full overflow-x-hidden overflow-y-auto"
-        align="end"
+  const panel = (
+    <SideSheet className="fixed inset-y-0 end-0 z-50 h-dvh w-36 max-w-full">
+      <SideSheetPanel
+        id={panelId}
+        open
+        side="end"
+        label="Theme settings"
+        className="h-full w-full overflow-y-auto"
       >
-        <div className="flex max-h-48 min-w-0 flex-col gap-1 overflow-y-auto p-1">
+        <div className="flex min-w-0 flex-col gap-1">
+          <div className="flex items-start justify-between gap-0.5">
+            <div className="flex min-w-0 flex-col gap-0.5">
+              <h2 className="text-sm font-semibold text-gray-12">
+                Theme settings
+              </h2>
+              <p className="text-sm text-gray-11">
+                Presets store a light pair and a dark pair.
+              </p>
+            </div>
+            <Button
+              ref={closeRef}
+              type="button"
+              variant="pill"
+              size="icon"
+              aria-label="Close theme settings"
+              onClick={() => setOpen(false)}
+            >
+              <Cross2Icon className="icon" />
+            </Button>
+          </div>
+
           <div className="flex items-center justify-between gap-0.5">
-            <p className="text-sm font-semibold text-gray-12">Theme Settings</p>
-            <div className="flex rounded-sm bg-gray-3 p-0">
+            <p className="text-sm text-gray-12">Appearance</p>
+            <div
+              className="flex rounded-sm bg-gray-3 p-0"
+              role="group"
+              aria-label="Appearance"
+            >
               <button
                 type="button"
+                aria-pressed={appearance === "light"}
                 onClick={() => setTheme("light")}
                 className={cn(
                   "cursor-pointer rounded border-none px-0.5 py-0.5 text-xs font-medium",
+                  "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-8",
                   appearance === "light"
                     ? "bg-gray-1 text-gray-12 shadow-sm"
                     : "bg-transparent text-gray-11"
@@ -107,9 +154,11 @@ export function ThemeColorSwitcher() {
               </button>
               <button
                 type="button"
+                aria-pressed={appearance === "dark"}
                 onClick={() => setTheme("dark")}
                 className={cn(
                   "cursor-pointer rounded border-none px-0.5 py-0.5 text-xs font-medium",
+                  "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-8",
                   appearance === "dark"
                     ? "bg-gray-1 text-gray-12 shadow-sm"
                     : "bg-transparent text-gray-11"
@@ -130,13 +179,14 @@ export function ThemeColorSwitcher() {
               aria-labelledby={presetsLabelId}
             >
               {presets.map((preset) => {
-                const active = colorsMatch(currentColors, preset);
+                const resolved = resolvePreset(preset);
+                const active = presetMatches(themeColors, preset);
                 return (
                   <button
                     key={preset.id}
                     type="button"
                     aria-pressed={active}
-                    aria-label={`${preset.name} color preset`}
+                    aria-label={`${preset.name} preset, light and dark`}
                     onClick={() => applyPreset(preset)}
                     className={cn(
                       "flex min-w-0 items-center gap-0.5 rounded border px-0.5 py-0.5 text-start text-sm text-gray-12",
@@ -151,17 +201,23 @@ export function ThemeColorSwitcher() {
                       aria-hidden
                     >
                       <span
-                        className="size-1.5"
-                        style={{ backgroundColor: preset.accent }}
-                      />
+                        className="flex size-1.5 items-center justify-center"
+                        style={{ backgroundColor: resolved.light.background }}
+                      >
+                        <span
+                          className="size-0.5 rounded-full"
+                          style={{ backgroundColor: resolved.light.accent }}
+                        />
+                      </span>
                       <span
-                        className="size-1.5"
-                        style={{ backgroundColor: preset.gray }}
-                      />
-                      <span
-                        className="size-1.5"
-                        style={{ backgroundColor: preset.background }}
-                      />
+                        className="flex size-1.5 items-center justify-center"
+                        style={{ backgroundColor: resolved.dark.background }}
+                      >
+                        <span
+                          className="size-0.5 rounded-full"
+                          style={{ backgroundColor: resolved.dark.accent }}
+                        />
+                      </span>
                     </span>
                     <span className="truncate">{preset.name}</span>
                   </button>
@@ -226,14 +282,6 @@ export function ThemeColorSwitcher() {
             placeholder="#7254cb"
             onChange={(value) => handleColorChange(value, "gray")}
           />
-          <ColorField
-            id={backgroundId}
-            label="Background Color"
-            value={backgroundInput}
-            color={currentColors.background}
-            placeholder="#100b21"
-            onChange={(value) => handleColorChange(value, "background")}
-          />
 
           <div className="grid grid-cols-2 gap-0.5">
             <Button
@@ -255,8 +303,25 @@ export function ThemeColorSwitcher() {
             </Button>
           </div>
         </div>
-      </PopoverContent>
-    </Popover>
+      </SideSheetPanel>
+    </SideSheet>
+  );
+
+  return (
+    <>
+      <Button
+        type="button"
+        variant="pill"
+        size="icon"
+        aria-label="Theme"
+        aria-expanded={open}
+        aria-controls={open ? panelId : undefined}
+        onClick={() => setOpen((value) => !value)}
+      >
+        <MixerHorizontalIcon className="icon" />
+      </Button>
+      {mounted && open ? createPortal(panel, document.body) : null}
+    </>
   );
 }
 

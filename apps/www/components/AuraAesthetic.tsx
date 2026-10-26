@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useId, useState, type FormEvent, type ReactNode } from "react";
 import {
   AccessibilityIcon,
   BookmarkIcon,
@@ -42,12 +41,6 @@ import {
 } from "@/components/ui/Avatar";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/Card";
 import { Checkbox } from "@/components/ui/Checkbox";
 import {
   DropdownMenu,
@@ -60,6 +53,12 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu";
+import {
+  Field,
+  FieldGroup,
+  FieldLabel,
+  FieldSeparator,
+} from "@/components/ui/Field";
 import {
   HoverCard,
   HoverCardContent,
@@ -224,6 +223,9 @@ function ColorUsageRange({ label }: { label: string }) {
   );
 }
 
+const paletteScaleClassName =
+  "grid grid-cols-6 gap-px overflow-hidden rounded-md border border-gray-a6 bg-gray-a6 bg-clip-padding sm:grid-cols-12";
+
 function ColorSwatch({
   scale,
   step,
@@ -238,9 +240,8 @@ function ColorSwatch({
       type="button"
       title={`${scale} ${step} (${varName})`}
       className={cn(
-        "relative aspect-[4/3] w-full outline-none transition-transform",
-        "hover:z-10 hover:scale-[1.04] focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-accent-8",
-        "border border-gray-a4 first:rounded-l-md last:rounded-r-md"
+        "relative aspect-[4/3] w-full border-0 outline-none transition-transform",
+        "hover:z-10 hover:scale-[1.04] focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent-8",
       )}
       style={{ backgroundColor: `var(${varName})` }}
       onClick={async () => {
@@ -262,7 +263,7 @@ function ColorSwatch({
 
 function ScaleRow({ scale }: { scale: "accent" | "gray" }) {
   return (
-    <div className="grid grid-cols-6 overflow-hidden rounded-md sm:grid-cols-12">
+    <div className={paletteScaleClassName}>
       {Array.from({ length: 12 }, (_, index) => (
         <ColorSwatch
           key={`${scale}-${index + 1}`}
@@ -379,6 +380,110 @@ function ToDoList({
   );
 }
 
+function SignUpPreview() {
+  const signupTitleId = useId();
+  const accountTitleId = useId();
+  const nameId = useId();
+  const emailId = useId();
+  const passwordId = useId();
+  const [notice, setNotice] = useState("");
+
+  const keepPreviewOnPage = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setNotice("This preview does not create an account.");
+  };
+
+  return (
+    <section
+      id="sign-up"
+      aria-labelledby={signupTitleId}
+      className="flex flex-col gap-1.5"
+    >
+      <h3
+        id={signupTitleId}
+        className="small m-0 font-semibold text-gray-12"
+      >
+        Sign up
+      </h3>
+      <form
+        aria-labelledby={accountTitleId}
+        className="flex flex-col gap-2"
+        onSubmit={keepPreviewOnPage}
+      >
+        <h4
+          id={accountTitleId}
+          className="small m-0 font-semibold text-gray-12"
+        >
+          Create account
+        </h4>
+        <FieldGroup>
+          <Field>
+            <FieldLabel htmlFor={nameId}>Full name</FieldLabel>
+            <Input
+              id={nameId}
+              name="name"
+              autoComplete="name"
+              placeholder="Enter your name"
+              required
+              size="sm"
+            />
+          </Field>
+          <Field>
+            <FieldLabel htmlFor={emailId}>Email</FieldLabel>
+            <Input
+              id={emailId}
+              name="email"
+              type="email"
+              inputMode="email"
+              autoComplete="email"
+              autoCapitalize="none"
+              spellCheck={false}
+              placeholder="Enter your email address"
+              required
+              size="sm"
+            />
+          </Field>
+          <Field>
+            <FieldLabel htmlFor={passwordId}>Password</FieldLabel>
+            <Input
+              id={passwordId}
+              name="password"
+              type="password"
+              autoComplete="new-password"
+              autoCapitalize="none"
+              spellCheck={false}
+              placeholder="Enter your password"
+              required
+              size="sm"
+            />
+          </Field>
+        </FieldGroup>
+        <div className="flex flex-col gap-1">
+          <Button type="submit" size="sm" className="w-full">
+            Create account
+          </Button>
+          <FieldSeparator>OR</FieldSeparator>
+          <Button
+            type="button"
+            size="sm"
+            variant="pill"
+            className="w-full"
+            onClick={() => {
+              setNotice("This preview does not continue with GitHub.");
+            }}
+          >
+            <GitHubLogoIcon className="icon" aria-hidden="true" />
+            Continue with GitHub
+          </Button>
+          <p role="status" className="small m-0 text-gray-11">
+            {notice}
+          </p>
+        </div>
+      </form>
+    </section>
+  );
+}
+
 function ComponentsShowcase() {
   const [todos, setTodos] = useState<ToDoItem[]>([
     { id: "a", completed: false },
@@ -430,17 +535,20 @@ function ComponentsShowcase() {
 
         <div className="overflow-hidden rounded-md border border-gray-6 bg-gray-1">
           {[
-            { icon: BoxIcon, label: "Box", indent: false },
-            { icon: TokensIcon, label: "Grid", indent: false },
-            { icon: ImageIcon, label: "Image", indent: true },
-            { icon: ImageIcon, label: "Image", indent: true },
-            { icon: TextIcon, label: "Text", indent: true },
+            { icon: BoxIcon, label: "Box", depth: 0, selected: true },
+            { icon: TokensIcon, label: "Grid", depth: 1 },
+            { icon: ImageIcon, label: "Image", depth: 2 },
+            { icon: ImageIcon, label: "Image", depth: 2 },
+            { icon: TextIcon, label: "Text", depth: 2 },
           ].map((layer, index) => (
             <div
               key={`${layer.label}-${index}`}
               className={cn(
-                "flex items-center gap-0.5 border-b border-gray-6 px-1 py-1 last:border-b-0 hover:bg-gray-3",
-                layer.indent && "pl-3"
+                "flex items-center gap-0.5 py-0.5 pr-1",
+                layer.selected && "bg-accent-3",
+                layer.depth === 0 && "pl-1",
+                layer.depth === 1 && "pl-2.5",
+                layer.depth === 2 && "pl-4",
               )}
             >
               <layer.icon className="icon text-gray-11" />
@@ -492,10 +600,8 @@ function ComponentsShowcase() {
               href="#profile"
               onClick={(event) => event.preventDefault()}
               className={cn(
-                "flex items-center gap-1 rounded-md border p-1 transition-colors hover:bg-gray-3",
-                surface
-                  ? "border-gray-6 bg-accent-surface"
-                  : "border-gray-6 bg-gray-1"
+                "flex items-center gap-1 py-0.5 transition-colors hover:bg-gray-3",
+                surface && "bg-accent-surface"
               )}
             >
               <Avatar className="size-3 shrink-0">
@@ -517,7 +623,7 @@ function ComponentsShowcase() {
 
       <div className="flex min-w-0 flex-col gap-1.5">
         <div className="hidden min-w-0 items-center gap-1 md:flex">
-          <div className="flex min-w-0 flex-1 items-center gap-0.5 overflow-x-auto rounded-md border border-gray-6 bg-gray-1 p-0.5">
+          <div className="flex min-w-0 flex-1 items-center gap-0.5 overflow-x-auto">
             {toolbarItems.map(([Icon, label], index) => (
               <div key={label} className="flex shrink-0 items-center">
                 {(index === 1 || index === 5 || index === 8) && (
@@ -579,78 +685,7 @@ function ComponentsShowcase() {
           </DropdownMenu>
         </div>
 
-        <div className="relative overflow-hidden rounded-xl border border-gray-6 bg-gray-2 px-1.5 py-2.5">
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 opacity-50"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle at 15% 10%, var(--accent-a4), transparent 42%), radial-gradient(circle at 85% 0%, var(--accent-a3), transparent 38%), linear-gradient(160deg, var(--gray-2), var(--gray-3))",
-            }}
-          />
-          <div className="relative mx-auto w-full max-w-[360px]">
-            <p className="mb-1.5 text-center text-sm font-semibold text-gray-12">
-              Sign up
-            </p>
-            <Card className="border-gray-6 bg-gray-1 shadow-sm">
-              <CardHeader className="pb-1">
-                <CardTitle className="text-sm font-semibold text-gray-12">
-                  Create account
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-col gap-2.5">
-                  <div className="flex flex-col gap-0.5">
-                    <Label htmlFor="example-name" className="text-sm">
-                      Full name
-                    </Label>
-                    <Input
-                      id="example-name"
-                      placeholder="Enter your name"
-                      className="h-3 rounded-md border border-gray-6 bg-gray-1 px-1 text-gray-12"
-                    />
-                  </div>
-                  <div className="flex flex-col gap-0.5">
-                    <Label htmlFor="example-email" className="text-sm">
-                      Email
-                    </Label>
-                    <Input
-                      id="example-email"
-                      type="email"
-                      placeholder="Enter your email address"
-                      className="h-3 rounded-md border border-gray-6 bg-gray-1 px-1 text-gray-12"
-                    />
-                  </div>
-                  <div className="flex flex-col gap-0.5">
-                    <Label htmlFor="example-password" className="text-sm">
-                      Password
-                    </Label>
-                    <Input
-                      id="example-password"
-                      type="password"
-                      placeholder="Enter your password"
-                      className="h-3 rounded-md border border-gray-6 bg-gray-1 px-1 text-gray-12"
-                    />
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <Button type="button" size="sm">
-                      Create account
-                    </Button>
-                    <div className="flex items-center gap-1">
-                      <Separator className="flex-1" />
-                      <span className="text-xs text-gray-11">OR</span>
-                      <Separator className="flex-1" />
-                    </div>
-                    <Button type="button" size="sm" variant="pill">
-                      <GitHubLogoIcon className="icon" />
-                      Continue with GitHub
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
+        <SignUpPreview />
       </div>
 
       <div className="flex min-w-0 flex-col gap-1.5">
@@ -735,9 +770,7 @@ function ComponentsShowcase() {
           <LinksExample muted />
         </div>
 
-        <div className="rounded-lg border border-gray-6 bg-gray-1 p-1.5">
-          <ToDoList items={todos} onItemsChange={setTodos} />
-        </div>
+        <ToDoList items={todos} onItemsChange={setTodos} />
       </div>
     </div>
   );
@@ -759,13 +792,13 @@ export default function AuraAesthetic() {
     };
 
   return (
-    <section className="overflow-x-clip border-t border-gray-6 bg-gray-2">
-      <div className="smesh pad flex flex-col gap-2.5 px-2 py-3 md:px-3">
+    <div>
+      <div className="flex flex-col gap-2.5">
         <div className="mx-auto flex max-w-2xl flex-col items-center gap-1 text-center">
           <h2 className="font-bold text-gray-12">Create a custom palette</h2>
           <p className="text-balance text-gray-11">
-            Same live preview as the header color mixer: pick accent, gray, and
-            background, then download CSS for your app.
+            Twelve accent steps and twelve gray steps. Agents use these
+            tokens. Pick seeds, then download the CSS.
           </p>
 
           <div
@@ -803,7 +836,7 @@ export default function AuraAesthetic() {
         </div>
 
         <div className="mx-auto flex w-full max-w-4xl flex-col items-stretch gap-1 rounded-xl border border-gray-6 bg-gray-1 p-2 sm:flex-row sm:items-end sm:gap-1.5">
-          <div className="grid flex-1 grid-cols-1 gap-1 sm:grid-cols-3">
+          <div className="grid flex-1 grid-cols-1 gap-1 sm:grid-cols-2">
             <ColorField
               id="custom-accent"
               label="Accent"
@@ -816,14 +849,17 @@ export default function AuraAesthetic() {
               value={currentColors.gray}
               onChange={handleFieldChange("gray")}
             />
-            <ColorField
-              id="custom-background"
-              label="Background"
-              value={currentColors.background}
-              onChange={handleFieldChange("background")}
-            />
           </div>
-          <div className="flex shrink-0 flex-wrap items-center gap-1">
+          <div
+            role="group"
+            aria-label="Palette actions"
+            className={cn(
+              "flex w-full flex-col gap-1",
+              "max-sm:[&>*]:w-full",
+              "sm:w-auto sm:shrink-0 sm:flex-row sm:flex-wrap sm:items-center",
+              "[&>*]:focus-visible:relative [&>*]:focus-visible:z-10",
+            )}
+          >
             <Button type="button" variant="pill" onClick={resetDefaults}>
               Reset
             </Button>
@@ -877,24 +913,12 @@ export default function AuraAesthetic() {
               Component preview
             </h3>
             <p className="text-xs text-gray-11">
-              Aura components using your live palette.
+              Aura components reinterpreting Radix UI, shown with your live palette.
             </p>
           </div>
-          <div className="rounded-xl border border-gray-6 bg-gray-1 p-2 md:p-3">
-            <ComponentsShowcase />
-          </div>
-        </div>
-
-        <div className="mx-auto flex max-w-xl flex-col items-center gap-1 pb-1 text-center">
-          <p className="text-gray-11">
-            Start with great taste, finish with{" "}
-            <span className="text-gray-12">your own flavor</span>.
-          </p>
-          <Button asChild size="lg">
-            <Link href="/docs">Get Started</Link>
-          </Button>
+          <ComponentsShowcase />
         </div>
       </div>
-    </section>
+    </div>
   );
 }

@@ -1,9 +1,6 @@
-"use client";
-
 import Link from "next/link";
 import { ArrowRightIcon } from "@radix-ui/react-icons";
 
-import Section from "@/components/Section";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/utils/class-names";
 
@@ -23,24 +20,22 @@ export default function HomeDocSection({
   className,
 }: HomeDocSectionProps) {
   return (
-    <Section className={cn("border-t border-gray-6 bg-gray-2 px-2 md:px-3", className)}>
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-        <div className="flex items-start gap-2">
-          <span className="text-gray-11 shrink-0 mt-0.5" aria-hidden>
-            {icon}
-          </span>
-          <div>
-            <h2 className="h4 font-bold text-gray-12">{title}</h2>
-            <p className="p text-gray-11 mt-0.5">{description}</p>
-          </div>
+    <div className={cn("flex flex-col gap-1 p-2", className)}>
+      <div className="flex items-start gap-1">
+        <span className="shrink-0 text-gray-11" aria-hidden>
+          {icon}
+        </span>
+        <div className="flex flex-col gap-0.5">
+          <h3 className="h5 text-gray-12">{title}</h3>
+          <p className="p text-gray-11">{description}</p>
         </div>
-        <Button variant="pill" size="default" asChild className="shrink-0">
-          <Link href={href}>
-            View
-            <ArrowRightIcon className="icon" />
-          </Link>
-        </Button>
       </div>
-    </Section>
+      <Button variant="pill" asChild>
+        <Link href={href}>
+          View
+          <ArrowRightIcon className="icon" />
+        </Link>
+      </Button>
+    </div>
   );
 }

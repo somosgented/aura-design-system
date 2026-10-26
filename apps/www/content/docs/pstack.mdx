@@ -94,6 +94,7 @@ Targeted AI context without full theme rewrite:
 
 ```bash
 pnpm dlx shadcn@latest add \
+  @aura/skill-aura \
   @aura/rules \
   @aura/skills \
   @aura/rule-design-md \
@@ -108,7 +109,7 @@ Cloud Agents run on a remote VM. Marketplace plugins **sometimes do not load** t
 
 - Prompt in plain words: “use pstack / poteto-mode …”
 - Prefer [cursor.com/agents](https://cursor.com/agents) if desktop autocomplete hides the skill
-- Optional (team decision): thin repo skill under `.cursor/skills/` or monorepo `AGENTS.md` requiring poteto-mode — **do not** vendor the entire pstack plugin into every consumer app by default
+- Optional (team decision): thin repo skill under `.agents/skills/` or monorepo `AGENTS.md` requiring poteto-mode — **do not** vendor the entire pstack plugin into every consumer app by default
 
 ### 4. Monorepo `AGENTS.md`
 

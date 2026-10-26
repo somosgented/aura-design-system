@@ -42,11 +42,31 @@ const config: NextConfig = {
         destination: "/docs/charts",
         permanent: true,
       },
+      ...["figma", "international", "voice"].map((slug) => ({
+        source: `/docs/foundations/${slug}`,
+        destination: "/docs/foundations",
+        permanent: true,
+      })),
       {
         source: "/docs/rules/self-documenting-system",
         destination: "/docs/rules/feature-map",
         permanent: true,
       },
+      ...[
+        "fundations-colors",
+        "fundations-typography",
+        "fundations-layout-spacing",
+        "fundation-icons",
+        "fundation-animations",
+        "components-forms",
+        "principles",
+        "shadcn-lint",
+        "aura-agent-surface",
+      ].map((slug) => ({
+        source: `/docs/rules/${slug}`,
+        destination: "/docs/rules/aura-skill",
+        permanent: true,
+      })),
       {
         source: "/docs/components/app-bar",
         destination: "/docs/components",

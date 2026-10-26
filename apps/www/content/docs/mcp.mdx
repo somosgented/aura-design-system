@@ -121,9 +121,9 @@ All Aura skills:
 pnpm dlx shadcn@latest add @aura/skills
 ```
 
-That writes the component-porting and identity-aware image-generation skills under `.cursor/skills/`. `aura init` / `aura setup` also install `@aura/skills` next to `@aura/rules`.
+That writes the component-porting and identity-aware image-generation skills under `.agents/skills/`. `aura init` / `aura setup` also install `@aura/skills` next to `@aura/rules`.
 
-Authoring in this monorepo: edit the relevant folder under `.cursor/skills/`, then from `packages/registry`:
+Authoring in this monorepo: edit the relevant folder under `.agents/skills/`, then from `packages/registry`:
 
 ```bash
 pnpm sync:skills
@@ -202,8 +202,8 @@ Aura already *is* a registry. With shadcn MCP enabled, Cursor can list `@aura/*`
 Manual checklist:
 
 1. Add `.cursor/mcp.json` and enable the shadcn server.
-2. Keep using existing [Rules](/docs/rules) and DESIGN.md (`pnpm dlx shadcn@latest add @aura/rules`).
-3. Install skills with `pnpm dlx shadcn@latest add @aura/skills`.
+2. Install root `DESIGN.md`, the always-on process rules, and the Aura skill (`pnpm dlx shadcn@latest add @aura/rules @aura/skill-aura`).
+3. Install procedure skills with `pnpm dlx shadcn@latest add @aura/skills`.
 4. Install Aura design lint: see [Lint](/docs/lint) (`@aura/eslint-shadcn-lint` + `@shadcn/lint`).
 5. Proof-carrying authz: [gdp-ts](/docs/gdp-ts). `aura init` / `setup` / `blueprint` install `@gdp-ts/core`, the ESLint preset, the skill, and starter proofs (blueprint § F).
 6. Optional agent rigor: [pstack](/docs/pstack) via `/add-plugin pstack` then `/setup-pstack` (blueprint also audits it — [Agent blueprint](/docs/mcp-agent-blueprint) § E). Does not replace Aura rules/lint or gdp-ts.

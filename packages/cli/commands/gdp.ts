@@ -2,14 +2,12 @@ import { execa } from "execa";
 import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "fs";
 import { dirname, join, relative } from "path";
 import { fileURLToPath } from "url";
+import { migrateLegacySkill } from "./rules-link.js";
 
 const GDP_PACKAGE = "@gdp-ts/core";
 const GDP_RANGE = "^0.1.0";
 
-const SKILL_MARKERS = [
-  ".agents/skills/gdp-ts/SKILL.md",
-  ".cursor/skills/gdp-ts/SKILL.md",
-];
+const GDP_SKILL = join(".agents", "skills", "gdp-ts", "SKILL.md");
 
 const ESLINT_CONFIG_NAMES = [
   "eslint.config.mjs",
@@ -293,7 +291,8 @@ async function wireEslint(projectRoot: string): Promise<void> {
 }
 
 function skillInstalled(projectRoot: string): boolean {
-  return SKILL_MARKERS.some((rel) => existsSync(join(projectRoot, rel)));
+  migrateLegacySkill(projectRoot, "gdp-ts");
+  return existsSync(join(projectRoot, GDP_SKILL));
 }
 
 async function installSkill(projectRoot: string, force: boolean): Promise<void> {
@@ -320,7 +319,7 @@ async function installSkill(projectRoot: string, force: boolean): Promise<void> 
   );
   if (!skillInstalled(projectRoot)) {
     throw new Error(
-      "skills add finished without writing .agents/skills/gdp-ts/SKILL.md or .cursor/skills/gdp-ts/SKILL.md. Re-run: npx skills add rauchg/gdp-ts --skill gdp-ts -a cursor -y --copy",
+      "skills add finished without writing .agents/skills/gdp-ts/SKILL.md. Re-run: npx skills add rauchg/gdp-ts --skill gdp-ts -a cursor -y --copy",
     );
   }
   console.log("  gdp-ts skill: installed");

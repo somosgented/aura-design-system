@@ -1,21 +1,58 @@
 ---
 title: Installation
-description: Get started with Aura Design System by installing the CLI and initializing your project.
-icon: ArrowBigDownDash 
+description: Install Aura with the CLI on a new or existing Next.js app, then add registry components.
+icon: ArrowBigDownDash
 ---
 
-To install, simply run the Aura Design CLI. 
+Install is the human path into the kit. What an agent should read, and the rules it follows, is on [Get started](/docs).
 
+## New app
 
 ```bash
 pnpm dlx @aura-design/cli@latest init
 ```
 
-This command will automatically execute the original shadcn/ui CLI under the hood, and then apply all necessary tokens and configuration fixtures specific to the Aura Design System. You don't need to manually configure anything — just run the command below and your project will be set up with Aura's tokens and settings seamlessly.
+`init` creates a Next.js app, then applies Aura:
 
-For an existing Next.js app, use `setup` instead of `init`. Full command reference: [CLI](/docs/cli).
+1. `components.json` with the `@aura` and `@aura-dev` registries
+2. Light and dark accent and gray scales in `globals.css`
+3. `@aura/class-names`, `@aura/page-get-starter`, `@aura/css-main`, `@aura/rules`, `@aura/skill-aura`, and `@aura/skills`
+4. Blueprint scaffolding, including [gdp-ts](/docs/gdp-ts) proofs
 
-> **Note:** There isn't a custom CLI command to add *all* components at once.
+`@aura/rules` writes root `DESIGN.md` and the always-on process rules into `.agents/rules/` (feature map, no comments, and the `DESIGN.md` pointer). Cursor reads that directory directly. `@aura/skill-aura` writes the design skill to `.agents/skills/aura/` (color, type, the 13px grid, icons, motion, forms, and lint). `@aura/skills` writes the procedure skills under `.agents/skills/`.
 
-If you want to install all available Aura components in one shot, you can use the list at [https://auradesignsystem.com/all.txt](https://auradesignsystem.com/all.txt). This URL always contains an up-to-date, newline-delimited list of all registry component names.
+Install the design skill on its own with either command:
 
+```bash
+pnpm dlx shadcn@latest add @aura/skill-aura
+```
+
+```bash
+pnpm dlx skills add somosgented/aura-design-system --skill aura
+```
+
+See [Aura skill](/docs/rules/aura-skill) and [Get started](/docs).
+
+## Existing app
+
+```bash
+pnpm dlx @aura-design/cli@latest setup
+```
+
+`setup` runs the same apply step and skips `create-next-app`. Pass `--dir` when the app is not the current directory.
+
+```bash
+pnpm dlx @aura-design/cli@latest setup --dir ./apps/web
+```
+
+An agent on a project that is already partly set up should follow the [agent blueprint](/docs/mcp-agent-blueprint) and install only what is missing.
+
+## One component
+
+```bash
+pnpm dlx shadcn@latest add @aura/button
+```
+
+There is no command that adds every component at once. The current names, one per line, are at [all.txt](https://auradesignsystem.com/all.txt).
+
+Flags for `link`, `colors`, `typography`, `spacing`, and `blueprint` are on the [CLI](/docs/cli) page.

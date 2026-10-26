@@ -2,7 +2,7 @@
 
 This package holds a [Google Stitch–style DESIGN.md](https://stitch.withgoogle.com/docs/design-md/overview/) for the **Aura Design System**: a single markdown file coding agents can read to stay aligned with Aura tokens, layout, typography, and component conventions.
 
-Content is derived from the public documentation dump (`llms-full.txt`), the registry (`packages/registry`), and foundation rules (`.cursor/rules`).
+Content is derived from the public documentation dump (`llms-full.txt`), the registry (`packages/registry`), and the Aura skill (`.agents/skills/aura`).
 
 ## Files
 

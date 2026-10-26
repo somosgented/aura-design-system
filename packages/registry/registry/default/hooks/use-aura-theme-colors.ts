@@ -3,7 +3,9 @@
 import { useCallback, useLayoutEffect, useState, useSyncExternalStore } from "react";
 import { useTheme } from "next-themes";
 
+import { presets, resolvePreset, type ThemePreset } from "@/theme/presets";
 import { generateRadixColors } from "@/utils/custom-color-functions";
+import { canvasFromGray } from "@/utils/scheme-from-seed";
 
 const AURA_THEME_COLORS_KEY = "aura-theme-colors";
 
@@ -18,10 +20,12 @@ export type ThemeColorsByMode = {
   dark: ThemeColors;
 };
 
-export const DEFAULT_THEME_COLORS: ThemeColorsByMode = {
-  light: { accent: "#4015ca", gray: "#7254cb", background: "#ffffff" },
-  dark: { accent: "#4015ca", gray: "#7254cb", background: "#100b21" },
-};
+const auraPreset = presets.find((preset) => preset.id === "aura");
+if (!auraPreset) {
+  throw new Error("Missing Aura theme preset.");
+}
+
+export const DEFAULT_THEME_COLORS: ThemeColorsByMode = resolvePreset(auraPreset);
 
 const STORAGE_KEY = AURA_THEME_COLORS_KEY;
 const CHANGE_EVENT = "aura-theme-colors-change";
@@ -597,12 +601,17 @@ export function useAuraThemeColors() {
     (field: keyof ThemeColors, value: string) => {
       if (!isValidHex(value)) return;
       const current = getSnapshot();
+      const normalized = normalizeHex(value);
+      const nextMode: ThemeColors = {
+        ...current[appearance],
+        [field]: normalized,
+      };
+      if (field === "gray") {
+        nextMode.background = canvasFromGray(normalized, appearance);
+      }
       writeToStorage({
         ...current,
-        [appearance]: {
-          ...current[appearance],
-          [field]: normalizeHex(value),
-        },
+        [appearance]: nextMode,
       });
     },
     [appearance]
@@ -617,30 +626,17 @@ export function useAuraThemeColors() {
   }, []);
 
   const applyPreset = useCallback(
-    (preset: { accent: string; gray: string; background: string }) => {
-      if (
-        !isValidHex(preset.accent) ||
-        !isValidHex(preset.gray) ||
-        !isValidHex(preset.background)
-      ) {
-        return;
-      }
-      const mode = appearanceForBackground(preset.background);
-      const normalized = {
-        accent: normalizeHex(preset.accent),
-        gray: normalizeHex(preset.gray),
-        background: normalizeHex(preset.background),
+    (preset: ThemePreset) => {
+      const scheme = resolvePreset(preset);
+      if (!isValidThemeColorsByMode(scheme)) return;
+      const normalized: ThemeColorsByMode = {
+        light: toNormalizedThemeColors(scheme.light),
+        dark: toNormalizedThemeColors(scheme.dark),
       };
-      const current = getSnapshot();
-      pinAppearance(mode);
-      writeToStorage({
-        ...current,
-        [mode]: normalized,
-      });
-      injectThemeColors(mode, normalized);
-      setTheme(mode);
+      writeToStorage(normalized);
+      injectThemeColors(appearance, normalized[appearance]);
     },
-    [setTheme]
+    [appearance]
   );
 
   const resetDefaults = useCallback(() => {
