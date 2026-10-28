@@ -484,6 +484,7 @@ select {
   @import "../styles/alert-dialog.css" ;
   @import "../styles/collapsible.css" ;
   @import "../styles/dialog.css" ;
+  @import "../styles/not-found.css" ;
   @import "../../../packages/registry/registry/default/styles/responsive-dropdown-menu.css";
   @import "../../../packages/registry/registry/default/styles/selection-toolbar.css";
   @import "../../../packages/registry/registry/default/styles/action-bar.css";

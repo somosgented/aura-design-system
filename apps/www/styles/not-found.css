@@ -1,0 +1,302 @@
+@theme animatons {
+  --animate-not-found-in: notFoundIn 250ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-not-found-sky-in: notFoundSkyIn 500ms ease-out both;
+  --animate-not-found-drift: notFoundDrift 120s linear infinite;
+  --animate-not-found-orbit: notFoundOrbit 18s linear infinite;
+  --animate-not-found-orbit-counter: notFoundOrbitCounter 18s linear infinite;
+  --animate-not-found-float: notFoundFloat 14s ease-in-out infinite alternate;
+  --animate-not-found-glow: notFoundGlow 10s ease-in-out infinite alternate;
+}
+
+@layer components {
+  @keyframes notFoundIn {
+    from {
+      opacity: 0;
+      transform: translate3d(0, calc(var(--spacing) * 0.5), 0) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+
+  @keyframes notFoundSkyIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes notFoundDrift {
+    from {
+      transform: translate3d(0, calc(var(--nf-tile) * -1), 0);
+    }
+    to {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes notFoundOrbit {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes notFoundOrbitCounter {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+
+  @keyframes notFoundFloat {
+    from {
+      transform: translate3d(0, calc(var(--spacing) * -0.5), 0) rotate(-6deg);
+    }
+    to {
+      transform: translate3d(0, calc(var(--spacing) * 0.5), 0) rotate(6deg);
+    }
+  }
+
+  @keyframes notFoundGlow {
+    from {
+      opacity: 0.5;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .not-found-viewport {
+    min-height: calc(100dvh - var(--header-height, 0px));
+  }
+
+  .not-found-sky {
+    animation: var(--animate-not-found-sky-in);
+  }
+
+  .not-found-layer {
+    --nf-depth: 0px;
+    transform: translate3d(
+      calc(var(--nf-px, 0) * var(--nf-depth)),
+      calc(var(--nf-py, 0) * var(--nf-depth)),
+      0
+    );
+    transition: transform 250ms cubic-bezier(0.215, 0.61, 0.355, 1);
+    will-change: transform;
+  }
+
+  .not-found-layer-far {
+    --nf-depth: 6.5px;
+  }
+
+  .not-found-layer-mid {
+    --nf-depth: 13px;
+  }
+
+  .not-found-layer-near {
+    --nf-depth: 26px;
+  }
+
+  .not-found-layer-content {
+    --nf-depth: -6.5px;
+  }
+
+  .not-found-glow {
+    background-image:
+      radial-gradient(55% 45% at 50% 38%, var(--accent-a5), transparent 70%),
+      radial-gradient(40% 35% at 12% 82%, var(--accent-a3), transparent 70%),
+      radial-gradient(45% 40% at 88% 12%, var(--gray-a4), transparent 70%);
+    animation: var(--animate-not-found-glow);
+  }
+
+  .not-found-stars {
+    position: absolute;
+    inset: calc(var(--nf-tile) * -1);
+    background-repeat: repeat;
+    background-size: var(--nf-tile) var(--nf-tile);
+    animation: var(--animate-not-found-drift);
+    will-change: transform;
+  }
+
+  .not-found-stars-far {
+    --nf-tile: 200px;
+    animation-duration: 150s;
+    opacity: 0.7;
+    background-image:
+      radial-gradient(1px 1px at 12% 18%, var(--gray-a9), transparent 65%),
+      radial-gradient(1px 1px at 67% 9%, var(--gray-a8), transparent 65%),
+      radial-gradient(1px 1px at 34% 61%, var(--gray-a9), transparent 65%),
+      radial-gradient(1px 1px at 88% 46%, var(--gray-a8), transparent 65%),
+      radial-gradient(1px 1px at 51% 87%, var(--gray-a9), transparent 65%),
+      radial-gradient(1px 1px at 6% 73%, var(--gray-a8), transparent 65%);
+  }
+
+  .not-found-stars-mid {
+    --nf-tile: 330px;
+    animation-duration: 95s;
+    opacity: 0.85;
+    background-image:
+      radial-gradient(1.5px 1.5px at 22% 31%, var(--gray-11), transparent 60%),
+      radial-gradient(1.5px 1.5px at 79% 24%, var(--accent-11), transparent 60%),
+      radial-gradient(1.5px 1.5px at 44% 78%, var(--gray-11), transparent 60%),
+      radial-gradient(1.5px 1.5px at 91% 69%, var(--gray-a11), transparent 60%),
+      radial-gradient(1.5px 1.5px at 9% 55%, var(--gray-11), transparent 60%);
+  }
+
+  .not-found-stars-near {
+    --nf-tile: 520px;
+    animation-duration: 60s;
+    background-image:
+      radial-gradient(2px 2px at 17% 42%, var(--gray-12), transparent 55%),
+      radial-gradient(2px 2px at 62% 15%, var(--accent-12), transparent 55%),
+      radial-gradient(2px 2px at 84% 81%, var(--gray-12), transparent 55%),
+      radial-gradient(2px 2px at 37% 92%, var(--accent-11), transparent 55%);
+  }
+
+  .not-found-star {
+    animation: var(--animate-not-found-float);
+    will-change: transform;
+  }
+
+  .not-found-star-delay {
+    animation-delay: -6s;
+  }
+
+  .not-found-code {
+    --min: 5rem;
+    --val: 26vw;
+    --max: 12rem;
+    font-size: clamp(var(--min), var(--val), var(--max));
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+  }
+
+  .not-found-orbit {
+    position: relative;
+    display: inline-flex;
+  }
+
+  .not-found-orbit-glyph {
+    position: relative;
+    z-index: 1;
+  }
+
+  .not-found-orbit-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 175%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%) rotate(-11deg) scaleY(0.42);
+    border: 1px solid var(--gray-a8);
+    border-radius: 999px;
+    pointer-events: none;
+  }
+
+  .not-found-orbit-spin {
+    position: absolute;
+    inset: 0;
+    animation: var(--animate-not-found-orbit);
+    will-change: transform;
+  }
+
+  .not-found-orbit-anchor {
+    position: absolute;
+    top: calc(var(--spacing) * -0.375);
+    left: 50%;
+    width: calc(var(--spacing) * 0.75);
+    height: calc(var(--spacing) * 0.75);
+    margin-left: calc(var(--spacing) * -0.375);
+    animation: var(--animate-not-found-orbit-counter);
+    will-change: transform;
+  }
+
+  .not-found-satellite {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 999px;
+    background-color: var(--accent-12);
+    box-shadow: 0 0 calc(var(--spacing) * 1.5) var(--accent-a9);
+    transform: scaleY(2.38) rotate(11deg);
+  }
+
+  .cta-arrow-back {
+    transform-origin: center;
+    transition: transform 250ms cubic-bezier(0.4, 0, 0.6, 1);
+  }
+
+  .not-found-in {
+    animation: var(--animate-not-found-in);
+  }
+
+  .not-found-enter > .not-found-in:nth-child(2) {
+    animation-delay: 50ms;
+  }
+
+  .not-found-enter > .not-found-in:nth-child(3) {
+    animation-delay: 100ms;
+  }
+
+  .not-found-enter > .not-found-in:nth-child(4) {
+    animation-delay: 150ms;
+  }
+
+  .not-found-enter > .not-found-in:nth-child(5) {
+    animation-delay: 200ms;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  @layer components {
+    :is(.button, .button-fill, .button-pill, .button-link):hover
+      .cta-arrow-back {
+      transform: translateX(calc(var(--spacing) * -0.5));
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @layer components {
+    .not-found-sky,
+    .not-found-glow,
+    .not-found-stars,
+    .not-found-star,
+    .not-found-orbit-spin,
+    .not-found-orbit-anchor,
+    .not-found-in {
+      animation: none;
+    }
+
+    .not-found-layer {
+      transform: none;
+      transition: none;
+      will-change: auto;
+    }
+
+    .cta-arrow-back {
+      transition: none;
+    }
+
+    :is(.button, .button-fill, .button-pill, .button-link):hover
+      .cta-arrow-back {
+      transform: none;
+    }
+
+    .not-found-stars,
+    .not-found-star,
+    .not-found-orbit-spin,
+    .not-found-orbit-anchor {
+      will-change: auto;
+    }
+  }
+}
