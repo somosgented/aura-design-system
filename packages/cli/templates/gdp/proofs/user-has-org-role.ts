@@ -1,7 +1,3 @@
-/**
- * Trusted module. Role in an org: Owner or Member. Viewers are not a role
- * here. Do not export the prover.
- */
 import { defineProof, type Named, type Proof } from "@gdp-ts/core";
 import { orgRoleFor } from "@/lib/authz-store";
 import type { OrgId, UserId } from "@/lib/ids";

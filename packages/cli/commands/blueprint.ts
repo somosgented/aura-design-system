@@ -6,6 +6,7 @@ import { fileURLToPath } from "url";
 import { installFormStack, syncFormAgentFiles } from "./forms-stack.js";
 import { applyGdpToProject } from "./gdp.js";
 import { ensureAgentsRules, migrateLegacySkill } from "./rules-link.js";
+import { installerOptions } from "../utils/run.js";
 
 const SCRIPTS_TO_MERGE: Record<string, string> = {
   preflight: "tsx scripts/preflight.ts",
@@ -60,7 +61,11 @@ function interpolate(
   return out;
 }
 
-function writeIfMissingOrForce(
+function writeIfMissing(path: string, content: string, label: string): void {
+  writeManaged(path, content, false, label);
+}
+
+function writeManaged(
   path: string,
   content: string,
   force: boolean,
@@ -185,7 +190,7 @@ export function scaffoldFeatureMap(
 
   for (const f of ["app.json", "appearance.json", "core-plugins.json"]) {
     const src = join(templatesRoot(), "obsidian", "dotobsidian", f);
-    writeIfMissingOrForce(
+    writeManaged(
       join(obsidianDir, ".obsidian", f),
       readFileSync(src, "utf-8"),
       force,
@@ -193,36 +198,36 @@ export function scaffoldFeatureMap(
     );
   }
 
-  writeIfMissingOrForce(
+  writeManaged(
     join(obsidianDir, FEATURE_MAP_DIR, `${FEATURE_MAP_DIR}.base`),
     readTpl("obsidian/Feature-Map.base"),
     force,
     `wiki/${obsidianName}/${FEATURE_MAP_DIR}/${FEATURE_MAP_DIR}.base`,
   );
 
-  writeIfMissingOrForce(
+  writeIfMissing(
     join(obsidianDir, "01-Identity", "Image-Identity.md"),
     interpolate(readTpl("obsidian/Image-Identity.md"), {
       DATE: new Date().toISOString().slice(0, 10),
     }),
-    false,
     `wiki/${obsidianName}/01-Identity/Image-Identity.md`,
   );
 }
 
 export function scaffoldFeatureMapAgentFiles(
   projectRoot: string,
+  suffix: string,
   force: boolean,
 ): void {
   ensureAgentsRules(projectRoot);
-  writeIfMissingOrForce(
+  writeManaged(
     join(projectRoot, ".agents", "rules", "feature-map.mdc"),
-    readTpl("agents/rules/feature-map.mdc"),
+    interpolate(readTpl("agents/rules/feature-map.mdc"), { SUFFIX: suffix }),
     force,
     ".agents/rules/feature-map.mdc",
   );
   migrateLegacySkill(projectRoot, "update-feature-map");
-  writeIfMissingOrForce(
+  writeManaged(
     join(projectRoot, ".agents", "skills", "update-feature-map", "SKILL.md"),
     readTpl("agents/skills/update-feature-map/SKILL.md"),
     force,
@@ -286,7 +291,7 @@ export function retireProjectBrain(projectRoot: string): void {
 
 function scaffoldNoCommentsRule(projectRoot: string, force: boolean): void {
   ensureAgentsRules(projectRoot);
-  writeIfMissingOrForce(
+  writeManaged(
     join(projectRoot, ".agents", "rules", "no-comments.mdc"),
     readTpl("agents/rules/no-comments.mdc"),
     force,
@@ -303,7 +308,7 @@ function scaffoldImageSkill(projectRoot: string, force: boolean): void {
     "generate-brand-images",
   );
   for (const file of ["SKILL.md", "generate-images.mjs"]) {
-    writeIfMissingOrForce(
+    writeManaged(
       join(skillDir, file),
       readTpl(`agents/skills/generate-brand-images/${file}`),
       force,
@@ -312,12 +317,11 @@ function scaffoldImageSkill(projectRoot: string, force: boolean): void {
   }
 }
 
-function scaffoldPreflight(projectRoot: string, force: boolean): void {
+function scaffoldPreflight(projectRoot: string): void {
   const scriptsDir = join(projectRoot, "scripts");
   mkdirSync(scriptsDir, { recursive: true });
   const dest = join(scriptsDir, "preflight.ts");
-  const body = readTpl("preflight.ts");
-  writeIfMissingOrForce(dest, body, force, "scripts/preflight.ts");
+  writeIfMissing(dest, readTpl("preflight.ts"), "scripts/preflight.ts");
 }
 
 async function installShadcnSkills(
@@ -333,7 +337,7 @@ async function installShadcnSkills(
   await execa(
     "npx",
     ["--yes", "skills", "add", "shadcn/ui", "-a", "cursor", "-y", "--copy"],
-    { cwd: projectRoot, stdio: "inherit" },
+    installerOptions(projectRoot),
   );
   migrateLegacySkill(projectRoot, "shadcn");
   if (!existsSync(join(projectRoot, SHADCN_SKILL))) {
@@ -344,22 +348,45 @@ async function installShadcnSkills(
   console.log("  shadcn/ui skills: installed");
 }
 
-function scaffoldSonarProperties(projectRoot: string, force: boolean): void {
-  const dest = join(projectRoot, "sonar-project.properties");
-  writeIfMissingOrForce(
-    dest,
+function scaffoldSonarProperties(projectRoot: string): void {
+  writeIfMissing(
+    join(projectRoot, "sonar-project.properties"),
     readTpl("sonar-project.properties"),
-    force,
     "sonar-project.properties",
   );
 }
 
-function deriveSuffix(packageName: string): string {
-  const parts = packageName.split("-").filter(Boolean);
-  if (parts.length <= 1) {
-    return packageName;
-  }
-  return parts.slice(1).join("-");
+function normalizeSuffix(raw: string): string {
+  return raw
+    .toLowerCase()
+    .replace(/[^a-z0-9._-]+/g, "-")
+    .replace(/^[-.]+|[-.]+$/g, "");
+}
+
+export function deriveSuffix(packageName: string): string {
+  const unscoped = packageName.replace(/^@[^/]*\//, "");
+  const parts = unscoped.split("-").filter(Boolean);
+  const raw = parts.length <= 1 ? unscoped : parts.slice(1).join("-");
+  return normalizeSuffix(raw) || "app";
+}
+
+export function scaffoldBlueprintFiles(
+  projectRoot: string,
+  suffix: string,
+  force: boolean,
+): void {
+  retireProjectBrain(projectRoot);
+  ensureAgentsRules(projectRoot);
+  retireUpstreamSkills(projectRoot);
+  scaffoldFeatureMap(projectRoot, suffix, force);
+  scaffoldNoCommentsRule(projectRoot, force);
+  syncFormAgentFiles(projectRoot, force);
+  scaffoldFeatureMapAgentFiles(projectRoot, suffix, force);
+  scaffoldImageSkill(projectRoot, force);
+  scaffoldPreflight(projectRoot);
+  scaffoldSonarProperties(projectRoot);
+  ensureGitignoreLines(projectRoot);
+  ensureEnvExample(projectRoot);
 }
 
 export type ApplyBlueprintOptions = {
@@ -381,27 +408,15 @@ export async function applyBlueprintToProject(
   };
   const packageName = pkg.name ?? "app";
   const suffix =
-    typeof options.suffix === "string" && options.suffix.length > 0
-      ? options.suffix
-      : deriveSuffix(packageName);
+    (typeof options.suffix === "string" && normalizeSuffix(options.suffix)) ||
+    deriveSuffix(packageName);
   const force = Boolean(options.force);
 
   console.log(`\n@aura-design/cli blueprint → ${projectRoot}`);
   console.log(`  package: ${packageName}`);
   console.log(`  vault suffix: ${suffix}\n`);
 
-  retireProjectBrain(projectRoot);
-  ensureAgentsRules(projectRoot);
-  retireUpstreamSkills(projectRoot);
-  scaffoldFeatureMap(projectRoot, suffix, force);
-  scaffoldNoCommentsRule(projectRoot, force);
-  syncFormAgentFiles(projectRoot, force);
-  scaffoldFeatureMapAgentFiles(projectRoot, force);
-  scaffoldImageSkill(projectRoot, force);
-  scaffoldPreflight(projectRoot, force);
-  scaffoldSonarProperties(projectRoot, force);
-  ensureGitignoreLines(projectRoot);
-  ensureEnvExample(projectRoot);
+  scaffoldBlueprintFiles(projectRoot, suffix, force);
   await installShadcnSkills(projectRoot, force);
   await applyGdpToProject(projectRoot, force);
   await installFormStack(projectRoot);
@@ -418,7 +433,7 @@ export function registerBlueprintCommand(program: Command) {
     )
     .option(
       "-f, --force",
-      "Overwrite bootstrap files, customized forms rule and skill, and scripts/preflight.ts if they already exist",
+      "Overwrite Aura-owned rules, skills, and vault files, including a customized forms rule and skill; package.json, scripts/preflight.ts, sonar-project.properties, gdp-ts proofs, and Image-Identity.md are never overwritten",
       false,
     )
     .option(

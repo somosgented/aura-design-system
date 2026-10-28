@@ -80,7 +80,7 @@ The skills CLI puts a Cursor project skill at `.agents/skills/gdp-ts/`. `--copy`
 
 `name` takes at most three values, so `deleteProject` names the session, the user, and the project. The org-role proof is the same pattern for an org-scoped function (name the user and the org). Demo rows in the store: `sess_demo`, `user_demo`, `prj_demo` (pro). `prj_hobby` stays on the hobby plan so the entitlement check returns `null`.
 
-Re-running blueprint skips files that already exist. `--force` overwrites the starter proofs and reinstalls the skill.
+Re-running blueprint skips files that already exist. `--force` reinstalls the skill and never touches the starter proofs.
 
 ## Install on an existing app
 
