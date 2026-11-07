@@ -76,7 +76,7 @@ pnpm dlx @aura-design/cli@latest link --output ./apps/web/components.json
 
 Scaffolds Aura project tooling into any repo with a `package.json`:
 
-- The feature map: `wiki/obsidian-*/Feature-Map/Feature-Map.base` (suffix from the package name, first segment stripped), plus `.agents/rules/feature-map.mdc` and `.agents/skills/update-feature-map/`. It is the only project documentation: one note per feature, updated in the PR that changes it. There is no progress log
+- The feature map: `wiki/obsidian-*/Feature-Map/Feature-Map.base` (suffix from the package name without its scope, first segment stripped, for example `@org/my-app` gives `app`), plus `.agents/rules/feature-map.mdc` and `.agents/skills/update-feature-map/`. It is the only project documentation: one note per feature, updated in the PR that changes it. There is no progress log
 - `wiki/obsidian-*/01-Identity/Image-Identity.md` for image generation
 - `.agents/skills/generate-brand-images/` (identity-aware Gemini landing images)
 - Third-party [audits](/docs/audits) are not installed. Re-running blueprint deletes the Emil and Vercel skill folders an older CLI copied into `.cursor/skills/` and `.agents/skills/`
@@ -94,7 +94,7 @@ On repos bootstrapped by an older CLI, blueprint removes the Project Brain agent
 
 | Option | Description |
 | --- | --- |
-| `-f, --force` | Overwrite bootstrap files, a customized forms rule or skill, and `scripts/preflight.ts` if they exist |
+| `-f, --force` | Overwrite Aura-owned rules, skills, and vault files, including a customized forms rule or skill. `package.json`, `scripts/preflight.ts`, `sonar-project.properties`, the gdp-ts proofs, and `Image-Identity.md` are never overwritten |
 | `--suffix <string>` | Override the `wiki/obsidian-<suffix>` vault suffix |
 
 ```bash

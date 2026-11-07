@@ -13,7 +13,7 @@ import { cn } from "@/utils/class-names";
 const alertVariants = cva("flex items-start gap-1 p-1 rounded-md border", {
   variants: {
     variant: {
-      default: "bg-background text-foreground border-gray-6",
+      default: "bg-background text-foreground border-border",
       info: "bg-info text-info-contrast border-info-contrast",
       success: "bg-success text-success-contrast border-success-contrast",
       warning: "bg-warning text-warning-contrast border-warning-contrast",

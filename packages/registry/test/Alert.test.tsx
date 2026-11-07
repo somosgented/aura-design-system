@@ -27,7 +27,7 @@ describe("Alert", () => {
       "bg-background",
       "text-foreground",
       "border",
-      "border-gray-6",
+      "border-border",
     );
     expect(alert).not.toHaveClass("space-y-0.5");
     expect(screen.getByText("Heads up!")).toHaveClass("font-bold", "p");
@@ -137,7 +137,7 @@ describe("AlertStatus", () => {
       />,
     );
     const alert = screen.getByRole("alert");
-    expect(alert).toHaveClass("border-gray-6", "bg-background");
+    expect(alert).toHaveClass("border-border", "bg-background");
     expect(screen.getByText("Notice")).toHaveClass("font-bold");
     expect(screen.getByText("Nothing needs attention.")).toHaveClass("p");
   });
