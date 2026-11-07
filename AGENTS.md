@@ -53,7 +53,7 @@ Emil Kowalski’s skills, Vercel’s `vercel-react-best-practices`, and WorkOS�
 
 ## Proof-carrying authz (gdp-ts)
 
-`aura init`, `aura setup`, and `aura blueprint` install [`@gdp-ts/core`](https://github.com/rauchg/gdp-ts), its ESLint preset, the `rauchg/gdp-ts` skill, and a starter `proofs/` module (session, org role, project role, plan entitlement, and `deleteProject`). Sensitive functions demand those proofs. Do not cast them. CI is typecheck plus lint. Do not vendor the skill into the registry; the CLI installs it with `npx skills add`. Docs: `apps/www/content/docs/gdp-ts.mdx`.
+`aura init`, `aura setup`, and `aura blueprint` (on Node and TypeScript projects) install [`@gdp-ts/core`](https://github.com/rauchg/gdp-ts), its ESLint preset, the `rauchg/gdp-ts` skill, and a starter `proofs/` module (session, org role, project role, plan entitlement, and `deleteProject`). Sensitive functions demand those proofs. Do not cast them. CI is typecheck plus lint. Do not vendor the skill into the registry; the CLI installs it with `npx skills add`. Docs: `apps/www/content/docs/gdp-ts.mdx`.
 
 ## Out of scope
 

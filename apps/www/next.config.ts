@@ -48,6 +48,11 @@ const config: NextConfig = {
         permanent: true,
       })),
       {
+        source: "/docs/emil-skills",
+        destination: "/docs/audits#emil-kowalski",
+        permanent: true,
+      },
+      {
         source: "/docs/rules/self-documenting-system",
         destination: "/docs/rules/feature-map",
         permanent: true,
