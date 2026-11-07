@@ -142,6 +142,18 @@ export function pinAppearance(mode: "light" | "dark") {
   pinnedAppearance = mode;
 }
 
+function appearanceForRender(
+  mounted: boolean,
+  resolvedTheme: string | undefined,
+  domAppearance: "light" | "dark" | null,
+): "light" | "dark" {
+  if (!mounted) return "light";
+  if (resolvedTheme === "dark" || resolvedTheme === "light") {
+    return resolvedTheme;
+  }
+  return domAppearance === "dark" ? "dark" : "light";
+}
+
 export function consumePaintAppearance(
   resolved: string | undefined
 ): "light" | "dark" | null {
@@ -589,12 +601,11 @@ export function useAuraThemeColors() {
           ? "light"
           : null
       : null;
-  const appearance: "light" | "dark" =
-    resolvedTheme === "dark" || resolvedTheme === "light"
-      ? resolvedTheme
-      : domAppearance === "dark"
-        ? "dark"
-        : "light";
+  const appearance: "light" | "dark" = appearanceForRender(
+    mounted,
+    resolvedTheme,
+    domAppearance,
+  );
   const currentColors = themeColors[appearance];
 
   const setColor = useCallback(

@@ -101,7 +101,7 @@ export default function Footer() {
           ))}
         </div>
         <div className="home-hatch home-wordmark" aria-hidden>
-          Aura
+        Agentic Design System.
         </div>
       </div>
     </footer>

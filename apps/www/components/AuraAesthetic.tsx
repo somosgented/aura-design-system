@@ -780,11 +780,13 @@ export default function AuraAesthetic() {
   const {
     appearance,
     currentColors,
+    mounted,
     setTheme,
     setColor,
     resetDefaults,
     downloadCSS,
   } = useAuraThemeColors();
+  const selectedAppearance = mounted ? appearance : null;
 
   const handleFieldChange =
     (field: keyof ThemeColors) => (value: string) => {
@@ -808,10 +810,11 @@ export default function AuraAesthetic() {
           >
             <button
               type="button"
+              aria-pressed={selectedAppearance === "light"}
               onClick={() => setTheme("light")}
               className={cn(
                 "inline-flex cursor-pointer items-center gap-0.5 rounded border-none px-1 py-0.5 text-xs font-medium transition-colors",
-                appearance === "light"
+                selectedAppearance === "light"
                   ? "bg-gray-1 text-gray-12 shadow-sm"
                   : "bg-transparent text-gray-11 hover:text-gray-12"
               )}
@@ -821,10 +824,11 @@ export default function AuraAesthetic() {
             </button>
             <button
               type="button"
+              aria-pressed={selectedAppearance === "dark"}
               onClick={() => setTheme("dark")}
               className={cn(
                 "inline-flex cursor-pointer items-center gap-0.5 rounded border-none px-1 py-0.5 text-xs font-medium transition-colors",
-                appearance === "dark"
+                selectedAppearance === "dark"
                   ? "bg-gray-1 text-gray-12 shadow-sm"
                   : "bg-transparent text-gray-11 hover:text-gray-12"
               )}
