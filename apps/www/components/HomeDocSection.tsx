@@ -20,7 +20,7 @@ export default function HomeDocSection({
   className,
 }: HomeDocSectionProps) {
   return (
-    <div className={cn("flex flex-col gap-1 p-2", className)}>
+    <div className={cn("flex flex-col justify-between gap-1.5 p-2 md:p-3", className)}>
       <div className="flex items-start gap-1">
         <span className="shrink-0 text-gray-11" aria-hidden>
           {icon}

@@ -11,7 +11,6 @@ import HeroSection from "@/components/HeroSection";
 import HomeAgentic from "@/components/HomeAgentic";
 import HomeDocSection from "@/components/HomeDocSection";
 import { Button } from "@/components/ui/Button";
-import { Kbd } from "@/components/ui/Kbd";
 import {
   Stat,
   StatDescription,
@@ -55,7 +54,7 @@ const faqs = [
   },
   {
     q: "Where do the colors come from?",
-    a: "Twelve accent steps and twelve gray steps. Primary maps to accent-9. Body copy is gray-12. Muted metadata is gray-11. The playground below is the live ramp.",
+    a: "Twelve accent steps and twelve gray steps. Primary maps to accent-9. Body copy is gray-12. Muted metadata is gray-11. The palette playground above is the live ramp.",
   },
   {
     q: "What does the 13px grid mean?",
@@ -66,8 +65,8 @@ const faqs = [
 export default function HomePage() {
   return (
     <main>
-      <HomeBand>
-        <p className="p px-1.5 py-1 text-center text-gray-12">
+      <HomeBand padded={false}>
+        <p className="p px-2 py-1 text-center text-gray-12 md:px-3">
           <span className="text-accent-11">News:</span> Tokens, rules, and
           registry components stay on one path.{" "}
           <Link
@@ -86,12 +85,12 @@ export default function HomePage() {
       <HomeAgentic />
 
       <HomeBand padded={false}>
-        <div className="flex flex-col gap-1 border-b border-gray-6 p-2 md:flex-row md:items-end md:justify-between">
+        <div className="flex flex-col gap-1 border-b border-gray-6 p-2 md:flex-row md:p-3 md:items-end md:justify-between">
           <div className="flex max-w-3xl flex-col gap-0.5">
-            <h2 className="h2 text-gray-12">Aura Just Ships</h2>
+            <h2 className="h2 text-gray-12">Start here</h2>
             <p className="p text-gray-11">
-              Powerful out of the box. Install the registry, then let an agent
-              read the same files you browse here.
+              Three ways in. Install the registry, then let an agent read the
+              same files you browse here.
             </p>
           </div>
           <Button variant="pill" asChild>
@@ -169,21 +168,20 @@ export default function HomePage() {
       </HomeBand>
 
       <HomeBand hero>
-        <div className="flex flex-col items-center gap-1.5 py-4 text-center">
+        <div className="flex flex-col items-center gap-1.5 py-2 text-center md:py-4">
           <h2 className="h2 text-accent-11">Daily UI with Aura</h2>
           <p className="p text-gray-11">Build at the speed of reading.</p>
-          <div className="flex flex-col items-center gap-1 sm:flex-row">
-            <Button size="lg" asChild>
-              <Link href="/docs">
-                Get started
-                <Kbd>G</Kbd>
-              </Link>
+          <div className="flex w-full flex-col gap-1 sm:w-auto sm:flex-row">
+            <Button size="lg" className="w-full sm:w-auto" asChild>
+              <Link href="/docs">Get started</Link>
             </Button>
-            <Button variant="pill" size="lg" asChild>
-              <Link href="/docs/rules">
-                Rules
-                <Kbd>R</Kbd>
-              </Link>
+            <Button
+              variant="pill"
+              size="lg"
+              className="w-full sm:w-auto"
+              asChild
+            >
+              <Link href="/docs/rules">Rules</Link>
             </Button>
           </div>
           <p className="text-sm text-gray-11">
