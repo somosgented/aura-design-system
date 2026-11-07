@@ -22,7 +22,6 @@ import {
   ItemGroup,
   ItemTitle,
 } from "@/components/ui/Item";
-import { Kbd } from "@/components/ui/Kbd";
 import {
   Message,
   MessageContent,
@@ -57,13 +56,12 @@ const files = [
 
 export default function HomeProductStage() {
   return (
-    <div className="relative flex flex-col gap-2 pt-5">
-      <div className="absolute top-0 left-1/2 z-10 -translate-x-1/2">
+    <div className="relative flex flex-col gap-2 pt-5 pb-3">
+      <div className="absolute top-0 left-1/2 z-10 -translate-x-1/2 whitespace-nowrap">
         <Button variant="pill" size="sm" asChild>
           <Link href="/docs/components">
             <PlayIcon className="icon" />
             Watch components
-            <Kbd>C</Kbd>
           </Link>
         </Button>
       </div>

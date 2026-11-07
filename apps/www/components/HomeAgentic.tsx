@@ -120,7 +120,7 @@ export default function HomeAgentic() {
               <div
                 key={reader.title}
                 className={cn(
-                  "flex flex-col gap-1 p-2",
+                  "flex flex-col gap-1 p-2 md:p-3",
                   index > 0 && "border-t border-gray-6 md:border-t-0 md:border-l"
                 )}
               >
@@ -135,7 +135,7 @@ export default function HomeAgentic() {
         </div>
       </HomeBand>
 
-      <HomeBand stage padded={false} columnClassName="px-1.5 pb-0 pt-2">
+      <HomeBand stage padded={false} columnClassName="px-2 pb-0 pt-2 md:px-3">
         <HomeProductStage />
       </HomeBand>
 
@@ -154,7 +154,7 @@ export default function HomeAgentic() {
 
           <div className="flex flex-col gap-1">
             <h3 className="h4 text-gray-12">What to open</h3>
-            <div className="border-y border-gray-6">
+            <div className="md:border-y md:border-gray-6">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -212,10 +212,13 @@ export default function HomeAgentic() {
               files, skills, playbooks, and audits.
             </p>
           </div>
-          <div className="grid gap-1 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-1.5 md:grid-cols-2 lg:grid-cols-3">
             {harness.map((layer, index) => (
-              <div key={layer.title} className={index === 1 ? "home-hl" : undefined}>
-                <Item variant="outline" asChild>
+              <div
+                key={layer.title}
+                className={cn("h-full", index === 1 && "home-hl")}
+              >
+                <Item variant="outline" className="h-full items-start" asChild>
                   <Link href={layer.href}>
                     <ItemContent>
                       <ItemTitle>{layer.title}</ItemTitle>
