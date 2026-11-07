@@ -61,7 +61,20 @@ describe("forms stack blueprint", () => {
   it("forbids zod, names the action and schema paths, and keeps the server action pattern", () => {
     const rule = readFileSync(join(templates, "agents/skills/aura/rules/forms.md"), "utf8");
     assert.match(rule, new RegExp(NO_ZOD_LINE.replace(/[.*+?^${}()|[\]\\/]/g, "\\$&")));
-    for (const glob of ["**/actions.ts", "**/*-actions.ts", "app/**/route.ts", "**/validation/**", "*schema*"]) {
+    for (const glob of [
+      "**/actions.ts",
+      "**/Actions.ts",
+      "**/*-actions.ts",
+      "**/*Actions.ts",
+      "app/**/route.ts",
+      "**/validation/**",
+      "**/Validation/**",
+      "**/*schema*",
+      "**/*Schema*",
+      "**/form.tsx",
+      "**/Form.tsx",
+      "**/use-dynamic-form.ts",
+    ]) {
       assert.ok(rule.includes(glob), glob);
     }
     assert.match(rule, /check auth and authorization/);

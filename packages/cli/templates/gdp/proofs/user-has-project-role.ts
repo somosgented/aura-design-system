@@ -1,8 +1,3 @@
-/**
- * Trusted module. Role on a project team (the project's org membership):
- * Owner or Member may manage the project. A viewer may not. Do not export
- * the prover.
- */
 import { defineProof, type Named, type Proof } from "@gdp-ts/core";
 import { projectRoleFor } from "@/lib/authz-store";
 import type { ProjectId, UserId } from "@/lib/ids";

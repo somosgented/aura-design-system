@@ -5,6 +5,7 @@ import {
   readdirSync,
   renameSync,
   rmSync,
+  unlinkSync,
 } from "fs";
 import { dirname, join } from "path";
 
@@ -29,7 +30,7 @@ export function ensureAgentsRules(projectRoot: string): void {
 
   const stat = lstatSync(legacyDir);
   if (stat.isSymbolicLink()) {
-    rmSync(legacyDir);
+    unlinkSync(legacyDir);
     console.log("  remove: .cursor/rules (Cursor reads .agents/rules)");
     return;
   }

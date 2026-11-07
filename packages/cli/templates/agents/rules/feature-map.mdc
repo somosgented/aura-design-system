@@ -6,7 +6,7 @@ description: The only project documentation is a feature map in the Obsidian vau
 
 # Feature map
 
-The only project documentation is the feature map: one short note per feature in `wiki/obsidian-{suffix}/Feature-Map/`, shown as a table by `Feature-Map.base`. `{suffix}` is the `package.json` `name` with its first segment stripped. Aura's vault is `wiki/obsidian-aura-design-project/`.
+The only project documentation is the feature map: one short note per feature in `wiki/obsidian-{{SUFFIX}}/Feature-Map/`, shown as a table by `Feature-Map.base`.
 
 * **MUST**: When you open or update a PR, add or update the note of each feature the PR changes, inside that PR. Steps live in skill `update-feature-map`.
 * **MUST NOT**: Read or write the feature map before PR time. Code, types, and tests are the source of truth while you work.

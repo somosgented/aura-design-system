@@ -1,8 +1,3 @@
-/**
- * Trusted module. A precondition that is not about who is asking: API project
- * deletion is an entitlement of the Pro and Enterprise plans. Hobby accounts
- * delete from the dashboard, so "forgot to check the plan" is a compile error.
- */
 import { defineProof, type Named, type Proof } from "@gdp-ts/core";
 import { planForProject } from "@/lib/authz-store";
 import type { ProjectId } from "@/lib/ids";
