@@ -52,7 +52,7 @@ Keep each trusted module small and test the function that returns `null`. Everyt
 
 ## What `aura init` scaffolds
 
-`aura init` and `aura setup` call `aura blueprint`. Blueprint does four things, matching the upstream install (`pnpm add @gdp-ts/core`, then `npx skills add rauchg/gdp-ts`):
+`aura init` and `aura setup` call `aura blueprint`. On Node and TypeScript projects, blueprint does four things, matching the upstream install (`pnpm add @gdp-ts/core`, then `npx skills add rauchg/gdp-ts`):
 
 1. Adds `@gdp-ts/core` (and ESLint 9+ / TypeScript 5.4+ when the app does not already have them).
 2. Spreads the ESLint preset into `eslint.config.mjs` (or `.js` / `.ts`). If that file is not a flat array or `tseslint.config(...)` call, it writes `eslint.gdp-ts.mjs` and prints the one spread to add. CommonJS configs are left untouched for the same reason: the preset is ESM.

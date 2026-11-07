@@ -79,10 +79,11 @@ The harness is what an agent reads before it edits. Aura's own files and skills 
 | [Consumer skills](#consumer-skills) | Procedures an app can install | `@aura/skills` writes `.agents/skills/` |
 | [Monorepo skills](#monorepo-skills) | How to edit this repository | `.agents/skills/aura-constraints`, `.agents/skills/aura-verification` |
 | [Poteto mode](#poteto-mode) | Multi-step engineering playbooks | Marketplace plugin. `/setup-pstack` and `/poteto-mode` are not in this repo |
-| [gdp-ts](#gdp-ts) | Proof-carrying authorization | `aura blueprint` installs `@gdp-ts/core` and the `rauchg/gdp-ts` skill |
+| [gdp-ts](#gdp-ts) | Proof-carrying authorization | `aura blueprint` installs `@gdp-ts/core` and the `rauchg/gdp-ts` skill on Node and TypeScript projects |
 | [Feature map](#feature-map) | The only project note | `wiki/obsidian-*/Feature-Map/`, skill `update-feature-map` |
 | [Brand images](#brand-images) | Gemini images from the vault identity | Consumer skill `generate-brand-images` |
-| [Audits](#audits-you-install) | Design, motion, and React performance reviews | `npx skills add` when you want the audit. Do not commit the folders |
+| [Audits](#audits) | Reviews before a PR: lint, Sonar, Bruno, gdp-ts, and optional third-party skills | [Audits](/docs/audits) |
+| Sonar and Bruno | Code quality on every stack Sonar can scan, and the API collection on backends | `aura blueprint` on any project |
 | [Visual lint](#visual-lint) | Machine check of spacing, color, and restyle | `@shadcn/lint` and skill `verify-aura-ui` |
 
 ### Own files
@@ -136,11 +137,11 @@ Practice and the starter files: [gdp-ts](/docs/gdp-ts).
 
 ### Feature map
 
-The feature map is the only project documentation. One short note per feature lives under `wiki/obsidian-*/Feature-Map/`, shown as a table by `Feature-Map.base`. The folder suffix is the `package.json` name with its first segment stripped. Aura's vault is `wiki/obsidian-aura-design-project/Feature-Map/`.
+The feature map is the only project documentation. One short note per feature lives under `wiki/obsidian-*/Feature-Map/`, shown as a table by `Feature-Map.base`. The folder suffix is the project name with its first segment stripped, read from `package.json`, `pyproject.toml`, `go.mod`, `pom.xml`, `composer.json`, `Cargo.toml`, or the folder. Aura's vault is `wiki/obsidian-aura-design-project/Feature-Map/`.
 
 The rule is `.agents/rules/feature-map.mdc`. Cursor reads that directory directly. The procedure is skill `update-feature-map`. When you open or update a PR, update the note of each feature that PR changes, inside that PR. Code is the source of truth while you work. Do not keep a progress log, and do not write secrets into notes. Name environment variables only.
 
-Blueprint creates the vault, the rule, and the skill.
+Blueprint creates the vault, the rule, and the skill on every stack, including Python, Go, Java, .NET, PHP, Ruby, and Rust projects.
 
 ### Brand images
 
@@ -148,41 +149,11 @@ Blueprint creates the vault, the rule, and the skill.
 
 It reads `wiki/obsidian-*/Bootstrap.md` and `01-Identity/`. Image identity is ready only when the notes name a medium, a palette and lighting, composition or motifs, and exclusions. The script reads `GOOGLE_API_KEY` or `GEMINI_API_KEY` from `.env`. Name those variables. Do not print or commit the value. Blueprint writes a starter `01-Identity/Image-Identity.md` and the skill.
 
-### Audits you install
+### Audits
 
-Emil Kowalski's design and animation reviews, and Vercel's React performance review, are not part of Aura. Nothing in `init`, `setup`, or `blueprint` installs them, and no Aura rule loads them. Install one from upstream when you want that audit, run it, apply the findings you accept, and leave the folder uncommitted. `aura blueprint` deletes the Emil and Vercel copies an older CLI wrote into `.cursor/skills/` and `.agents/skills/`.
+An audit is a read-only review that returns findings. Aura ships the gates: visual lint, SonarQube, the Bruno collection, and gdp-ts. Emil Kowalski's design and motion skills, Vercel's React performance skill, and WorkOS's skill are third-party audits. Install one for a review and do not commit it. `aura blueprint` deletes the Emil and Vercel copies an older CLI wrote into `.cursor/skills/` and `.agents/skills/`.
 
-Design and motion, from [emilkowalski/skills](https://github.com/emilkowalski/skills):
-
-```bash
-npx skills add emilkowalski/skills \
-  --skill emil-design-eng \
-  --skill review-animations \
-  --skill improve-animations \
-  --skill find-animation-opportunities \
-  -a cursor -y --copy
-```
-
-| Skill | What it checks |
-| --- | --- |
-| `emil-design-eng` | UI polish and design-engineering decisions |
-| `review-animations` | Motion in a diff: curves, durations, springs |
-| `improve-animations` | Motion across the codebase, with a fix plan per finding |
-| `find-animation-opportunities` | Where a screen should and should not animate |
-
-Invoke one by name, for example `/review-animations` on the current diff. The audit returns findings. It does not edit the code.
-
-React performance, from [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills). The installed name is `vercel-react-best-practices`. It checks waterfalls, bundle size, server work, and re-renders. In an Aura app, form validation stays `validateFormData` with an ajv JSON Schema.
-
-```bash
-npx skills add vercel-labs/agent-skills --skill vercel-react-best-practices -a cursor -y --copy
-```
-
-```text
-/vercel-react-best-practices Audit this screen and its server actions.
-```
-
-This is a separate gate from Aura's visual lint. Full catalog, the findings shape, and how to remove a skill: [Audits](/docs/audits). The WorkOS skill is the same kind of optional audit. That page has its install command.
+[Audits](/docs/audits) has the table that maps a change to its audit, the six-step procedure, the findings format, and every install command.
 
 ### Visual lint
 

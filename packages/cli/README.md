@@ -14,6 +14,14 @@ pnpm dlx @aura-design/cli@latest typography generate
 pnpm dlx @aura-design/cli@latest spacing
 ```
 
+## blueprint on any stack
+
+`blueprint` runs in any repo, with or without a `package.json`. It always writes the agent rules and the Obsidian feature map. By detected stack it adds Sonar where SonarQube can scan the language (`scripts/sonar.sh` outside Node), a Bruno collection for backends, image generation for frontends, and the Node and React tooling for JavaScript projects. Override detection with `--stack`, `--with`, and `--without`.
+
+```bash
+npx @aura-design/cli@latest blueprint . --stack python --without bruno
+```
+
 ## colors
 
 `--accent` and `--gray` are the seeds. `--background` is an optional light canvas. The dark canvas is derived from the gray seed.

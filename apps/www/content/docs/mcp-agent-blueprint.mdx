@@ -22,12 +22,27 @@ If the user pasted this URL with **Ejecuta**, **Run**, **Execute**, or **Aplica*
 
 Default target: **consumer project** (an app using Aura). Only use the Aura monorepo registry path if the repo clearly is `aura-design-system` (has `packages/registry/registry/default/components/`).
 
+### Update an existing project
+
+An existing project has any of these: `.agents/`, `.cursor/rules`, `.cursor/skills`, `wiki/obsidian-*`, `components.json` with `@aura`, `DESIGN.md`, or `sonar-project.properties`. For an existing project:
+
+1. **MUST NOT** run `aura init` or `aura setup`. They rewrite `components.json` and `globals.css` and would replace a customized theme.
+2. Run the latest blueprint from the project root:
+
+   ```bash
+   npx @aura-design/cli@latest blueprint .
+   ```
+
+   It keeps team-owned files (`package.json` entries, `scripts/preflight.ts`, `sonar-project.properties`, `scripts/sonar.sh`, `bruno/`, gdp-ts proofs, `Image-Identity.md`), writes rules and skills that are missing, keeps the ones that exist (the forms skill files are updated when they are an unmodified older Aura copy), moves `.cursor/rules` into `.agents/rules`, and deletes retired files: Project Brain and older Emil and Vercel skill copies.
+3. Pass `--force` only when the user wants the latest Aura rules and skills over the existing copies. It overwrites Aura-owned rules, skills, and vault config, including customized ones. It never touches the team-owned files above.
+4. Continue with the audit below and install only the rows still missing. Report the `stack:` and `modules:` lines blueprint printed.
+
 ### 0. Preconditions
 
-- Work in the project root that has (or will have) `package.json` / the Next app.
+- Work in the project root: the folder with `package.json`, `pyproject.toml`, `go.mod`, `pom.xml`, `*.csproj`, `composer.json`, `Gemfile`, or `Cargo.toml`.
 - Prefer non-interactive installs: `pnpm dlx …`.
 - Do not invent secrets. Do not force-push.
-- If `components.json` is missing and the app is not Next-like, say what blocked you and stop after the audit.
+- If the project is not a JavaScript frontend (Python, Go, Java/Kotlin, .NET, PHP, Ruby, Rust, or anything else), skip the Aura UI rows (`components.json`, `DESIGN.md`, shadcn MCP, `@shadcn/lint`, forms) and gdp-ts. Audit and install only what applies to that stack, then run `npx @aura-design/cli@latest blueprint .`. It detects the stack and adds the agent rules and the feature map everywhere, Sonar where SonarQube can scan the language, a Bruno collection for backends, and image generation for frontends. Report the stack and the modules it printed.
 
 ### 1. Audit (read before write)
 
@@ -51,6 +66,9 @@ Check and record **present / missing** for each:
 | gdp-ts skill | `.agents/skills/gdp-ts/SKILL.md` |
 | gdp-ts proofs | `proofs/session-is-valid.ts`, `proofs/user-has-project-role.ts`, `proofs/plan-includes-entitlement.ts`, and `data/delete-project.ts` (project root or `src/`, wherever `@/` points) |
 | Package manager | Prefer `pnpm`; fall back to npm/yarn if that is what the repo uses |
+| Stack | `aura blueprint` prints `stack:` and `modules:`. Manifest files decide it: `go.mod`, `pyproject.toml`, `pom.xml`, `*.csproj`, `composer.json`, `Gemfile`, `Cargo.toml`, `package.json` |
+| Sonar | `sonar-project.properties`, plus `sonar:*` scripts on Node or `scripts/sonar.sh` on other stacks. Not expected on Rust or unknown stacks |
+| Bruno (backends) | `bruno/bruno.json`, `bruno/environments/local.bru`, and `.agents/rules/bruno.mdc` |
 
 Also note: Tailwind/Aura CSS already applied? (`globals.css` with accent/gray scales, or prior `aura setup` / `init`).
 
@@ -196,11 +214,14 @@ Additive **agent-rigor** layer (verification + playbooks). It does **not** repla
 
 **Do not:** `git clone` pstack into `node_modules` or app `src/`; do not replace Aura lint/rules with pstack principles.
 
-#### F. Third-party audits
+#### F. Audits
 
-Emil Kowalski’s skills, Vercel’s `vercel-react-best-practices`, and WorkOS’s `workos` skill are not part of Aura. Blueprint does not install them. On re-run it deletes the Emil and Vercel folders an older CLI copied into `.cursor/skills/` and `.agents/skills/`.
+Do not install audits during setup. Record what exists, and install a third-party audit only when the user asks for that review.
 
-Install one from upstream only when someone asks for that audit. The commands, the Spanish prompts, and the findings format are on [Audits](/docs/audits). Do not commit the installed folders, and do not vendor them into this repo.
+- **Built in:** confirm the gates for the stack. `pnpm lint` with `@shadcn/lint` on JavaScript frontends. `sonar-project.properties` with `sonar:*` scripts on Node, or `scripts/sonar.sh` on Python, Go, Java/Kotlin, .NET, PHP, and Ruby. `bruno/` on backends. gdp-ts on Node and TypeScript.
+- **Third-party:** Emil Kowalski's skills, `vercel-react-best-practices`, and `workos` are not part of Aura. Blueprint deletes the Emil and Vercel folders an older CLI copied into `.cursor/skills/` and `.agents/skills/`. Do not commit or vendor them.
+
+Which audit fits which change, the procedure, the findings format, and the commands are on [Audits](/docs/audits).
 
 #### G. gdp-ts (proof-carrying authz)
 
@@ -232,8 +253,12 @@ Confirm after installs:
 - `.agents/skills/aura/SKILL.md` exists when `@aura/skill-aura` or `skills add` was used
 - `.agents/rules/` has the always-on process rules (`feature-map`, `no-comments`, `design-md`) when `@aura/rules` was installed
 - `.cursor/rules` is absent (Cursor reads `.agents/rules` directly)
+- `.agents/rules/feature-map.mdc`, `.agents/rules/no-comments.mdc`, `.agents/skills/update-feature-map/SKILL.md`, and `wiki/obsidian-*/Feature-Map/Feature-Map.base` exist on every stack
+- Sonar: `sonar-project.properties` plus `sonar:*` scripts on Node, or `scripts/sonar.sh` on Python, Go, Java/Kotlin, PHP, and Ruby; `scripts/sonar.sh` without properties on .NET; nothing on Rust or unknown stacks
+- Backends: `bruno/bruno.json`, `bruno/environments/local.bru`, and `.agents/rules/bruno.mdc` exist, and `.gitignore` has `bruno/.env`
+- The checks below about components, forms, images, lint, MCP, and gdp-ts apply to JavaScript projects only
 - `.agents/skills/port-component-to-aura/SKILL.md` exists
-- `.agents/skills/generate-brand-images/SKILL.md` and its generator script exist
+- `.agents/skills/generate-brand-images/SKILL.md` and its generator script exist on frontends
 - `.agents/skills/verify-aura-ui/SKILL.md` and `.agents/skills/update-feature-map/SKILL.md` exist when `@aura/skills` was added
 - `.cursor/skills/` and `.agents/skills/` do not contain `emil-design-eng`, `react-best-practices`, or `vercel-react-best-practices` unless someone installed that audit for this task and has not committed it
 - `.agents/skills/aura/rules/forms.md`, `.agents/skills/aura-forms/SKILL.md`, and the `form`, `field`, `use-dynamic-form`, and `web-validation` registry items exist
@@ -271,6 +296,7 @@ Optional smoke: `pnpm dlx shadcn@latest add @aura/button` only if the user asked
 
 **Project:** <path or package name>
 **Scenario:** consumer | aura-monorepo
+**Stack:** <stack and modules printed by aura blueprint>
 
 | Check | Before | Action | After |
 | --- | --- | --- | --- |
@@ -279,6 +305,9 @@ Optional smoke: `pnpm dlx shadcn@latest add @aura/button` only if the user asked
 | .agents/skills/aura | … | … | … |
 | .agents/rules | … | … | … |
 | .agents/skills | … | … | … |
+| Feature map + agent rules | … | … | … |
+| Sonar (when the stack is scannable) | … | … | … |
+| Bruno (backends) | … | … | … |
 | Third-party audits | … | … | … |
 | Forms stack (forms.md, aura-forms, components) | … | … | … |
 | Blueprint image identity | … | … | … |

@@ -1,0 +1,63 @@
+---
+title: Skills
+description: Every skill an Aura project can carry, the task that triggers it, where it lives, and how it is installed.
+---
+
+# Skills
+
+A skill is a folder with a `SKILL.md`. The agent reads the `description` in its frontmatter and loads the skill when the task matches. Rules in `.agents/rules/` still apply while a skill runs. When a skill and a rule disagree, the rule wins.
+
+## Pick a skill
+
+| The task | Load | Then |
+| --- | --- | --- |
+| Build or restyle UI with Aura tokens | `aura` | Run `verify-aura-ui` |
+| Build or fix a form, a server action, or a validation schema | `aura-forms` | Run `verify-aura-ui` |
+| Bring a component from a URL onto Aura | `port-component-to-aura` | Run `verify-aura-ui` |
+| Add, search, or debug a shadcn registry item | `shadcn` | The `aura` skill wins on icons, forms, spacing, type, and restyle |
+| Write a function that reads or changes data only some callers may touch | `gdp-ts` | Run `pnpm typecheck` and `pnpm lint` |
+| Landing, hero, or marketing page that needs images | `generate-brand-images` | Record the asset paths in the feature map at PR time |
+| Open or update a PR | `update-feature-map` | Once per PR, after the code is final |
+| Review UI, motion, performance, or auth before a PR | An [audit](/docs/audits) | Apply the findings you accept |
+
+## Aura skills
+
+These ship with Aura. `@aura/skill-aura` installs the design skill. `@aura/skills` installs the procedure skills. `aura blueprint` writes the ones that fit the project's stack.
+
+| Skill | Triggers on | Stacks | Install |
+| --- | --- | --- | --- |
+| `aura` | UI, tokens, theme, Tailwind classes, icons, motion, `DESIGN.md` | JavaScript frontends | `pnpm dlx shadcn@latest add @aura/skill-aura` or `pnpm dlx skills add somosgented/aura-design-system --skill aura` |
+| `aura-forms` | Forms, server actions, JSON Schema validation | React | `@aura/skills`, or `aura blueprint` on React projects |
+| `verify-aura-ui` | After any UI edit: `pnpm lint` and the `@shadcn/lint` findings on touched files | JavaScript frontends | `@aura/skills` |
+| `port-component-to-aura` | A pasted component URL or a request to recreate one in Aura | JavaScript frontends | `@aura/skills` |
+| `update-feature-map` | Opening or updating a PR | Every stack | `@aura/skills`, or `aura blueprint` on any project |
+| `generate-brand-images` | A page that needs generated images | Frontends | `@aura/skills`, or `aura blueprint` on frontend projects |
+
+Design guardrails behind `aura` are listed on [Aura skill](/docs/rules/aura-skill).
+
+## Upstream skills blueprint installs
+
+These come from their own repos. They are not in the Aura registry. `aura blueprint` installs them with the `skills` CLI into `.agents/skills/`.
+
+| Skill | Source | Installed when | Command |
+| --- | --- | --- | --- |
+| `shadcn` | [shadcn/ui](https://ui.shadcn.com/docs/skills) | React projects | `pnpm dlx skills add shadcn/ui -a cursor -y --copy` |
+| `gdp-ts` | [rauchg/gdp-ts](https://github.com/rauchg/gdp-ts) | Node and TypeScript projects | `npx skills add rauchg/gdp-ts --skill gdp-ts -a cursor -y --copy` |
+
+## Skills you install for one review
+
+Emil Kowalski's design and motion skills, Vercel's `vercel-react-best-practices`, and WorkOS's `workos` are audits. Nothing in Aura installs them. Install one when you want that review, and do not commit the folder. Commands, prompts, and the findings format are on [Audits](/docs/audits).
+
+## Monorepo-only skills
+
+`aura-constraints` and `aura-verification` live in the Aura repository for agents editing Aura itself. They are not published to the registry.
+
+## Write a good trigger
+
+The agent picks a skill from its `description` alone. A description that works:
+
+* Names the task in the words a user types: "form", "landing page", "open a PR".
+* Names the files or tools it touches: `useFormDynamic`, `bruno/`, `pnpm lint`.
+* Says when not to use it, if a nearby skill covers that case.
+
+Keep the steps in `SKILL.md` and the guardrails in a rule or in the `aura` skill. Do not copy one into the other.

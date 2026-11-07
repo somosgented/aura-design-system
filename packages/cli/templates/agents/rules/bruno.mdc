@@ -1,0 +1,15 @@
+---
+alwaysApply: true
+title: Bruno collection
+description: The HTTP API is described by the Bruno collection in bruno/, updated in the PR that changes an endpoint.
+---
+
+# Bruno collection
+
+The HTTP API of this project is described by the [Bruno](https://www.usebruno.com) collection in `bruno/`. One `.bru` request per endpoint, grouped in one folder per resource.
+
+* **MUST**: When a PR adds, changes, or removes an HTTP endpoint, add, update, or delete its `.bru` request in that PR.
+* **MUST**: Use `{{baseUrl}}` and environment variables from `bruno/environments/` for hosts, ids, and tokens.
+* **MUST**: Add an `assert` block with the expected status for each request.
+* **MUST NOT**: Write secrets into `.bru` files. Mark them `vars:secret` in an environment, or read them with `{{process.env.NAME}}` from `bruno/.env`, which is git-ignored.
+* Run the collection from `bruno/` with `npx @usebruno/cli run --env local`.

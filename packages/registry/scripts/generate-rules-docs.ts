@@ -136,30 +136,59 @@ ${bodyWithInstallation}
 `;
 }
 
-function generateRulesIndex(rules: RuleDoc[]): string {
-  let content = `---
-title: Rules
-description: Always-on Aura process rules. Design guardrails live in the Aura skill.
+const RULES_INDEX_INTRO = `---
+title: Rules & skills
+description: What an agent loads in an Aura project, when it loads it, and which file wins when two disagree.
 ---
 
-## Rules
+## How an agent reads an Aura project
 
-These pages are the always-on process rules (\`feature-map\`, \`no-comments\`, \`design-md\`). Install them into \`.agents/rules/\`. Cursor reads that directory directly.
+Three kinds of files steer an agent. A rule is a limit that always applies. A skill is a procedure the agent loads when the task matches its description. \`DESIGN.md\` is the narrative spec both point to.
 
-Color, type, spacing, icons, motion, forms, lint, and product principles live in the Aura skill at \`.agents/skills/aura/\` (same layout as the shadcn skill: \`SKILL.md\` plus \`rules/\`). See [Aura skill](/docs/rules/aura-skill).
+| Layer | Path | Loaded | Holds |
+| --- | --- | --- | --- |
+| Always-on rules | \`.agents/rules/*.mdc\` | Every turn. Cursor reads the directory directly | Process policy: feature map, no comments, the \`DESIGN.md\` pointer, and Bruno on backends |
+| Aura skill | \`.agents/skills/aura/\` | When the task is UI | Design guardrails: color, type, 13px spacing, icons, motion, forms, lint |
+| Procedure skills | \`.agents/skills/<name>/\` | When the task matches the skill description | Steps: forms, UI verify, porting, feature map, brand images |
+| Narrative spec | \`DESIGN.md\` | When reasoning about tokens or brand | Theme, color roles, the grid, motion, product principles |
 
-\`\`\`bash
-pnpm dlx shadcn@latest add @aura/rules
-\`\`\`
+The full skill catalog, with triggers and install commands, is on [Skills](/docs/rules/skills). Design guardrails are on [Aura skill](/docs/rules/aura-skill).
+
+## Which file wins
+
+1. The user's explicit instruction for the task.
+2. Always-on rules in \`.agents/rules/\`.
+3. The Aura skill and \`DESIGN.md\`.
+4. Upstream skills: \`shadcn\`, \`gdp-ts\`.
+5. Third-party [audits](/docs/audits). They return findings and never override Aura.
+
+## Install
+
+| Project | Command | What it writes |
+| --- | --- | --- |
+| Next.js or React app | \`pnpm dlx shadcn@latest add @aura/rules\` | \`feature-map\`, \`no-comments\`, \`design-md\` and root \`DESIGN.md\` |
+| Any project, any language | \`npx @aura-design/cli@latest blueprint .\` | \`feature-map\`, \`no-comments\`, the feature map vault, and per stack Sonar, Bruno, and image generation. See [CLI](/docs/cli#blueprint-projectdir) |
+
+Install a single rule with \`pnpm dlx shadcn@latest add @aura/rule-<name>\`.
+
+## Rules in the registry
 
 `;
 
+const CLI_RULES_SECTION = `## Rules the CLI adds by stack
+
+### [Bruno collection](/docs/rules/bruno)
+
+Written by \`aura blueprint\` on backend projects. Each PR that changes an HTTP endpoint updates its \`.bru\` request in \`bruno/\`. Not in the registry.
+`;
+
+function generateRulesIndex(rules: RuleDoc[]): string {
+  let content = RULES_INDEX_INTRO;
   for (const rule of rules) {
     content += `### [${rule.title}](/docs/rules/${rule.name})\n\n`;
     content += `${rule.description}\n\n`;
   }
-
-  return content;
+  return content + CLI_RULES_SECTION;
 }
 
 function generateRulesDocs() {

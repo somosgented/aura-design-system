@@ -74,7 +74,27 @@ pnpm dlx @aura-design/cli@latest link --output ./apps/web/components.json
 
 ### `blueprint [projectDir]`
 
-Scaffolds Aura project tooling into any repo with a `package.json`:
+Scaffolds Aura project tooling into any repo. It does not need a `package.json`. Blueprint detects the stack and picks modules from it:
+
+| Stack | Detected by | Always | Sonar | Bruno | Images | Node / React |
+| --- | --- | --- | --- | --- | --- | --- |
+| `next` | `next` in `package.json` | agents, wiki | yes | when `app/api` or `pages/api` exists | yes | yes |
+| `node` | `package.json` | agents, wiki | yes | with Express, Fastify, Nest, Koa, Hono, … | with a frontend framework | preflight, gdp-ts; forms and shadcn skills with React |
+| `python` | `pyproject.toml`, `requirements.txt`, `setup.py`, `Pipfile` | agents, wiki | yes | with FastAPI, Django, Flask, … | no | no |
+| `go` | `go.mod` | agents, wiki | yes | with Gin, Echo, Fiber, chi, … | no | no |
+| `jvm` | `pom.xml`, `build.gradle(.kts)` | agents, wiki | yes (build first) | with Spring Boot, Quarkus, Ktor, … | no | no |
+| `dotnet` | `*.sln`, `*.csproj`, `*.fsproj` | agents, wiki | yes (SonarScanner for .NET) | with `Microsoft.NET.Sdk.Web` | no | no |
+| `php` | `composer.json` | agents, wiki | yes | with Laravel, Symfony, Slim, … | with a JS frontend | no |
+| `ruby` | `Gemfile` | agents, wiki | yes | with Rails, Sinatra, … | no | no |
+| `rust` | `Cargo.toml` | agents, wiki | no, SonarQube cannot scan it | with Axum, Actix, Rocket, … | no | no |
+| `generic` | anything else | agents, wiki | no | no | no | no |
+
+A server-language manifest wins over a `package.json` that only builds assets, so a Laravel app with Vite is `php` with images. Go servers built only on `net/http` are not detected as backends. Pass `--with bruno` for them.
+
+- **Sonar** outside Node writes a `sonar-project.properties` for the language and `scripts/sonar.sh` (`up`, `setup`, `scan`, `report`, `full`). It runs SonarQube and the scanner in Docker, so the project needs no npm. .NET uses `dotnet-sonarscanner` and no properties file. Node keeps the `sonar:*` scripts in `package.json`
+- **Bruno** writes `bruno/bruno.json`, `bruno/environments/local.bru` with `baseUrl` on the stack's default port, a `health.bru` request, and `.agents/rules/bruno.mdc`, which asks agents to update the `.bru` request in the PR that changes an endpoint. `bruno/.env` is git-ignored
+
+For a Next app, blueprint writes:
 
 - The feature map: `wiki/obsidian-*/Feature-Map/Feature-Map.base` (suffix from the package name without its scope, first segment stripped, for example `@org/my-app` gives `app`), plus `.agents/rules/feature-map.mdc` and `.agents/skills/update-feature-map/`. It is the only project documentation: one note per feature, updated in the PR that changes it. There is no progress log
 - `wiki/obsidian-*/01-Identity/Image-Identity.md` for image generation
@@ -96,10 +116,14 @@ On repos bootstrapped by an older CLI, blueprint removes the Project Brain agent
 | --- | --- |
 | `-f, --force` | Overwrite Aura-owned rules, skills, and vault files, including a customized forms rule or skill. `package.json`, `scripts/preflight.ts`, `sonar-project.properties`, the gdp-ts proofs, and `Image-Identity.md` are never overwritten |
 | `--suffix <string>` | Override the `wiki/obsidian-<suffix>` vault suffix |
+| `--stack <stack>` | Override the detected stack: `next`, `node`, `python`, `go`, `jvm`, `dotnet`, `php`, `ruby`, `rust`, `generic` |
+| `--with <modules>` | Add modules on top of detection, comma-separated: `sonar`, `bruno`, `images`. `sonar` is ignored on stacks SonarQube cannot scan |
+| `--without <modules>` | Leave modules out, comma-separated: `sonar`, `bruno`, `images` |
 
 ```bash
 pnpm dlx @aura-design/cli@latest blueprint
 pnpm dlx @aura-design/cli@latest blueprint ./apps/web --force --suffix my-app
+npx @aura-design/cli@latest blueprint ./services/billing --with bruno --without sonar
 ```
 
 > **Note:** The docs page [Agent blueprint](/docs/mcp-agent-blueprint) is an **agent runbook** (`Ejecuta` + URL). It is not this CLI command, though the runbook may invoke `aura blueprint` when scaffolding is missing.

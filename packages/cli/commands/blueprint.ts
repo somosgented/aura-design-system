@@ -7,8 +7,21 @@ import { installFormStack, syncFormAgentFiles } from "./forms-stack.js";
 import { applyGdpToProject } from "./gdp.js";
 import { ensureAgentsRules, migrateLegacySkill } from "./rules-link.js";
 import { installerOptions } from "../utils/run.js";
+import {
+  isNodeStack,
+  parseModules,
+  parseStack,
+  resolveProfile,
+  type OptionalModule,
+  type ProjectProfile,
+  type Stack,
+} from "../utils/stack.js";
+import { scaffoldSonar, sonarGitignoreLines } from "./sonar.js";
+import { BRUNO_GITIGNORE_LINES, scaffoldBruno } from "./bruno.js";
 
-const SCRIPTS_TO_MERGE: Record<string, string> = {
+type ScriptGroup = "node" | "next" | "images" | "sonar";
+
+const BLUEPRINT_SCRIPTS: [string, string, ScriptGroup][] = Object.entries({
   preflight: "tsx scripts/preflight.ts",
   "ai:image":
     "node .agents/skills/generate-brand-images/generate-images.mjs",
@@ -24,21 +37,50 @@ const SCRIPTS_TO_MERGE: Record<string, string> = {
   "sonar:report":
     "curl -u admin:$npm_package_name \"http://localhost:9000/api/issues/search?componentKeys=$npm_package_name&resolved=false\" | jq '[.issues[] | {message: .message, severity: .severity, component: .component, line: .line}]' > sonar-issues.json",
   "sonar:full": "pnpm run sonar:up && pnpm run sonar:setup && pnpm run sonar:scan",
-};
+}).map(([name, command]) => [name, command, scriptGroup(name)]);
+
+function scriptGroup(name: string): ScriptGroup {
+  if (name.startsWith("sonar:")) return "sonar";
+  if (name === "ai:image") return "images";
+  if (name === "dev" || name === "dev:server") return "next";
+  return "node";
+}
 
 const SHADCN_SKILL = join(".agents", "skills", "shadcn", "SKILL.md");
 
-const DEV_DEPS_TO_ADD: Record<string, string> = {
-  "sonarqube-scanner": "^4.3.5",
-  tsx: "^4.19.1",
+const BLUEPRINT_DEV_DEPS: [string, string, ScriptGroup][] = [
+  ["sonarqube-scanner", "^4.3.5", "sonar"],
+  ["tsx", "^4.19.1", "node"],
+];
+
+export const NEXT_PROFILE: ProjectProfile = {
+  stack: "next",
+  name: "app",
+  frontend: true,
+  backend: false,
+  react: true,
+  sonar: true,
+  bruno: false,
+  images: true,
 };
 
-const GITIGNORE_BLUEPRINT_LINES = [
-  ".env",
-  ".sonar-token",
-  "sonar-issues.json",
-  ".scannerwork/",
-];
+function enabledGroups(profile: ProjectProfile): Set<ScriptGroup> {
+  const groups = new Set<ScriptGroup>();
+  const node = isNodeStack(profile.stack);
+  if (node) groups.add("node");
+  if (profile.stack === "next") groups.add("next");
+  if (profile.images) groups.add("images");
+  if (node && profile.sonar) groups.add("sonar");
+  return groups;
+}
+
+export function gitignoreLines(profile: ProjectProfile): string[] {
+  return [
+    ".env",
+    ...(profile.sonar ? sonarGitignoreLines(profile.stack) : []),
+    ...(profile.bruno ? BRUNO_GITIGNORE_LINES : []),
+  ];
+}
 
 function templatesRoot(): string {
   const __filename = fileURLToPath(import.meta.url);
@@ -80,7 +122,7 @@ function writeManaged(
   console.log(`  write: ${label}`);
 }
 
-function mergePackageJson(projectRoot: string): void {
+export function mergePackageJson(projectRoot: string, profile: ProjectProfile): void {
   const path = join(projectRoot, "package.json");
   const pkg = JSON.parse(readFileSync(path, "utf-8")) as {
     scripts?: Record<string, string>;
@@ -91,7 +133,9 @@ function mergePackageJson(projectRoot: string): void {
   const legacyImageScript =
     "node .cursor/skills/generate-brand-images/generate-images.mjs";
   let scriptsAdded = 0;
-  for (const [key, value] of Object.entries(SCRIPTS_TO_MERGE)) {
+  const groups = enabledGroups(profile);
+  for (const [key, value, group] of BLUEPRINT_SCRIPTS) {
+    if (!groups.has(group)) continue;
     const current = pkg.scripts[key];
     const replaceLegacyImage = key === "ai:image" && current === legacyImageScript;
     if (current === undefined || replaceLegacyImage) {
@@ -104,8 +148,8 @@ function mergePackageJson(projectRoot: string): void {
 
   pkg.devDependencies = pkg.devDependencies ?? {};
   let depsAdded = 0;
-  for (const [key, value] of Object.entries(DEV_DEPS_TO_ADD)) {
-    if (pkg.devDependencies[key] === undefined) {
+  for (const [key, value, group] of BLUEPRINT_DEV_DEPS) {
+    if (groups.has(group) && pkg.devDependencies[key] === undefined) {
       pkg.devDependencies[key] = value;
       depsAdded += 1;
     }
@@ -117,9 +161,8 @@ function mergePackageJson(projectRoot: string): void {
   );
 }
 
-function ensureGitignoreLines(projectRoot: string): void {
+function ensureGitignoreLines(projectRoot: string, lines: string[]): void {
   const path = join(projectRoot, ".gitignore");
-  const lines = GITIGNORE_BLUEPRINT_LINES;
   if (!existsSync(path)) {
     writeFileSync(path, lines.join("\n") + "\n", "utf-8");
     console.log("  write: .gitignore (blueprint entries)");
@@ -184,6 +227,7 @@ export function scaffoldFeatureMap(
   projectRoot: string,
   suffix: string,
   force: boolean,
+  withImageIdentity = true,
 ): void {
   const obsidianName = `obsidian-${suffix}`;
   const obsidianDir = join(projectRoot, "wiki", obsidianName);
@@ -205,6 +249,7 @@ export function scaffoldFeatureMap(
     `wiki/${obsidianName}/${FEATURE_MAP_DIR}/${FEATURE_MAP_DIR}.base`,
   );
 
+  if (!withImageIdentity) return;
   writeIfMissing(
     join(obsidianDir, "01-Identity", "Image-Identity.md"),
     interpolate(readTpl("obsidian/Image-Identity.md"), {
@@ -279,6 +324,7 @@ export function retireProjectBrain(projectRoot: string): void {
   }
 
   const pkgPath = join(projectRoot, "package.json");
+  if (!existsSync(pkgPath)) return;
   const pkg = JSON.parse(readFileSync(pkgPath, "utf-8")) as {
     scripts?: Record<string, string>;
   };
@@ -348,14 +394,6 @@ async function installShadcnSkills(
   console.log("  shadcn/ui skills: installed");
 }
 
-function scaffoldSonarProperties(projectRoot: string): void {
-  writeIfMissing(
-    join(projectRoot, "sonar-project.properties"),
-    readTpl("sonar-project.properties"),
-    "sonar-project.properties",
-  );
-}
-
 function normalizeSuffix(raw: string): string {
   return raw
     .toLowerCase()
@@ -374,53 +412,78 @@ export function scaffoldBlueprintFiles(
   projectRoot: string,
   suffix: string,
   force: boolean,
+  profile: ProjectProfile = NEXT_PROFILE,
 ): void {
   retireProjectBrain(projectRoot);
   ensureAgentsRules(projectRoot);
   retireUpstreamSkills(projectRoot);
-  scaffoldFeatureMap(projectRoot, suffix, force);
+  scaffoldFeatureMap(projectRoot, suffix, force, profile.images);
   scaffoldNoCommentsRule(projectRoot, force);
-  syncFormAgentFiles(projectRoot, force);
+  if (profile.react) syncFormAgentFiles(projectRoot, force);
   scaffoldFeatureMapAgentFiles(projectRoot, suffix, force);
-  scaffoldImageSkill(projectRoot, force);
-  scaffoldPreflight(projectRoot);
-  scaffoldSonarProperties(projectRoot);
-  ensureGitignoreLines(projectRoot);
-  ensureEnvExample(projectRoot);
+  if (profile.images) scaffoldImageSkill(projectRoot, force);
+  if (isNodeStack(profile.stack)) scaffoldPreflight(projectRoot);
+  if (profile.sonar) {
+    scaffoldSonar(projectRoot, profile.stack, normalizeSuffix(profile.name) || "app");
+  }
+  if (profile.bruno) scaffoldBruno(projectRoot, profile.stack, profile.name, force);
+  ensureGitignoreLines(projectRoot, gitignoreLines(profile));
+  if (profile.images) ensureEnvExample(projectRoot);
 }
 
 export type ApplyBlueprintOptions = {
   force?: boolean;
   suffix?: string;
+  stack?: Stack;
+  with?: OptionalModule[];
+  without?: OptionalModule[];
 };
+
+function describeProfile(profile: ProjectProfile): string {
+  const modules = [
+    "agents",
+    "wiki",
+    profile.sonar && "sonar",
+    profile.bruno && "bruno",
+    profile.images && "images",
+    profile.react && "react",
+    isNodeStack(profile.stack) && "node",
+  ].filter(Boolean);
+  return modules.join(", ");
+}
 
 export async function applyBlueprintToProject(
   projectRoot: string,
   options: ApplyBlueprintOptions = {},
 ): Promise<void> {
-  const pkgPath = join(projectRoot, "package.json");
-  if (!existsSync(pkgPath)) {
-    throw new Error(`No package.json at ${projectRoot}`);
+  if (!existsSync(projectRoot)) {
+    throw new Error(`No directory at ${projectRoot}`);
   }
 
-  const pkg = JSON.parse(readFileSync(pkgPath, "utf-8")) as {
-    name?: string;
-  };
-  const packageName = pkg.name ?? "app";
+  const profile = resolveProfile(projectRoot, {
+    stack: options.stack,
+    with: options.with,
+    without: options.without,
+  });
   const suffix =
     (typeof options.suffix === "string" && normalizeSuffix(options.suffix)) ||
-    deriveSuffix(packageName);
+    deriveSuffix(profile.name);
   const force = Boolean(options.force);
+  const node = isNodeStack(profile.stack);
 
   console.log(`\n@aura-design/cli blueprint → ${projectRoot}`);
-  console.log(`  package: ${packageName}`);
+  console.log(`  project: ${profile.name}`);
+  console.log(`  stack: ${profile.stack}`);
+  console.log(`  modules: ${describeProfile(profile)}`);
   console.log(`  vault suffix: ${suffix}\n`);
 
-  scaffoldBlueprintFiles(projectRoot, suffix, force);
-  await installShadcnSkills(projectRoot, force);
-  await applyGdpToProject(projectRoot, force);
-  await installFormStack(projectRoot);
-  mergePackageJson(projectRoot);
+  scaffoldBlueprintFiles(projectRoot, suffix, force, profile);
+  if (profile.react) await installShadcnSkills(projectRoot, force);
+  if (node) await applyGdpToProject(projectRoot, force);
+  if (profile.react) await installFormStack(projectRoot);
+  if (existsSync(join(projectRoot, "package.json"))) {
+    mergePackageJson(projectRoot, profile);
+  }
 
   console.log("\n✓ Blueprint scaffolding complete.\n");
 }
@@ -429,7 +492,7 @@ export function registerBlueprintCommand(program: Command) {
   program
     .command("blueprint [projectDir]")
     .description(
-      "Scaffold the Obsidian feature map, the feature-map, no-comments, and forms rules, the aura-forms skill and form components, identity-aware image generation, preflight, Sonar config, shadcn/ui skills, and gdp-ts proofs",
+      "Scaffold agent rules and the Obsidian feature map in any project. By detected stack it also adds Sonar where SonarQube can scan, a Bruno collection for backends, identity-aware image generation for frontends, and for Node/React the forms stack, preflight, shadcn/ui skills, and gdp-ts proofs",
     )
     .option(
       "-f, --force",
@@ -438,7 +501,19 @@ export function registerBlueprintCommand(program: Command) {
     )
     .option(
       "--suffix <string>",
-      "Override the wiki/obsidian-<suffix> vault suffix (default: package.json name with first segment removed)",
+      "Override the wiki/obsidian-<suffix> vault suffix (default: project name with first segment removed)",
+    )
+    .option(
+      "--stack <stack>",
+      "Override the detected stack: next, node, python, go, jvm, dotnet, php, ruby, rust, generic",
+    )
+    .option(
+      "--with <modules>",
+      "Comma-separated modules to add on top of detection: sonar, bruno, images",
+    )
+    .option(
+      "--without <modules>",
+      "Comma-separated modules to leave out: sonar, bruno, images",
     )
     .action(async (projectDir: string | undefined, options) => {
       const root = resolve(process.cwd(), projectDir ?? ".");
@@ -449,6 +524,9 @@ export function registerBlueprintCommand(program: Command) {
             typeof options.suffix === "string" && options.suffix.length > 0
               ? options.suffix
               : undefined,
+          stack: options.stack ? parseStack(options.stack) : undefined,
+          with: options.with ? parseModules(options.with) : undefined,
+          without: options.without ? parseModules(options.without) : undefined,
         });
       } catch (error) {
         console.error(error instanceof Error ? error.message : error);

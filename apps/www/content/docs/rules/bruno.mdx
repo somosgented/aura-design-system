@@ -1,0 +1,20 @@
+---
+title: "Bruno collection"
+description: "Backend projects describe their HTTP API as a Bruno collection in bruno/, updated in the PR that changes an endpoint."
+---
+
+# Bruno collection
+
+## Installation
+```bash
+npx @aura-design/cli@latest blueprint .
+```
+Blueprint writes this rule to `.agents/rules/bruno.mdc` on backend projects, together with `bruno/bruno.json`, `bruno/environments/local.bru`, and a `health.bru` request. Force it with `--with bruno` or skip it with `--without bruno`. It is not in the registry.
+
+The HTTP API of this project is described by the [Bruno](https://www.usebruno.com) collection in `bruno/`. One `.bru` request per endpoint, grouped in one folder per resource.
+
+* **MUST**: When a PR adds, changes, or removes an HTTP endpoint, add, update, or delete its `.bru` request in that PR.
+* **MUST**: Use `{{baseUrl}}` and environment variables from `bruno/environments/` for hosts, ids, and tokens.
+* **MUST**: Add an `assert` block with the expected status for each request.
+* **MUST NOT**: Write secrets into `.bru` files. Mark them `vars:secret` in an environment, or read them with `{{process.env.NAME}}` from `bruno/.env`, which is git-ignored.
+* Run the collection from `bruno/` with `npx @usebruno/cli run --env local`.

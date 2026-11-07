@@ -98,8 +98,8 @@ const harness = [
   },
   {
     title: "Audits",
-    body: "Emil’s design and motion reviews, and Vercel’s React performance review. Install for the audit. Leave them uncommitted.",
-    href: "/docs#audits-you-install",
+    body: "Lint, Sonar, Bruno, and gdp-ts ship with Aura. Install Emil, Vercel, or WorkOS skills for one review and leave them uncommitted.",
+    href: "/docs/audits",
   },
 ] as const;
 
