@@ -690,6 +690,83 @@
           "gray-12": "#eee"
         }
       }
+    },
+    {
+      "slug": "nestling",
+      "name": "Nestling",
+      "description": "A white, airy canvas with soft-grotesk headlines, ink and cream pills, warm off-white panels and clusters of flat, rounded, bobbing vector critters. An Aura flavor for friendly finance apps, wallets and playful consumer products.",
+      "design": "designs/nestling/DESIGN.md",
+      "theme": "designs/nestling/theme.css",
+      "result": "designs/nestling/result.html",
+      "fonts": {
+        "sans": "Inter",
+        "display": "Figtree",
+        "label": "Inter",
+        "href": "https://fonts.googleapis.com/css2?family=Figtree:wght@500;600&family=Inter:wght@400;500;600&display=swap"
+      },
+      "hero": "paper",
+      "headingWeight": 500,
+      "radius": {
+        "button": "9999px",
+        "input": "13px",
+        "surface": "26px"
+      },
+      "tokens": {
+        "light": {
+          "accent-contrast": "#fff",
+          "accent-1": "#fcfcfc",
+          "gray-1": "#fcfcfc",
+          "accent-2": "#f9f9f9",
+          "gray-2": "#f9f9f8",
+          "accent-3": "#f0f0f0",
+          "gray-3": "#f0efef",
+          "accent-4": "#e8e8e8",
+          "gray-4": "#e9e7e7",
+          "accent-5": "#e1e1e1",
+          "gray-5": "#e2e0df",
+          "accent-6": "#d9d9d9",
+          "gray-6": "#dad8d7",
+          "accent-7": "#cecece",
+          "gray-7": "#d0cdcc",
+          "accent-8": "#bbb",
+          "gray-8": "#bdbab8",
+          "accent-9": "#171717",
+          "gray-9": "#908c8a",
+          "accent-10": "#2e2e2e",
+          "gray-10": "#858280",
+          "accent-11": "#636363",
+          "gray-11": "#666362",
+          "accent-12": "#1f1f1f",
+          "gray-12": "#211f1e"
+        },
+        "dark": {
+          "accent-contrast": "#2a2009",
+          "accent-1": "#12110e",
+          "gray-1": "#121110",
+          "accent-2": "#1a1916",
+          "gray-2": "#1a1918",
+          "accent-3": "#24221e",
+          "gray-3": "#232221",
+          "accent-4": "#2c2924",
+          "gray-4": "#2b2927",
+          "accent-5": "#34312a",
+          "gray-5": "#32312e",
+          "accent-6": "#3d3a33",
+          "gray-6": "#3c3a37",
+          "accent-7": "#4b4840",
+          "gray-7": "#4b4844",
+          "accent-8": "#646058",
+          "gray-8": "#635f59",
+          "accent-9": "#f2efe9",
+          "gray-9": "#726d66",
+          "accent-10": "#e9e6e0",
+          "gray-10": "#807b74",
+          "accent-11": "#b7b3aa",
+          "gray-11": "#b8b3ad",
+          "accent-12": "#f0ede7",
+          "gray-12": "#efeeec"
+        }
+      }
     }
   ]
 }
