@@ -41,7 +41,7 @@ document.documentElement.style.colorScheme = appearance;
 --blue: #2f80ed;
 --green: #10b981;
 --hero-cta: var(--accent-9);
---hero-cta-fg: #ffffff;
+--hero-cta-fg: var(--accent-contrast);
 --ink-button-bg: var(--gray-12);
 --ink-button-fg: var(--gray-1);
 --green-pale: #e6f5ec;
@@ -53,7 +53,7 @@ document.documentElement.style.colorScheme = appearance;
 }
 .dark {
 --hero-cta: var(--accent-9);
---hero-cta-fg: #0d1117;
+--hero-cta-fg: var(--accent-contrast);
 --ink-button-bg: var(--gray-1);
 --ink-button-fg: var(--gray-12);
 --band: #1e1e1e;
@@ -102,8 +102,6 @@ a { color: inherit; }
 .btn.sm { height: calc(var(--aura) * 2.5); padding: 0 var(--aura); font-size: 0.83rem; }
 .btn-fill { background: var(--accent-9); color: var(--accent-contrast); }
 .btn-fill:hover { background: var(--accent-10); }
-.dark .btn-fill { background: var(--accent-9); color: #0d1117; }
-.dark .btn-fill:hover { background: var(--accent-10); }
 .btn-soft { background: var(--pill-soft); color: var(--gray-12); }
 .btn-soft:hover { background: var(--pill-soft-hover); }
 .btn-ink { background: var(--ink-button-bg); color: var(--ink-button-fg); }
@@ -126,23 +124,29 @@ a { color: inherit; }
 .drop small { display: block; color: var(--gray-9); font-size: 0.72rem; margin-top: 2px; }
 .nav-end { display: flex; align-items: center; gap: calc(var(--aura) * 0.5); margin-left: auto; }
 .toggle { display: none; }
+.nav-search { position: relative; }
+.nav-search input { width: calc(var(--aura) * 12); height: calc(var(--aura) * 2.5); padding: 0 var(--aura); border: 1px solid var(--gray-7); border-radius: 6px; background: var(--aura-input-bg); color: var(--gray-12); font: inherit; font-size: 0.83rem; }
+.nav-search input::placeholder { color: var(--aura-input-placeholder-color); }
+.nav-search input:focus-visible { outline: 2px solid var(--accent-9); outline-offset: 2px; border-color: var(--accent-9); }
 
 .hero { padding: calc(var(--aura) * 6) 0 calc(var(--aura) * 8); text-align: center; }
 .hero h1 { max-width: calc(var(--aura) * 62); margin: 0 auto; }
 .hero .lead { margin: calc(var(--aura) * 1.5) auto 0; max-width: calc(var(--aura) * 36); }
 .cta { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--aura); margin-top: calc(var(--aura) * 2.5); }
+.hero-pill { display: inline-block; padding: calc(var(--aura) * 0.4) calc(var(--aura) * 0.8); border-radius: 999px; background: var(--pill-soft); color: var(--gray-12); font-size: 0.83rem; font-weight: 500; margin-bottom: calc(var(--aura) * 2); }
 .btn-hero-primary { background: var(--hero-cta); color: var(--hero-cta-fg); }
 .btn-hero-primary:hover { opacity: 0.92; }
-.dark .btn-hero-primary { background: var(--hero-cta); color: #0d1117; }
-.dark .btn-hero-primary:hover { opacity: 0.92; }
-.hero-email { display: flex; align-items: center; gap: calc(var(--aura) * 0.5); }
-.hero-email input { height: calc(var(--aura) * 3.5); width: calc(var(--aura) * 18); padding: 0 var(--aura); border: 1px solid var(--gray-7); border-radius: 6px; background: var(--gray-1); color: var(--gray-12); font: inherit; font-size: 0.94rem; }
-.hero-email input::placeholder { color: var(--gray-9); }
+.hero-email { display: flex; align-items: center; gap: 0; border: 1px solid var(--gray-7); border-radius: 6px; overflow: hidden; }
+.hero-email input { height: calc(var(--aura) * 3.5); width: calc(var(--aura) * 18); padding: 0 var(--aura); border: 0; background: var(--aura-input-bg); color: var(--gray-12); font: inherit; font-size: 0.94rem; }
+.hero-email input::placeholder { color: var(--aura-input-placeholder-color); }
+.hero-email input:focus-visible { outline: 2px solid var(--accent-9); outline-offset: 2px; border-color: var(--accent-9); }
+.hero-email .btn { border-radius: 0; }
 @media (max-width: 600px) {
 .cta { flex-direction: column; align-items: stretch; }
 .cta .btn { width: 100%; }
-.hero-email { flex-direction: column; width: 100%; }
-.hero-email input { width: 100%; }
+.hero-email { flex-direction: column; width: 100%; border-radius: 6px; }
+.hero-email input { width: 100%; border-radius: 6px; border: 1px solid var(--gray-7); }
+.hero-email .btn { border-radius: 6px; }
 }
 
 .logos { padding: calc(var(--aura) * 4) 0; overflow: hidden; }
@@ -153,8 +157,11 @@ a { color: inherit; }
 .mq::after { right: 0; background: linear-gradient(270deg, var(--gray-1), transparent); }
 .band .mq::before { background: linear-gradient(90deg, var(--band), transparent); }
 .band .mq::after { background: linear-gradient(270deg, var(--band), transparent); }
+.mq-ctrl { display: flex; justify-content: center; margin-top: calc(var(--aura) * 1.5); }
+.mq-ctrl button { height: calc(var(--aura) * 2.5); padding: 0 var(--aura); border: 1px solid var(--gray-7); border-radius: 6px; background: var(--gray-1); color: var(--gray-12); font: inherit; font-size: 0.83rem; font-weight: 500; cursor: pointer; }
+.mq-ctrl button:hover { background: var(--pill-soft); }
 .track { display: flex; align-items: center; gap: calc(var(--aura) * 4); width: max-content; }
-.track svg { height: calc(var(--aura) * 1.5); width: auto; color: var(--gray-11); flex: none; }
+.track svg { height: calc(var(--aura) * 1.5); width: auto; color: var(--gray-11); flex: none; fill: currentColor; }
 .dup { display: none; }
 
 .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: calc(var(--aura) * 2); padding: calc(var(--aura) * 3); border-radius: calc(var(--aura) * 1.5); background: var(--band); }
@@ -239,7 +246,9 @@ td.num { font-variant-numeric: tabular-nums; }
 form { display: grid; gap: calc(var(--aura) * 1.25); }
 .field { display: grid; gap: calc(var(--aura) * 0.4); }
 .field label { font-weight: 500; font-size: 0.88rem; }
-.field input, .field select { height: calc(var(--aura) * 3); padding: 0 var(--aura); border: 1px solid var(--gray-7); border-radius: calc(var(--aura) * 0.75); background: var(--gray-1); color: var(--gray-12); font: inherit; font-size: 0.94rem; }
+.field input, .field select { height: calc(var(--aura) * 3); padding: 0 var(--aura); border: 1px solid var(--gray-7); border-radius: calc(var(--aura) * 0.75); background: var(--aura-input-bg); color: var(--gray-12); font: inherit; font-size: 0.94rem; }
+.field input::placeholder { color: var(--aura-input-placeholder-color); }
+.field input:focus-visible { outline: 2px solid var(--accent-9); outline-offset: 2px; border-color: var(--accent-9); }
 .field select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 15 15'%3E%3Cpath d='M4 6l3.5 3.5L11 6' fill='none' stroke='%235c5c5c' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right var(--aura) center; padding-right: calc(var(--aura) * 2.5); }
 .field [aria-invalid="true"] { border-color: var(--ui-red); }
 .err { color: var(--ui-red); font-size: 0.83rem; }
@@ -272,8 +281,8 @@ footer { padding: calc(var(--aura) * 5) 0 calc(var(--aura) * 3); border-top: var
 .chev, .acc-b svg { transition: transform 200ms ease; }
 .acc-p:not([hidden]) { animation: fade 200ms ease-in-out; }
 .track { animation: slide 30s linear infinite; }
+.track.paused { animation-play-state: paused; }
 .dup { display: flex; }
-.logos:hover .track { animation-play-state: paused; }
 @keyframes slide { to { transform: translateX(-50%); } }
 @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
 }
@@ -293,6 +302,7 @@ footer { padding: calc(var(--aura) * 5) 0 calc(var(--aura) * 3); border-top: var
 .toggle { display: inline-flex; order: 1; margin-left: auto; }
 .nav-end { order: 2; margin-left: 0; }
 .nav-end .btn-soft { display: none; }
+.nav-search { display: none; }
 .menu { order: 3; flex-basis: 100%; flex-direction: column; align-items: stretch; gap: 2px; padding: calc(var(--aura) * 0.5); border-radius: calc(var(--aura) * 0.75); background: var(--band); }
 .menu .nl { width: 100%; justify-content: space-between; padding: var(--aura); }
 .nav[data-open="false"] .menu { display: none; }
@@ -350,6 +360,7 @@ footer { padding: calc(var(--aura) * 5) 0 calc(var(--aura) * 3); border-top: var
 <li><a class="nl" href="#pricing">Pricing</a></li>
 </ul>
 <div class="nav-end">
+<div class="nav-search"><input type="search" placeholder="Search..." aria-label="Search"/></div>
 <a class="btn btn-soft sm" href="#demo">Sign in</a>
 <a class="btn btn-ink sm" href="#demo">Sign up</a>
 </div>
@@ -358,33 +369,38 @@ footer { padding: calc(var(--aura) * 5) 0 calc(var(--aura) * 3); border-top: var
 
 <main id="main">
 <section class="hero wrap" id="top" aria-labelledby="hero-title">
+<div class="hero-pill">🚀 New: AI-powered code reviews — learn more</div>
 <h1 class="h1" id="hero-title">Build software that grows<br/>with your vision</h1>
 <p class="lead">Ship quality code faster with intelligent tools that scale. Trusted by teams who value collaboration and precision.</p>
 <div class="cta">
 <div class="hero-email">
-<input type="email" placeholder="you@domain.com" aria-label="Email address"/>
-<a class="btn btn-hero-primary lg" href="#demo">Sign up for Verdantline</a>
+<input type="email" placeholder="you@company.com" aria-label="Email address"/>
+<a class="btn btn-hero-primary lg" href="#demo">Get started free</a>
 </div>
+<a class="btn btn-soft lg" href="#demo">Watch demo</a>
 </div>
 </section>
 
 <section class="logos" aria-label="Trusted by leading companies">
 <p>Trusted by teams at</p>
 <div class="mq">
-<div class="track">
-<svg viewBox="0 0 80 24" aria-label="Acme"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16">Acme</text></svg>
-<svg viewBox="0 0 90 24" aria-label="Globex"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16">Globex</text></svg>
-<svg viewBox="0 0 80 24" aria-label="Initech"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16">Initech</text></svg>
-<svg viewBox="0 0 90 24" aria-label="Massive"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16">Massive</text></svg>
-<svg viewBox="0 0 80 24" aria-label="Hooli"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16">Hooli</text></svg>
-<svg viewBox="0 0 90 24" aria-label="Umbrella"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16">Umbrella</text></svg>
-<svg viewBox="0 0 80 24" aria-label="Acme" class="dup"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16">Acme</text></svg>
-<svg viewBox="0 0 90 24" aria-label="Globex" class="dup"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16">Globex</text></svg>
-<svg viewBox="0 0 80 24" aria-label="Initech" class="dup"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16">Initech</text></svg>
-<svg viewBox="0 0 90 24" aria-label="Massive" class="dup"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16">Massive</text></svg>
-<svg viewBox="0 0 80 24" aria-label="Hooli" class="dup"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16">Hooli</text></svg>
-<svg viewBox="0 0 90 24" aria-label="Umbrella" class="dup"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16">Umbrella</text></svg>
+<div class="track" id="logo-track">
+<svg viewBox="0 0 80 24" aria-label="Acme"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16" fill="currentColor">Acme</text></svg>
+<svg viewBox="0 0 90 24" aria-label="Globex"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16" fill="currentColor">Globex</text></svg>
+<svg viewBox="0 0 80 24" aria-label="Initech"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16" fill="currentColor">Initech</text></svg>
+<svg viewBox="0 0 90 24" aria-label="Massive"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16" fill="currentColor">Massive</text></svg>
+<svg viewBox="0 0 80 24" aria-label="Hooli"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16" fill="currentColor">Hooli</text></svg>
+<svg viewBox="0 0 90 24" aria-label="Umbrella"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16" fill="currentColor">Umbrella</text></svg>
+<svg viewBox="0 0 80 24" aria-label="Acme" class="dup"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16" fill="currentColor">Acme</text></svg>
+<svg viewBox="0 0 90 24" aria-label="Globex" class="dup"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16" fill="currentColor">Globex</text></svg>
+<svg viewBox="0 0 80 24" aria-label="Initech" class="dup"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16" fill="currentColor">Initech</text></svg>
+<svg viewBox="0 0 90 24" aria-label="Massive" class="dup"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16" fill="currentColor">Massive</text></svg>
+<svg viewBox="0 0 80 24" aria-label="Hooli" class="dup"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16" fill="currentColor">Hooli</text></svg>
+<svg viewBox="0 0 90 24" aria-label="Umbrella" class="dup"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16" fill="currentColor">Umbrella</text></svg>
 </div>
+</div>
+<div class="mq-ctrl">
+<button type="button" id="mq-pause" aria-pressed="false">Pause animation</button>
 </div>
 </section>
 
@@ -693,6 +709,14 @@ panel.querySelectorAll("a").forEach(function(link){link.addEventListener("click"
 document.addEventListener("click",function(e){if(!e.target.closest(".menu > li"))dds.forEach(function(c){c(false);});});
 nav.querySelectorAll(".menu > li > a").forEach(function(link){link.addEventListener("click",function(){setMenu(false);});});
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&nav.dataset.open==="true"){setMenu(false);toggle.focus();}});
+
+var mqPause=document.getElementById("mq-pause"),mqTrack=document.getElementById("logo-track");
+mqPause.addEventListener("click",function(){
+var paused=mqPause.getAttribute("aria-pressed")==="true";
+mqPause.setAttribute("aria-pressed",String(!paused));
+mqPause.textContent=paused?"Pause animation":"Resume animation";
+if(paused){mqTrack.classList.remove("paused");}else{mqTrack.classList.add("paused");}
+});
 
 var seg=document.querySelector('[aria-label="Filter pull requests"]'),rows=document.querySelectorAll("#proj tbody tr"),count=document.getElementById("proj-count");
 seg.addEventListener("click",function(e){
