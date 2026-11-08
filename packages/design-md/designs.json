@@ -767,6 +767,83 @@
           "gray-12": "#efeeec"
         }
       }
+    },
+    {
+      "slug": "plinth",
+      "name": "Plinth",
+      "description": "A pristine white canvas with oversized grotesk headlines, ink pill buttons, soft gray bands, bento product vignettes and airy navigation. An Aura flavor for workspace SaaS marketing, team tools and productivity platforms.",
+      "design": "designs/plinth/DESIGN.md",
+      "theme": "designs/plinth/theme.css",
+      "result": "designs/plinth/result.html",
+      "fonts": {
+        "sans": "Inter",
+        "display": "Inter",
+        "label": "Inter",
+        "href": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      },
+      "hero": "paper",
+      "headingWeight": 600,
+      "radius": {
+        "button": "9999px",
+        "input": "10px",
+        "surface": "16px"
+      },
+      "tokens": {
+        "light": {
+          "accent-contrast": "#fff",
+          "accent-1": "#fcfcfc",
+          "gray-1": "#fdfdfc",
+          "accent-2": "#f9f9f9",
+          "gray-2": "#f9f9f8",
+          "accent-3": "#f0f0f0",
+          "gray-3": "#f0f0ef",
+          "accent-4": "#e8e8e8",
+          "gray-4": "#e9e8e7",
+          "accent-5": "#e1e1e1",
+          "gray-5": "#e1e1e0",
+          "accent-6": "#d9d9d9",
+          "gray-6": "#dad9d7",
+          "accent-7": "#cecece",
+          "gray-7": "#cfcecc",
+          "accent-8": "#bbb",
+          "gray-8": "#bcbbb9",
+          "accent-9": "#191919",
+          "gray-9": "#8d8c89",
+          "accent-10": "#303030",
+          "gray-10": "#83827f",
+          "accent-11": "#636363",
+          "gray-11": "#646360",
+          "accent-12": "#1f1f1f",
+          "gray-12": "#20201d"
+        },
+        "dark": {
+          "accent-contrast": "#311921",
+          "accent-1": "#121211",
+          "gray-1": "#121211",
+          "accent-2": "#191918",
+          "gray-2": "#191918",
+          "accent-3": "#222221",
+          "gray-3": "#222221",
+          "accent-4": "#292928",
+          "gray-4": "#292928",
+          "accent-5": "#31302f",
+          "gray-5": "#31302f",
+          "accent-6": "#3a3a38",
+          "gray-6": "#3a3a38",
+          "accent-7": "#484745",
+          "gray-7": "#484745",
+          "accent-8": "#61605d",
+          "gray-8": "#61605d",
+          "accent-9": "#fff",
+          "gray-9": "#6e6d69",
+          "accent-10": "#f6f6f5",
+          "gray-10": "#7c7a76",
+          "accent-11": "#b4b3b0",
+          "gray-11": "#b4b3b0",
+          "accent-12": "#eeeded",
+          "gray-12": "#eeeded"
+        }
+      }
     }
   ]
 }
