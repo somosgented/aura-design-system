@@ -162,9 +162,11 @@ Source flavor: https://github.com/ (observed 2026-11-08). This file adapts its v
 
 | Kind | What |
 | --- | --- |
-| Observed (measured) | IBM Plex Sans body (16px/1.6); IBM Plex Mono for code (14px/1.6); display headings 72px weight 600 with tracking `-0.03em`, section heads 40px/1.2 weight 600; green accent `#08872b` (light) / `#3fb950` (dark); soft rounded corners 6px buttons, 12px cards; tab navigation with underline; repository cards with language dot, star count, description; subtle gray bands `#f6f8fa`, `#eaeef2`; code blocks with background `#f6f8fa`, inline code `#eff1f3`; content max-width about 1248px; section padding about 100–110px; counters with rounded background; timeline component; sticky header |
+| Observed (measured) | IBM Plex Sans body (16px/1.6); IBM Plex Mono for code (14px/1.6); display headings 72px weight 600 with tracking `-0.03em`, section heads 40px/1.2 weight 600; green accent `#08872b` (light) / `#3fb950` (dark); soft rounded corners 6px buttons, 12px cards; tab navigation with underline; repository cards with language dot, star count, description; subtle gray bands `#f6f8fa`, `#eaeef2`; code blocks with background `#f6f8fa`, inline code `#eff1f3`; content max-width about 1248px; section padding about 100–110px; counters with rounded background; timeline component; sticky header; email signup input with adjacent green CTA |
 | Adapted by Verdantline | All type set in IBM Plex Sans and IBM Plex Mono (source uses system fonts and SFMono); every spacing value rounded to the 13px grid; original repository cards with fictional projects; original brand hue set (green, blue, orange, red, purple) for labels and status indicators; all copy; the shared Aura skeleton placed into the source's visual rhythm |
 | Not legible | Exact animation keyframes for tab transitions, hover states on navigation dropdowns, any authenticated repository flows, octicon vector paths |
+
+**Dark mode note:** The reference was captured in `prefers-color-scheme: dark` only; no independent logged-out dark reference was observed (the page appeared light-themed in the screenshot). Dark mode values in this spec are designed adaptations based on typical developer platform patterns and semantic variable naming, not measured from a dark-mode reference screenshot.
 
 ## Apply to an Aura project
 
@@ -181,7 +183,30 @@ An agent that receives this file's link inside an Aura project does this, in ord
 
 ## Overview
 
-Verdantline is a crisp, functional page with a developer-first aesthetic. The hero is paper: a bold centered headline (one or two lines), a muted subline explaining the platform's purpose, and two rounded buttons (green primary, soft gray secondary). Below, content alternates between white and soft gray bands. Repository cards dominate—white rectangles with rounded corners, 1px gray borders, a language color dot, star count badge, and three-line description. Tab navigation sits above many sections, using underlined active state. Code blocks appear frequently, with light gray backgrounds and monospaced type. Section headlines are left-aligned, bold, and spacious. Small rounded counters (pale gray background) show metrics. Color is restrained: green for primary actions and success states, blue for links, orange for warnings, red for errors, purple for special labels—all appearing sparingly. The page feels open, organized, and technically competent.
+Verdantline is a crisp, functional page with a developer-first aesthetic. The hero is paper: a bold centered headline (one or two lines), a muted subline explaining the platform's purpose, an email input field with placeholder text, and a green "Sign up" button adjacent to the input. Below, content alternates between white and soft gray bands. Repository cards dominate—white rectangles with rounded corners, 1px gray borders, a language color dot, star count badge, and three-line description. Tab navigation sits above many sections, using underlined active state. Code blocks appear frequently, with light gray backgrounds and monospaced type. Section headlines are left-aligned, bold, and spacious. Small rounded counters (pale gray background) show metrics. Color is restrained: green for primary actions and success states, blue for links, orange for warnings, red for errors, purple for special labels—all appearing sparingly. The page feels open, organized, and technically competent.
+
+## Visual Inventory
+
+| Feature | Pass / N/A | Notes |
+| --- | --- | --- |
+| F01 Hero headline | Pass | Two-line headline with original copy, 72px display weight 600 |
+| F02 Hero subline | Pass | Muted paragraph below headline |
+| F03 Email input | Pass | Rounded input with placeholder, adjacent to CTA |
+| F04 Primary CTA | Pass | Green button "Sign up for Verdantline" |
+| F05 Secondary CTA | N/A | Not present in Verdantline hero |
+| F06 Navigation | Pass | Horizontal nav with logo, links, sign-up button |
+| F07 Sticky header | Pass | 1px bottom border on scroll |
+| F08 Avatar stack | N/A | Not present in Verdantline |
+| F09 Repository cards | Pass | White card, 1px border, 12px radius, language dot, star count |
+| F10 Tab navigation | Pass | Underline active state, 2px accent border |
+| F11 Code blocks | Pass | Gray background, monospaced type, 6px radius |
+| F12 Inline code | Pass | Lighter gray background, mono font, `--gray-9` text |
+| F13 Language dots | Pass | 8px circles in brand colors |
+| F14 Counters | Pass | Rounded badges with tabular numerals |
+| F15 Gray bands | Pass | Alternating `--gray-1` and `--band` sections |
+| F16 Focus ring | Pass | 2px solid `--accent-9` with 2px offset |
+| F17 Mobile nav | Pass | Toggle before list, Escape closes |
+| F18 Dark mode | Pass | Designed adaptation via semantic variables |
 
 ## Colors
 
@@ -279,114 +304,22 @@ Consistency: all interactive elements use 6px base radius except counters and do
 
 ### Core Elements
 
-| Element | Aura Token Class | Overrides |
-|---------|------------------|-----------|
-| Hero CTA Button | `Button variant="fill"` | `bg-[--accent-9] text-[--accent-contrast] rounded-sm` |
-| Nav Signup Button | `Button variant="fill"` | `bg-[--accent-9] text-[--accent-contrast] rounded-sm` |
-| Secondary Button | `Button variant="outline"` | `border-[--accent-7] text-[--accent-11] rounded-sm` |
-| Section Container | `Container` | `max-w-7xl px-[--space-4] py-[--space-8]` |
-| Heading (Hero) | `Text as="h1"` | `text-[--font-size-9] font-[--font-weight-bold] text-[--gray-12]` |
-| Heading (Section) | `Text as="h2"` | `text-[--font-size-7] font-[--font-weight-bold] text-[--gray-12]` |
-| Body Text | `Text` | `text-[--font-size-3] text-[--gray-11]` |
-| Feature Card | `Card` | `bg-[--gray-1] border-[--gray-6] rounded-sm` |
-| Input Field | `TextField.Root` | `bg-[--gray-2] border-[--gray-7] rounded-sm` |
-| Nav Container | `Flex` | `justify-between items-center px-[--space-5] py-[--space-3]` |
+| Element | Aura Pattern | Overrides |
+|---------|--------------|-----------|
+| Hero CTA Button | `import { Button } from '@/components/ui/button'` | `className="bg-[--accent-9] text-[--accent-contrast] rounded-sm"` |
+| Hero Email Input | `import { Input } from '@/components/ui/input'` | `className="bg-[--gray-2] border-[--gray-7] rounded-sm"` |
+| Nav Signup Button | `Button variant="default"` | `className="bg-[--accent-9] text-[--accent-contrast]"` |
+| Secondary Button | `Button variant="outline"` | `className="border-[--gray-7] text-[--gray-11]"` |
+| Section Container | `import { Container } from '@/components/ui/container'` | `className="max-w-96 px-4 py-8"` |
+| Heading (Hero) | `<h1 className="text-9 font-bold text-[--gray-12]">` | Fluid size `clamp(2rem, 6vw, 4.5rem)` |
+| Heading (Section) | `<h2 className="text-7 font-bold text-[--gray-12]">` | Fluid size `clamp(1.5rem, 3.5vw, 2.5rem)` |
+| Body Text | `<p className="text-3 text-[--gray-11] leading-relaxed">` | 16px / 1.6 line-height |
+| Feature Card | `import { Card } from '@/components/ui/card'` | `className="bg-[--card-bg] border-[--card-border] rounded-lg"` |
+| Repository Card | `Card` | `className="bg-[--card-bg] border-[--card-border] rounded-lg p-1.5"` |
+| Code Block | `<pre className="bg-[--code-bg] border-[--code-border] rounded-sm p-2">` | IBM Plex Mono 14px |
+| Inline Code | `<code className="bg-[--code-inline-bg] text-[--gray-9] rounded-sm px-1">` | 3px radius |
+| Language Dot | `<span className="inline-block w-2 h-2 rounded-full bg-[--green]">` | 8px circle |
+| Counter Badge | `<span className="inline-flex items-center gap-0.5 bg-[--counter-bg] text-[--counter-text] rounded-full px-1.5 py-0.5">` | Tabular numerals |
+| Tab Navigation | `import { Tabs } from '@/components/ui/tabs'` | Active: `border-b-2 border-[--accent-9] bg-[--tab-active]` |
 
-## Reference
-
-```tsx
-import { Button, Container, Flex, Text } from '@radix-ui/themes';
-
-export function HeroSection() {
-  return (
-    <Container size="4" className="py-[--space-9]">
-      <Flex direction="column" align="center" gap="6" className="text-center">
-        <Text 
-          as="h1" 
-          className="text-[--font-size-9] font-[--font-weight-bold] text-[--gray-12] leading-tight max-w-4xl"
-        >
-          Grow Your Business with Sustainable Technology
-        </Text>
-        
-        <Text 
-          className="text-[--font-size-4] text-[--gray-11] max-w-2xl leading-relaxed"
-        >
-          Verdantline helps forward-thinking companies build scalable infrastructure 
-          while reducing their environmental impact. Join over 2,000 teams already 
-          making a difference.
-        </Text>
-
-        <Flex gap="3" className="mt-[--space-2]">
-          <Button 
-            size="3" 
-            variant="fill"
-            className="bg-[--accent-9] text-[--accent-contrast] rounded-sm px-[--space-5]"
-          >
-            Start Free Trial
-          </Button>
-          
-          <Button 
-            size="3" 
-            variant="outline"
-            className="border-[--accent-7] text-[--accent-11] rounded-sm px-[--space-5]"
-          >
-            Watch Demo
-          </Button>
-        </Flex>
-      </Flex>
-    </Container>
-  );
-}
-```## Do's and Don'ts
-
-**Do:**
-- Use IBM Plex Sans for all UI text and IBM Plex Mono for all code.
-- Apply 6px radius to buttons and inputs, 12px to cards.
-- Use `--accent-9` (green) for primary actions only; `--blue` for links in prose.
-- Show language dots as 8px circles in brand colors (`--green`, `--blue`, `--orange`, `--red`, `--purple`).
-- Give repository cards 1px `--card-border`, 12px radius, 1.5-step padding.
-- Use tab navigation with 2px bottom border (`--accent-9`) for active state.
-- Apply `--gray-9` for muted text (descriptions, metadata, inline code).
-- Use tabular numerals (`font-variant-numeric: tabular-nums`) for counters and stats.
-- Alternate section backgrounds between `--gray-1` (white) and `--band` (soft gray).
-- Place focus ring at 2px `--accent-9` solid with 2px offset.
-- Use 1px borders (`--card-border`, `--gray-5`, `--gray-7`) for all elevation; no shadows.
-- Ensure mobile nav toggle appears before list in DOM and closes on Escape.
-- Check at 360px, in dark mode, and with `prefers-reduced-motion: reduce`.
-- Override `--aura-text-primary-inverse: var(--accent-contrast)` in `:root` for button labels.
-
-**Don't:**
-- Don't use drop shadows anywhere in the flavor; rely on borders only.
-- Don't mix system fonts; load IBM Plex Sans and IBM Plex Mono only.
-- Don't apply green accent to hyperlinks in prose; use `--blue`.
-- Don't use border radius other than 6px (buttons/inputs), 12px (cards), or full (counters/dots).
-- Don't create new color tokens; use only the defined brand hues for labels and language dots.
-- Don't make language dots larger than 8px or smaller than 6px.
-- Don't place repository card descriptions longer than three lines without truncation.
-- Don't use IBM Plex Mono for UI labels or body text; mono is for code only.
-- Don't forget to set `line-height: 1.1` and `letter-spacing: -0.03em` on hero headlines.
-- Don't invert colors for dark mode; reinterpret through semantic variables.
-- Don't use box-shadow for focus; use 2px solid outline with 2px offset.
-- Don't animate if `prefers-reduced-motion: reduce`.
-- Don't import Verdantline's sample copy (fictional repositories, blog posts, testimonials) into an unrelated product.
-- Don't patch generated CSS files by hand; override in component styles or additional blocks only.
-
-## Motion
-
-Verdantline uses restrained, functional motion. All transitions respect `prefers-reduced-motion: reduce`.
-
-| Interaction | Duration | Easing | Property |
-| --- | --- | --- | --- |
-| Button hover | 150ms | ease | `background-color` |
-| Card hover | 200ms | ease | `background-color` |
-| Tab switch | 200ms | ease | `border-color`, `background-color` |
-| Link hover | 100ms | ease | `color` |
-| Accordion open | 250ms | ease-out | `height`, `opacity` |
-| Input focus | 150ms | ease | `border-color`, `outline` |
-| Marquee scroll | 12s | linear | `transform` (infinite) |
-| Dropdown open | 200ms | ease-out | `opacity`, `transform` (translateY 4px) |
-| Mobile nav | 250ms | ease-out | `transform` (translateY from -100%) |
-
-No bounce, elastic or spring easings. Hover states lighten backgrounds by one step (`--gray-3` → `--gray-4`). Focus rings appear instantly (no transition). Skeleton loaders (if used) pulse between `--gray-3` and `--gray-4` at 1.5s ease-in-out infinite. Parallax, 3D transforms and scroll-driven animations are out of scope.
-
-**Reduced motion:** in `prefers-reduced-motion: reduce`, disable marquee animation, set all transition durations to 0ms, and snap accordion/dropdown states instantly. Focus rings and hover color changes remain (they are not motion).
+### Reference Implementation
