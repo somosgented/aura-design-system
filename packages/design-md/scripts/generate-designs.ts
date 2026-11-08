@@ -153,28 +153,30 @@ function generate() {
     throw new Error(`[design-md] Add ${unknown.join(", ")} to designs/order.json.`);
   }
 
-  const manifest = order.map((slug) => {
-    const design = readFrontmatter(path.join(designsRoot, slug, "DESIGN.md"));
-    const light = scalesFor("light", design.aura.theme.light);
-    const dark = scalesFor("dark", design.aura.theme.dark);
-    fs.writeFileSync(path.join(designsRoot, slug, "theme.css"), themeCss(design, light, dark));
-    console.log(`[design-md] designs/${slug}/theme.css`);
-    return {
-      slug,
-      name: design.name,
-      description: design.description,
-      design: `designs/${slug}/DESIGN.md`,
-      theme: `designs/${slug}/theme.css`,
-      result: fs.existsSync(path.join(designsRoot, slug, "result.html"))
-        ? `designs/${slug}/result.html`
-        : null,
-      fonts: design.aura.fonts,
-      hero: design.aura.hero ?? "field",
-      headingWeight: design.aura.headingWeight ?? 400,
-      radius: design.aura.radius,
-      tokens: { light: previewTokens(light), dark: previewTokens(dark) },
-    };
-  });
+  const manifest = order
+    .map((slug) => {
+      const design = readFrontmatter(path.join(designsRoot, slug, "DESIGN.md"));
+      const light = scalesFor("light", design.aura.theme.light);
+      const dark = scalesFor("dark", design.aura.theme.dark);
+      fs.writeFileSync(path.join(designsRoot, slug, "theme.css"), themeCss(design, light, dark));
+      console.log(`[design-md] designs/${slug}/theme.css`);
+      return {
+        slug,
+        name: design.name,
+        description: design.description,
+        design: `designs/${slug}/DESIGN.md`,
+        theme: `designs/${slug}/theme.css`,
+        result: fs.existsSync(path.join(designsRoot, slug, "result.html"))
+          ? `designs/${slug}/result.html`
+          : null,
+        fonts: design.aura.fonts,
+        hero: design.aura.hero ?? "field",
+        headingWeight: design.aura.headingWeight ?? 400,
+        radius: design.aura.radius,
+        tokens: { light: previewTokens(light), dark: previewTokens(dark) },
+      };
+    })
+    .sort((a, b) => a.name.localeCompare(b.name, "en", { sensitivity: "base" }));
 
   fs.writeFileSync(manifestPath, `${JSON.stringify({ designs: manifest }, null, 2)}\n`);
   console.log(`[design-md] designs.json (${manifest.length} designs)`);

@@ -134,6 +134,10 @@
         background: var(--gray-6);
       }
 
+      [hidden] {
+        display: none !important;
+      }
+
       .btn,
       .icon-btn {
         display: inline-flex;
@@ -759,7 +763,10 @@
       }
 
       try {
-        const { designs } = await (await fetch("/designs.json")).json();
+        const response = await fetch(
+          `/designs.json?v=${encodeURIComponent(document.lastModified)}`,
+        );
+        const { designs } = await response.json();
         design = designs.find((entry) => entry.slug === slug);
       } catch {
         design = undefined;

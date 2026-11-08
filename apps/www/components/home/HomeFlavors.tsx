@@ -8,13 +8,13 @@ import { Button } from "@/components/ui/Button";
 const GALLERY_URL = "https://design-md.auradesignsystem.com";
 
 const flavors = [
-  { slug: "sharpmint", name: "Sharpmint", mood: "Ice-blue fields, square split-cell actions, an open ledger" },
-  { slug: "stillfield", name: "Stillfield", mood: "Warm paper, drifting tiles, one light headline" },
-  { slug: "narc", name: "Narc", mood: "Grainy blue bands, scalloped edges, candy windows" },
   { slug: "bauhaus", name: "Bauhaus", mood: "Muted primaries, ink rules, six geometric shapes" },
-  { slug: "merchantry", name: "Merchantry", mood: "Night stages, electric lime, huge tight type" },
-  { slug: "slipstream", name: "Slipstream", mood: "A flowing gradient, navy ink, layered cards" },
   { slug: "blocksmith", name: "Blocksmith", mood: "Heavy type, dotted canvas, pages built from blocks" },
+  { slug: "bluefold", name: "Bluefold", mood: "White canvas, ink pills, a cream panel and desktop mockup" },
+  { slug: "marginalia", name: "Marginalia", mood: "Warm ivory paper, ink buttons, one clay margin rule" },
+  { slug: "merchantry", name: "Merchantry", mood: "Night stages, electric lime, huge tight type" },
+  { slug: "narc", name: "Narc", mood: "Grainy blue bands, scalloped edges, candy windows" },
+  { slug: "nestling", name: "Nestling", mood: "Airy white canvas, soft headlines, bobbing critters" },
 ] as const;
 
 export function HomeFlavors() {
