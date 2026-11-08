@@ -100,8 +100,6 @@ aura:
       code-bg: "#f6f8fa"
       code-inline-bg: "#eff1f3"
       code-border: "#d1d9e0"
-      counter-bg: "#eaeef2"
-      counter-text: "#57606a"
       green: "#08872b"
       green-pale: "#dafbe1"
       blue: "#0969da"
@@ -121,8 +119,6 @@ aura:
       code-bg: "#161b22"
       code-inline-bg: "#1c2128"
       code-border: "#30363d"
-      counter-bg: "#1c2128"
-      counter-text: "#8b949e"
       green: "#3fb950"
       green-pale: "#0f3c1a"
       blue: "#58a6ff"
@@ -154,7 +150,7 @@ Source flavor: https://github.com/ (observed 2026-11-08). This file adapts its v
 
 | Kind | What |
 | --- | --- |
-| Observed (measured) | IBM Plex Sans body (16px/1.6); IBM Plex Mono for code (14px/1.6); display headings 72px weight 600 with tracking `-0.03em`, section heads 40px/1.2 weight 600; green accent light / dark; soft rounded corners 6px buttons, 12px cards; subtle gray bands, code blocks with background, inline code; content max-width about 1248px; section padding about 100–110px; counters with rounded background; email signup input with adjacent green CTA; primary CTA labeled "Sign up for GitHub" (adapted as "Sign up" in Verdantline) |
+| Observed (measured) | IBM Plex Sans body (16px/1.6); IBM Plex Mono for code (14px/1.6); display headings 72px weight 600 with tracking `-0.03em`, section heads 40px/1.2 weight 600; green accent light / dark; soft rounded corners 6px buttons, 12px cards; subtle gray bands, code blocks with background, inline code; content max-width about 1248px; section padding about 100–110px; email signup input with adjacent green CTA; primary CTA labeled "Sign up for GitHub" (adapted as "Sign up" in Verdantline) |
 | Adapted by Verdantline | All type set in IBM Plex Sans and IBM Plex Mono (source uses system fonts and SFMono); every spacing value rounded to the 13px grid; original brand hue set (green, blue, orange, red, purple) for labels and status indicators; all copy; the shared Aura skeleton placed into the source's visual rhythm |
 | Not legible | Exact animation keyframes for hover states, any authenticated flows |
 
@@ -175,7 +171,7 @@ An agent that receives this file's link inside an Aura project does this, in ord
 
 ## Overview
 
-Verdantline is a crisp, functional page with a developer-first aesthetic. The hero is paper: a bold centered headline (one or two lines), a muted subline explaining the platform's purpose, an email input field with placeholder text (observed: "you@domain.com"), and a green "Sign up" button adjacent to the input. Below, content alternates between white and soft gray bands. Code blocks appear frequently, with light gray backgrounds and monospaced type. Section headlines are left-aligned, bold, and spacious. Small rounded counters (pale gray background) show metrics. Color is restrained: green for primary actions and success states, blue for links, orange for warnings, red for errors, purple for special labels—all appearing sparingly. The page feels open, organized, and technically competent.
+Verdantline is a crisp, functional page with a developer-first aesthetic. The hero is paper: a bold centered headline (one or two lines), a muted subline explaining the platform's purpose, an email input field with placeholder text (observed: "you@domain.com"), and a green "Sign up" button adjacent to the input. Below, content alternates between white and soft gray bands. Code blocks appear frequently, with light gray backgrounds and monospaced type. Section headlines are left-aligned, bold, and spacious. Color is restrained: green for primary actions and success states, blue for links, orange for warnings, red for errors, purple for special labels—all appearing sparingly. The page feels open, organized, and technically competent.
 
 ## Colors
 
@@ -194,7 +190,6 @@ The accent is **green**: the source's primary action is a green button, so `acce
 | Field border | `--gray-7` | `--gray-7` | Inputs, select |
 | Headline / body | `--gray-12` / `--gray-12` | same steps | Text |
 | Muted text | `--gray-9` | `--gray-9` | Descriptions, metadata, inline code text |
-| Counter | `--counter-bg`, `--counter-text` | `--counter-bg`, `--counter-text` | Star counts, metrics |
 | Badge tints | `--green-pale`, `--blue-pale`, `--orange-pale`, `--red-pale`, `--purple-pale` with matching hue text | darker variants | Status labels, tags |
 
 - Focus ring: `--aura-outline: var(--accent-9) solid 2px` with 2px offset.
@@ -231,7 +226,6 @@ In dark mode, card borders remain visible at 1px `--card-border`. Code blocks ga
 - Labels: IBM Plex Sans 500 14px. Eyebrows: IBM Plex Sans 500 12px uppercase `tracking-wide` in `--gray-9`.
 - Code blocks: IBM Plex Mono 400 14px/1.6 in `--code-bg`.
 - Inline code: IBM Plex Mono 400 14px in `--code-inline-bg`, color `--gray-9`.
-- Counters use `font-variant-numeric: tabular-nums`.
 
 ## Layout
 
@@ -242,7 +236,7 @@ In dark mode, card borders remain visible at 1px `--card-border`. Code blocks ga
 | 100–110 section | `py-8` | 104 | Section rhythm |
 | 32 medium gap | `gap-2.5` | 32.5 | Feature grids |
 | 16 small gap | `gap-1` | 13 | Card internal spacing |
-| 8 counter gap | `gap-0.5` | 6.5 | Icon + text in counters |
+| 8 inline cluster gap | `gap-0.5` | 6.5 | Icon + text in marquee |
 
 Verdantline uses a narrow column for prose (78.5 steps, about 1020px) but full width (96 steps, 1248px) for feature cards. Section padding is 8 steps (104px vertical), creating a measured, spacious rhythm.
 
@@ -256,11 +250,10 @@ Verdantline avoids shadows in favor of borders. Cards use 1px `--card-border` on
 - Cards: 12px radius (`rounded-lg`), 1px border, 1.5-step internal padding.
 - Code blocks: 6px radius, 1px border.
 - Inline code: 3px radius.
-- Counters: 12px full radius (`rounded-full`), 4px vertical padding, 6px horizontal padding.
 - Inputs: 6px radius, 1px border.
 - Badges: 12px radius, 2px vertical padding, 6px horizontal padding.
 
-Consistency: all interactive elements use 6px base radius except counters (full). Cards and surfaces use 12px. Avoid mixing radii within a component.
+Consistency: interactive controls use 6px base radius; cards and surfaces use 12px. Avoid mixing radii within a component.
 
 ## Components
 
@@ -268,4 +261,12 @@ All components below use Aura primitives and semantic tokens only. No literals b
 
 ### Hero (Paper)
 
-Centered on `--gray-1`, max-width 78.5 steps (prose column).
+Centered on `--gray-1`, max-width 78.5 steps (prose column). Headline `h1.h1`, muted `p.lead`. Email input + CTA wrapper is `.hero-email` with 1px `--gray-7` border, 6px radius. Input placeholder must meet 4.5:1 vs `--aura-input-bg` in both themes (changed to `--gray-11` in light, `--gray-10` in dark to meet CA-14). On keyboard focus, `.hero-email:focus-within` shows 2px `--accent-9` outline at 2px offset. Input itself has no border (border:0). Adjacent green CTA uses `.btn-hero-primary`. Mobile (<600px) stacks vertically, input gains border and full width.
+
+### Nav search
+
+Same focus treatment as hero email but on the input directly: 2px `--accent-9` box-shadow on focus.
+
+---
+
+*All references to "counters" on product pages removed per patch instructions.*
