@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sharpmint · Aura flavor</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/aura/main.css" />
+    <link rel="stylesheet" href="theme.css" />
+    <script>
+      (function () {
+        var appearance = new URLSearchParams(window.location.search).get("appearance") === "dark" ? "dark" : "light";
+        document.documentElement.classList.add(appearance);
+        document.documentElement.style.colorScheme = appearance;
+      })();
+    </script>
+    <style>
+      :root {
+        --aura-outline: var(--accent-9) solid 2px;
+        --aura-input-bg: var(--gray-1);
+        --ease: cubic-bezier(0.45, 0, 0.55, 1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        font-size: 17px;
+        background: var(--gray-1);
+      }
+
+      body {
+        margin: 0;
+        overflow-x: hidden;
+        background: var(--gray-1);
+        color: var(--gray-12);
+        line-height: 1.5;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      h1,
+      h2,
+      h3,
+      p,
+      figure,
+      blockquote {
+        margin: 0;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: var(--aura-font-display);
+        font-weight: 400;
+        letter-spacing: -0.035em;
+      }
+
+      .wrap {
+        width: min(100% - var(--aura) * 4, var(--aura) * 106.5);
+        margin-inline: auto;
+      }
+
+      .label {
+        font: 500 calc(13 / 17 * 1rem) / 1.4 var(--aura-font-label);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .muted {
+        color: var(--gray-11);
+      }
+
+      .split {
+        display: inline-flex;
+        align-items: stretch;
+        gap: 2px;
+      }
+
+      .split > * {
+        display: grid;
+        place-items: center;
+        border: 0;
+        background: var(--gray-12);
+        color: var(--gray-1);
+        cursor: pointer;
+      }
+
+      .split .text {
+        padding: calc(var(--aura) * 1) calc(var(--aura) * 1.5);
+        font: 500 calc(13 / 17 * 1rem) / 1.4 var(--aura-font-label);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .split .arrow {
+        width: calc(var(--aura) * 3.5);
+        font-size: 1.25rem;
+      }
+
+      .split:hover > * {
+        background: var(--accent-9);
+        color: var(--accent-contrast);
+      }
+
+      .split.secondary > * {
+        background: var(--gray-3);
+        color: var(--gray-12);
+      }
+
+      .split.secondary:hover > * {
+        background: var(--accent-9);
+        color: var(--accent-contrast);
+      }
+
+      .split:focus-visible,
+      a:focus-visible,
+      summary:focus-visible {
+        outline: var(--aura-outline);
+        outline-offset: 4px;
+      }
+
+      .field {
+        position: relative;
+        isolation: isolate;
+        min-height: calc(var(--aura) * 61);
+        background: var(--gray-1);
+        color: var(--gray-12);
+      }
+
+      .field::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background:
+          radial-gradient(ellipse at 28% 0%, var(--accent-12), transparent 75%),
+          linear-gradient(178deg, var(--accent-8), var(--gray-1) 83%);
+        opacity: 0.8;
+      }
+
+      .field::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background: linear-gradient(0deg, var(--gray-1), transparent 65%);
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: calc(var(--aura) * 2);
+        height: calc(var(--aura) * 7.5);
+      }
+
+      .wordmark {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font: 500 1.5rem / 1 var(--aura-font-display);
+        letter-spacing: -0.06em;
+      }
+
+      .wordmark .bars {
+        display: grid;
+        grid-template-columns: repeat(3, 3px);
+        gap: 4px;
+        height: 23px;
+        transform: skewY(-22deg);
+      }
+
+      .wordmark .bars i {
+        background: currentColor;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2px;
+        margin-left: auto;
+      }
+
+      .nav-links a {
+        padding: calc(var(--aura) * 1) calc(var(--aura) * 1.5);
+        background: var(--gray-a3);
+      }
+
+      .nav-links a:hover {
+        background: var(--gray-a5);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.15fr 1fr;
+        gap: calc(var(--aura) * 2);
+        align-items: center;
+        min-height: calc(var(--aura) * 47);
+        padding-top: calc(var(--aura) * 4);
+      }
+
+      .hero h1 {
+        max-width: 9ch;
+        margin-block: calc(var(--aura) * 2);
+        line-height: 1.02;
+      }
+
+      .hero .lead {
+        max-width: 36ch;
+        font-size: 1.1rem;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: calc(var(--aura) * 1);
+        margin-top: calc(var(--aura) * 2.5);
+      }
+
+      .proof {
+        margin-top: calc(var(--aura) * 1.5);
+        opacity: 0.78;
+      }
+
+      .reserve {
+        position: relative;
+        height: calc(var(--aura) * 30);
+      }
+
+      .reserve svg {
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        transform: rotate(-18deg);
+      }
+
+      .reserve .wire {
+        fill: color-mix(in srgb, var(--accent-12) 3%, transparent);
+        stroke: var(--accent-12);
+        stroke-width: 1px;
+        vector-effect: non-scaling-stroke;
+      }
+
+      .reserve .solid {
+        fill: color-mix(in srgb, var(--accent-12) 17%, transparent);
+      }
+
+      .reserve .axis {
+        stroke: var(--gray-12);
+        stroke-opacity: 0.25;
+        stroke-dasharray: 3 8;
+      }
+
+      .reserve-note {
+        position: absolute;
+        right: 0;
+        bottom: calc(var(--aura) * 1);
+        display: grid;
+        gap: 4px;
+        padding-left: calc(var(--aura) * 1.25);
+        border-left: 1px solid var(--gray-a8);
+      }
+
+      .reserve-note strong {
+        font: 400 1.75rem / 1.1 var(--aura-font-display);
+        letter-spacing: -0.03em;
+      }
+
+      .ticker {
+        display: grid;
+        grid-template-columns: 1fr auto auto;
+        gap: calc(var(--aura) * 2.5);
+        padding-block: calc(var(--aura) * 1.5);
+        border-top: 1px solid var(--gray-a6);
+      }
+
+      .live {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+      }
+
+      .live::before {
+        content: "";
+        width: 5px;
+        height: 5px;
+        background: var(--accent-11);
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        border-bottom: 1px solid var(--gray-6);
+      }
+
+      .stats > div {
+        padding: calc(var(--aura) * 3.5) calc(var(--aura) * 2);
+        border-right: 1px solid var(--gray-6);
+      }
+
+      .stats > div:first-child {
+        padding-left: 0;
+      }
+
+      .stats > div:last-child {
+        border-right: 0;
+      }
+
+      .stats strong {
+        display: block;
+        font: 400 clamp(2rem, 3.6vw, 3.25rem) / 1.1 var(--aura-font-display);
+        letter-spacing: -0.04em;
+      }
+
+      .stats .label {
+        display: block;
+        margin-top: calc(var(--aura) * 1);
+        color: var(--gray-11);
+      }
+
+      .section {
+        padding-top: calc(var(--aura) * 8.5);
+      }
+
+      .heading {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: calc(var(--aura) * 2);
+        margin-bottom: calc(var(--aura) * 5);
+      }
+
+      .heading h2 {
+        max-width: 20ch;
+        line-height: 1.08;
+      }
+
+      .features {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .feature {
+        padding: calc(var(--aura) * 1.5) calc(var(--aura) * 2) 0 0;
+        border-top: 1px solid var(--gray-12);
+      }
+
+      .feature + .feature {
+        padding-left: calc(var(--aura) * 2);
+        border-left: 1px solid var(--gray-6);
+      }
+
+      .feature h3 {
+        margin-block: calc(var(--aura) * 3) calc(var(--aura) * 1);
+        line-height: 1.2;
+      }
+
+      .feature p {
+        max-width: 34ch;
+        color: var(--gray-11);
+      }
+
+      .chart {
+        display: flex;
+        align-items: end;
+        gap: 7px;
+        height: calc(var(--aura) * 11.5);
+        margin-top: calc(var(--aura) * 3);
+        border-bottom: 1px solid var(--gray-6);
+        background-image: linear-gradient(var(--gray-6) 1px, transparent 1px);
+        background-size: 100% calc(var(--aura) * 4);
+      }
+
+      .chart i {
+        flex: 1;
+        height: var(--h);
+        background: color-mix(in srgb, var(--accent-9) 28%, var(--gray-1));
+      }
+
+      .chart i:last-child {
+        background: var(--accent-9);
+      }
+
+      .ledger {
+        margin-top: calc(var(--aura) * 3);
+        font: calc(13 / 17 * 1rem) / 1.4 var(--aura-font-label);
+      }
+
+      .ledger div {
+        display: flex;
+        justify-content: space-between;
+        padding-block: calc(var(--aura) * 1);
+        border-bottom: 1px solid var(--gray-6);
+      }
+
+      .ledger b {
+        font-weight: 500;
+      }
+
+      .stamp {
+        display: grid;
+        place-items: center;
+        height: calc(var(--aura) * 11.5);
+        margin-top: calc(var(--aura) * 3);
+        background:
+          linear-gradient(90deg, transparent 49.8%, var(--gray-6) 50%, transparent 50.2%),
+          linear-gradient(transparent 49.6%, var(--gray-6) 50%, transparent 50.4%);
+      }
+
+      .stamp span {
+        display: grid;
+        place-items: center;
+        width: calc(var(--aura) * 8);
+        height: calc(var(--aura) * 5);
+        border: 1px solid var(--accent-9);
+        background: var(--gray-1);
+        color: var(--accent-11);
+      }
+
+      .report {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        margin-top: calc(var(--aura) * 5.5);
+        border: 1px solid var(--gray-6);
+      }
+
+      .plate {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: calc(var(--aura) * 2.5);
+        padding: calc(var(--aura) * 2);
+        background: var(--gray-3);
+      }
+
+      .plate h3 {
+        line-height: 1.15;
+      }
+
+      .rows {
+        padding: 6px calc(var(--aura) * 2);
+      }
+
+      .rows a {
+        display: grid;
+        grid-template-columns: 1fr auto auto;
+        gap: calc(var(--aura) * 2);
+        align-items: center;
+        padding-block: calc(var(--aura) * 1.75);
+        border-bottom: 1px solid var(--gray-6);
+      }
+
+      .rows a:last-child {
+        border-bottom: 0;
+      }
+
+      .rows a:hover b {
+        color: var(--accent-9);
+      }
+
+      .rows span {
+        color: var(--gray-11);
+      }
+
+      .policy {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        border: 1px solid var(--gray-6);
+      }
+
+      .policy aside {
+        padding: calc(var(--aura) * 2);
+        border-right: 1px solid var(--gray-6);
+      }
+
+      .policy aside p {
+        margin-top: calc(var(--aura) * 1);
+        color: var(--gray-11);
+      }
+
+      .policy form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .control {
+        display: grid;
+        gap: 6px;
+        padding: calc(var(--aura) * 1.5) calc(var(--aura) * 2);
+        border-bottom: 1px solid var(--gray-6);
+      }
+
+      .control:nth-child(odd) {
+        border-right: 1px solid var(--gray-6);
+      }
+
+      .control.full {
+        grid-column: 1 / -1;
+        border-right: 0;
+      }
+
+      .control input,
+      .control select {
+        height: calc(var(--aura) * 3.5);
+        padding-inline: calc(var(--aura) * 1);
+        border: 1px solid var(--gray-7);
+        border-radius: 0;
+        background: var(--gray-1);
+        color: var(--gray-12);
+        font: inherit;
+        font-size: max(1rem, 17px);
+        font-variant-numeric: tabular-nums;
+      }
+
+      .control input:focus-visible,
+      .control select:focus-visible {
+        outline: var(--aura-outline);
+        outline-offset: 2px;
+      }
+
+      .control.check {
+        display: flex;
+        align-items: center;
+        gap: calc(var(--aura) * 0.75);
+      }
+
+      .control.check input {
+        width: calc(var(--aura) * 1.5);
+        height: calc(var(--aura) * 1.5);
+        accent-color: var(--accent-9);
+      }
+
+      .submit {
+        grid-column: 1 / -1;
+        padding: calc(var(--aura) * 1.5) calc(var(--aura) * 2);
+      }
+
+      .plans {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        border: 1px solid var(--gray-6);
+      }
+
+      .plan {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        gap: calc(var(--aura) * 1.5);
+        padding: calc(var(--aura) * 2.5);
+      }
+
+      .plan + .plan {
+        border-left: 1px solid var(--gray-6);
+      }
+
+      .plan.highlight {
+        background: var(--gray-12);
+        color: var(--gray-1);
+      }
+
+      .plan .price {
+        font: 400 3.25rem / 1.1 var(--aura-font-display);
+        letter-spacing: -0.04em;
+      }
+
+      .plan .price small {
+        font-size: calc(13 / 17 * 1rem);
+        letter-spacing: 0;
+      }
+
+      .plan ul {
+        line-height: 2;
+      }
+
+      .plan .split {
+        margin-top: auto;
+      }
+
+      .plan.highlight .split > * {
+        background: var(--gray-1);
+        color: var(--gray-12);
+      }
+
+      .plan.highlight .split:hover > * {
+        background: var(--accent-9);
+        color: var(--accent-contrast);
+      }
+
+      .faq {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: calc(var(--aura) * 2);
+      }
+
+      details {
+        padding-block: calc(var(--aura) * 2);
+        border-top: 1px solid var(--gray-6);
+      }
+
+      summary {
+        display: flex;
+        justify-content: space-between;
+        gap: calc(var(--aura) * 1.5);
+        font: 400 1.3rem / 1.3 var(--aura-font-display);
+        letter-spacing: -0.02em;
+        list-style: none;
+        cursor: pointer;
+      }
+
+      summary::-webkit-details-marker {
+        display: none;
+      }
+
+      summary::after {
+        content: "+";
+        font-family: var(--aura-font-label);
+      }
+
+      details[open] summary::after {
+        content: "−";
+      }
+
+      details p {
+        max-width: 60ch;
+        margin-top: calc(var(--aura) * 1.5);
+        color: var(--gray-11);
+      }
+
+      .end {
+        margin-top: calc(var(--aura) * 8.5);
+        padding-block: calc(var(--aura) * 5.5);
+        background: var(--accent-4);
+      }
+
+      .end .wrap {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: calc(var(--aura) * 2.5);
+      }
+
+      .end h2 {
+        max-width: 14ch;
+        line-height: 1.08;
+      }
+
+      .end small {
+        display: block;
+        margin-top: calc(var(--aura) * 1);
+      }
+
+      footer {
+        padding-block: calc(var(--aura) * 4) calc(var(--aura) * 2);
+      }
+
+      .foot-top {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: calc(var(--aura) * 2.5);
+      }
+
+      .foot-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: calc(var(--aura) * 2);
+      }
+
+      .foot-bottom {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: calc(var(--aura) * 1.5);
+        margin-top: calc(var(--aura) * 5);
+        padding-top: calc(var(--aura) * 1.5);
+        border-top: 1px solid var(--gray-6);
+        color: var(--gray-11);
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .split > *,
+        .nav-links a {
+          transition: background-color 250ms var(--ease), color 250ms var(--ease), transform 250ms var(--ease);
+        }
+        .split:hover .arrow {
+          transform: translateX(2px);
+        }
+      }
+
+      @media (max-width: 900px) {
+        .heading,
+        .report,
+        .faq,
+        .policy,
+        .features,
+        .plans {
+          grid-template-columns: 1fr;
+        }
+        .policy aside {
+          border-right: 0;
+          border-bottom: 1px solid var(--gray-6);
+        }
+        .feature,
+        .feature + .feature {
+          padding: calc(var(--aura) * 2) 0 calc(var(--aura) * 3);
+          border-left: 0;
+        }
+        .plan + .plan {
+          border-left: 0;
+          border-top: 1px solid var(--gray-6);
+        }
+      }
+
+      @media (max-width: 600px) {
+        .wrap {
+          width: calc(100% - var(--aura) * 3);
+        }
+        .nav-links {
+          display: none;
+        }
+        .hero {
+          grid-template-columns: 1fr;
+        }
+        .reserve {
+          height: calc(var(--aura) * 21);
+        }
+        .ticker {
+          grid-template-columns: 1fr auto;
+        }
+        .ticker > :last-child,
+        .rows span {
+          display: none;
+        }
+        .stats {
+          grid-template-columns: 1fr 1fr;
+        }
+        .stats > div {
+          padding: calc(var(--aura) * 2) calc(var(--aura) * 1);
+        }
+        .stats > div:nth-child(odd) {
+          padding-left: 0;
+        }
+        .stats > div:nth-child(2) {
+          border-right: 0;
+        }
+        .stats > div:nth-child(-n + 2) {
+          border-bottom: 1px solid var(--gray-6);
+        }
+        .policy form {
+          grid-template-columns: 1fr;
+        }
+        .control:nth-child(odd) {
+          border-right: 0;
+        }
+      }
+
+      .logo {
+        display: inline-flex;
+        align-items: center;
+        gap: calc(var(--aura) * 0.5);
+        font: 500 1.25rem / 1 var(--aura-font-display);
+        letter-spacing: -0.04em;
+      }
+
+      .logo i {
+        width: calc(var(--aura) * 1);
+        height: calc(var(--aura) * 1);
+        border-radius: var(--aura-button-radius);
+        background: var(--accent-9);
+      }
+    </style>
+  </head>
+  <body>
+    <header class="field dark">
+      <nav class="wrap nav" aria-label="Main">
+        <a href="#" class="logo"><i aria-hidden="true"></i>Sharpmint</a>
+        <div class="nav-links label"><a href="#">The reserve</a><a href="#">Reports</a><a href="#">Approach</a><a href="#">Plans ↗</a></div>
+      </nav>
+      <div class="wrap hero">
+        <div>
+          <span class="label">Capital, accounted for.</span>
+          <h1 class="h1">Give idle capital purpose.</h1>
+          <p class="lead">A treasury workspace for patient businesses. See every reserve, set the rules, and make tomorrow’s cash a little less mysterious.</p>
+          <div class="actions">
+            <a href="#" class="split"><span class="text">Open the reserve</span><span class="arrow" aria-hidden="true">↗</span></a>
+            <a href="#" class="split secondary"><span class="text">Read our approach</span><span class="arrow" aria-hidden="true">→</span></a>
+          </div>
+          <p class="proof label">164 finance teams · every balance reconciled daily</p>
+        </div>
+        <div class="reserve" role="img" aria-label="Three transparent reserve blocks with a reported balance of 24.8 million dollars">
+          <svg viewBox="0 0 500 390" aria-hidden="true">
+            <path class="axis" d="M10 320H490M250 15V375" />
+            <g class="wire">
+              <path d="m76 112 140-70 145 73-141 72Z M76 112v126l144 73 141-71V115 M220 187v124" />
+              <path d="m114 137 140-70 145 73-141 72Z M114 137v126l144 73 141-71V140 M258 212v124" />
+              <path class="solid" d="m152 162 140-70 145 73-141 72Z" />
+              <path d="M152 162v126l144 73 141-71V165 M296 237v124" />
+            </g>
+          </svg>
+          <div class="reserve-note"><span class="label">Reserve / 01</span><strong>$24,800,000</strong><span class="label">Reconciled 08:00 UTC</span></div>
+        </div>
+      </div>
+      <div class="wrap ticker label"><span class="live">Reserve report · 29 October 2026</span><span>Coverage 18.4 months</span><span>View statement ↗</span></div>
+    </header>
+
+    <main>
+      <section class="wrap stats" aria-label="Reserve statistics">
+        <div><strong>$2.6bn</strong><span class="label">Reserves tracked</span></div>
+        <div><strong>164</strong><span class="label">Finance teams</span></div>
+        <div><strong>18.4 mo</strong><span class="label">Median runway</span></div>
+        <div><strong>08:00</strong><span class="label">Daily reconciliation</span></div>
+      </section>
+
+      <section class="wrap section">
+        <div class="heading"><span class="label muted">01 / The approach</span><h2 class="h2">Less idle. More intentional.</h2></div>
+        <div class="features">
+          <article class="feature">
+            <span class="label muted">01.1 / Visibility</span>
+            <h3 class="h5">A balance with context.</h3>
+            <p>Operating cash, tax reserves and long-term funds in one view.</p>
+            <div class="chart" aria-hidden="true"><i style="--h: 28%"></i><i style="--h: 39%"></i><i style="--h: 37%"></i><i style="--h: 52%"></i><i style="--h: 63%"></i><i style="--h: 59%"></i><i style="--h: 75%"></i><i style="--h: 88%"></i></div>
+          </article>
+          <article class="feature">
+            <span class="label muted">01.2 / Discipline</span>
+            <h3 class="h5">Rules before reactions.</h3>
+            <p>Ring-fence six months of payroll. Two signatures for transfers.</p>
+            <div class="ledger"><div><span>Operating floor</span><b>$4,200,000</b></div><div><span>Tax reserve</span><b>$820,000</b></div><div><span>Approval threshold</span><b>2 signatures</b></div></div>
+          </article>
+          <article class="feature">
+            <span class="label muted">01.3 / Evidence</span>
+            <h3 class="h5">Every figure has a trail.</h3>
+            <p>Trace a board-pack number back to its account and timestamp.</p>
+            <div class="stamp" aria-hidden="true"><span class="label">Reconciled ✓</span></div>
+          </article>
+        </div>
+
+        <div class="report">
+          <div class="plate"><span class="label">The open ledger</span><h3 class="h4">Nothing hidden in the footnotes.</h3><span class="label muted">Latest statements →</span></div>
+          <div class="rows">
+            <a href="#"><b>October reserve statement</b><span class="label">29.10.26 · PDF</span><b>↗</b></a>
+            <a href="#"><b>Quarterly allocation review</b><span class="label">01.10.26 · PDF</span><b>↗</b></a>
+            <a href="#"><b>Our reserve policy</b><span class="label">Version 2.4</span><b>↗</b></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="wrap section">
+        <div class="heading"><span class="label muted">02 / Policy</span><h2 class="h2">Write the rule once.</h2></div>
+        <div class="policy">
+          <aside><span class="label">Policy 2.4 · draft</span><p>Changes apply from the next 08:00 reconciliation. Every edit is versioned and signed.</p></aside>
+          <form onsubmit="return false">
+            <label class="control"><span class="label muted">Operating floor</span><input type="text" value="$4,200,000" /></label>
+            <label class="control"><span class="label muted">Runway target</span>
+              <select><option>18 months</option><option>12 months</option></select>
+            </label>
+            <label class="control full"><span class="label muted">Second signatory</span><input type="email" placeholder="controller@company.com" /></label>
+            <label class="control full check"><input type="checkbox" checked /><span>Require two signatures above the threshold</span></label>
+            <div class="submit"><button type="submit" class="split"><span class="text">Sign the policy</span><span class="arrow" aria-hidden="true">→</span></button></div>
+          </form>
+        </div>
+      </section>
+
+      <section class="wrap section">
+        <div class="heading"><span class="label muted">03 / Access</span><h2 class="h2">A clear plan for your capital.</h2></div>
+        <div class="plans">
+          <article class="plan"><span class="label muted">01 / Observe</span><h3 class="h5">One clear picture.</h3><div class="price">$0 <small>/ month</small></div><ul class="small"><li>3 connected accounts</li><li>Daily balance reports</li></ul><a href="#" class="split secondary"><span class="text">Start observing</span><span class="arrow" aria-hidden="true">↗</span></a></article>
+          <article class="plan highlight"><span class="label">02 / Steward · Recommended</span><h3 class="h5">Make the rules stick.</h3><div class="price">$120 <small>/ month</small></div><ul class="small"><li>20 connected accounts</li><li>Approval policies</li></ul><a href="#" class="split"><span class="text">Become a steward</span><span class="arrow" aria-hidden="true">↗</span></a></article>
+          <article class="plan"><span class="label muted">03 / Institution</span><h3 class="h5">Room for complexity.</h3><div class="price">$480 <small>/ month</small></div><ul class="small"><li>Unlimited entities</li><li>Custom reporting periods</li></ul><a href="#" class="split secondary"><span class="text">Talk to the team</span><span class="arrow" aria-hidden="true">↗</span></a></article>
+        </div>
+      </section>
+
+      <section class="wrap section faq">
+        <div><span class="label muted">04 / Questions</span><h2 class="h3" style="margin-top: calc(var(--aura) * 1.5)">Before you begin.</h2></div>
+        <div>
+          <details open><summary>Do you move or hold our money?</summary><p>No. Sharpmint is a read-only reporting and policy workspace. Funds stay with your institutions.</p></details>
+          <details><summary>How fresh are the balances?</summary><p>Accounts reconcile every morning at 08:00 UTC. A missing report is never shown as fresh.</p></details>
+          <details><summary>Can we bring several entities?</summary><p>Yes. Each entity keeps its own reporting and permissions, with one consolidated view.</p></details>
+        </div>
+      </section>
+
+      <section class="end">
+        <div class="wrap">
+          <h2 class="h2">Know what tomorrow can afford.</h2>
+          <div><a href="#" class="split"><span class="text">Open your reserve</span><span class="arrow" aria-hidden="true">↗</span></a><small class="label">Read-only connections. No card for Observe.</small></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="wrap">
+      <div class="foot-top">
+        <a href="#" class="logo"><i aria-hidden="true"></i>Sharpmint</a>
+        <div class="foot-links label"><a href="#">Reserve</a><a href="#">Reports</a><a href="#">Privacy</a><a href="#">Contact</a></div>
+      </div>
+      <div class="foot-bottom label"><span>© 2026 Sharpmint · built with Aura</span><span class="live">All connections reporting · 08:00 UTC</span></div>
+    </footer>
+  </body>
+</html>

@@ -3762,6 +3762,29 @@
       ]
     },
     {
+      "name": "skill-generate-design-md",
+      "type": "registry:file",
+      "title": "Skill: Generate Design Md",
+      "description": "Aura skill: Generate Design Md. Installs to .agents/skills/generate-design-md/.",
+      "files": [
+        {
+          "path": "registry/default/skills/generate-design-md/SKILL.md",
+          "type": "registry:file",
+          "target": ".agents/skills/generate-design-md/SKILL.md"
+        },
+        {
+          "path": "registry/default/skills/generate-design-md/reference/format.md",
+          "type": "registry:file",
+          "target": ".agents/skills/generate-design-md/reference/format.md"
+        },
+        {
+          "path": "registry/default/skills/generate-design-md/reference/mapping.md",
+          "type": "registry:file",
+          "target": ".agents/skills/generate-design-md/reference/mapping.md"
+        }
+      ]
+    },
+    {
       "name": "skill-port-component-to-aura",
       "type": "registry:file",
       "title": "Skill: Port Component To Aura",
@@ -3895,6 +3918,21 @@
           "path": "registry/default/skills/verify-aura-ui/SKILL.md",
           "type": "registry:file",
           "target": ".agents/skills/verify-aura-ui/SKILL.md"
+        },
+        {
+          "path": "registry/default/skills/generate-design-md/SKILL.md",
+          "type": "registry:file",
+          "target": ".agents/skills/generate-design-md/SKILL.md"
+        },
+        {
+          "path": "registry/default/skills/generate-design-md/reference/format.md",
+          "type": "registry:file",
+          "target": ".agents/skills/generate-design-md/reference/format.md"
+        },
+        {
+          "path": "registry/default/skills/generate-design-md/reference/mapping.md",
+          "type": "registry:file",
+          "target": ".agents/skills/generate-design-md/reference/mapping.md"
         }
       ]
     },

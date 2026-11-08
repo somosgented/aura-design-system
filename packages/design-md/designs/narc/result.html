@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Narc · Aura flavor</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/aura/main.css" />
+    <link rel="stylesheet" href="theme.css" />
+    <script>
+      (function () {
+        var appearance = new URLSearchParams(window.location.search).get("appearance") === "dark" ? "dark" : "light";
+        document.documentElement.classList.add(appearance);
+        document.documentElement.style.colorScheme = appearance;
+      })();
+    </script>
+    <style>
+      :root {
+        --aura-accents-primary: var(--accent-9);
+        --aura-text-primary-inverse: var(--accent-contrast);
+        --aura-button-hover: var(--accent-10);
+        --aura-outline: var(--accent-8) solid 2px;
+        --aura-input-bg: var(--gray-1);
+        --serif: "Fraunces", Georgia, serif;
+        --rule: var(--accent-a5);
+        --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='3' intercept='-1'/%3E%3CfeFuncG type='linear' slope='3' intercept='-1'/%3E%3CfeFuncB type='linear' slope='3' intercept='-1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        --wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 10' preserveAspectRatio='none'%3E%3Cpath d='M0 0H20V3C15 3 15 10 10 10S5 3 0 3Z'/%3E%3C/svg%3E");
+        --band: var(--accent-9);
+        --band-fg: var(--accent-contrast);
+        --heading: var(--accent-9);
+        --chalk: #ffffff;
+        --chalk-fg: var(--brand-deep);
+        --frame-mix: 100%;
+        --grain: 0.5;
+        --glow: 70%;
+        --wline: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 10' preserveAspectRatio='none'%3E%3Cpath d='M0 3C5 3 5 8 10 8S15 3 20 3' fill='none' stroke='%23000' stroke-width='2.6'/%3E%3C/svg%3E");
+      }
+
+      .dark {
+        --band: color-mix(in srgb, var(--accent-9) 30%, var(--gray-1));
+        --band-fg: var(--accent-12);
+        --heading: var(--accent-11);
+        --chalk: var(--accent-12);
+        --chalk-fg: var(--gray-1);
+        --frame-mix: 30%;
+        --grain: 0.3;
+        --glow: 35%;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        font-size: 17px;
+        background: var(--gray-1);
+      }
+
+      body {
+        margin: 0;
+        overflow-x: hidden;
+        background: var(--gray-1);
+        color: var(--gray-12);
+        line-height: 1.5;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      h1,
+      h2,
+      h3,
+      p,
+      blockquote,
+      figure {
+        margin: 0;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: var(--aura-font-display);
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        text-wrap: balance;
+      }
+
+      .wrap {
+        width: min(100% - var(--aura) * 5, var(--aura) * 98.5);
+        margin-inline: auto;
+      }
+
+      .mono {
+        font: 700 calc(12 / 17 * 1rem) / 1.3 var(--aura-font-label);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .band {
+        position: relative;
+        isolation: isolate;
+        background: var(--band);
+        color: var(--band-fg);
+      }
+
+      .band::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background: var(--noise);
+        background-size: 180px;
+        opacity: var(--grain);
+        mix-blend-mode: overlay;
+        pointer-events: none;
+      }
+
+      .scallop {
+        z-index: 2;
+      }
+
+      .scallop::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: calc(100% - 1px);
+        height: 9px;
+        background: inherit;
+        -webkit-mask: var(--wave) 0 0 / 18px 100% repeat-x;
+        mask: var(--wave) 0 0 / 18px 100% repeat-x;
+        pointer-events: none;
+      }
+
+      .cream {
+        position: relative;
+        background: var(--paper-cream);
+        color: var(--gray-12);
+      }
+
+      .band,
+      .cream,
+      .win,
+      .plan,
+      .button {
+        transition: background-color 250ms ease-out, color 250ms ease-out, box-shadow 250ms ease-out;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: calc(var(--aura) * 1.5);
+        height: calc(var(--aura) * 7.5);
+      }
+
+      .mark {
+        width: calc(var(--aura) * 2.5);
+        height: calc(var(--aura) * 2.5);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: calc(var(--aura) * 0.5);
+        margin-left: calc(var(--aura) * 1);
+      }
+
+      .nav-links a {
+        padding: calc(var(--aura) * 0.5) calc(var(--aura) * 1);
+        border-radius: calc(var(--aura) * 0.5);
+        font: 500 calc(14 / 17 * 1rem) / 1 var(--aura-font-display);
+        letter-spacing: -0.02em;
+      }
+
+      .nav-links a:hover {
+        background: color-mix(in srgb, var(--brand-deep) 50%, transparent);
+      }
+
+      .nav .button {
+        margin-left: auto;
+      }
+
+      .nav-cta {
+        height: calc(var(--aura) * 3);
+        border: 0;
+      }
+
+      .promo {
+        padding-block: calc(var(--aura) * 2.5);
+        background:
+          radial-gradient(40% 90% at 8% 0, color-mix(in srgb, var(--candy-peach) var(--glow), transparent), transparent 70%),
+          radial-gradient(34% 90% at 96% 10%, color-mix(in srgb, var(--candy-blush) var(--glow), transparent), transparent 70%),
+          var(--paper-cream);
+      }
+
+      .promo .wrap {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: calc(var(--aura) * 2.5);
+      }
+
+      .promo p {
+        font: 700 clamp(1.5rem, 3vw, 2.25rem) / 1.05 var(--serif);
+        letter-spacing: -0.03em;
+      }
+
+
+      .hero {
+        padding-top: calc(var(--aura) * 5);
+        text-align: center;
+        overflow: hidden;
+      }
+
+      .hero .mono {
+        opacity: 0.75;
+      }
+
+      .hero h1 {
+        max-width: 20ch;
+        margin: calc(var(--aura) * 1.5) auto 0;
+        line-height: 0.98;
+      }
+
+      .hero h1 .q {
+        font-size: 0.6em;
+        vertical-align: 0.5em;
+        opacity: 0.55;
+      }
+
+      .press {
+        margin-top: calc(var(--aura) * 1.5);
+        font: 800 1.25rem / 1 var(--aura-font-display);
+        letter-spacing: -0.07em;
+        text-transform: uppercase;
+        opacity: 0.8;
+      }
+
+      .note {
+        max-width: 34ch;
+        margin: calc(var(--aura) * 1.5) auto 0;
+        font: 700 calc(13 / 17 * 1rem) / 1.4 var(--aura-font-label);
+        opacity: 0.72;
+      }
+
+      .dl {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: calc(var(--aura) * 1);
+        margin-top: calc(var(--aura) * 2.5);
+      }
+
+      .dl .button {
+        min-width: calc(var(--aura) * 21);
+        height: calc(var(--aura) * 3.5);
+        border: 0;
+        font-size: calc(14 / 17 * 1rem);
+        box-shadow: 0 5px 5px var(--gray-a3);
+      }
+
+      .button.chalk {
+        background: var(--chalk);
+        color: var(--chalk-fg);
+      }
+
+      .button.chalk:hover:not(:disabled) {
+        background: color-mix(in srgb, var(--chalk) 88%, var(--band));
+      }
+
+      .button.deep {
+        background: var(--brand-deep);
+        color: #fff;
+      }
+
+      .stage {
+        width: min(100% - var(--aura) * 5, var(--aura) * 84.5);
+        margin: calc(var(--aura) * 4) auto 0;
+      }
+
+      .win {
+        --t: var(--candy-coral);
+        display: grid;
+        grid-template-columns: calc(var(--aura) * 17) 1fr;
+        gap: 8px;
+        padding: 8px;
+        border-radius: var(--aura-radius);
+        --frame: color-mix(in srgb, var(--t) var(--frame-mix), var(--gray-2));
+        background: linear-gradient(160deg, color-mix(in srgb, var(--frame) 86%, var(--gray-1)), var(--frame));
+        box-shadow: 0 30px 60px var(--gray-a5), 0 0 0 1px color-mix(in srgb, var(--t) 55%, transparent);
+        color: var(--gray-12);
+        text-align: left;
+      }
+
+      .hero .win {
+        border-radius: var(--aura-radius) var(--aura-radius) 0 0;
+        padding-bottom: 0;
+      }
+
+      .side {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 8px 4px;
+      }
+
+      .lights {
+        display: flex;
+        gap: 7px;
+        padding: 4px 6px;
+      }
+
+      .lights i {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background: var(--candy-red);
+      }
+
+      .lights i:nth-child(2) {
+        background: var(--candy-sun);
+      }
+
+      .lights i:nth-child(3) {
+        background: var(--candy-mint);
+      }
+
+      .url {
+        display: flex;
+        align-items: center;
+        height: calc(var(--aura) * 2.5);
+        margin-top: 4px;
+        padding-inline: calc(var(--aura) * 1);
+        border-radius: 8px;
+        background: var(--gray-a3);
+        font-size: calc(13 / 17 * 1rem);
+        font-weight: 600;
+      }
+
+      .pins {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin-block: 6px;
+      }
+
+      .pins i {
+        display: grid;
+        place-items: center;
+        height: calc(var(--aura) * 3);
+        border-radius: 8px;
+        background: color-mix(in srgb, var(--gray-1) 28%, transparent);
+        font: 800 calc(14 / 17 * 1rem) / 1 var(--aura-font-display);
+        font-style: normal;
+      }
+
+      .lab {
+        padding: 6px calc(var(--aura) * 1) 2px;
+        font-size: calc(12 / 17 * 1rem);
+        font-weight: 600;
+        opacity: 0.55;
+      }
+
+      .tab {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        height: calc(var(--aura) * 3);
+        padding-inline: calc(var(--aura) * 1);
+        border-radius: 8px;
+        font-size: calc(14 / 17 * 1rem);
+        font-weight: 600;
+      }
+
+      .tab.on {
+        background: color-mix(in srgb, var(--gray-1) 88%, transparent);
+        box-shadow: 0 1px 3px var(--gray-a4);
+      }
+
+      .tab svg {
+        width: 16px;
+        height: 16px;
+        color: var(--heading);
+      }
+
+      .tab.new {
+        margin: 6px 8px 0;
+        padding-inline: 4px;
+        border-top: 1px solid var(--gray-a4);
+        border-radius: 0;
+        font-weight: 500;
+        opacity: 0.55;
+      }
+
+      .pane {
+        min-height: calc(var(--aura) * 30);
+        padding: calc(var(--aura) * 2.5);
+        border-radius: 8px 8px 0 0;
+        background: var(--gray-1);
+        color: var(--gray-12);
+        box-shadow: 0 1px 4px var(--gray-a5);
+      }
+
+      .sec .pane {
+        border-radius: 8px;
+      }
+
+      .pane-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: calc(var(--aura) * 1);
+      }
+
+      .pane-head b {
+        font: 800 1.25rem / 1 var(--aura-font-display);
+        letter-spacing: 0.4em;
+        color: var(--candy-coral);
+      }
+
+      .pane-head span {
+        display: flex;
+        gap: calc(var(--aura) * 2.5);
+        color: var(--gray-11);
+        font: italic 400 calc(11 / 17 * 1rem) / 1 var(--aura-font-label);
+        letter-spacing: 0.08em;
+      }
+
+      .report {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: calc(var(--aura) * 1.5);
+        margin-top: calc(var(--aura) * 2.5);
+      }
+
+      .poster {
+        position: relative;
+        display: flex;
+        align-items: flex-end;
+        min-height: calc(var(--aura) * 18);
+        padding: calc(var(--aura) * 1.5);
+        overflow: hidden;
+        border-radius: var(--aura-radius);
+        background:
+          radial-gradient(60% 60% at 70% 30%, var(--candy-peach), transparent 70%),
+          radial-gradient(50% 60% at 20% 80%, var(--candy-lilac), transparent 70%),
+          var(--brand-deep);
+      }
+
+      .poster::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--noise);
+        background-size: 180px;
+        opacity: 0.35;
+        mix-blend-mode: overlay;
+      }
+
+      .poster figcaption {
+        position: relative;
+        z-index: 1;
+        padding: calc(var(--aura) * 1) calc(var(--aura) * 1.25);
+        border-radius: 12px;
+        background: color-mix(in srgb, var(--gray-1) 92%, transparent);
+        color: var(--gray-12);
+        font-size: calc(14 / 17 * 1rem);
+        font-weight: 600;
+        box-shadow: 0 8px 30px var(--gray-a5);
+      }
+
+      .poster figcaption b {
+        display: block;
+        font: 800 1.75rem / 1 var(--aura-font-display);
+        letter-spacing: -0.04em;
+        color: var(--heading);
+      }
+
+      .offenders {
+        display: grid;
+        align-content: start;
+        gap: 6px;
+      }
+
+      .offender {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: calc(var(--aura) * 0.75);
+        padding: calc(var(--aura) * 0.75);
+        border-radius: 10px;
+        background: var(--gray-2);
+        font-size: calc(14 / 17 * 1rem);
+        font-weight: 600;
+      }
+
+      .offender i {
+        width: calc(var(--aura) * 2.5);
+        height: calc(var(--aura) * 2.5);
+        border-radius: 8px;
+        background: var(--candy-mint);
+      }
+
+      .offender:nth-child(2) i {
+        background: var(--candy-sun);
+      }
+
+      .offender:nth-child(3) i {
+        background: var(--candy-lilac);
+      }
+
+      .offender small {
+        display: block;
+        color: var(--gray-11);
+        font-weight: 400;
+      }
+
+      .offender em {
+        color: var(--heading);
+        font: 700 calc(12 / 17 * 1rem) / 1 var(--aura-font-label);
+        font-style: normal;
+      }
+
+      .marquee {
+        z-index: 3;
+        padding: calc(var(--aura) * 1.75) 0 calc(var(--aura) * 2);
+        overflow: hidden;
+        background: var(--paper-cream);
+      }
+
+      .marquee::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -8px;
+        height: 10px;
+        background: var(--heading);
+        -webkit-mask: var(--wline) 0 0 / 18px 100% repeat-x;
+        mask: var(--wline) 0 0 / 18px 100% repeat-x;
+      }
+
+      .row {
+        display: flex;
+        align-items: center;
+        gap: calc(var(--aura) * 3.5);
+        width: max-content;
+        white-space: nowrap;
+        color: var(--heading);
+      }
+
+      .row q {
+        font: 700 1rem / 1 var(--aura-font-display);
+        letter-spacing: -0.02em;
+      }
+
+      .row .lg {
+        font: 800 1.125rem / 1 var(--aura-font-display);
+        letter-spacing: -0.06em;
+        text-transform: uppercase;
+      }
+
+      .row .sf {
+        font: 700 1.2rem / 1 var(--serif);
+        text-transform: none;
+        letter-spacing: -0.02em;
+      }
+
+      .row .mo {
+        font: 700 calc(15 / 17 * 1rem) / 1 var(--aura-font-label);
+        letter-spacing: 0.06em;
+      }
+
+      .sec {
+        padding-top: calc(var(--aura) * 11);
+        text-align: center;
+      }
+
+      .sh {
+        max-width: 22ch;
+        margin-inline: auto;
+        color: var(--heading);
+        line-height: 0.98;
+      }
+
+      .sub {
+        max-width: 48ch;
+        margin: calc(var(--aura) * 1) auto 0;
+        color: var(--gray-11);
+      }
+
+      .sub b {
+        color: var(--gray-12);
+        font-weight: 600;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        margin-top: calc(var(--aura) * 4);
+      }
+
+      .stats div {
+        padding: 6px calc(var(--aura) * 1.5);
+        border-left: 2px solid var(--rule);
+      }
+
+      .stats div:first-child {
+        border-left: 0;
+      }
+
+      .stats b {
+        display: block;
+        color: var(--heading);
+        font: 800 clamp(2.5rem, 5vw, 3.5rem) / 1 var(--aura-font-display);
+        letter-spacing: -0.05em;
+      }
+
+      .stats span {
+        display: block;
+        margin-top: calc(var(--aura) * 0.75);
+        color: var(--gray-11);
+      }
+
+      .sec .stage {
+        margin-top: calc(var(--aura) * 4);
+      }
+
+      .w-lilac {
+        --t: var(--candy-lilac);
+      }
+
+      .w-sun {
+        --t: var(--candy-sun);
+      }
+
+      .form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: calc(var(--aura) * 1.5);
+      }
+
+      .field {
+        display: grid;
+        gap: 6px;
+      }
+
+      .field.full {
+        grid-column: 1 / -1;
+      }
+
+      .field span {
+        color: var(--gray-11);
+      }
+
+      .field input,
+      .field select {
+        height: calc(var(--aura) * 3.5);
+        padding-inline: calc(var(--aura) * 1);
+        border: 2px solid var(--rule);
+        border-radius: var(--aura-input-radius);
+        background: var(--gray-1);
+        color: var(--gray-12);
+        font: inherit;
+        font-size: max(1rem, 17px);
+      }
+
+      .field input:focus-visible,
+      .field select:focus-visible {
+        outline: var(--aura-outline);
+        outline-offset: 1px;
+      }
+
+      .switch-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: calc(var(--aura) * 1);
+        padding: calc(var(--aura) * 1);
+        border-radius: 10px;
+        background: var(--gray-2);
+      }
+
+      .switch-row input {
+        width: calc(var(--aura) * 1.5);
+        height: calc(var(--aura) * 1.5);
+        accent-color: var(--heading);
+      }
+
+      .form .button {
+        justify-self: start;
+        border: 0;
+        box-shadow: 0 5px 5px var(--gray-a3);
+      }
+
+      table {
+        width: 100%;
+        font-variant-numeric: tabular-nums;
+        border-collapse: collapse;
+        text-align: left;
+      }
+
+      th {
+        padding: calc(var(--aura) * 0.75) calc(var(--aura) * 1);
+        color: var(--gray-11);
+        border-bottom: 2px solid var(--rule);
+      }
+
+      td {
+        padding: calc(var(--aura) * 1);
+        border-bottom: 1px solid var(--rule);
+        font-size: calc(15 / 17 * 1rem);
+      }
+
+      td:first-child {
+        font-weight: 600;
+      }
+
+      td.num {
+        font-family: var(--aura-font-display);
+        font-weight: 700;
+        color: var(--heading);
+      }
+
+      .verdict {
+        display: inline-block;
+        padding: 3px calc(var(--aura) * 0.75);
+        border: 2px solid currentColor;
+        border-radius: 6.5px;
+        color: var(--heading);
+      }
+
+      .verdict.guilty {
+        color: var(--candy-red);
+      }
+
+      .tst {
+        margin-top: calc(var(--aura) * 11);
+        padding: calc(var(--aura) * 4.5) 0 calc(var(--aura) * 5);
+        text-align: center;
+      }
+
+      .quotes {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: calc(var(--aura) * 3);
+        margin-top: calc(var(--aura) * 3);
+      }
+
+      .quote {
+        font-family: inherit;
+        font-weight: inherit;
+        text-transform: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: calc(var(--aura) * 1.5);
+      }
+
+      .quote p {
+        text-wrap: pretty;
+        color: var(--heading);
+        font: 700 1.5rem / 1.15 var(--aura-font-display);
+        letter-spacing: -0.04em;
+      }
+
+      .handle {
+        padding: 4px calc(var(--aura) * 1);
+        border: 2px solid var(--heading);
+        border-radius: 6.5px;
+        color: var(--heading);
+        transition: transform 150ms ease-out;
+      }
+
+      .handle:hover {
+        transform: translateY(-3px);
+      }
+
+      .handle small {
+        display: block;
+        font-weight: 400;
+        font-size: 0.85em;
+        letter-spacing: 0.06em;
+        opacity: 0.7;
+      }
+
+      .plans {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: calc(var(--aura) * 1.5);
+        margin-top: calc(var(--aura) * 4);
+        text-align: left;
+      }
+
+      .plan {
+        display: flex;
+        flex-direction: column;
+        gap: calc(var(--aura) * 1);
+        padding: calc(var(--aura) * 2.25);
+        border-radius: var(--aura-radius);
+        background: var(--gray-1);
+        box-shadow: 0 8px 30px var(--gray-a4), 0 0 0 1px var(--rule);
+      }
+
+      .plan h3 {
+        color: var(--heading);
+        font-size: 1.375rem;
+      }
+
+      .plan .price {
+        font: 800 3.25rem / 1 var(--aura-font-display);
+        letter-spacing: -0.05em;
+      }
+
+      .plan .price small {
+        color: var(--gray-11);
+        letter-spacing: 0.1em;
+      }
+
+      .plan p {
+        flex: 1;
+        color: var(--gray-11);
+      }
+
+      .plan .button {
+        width: 100%;
+        border: 0;
+      }
+
+      .plan.hot {
+        background: var(--band);
+        color: var(--band-fg);
+        box-shadow: 0 30px 60px var(--gray-a5);
+      }
+
+      .plan.hot h3,
+      .plan.hot p,
+      .plan.hot .price small {
+        color: var(--band-fg);
+      }
+
+      .tag {
+        align-self: flex-start;
+        padding: 4px 10px;
+        border: 2px solid currentColor;
+        border-radius: 6.5px;
+      }
+
+      .faq {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: calc(var(--aura) * 1.5) calc(var(--aura) * 3.5);
+        margin-top: calc(var(--aura) * 4);
+        text-align: left;
+      }
+
+      details {
+        padding-block: calc(var(--aura) * 1.5);
+        border-top: 2px solid var(--rule);
+      }
+
+      summary {
+        display: flex;
+        justify-content: space-between;
+        gap: calc(var(--aura) * 1);
+        color: var(--heading);
+        font: 700 1.25rem / 1.2 var(--aura-font-display);
+        letter-spacing: -0.03em;
+        list-style: none;
+        cursor: pointer;
+      }
+
+      summary::-webkit-details-marker {
+        display: none;
+      }
+
+      summary::after {
+        content: "+";
+        font: 400 1.25rem / 1 var(--aura-font-label);
+      }
+
+      details[open] summary::after {
+        content: "−";
+      }
+
+      details p {
+        margin-top: calc(var(--aura) * 1);
+        color: var(--gray-11);
+      }
+
+      summary:focus-visible,
+      a:focus-visible {
+        outline: var(--aura-outline);
+        outline-offset: 3px;
+      }
+
+      .end {
+        margin-top: calc(var(--aura) * 11);
+        padding: calc(var(--aura) * 5.5) 0;
+        text-align: center;
+      }
+
+      .end h2 i {
+        font-style: italic;
+      }
+
+      .end .button {
+        margin-top: calc(var(--aura) * 2);
+        border: 0;
+      }
+
+      .end small {
+        display: block;
+        margin-top: calc(var(--aura) * 1.25);
+        opacity: 0.7;
+      }
+
+      footer {
+        padding: calc(var(--aura) * 3) 0;
+        border-top: 1px solid var(--accent-a8);
+      }
+
+      footer .wrap {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: calc(var(--aura) * 3.5);
+      }
+
+      footer h4 {
+        margin: 0 0 calc(var(--aura) * 1);
+      }
+
+      footer .col a {
+        display: block;
+        margin-top: 6px;
+        font-size: calc(14 / 17 * 1rem);
+        font-weight: 600;
+      }
+
+      .office {
+        margin-left: auto;
+        text-align: right;
+        font: 700 1rem / 1.2 var(--serif);
+        text-transform: uppercase;
+      }
+
+      .office span {
+        display: block;
+        margin-top: calc(var(--aura) * 0.75);
+        font: 400 calc(11 / 17 * 1rem) / 1.4 var(--aura-font-label);
+        text-transform: none;
+        opacity: 0.8;
+      }
+
+      .icon {
+        width: 1em;
+        height: 1em;
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .row {
+          animation: crawl 42s linear infinite;
+        }
+        .marquee:hover .row {
+          animation-play-state: paused;
+        }
+      }
+
+      @keyframes crawl {
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+      @media (max-width: 900px) {
+        .nav-links {
+          display: none;
+        }
+        .win {
+          grid-template-columns: 1fr;
+        }
+        .side {
+          display: none;
+        }
+        .report,
+        .form,
+        .faq,
+        .plans {
+          grid-template-columns: 1fr;
+        }
+        .stats,
+        .quotes {
+          grid-template-columns: 1fr 1fr;
+          row-gap: calc(var(--aura) * 2.5);
+        }
+        .stats div:nth-child(3) {
+          border-left: 0;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .wrap,
+        .stage {
+          width: calc(100% - var(--aura) * 3);
+        }
+        .quotes {
+          grid-template-columns: 1fr;
+        }
+        .pane {
+          padding: calc(var(--aura) * 1.5);
+        }
+        .pane-head span,
+        .hide-sm {
+          display: none;
+        }
+        .office {
+          margin-left: 0;
+          text-align: left;
+        }
+      }
+
+      .logo {
+        display: inline-flex;
+        align-items: center;
+        gap: calc(var(--aura) * 0.5);
+        font: 500 1.25rem / 1 var(--aura-font-display);
+        letter-spacing: -0.04em;
+      }
+
+      .logo i {
+        width: calc(var(--aura) * 1);
+        height: calc(var(--aura) * 1);
+        border-radius: var(--aura-button-radius);
+        background: var(--band-fg);
+      }
+    </style>
+  </head>
+  <body>
+    <header class="band scallop">
+      <nav class="wrap nav" aria-label="Main">
+        <a href="#" class="logo"><i aria-hidden="true"></i>Narc</a>
+        <div class="nav-links">
+          <a href="#">Pro</a><a href="#">Mobile</a><a href="#">Reports</a><a href="#">Students</a><a href="#">Blog</a>
+        </div>
+        <a href="#" class="button button-fill chalk nav-cta">Download</a>
+      </nav>
+    </header>
+
+    <aside class="cream promo scallop">
+      <div class="wrap">
+        <p>Meet Tattle, the weekly report on your tabs</p>
+      </div>
+    </aside>
+
+    <main>
+      <section class="band hero">
+        <div class="wrap">
+          <p class="mono">Narc 4.2 · for every desktop</p>
+          <h1 class="h1"><span class="q">“</span>Narc is the browser that finally told on my tabs.<span class="q">”</span></h1>
+          <p class="press">The Weekly Loop</p>
+          <p class="note">FYI: Narc reports to exactly one person. You. Your manager gets a very polite nothing.</p>
+          <div class="dl">
+            <a class="button button-fill chalk" href="#">
+              <svg class="icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M7 1h2v7.6l2.6-2.6 1.4 1.4L8 12.4 3 7.4 4.4 6 7 8.6zM2 13.5h12V15H2z" /></svg>
+              Download Narc for desktop
+            </a>
+            <a class="button button-fill deep" href="#">
+              <svg class="icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4.5 1h7A1.5 1.5 0 0 1 13 2.5v11a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 3 13.5v-11A1.5 1.5 0 0 1 4.5 1zM5 3v9h6V3z" /></svg>
+              Get Narc for your phone
+            </a>
+          </div>
+        </div>
+        <div class="stage">
+          <div class="win">
+            <div class="side">
+              <div class="lights"><i></i><i></i><i></i></div>
+              <div class="url">tabcount.report</div>
+              <div class="pins"><i>✓</i><i>M</i><i>§</i></div>
+              <div class="lab">Personal</div>
+              <a class="tab" href="#"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h3.2l1.6 1.8h6.2A1.5 1.5 0 0 1 16 7.3v6.2a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 2 13.5z" /></svg>Receipts</a>
+              <a class="tab" href="#"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h3.2l1.6 1.8h6.2A1.5 1.5 0 0 1 16 7.3v6.2a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 2 13.5z" /></svg>Read later (lol)</a>
+              <a class="tab on" href="#"><svg viewBox="0 0 18 18" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="12" height="12" rx="3" /></svg>Weekly report</a>
+              <a class="tab new" href="#">+ New Tab</a>
+            </div>
+            <div class="pane">
+              <div class="pane-head"><b>TABCOUNT</b><span><em>Week 38</em><em>Offenders</em><em>Pardons</em></span></div>
+              <div class="report">
+                <figure class="poster"><figcaption><b>1,284 tabs</b>opened this week. You read nine.</figcaption></figure>
+                <div class="offenders">
+                  <div class="offender"><i></i><span>Mattress reviews<small>47 tabs · 0 read</small></span><em>Guilty</em></div>
+                  <div class="offender"><i></i><span>Bauhaus chairs<small>31 tabs · 2 read</small></span><em>Pardon</em></div>
+                  <div class="offender"><i></i><span>Recipes, someday<small>64 tabs · 1 read</small></span><em>Guilty</em></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="cream marquee" aria-label="Press">
+        <div class="row">
+          <q>The browser equivalent of a friend who counts your drinks.</q><span class="lg">Byteline</span>
+          <q>The only app that has ever made me close a tab.</q><span class="lg sf">The Tab Review</span>
+          <q>Deeply annoying. I use it every day.</q><span class="lg mo">KERNEL/WEEKLY</span>
+          <q>Finally, a browser with a conscience.</q><span class="lg">The Weekly Loop</span>
+          <q>The browser equivalent of a friend who counts your drinks.</q><span class="lg">Byteline</span>
+          <q>The only app that has ever made me close a tab.</q><span class="lg sf">The Tab Review</span>
+          <q>Deeply annoying. I use it every day.</q><span class="lg mo">KERNEL/WEEKLY</span>
+          <q>Finally, a browser with a conscience.</q><span class="lg">The Weekly Loop</span>
+        </div>
+      </div>
+
+      <section class="sec wrap">
+        <h2 class="h3 sh">A browser that doesn’t just hold your tabs. It keeps receipts.</h2>
+        <p class="sub">Calm, quiet and faintly judgmental. Narc counts what you open and <b>what you actually read</b>.</p>
+        <div class="stats">
+          <div><b>1,284</b><span class="mono">tabs opened per week</span></div>
+          <div><b>9</b><span class="mono">of them actually read</span></div>
+          <div><b>38 min</b><span class="mono">saved by Tab Court</span></div>
+          <div><b>0</b><span class="mono">reports sent to anyone else</span></div>
+        </div>
+      </section>
+
+      <section class="sec">
+        <div class="wrap">
+          <h2 class="h3 sh">Room for the different sides of you.</h2>
+          <p class="sub">Work, study, three abandoned hobbies. Each gets its own <b>Room</b> and its own <b>Report</b>.</p>
+        </div>
+        <div class="stage">
+          <div class="win w-lilac">
+            <div class="side">
+              <div class="lights"><i></i><i></i><i></i></div>
+              <div class="url">rooms.settings</div>
+              <div class="pins"><i>W</i><i>S</i><i>♪</i></div>
+              <div class="lab">Rooms</div>
+              <a class="tab on" href="#"><svg viewBox="0 0 18 18" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="12" height="12" rx="3" /></svg>New Room</a>
+              <a class="tab" href="#"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h3.2l1.6 1.8h6.2A1.5 1.5 0 0 1 16 7.3v6.2a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 2 13.5z" /></svg>Work</a>
+              <a class="tab new" href="#">+ New Tab</a>
+            </div>
+            <form class="pane form" onsubmit="return false">
+              <label class="field"><span class="mono">Room name</span><input type="text" value="Three abandoned hobbies" /></label>
+              <label class="field"><span class="mono">Report day</span>
+                <select><option>Friday at 4</option><option>Monday at 9</option></select>
+              </label>
+              <label class="field full"><span class="mono">Send the report to</span><input type="email" placeholder="only-you@example.com" /></label>
+              <label class="switch-row field full"><span>Let Tab Court pardon tabs older than 30 days</span><input type="checkbox" checked /></label>
+              <button type="submit" class="button button-fill">Create Room</button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec">
+        <div class="wrap">
+          <h2 class="h3 sh">Tab Court is now in session.</h2>
+          <p class="sub">Every tab gets a hearing. <b>Pardons</b> are granted in bulk.</p>
+        </div>
+        <div class="stage">
+          <div class="win w-sun">
+            <div class="side">
+              <div class="lights"><i></i><i></i><i></i></div>
+              <div class="url">tabcourt.gov</div>
+              <div class="pins"><i>M</i><i>T</i><i>31</i></div>
+              <div class="lab">Session 12</div>
+              <a class="tab on" href="#"><svg viewBox="0 0 18 18" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="12" height="12" rx="3" /></svg>Docket</a>
+              <a class="tab new" href="#">+ New Tab</a>
+            </div>
+            <div class="pane">
+              <table>
+                <thead class="mono"><tr><th scope="col">Tab</th><th scope="col" class="hide-sm">Opened</th><th scope="col">Days</th><th scope="col">Verdict</th></tr></thead>
+                <tbody>
+                  <tr><td>Nine homes with gardens</td><td class="hide-sm">6 times</td><td class="num">41</td><td><span class="verdict guilty mono">Guilty</span></td></tr>
+                  <tr><td>Ceramics for one plate</td><td class="hide-sm">4 times</td><td class="num">12</td><td><span class="verdict mono">Pardon</span></td></tr>
+                  <tr><td>How to read your tabs</td><td class="hide-sm">Never</td><td class="num">88</td><td><span class="verdict guilty mono">Guilty</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cream tst">
+        <div class="wrap">
+          <div class="quotes">
+            <blockquote class="quote"><p>It told me I had 211 tabs open. I went for a walk.</p><cite class="handle mono">@noor_ships<small>Product designer</small></cite></blockquote>
+            <blockquote class="quote"><p>Tab Court pardoned 64 recipes. I felt seen, then free.</p><cite class="handle mono">@dan.okafor<small>Line cook</small></cite></blockquote>
+            <blockquote class="quote"><p>Playful, pretty, and it will not let me lie to myself.</p><cite class="handle mono">@hanna_vu<small>PhD, year five</small></cite></blockquote>
+            <blockquote class="quote"><p>A week without Narc. Nobody counted anything. Miserable.</p><cite class="handle mono">@petrakell<small>Staff engineer</small></cite></blockquote>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec wrap">
+        <h2 class="h3 sh">Free. Then slightly less free.</h2>
+        <p class="sub">The browser costs nothing. The <b>reports</b> are where it gets personal.</p>
+        <div class="plans">
+          <div class="plan"><h3>Narc</h3><div class="price">$0 <small class="mono">forever</small></div><p>Rooms, Side by Side and a monthly tab count with no commentary.</p><a class="button button-fill" href="#">Download Narc</a></div>
+          <div class="plan hot band"><span class="tag mono">Most honest</span><h3>Narc Pro</h3><div class="price">$6 <small class="mono">per month</small></div><p>Weekly Tattle reports and Tab Court with bulk pardons.</p><a class="button button-fill chalk" href="#">Start 14-day trial</a></div>
+          <div class="plan"><h3>Narc Teams</h3><div class="price">$11 <small class="mono">per seat</small></div><p>Shared Rooms and team totals. Nobody narcs on anybody.</p><a class="button button-fill" href="#">Talk to us</a></div>
+        </div>
+      </section>
+
+      <section class="sec wrap">
+        <h2 class="h3 sh">Questions, filed.</h2>
+        <div class="faq">
+          <details open><summary>Does anyone else see my report?</summary><p>No. Reports are built on your machine and delivered to your own Narc.</p></details>
+          <details><summary>Can I pardon a tab?</summary><p>Up to 200 at once, with a short hearing for anything older than 30 days.</p></details>
+          <details><summary>Will it import my old tabs?</summary><p>All of them, in about four seconds. Then it quietly counts them.</p></details>
+          <details><summary>Can I turn the judging off?</summary><p>Settings, Tone, Neutral. The numbers stay. The eyebrow goes back down.</p></details>
+        </div>
+      </section>
+
+      <section class="band end">
+        <div class="wrap">
+          <h2 class="h3">Enter <i>your</i> new home on the internet</h2>
+          <a class="button button-fill chalk end-cta" href="#">Download Narc for desktop</a>
+          <small class="mono">Every desktop from 2021 on · 118 MB</small>
+        </div>
+      </section>
+    </main>
+
+    <footer class="band">
+      <div class="wrap">
+        <div class="col"><h4 class="mono">Product</h4><a href="#">Download</a><a href="#">Narc Pro</a><a href="#">Tattle</a></div>
+        <div class="col"><h4 class="mono">Resources</h4><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Careers</a></div>
+        <div class="office">The Tab Office<br />of Brooklyn<span>All reports delivered · built with Aura</span></div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -107,5 +107,6 @@ The first block is the pattern: gray step 2 surface, fluid heading, `gap-2` (26p
 | Theming without new hex values | [customization.md](./customization.md) |
 | shadcn CLI, registries, presets | skill `shadcn` — Aura Keep still wins |
 | Forms end to end | skill `aura-forms` |
+| Create a DESIGN.md flavor (adapt a design, site or brief to Aura) | skill `generate-design-md` |
 | Port a component | skill `port-component-to-aura` |
 | Feature-map note | skill `update-feature-map` |

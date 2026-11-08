@@ -1,0 +1,87 @@
+---
+title: DESIGN.md flavors
+description: Themes over Aura. Generate one from any design with the generate-design-md skill, then give its link to the agent in your project.
+---
+
+# DESIGN.md flavors
+
+A flavor is a `DESIGN.md` that adapts Aura to a new look. It changes color seeds, type, radius, shape, motion and voice. The 13px grid, the components, Radix icons, forms and accessibility stay Aura. The root `DESIGN.md` remains the base spec, and the flavor is saved next to it as `DESIGN.theme.md`.
+
+Each flavor ships two files:
+
+| File | Holds |
+| --- | --- |
+| `DESIGN.md` | The DESIGN.md alpha format: token frontmatter, `extends` pointing at the Aura base, an `aura` block (theme seeds, fonts, radius, extra tokens), and the narrative an agent follows |
+| `theme.css` | Generated from the `aura` block: 12-step accent and gray scales for light and dark, fonts, radius and extra tokens, ready to paste into `globals.css` |
+
+## Apply a flavor
+
+Open the DESIGN.md gallery, pick a flavor and press **Copy link**. In your Aura project, tell the agent:
+
+```text
+Apply this design: <link>
+```
+
+The always-on `design-md` rule tells the agent what to do with the link: save it as `DESIGN.theme.md`, append the sibling `theme.css` after the existing theme blocks in `globals.css`, and restyle with Aura components. Install the rule with:
+
+```bash
+pnpm dlx shadcn@latest add @aura/rule-design-md
+```
+
+## Generate a flavor
+
+The `generate-design-md` skill turns a pasted DESIGN.md (flavors.design, Google Stitch), a site URL, a screenshot or a brand brief into a flavor. It keeps the source's personality and expresses every signature element through Aura tokens and components.
+
+```bash
+pnpm dlx shadcn@latest add @aura/skill-generate-design-md
+```
+
+It also ships in the `@aura/skills` bundle. Then ask:
+
+```text
+Make a DESIGN.md flavor from this: <paste or URL>
+```
+
+The skill:
+
+1. Reads the palette, type, grid, shape, signature elements, voice and don'ts from the source.
+2. Writes the frontmatter, including the `aura` block the generator reads.
+3. Converts every spacing value to the 13px grid, maps every color role to an Aura step or a custom token, and maps every element to an Aura component.
+4. Reinterprets dark mode through a few semantic variables instead of inverting colors.
+5. Writes the narrative: Apply steps, Overview, Colors with Dark mode, Typography, Layout, Elevation & Depth, Shapes, Components, Do's and Don'ts, Motion, Reference.
+
+| Where you run it | What it writes |
+| --- | --- |
+| The Aura monorepo | `packages/design-md/designs/<slug>/DESIGN.md`, the slug in `order.json`, the generated `theme.css` and `designs.json`, and a `result.html` showcase for the gallery |
+| Your app | `DESIGN.theme.md` at the root and the generated theme blocks in `globals.css`, using `@aura/custom-color-functions` |
+
+## The `aura` block
+
+```yaml
+aura:
+  theme:
+    light: { accent: "#3139fb", gray: "#696969", background: "#ffffff" }
+    dark: { accent: "#5b62ff", gray: "#6f6f8f", background: "#0e0f1f" }
+  fonts:
+    sans: "Inter"
+    display: "Gabarito"
+    label: "Space Mono"
+    href: "https://fonts.googleapis.com/css2?family=Gabarito:wght@700&family=Inter:wght@400;600&family=Space+Mono:wght@700&display=swap"
+  hero: "band"
+  headingWeight: 700
+  radius: { button: "10px", input: "10px", surface: "13px" }
+  tokens:
+    light: { brand-deep: "#2702c2" }
+    dark: { brand-deep: "#2a1bb0" }
+```
+
+The `gray` seed is a mid-tone that carries the source's tint, never its darkest ink. If the source's primary action is ink, the accent seed is ink. Extra colors go in `tokens` with the same names in light and dark.
+
+## Rules a flavor keeps
+
+* Every value in the narrative is a token, a class on the 13px grid, or a custom token from the frontmatter. No new hex in components.
+* Dark mode always exists. When the source has none, the skill writes one.
+* The flavor says what it overrides on purpose, such as 0px radius, so the agent does not undo it.
+* It never copies the source's full HTML, brand names or product claims into your product.
+
+Related: [DESIGN.md rule](/docs/rules/design-md), [Skills](/docs/rules/skills), [Aura skill](/docs/rules/aura-skill).

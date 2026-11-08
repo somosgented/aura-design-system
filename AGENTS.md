@@ -42,7 +42,7 @@ Aura is a **design system monorepo**: tokens, UI components, Ladle stories, docs
 - Design guardrails live in `.agents/skills/aura/` (`SKILL.md` plus `rules/*.md`, same layout as the shadcn skill). `DESIGN.md` is the narrative spec. Do not invent a second design policy.
 - Always-on process rules stay in `.agents/rules/`: `feature-map`, `no-comments`, `design-md`, and monorepo `agents-md`. Every agent finds it through the root `AGENTS.md`. Those files are not inside the skill.
 - Monorepo skills: `.agents/skills/aura-constraints/`, `.agents/skills/aura-verification/`.
-- Consumer skills (registry-synced): `aura`, `aura-forms`, `verify-aura-ui`, `update-feature-map`, `port-component-to-aura`, and `generate-brand-images`, all under `.agents/skills/` — see `packages/registry/scripts/sync-skills.ts`.
+- Consumer skills (registry-synced): `aura`, `aura-forms`, `verify-aura-ui`, `update-feature-map`, `port-component-to-aura`, `generate-brand-images`, and `generate-design-md`, all under `.agents/skills/` — see `packages/registry/scripts/sync-skills.ts`.
 - Upstream skills (blueprint / `skills add`, not registry): `.agents/skills/shadcn` (`pnpm dlx skills add shadcn/ui`) and gdp-ts. Aura Keep invariants in the Aura skill win on icons, forms, spacing, typography, and restyle.
 - Documentation: `.agents/rules/feature-map.mdc`. On PR, add or update the feature's note in the feature map. Do not read or write other wiki or progress files.
 - **Agent-constraint skills stay local** and are not added to `sync-skills.ts` unless intentionally published.
