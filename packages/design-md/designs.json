@@ -844,6 +844,83 @@
           "gray-12": "#eeeded"
         }
       }
+    },
+    {
+      "slug": "marginalia",
+      "name": "Marginalia",
+      "description": "Warm ivory paper, near-black ink buttons, a bookish serif and one clay margin rule used sparingly. A thoughtful editorial flavor of Aura for research tools, writing assistants and knowledge products.",
+      "design": "designs/marginalia/DESIGN.md",
+      "theme": "designs/marginalia/theme.css",
+      "result": "designs/marginalia/result.html",
+      "fonts": {
+        "sans": "Instrument Sans",
+        "display": "Newsreader",
+        "label": "Instrument Sans",
+        "href": "https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Instrument+Sans:wght@400;500;600&display=swap"
+      },
+      "hero": "paper",
+      "headingWeight": 400,
+      "radius": {
+        "button": "8px",
+        "input": "8px",
+        "surface": "26px"
+      },
+      "tokens": {
+        "light": {
+          "accent-contrast": "#fff",
+          "accent-1": "#f7f6f5",
+          "gray-1": "#f6f6f5",
+          "accent-2": "#f7f0ee",
+          "gray-2": "#f2f2f1",
+          "accent-3": "#f6e5e0",
+          "gray-3": "#e9e9e7",
+          "accent-4": "#f9d4c9",
+          "gray-4": "#e1e0de",
+          "accent-5": "#f6c6b7",
+          "gray-5": "#d9d9d6",
+          "accent-6": "#edb9a8",
+          "gray-6": "#d1d0cc",
+          "accent-7": "#dea795",
+          "gray-7": "#c6c5c1",
+          "accent-8": "#d2917b",
+          "gray-8": "#b3b2ac",
+          "accent-9": "#d97757",
+          "gray-9": "#85847c",
+          "accent-10": "#cd6a4a",
+          "gray-10": "#7a7973",
+          "accent-11": "#b05334",
+          "gray-11": "#5c5b56",
+          "accent-12": "#513127",
+          "gray-12": "#21201c"
+        },
+        "dark": {
+          "accent-contrast": "#fff",
+          "accent-1": "#1c1817",
+          "gray-1": "#1a1918",
+          "accent-2": "#241d1b",
+          "gray-2": "#20201f",
+          "accent-3": "#322420",
+          "gray-3": "#292927",
+          "accent-4": "#402921",
+          "gray-4": "#2f2f2d",
+          "accent-5": "#4c3026",
+          "gray-5": "#353532",
+          "accent-6": "#5a3a2f",
+          "gray-6": "#3e3d3a",
+          "accent-7": "#6e483b",
+          "gray-7": "#4b4a45",
+          "accent-8": "#8d5b4a",
+          "gray-8": "#63615b",
+          "accent-9": "#e08a6c",
+          "gray-9": "#6f6d67",
+          "accent-10": "#d47f61",
+          "gray-10": "#7d7b74",
+          "accent-11": "#f2a98f",
+          "gray-11": "#b5b3ad",
+          "accent-12": "#fdddd2",
+          "gray-12": "#eeeeec"
+        }
+      }
     }
   ]
 }
