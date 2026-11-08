@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plumline · Aura flavor</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/aura/main.css" />
+    <link rel="stylesheet" href="theme.css" />
+    <script>
+      (function () {
+        var appearance = new URLSearchParams(window.location.search).get("appearance") === "dark" ? "dark" : "light";
+        document.documentElement.classList.add(appearance);
+        document.documentElement.style.colorScheme = appearance;
+      })();
+    </script>
+    <style>
+      :root {
+        --aura-accents-primary: var(--accent-9);
+        --aura-text-primary-inverse: var(--accent-contrast);
+        --aura-button-hover: var(--accent-10);
+        --aura-outline: var(--accent-8) solid 2px;
+        --aura-input-bg: var(--paper);
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+        --stage: var(--plum);
+        --stage-fg: var(--on-plum);
+        --stage-muted: var(--on-plum-muted);
+        --stage-ring: transparent;
+        --glow-opacity: 0.45;
+        --float: 0 calc(var(--aura) * 2) calc(var(--aura) * 4) calc(var(--aura) * -2) var(--gray-a10);
+      }
+
+      .dark {
+        --stage: var(--plum-raised);
+        --stage-ring: var(--accent-a5);
+        --glow-opacity: 0.22;
+        --float: 0 0 0 1px var(--accent-a5);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        font-size: 17px;
+        background: var(--paper);
+      }
+
+      body {
+        margin: 0;
+        overflow-x: hidden;
+        background: var(--paper);
+        color: var(--gray-12);
+        font-family: var(--aura-font-stack);
+        line-height: 1.55;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      p,
+      fieldset,
+      figure {
+        margin: 0;
+      }
+
+      h1,
+      h2,
+      h3,
+      summary {
+        font-family: var(--aura-font-display);
+        font-weight: 400;
+        letter-spacing: -0.025em;
+        line-height: 1.02;
+        text-wrap: balance;
+      }
+
+      em {
+        font-style: italic;
+      }
+
+      :focus-visible {
+        outline: var(--aura-outline);
+        outline-offset: 2px;
+      }
+
+      .wrap {
+        width: min(100% - var(--aura) * 4, var(--aura) * 92);
+        margin-inline: auto;
+      }
+
+      .section {
+        padding-block: calc(var(--aura) * 10);
+      }
+
+      .kicker {
+        font-family: var(--aura-font-label);
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--accent-11);
+      }
+
+      .muted {
+        color: var(--gray-11);
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: calc(var(--aura) * 0.5);
+        font-weight: 600;
+      }
+
+      .icon {
+        width: 15px;
+        height: 15px;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: calc(var(--aura) * 2);
+        padding-block: calc(var(--aura) * 1.5);
+      }
+
+      .logo {
+        display: inline-flex;
+        align-items: center;
+        gap: calc(var(--aura) * 0.5);
+        font-family: var(--aura-font-display);
+        font-size: 1.3rem;
+        letter-spacing: -0.02em;
+      }
+
+      .logo i {
+        width: calc(var(--aura) * 1.5);
+        height: calc(var(--aura) * 1.5);
+        background: var(--accent-9);
+        border-radius: 3px;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: calc(var(--aura) * 2);
+        color: var(--gray-11);
+      }
+
+      .nav-links a:hover {
+        color: var(--gray-12);
+      }
+
+      .nav-end {
+        display: flex;
+        align-items: center;
+        gap: calc(var(--aura) * 1.5);
+      }
+
+      .stage {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        background: var(--stage);
+        color: var(--stage-fg);
+        box-shadow: inset 0 0 0 1px var(--stage-ring);
+      }
+
+      .stage::before {
+        content: "";
+        position: absolute;
+        inset: auto -20% -40% 30%;
+        height: 120%;
+        z-index: -1;
+        background: radial-gradient(closest-side, var(--glow), transparent);
+        opacity: var(--glow-opacity);
+      }
+
+      .stage .muted {
+        color: var(--stage-muted);
+      }
+
+      .stage .kicker {
+        color: var(--stage-muted);
+      }
+
+      .stage .qcard .muted,
+      .stage .transcript .muted {
+        color: var(--gray-11);
+      }
+
+      .stage .qcard .kicker {
+        color: var(--accent-11);
+      }
+
+      .button-pill {
+        border: 1px solid var(--gray-7);
+        color: var(--gray-12);
+        background: transparent;
+      }
+
+      .stage .button-pill {
+        border: 1px solid var(--stage-muted);
+        color: var(--stage-fg);
+        background: transparent;
+      }
+
+      .hero-band {
+        margin-inline: calc(var(--aura) * 1);
+        border-radius: var(--aura-radius);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.1fr 1fr;
+        gap: calc(var(--aura) * 4);
+        align-items: center;
+        padding-block: calc(var(--aura) * 7.5);
+      }
+
+      .hero h1 {
+        font-size: clamp(2.5rem, 6.5vw, 5.5rem);
+        margin-top: calc(var(--aura) * 1);
+      }
+
+      .hero p.lede {
+        margin-top: calc(var(--aura) * 2);
+        max-width: 38ch;
+        font-size: 1.1rem;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: calc(var(--aura) * 1);
+        margin-top: calc(var(--aura) * 3);
+      }
+
+      .qcard {
+        background: var(--paper);
+        color: var(--gray-12);
+        border: 1px solid var(--gray-6);
+        border-radius: var(--aura-radius);
+        padding: calc(var(--aura) * 2.5);
+        box-shadow: var(--float);
+      }
+
+      .thread {
+        height: 3px;
+        border-radius: 9999px;
+        background: var(--accent-a4);
+        overflow: hidden;
+        margin-bottom: calc(var(--aura) * 2);
+      }
+
+      .thread span {
+        display: block;
+        height: 100%;
+        width: 100%;
+        background: var(--accent-9);
+        border-radius: inherit;
+        transform-origin: left center;
+        transform: scaleX(var(--progress, 0.4));
+      }
+
+      .qcard legend {
+        padding: 0;
+        max-width: 46ch;
+      }
+
+      .qcard legend .q {
+        display: block;
+        margin-top: calc(var(--aura) * 1);
+        font-family: var(--aura-font-display);
+        font-size: clamp(1.45rem, 2.6vw, 1.9rem);
+        line-height: 1.15;
+        letter-spacing: -0.015em;
+        text-wrap: balance;
+      }
+
+      .qcard fieldset {
+        border: 0;
+        padding: 0;
+        min-width: 0;
+      }
+
+      .choices {
+        display: grid;
+        gap: calc(var(--aura) * 0.5);
+        margin-top: calc(var(--aura) * 2);
+      }
+
+      .choice {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: calc(var(--aura) * 1);
+        min-height: calc(var(--aura) * 3.5);
+        padding-inline: calc(var(--aura) * 1);
+        border: 1px solid var(--gray-6);
+        border-radius: var(--aura-input-radius);
+        background: var(--paper-raised);
+        cursor: pointer;
+      }
+
+      .choice input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .choice:hover {
+        border-color: var(--accent-8);
+      }
+
+      .choice:has(input:checked) {
+        background: var(--lilac);
+        border-color: var(--accent-9);
+      }
+
+      .choice:has(input:focus-visible) {
+        outline: var(--aura-outline);
+        outline-offset: 2px;
+      }
+
+      kbd {
+        display: inline-grid;
+        place-items: center;
+        width: calc(var(--aura) * 2);
+        height: calc(var(--aura) * 2);
+        flex: none;
+        border: 1px solid var(--gray-7);
+        border-radius: var(--aura-input-radius);
+        background: var(--paper);
+        font-family: var(--aura-font-label);
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .choice:has(input:checked) kbd {
+        background: var(--accent-9);
+        border-color: var(--accent-9);
+        color: var(--accent-contrast);
+      }
+
+      .ok {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: calc(var(--aura) * 1);
+        margin-top: calc(var(--aura) * 2);
+      }
+
+      .head {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: end;
+        gap: calc(var(--aura) * 1.5);
+        margin-bottom: calc(var(--aura) * 4);
+      }
+
+      .head h2 {
+        font-size: clamp(2rem, 4.5vw, 3.4rem);
+        max-width: 18ch;
+        margin-top: calc(var(--aura) * 0.5);
+      }
+
+      .head p {
+        max-width: 40ch;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: calc(var(--aura) * 2);
+        border-top: 1px solid var(--gray-6);
+        padding-top: calc(var(--aura) * 2.5);
+      }
+
+      .stat b {
+        display: block;
+        font-family: var(--aura-font-display);
+        font-weight: 400;
+        font-size: clamp(2.2rem, 4vw, 3.2rem);
+        letter-spacing: -0.03em;
+        line-height: 1;
+      }
+
+      .stat span {
+        display: block;
+        margin-top: calc(var(--aura) * 0.5);
+        color: var(--gray-11);
+        font-size: 15px;
+      }
+
+      .talk {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: calc(var(--aura) * 4);
+        align-items: start;
+      }
+
+      .transcript {
+        display: grid;
+        gap: calc(var(--aura) * 1);
+        padding: calc(var(--aura) * 2);
+        border: 1px solid var(--gray-6);
+        border-radius: var(--aura-radius);
+        background: var(--paper-raised);
+        color: var(--gray-12);
+      }
+
+      .bubble {
+        max-width: 85%;
+        padding: calc(var(--aura) * 1) calc(var(--aura) * 1.5);
+        border-radius: var(--aura-radius);
+        background: var(--paper);
+        border: 1px solid var(--gray-6);
+        font-family: var(--aura-font-display);
+        font-size: 1.1rem;
+        line-height: 1.3;
+      }
+
+      .bubble.answer {
+        justify-self: end;
+        border-bottom-right-radius: var(--aura-input-radius);
+        background: var(--lilac);
+        border-color: var(--accent-a6);
+        font-family: var(--aura-font-stack);
+        font-size: 15px;
+      }
+
+      .bubble small {
+        display: block;
+        margin-bottom: calc(var(--aura) * 0.25);
+        font-family: var(--aura-font-label);
+        font-size: 12px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--gray-11);
+      }
+
+      .features {
+        display: grid;
+        gap: calc(var(--aura) * 2.5);
+      }
+
+      .feature {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: calc(var(--aura) * 1.5);
+      }
+
+      .feature h3 {
+        font-size: 1.5rem;
+        line-height: 1.15;
+      }
+
+      .feature p {
+        margin-top: calc(var(--aura) * 0.5);
+        color: var(--gray-11);
+      }
+
+      .card {
+        border: 1px solid var(--gray-6);
+        border-radius: var(--aura-radius);
+        background: var(--paper-raised);
+        padding: calc(var(--aura) * 2.5);
+      }
+
+      .card h3 {
+        font-size: 1.6rem;
+        line-height: 1.1;
+        margin-bottom: calc(var(--aura) * 1.5);
+      }
+
+      .work {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: calc(var(--aura) * 2);
+        align-items: start;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 15px;
+      }
+
+      th {
+        text-align: left;
+        font-family: var(--aura-font-label);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--gray-11);
+        padding: calc(var(--aura) * 0.5) calc(var(--aura) * 0.5) calc(var(--aura) * 0.5) 0;
+        border-bottom: 1px solid var(--gray-6);
+      }
+
+      td {
+        padding: calc(var(--aura) * 1) calc(var(--aura) * 0.5) calc(var(--aura) * 1) 0;
+        border-bottom: 1px solid var(--gray-5);
+      }
+
+      tbody tr:last-child td {
+        border-bottom: 0;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 2px calc(var(--aura) * 0.75);
+        border-radius: 9999px;
+        font-size: 13px;
+        font-weight: 600;
+        background: var(--accent-a3);
+        color: var(--accent-11);
+      }
+
+      .badge.neutral {
+        background: var(--gray-a3);
+        color: var(--gray-11);
+      }
+
+      form.card {
+        display: grid;
+        gap: calc(var(--aura) * 1.5);
+      }
+
+      form.card h3 {
+        margin-bottom: 0;
+      }
+
+      label.field {
+        display: grid;
+        gap: calc(var(--aura) * 0.5);
+        font-size: 15px;
+        font-weight: 500;
+      }
+
+      label.field input,
+      label.field select {
+        font: inherit;
+        font-weight: 400;
+        height: calc(var(--aura) * 3);
+        padding-inline: calc(var(--aura) * 1);
+        border: 1px solid var(--gray-7);
+        border-radius: var(--aura-input-radius);
+        background: var(--paper);
+        color: var(--gray-12);
+      }
+
+      .toggles {
+        display: flex;
+        flex-wrap: wrap;
+        gap: calc(var(--aura) * 0.5);
+      }
+
+      .toggles button {
+        font: inherit;
+        font-size: 14px;
+        min-height: calc(var(--aura) * 2.5);
+        padding-inline: calc(var(--aura) * 1);
+        border-radius: 9999px;
+        border: 1px solid var(--gray-7);
+        background: transparent;
+        color: var(--gray-12);
+        cursor: pointer;
+      }
+
+      .toggles button[aria-pressed="true"] {
+        background: var(--lilac);
+        border-color: var(--accent-9);
+      }
+
+      .group-label {
+        font-size: 15px;
+        font-weight: 500;
+        margin-bottom: calc(var(--aura) * 0.5);
+      }
+
+      .plans {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: calc(var(--aura) * 2);
+        align-items: stretch;
+      }
+
+      .plan {
+        display: flex;
+        flex-direction: column;
+        gap: calc(var(--aura) * 1);
+        padding: calc(var(--aura) * 2.5);
+        border: 1px solid var(--gray-6);
+        border-radius: var(--aura-radius);
+        background: var(--paper-raised);
+      }
+
+      .plan.stage {
+        background: var(--stage);
+        border-color: var(--stage-ring);
+      }
+
+      .plan h3 {
+        font-size: 1.6rem;
+      }
+
+      .plan .price {
+        font-family: var(--aura-font-display);
+        font-size: 2.6rem;
+        letter-spacing: -0.03em;
+        line-height: 1;
+      }
+
+      .plan .price small {
+        font-family: var(--aura-font-stack);
+        font-size: 15px;
+        letter-spacing: 0;
+        color: var(--gray-11);
+      }
+
+      .plan.stage .price small {
+        color: var(--stage-muted);
+      }
+
+      .plan ul {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 calc(var(--aura) * 1);
+        display: grid;
+        gap: calc(var(--aura) * 0.5);
+        align-content: start;
+        flex: 1;
+      }
+
+      .plan li::before {
+        content: "→ ";
+        color: var(--accent-11);
+      }
+
+      .plan.stage li::before {
+        color: var(--stage-muted);
+      }
+
+      .plan .btn {
+        justify-content: center;
+      }
+
+      .faq {
+        display: grid;
+        grid-template-columns: 1fr 1.6fr;
+        gap: calc(var(--aura) * 4);
+      }
+
+      details {
+        border-bottom: 1px solid var(--gray-6);
+        padding-block: calc(var(--aura) * 1.5);
+      }
+
+      summary {
+        display: flex;
+        justify-content: space-between;
+        gap: calc(var(--aura) * 1);
+        font-size: 1.35rem;
+        line-height: 1.2;
+        cursor: pointer;
+        list-style: none;
+      }
+
+      summary::-webkit-details-marker {
+        display: none;
+      }
+
+      summary i {
+        font-style: normal;
+        color: var(--accent-11);
+      }
+
+      details[open] summary i {
+        transform: rotate(45deg);
+      }
+
+      details p {
+        margin-top: calc(var(--aura) * 1);
+        color: var(--gray-11);
+        max-width: 60ch;
+      }
+
+      .cta {
+        border-radius: var(--aura-radius);
+        padding: calc(var(--aura) * 6) calc(var(--aura) * 4);
+        text-align: center;
+      }
+
+      .cta h2 {
+        font-size: clamp(2.2rem, 5.5vw, 4.4rem);
+        max-width: 16ch;
+        margin: calc(var(--aura) * 1) auto 0;
+      }
+
+      .cta .actions {
+        justify-content: center;
+      }
+
+      footer {
+        padding-block: calc(var(--aura) * 5);
+        border-top: 1px solid var(--gray-6);
+      }
+
+      footer .cols {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: calc(var(--aura) * 2);
+      }
+
+      footer h4 {
+        font-family: var(--aura-font-label);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--gray-11);
+        margin-bottom: calc(var(--aura) * 1);
+      }
+
+      footer .col {
+        display: grid;
+        gap: calc(var(--aura) * 0.5);
+        align-content: start;
+        font-size: 15px;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .thread span {
+          transition: transform 250ms var(--ease);
+        }
+        .qcard.rise {
+          animation: rise 250ms var(--ease);
+        }
+        summary i {
+          transition: transform 250ms var(--ease);
+        }
+      }
+
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(13px);
+        }
+      }
+
+      @media (max-width: 960px) {
+        .nav {
+          flex-wrap: wrap;
+        }
+        .nav-links {
+          order: 3;
+          width: 100%;
+          gap: calc(var(--aura) * 1.5);
+          font-size: 15px;
+          overflow-x: auto;
+        }
+        .hero,
+        .talk,
+        .work,
+        .faq {
+          grid-template-columns: 1fr;
+        }
+        .stats {
+          grid-template-columns: 1fr 1fr;
+        }
+        .plans {
+          grid-template-columns: 1fr;
+        }
+        footer .cols {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .wrap {
+          width: calc(100% - var(--aura) * 3);
+        }
+        .hero-band {
+          margin-inline: 0;
+          border-radius: 0;
+        }
+        .hero {
+          padding-block: calc(var(--aura) * 5);
+        }
+        .section {
+          padding-block: calc(var(--aura) * 6);
+        }
+        .qcard,
+        .card,
+        .plan,
+        .transcript {
+          padding: calc(var(--aura) * 1.5);
+        }
+        .nav-end .signin,
+        .hide-sm {
+          display: none;
+        }
+        .cta {
+          padding: calc(var(--aura) * 4) calc(var(--aura) * 1.5);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="wrap nav" aria-label="Main">
+      <a href="#" class="logo"><i aria-hidden="true"></i>Plumline</a>
+      <div class="nav-links"><a href="#how">How it works</a><a href="#responses">Responses</a><a href="#plans">Plans</a><a href="#faq">FAQ</a></div>
+      <div class="nav-end"><a href="#" class="signin">Sign in</a><a href="#start" class="button button-fill btn">Start asking</a></div>
+    </nav>
+
+    <header class="stage hero-band">
+      <div class="wrap hero">
+        <div>
+          <span class="kicker">Forms, but a conversation</span>
+          <h1>Ask one good question <em>at a time.</em></h1>
+          <p class="lede muted">Plumline turns long forms into a quiet back-and-forth, so people answer like they would to a person across the table.</p>
+          <div class="actions">
+            <a href="#start" class="button button-fill btn">Start a conversation<svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M8.15 3.15a.5.5 0 0 1 .7 0l4 4a.5.5 0 0 1 0 .7l-4 4a.5.5 0 0 1-.7-.7L11.29 8H2.5a.5.5 0 0 1 0-1h8.79L8.15 3.85a.5.5 0 0 1 0-.7Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" /></svg></a>
+            <a href="#how" class="button button-pill btn">See a sample</a>
+          </div>
+        </div>
+
+        <form class="qcard" id="qcard" aria-label="Sample question" onsubmit="return false">
+          <div class="thread" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="5" aria-valuenow="2"><span id="thread-fill" style="--progress: 0.4"></span></div>
+          <fieldset>
+            <legend><span class="kicker" id="qnum">Question 3 of 5</span><span class="q" id="qtext">How did the workshop <em>feel</em> for you?</span></legend>
+            <div class="choices" id="choices">
+              <label class="choice"><input type="radio" name="answer" value="1" /><kbd>1</kbd>Energising</label>
+              <label class="choice"><input type="radio" name="answer" value="2" /><kbd>2</kbd>Steady and useful</label>
+              <label class="choice"><input type="radio" name="answer" value="3" /><kbd>3</kbd>A little rushed</label>
+              <label class="choice"><input type="radio" name="answer" value="4" /><kbd>4</kbd>Not for me, this time</label>
+            </div>
+          </fieldset>
+          <div class="ok">
+            <button type="submit" class="button button-fill btn" id="ok">OK<svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M8.15 3.15a.5.5 0 0 1 .7 0l4 4a.5.5 0 0 1 0 .7l-4 4a.5.5 0 0 1-.7-.7L11.29 8H2.5a.5.5 0 0 1 0-1h8.79L8.15 3.85a.5.5 0 0 1 0-.7Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" /></svg></button>
+            <span class="small muted">press <kbd style="width: auto; padding-inline: 6.5px">Enter ↵</kbd> or a number key</span>
+          </div>
+          <p class="sr-only" aria-live="polite" id="status"></p>
+        </form>
+      </div>
+    </header>
+
+    <main>
+      <section class="wrap section" aria-labelledby="stats-title">
+        <div class="head">
+          <div><span class="kicker">Sample studio, last season</span><h2 id="stats-title">People finish what feels like a chat.</h2></div>
+          <p class="muted">Illustrative numbers from a fictional pottery studio that moved its sign-up and feedback forms to Plumline.</p>
+        </div>
+        <div class="stats">
+          <div class="stat"><b>3 min</b><span>median time to finish a five-question check-in</span></div>
+          <div class="stat"><b>1</b><span>question on screen at any moment</span></div>
+          <div class="stat"><b>412</b><span>responses collected across four workshops</span></div>
+          <div class="stat"><b>0</b><span>scrolling needed on a phone</span></div>
+        </div>
+      </section>
+
+      <section class="stage section" id="how" aria-labelledby="how-title" style="margin-inline: 0">
+        <div class="wrap talk">
+          <div>
+            <span class="kicker">How it works</span>
+            <h2 id="how-title" style="font-size: clamp(2rem, 4.5vw, 3.4rem); margin-top: calc(var(--aura) * 0.5)">Every answer shapes the <em>next</em> question.</h2>
+            <div class="features" style="margin-top: calc(var(--aura) * 4)">
+              <div class="feature"><kbd style="background: transparent; border-color: var(--stage-muted); color: var(--stage-fg)">1</kbd><div><h3>Write it like you talk</h3><p class="muted">Draft questions in plain sentences. Plumline handles numbering, shortcuts and progress.</p></div></div>
+              <div class="feature"><kbd style="background: transparent; border-color: var(--stage-muted); color: var(--stage-fg)">2</kbd><div><h3>Branch on what matters</h3><p class="muted">Skip what does not apply. A first-timer and a regular never see the same path.</p></div></div>
+              <div class="feature"><kbd style="background: transparent; border-color: var(--stage-muted); color: var(--stage-fg)">3</kbd><div><h3>Read it as a transcript</h3><p class="muted">Each response arrives as a short conversation, not a row of cells.</p></div></div>
+            </div>
+          </div>
+          <div class="transcript" aria-label="Sample transcript">
+            <div class="bubble"><small>Q1</small>What should we call you?</div>
+            <div class="bubble answer">Rosa</div>
+            <div class="bubble"><small>Q2</small>Nice to meet you, Rosa. Have you thrown on a wheel before?</div>
+            <div class="bubble answer">A couple of times, years ago</div>
+            <div class="bubble"><small>Q3</small>Then we will start you on the intermediate bench. Any evening that suits best?</div>
+            <div class="bubble answer">Thursdays</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="wrap section" id="responses" aria-labelledby="responses-title">
+        <div class="head"><div><span class="kicker">Responses</span><h2 id="responses-title">Listen first, then build the next one.</h2></div></div>
+        <div class="work">
+          <div class="card">
+            <h3>Latest conversations</h3>
+            <table>
+              <thead><tr><th scope="col">Person</th><th scope="col" class="hide-sm">Form</th><th scope="col">Status</th><th scope="col" class="hide-sm">When</th></tr></thead>
+              <tbody>
+                <tr><td>Rosa M.</td><td class="hide-sm">Spring sign-up</td><td><span class="badge">Complete</span></td><td class="muted hide-sm">4 min ago</td></tr>
+                <tr><td>Idris K.</td><td class="hide-sm">Workshop check-in</td><td><span class="badge">Complete</span></td><td class="muted hide-sm">1 h ago</td></tr>
+                <tr><td>Wen L.</td><td class="hide-sm">Spring sign-up</td><td><span class="badge neutral">Partial</span></td><td class="muted hide-sm">Yesterday</td></tr>
+                <tr><td>Amara O.</td><td class="hide-sm">Kiln waitlist</td><td><span class="badge">Complete</span></td><td class="muted hide-sm">2 days ago</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <form class="card" id="start" onsubmit="return false" aria-labelledby="new-q">
+            <h3 id="new-q">New question</h3>
+            <label class="field">Ask<input type="text" placeholder="What brings you in today?" /></label>
+            <label class="field">Answer with<select><option>Multiple choice</option><option>Short text</option><option>Rating</option><option>Date</option></select></label>
+            <div>
+              <div class="group-label" id="opts-label">Options</div>
+              <div class="toggles" role="group" aria-labelledby="opts-label">
+                <button type="button" aria-pressed="true">Required</button><button type="button" aria-pressed="false">Allow other</button><button type="button" aria-pressed="true">Show shortcut keys</button>
+              </div>
+            </div>
+            <button type="submit" class="button button-fill btn">Add question</button>
+          </form>
+        </div>
+      </section>
+
+      <section class="wrap section" id="plans" aria-labelledby="plans-title" style="padding-top: 0">
+        <div class="head"><div><span class="kicker">Plans</span><h2 id="plans-title">Pay for conversations, not seats.</h2></div></div>
+        <div class="plans">
+          <div class="plan"><h3>Sketch</h3><div class="price">$0 <small>/ month</small></div><p class="muted">For a first form and a few friends.</p><ul><li>3 live forms</li><li>100 responses a month</li></ul><a href="#" class="button button-pill btn">Start free</a></div>
+          <div class="plan stage"><span class="kicker">Most chosen</span><h3>Studio</h3><div class="price">$24 <small>/ month</small></div><p class="muted">For small teams who ask every week.</p><ul><li>Unlimited forms</li><li>2,000 responses a month</li><li>Branching and transcripts</li></ul><a href="#" class="button button-fill btn">Try Studio</a></div>
+          <div class="plan"><h3>Guild</h3><div class="price">$79 <small>/ month</small></div><p class="muted">For many teams and many languages.</p><ul><li>Shared question library</li><li>Roles and review</li></ul><a href="#" class="button button-pill btn">Talk with us</a></div>
+        </div>
+      </section>
+
+      <section class="wrap section" id="faq" aria-labelledby="faq-title" style="padding-top: 0">
+        <div class="faq">
+          <div><span class="kicker">FAQ</span><h2 id="faq-title" style="font-size: clamp(2rem, 4.5vw, 3.4rem); margin-top: calc(var(--aura) * 0.5)">Fair questions.</h2></div>
+          <div>
+            <details open><summary>Can people still use a mouse or touch?<i aria-hidden="true">+</i></summary><p>Yes. Number keys and Enter are shortcuts, never the only way forward. Every choice is a regular control.</p></details>
+            <details><summary>What happens if someone leaves halfway?<i aria-hidden="true">+</i></summary><p>The answers so far are kept as a partial transcript, and the link picks up where they stopped.</p></details>
+            <details><summary>Can a question depend on an earlier answer?<i aria-hidden="true">+</i></summary><p>Yes. Branches can skip, reorder or rephrase what comes next.</p></details>
+          </div>
+        </div>
+      </section>
+
+      <section class="wrap section" style="padding-top: 0" aria-labelledby="cta-title">
+        <div class="stage cta">
+          <span class="kicker">Your turn</span>
+          <h2 id="cta-title">What would you like to <em>ask</em> first?</h2>
+          <div class="actions"><a href="#start" class="button button-fill btn">Write a question</a><a href="#how" class="button button-pill btn">Browse samples</a></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="wrap">
+      <div class="cols">
+        <div><a href="#" class="logo"><i aria-hidden="true"></i>Plumline</a><p class="muted" style="margin-top: calc(var(--aura) * 1); max-width: 30ch">A demo flavor of the Aura design system. Fictional product and sample content.</p></div>
+        <div class="col"><h4>Product</h4><a href="#">Forms</a><a href="#">Transcripts</a><a href="#">Plans</a></div>
+        <div class="col"><h4>Learn</h4><a href="#">Question guide</a><a href="#">Accessibility</a><a href="#">Changelog</a></div>
+        <div class="col"><h4>Studio</h4><a href="#">About</a><a href="#">Privacy</a><a href="#">Contact</a></div>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        var questions = [
+          { text: "How did the workshop <em>feel</em> for you?", choices: ["Energising", "Steady and useful", "A little rushed", "Not for me, this time"] },
+          { text: "Which part would you <em>keep</em> next time?", choices: ["The demo", "Hands-on time", "Group critique", "The tea break"] },
+          { text: "Would you come back for the <em>next</em> one?", choices: ["Yes, sign me up", "Maybe later", "Probably not", "Ask me again"] },
+        ];
+        var index = 0;
+        var card = document.getElementById("qcard");
+        var choices = document.getElementById("choices");
+        var status = document.getElementById("status");
+        var bar = card.querySelector(".thread");
+
+        function render() {
+          var question = questions[index];
+          var step = index + 3;
+          document.getElementById("qnum").textContent = "Question " + step + " of 5";
+          document.getElementById("qtext").innerHTML = question.text;
+          choices.innerHTML = question.choices
+            .map(function (label, i) {
+              return '<label class="choice"><input type="radio" name="answer" value="' + (i + 1) + '" /><kbd>' + (i + 1) + "</kbd>" + label + "</label>";
+            })
+            .join("");
+          document.getElementById("thread-fill").style.setProperty("--progress", String((step - 1) / 5));
+          bar.setAttribute("aria-valuenow", String(step - 1));
+          card.classList.remove("rise");
+          void card.offsetWidth;
+          card.classList.add("rise");
+          status.textContent = "Question " + step + " of 5: " + document.getElementById("qtext").textContent;
+        }
+
+        card.addEventListener("submit", function () {
+          index = (index + 1) % questions.length;
+          render();
+        });
+
+        card.addEventListener("keydown", function (event) {
+          var target = event.target;
+          if (target && target.tagName === "INPUT" && target.type === "text") return;
+          var number = Number(event.key);
+          if (number >= 1 && number <= 4) {
+            var input = choices.querySelectorAll("input")[number - 1];
+            if (input) {
+              input.checked = true;
+              input.focus();
+            }
+          }
+        });
+
+        document.querySelectorAll(".toggles button").forEach(function (button) {
+          button.addEventListener("click", function () {
+            button.setAttribute("aria-pressed", String(button.getAttribute("aria-pressed") !== "true"));
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>

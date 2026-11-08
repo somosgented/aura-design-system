@@ -518,8 +518,10 @@
       }
 
       try {
-        const response = await fetch("designs.json");
-        designs = (await response.json()).designs;
+        const response = await fetch(`designs.json?v=${encodeURIComponent(document.lastModified)}`);
+        designs = (await response.json()).designs.slice().sort((a, b) =>
+          a.name.localeCompare(b.name, "en", { sensitivity: "base" }),
+        );
       } catch {
         designs = [];
       }
