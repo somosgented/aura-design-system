@@ -53,7 +53,7 @@ document.documentElement.style.colorScheme = appearance;
 }
 .dark {
 --hero-cta: var(--accent-9);
---hero-cta-fg: var(--gray-12);
+--hero-cta-fg: var(--gray-1);
 --ink-button-bg: var(--gray-1);
 --ink-button-fg: var(--gray-12);
 --band: #1e1e1e;
@@ -128,7 +128,7 @@ a { color: inherit; }
 .nav-search { position: relative; }
 .nav-search input { width: calc(var(--aura) * 12); height: calc(var(--aura) * 2.5); padding: 0 var(--aura); border: 1px solid var(--gray-7); border-radius: 6px; background: var(--aura-input-bg); color: var(--gray-12); font: inherit; font-size: 0.83rem; }
 .nav-search input::placeholder { color: var(--aura-input-placeholder-color); }
-.nav-search input:focus-visible { outline: 0; border-color: var(--accent-9); box-shadow: 0 0 0 2px var(--accent-9); }
+.nav-search input:focus-visible, .nav-search input:focus { outline: 0 !important; border-color: var(--accent-9) !important; box-shadow: 0 0 0 2px var(--accent-9) !important; }
 
 .hero { padding: calc(var(--aura) * 6) 0 calc(var(--aura) * 8); text-align: center; }
 .hero h1 { max-width: calc(var(--aura) * 62); margin: 0 auto; }
@@ -141,7 +141,7 @@ a { color: inherit; }
 .hero-email { display: flex; align-items: center; gap: 0; border: 1px solid var(--gray-7); border-radius: 6px; overflow: hidden; }
 .hero-email input { height: calc(var(--aura) * 3.5); width: calc(var(--aura) * 18); padding: 0 var(--aura); border: 0; background: var(--aura-input-bg); color: var(--gray-12); font: inherit; font-size: 0.94rem; }
 .hero-email input::placeholder { color: var(--aura-input-placeholder-color); }
-.hero-email input:focus-visible { outline: 0; border-color: var(--accent-9); box-shadow: 0 0 0 2px var(--accent-9); }
+.hero-email input:focus-visible, .hero-email input:focus { outline: 0 !important; border-color: var(--accent-9) !important; box-shadow: 0 0 0 2px var(--accent-9) !important; }
 .hero-email .btn { border-radius: 0; }
 @media (max-width: 600px) {
 .cta { flex-direction: column; align-items: stretch; }
@@ -250,7 +250,8 @@ form { display: grid; gap: calc(var(--aura) * 1.25); }
 .field label { font-weight: 500; font-size: 0.88rem; }
 .field input, .field select { height: calc(var(--aura) * 3); padding: 0 var(--aura); border: 1px solid var(--gray-7); border-radius: calc(var(--aura) * 0.75); background: var(--aura-input-bg); color: var(--gray-12); font: inherit; font-size: 0.94rem; }
 .field input::placeholder { color: var(--aura-input-placeholder-color); }
-.field input:focus-visible, .field select:focus-visible { outline: 0; border-color: var(--accent-9); box-shadow: 0 0 0 2px var(--accent-9); }
+.field input:focus-visible, .field select:focus-visible, .field input:focus, .field select:focus { outline: 0 !important; border-color: var(--accent-9) !important; box-shadow: 0 0 0 2px var(--accent-9) !important; }
+#f-name:focus, #f-name:focus-visible, #f-email:focus, #f-email:focus-visible, #f-size:focus, #f-size:focus-visible { outline: 0 !important; border-color: var(--accent-9) !important; box-shadow: 0 0 0 2px var(--accent-9) !important; }
 .field select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 15 15'%3E%3Cpath d='M4 6l3.5 3.5L11 6' fill='none' stroke='%235c5c5c' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right var(--aura) center; padding-right: calc(var(--aura) * 2.5); }
 .field [aria-invalid="true"] { border-color: var(--ui-red); }
 .err { color: var(--ui-red); font-size: 0.83rem; }
@@ -590,17 +591,17 @@ footer { padding: calc(var(--aura) * 5) 0 calc(var(--aura) * 3); border-top: var
 <p class="hint">Demo form. No data will be submitted.</p>
 <div class="field">
 <label for="f-name">Full name</label>
-<input id="f-name" name="name" type="text" autocomplete="name" required minlength="2" aria-describedby="f-name-err"/>
+<input class="default" id="f-name" name="name" type="text" autocomplete="name" required minlength="2" aria-describedby="f-name-err"/>
 <p class="err" id="f-name-err" aria-live="polite"></p>
 </div>
 <div class="field">
 <label for="f-email">Work email</label>
-<input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="f-email-err"/>
+<input class="default" id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="f-email-err"/>
 <p class="err" id="f-email-err" aria-live="polite"></p>
 </div>
 <div class="field">
 <label for="f-size">Team size</label>
-<select id="f-size" name="size" required aria-describedby="f-size-err">
+<select class="default" id="f-size" name="size" required aria-describedby="f-size-err">
 <option value="">Select team size</option>
 <option>1–10</option>
 <option>11–50</option>

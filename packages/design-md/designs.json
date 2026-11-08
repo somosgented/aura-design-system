@@ -848,7 +848,7 @@
     {
       "slug": "verdantline",
       "name": "Verdantline",
-      "description": "A clean, open developer platform home with crisp green accents, monospaced code blocks, versatile tab navigation, repository cards and subdued gray prose. An Aura flavor for code hosts, API docs and developer portals, observed November 2026.",
+      "description": "A clean, open developer platform home with crisp green accents, monospaced code blocks, email signup, and subdued gray prose. An Aura flavor for code hosts, API docs and developer portals, observed November 2026.",
       "design": "designs/verdantline/DESIGN.md",
       "theme": "designs/verdantline/theme.css",
       "result": "designs/verdantline/result.html",
