@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slipstream · Aura flavor</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/aura/main.css" />
+    <link rel="stylesheet" href="theme.css" />
+    <script>
+      (function () {
+        var appearance = new URLSearchParams(window.location.search).get("appearance") === "dark" ? "dark" : "light";
+        document.documentElement.classList.add(appearance);
+        document.documentElement.style.colorScheme = appearance;
+      })();
+    </script>
+    <style>
+      :root {
+        --aura-accents-primary: var(--accent-9);
+        --aura-text-primary-inverse: var(--accent-contrast);
+        --aura-button-hover: var(--accent-10);
+        --aura-outline: var(--accent-8) solid 2px;
+        --aura-input-bg: var(--gray-1);
+        --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+        --mesh-opacity: 1;
+        --card-shadow: 0 30px 60px -12px rgba(11, 35, 64, 0.25), 0 18px 36px -18px rgba(0, 0, 0, 0.3);
+        --guide: var(--gray-6);
+      }
+
+      .dark {
+        --mesh-opacity: 0.7;
+        --card-shadow: 0 0 0 1px var(--gray-a5), 0 30px 60px -12px rgba(0, 0, 0, 0.6);
+        --guide: var(--gray-a4);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        font-size: 17px;
+        background: var(--gray-1);
+      }
+
+      body {
+        margin: 0;
+        overflow-x: hidden;
+        background: var(--gray-1);
+        color: var(--gray-12);
+        line-height: 1.55;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      h1,
+      h2,
+      h3,
+      p,
+      figure {
+        margin: 0;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: var(--aura-font-display);
+        font-weight: 500;
+        letter-spacing: -0.035em;
+        line-height: 1.04;
+        text-wrap: balance;
+      }
+
+      .wrap {
+        position: relative;
+        width: min(100% - var(--aura) * 4, var(--aura) * 90.5);
+        margin-inline: auto;
+      }
+
+      .mono {
+        font: 500 calc(13 / 17 * 1rem) / 1.4 var(--aura-font-label);
+      }
+
+      .muted {
+        color: var(--gray-11);
+      }
+
+      .eyebrow {
+        color: var(--accent-9);
+        font-size: calc(15 / 17 * 1rem);
+        font-weight: 600;
+      }
+
+      .guides {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        width: min(100% - var(--aura) * 4, var(--aura) * 90.5);
+        margin-inline: auto;
+        pointer-events: none;
+      }
+
+      .guides i {
+        border-left: 1px dashed var(--guide);
+      }
+
+      .guides i:last-child {
+        border-right: 1px dashed var(--guide);
+      }
+
+      .pill {
+        height: calc(var(--aura) * 3);
+        padding-inline: calc(var(--aura) * 1.25);
+        border-width: 0;
+        font-weight: 600;
+      }
+
+      .pill.button-fill:hover.button-fill:hover:not(:disabled) {
+        transform: none;
+      }
+
+      .chev {
+        display: inline-block;
+        transition: transform 200ms var(--ease);
+      }
+
+      a:hover .chev,
+      button:hover .chev {
+        transform: translateX(3px);
+      }
+
+      .link {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        color: var(--accent-9);
+        font-weight: 600;
+      }
+
+      a:focus-visible,
+      button:focus-visible,
+      summary:focus-visible,
+      input:focus-visible,
+      select:focus-visible {
+        outline: var(--aura-outline);
+        outline-offset: 3px;
+      }
+
+      header {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .mesh {
+        position: absolute;
+        inset: 0 0 auto;
+        height: calc(var(--aura) * 36);
+        overflow: hidden;
+        opacity: var(--mesh-opacity);
+        clip-path: polygon(0 0, 100% 0, 100% 52%, 0 100%);
+        background: var(--wave-violet);
+      }
+
+      .blob {
+        position: absolute;
+        width: 60%;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        filter: blur(70px);
+        background: var(--c);
+      }
+
+      .nav {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        gap: calc(var(--aura) * 2.5);
+        height: calc(var(--aura) * 6);
+        color: #fff;
+      }
+
+      .logo {
+        display: inline-flex;
+        align-items: center;
+        gap: calc(var(--aura) * 0.5);
+        font: 600 1.3rem / 1 var(--aura-font-display);
+        letter-spacing: -0.04em;
+      }
+
+      .logo i {
+        width: calc(var(--aura) * 1);
+        height: calc(var(--aura) * 1);
+        border-radius: 4px;
+        background: currentColor;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: calc(var(--aura) * 2);
+        font-weight: 500;
+      }
+
+      .nav-end {
+        display: flex;
+        align-items: center;
+        gap: calc(var(--aura) * 1.5);
+        margin-left: auto;
+        font-weight: 600;
+      }
+
+      .glass {
+        padding: 6px calc(var(--aura) * 1);
+        border-radius: 9999px;
+        background: rgba(255, 255, 255, 0.22);
+      }
+
+      .hero {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 1.05fr 1fr;
+        gap: calc(var(--aura) * 3);
+        align-items: start;
+        padding-block: calc(var(--aura) * 3) calc(var(--aura) * 7);
+      }
+
+      .hero h1 {
+        font-size: clamp(2.75rem, 6vw, 5.25rem);
+        color: var(--gray-12);
+        mix-blend-mode: normal;
+      }
+
+      .hero-copy {
+        padding: calc(var(--aura) * 2) 0;
+      }
+
+      .hero .lead {
+        max-width: 34ch;
+        margin-top: calc(var(--aura) * 2);
+        font-size: 1.15rem;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: calc(var(--aura) * 1.5);
+        margin-top: calc(var(--aura) * 2.5);
+      }
+
+      .stack {
+        position: relative;
+        height: calc(var(--aura) * 36);
+      }
+
+      .card {
+        position: absolute;
+        border-radius: 13px;
+        background: var(--gray-1);
+        box-shadow: var(--card-shadow);
+        color: var(--gray-12);
+      }
+
+      .card.pay {
+        top: 6%;
+        left: 0;
+        width: 62%;
+        padding: calc(var(--aura) * 1.5);
+      }
+
+      .card.chart {
+        top: 0;
+        right: 0;
+        width: 46%;
+        padding: calc(var(--aura) * 1.25);
+      }
+
+      .card.phone {
+        right: 6%;
+        bottom: 0;
+        width: 34%;
+        height: 62%;
+        padding: calc(var(--aura) * 1);
+        border-radius: 26px;
+      }
+
+      .pay-item {
+        display: flex;
+        gap: calc(var(--aura) * 1);
+        align-items: center;
+      }
+
+      .pay-item i {
+        width: calc(var(--aura) * 3.5);
+        height: calc(var(--aura) * 3.5);
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--wave-cyan), var(--wave-violet));
+      }
+
+      .pay-item b {
+        display: block;
+        font-weight: 600;
+      }
+
+      .fake-field {
+        height: calc(var(--aura) * 2.5);
+        margin-top: 8px;
+        border: 1px solid var(--gray-6);
+        border-radius: 6.5px;
+        background: var(--gray-1);
+      }
+
+      .fake-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .fake-label {
+        display: block;
+        margin-top: calc(var(--aura) * 1);
+        color: var(--gray-11);
+        font-size: 0.75rem;
+      }
+
+      .fake-btn {
+        margin-top: calc(var(--aura) * 1.25);
+        padding: 10px;
+        border-radius: 6.5px;
+        background: var(--accent-9);
+        color: var(--accent-contrast);
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-align: center;
+      }
+
+      .chart-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        font-size: 0.75rem;
+      }
+
+      .chart-top b {
+        font: 500 1.4rem / 1 var(--aura-font-display);
+        letter-spacing: -0.03em;
+      }
+
+      .chart svg {
+        display: block;
+        width: 100%;
+        height: calc(var(--aura) * 6);
+        margin-top: 8px;
+      }
+
+      .phone-bar {
+        width: 30%;
+        height: 5px;
+        margin: 0 auto calc(var(--aura) * 1.25);
+        border-radius: 3px;
+        background: var(--gray-5);
+      }
+
+      .phone-amount {
+        font: 500 1.6rem / 1 var(--aura-font-display);
+        letter-spacing: -0.03em;
+        text-align: center;
+      }
+
+      .phone-sub {
+        margin-top: 4px;
+        color: var(--gray-11);
+        font-size: 0.7rem;
+        text-align: center;
+      }
+
+      .phone-line {
+        height: 8px;
+        margin-top: 10px;
+        border-radius: 4px;
+        background: var(--gray-3);
+      }
+
+      .phone-pay {
+        margin-top: calc(var(--aura) * 1.25);
+        padding: 9px;
+        border-radius: 9999px;
+        background: var(--gray-12);
+        color: var(--gray-1);
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-align: center;
+      }
+
+      .marks {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        row-gap: calc(var(--aura) * 2);
+        padding-block: calc(var(--aura) * 2) calc(var(--aura) * 4);
+        color: var(--gray-11);
+        text-align: center;
+      }
+
+      .marks span {
+        font: 600 1.25rem / 1 var(--aura-font-display);
+        letter-spacing: -0.03em;
+        opacity: 0.75;
+      }
+
+      .marks .serif {
+        font: italic 500 1.35rem / 1 Georgia, serif;
+      }
+
+      .marks .caps {
+        font-size: 0.85rem;
+        letter-spacing: 0.22em;
+      }
+
+      .section {
+        position: relative;
+        z-index: 1;
+        padding-block: calc(var(--aura) * 10);
+      }
+
+      .section h2 {
+        max-width: 18ch;
+        margin-top: calc(var(--aura) * 1);
+        font-size: clamp(2.2rem, 4.4vw, 3.6rem);
+      }
+
+      .section .lead {
+        max-width: 52ch;
+        margin-top: calc(var(--aura) * 1.5);
+        font-size: 1.1rem;
+      }
+
+      .features {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: calc(var(--aura) * 2.5);
+        margin-top: calc(var(--aura) * 5);
+      }
+
+      .feature .ico {
+        display: grid;
+        place-items: center;
+        width: calc(var(--aura) * 2);
+        height: calc(var(--aura) * 2);
+        border-radius: 6.5px;
+        background: var(--accent-3);
+        color: var(--accent-11);
+      }
+
+      .feature .ico svg {
+        width: 15px;
+        height: 15px;
+      }
+
+      .feature h3 {
+        margin-top: calc(var(--aura) * 1.25);
+        padding-left: calc(var(--aura) * 1);
+        margin-left: calc(var(--aura) * -1);
+        border-left: 2px solid var(--accent-9);
+        font-size: 1.1rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+
+      .feature p {
+        margin-top: 6px;
+        color: var(--gray-11);
+        font-size: calc(15 / 17 * 1rem);
+      }
+
+      .feature .link {
+        margin-top: calc(var(--aura) * 1);
+        font-size: calc(15 / 17 * 1rem);
+      }
+
+      .dev {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: calc(var(--aura) * 4);
+        align-items: center;
+      }
+
+      .checks {
+        display: grid;
+        gap: calc(var(--aura) * 0.75);
+        margin-top: calc(var(--aura) * 2);
+      }
+
+      .checks li {
+        display: flex;
+        gap: calc(var(--aura) * 0.75);
+      }
+
+      .checks li::before {
+        content: "✓";
+        color: var(--accent-9);
+        font-weight: 700;
+      }
+
+      .code {
+        overflow: hidden;
+        border-radius: 13px;
+        background: var(--navy);
+        color: var(--navy-fg);
+        box-shadow: var(--card-shadow);
+      }
+
+      .code-tabs {
+        display: flex;
+        gap: calc(var(--aura) * 1.5);
+        padding: calc(var(--aura) * 1) calc(var(--aura) * 1.5);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: calc(14 / 17 * 1rem);
+      }
+
+      .code-tabs span {
+        opacity: 0.55;
+      }
+
+      .code-tabs span.on {
+        opacity: 1;
+        box-shadow: 0 2px 0 var(--wave-cyan);
+      }
+
+      .code pre {
+        margin: 0;
+        padding: calc(var(--aura) * 1.5);
+        overflow-x: auto;
+        font: 400 calc(14 / 17 * 1rem) / 1.7 var(--aura-font-label);
+        counter-reset: line;
+      }
+
+      .code pre span.l {
+        display: block;
+      }
+
+      .code pre span.l::before {
+        counter-increment: line;
+        content: counter(line);
+        display: inline-block;
+        width: 2.2em;
+        color: rgba(246, 249, 252, 0.3);
+      }
+
+      .k {
+        color: var(--wave-pink);
+      }
+
+      .s {
+        color: var(--wave-orange);
+      }
+
+      .f {
+        color: var(--wave-cyan);
+      }
+
+      .n {
+        color: var(--accent-7);
+      }
+
+      .band {
+        position: relative;
+        isolation: isolate;
+        color: var(--navy-fg);
+      }
+
+      .band::before {
+        content: "";
+        position: absolute;
+        inset: calc(var(--aura) * 4) 0;
+        z-index: -1;
+        background: var(--navy);
+        transform: skewY(-6deg);
+      }
+
+      .band .eyebrow {
+        color: var(--wave-cyan);
+      }
+
+      .band .lead {
+        color: rgba(246, 249, 252, 0.7);
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: calc(var(--aura) * 2.5);
+        margin-top: calc(var(--aura) * 4.5);
+      }
+
+      .stat {
+        padding-left: calc(var(--aura) * 1);
+        border-left: 1px solid rgba(246, 249, 252, 0.2);
+      }
+
+      .stat b {
+        display: block;
+        font: 500 clamp(2.4rem, 4.6vw, 3.8rem) / 1 var(--aura-font-display);
+        letter-spacing: -0.04em;
+      }
+
+      .stat b.grad {
+        background: linear-gradient(90deg, var(--wave-cyan), var(--wave-violet), var(--wave-pink), var(--wave-orange));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .stat span {
+        display: block;
+        margin-top: calc(var(--aura) * 0.75);
+        color: rgba(246, 249, 252, 0.7);
+        font-size: calc(15 / 17 * 1rem);
+      }
+
+      .ops {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        gap: calc(var(--aura) * 2.5);
+        margin-top: calc(var(--aura) * 4);
+        align-items: start;
+      }
+
+      .panel {
+        border: 1px solid var(--gray-6);
+        border-radius: 13px;
+        background: var(--gray-1);
+        box-shadow: var(--card-shadow);
+      }
+
+      .panel-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: calc(var(--aura) * 1.25) calc(var(--aura) * 1.5);
+        border-bottom: 1px solid var(--gray-6);
+      }
+
+      .panel-head h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-variant-numeric: tabular-nums;
+      }
+
+      th {
+        padding: calc(var(--aura) * 0.75) calc(var(--aura) * 1.5);
+        border-bottom: 1px solid var(--gray-6);
+        color: var(--gray-11);
+        font-size: calc(13 / 17 * 1rem);
+        font-weight: 600;
+        text-align: left;
+      }
+
+      td {
+        padding: calc(var(--aura) * 1) calc(var(--aura) * 1.5);
+        border-bottom: 1px solid var(--gray-6);
+        font-size: calc(15 / 17 * 1rem);
+      }
+
+      tbody tr:last-child td {
+        border-bottom: 0;
+      }
+
+      .amt {
+        font-family: var(--aura-font-label);
+        font-weight: 500;
+      }
+
+      .status {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 6.5px;
+        font-size: calc(13 / 17 * 1rem);
+        font-weight: 600;
+      }
+
+      .status.ok {
+        background: var(--aura-accents-success-bg);
+        color: var(--aura-accents-success);
+      }
+
+      .status.wait {
+        background: var(--gray-3);
+        color: var(--gray-11);
+      }
+
+      .status.back {
+        background: var(--accent-3);
+        color: var(--accent-11);
+      }
+
+      .checkout {
+        display: grid;
+        gap: calc(var(--aura) * 1);
+        padding: calc(var(--aura) * 1.5);
+      }
+
+      .checkout label {
+        display: grid;
+        gap: 6px;
+        color: var(--gray-11);
+        font-size: calc(14 / 17 * 1rem);
+        font-weight: 500;
+      }
+
+      .checkout input,
+      .checkout select {
+        height: calc(var(--aura) * 3.5);
+        padding-inline: calc(var(--aura) * 1);
+        border: 1px solid var(--gray-6);
+        border-radius: var(--aura-input-radius);
+        background: var(--gray-1);
+        color: var(--gray-12);
+        font: inherit;
+        font-size: max(1rem, 17px);
+        box-shadow: 0 1px 2px var(--gray-a3);
+      }
+
+      .two {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: calc(var(--aura) * 1);
+      }
+
+      .checkout .button {
+        width: 100%;
+        height: calc(var(--aura) * 3.5);
+        border-width: 0;
+        border-radius: 6.5px;
+        font-weight: 600;
+      }
+
+      .checkout .button.button-fill:hover.button-fill:hover:not(:disabled) {
+        transform: none;
+      }
+
+      .plans {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: calc(var(--aura) * 2);
+        margin-top: calc(var(--aura) * 4);
+      }
+
+      .plan {
+        display: flex;
+        flex-direction: column;
+        gap: calc(var(--aura) * 1);
+        padding: calc(var(--aura) * 2);
+        border: 1px solid var(--gray-6);
+        border-radius: 13px;
+        background: var(--gray-1);
+      }
+
+      .plan.hot {
+        border-top: 4px solid var(--accent-9);
+        box-shadow: var(--card-shadow);
+      }
+
+      .plan h3 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+
+      .plan .price {
+        font: 500 2.6rem / 1 var(--aura-font-display);
+        letter-spacing: -0.04em;
+      }
+
+      .plan .price small {
+        color: var(--gray-11);
+        font-size: calc(15 / 17 * 1rem);
+        letter-spacing: 0;
+      }
+
+      .plan ul {
+        display: grid;
+        gap: 8px;
+        flex: 1;
+        margin-block: calc(var(--aura) * 0.5);
+      }
+
+      .plan li {
+        display: flex;
+        gap: calc(var(--aura) * 0.75);
+        color: var(--gray-11);
+      }
+
+      .plan li::before {
+        content: "✓";
+        color: var(--accent-9);
+        font-weight: 700;
+      }
+
+      .faq {
+        max-width: calc(var(--aura) * 60);
+        margin-top: calc(var(--aura) * 3);
+        border-top: 1px solid var(--gray-6);
+      }
+
+      details {
+        border-bottom: 1px solid var(--gray-6);
+      }
+
+      summary {
+        display: flex;
+        justify-content: space-between;
+        gap: calc(var(--aura) * 1.5);
+        padding-block: calc(var(--aura) * 1.5);
+        font-size: 1.15rem;
+        font-weight: 600;
+        list-style: none;
+        cursor: pointer;
+      }
+
+      summary::-webkit-details-marker {
+        display: none;
+      }
+
+      summary::after {
+        content: "›";
+        color: var(--accent-9);
+        transform: rotate(90deg);
+        transition: transform 200ms var(--ease);
+      }
+
+      details[open] summary::after {
+        transform: rotate(-90deg);
+      }
+
+      details p {
+        max-width: 62ch;
+        padding-bottom: calc(var(--aura) * 1.5);
+        color: var(--gray-11);
+      }
+
+      .cta {
+        display: grid;
+        grid-template-columns: 1.3fr 1fr 1fr;
+        gap: calc(var(--aura) * 2.5);
+        padding-top: calc(var(--aura) * 3);
+        border-top: 1px solid var(--gray-6);
+      }
+
+      .cta h2 {
+        font-size: clamp(2rem, 3.6vw, 3rem);
+      }
+
+      .cta .box h3 {
+        font-size: 1.05rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+
+      .cta .box p {
+        margin-block: 6px calc(var(--aura) * 1);
+        color: var(--gray-11);
+      }
+
+      footer {
+        position: relative;
+        z-index: 1;
+        padding-block: calc(var(--aura) * 4) calc(var(--aura) * 3);
+        background: var(--gray-2);
+      }
+
+      footer .cols {
+        display: grid;
+        grid-template-columns: 1.5fr repeat(3, 1fr);
+        gap: calc(var(--aura) * 2);
+      }
+
+      footer h4 {
+        margin: 0 0 calc(var(--aura) * 0.75);
+        font-size: calc(15 / 17 * 1rem);
+        font-weight: 600;
+      }
+
+      footer .col a {
+        display: block;
+        margin-top: 6px;
+        color: var(--gray-11);
+        font-size: calc(15 / 17 * 1rem);
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .blob {
+          animation: drift 20s ease-in-out infinite alternate;
+        }
+        .blob:nth-child(2) {
+          animation-duration: 24s;
+        }
+        .blob:nth-child(3) {
+          animation-duration: 28s;
+        }
+        .card {
+          transition: transform 200ms var(--ease);
+        }
+        .card:hover {
+          transform: translateY(-2px);
+        }
+      }
+
+      @keyframes drift {
+        to {
+          transform: translate(10%, 8%) scale(1.1);
+        }
+      }
+
+      @media (max-width: 960px) {
+        .nav-links {
+          display: none;
+        }
+        .hero,
+        .dev,
+        .ops,
+        .cta {
+          grid-template-columns: 1fr;
+        }
+        .features,
+        .stats,
+        .marks {
+          grid-template-columns: 1fr 1fr;
+        }
+        .plans {
+          grid-template-columns: 1fr;
+        }
+        footer .cols {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .wrap,
+        .guides {
+          width: calc(100% - var(--aura) * 3);
+        }
+        .section {
+          padding-block: calc(var(--aura) * 6);
+        }
+        .nav-end .signin,
+        .hide-sm {
+          display: none;
+        }
+        .mesh {
+          height: calc(var(--aura) * 19);
+        }
+        .stack {
+          height: calc(var(--aura) * 30);
+        }
+        .card.chart {
+          display: none;
+        }
+        .card.pay {
+          width: 70%;
+        }
+        .features {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="mesh" aria-hidden="true">
+        <span class="blob" style="--c: var(--wave-orange); left: 40%; top: -30%"></span>
+        <span class="blob" style="--c: var(--wave-pink); left: 62%; top: 10%"></span>
+        <span class="blob" style="--c: var(--wave-cyan); left: -10%; top: -40%"></span>
+        <span class="blob" style="--c: var(--wave-violet); left: 10%; top: 20%"></span>
+      </div>
+      <nav class="wrap nav" aria-label="Main">
+        <a href="#" class="logo"><i aria-hidden="true"></i>Slipstream</a>
+        <div class="nav-links"><a href="#">Products</a><a href="#">Solutions</a><a href="#">Developers</a><a href="#">Pricing</a></div>
+        <div class="nav-end"><a href="#" class="signin">Sign in</a><a href="#" class="glass">Contact sales <span class="chev">›</span></a></div>
+      </nav>
+      <div class="wrap hero">
+        <div class="hero-copy">
+          <h1>Move money with the confidence of a ledger.</h1>
+          <p class="lead muted">Accept payments, send payouts and reconcile every cent from one API. Built for teams that measure in milliseconds.</p>
+          <div class="actions">
+            <a href="#" class="button button-fill pill">Start building <span class="chev">›</span></a>
+            <a href="#" class="link">Talk to an engineer <span class="chev">›</span></a>
+          </div>
+        </div>
+        <div class="stack" aria-hidden="true">
+          <div class="card chart">
+            <div class="chart-top"><span class="muted">Net volume</span><b>€184,920</b></div>
+            <svg viewBox="0 0 200 60" preserveAspectRatio="none"><path d="M0 50 C 30 46, 40 30, 70 34 S 120 18, 140 22 S 180 8, 200 6" fill="none" stroke="var(--accent-9)" stroke-width="2" /><path d="M0 50 C 30 46, 40 30, 70 34 S 120 18, 140 22 S 180 8, 200 6 V60 H0 Z" fill="var(--accent-a3)" /></svg>
+          </div>
+          <div class="card pay">
+            <div class="pay-item"><i></i><span><b>Annual plan</b><span class="muted" style="font-size: 0.8rem">Billed yearly · €240.00</span></span></div>
+            <span class="fake-label">Email</span><div class="fake-field"></div>
+            <span class="fake-label">Card</span><div class="fake-field"></div>
+            <div class="fake-row"><div class="fake-field"></div><div class="fake-field"></div></div>
+            <div class="fake-btn">Pay €240.00</div>
+          </div>
+          <div class="card phone">
+            <div class="phone-bar"></div>
+            <div class="phone-amount">€48.00</div>
+            <div class="phone-sub">Order 2,184 · 2 items</div>
+            <div class="phone-line"></div>
+            <div class="phone-line" style="width: 70%"></div>
+            <div class="phone-pay">Confirm payment</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main style="position: relative">
+      <div class="guides" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+      <div class="wrap marks" aria-label="Teams on Slipstream">
+        <span>Fernhill</span><span class="serif">Quarto &amp; Vale</span><span class="caps">NORTHWIND LABS</span><span>Copperleaf</span>
+        <span class="caps">ORBIT POST</span><span>Halcyon</span><span class="serif">Marlowe</span><span>tidepool</span>
+      </div>
+
+      <section class="wrap section">
+        <p class="eyebrow">One platform</p>
+        <h2>Every flow of money, on a single set of rails.</h2>
+        <p class="lead muted">Start with checkout, add payouts and billing when you need them. The data model stays the same as you grow.</p>
+        <div class="features">
+          <div class="feature"><span class="ico"><svg viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="1.5" y="3.5" width="12" height="8" rx="1.5" /><path d="M1.5 6.5h12" /></svg></span><h3>Payments</h3><p>Cards, wallets and bank debits in 40 currencies with smart retries.</p><a href="#" class="link">Explore payments <span class="chev">›</span></a></div>
+          <div class="feature"><span class="ico"><svg viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 11h11M4 11V6M7.5 11V3M11 11V8" /></svg></span><h3>Billing</h3><p>Subscriptions, usage meters and invoices that reconcile themselves.</p><a href="#" class="link">Explore billing <span class="chev">›</span></a></div>
+          <div class="feature"><span class="ico"><svg viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 7.5h11M9 3.5l4 4-4 4" /></svg></span><h3>Payouts</h3><p>Send funds to sellers and suppliers on the same day, in their currency.</p><a href="#" class="link">Explore payouts <span class="chev">›</span></a></div>
+          <div class="feature"><span class="ico"><svg viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M7.5 1.5l5 2v4c0 3-2.2 5-5 6-2.8-1-5-3-5-6v-4z" /></svg></span><h3>Risk</h3><p>Models trained on every transaction stop fraud before it settles.</p><a href="#" class="link">Explore risk <span class="chev">›</span></a></div>
+        </div>
+      </section>
+
+      <section class="wrap section" style="padding-top: 0">
+        <div class="dev">
+          <div>
+            <p class="eyebrow">Built for developers</p>
+            <h2>Ship a payment flow before lunch.</h2>
+            <p class="lead muted">Typed SDKs, readable errors and a sandbox that behaves exactly like production.</p>
+            <ul class="checks default" style="list-style: none; padding: 0">
+              <li>Idempotent requests by default</li>
+              <li>Webhooks with automatic replay</li>
+              <li>Test clocks for subscriptions</li>
+            </ul>
+          </div>
+          <figure class="code" aria-label="Code sample">
+            <div class="code-tabs"><span class="on">server.ts</span><span>webhook.ts</span><span>client.ts</span></div>
+            <pre><span class="l"><span class="k">import</span> { Slipstream } <span class="k">from</span> <span class="s">"slipstream"</span>;</span><span class="l"> </span><span class="l"><span class="k">const</span> client = <span class="k">new</span> <span class="f">Slipstream</span>(env.SECRET_KEY);</span><span class="l"> </span><span class="l"><span class="k">const</span> transfer = <span class="k">await</span> client.transfers.<span class="f">create</span>({</span><span class="l">  amount: <span class="n">4200</span>,</span><span class="l">  currency: <span class="s">"eur"</span>,</span><span class="l">  destination: <span class="s">"acct_8xk2"</span>,</span><span class="l">});</span></pre>
+          </figure>
+        </div>
+      </section>
+
+      <section class="band section">
+        <div class="wrap">
+          <p class="eyebrow">The network</p>
+          <h2 style="color: var(--navy-fg)">Infrastructure that scales with every order.</h2>
+          <p class="lead">Measured across all accounts over the last twelve months.</p>
+          <div class="stats">
+            <div class="stat"><b class="grad">99.999%</b><span>API uptime</span></div>
+            <div class="stat"><b>140ms</b><span>median authorization</span></div>
+            <div class="stat"><b>46</b><span>countries with local acquiring</span></div>
+            <div class="stat"><b>€2.1T</b><span>processed this year</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="wrap section">
+        <p class="eyebrow">Operations</p>
+        <h2>See every payment the moment it lands.</h2>
+        <div class="ops">
+          <div class="panel">
+            <div class="panel-head"><h3>Payments</h3><span class="mono muted">Live · UTC+1</span></div>
+            <table>
+              <thead><tr><th scope="col">Amount</th><th scope="col">Status</th><th scope="col" class="hide-sm">Customer</th><th scope="col" class="hide-sm">ID</th></tr></thead>
+              <tbody>
+                <tr><td class="amt">€240.00</td><td><span class="status ok">Succeeded</span></td><td class="hide-sm">lena@fernhill.io</td><td class="mono muted hide-sm">py_3N8a</td></tr>
+                <tr><td class="amt">€48.00</td><td><span class="status wait">Pending</span></td><td class="hide-sm">ops@copperleaf.co</td><td class="mono muted hide-sm">py_3N7z</td></tr>
+                <tr><td class="amt">€1,920.00</td><td><span class="status ok">Succeeded</span></td><td class="hide-sm">finance@orbit.post</td><td class="mono muted hide-sm">py_3N7q</td></tr>
+                <tr><td class="amt">€19.00</td><td><span class="status back">Refunded</span></td><td class="hide-sm">sam@tidepool.app</td><td class="mono muted hide-sm">py_3N7k</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <form class="panel checkout" onsubmit="return false">
+            <label>Email<input type="email" placeholder="you@company.com" /></label>
+            <label>Card number<input type="text" inputmode="numeric" placeholder="4242 4242 4242 4242" /></label>
+            <div class="two"><label>Expiry<input type="text" placeholder="MM / YY" /></label><label>CVC<input type="text" inputmode="numeric" placeholder="123" /></label></div>
+            <label>Country<select><option>Spain</option><option>Germany</option><option>Mexico</option></select></label>
+            <button type="submit" class="button button-fill">Pay €240.00</button>
+          </form>
+        </div>
+      </section>
+
+      <section class="wrap section" style="padding-top: 0">
+        <p class="eyebrow">Pricing</p>
+        <h2>Pay as you grow. Nothing hidden.</h2>
+        <div class="plans">
+          <div class="plan"><h3>Starter</h3><div class="price">1.4% <small>+ €0.25</small></div><p class="muted">Per successful card charge.</p><ul class="default" style="list-style: none; padding: 0"><li>Checkout and links</li><li>Dashboard and reports</li></ul><a href="#" class="link">Start now <span class="chev">›</span></a></div>
+          <div class="plan hot"><h3>Scale</h3><div class="price">1.2% <small>+ €0.20</small></div><p class="muted">For teams above €1M a year.</p><ul class="default" style="list-style: none; padding: 0"><li>Billing and payouts</li><li>Priority support</li></ul><a href="#" class="button button-fill pill" style="align-self: flex-start">Talk to sales <span class="chev">›</span></a></div>
+          <div class="plan"><h3>Custom</h3><div class="price">Let’s talk</div><p class="muted">Volume pricing and dedicated engineers.</p><ul class="default" style="list-style: none; padding: 0"><li>Custom contracts</li><li>Solution architects</li></ul><a href="#" class="link">Contact sales <span class="chev">›</span></a></div>
+        </div>
+      </section>
+
+      <section class="wrap section" style="padding-top: 0">
+        <p class="eyebrow">Questions</p>
+        <h2>Before you integrate.</h2>
+        <div class="faq">
+          <details open><summary>How long does an integration take?</summary><p>Most teams take their first live payment within a day using the hosted checkout.</p></details>
+          <details><summary>Can we test without real money?</summary><p>Every account has a sandbox with test cards, clocks and webhooks.</p></details>
+          <details><summary>Where are funds held?</summary><p>With licensed partner banks in each region, reconciled daily.</p></details>
+        </div>
+      </section>
+
+      <section class="wrap section" style="padding-top: 0">
+        <div class="cta">
+          <div><p class="eyebrow">Get started</p><h2>Ready when your first order is.</h2><div class="actions"><a href="#" class="button button-fill pill">Start building <span class="chev">›</span></a></div></div>
+          <div class="box"><h3>Clear pricing</h3><p>Pay per transaction with no setup or monthly fees.</p><a href="#" class="link">See pricing <span class="chev">›</span></a></div>
+          <div class="box"><h3>Start in minutes</h3><p>Copy a sample, swap the key and run it.</p><a href="#" class="link">Read the docs <span class="chev">›</span></a></div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap cols">
+        <div><a href="#" class="logo" style="color: var(--accent-9)"><i aria-hidden="true"></i>Slipstream</a><p class="muted" style="margin-top: calc(var(--aura) * 1); max-width: 30ch">A demo flavor of the Aura design system. Sample content.</p></div>
+        <div class="col"><h4>Products</h4><a href="#">Payments</a><a href="#">Billing</a><a href="#">Payouts</a></div>
+        <div class="col"><h4>Developers</h4><a href="#">Docs</a><a href="#">API status</a><a href="#">Changelog</a></div>
+        <div class="col"><h4>Company</h4><a href="#">About</a><a href="#">Careers</a><a href="#">Privacy</a></div>
+      </div>
+    </footer>
+  </body>
+</html>
