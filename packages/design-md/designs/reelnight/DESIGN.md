@@ -313,10 +313,10 @@ Medido en Chrome headless sobre el showcase de la galería, claro / oscuro, a 12
 | Par | Claro (peor de 1280 y 360) | Oscuro (peor de 1280 y 360) | Mínimo |
 | --- | --- | --- | --- |
 | Etiqueta blanca sobre `--accent-9` (CTA, "Entrar", insignia) | 4.79 | 4.79 | 4.5 |
-| Titular del hero sobre el muro (peor píxel) | 9.71 | 7.23 | 3 (texto grande) |
-| Pregunta del hero sobre el muro (peor píxel) | 8.95 | 5.92 | 4.5 |
-| Etiqueta flotante sobre el campo | 7.31 | 8.96 | 4.5 |
-| Error del campo (`--alert-ink`) en el hero | 5.59 | 4.71 | 4.5 |
+| Titular del hero sobre el muro (peor píxel) | 9.66 | 7.91 | 3 (texto grande) |
+| Pregunta del hero sobre el muro (peor píxel) | 8.93 | 6.00 | 4.5 |
+| Etiqueta flotante sobre el campo | 7.32 | 8.95 | 4.5 |
+| Error del campo (`--alert-ink`) en el hero | 5.55 | 4.71 | 4.5 |
 | Texto de tarjeta de razones (`--gray-11` sobre degradado) | 6.14 | 7.72 | 4.5 |
 | Pregunta FAQ sobre `--panel` | 12.93 | 11.87 | 4.5 |
 | Enlaces y nota del footer (`--gray-11`) | 6.59 | 10.13 | 4.5 |
