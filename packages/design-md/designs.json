@@ -613,6 +613,83 @@
           "gray-12": "#efedf1"
         }
       }
+    },
+    {
+      "slug": "bluefold",
+      "name": "Bluefold",
+      "description": "Pale sky fields, a white sweep of light, one clear working blue and a folded-square mark. A calm, airy flavor of Aura for agent dashboards, task runners and assistant products.",
+      "design": "designs/bluefold/DESIGN.md",
+      "theme": "designs/bluefold/theme.css",
+      "result": "designs/bluefold/result.html",
+      "fonts": {
+        "sans": "Instrument Sans",
+        "display": "Bricolage Grotesque",
+        "label": "JetBrains Mono",
+        "href": "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap"
+      },
+      "hero": "field",
+      "headingWeight": 600,
+      "radius": {
+        "button": "9999px",
+        "input": "6.5px",
+        "surface": "13px"
+      },
+      "tokens": {
+        "light": {
+          "accent-contrast": "#fff",
+          "accent-1": "#f6f7f9",
+          "gray-1": "#f5f6f9",
+          "accent-2": "#eff3f9",
+          "gray-2": "#f0f3f8",
+          "accent-3": "#e3ecf9",
+          "gray-3": "#e5eaf1",
+          "accent-4": "#d4e4fd",
+          "gray-4": "#dbe2eb",
+          "accent-5": "#c3dafe",
+          "gray-5": "#d2dae6",
+          "accent-6": "#aeccfa",
+          "gray-6": "#c9d3e0",
+          "accent-7": "#95baf4",
+          "gray-7": "#bcc8d9",
+          "accent-8": "#70a1ee",
+          "gray-8": "#a5b5cb",
+          "accent-9": "#1d6ee6",
+          "gray-9": "#77879d",
+          "accent-10": "#0760d6",
+          "gray-10": "#6d7c91",
+          "accent-11": "#0760d6",
+          "gray-11": "#515e6f",
+          "accent-12": "#0f3165",
+          "gray-12": "#19202a"
+        },
+        "dark": {
+          "accent-contrast": "#fff",
+          "accent-1": "#091221",
+          "gray-1": "#101216",
+          "accent-2": "#0d182a",
+          "gray-2": "#171a1d",
+          "accent-3": "#082452",
+          "gray-3": "#1f2328",
+          "accent-4": "#022d70",
+          "gray-4": "#252a31",
+          "accent-5": "#063885",
+          "gray-5": "#2b313a",
+          "accent-6": "#104497",
+          "gray-6": "#333a45",
+          "accent-7": "#1851ae",
+          "gray-7": "#3e4855",
+          "accent-8": "#1c5fcd",
+          "gray-8": "#556173",
+          "accent-9": "#1a5ecb",
+          "gray-9": "#626f81",
+          "accent-10": "#1952ae",
+          "gray-10": "#707c8d",
+          "accent-11": "#81b6ff",
+          "gray-11": "#abb4c2",
+          "accent-12": "#cbe3ff",
+          "gray-12": "#ebeef2"
+        }
+      }
     }
   ]
 }

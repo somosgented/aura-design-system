@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bluefold · Aura flavor</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/aura/main.css" />
+    <link rel="stylesheet" href="theme.css" />
+    <script>
+      (function () {
+        var appearance = new URLSearchParams(window.location.search).get("appearance") === "dark" ? "dark" : "light";
+        document.documentElement.classList.add(appearance);
+        document.documentElement.style.colorScheme = appearance;
+      })();
+    </script>
+    <style>
+      :root {
+        --aura-accents-primary: var(--accent-9);
+        --aura-text-primary-inverse: var(--accent-contrast);
+        --aura-button-hover: var(--accent-10);
+        --aura-outline: var(--accent-8) solid 2px;
+        --ease: cubic-bezier(0.4, 0, 0.6, 1);
+        --field: linear-gradient(160deg, var(--sky-mist) 0%, var(--sky-mid) 70%);
+        --field-fg: var(--field-ink);
+        --sweep-opacity: 0.85;
+        --lift: 0 calc(var(--aura) * 1) calc(var(--aura) * 3) calc(var(--aura) * -1) var(--accent-a6);
+        --card-ring: transparent;
+      }
+
+      .dark {
+        --field: linear-gradient(160deg, var(--gray-2) 0%, color-mix(in srgb, var(--sky-mid) 30%, var(--gray-1)) 70%);
+        --sweep-opacity: 0.25;
+        --lift: 0 0 0 1px var(--accent-a5);
+        --card-ring: var(--accent-a5);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        font-size: 17px;
+        background: var(--gray-1);
+        scroll-behavior: auto;
+      }
+
+      body {
+        margin: 0;
+        overflow-x: hidden;
+        background: var(--gray-1);
+        color: var(--gray-12);
+        font-family: var(--aura-font-stack);
+        line-height: 1.55;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      h1,
+      h2,
+      h3,
+      p,
+      fieldset {
+        margin: 0;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: var(--aura-font-display);
+        font-weight: 600;
+        letter-spacing: -0.03em;
+        line-height: 1;
+        text-wrap: balance;
+      }
+
+      :focus-visible {
+        outline: var(--aura-outline);
+        outline-offset: 2px;
+      }
+
+      [id] {
+        scroll-margin-top: calc(var(--aura) * 2);
+      }
+
+      .skip {
+        position: absolute;
+        left: calc(var(--aura) * 1);
+        top: calc(var(--aura) * -4);
+        padding: calc(var(--aura) * 0.5) calc(var(--aura) * 1);
+        background: var(--accent-9);
+        color: var(--accent-contrast);
+        border-radius: var(--aura-button-radius);
+        z-index: 10;
+      }
+
+      .skip:focus {
+        top: calc(var(--aura) * 1);
+      }
+
+      .wrap {
+        width: min(100% - var(--aura) * 3, var(--aura) * 92);
+        margin-inline: auto;
+      }
+
+      .section {
+        padding-block: calc(var(--aura) * 9);
+      }
+
+      .kicker,
+      .status {
+        font-family: var(--aura-font-label);
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--accent-11);
+      }
+
+      .muted {
+        color: var(--gray-11);
+      }
+
+      .note {
+        font-family: var(--aura-font-label);
+        font-size: 13px;
+        color: var(--gray-11);
+      }
+
+      .icon {
+        width: 15px;
+        height: 15px;
+        flex: none;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: calc(var(--aura) * 0.5);
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .nav {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: calc(var(--aura) * 1);
+        padding-block: calc(var(--aura) * 1.5);
+      }
+
+      .logo {
+        display: inline-flex;
+        align-items: center;
+        gap: calc(var(--aura) * 0.5);
+        font-family: var(--aura-font-display);
+        font-weight: 600;
+        font-size: 1.25rem;
+        letter-spacing: -0.03em;
+        text-decoration: none;
+      }
+
+      .mark {
+        position: relative;
+        width: calc(var(--aura) * 1.5);
+        height: calc(var(--aura) * 1.5);
+        background: var(--accent-9);
+        border-radius: 3px;
+        clip-path: polygon(0 0, 60% 0, 100% 40%, 100% 100%, 0 100%);
+      }
+
+      .mark::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 40%;
+        height: 40%;
+        background: linear-gradient(225deg, transparent 50%, var(--accent-6) 50%);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: calc(var(--aura) * 2);
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .nav-links a {
+        color: var(--gray-11);
+        text-decoration: none;
+      }
+
+      .nav-links a:hover {
+        color: var(--gray-12);
+      }
+
+      .menu-toggle {
+        display: none;
+      }
+
+      .field {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        background: var(--field);
+        color: var(--field-fg);
+      }
+
+      .field::before {
+        content: "";
+        position: absolute;
+        inset: -30% -10% auto -30%;
+        height: 70%;
+        z-index: -1;
+        background: linear-gradient(170deg, transparent 20%, var(--sweep) 50%, transparent 80%);
+        transform: rotate(-12deg);
+        filter: blur(calc(var(--aura) * 3));
+        opacity: var(--sweep-opacity);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: calc(var(--aura) * 4);
+        align-items: center;
+        padding-block: calc(var(--aura) * 5) calc(var(--aura) * 7);
+      }
+
+      .hero h1 {
+        font-size: clamp(2.5rem, 6vw, 5rem);
+      }
+
+      .hero p.lead {
+        margin-top: calc(var(--aura) * 1.5);
+        max-width: calc(var(--aura) * 38);
+        font-size: 1.15rem;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: calc(var(--aura) * 1);
+        margin-top: calc(var(--aura) * 2.5);
+      }
+
+      .button-pill.ghost {
+        border: 1px solid var(--gray-7);
+        background: transparent;
+        color: inherit;
+      }
+
+      .runs {
+        display: grid;
+        gap: calc(var(--aura) * 1.5);
+      }
+
+      .run {
+        background: var(--sky-mist);
+        color: var(--gray-12);
+        border-radius: var(--aura-radius);
+        padding: calc(var(--aura) * 2);
+        box-shadow: var(--lift);
+      }
+
+      .run h3 {
+        font-size: 1.25rem;
+        margin-top: calc(var(--aura) * 0.5);
+      }
+
+      .status {
+        display: inline-flex;
+        align-items: center;
+        gap: calc(var(--aura) * 0.5);
+      }
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 9999px;
+        background: var(--accent-9);
+      }
+
+      .status.done {
+        color: var(--gray-11);
+      }
+
+      .status.done .dot {
+        background: var(--gray-9);
+      }
+
+      .track {
+        height: 3px;
+        margin-top: calc(var(--aura) * 1);
+        border-radius: 9999px;
+        background: var(--accent-a4);
+        overflow: hidden;
+      }
+
+      .track span {
+        display: block;
+        height: 100%;
+        background: var(--accent-9);
+        transform-origin: left;
+      }
+
+      .run .note {
+        margin-top: calc(var(--aura) * 1);
+      }
+
+      .example {
+        margin-top: calc(var(--aura) * 1.5);
+        font-family: var(--aura-font-label);
+        font-size: 13px;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: calc(var(--aura) * 2);
+        padding-block: calc(var(--aura) * 4);
+        border-bottom: 1px solid var(--gray-6);
+      }
+
+      .stat strong {
+        display: block;
+        font-family: var(--aura-font-display);
+        font-weight: 600;
+        font-size: 2.5rem;
+        letter-spacing: -0.03em;
+        line-height: 1;
+      }
+
+      .stat span {
+        color: var(--gray-11);
+      }
+
+      .head {
+        max-width: calc(var(--aura) * 46);
+        margin-bottom: calc(var(--aura) * 4);
+      }
+
+      .head h2 {
+        font-size: clamp(2rem, 4vw, 3rem);
+        margin-top: calc(var(--aura) * 0.5);
+      }
+
+      .head p {
+        margin-top: calc(var(--aura) * 1);
+      }
+
+      .grid3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: calc(var(--aura) * 2);
+      }
+
+      .card {
+        border: 1px solid var(--gray-6);
+        border-radius: var(--aura-radius);
+        padding: calc(var(--aura) * 2);
+        background: var(--gray-1);
+      }
+
+      .card h3 {
+        font-size: 1.25rem;
+        margin-block: calc(var(--aura) * 1) calc(var(--aura) * 0.5);
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+        border: 1px solid var(--gray-6);
+        border-radius: var(--aura-radius);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.875rem;
+      }
+
+      caption {
+        text-align: left;
+        padding: calc(var(--aura) * 1) calc(var(--aura) * 1.5);
+        color: var(--gray-11);
+        font-family: var(--aura-font-label);
+        font-size: 13px;
+      }
+
+      th,
+      td {
+        text-align: left;
+        padding: calc(var(--aura) * 1) calc(var(--aura) * 1.5);
+        border-top: 1px solid var(--gray-6);
+        white-space: nowrap;
+      }
+
+      thead th {
+        background: var(--sky-wash);
+        font-weight: 600;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 0 calc(var(--aura) * 0.5);
+        border-radius: 9999px;
+        font-family: var(--aura-font-label);
+        font-size: 12px;
+        background: var(--accent-a3);
+        color: var(--accent-11);
+      }
+
+      .badge.neutral {
+        background: var(--gray-a3);
+        color: var(--gray-11);
+      }
+
+      .split {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: calc(var(--aura) * 4);
+        align-items: start;
+      }
+
+      form {
+        display: grid;
+        gap: calc(var(--aura) * 1.5);
+      }
+
+      .field-row {
+        display: grid;
+        gap: calc(var(--aura) * 0.5);
+      }
+
+      label {
+        font-weight: 600;
+      }
+
+      input,
+      select,
+      textarea {
+        font: inherit;
+        color: var(--gray-12);
+        background: var(--gray-1);
+        border: 1px solid var(--gray-7);
+        border-radius: var(--aura-input-radius);
+        padding: calc(var(--aura) * 0.5) calc(var(--aura) * 1);
+        min-height: calc(var(--aura) * 3);
+      }
+
+      textarea {
+        min-height: calc(var(--aura) * 7);
+        resize: vertical;
+      }
+
+      [aria-invalid="true"] {
+        border-color: var(--red-9, #d93025);
+      }
+
+      .error {
+        color: var(--red-11, #b3261e);
+        font-size: 0.875rem;
+      }
+
+      .error:empty {
+        display: none;
+      }
+
+      .form-status {
+        padding: calc(var(--aura) * 1);
+        border-radius: var(--aura-input-radius);
+        background: var(--sky-wash);
+        color: var(--gray-12);
+      }
+
+      .form-status:empty {
+        display: none;
+      }
+
+      .plans {
+        align-items: stretch;
+      }
+
+      .plan {
+        display: flex;
+        flex-direction: column;
+        gap: calc(var(--aura) * 1);
+      }
+
+      .plan.field {
+        border-color: transparent;
+        box-shadow: inset 0 0 0 1px var(--card-ring);
+      }
+
+      .plan .price {
+        font-family: var(--aura-font-display);
+        font-size: 2.25rem;
+        font-weight: 600;
+        letter-spacing: -0.03em;
+      }
+
+      .plan ul {
+        margin: 0;
+        padding-left: calc(var(--aura) * 1.5);
+        flex: 1;
+      }
+
+      .plan.field .muted {
+        color: var(--field-fg);
+      }
+
+      .faq {
+        max-width: calc(var(--aura) * 58);
+      }
+
+      details {
+        border-bottom: 1px solid var(--gray-6);
+        padding-block: calc(var(--aura) * 1.5);
+      }
+
+      summary {
+        cursor: pointer;
+        font-family: var(--aura-font-display);
+        font-weight: 600;
+        font-size: 1.15rem;
+        letter-spacing: -0.02em;
+      }
+
+      details p {
+        margin-top: calc(var(--aura) * 1);
+      }
+
+      .cta {
+        border-radius: var(--aura-radius);
+        padding: calc(var(--aura) * 6) calc(var(--aura) * 3);
+        text-align: center;
+        box-shadow: inset 0 0 0 1px var(--card-ring);
+      }
+
+      .cta h2 {
+        font-size: clamp(2rem, 4.5vw, 3.5rem);
+      }
+
+      .cta .actions {
+        justify-content: center;
+      }
+
+      footer {
+        border-top: 1px solid var(--gray-6);
+        padding-block: calc(var(--aura) * 4);
+        margin-top: calc(var(--aura) * 9);
+      }
+
+      .foot {
+        display: grid;
+        grid-template-columns: 2fr repeat(3, 1fr);
+        gap: calc(var(--aura) * 2);
+      }
+
+      .foot ul {
+        list-style: none;
+        margin: calc(var(--aura) * 0.5) 0 0;
+        padding: 0;
+        display: grid;
+        gap: calc(var(--aura) * 0.5);
+      }
+
+      .foot a {
+        color: var(--gray-11);
+        text-decoration: none;
+      }
+
+      .foot a:hover {
+        color: var(--gray-12);
+        text-decoration: underline;
+      }
+
+      .legal {
+        margin-top: calc(var(--aura) * 3);
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .button,
+        .run,
+        .card {
+          transition: transform 250ms var(--ease);
+        }
+
+        .button:hover,
+        .run:hover {
+          transform: scale(1.03);
+        }
+
+        .button:active {
+          transform: scale(0.97);
+        }
+
+        .nav-links {
+          transition: opacity 250ms var(--ease), transform 250ms var(--ease);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .button,
+        .run,
+        .card,
+        .nav-links {
+          transition: none;
+        }
+      }
+
+      @media (max-width: 960px) {
+        .hero,
+        .split {
+          grid-template-columns: 1fr;
+        }
+
+        .stats {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 760px) {
+        .menu-toggle {
+          display: inline-flex;
+        }
+
+        .nav-links {
+          flex-basis: 100%;
+          flex-direction: column;
+          gap: calc(var(--aura) * 1);
+          padding-block: calc(var(--aura) * 1);
+        }
+
+        .nav[data-open="false"] .nav-links {
+          display: none;
+        }
+
+        .nav-end .button-fill {
+          display: none;
+        }
+
+        .grid3,
+        .foot {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="wrap">
+      <nav class="nav" aria-label="Primary" data-open="false">
+        <a class="logo" href="#top" aria-label="Bluefold home"><i class="mark" aria-hidden="true"></i>Bluefold</a>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#features">How it works</a></li>
+          <li><a href="#runs">Runs</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+        <div class="nav-end">
+          <a class="button button-fill btn" href="#brief">Write a brief</a>
+          <button class="button button-pill ghost btn menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="field" id="top" aria-labelledby="hero-title">
+        <div class="wrap hero">
+          <div>
+            <p class="kicker">Bluefold Relay · fictional demo</p>
+            <h1 id="hero-title">Hand it off. Watch it land.</h1>
+            <p class="lead">A quiet crew of helpers that take the errands you keep postponing, run them side by side, and tell you plainly what they did.</p>
+            <div class="actions">
+              <a class="button button-fill btn" href="#brief">
+                Write a brief
+                <svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M8.15 3.15a.5.5 0 0 1 .7 0l4 4a.5.5 0 0 1 0 .7l-4 4a.5.5 0 0 1-.7-.7L11.29 8H2.5a.5.5 0 0 1 0-1h8.79L8.15 3.85a.5.5 0 0 1 0-.7Z" fill="currentColor" /></svg>
+              </a>
+              <a class="button button-pill ghost btn" href="#features">See how it works</a>
+            </div>
+          </div>
+          <div class="runs" aria-label="Example runs">
+            <article class="run">
+              <span class="status"><i class="dot" aria-hidden="true"></i>Running · 2 of 3</span>
+              <h3>Sort this week's invoices</h3>
+              <div class="track" role="progressbar" aria-label="Invoice run progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="66"><span style="transform: scaleX(0.66)"></span></div>
+              <p class="note">Learned: you file receipts by client first.</p>
+            </article>
+            <article class="run">
+              <span class="status done"><i class="dot" aria-hidden="true"></i>Done · 4 min</span>
+              <h3>Draft replies to the venue thread</h3>
+              <div class="track" role="progressbar" aria-label="Venue replies progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><span style="transform: scaleX(1)"></span></div>
+              <p class="note">Waiting for your approval before sending.</p>
+            </article>
+            <p class="example">Example tasks. Not real accounts or data.</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="wrap">
+        <section class="stats" aria-label="Example metrics">
+          <div class="stat"><strong>3</strong><span>errands in parallel (example)</span></div>
+          <div class="stat"><strong>12 min</strong><span>median run (example)</span></div>
+          <div class="stat"><strong>1 tap</strong><span>to approve or stop</span></div>
+          <div class="stat"><strong>0</strong><span>sends without your OK</span></div>
+        </section>
+      </div>
+
+      <section class="section" id="features" aria-labelledby="features-title">
+        <div class="wrap">
+          <div class="head">
+            <p class="kicker">How it works</p>
+            <h2 id="features-title">Small handoffs, clear receipts.</h2>
+            <p class="muted">Six ideas that shape every run in this fictional product.</p>
+          </div>
+          <div class="grid3">
+            <article class="card"><span class="status">01 · Parallel</span><h3>Several errands at once</h3><p class="muted">Start a few briefs and let them run side by side instead of in a queue.</p></article>
+            <article class="card"><span class="status">02 · Thread</span><h3>One thread per task</h3><p class="muted">Every run keeps its own status line, so you always know where it stands.</p></article>
+            <article class="card"><span class="status">03 · Routine</span><h3>Routines it picks up</h3><p class="muted">Repeat a task twice and it offers to remember the steps for next time.</p></article>
+            <article class="card"><span class="status">04 · Memory</span><h3>Notes with a source</h3><p class="muted">Anything it remembers shows where it came from, and you can delete it.</p></article>
+            <article class="card"><span class="status">05 · Crew</span><h3>Helpers that hand off</h3><p class="muted">One helper drafts, another checks, and you see each handoff in the log.</p></article>
+            <article class="card"><span class="status">06 · Trades</span><h3>Built for small studios</h3><p class="muted">Bookkeeping, scheduling and client follow-ups for people who run the whole shop.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="runs" aria-labelledby="runs-title">
+        <div class="wrap">
+          <div class="head">
+            <p class="kicker">Run log</p>
+            <h2 id="runs-title">Everything it did, in order.</h2>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <caption>Example run log for a fictional studio.</caption>
+              <thead>
+                <tr><th scope="col">Task</th><th scope="col">Helper</th><th scope="col">Started</th><th scope="col">Duration</th><th scope="col">State</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Sort invoices</td><td>Ledger</td><td>09:12</td><td>14 min</td><td><span class="badge">Running</span></td></tr>
+                <tr><td>Venue replies</td><td>Courier</td><td>08:40</td><td>4 min</td><td><span class="badge neutral">Needs approval</span></td></tr>
+                <tr><td>Reschedule fittings</td><td>Planner</td><td>Yesterday</td><td>9 min</td><td><span class="badge neutral">Done</span></td></tr>
+                <tr><td>Supplier price check</td><td>Ledger</td><td>Yesterday</td><td>21 min</td><td><span class="badge neutral">Done</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="brief" aria-labelledby="brief-title">
+        <div class="wrap split">
+          <div class="head">
+            <p class="kicker">Brief</p>
+            <h2 id="brief-title">Describe the errand.</h2>
+            <p class="muted">This is a design demo. The form checks your input locally and sends nothing anywhere.</p>
+          </div>
+          <form id="brief-form" novalidate aria-describedby="brief-note">
+            <p class="note" id="brief-note">Fields marked required must be filled.</p>
+            <div class="field-row">
+              <label for="task">Task (required)</label>
+              <input id="task" name="task" required minlength="4" aria-describedby="task-error" />
+              <p class="error" id="task-error" aria-live="polite"></p>
+            </div>
+            <div class="field-row">
+              <label for="helper">Helper</label>
+              <select id="helper" name="helper">
+                <option>Ledger</option>
+                <option>Courier</option>
+                <option>Planner</option>
+              </select>
+            </div>
+            <div class="field-row">
+              <label for="details">Details (required)</label>
+              <textarea id="details" name="details" required minlength="10" aria-describedby="details-error"></textarea>
+              <p class="error" id="details-error" aria-live="polite"></p>
+            </div>
+            <div><button class="button button-fill btn" type="submit">Check brief</button></div>
+            <p class="form-status" id="form-status" role="status"></p>
+          </form>
+        </div>
+      </section>
+
+      <section class="section" id="pricing" aria-labelledby="pricing-title">
+        <div class="wrap">
+          <div class="head">
+            <p class="kicker">Plans · example pricing</p>
+            <h2 id="pricing-title">Pay for the runs you use.</h2>
+          </div>
+          <div class="grid3 plans">
+            <article class="card plan"><h3>Desk</h3><p class="price">$0</p><ul class="muted"><li>One errand at a time</li><li>7-day run log</li></ul><a class="button button-pill ghost btn" href="#brief">Start a brief</a></article>
+            <article class="card plan field"><h3>Studio</h3><p class="price">$18</p><ul class="muted"><li>Three errands in parallel</li><li>Saved routines</li><li>90-day run log</li></ul><a class="button button-fill btn" href="#brief">Start a brief</a></article>
+            <article class="card plan"><h3>Workshop</h3><p class="price">$54</p><ul class="muted"><li>Ten errands in parallel</li><li>Shared crew for a team</li></ul><a class="button button-pill ghost btn" href="#faq">Read the FAQ</a></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="faq" aria-labelledby="faq-title">
+        <div class="wrap faq">
+          <div class="head">
+            <p class="kicker">FAQ</p>
+            <h2 id="faq-title">Questions, answered plainly.</h2>
+          </div>
+          <details><summary>Does it send anything without asking?</summary><p class="muted">No. In this fictional product every outgoing message waits for your approval.</p></details>
+          <details><summary>Can I see what it remembers?</summary><p class="muted">Yes. Each note lists the run it came from and can be removed.</p></details>
+          <details><summary>Does it work on my phone?</summary><p class="muted">The layout is designed for desktop and pocket screens alike.</p></details>
+          <details><summary>Is Bluefold a real product?</summary><p class="muted">No. Bluefold is a sample context for an Aura design flavor.</p></details>
+        </div>
+      </section>
+
+      <section class="wrap" aria-labelledby="cta-title">
+        <div class="field cta">
+          <h2 id="cta-title">Clear your desk by lunch.</h2>
+          <p class="lead">Write one brief and see how a calm handoff feels.</p>
+          <div class="actions"><a class="button button-fill btn" href="#brief">Write a brief</a></div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <div class="foot">
+          <div>
+            <a class="logo" href="#top"><i class="mark" aria-hidden="true"></i>Bluefold</a>
+            <p class="muted">A fictional demo for the Bluefold flavor of Aura.</p>
+          </div>
+          <div><p class="kicker">Product</p><ul><li><a href="#features">How it works</a></li><li><a href="#runs">Run log</a></li></ul></div>
+          <div><p class="kicker">Plans</p><ul><li><a href="#pricing">Pricing</a></li><li><a href="#brief">Write a brief</a></li></ul></div>
+          <div><p class="kicker">Help</p><ul><li><a href="#faq">FAQ</a></li><li><a href="#top">Back to top</a></li></ul></div>
+        </div>
+        <p class="note legal">Sample content. Metrics and prices are examples.</p>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        var nav = document.querySelector(".nav");
+        var toggle = document.querySelector(".menu-toggle");
+        toggle.addEventListener("click", function () {
+          var open = toggle.getAttribute("aria-expanded") !== "true";
+          toggle.setAttribute("aria-expanded", String(open));
+          nav.dataset.open = String(open);
+        });
+        nav.querySelectorAll(".nav-links a").forEach(function (link) {
+          link.addEventListener("click", function () {
+            toggle.setAttribute("aria-expanded", "false");
+            nav.dataset.open = "false";
+          });
+        });
+
+        var form = document.getElementById("brief-form");
+        var status = document.getElementById("form-status");
+        var messages = {
+          task: "Name the task in at least 4 characters.",
+          details: "Add at least 10 characters of detail."
+        };
+        function check(field) {
+          var error = document.getElementById(field.id + "-error");
+          var valid = field.checkValidity();
+          field.setAttribute("aria-invalid", String(!valid));
+          error.textContent = valid ? "" : messages[field.id];
+          return valid;
+        }
+        form.addEventListener("submit", function (event) {
+          event.preventDefault();
+          var fields = [form.elements.namedItem("task"), form.elements.namedItem("details")];
+          var firstInvalid = null;
+          fields.forEach(function (field) {
+            if (!check(field) && !firstInvalid) firstInvalid = field;
+          });
+          if (firstInvalid) {
+            status.textContent = "";
+            firstInvalid.focus();
+            return;
+          }
+          status.textContent = "Brief looks complete. This demo has no backend, so nothing was sent.";
+        });
+        [form.elements.namedItem("task"), form.elements.namedItem("details")].forEach(function (field) {
+          field.addEventListener("input", function () {
+            if (field.getAttribute("aria-invalid") === "true") check(field);
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>
