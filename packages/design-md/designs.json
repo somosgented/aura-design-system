@@ -613,6 +613,83 @@
           "gray-12": "#efedf1"
         }
       }
+    },
+    {
+      "slug": "bluefold",
+      "name": "Bluefold",
+      "description": "A white, quiet canvas with tight dark headlines, ink pills, a cream panel and a light desktop-app mockup, plus a folded-square mark. An Aura flavor for assistant apps, helper crews and desktop agent products.",
+      "design": "designs/bluefold/DESIGN.md",
+      "theme": "designs/bluefold/theme.css",
+      "result": "designs/bluefold/result.html",
+      "fonts": {
+        "sans": "Inter",
+        "display": "Inter Tight",
+        "label": "Inter",
+        "href": "https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600&family=Inter:wght@400;500;600&display=swap"
+      },
+      "hero": "paper",
+      "headingWeight": 500,
+      "radius": {
+        "button": "9999px",
+        "input": "13px",
+        "surface": "19.5px"
+      },
+      "tokens": {
+        "light": {
+          "accent-contrast": "#fff",
+          "accent-1": "#fcfcfc",
+          "gray-1": "#fcfcfc",
+          "accent-2": "#f9f9f9",
+          "gray-2": "#f9f9f9",
+          "accent-3": "#f0f0f0",
+          "gray-3": "#f0f0f0",
+          "accent-4": "#e8e8e8",
+          "gray-4": "#e8e8e8",
+          "accent-5": "#e1e1e1",
+          "gray-5": "#e1e1e1",
+          "accent-6": "#d9d9d9",
+          "gray-6": "#d9d9d9",
+          "accent-7": "#cecece",
+          "gray-7": "#cecece",
+          "accent-8": "#bbb",
+          "gray-8": "#bbb",
+          "accent-9": "#111",
+          "gray-9": "#8c8c8c",
+          "accent-10": "#2a2a2a",
+          "gray-10": "#818181",
+          "accent-11": "#636363",
+          "gray-11": "#636363",
+          "accent-12": "#1f1f1f",
+          "gray-12": "#1f1f1f"
+        },
+        "dark": {
+          "accent-contrast": "#311921",
+          "accent-1": "#0d0d0d",
+          "gray-1": "#0d0d0d",
+          "accent-2": "#181818",
+          "gray-2": "#181818",
+          "accent-3": "#212121",
+          "gray-3": "#222",
+          "accent-4": "#292929",
+          "gray-4": "#292929",
+          "accent-5": "#303030",
+          "gray-5": "#313131",
+          "accent-6": "#3a3a3a",
+          "gray-6": "#3a3a3a",
+          "accent-7": "#474747",
+          "gray-7": "#484848",
+          "accent-8": "#606060",
+          "gray-8": "#606060",
+          "accent-9": "#ededed",
+          "gray-9": "#6e6e6e",
+          "accent-10": "#e4e4e4",
+          "gray-10": "#7b7b7b",
+          "accent-11": "#b3b3b3",
+          "gray-11": "#b4b4b4",
+          "accent-12": "#ededed",
+          "gray-12": "#eee"
+        }
+      }
     }
   ]
 }
