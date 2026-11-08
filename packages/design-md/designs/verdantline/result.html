@@ -177,9 +177,16 @@ a { color: inherit; }
 .repo-card p { font-size: 0.83rem; color: var(--gray-11); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .repo-star { display: inline-flex; align-items: center; gap: 4px; font-size: 0.78rem; color: var(--gray-9); margin-top: calc(var(--aura) * 0.75); }
 
-.transition-band { padding: calc(var(--aura) * 6) 0; }
-.transition-rule { height: 2px; background: var(--transition-rule); margin-bottom: calc(var(--aura) * 3); }
-.transition-band h2 { text-align: center; }
+.transition-scene { position: relative; padding: calc(var(--aura) * 8) 0 calc(var(--aura) * 6); overflow: hidden; }
+.transition-peek { position: absolute; top: 0; left: 50%; transform: translate(-50%, 42%); width: calc(var(--aura) * 7); height: calc(var(--aura) * 7); z-index: 2; pointer-events: none; }
+.transition-peek svg { width: 100%; height: 100%; display: block; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.12)); }
+.transition-rule { height: 3px; background: var(--transition-rule); margin: 0; position: relative; z-index: 1; }
+.transition-grid { position: absolute; inset: calc(var(--aura) * 4) 0 0; background-image: linear-gradient(var(--gray-4) 1px, transparent 1px), linear-gradient(90deg, var(--gray-4) 1px, transparent 1px); background-size: calc(var(--aura) * 2) calc(var(--aura) * 2); opacity: 0.55; pointer-events: none; }
+.dark .transition-grid { opacity: 0.25; }
+.transition-pixel { position: absolute; width: calc(var(--aura) * 0.5); height: calc(var(--aura) * 0.5); border-radius: 1px; pointer-events: none; }
+.transition-pixel.pa { left: 12%; top: 28%; background: #7ee787; box-shadow: calc(var(--aura) * 0.5) 0 0 0 #3fb950, 0 calc(var(--aura) * 0.5) 0 0 #8957e5, calc(var(--aura) * 0.5) calc(var(--aura) * 0.5) 0 0 #8957e5; }
+.transition-pixel.pb { right: 14%; top: 32%; background: #ffa657; box-shadow: calc(var(--aura) * -0.5) 0 0 0 #3fb950, 0 calc(var(--aura) * 0.5) 0 0 #58a6ff, calc(var(--aura) * -0.5) calc(var(--aura) * 0.5) 0 0 #1f6feb; }
+.transition-scene .h2 { text-align: center; position: relative; z-index: 3; margin-top: calc(var(--aura) * 4); }
 
 .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: calc(var(--aura) * 2); padding: calc(var(--aura) * 3); border-radius: calc(var(--aura) * 1.5); background: var(--band); }
 .stat { text-align: center; }
@@ -191,7 +198,7 @@ a { color: inherit; }
 .head.c .lead { margin-inline: auto; }
 .head .lead { margin-top: calc(var(--aura) * 1); }
 
-.demo-workbench { display: grid; grid-template-columns: calc(var(--aura) * 18) 1fr; gap: 0; border-radius: calc(var(--aura) * 1.5); border: 1px solid var(--vignette-border); background: var(--vignette-bg); overflow: hidden; min-height: calc(var(--aura) * 38); margin-bottom: calc(var(--aura) * 4); }
+.demo-workbench { display: grid; grid-template-columns: calc(var(--aura) * 18) 1fr; gap: 0; border-radius: calc(var(--aura) * 1.5); border: 1px solid var(--vignette-border); border-left: calc(var(--aura) * 0.6) solid var(--ui-green); border-bottom: calc(var(--aura) * 0.6) solid var(--ui-green); background: var(--vignette-bg); overflow: hidden; min-height: calc(var(--aura) * 38); margin-bottom: calc(var(--aura) * 4); box-shadow: 4px 6px 0 rgba(31, 136, 61, 0.15); }
 .wb-sidebar { background: var(--ui-sidebar); padding: calc(var(--aura) * 1.5); display: flex; flex-direction: column; border-right: 1px solid var(--vignette-border); }
 .wb-nav { display: flex; flex-direction: column; gap: 2px; margin-bottom: calc(var(--aura) * 2); }
 .wb-nav-item { display: flex; align-items: center; gap: calc(var(--aura) * 0.5); padding: calc(var(--aura) * 0.5) calc(var(--aura) * 0.75); border-radius: 6px; font-size: 0.83rem; font-weight: 500; color: var(--gray-11); text-decoration: none; }
@@ -437,6 +444,23 @@ footer { padding: calc(var(--aura) * 5) 0 calc(var(--aura) * 3); border-top: var
 <symbol id="lock" viewBox="0 0 15 15"><rect x="3" y="7" width="9" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M5 7V5a2.5 2.5 0 015 0v2" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></symbol>
 <symbol id="code" viewBox="0 0 15 15"><path d="M4.5 5L2 7.5 4.5 10M10.5 5L13 7.5 10.5 10M8.5 3l-2 9" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 <symbol id="spark" viewBox="0 0 16 16"><path d="M8 1c.5 3 2.5 5 5.5 5.5-3 .5-5 2.5-5.5 5.5-.5-3-2.5-5-5.5-5.5 3-.5 5-2.5 5.5-5.5z" fill="currentColor"/></symbol>
+<symbol id="vl-mascot" viewBox="0 0 96 96">
+<ellipse cx="48" cy="58" rx="34" ry="28" fill="#1a1428"/>
+<ellipse cx="48" cy="52" rx="28" ry="24" fill="url(#vl-face)"/>
+<path d="M24 38 Q20 20 32 14 Q48 6 64 14 Q76 20 72 38" fill="#1a1428"/>
+<circle cx="36" cy="48" r="8" fill="#6e40c9"/>
+<circle cx="60" cy="48" r="8" fill="#6e40c9"/>
+<circle cx="38" cy="46" r="3" fill="#fff"/>
+<circle cx="62" cy="46" r="3" fill="#fff"/>
+<ellipse cx="48" cy="58" rx="6" ry="4" fill="#2d2040"/>
+<path d="M44 62 Q48 66 52 62" stroke="#ff8fab" stroke-width="2" fill="none" stroke-linecap="round"/>
+<defs>
+<linearGradient id="vl-face" x1="48" y1="30" x2="48" y2="70" gradientUnits="userSpaceOnUse">
+<stop stop-color="#ffc8a8"/>
+<stop offset="1" stop-color="#f4a4c8"/>
+</linearGradient>
+</defs>
+</symbol>
 <symbol id="duck" viewBox="0 0 64 64">
 <ellipse cx="32" cy="38" rx="20" ry="16" fill="#FFD700" opacity="0.9"/>
 <ellipse cx="32" cy="38" rx="18" ry="14" fill="#FFA500" opacity="0.7"/>
@@ -684,9 +708,16 @@ footer { padding: calc(var(--aura) * 5) 0 calc(var(--aura) * 3); border-top: var
 </div>
 </section>
 
-<section class="transition-band wrap" aria-labelledby="platform-title">
+<section class="transition-scene" aria-labelledby="platform-title">
+<div class="transition-peek" aria-hidden="true"><svg><use href="#vl-mascot"/></svg></div>
 <div class="transition-rule"></div>
+<div class="transition-grid" aria-hidden="true">
+<span class="transition-pixel pa"></span>
+<span class="transition-pixel pb"></span>
+</div>
+<div class="wrap">
 <h2 class="h2" id="platform-title">Verdantline Platform</h2>
+</div>
 </section>
 
 <section class="band sec" id="features" aria-labelledby="features-title">
@@ -762,6 +793,18 @@ footer { padding: calc(var(--aura) * 5) 0 calc(var(--aura) * 3); border-top: var
 <h3 class="h3">Codespaces</h3>
 <p>Cloud-powered dev environments ready in seconds, right from your browser.</p>
 <a class="btn btn-soft" href="#demo">Explore Codespaces</a>
+</article>
+<article class="card">
+<div class="vig">
+<div class="ui-doc" aria-hidden="true">
+<div class="ui-row"><span class="ui-icon" style="background:var(--ui-green)"></span><b>sprint-24 release</b><span class="ui-badge bg-green">On track</span></div>
+<div class="ui-row"><span class="ui-icon" style="background:var(--ui-blue)"></span><b>Design system sync</b><span>Due Friday</span></div>
+<div class="ui-row"><span class="ui-icon" style="background:var(--ui-orange)"></span><b>API migration</b><span class="ui-badge bg-orange">3 owners</span></div>
+</div>
+</div>
+<h3 class="h3">Projects</h3>
+<p>Plan roadmaps, track milestones, and keep delivery visible across teams.</p>
+<a class="btn btn-soft" href="#demo">Explore Projects</a>
 </article>
 </div>
 </div>
