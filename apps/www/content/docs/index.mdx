@@ -8,7 +8,7 @@ Aura is an **agentic design system** for product UI. People browse this site. Co
 
 You own the code. Aura is distributed in shadcn mode: the CLI copies component source into your app. Registry items are addressed as `@aura/button`, `@aura/card`, and the rest of the catalog.
 
-`DESIGN.md` holds the narrative spec and the long tables. The Aura skill at `.agents/skills/aura/` holds the design guardrails. Always-on process rules live in `.agents/rules/`. Cursor reads that directory directly. Other skills are the procedures. When they disagree, follow `DESIGN.md` and the component source, then fix the page that drifted.
+`DESIGN.md` holds the narrative spec and the long tables. The Aura skill at `.agents/skills/aura/` holds the design guardrails. Always-on process rules live in `.agents/rules/`. Every agent finds it through the root `AGENTS.md`. Other skills are the procedures. When they disagree, follow `DESIGN.md` and the component source, then fix the page that drifted.
 
 ## What to open
 
@@ -80,7 +80,7 @@ The harness is what an agent reads before it edits. Aura's own files and skills 
 | [Monorepo skills](#monorepo-skills) | How to edit this repository | `.agents/skills/aura-constraints`, `.agents/skills/aura-verification` |
 | [Poteto mode](#poteto-mode) | Multi-step engineering playbooks | Marketplace plugin. `/setup-pstack` and `/poteto-mode` are not in this repo |
 | [gdp-ts](#gdp-ts) | Proof-carrying authorization | `aura blueprint` installs `@gdp-ts/core` and the `rauchg/gdp-ts` skill on Node and TypeScript projects |
-| [Feature map](#feature-map) | The only project note | `wiki/obsidian-*/Feature-Map/`, skill `update-feature-map` |
+| [Feature map](#feature-map) | The only project note | `wiki/obsidian-*/02-Documentación/Feature-Map/`, skill `update-feature-map` |
 | [Brand images](#brand-images) | Gemini images from the vault identity | Consumer skill `generate-brand-images` |
 | [Audits](#audits) | Reviews before a PR: lint, Sonar, Bruno, gdp-ts, and optional third-party skills | [Audits](/docs/audits) |
 | Sonar and Bruno | Code quality on every stack Sonar can scan, and the API collection on backends | `aura blueprint` on any project |
@@ -93,7 +93,7 @@ The harness is what an agent reads before it edits. Aura's own files and skills 
 | Root [`AGENTS.md`](https://github.com/somosgented/aura-design-system/blob/canary/AGENTS.md) | Agents in this monorepo. Public APIs, stories, tokens, and the boundary of the repo. Consumer apps start at `DESIGN.md`. |
 | Root `DESIGN.md` | Everyone. Narrative source of truth: color steps, the 13px grid, type, icons, motion. `@aura/rules` installs it. |
 | `.agents/skills/aura/` | Agents, when the task is UI. `SKILL.md` plus `rules/*.md`, same layout as the shadcn skill. `@aura/skill-aura` installs it. Also: `pnpm dlx skills add somosgented/aura-design-system --skill aura`. |
-| `.agents/rules/*.mdc` | Agents, on every edit. Always-on process rules only: feature map, no comments, and the `DESIGN.md` pointer. Cursor reads this directory directly. |
+| `.agents/rules/*.mdc` | Agents, on every edit. Always-on process rules only: feature map, no comments, and the `DESIGN.md` pointer. Every agent finds it through the root `AGENTS.md`. |
 | [Foundations](/docs/foundations), [Aura skill](/docs/rules/aura-skill), and [Rules](/docs/rules) | People reading the same constraints on this site. |
 
 Blueprint also installs the upstream shadcn skill at `.agents/skills/shadcn` (`pnpm dlx skills add shadcn/ui`). Use it for the CLI, registry search, and presets. The Aura skill wins on icons, forms, spacing, typography, and restyle.
@@ -137,9 +137,11 @@ Practice and the starter files: [gdp-ts](/docs/gdp-ts).
 
 ### Feature map
 
-The feature map is the only project documentation. One short note per feature lives under `wiki/obsidian-*/Feature-Map/`, shown as a table by `Feature-Map.base`. The folder suffix is the project name with its first segment stripped, read from `package.json`, `pyproject.toml`, `go.mod`, `pom.xml`, `composer.json`, `Cargo.toml`, or the folder. Aura's vault is `wiki/obsidian-aura-design-project/Feature-Map/`.
+The feature map is the only project documentation. One short note per feature lives under `wiki/obsidian-*/02-Documentación/Feature-Map/`, shown as a table by `Feature-Map.base`. The folder suffix is the project name with its first segment stripped, read from `package.json`, `pyproject.toml`, `go.mod`, `pom.xml`, `composer.json`, `Cargo.toml`, or the folder. Aura's vault is `wiki/obsidian-aura-design-project/02-Documentación/Feature-Map/`.
 
-The rule is `.agents/rules/feature-map.mdc`. Cursor reads that directory directly. The procedure is skill `update-feature-map`. When you open or update a PR, update the note of each feature that PR changes, inside that PR. Code is the source of truth while you work. Do not keep a progress log, and do not write secrets into notes. Name environment variables only.
+The rule is `.agents/rules/feature-map.mdc`. Every agent finds it through the root `AGENTS.md`. The procedure is skill `update-feature-map`. When you open or update a PR, update the note of each feature that PR changes, inside that PR. Code is the source of truth while you work. Do not keep a progress log, and do not write secrets into notes. Name environment variables only.
+
+The vault has four sections: `00-General/` for product context, `01-Identidad/` for brand and image identity, `02-Documentación/` for the feature map, and `03-Configuración/` for services and environment variable names. Agents write only the feature map, at PR time, unless the user asks. `.obsidian/` is local editor state and is git-ignored.
 
 Blueprint creates the vault, the rule, and the skill on every stack, including Python, Go, Java, .NET, PHP, Ruby, and Rust projects.
 
@@ -147,7 +149,7 @@ Blueprint creates the vault, the rule, and the skill on every stack, including P
 
 `generate-brand-images` is the Gemini skill in `@aura/skills`. Use it when a landing page, hero, or marketing page needs images that match the product identity.
 
-It reads `wiki/obsidian-*/Bootstrap.md` and `01-Identity/`. Image identity is ready only when the notes name a medium, a palette and lighting, composition or motifs, and exclusions. The script reads `GOOGLE_API_KEY` or `GEMINI_API_KEY` from `.env`. Name those variables. Do not print or commit the value. Blueprint writes a starter `01-Identity/Image-Identity.md` and the skill.
+It reads `wiki/obsidian-*/01-Identidad/`. Image identity is ready only when the notes name a medium, a palette and lighting, composition or motifs, and exclusions. The script reads `GOOGLE_API_KEY` or `GEMINI_API_KEY` from `.env`. Name those variables. Do not print or commit the value. Blueprint writes a starter `01-Identidad/Image-Identity.md` and the skill.
 
 ### Audits
 

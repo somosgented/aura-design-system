@@ -2,8 +2,9 @@
   "name": "@aura/design-md",
   "version": "0.0.0",
   "private": true,
-  "description": "DESIGN.md and token previews for AI agents (Aura Design System)",
+  "description": "Aura DESIGN.md gallery: theme flavors agents can apply to any Aura project",
   "scripts": {
+    "generate": "tsx scripts/generate-designs.ts",
     "build": "node scripts/prepare-public.cjs"
   },
   "license": "MIT",
@@ -12,5 +13,8 @@
     "type": "git",
     "url": "https://github.com/somosgented/aura-design-system.git",
     "directory": "packages/design-md"
+  },
+  "devDependencies": {
+    "yaml": "^2.9.1"
   }
 }

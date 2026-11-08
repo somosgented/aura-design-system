@@ -15,7 +15,7 @@ Verify **inside this monorepo**. Do not invent Famity Care / Labelo E2E, mobile 
 | Change type | Minimum verification |
 | --- | --- |
 | Component API / behavior | Matching Ladle story compiles; run focused registry tests if present |
-| Tokens / CSS foundation | Visual check via Ladle or `packages/design-md` previews; no bypass of tokens |
+| Tokens / CSS foundation | Visual check via Ladle or the `packages/design-md` flavor gallery; no bypass of tokens |
 | Registry JSON / docs generation | Run the relevant generate/build script; confirm outputs under `apps/www` / `public/r` |
 | `apps/www` UI / docs copy | `pnpm lint` from `apps/www`; page loads locally if you touched routes |
 | Agent docs / skills / rules only | Path review + link sanity; no app runtime required |

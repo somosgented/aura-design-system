@@ -135,7 +135,7 @@ pnpm registry:build
 
 ### Skill: prompt → identity-aligned landing images
 
-`generate-brand-images` reads the blueprint vault's `01-Identity` notes, asks for missing image direction before generation, and batches all required landing assets through Gemini. The generated project command reads `GOOGLE_API_KEY` or `GEMINI_API_KEY` directly from root `.env`:
+`generate-brand-images` reads the blueprint vault's `01-Identidad` notes, asks for missing image direction before generation, and batches all required landing assets through Gemini. The generated project command reads `GOOGLE_API_KEY` or `GEMINI_API_KEY` directly from root `.env`:
 
 ```bash
 pnpm ai:image -- --manifest tmp/aura-image-plan.json
@@ -201,7 +201,7 @@ Aura already *is* a registry. With shadcn MCP enabled, Cursor can list `@aura/*`
 
 Manual checklist:
 
-1. Add `.cursor/mcp.json` and enable the shadcn server.
+1. Add the MCP config for your agent (`.cursor/mcp.json`, `.mcp.json`, or `.vscode/mcp.json`) and enable the shadcn server.
 2. Install root `DESIGN.md`, the always-on process rules, and the Aura skill (`pnpm dlx shadcn@latest add @aura/rules @aura/skill-aura`).
 3. Install procedure skills with `pnpm dlx shadcn@latest add @aura/skills`.
 4. Install Aura design lint: see [Lint](/docs/lint) (`@aura/eslint-shadcn-lint` + `@shadcn/lint`).

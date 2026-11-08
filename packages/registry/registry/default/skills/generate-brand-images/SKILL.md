@@ -10,7 +10,7 @@ Generate image assets from the product identity in the blueprint Obsidian vault.
 ## 1. Read identity before designing
 
 1. Locate the vault at `wiki/obsidian-*/`.
-2. Read the notes in `01-Identity/`, starting with `Image-Identity.md`.
+2. Read the notes in `01-Identidad/`, starting with `Image-Identity.md`.
 3. Treat image identity as ready only when the notes define at least:
    - visual medium or photographic/illustration style;
    - palette and lighting;
@@ -19,7 +19,7 @@ Generate image assets from the product identity in the blueprint Obsidian vault.
 
 A scaffolded `Image-Identity.md` with `status: needs-definition`, placeholders, or generic product copy is not a defined image identity.
 
-If image identity is not ready, stop before generating and ask focused questions about the missing dimensions. After the user answers, update `01-Identity/Image-Identity.md`, set `status: ready`, and continue.
+If image identity is not ready, stop before generating and ask focused questions about the missing dimensions. After the user answers, update `01-Identidad/Image-Identity.md`, set `status: ready`, and continue.
 
 ## 2. Check image generation access
 
@@ -49,7 +49,7 @@ Create `tmp/aura-image-plan.json`:
 
 ```json
 {
-  "identity": "wiki/obsidian-project/01-Identity/Image-Identity.md",
+  "identity": "wiki/obsidian-project/01-Identidad/Image-Identity.md",
   "images": [
     {
       "prompt": "Wide hero scene with the primary subject weighted right and clean negative space left",
@@ -84,7 +84,7 @@ pnpm ai:image -- --manifest tmp/aura-image-plan.json
 For one image:
 
 ```bash
-pnpm ai:image -- --identity wiki/obsidian-project/01-Identity/Image-Identity.md --prompt "Centered product still life" --output public/generated/product --aspect 1:1
+pnpm ai:image -- --identity wiki/obsidian-project/01-Identidad/Image-Identity.md --prompt "Centered product still life" --output public/generated/product --aspect 1:1
 ```
 
 The script uses `gemini-2.5-flash-image`, creates parent directories, and selects the extension from the returned MIME type. Read its `saved ...` lines before wiring paths into code.

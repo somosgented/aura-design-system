@@ -52,12 +52,14 @@ Check and record **present / missing** for each:
 | --- | --- |
 | Aura `components.json` | File exists; `registries["@aura"]` points at Aura registry JSON |
 | `DESIGN.md` (root) | File at project root (or install via `@aura/rule-design-md` / `@aura/design-md`) |
-| Agent rules | Always-on process rules in `.agents/rules/*.mdc`. Cursor reads that directory directly. Design guardrails in `.agents/skills/aura/` |
+| Agent rules | Always-on process rules in `.agents/rules/*.mdc`. Every agent finds it through the root `AGENTS.md`. Design guardrails in `.agents/skills/aura/` |
 | Cursor skills | `.agents/skills/port-component-to-aura/SKILL.md` and `.agents/skills/generate-brand-images/SKILL.md` |
 | Third-party audits | Not installed by Aura. Older Emil and Vercel copies under `.cursor/skills/` and `.agents/skills/` are gone after blueprint. See [Audits](/docs/audits) |
-| Image identity | `wiki/obsidian-*/01-Identity/Image-Identity.md`; `status: ready` only when style, palette, composition/motifs, and exclusions are concrete |
+| Image identity | `wiki/obsidian-*/01-Identidad/Image-Identity.md`; `status: ready` only when style, palette, composition/motifs, and exclusions are concrete |
 | Gemini image env | `.env.example` names `GOOGLE_API_KEY`; only check whether `.env` has `GOOGLE_API_KEY` or `GEMINI_API_KEY`, never print its value |
-| shadcn MCP | `.cursor/mcp.json` (or user MCP) with `shadcn` → `npx shadcn@latest mcp` |
+| `AGENTS.md` entry | Root `AGENTS.md` has the block between `<!-- aura:agents:start -->` and `<!-- aura:agents:end -->`; `CLAUDE.md` has `@AGENTS.md` |
+| Leftover `.cursor` agent files | `.cursor/rules/` and `.cursor/skills/` are absent, or each leftover is a differing duplicate to merge |
+| shadcn MCP | The MCP config of the agent in use has `shadcn` → `npx shadcn@latest mcp`. See C |
 | `@shadcn/lint` | Dep `@shadcn/lint` present; `eslint.config.*` registers `shadcn/*` rules; optional `eslint.aura-shadcn.mjs`. Policy text is `.agents/skills/aura/rules/lint.md` |
 | pstack / `/poteto-mode` | Marketplace plugin **pstack** enabled for this Cursor workspace **or** project has a usable poteto-mode entry (e.g. `.agents/skills/poteto-mode/SKILL.md` or `AGENTS.md` explicitly requiring `/poteto-mode`). Record: `plugin` / `repo-skill` / `missing` |
 | pstack model setup (optional) | User-level `~/.cursor/rules/pstack-models.mdc` exists after `/setup-pstack` — note present/missing; do **not** fail the Aura blueprint if missing |
@@ -111,9 +113,9 @@ pnpm dlx skills add somosgented/aura-design-system --skill aura
 - `@aura/rule-design-md` → rule + root `DESIGN.md`
 - `@aura/eslint-shadcn-lint` → `eslint.aura-shadcn.mjs` (see **D** below). Lint policy text is in the Aura skill
 
-Cursor reads project rules from `.agents/rules`. `aura blueprint` writes them there. If `.cursor/rules` is a symlink, blueprint removes it. If it is still a real directory, blueprint moves each file into `.agents/rules/` when that name is not already there, then removes the directory.
+`.agents/` is the one home for agent files. `aura blueprint` writes rules to `.agents/rules/`, skills to `.agents/skills/`, and a managed block in the root `AGENTS.md` that points every agent there, plus `CLAUDE.md` with `@AGENTS.md`. It moves `.cursor/rules/*` and `.cursor/skills/*` into `.agents/`. A differing duplicate stays in `.cursor/skills/` with a warning: merge it into `.agents/skills/` by hand, then delete it. Never write a new rule or skill under `.cursor/`.
 
-`.agents/skills/aura/SKILL.md` is the Aura design skill. Its `rules/*.md` files are references that skill links to, same as `.agents/skills/shadcn/`. Cursor does not apply those markdown files every turn. Always-on process rules stay in `.agents/rules/*.mdc`. `@aura/skills` installs procedure skills (`port-component-to-aura`, `verify-aura-ui`, `aura-forms`) to `.agents/skills/`.
+`.agents/skills/aura/SKILL.md` is the Aura design skill. Its `rules/*.md` files are references that skill links to, same as `.agents/skills/shadcn/`. No agent applies those markdown files every turn. Always-on process rules stay in `.agents/rules/*.mdc`. `@aura/skills` installs procedure skills (`port-component-to-aura`, `verify-aura-ui`, `aura-forms`) to `.agents/skills/`.
 
 If the feature map, `Image-Identity.md`, or `pnpm ai:image` is missing, scaffold those project capabilities without rewriting the Aura theme:
 
@@ -133,7 +135,15 @@ Ensure `components.json` has:
 
 #### C. MCP config (create if missing)
 
-Write **project** `.cursor/mcp.json` if absent:
+MCP config is the one agent file that stays in the tool's folder, because each client reads its own path. Write the project config for the agent in use, if absent:
+
+| Agent | Project config |
+| --- | --- |
+| Cursor | `.cursor/mcp.json` |
+| Claude Code | `.mcp.json` |
+| VS Code / Copilot | `.vscode/mcp.json` (`servers` instead of `mcpServers`) |
+| Codex | `~/.codex/config.toml` (user level) |
+
 
 ```json
 {
@@ -148,8 +158,8 @@ Write **project** `.cursor/mcp.json` if absent:
 
 Then tell the user (you cannot finish this in the terminal):
 
-1. Restart Cursor or reload MCP.
-2. Settings → MCP → enable **shadcn** (green dot).
+1. Restart the agent or reload MCP.
+2. Enable **shadcn** in the client's MCP settings.
 
 #### D. `@shadcn/lint` (Aura Tailwind policy for agents)
 
@@ -252,8 +262,9 @@ Confirm after installs:
 
 - `.agents/skills/aura/SKILL.md` exists when `@aura/skill-aura` or `skills add` was used
 - `.agents/rules/` has the always-on process rules (`feature-map`, `no-comments`, `design-md`) when `@aura/rules` was installed
-- `.cursor/rules` is absent (Cursor reads `.agents/rules` directly)
-- `.agents/rules/feature-map.mdc`, `.agents/rules/no-comments.mdc`, `.agents/skills/update-feature-map/SKILL.md`, and `wiki/obsidian-*/Feature-Map/Feature-Map.base` exist on every stack
+- `.cursor/rules` and `.cursor/skills` are absent, or the only leftovers are differing duplicates named in the report
+- Root `AGENTS.md` has the `aura:agents` block and `CLAUDE.md` has `@AGENTS.md`
+- `.agents/rules/feature-map.mdc`, `.agents/rules/no-comments.mdc`, `.agents/skills/update-feature-map/SKILL.md`, and `wiki/obsidian-*/02-Documentación/Feature-Map/Feature-Map.base` exist on every stack
 - Sonar: `sonar-project.properties` plus `sonar:*` scripts on Node, or `scripts/sonar.sh` on Python, Go, Java/Kotlin, PHP, and Ruby; `scripts/sonar.sh` without properties on .NET; nothing on Rust or unknown stacks
 - Backends: `bruno/bruno.json`, `bruno/environments/local.bru`, and `.agents/rules/bruno.mdc` exist, and `.gitignore` has `bruno/.env`
 - The checks below about components, forms, images, lint, MCP, and gdp-ts apply to JavaScript projects only
@@ -263,11 +274,12 @@ Confirm after installs:
 - `.cursor/skills/` and `.agents/skills/` do not contain `emil-design-eng`, `react-best-practices`, or `vercel-react-best-practices` unless someone installed that audit for this task and has not committed it
 - `.agents/skills/aura/rules/forms.md`, `.agents/skills/aura-forms/SKILL.md`, and the `form`, `field`, `use-dynamic-form`, and `web-validation` registry items exist
 - `.agents/skills/shadcn/SKILL.md` exists (or document the gap)
-- `wiki/obsidian-*/01-Identity/Image-Identity.md` and `wiki/obsidian-*/Feature-Map/Feature-Map.base` exist
+- `wiki/obsidian-*/` has `00-General/`, `01-Identidad/`, `02-Documentación/Feature-Map/Feature-Map.base`, and `03-Configuración/`; frontends also have `01-Identidad/Image-Identity.md`
+- `.gitignore` has `wiki/**/.obsidian/` and `git ls-files wiki` lists no `.obsidian/` file (otherwise run `git rm -r --cached wiki/*/.obsidian`)
 - `package.json` has `ai:image` and no `brain:progress`; `.env.example` names `GOOGLE_API_KEY`
 - Root `DESIGN.md` exists (or user declined design-md)
 - `components.json` includes `@aura`
-- `.cursor/mcp.json` has shadcn MCP (user must enable in UI)
+- The agent's MCP config has the shadcn server (user must enable it in the client)
 - `@shadcn/lint` installed; `eslint.config.*` spreads `createAuraShadcnLintConfig` (or equivalent); `eslint.aura-shadcn.mjs` present when using the registry item
 - pstack available: `/poteto-mode` resolves in this environment **or** documented missing with reason (local plugin / cloud gap / user skipped)
 - If installed (or install was offered): agent can state that `/setup-pstack` was offered or completed
@@ -279,7 +291,7 @@ Optional smoke: `pnpm dlx shadcn@latest add @aura/button` only if the user asked
 
 - **Consumer app:** follow the skill `port-component-to-aura` in **project** mode — write into `@/components` aliases; do **not** create Ladle/registry metadata.
 - **Aura monorepo:** skill **registry** mode — component + Ladle `Default` story + `metadata/{kebab}.yml` + `registry:generate` / `registry:build`.
-- **Landing with images:** follow `generate-brand-images`. Read the blueprint `01-Identity` notes first. If image identity is undefined, ask focused identity questions and update `Image-Identity.md` before generating.
+- **Landing with images:** follow `generate-brand-images`. Read the blueprint `01-Identidad` notes first. If image identity is undefined, ask focused identity questions and update `Image-Identity.md` before generating.
 - **Gemini access:** the bundled command reads `GOOGLE_API_KEY` or `GEMINI_API_KEY` directly from root `.env`. If absent, ask whether the user wants to add a key, use agent-native image generation when available, or continue with placeholders; never fabricate a key.
 - **Batch landing flow:** inspect the landing, create one manifest for the necessary image set, run `pnpm ai:image -- --manifest <path>`, integrate accepted local assets, then record their paths in the wiki.
 - **Mobile form UX (critical):** `input` / `textarea` / `select` font-size **MUST be ≥ 17px**. Never put `text-sm` or `text-xs` on editable fields—iOS Safari zooms on focus below that size. Keep `html { font-size: 17px; }` and the global floor in `styles/main.css` (`font-size: max(1rem, 17px)`). See the [Aura skill](/docs/rules/aura-skill) and `DESIGN.md`.
@@ -305,14 +317,15 @@ Optional smoke: `pnpm dlx shadcn@latest add @aura/button` only if the user asked
 | .agents/skills/aura | … | … | … |
 | .agents/rules | … | … | … |
 | .agents/skills | … | … | … |
-| Feature map + agent rules | … | … | … |
+| Feature map + agent rules + vault sections | … | … | … |
 | Sonar (when the stack is scannable) | … | … | … |
 | Bruno (backends) | … | … | … |
 | Third-party audits | … | … | … |
 | Forms stack (forms.md, aura-forms, components) | … | … | … |
 | Blueprint image identity | … | … | … |
 | Gemini image command | … | … | … |
-| .cursor/mcp.json | … | … | … |
+| AGENTS.md entry + .cursor migration | … | … | … |
+| MCP config | … | … | … |
 | @shadcn/lint + Aura eslint fragment | … | … | … |
 | pstack / poteto-mode | … | … | … |
 | pstack-models setup (optional) | … | … | … |

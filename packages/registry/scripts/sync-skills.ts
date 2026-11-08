@@ -13,6 +13,7 @@ const REGISTRY_SKILLS_PATH = path.join(__dirname, "../registry/default/skills");
 const SKILL_DIRS = [
   "aura-forms",
   "generate-brand-images",
+  "generate-design-md",
   "port-component-to-aura",
   "update-feature-map",
   "verify-aura-ui",

@@ -20,7 +20,7 @@ Define this product's source-of-truth direction for photography, illustration, a
 - Text or logo policy:
 
 ## Context
-- Related: `Feature-Map/`
+- Related: `02-Documentación/Feature-Map/`
 - Generated assets: `public/generated/`
 - Generator: `.agents/skills/generate-brand-images/generate-images.mjs`
 

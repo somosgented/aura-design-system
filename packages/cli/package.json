@@ -1,6 +1,6 @@
 {
   "name": "@aura-design/cli",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Aura Design System CLI",
   "type": "module",
   "keywords": [

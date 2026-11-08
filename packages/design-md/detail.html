@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aura flavor</title>
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+    <style>
+      :root {
+        --spacing: 13px;
+        --nav-h: calc(var(--spacing) * 4);
+        --font-sans: Gabarito, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+        --ease: cubic-bezier(0.16, 1, 0.3, 1);
+        --gray-1: #fcfaff;
+        --gray-2: #f9f6ff;
+        --gray-3: #f0ecff;
+        --gray-4: #e8e2ff;
+        --gray-6: #d9d1ff;
+        --gray-11: #6949bf;
+        --gray-12: #27005f;
+        --accent-9: #4015ca;
+        --accent-10: #3500b6;
+        --accent-contrast: #ffffff;
+        --scrim: rgba(16, 11, 33, 0.4);
+        color-scheme: light;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --gray-1: #100b21;
+          --gray-2: #19152b;
+          --gray-3: #231d3c;
+          --gray-4: #2b2350;
+          --gray-6: #3c2d6c;
+          --gray-11: #b5a2ff;
+          --gray-12: #eeecff;
+          --scrim: rgba(0, 0, 0, 0.55);
+          color-scheme: dark;
+        }
+      }
+
+      :root[data-theme="dark"] {
+        --gray-1: #100b21;
+        --gray-2: #19152b;
+        --gray-3: #231d3c;
+        --gray-4: #2b2350;
+        --gray-6: #3c2d6c;
+        --gray-11: #b5a2ff;
+        --gray-12: #eeecff;
+        --scrim: rgba(0, 0, 0, 0.55);
+        color-scheme: dark;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        font-size: 17px;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        overflow: hidden;
+        font-family: var(--font-sans);
+        background: var(--gray-1);
+        color: var(--gray-12);
+        line-height: 1.45;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .nav {
+        position: fixed;
+        inset: 0 0 auto;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        gap: calc(var(--spacing) * 0.5);
+        height: var(--nav-h);
+        padding-inline: calc(var(--spacing) * 1);
+        border-bottom: 1px solid var(--gray-6);
+        background: var(--gray-1);
+      }
+
+      .nav-title {
+        display: flex;
+        align-items: baseline;
+        gap: calc(var(--spacing) * 0.5);
+        min-width: 0;
+        margin-right: auto;
+      }
+
+      .nav-title strong {
+        font-size: 1.0625rem;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+
+      .nav-title span {
+        overflow: hidden;
+        color: var(--gray-11);
+        font-size: 0.875rem;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .group {
+        display: flex;
+        align-items: center;
+        gap: calc(var(--spacing) * 0.5);
+      }
+
+      .divider {
+        width: 1px;
+        height: calc(var(--spacing) * 2);
+        background: var(--gray-6);
+      }
+
+      .btn,
+      .icon-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6.5px;
+        height: calc(var(--spacing) * 2.5);
+        padding-inline: calc(var(--spacing) * 0.75);
+        border: 1px solid var(--gray-6);
+        border-radius: calc(var(--spacing) * 0.5);
+        background: var(--gray-2);
+        color: var(--gray-12);
+        font: 500 0.875rem/1 var(--font-sans);
+        text-decoration: none;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: background-color 250ms var(--ease);
+      }
+
+      .icon-btn {
+        width: calc(var(--spacing) * 2.5);
+        padding: 0;
+      }
+
+      .btn:hover,
+      .icon-btn:hover {
+        background: var(--gray-3);
+      }
+
+      .btn[aria-expanded="true"] {
+        background: var(--gray-4);
+      }
+
+      .btn.primary {
+        border-color: var(--accent-9);
+        background: var(--accent-9);
+        color: var(--accent-contrast);
+      }
+
+      .btn.primary:hover {
+        background: var(--accent-10);
+      }
+
+      .btn svg,
+      .icon-btn svg {
+        width: 1em;
+        height: 1em;
+        flex-shrink: 0;
+      }
+
+      .segmented {
+        display: inline-flex;
+        padding: 2px;
+        border: 1px solid var(--gray-6);
+        border-radius: calc(var(--spacing) * 0.5);
+        background: var(--gray-2);
+      }
+
+      .segmented button {
+        height: calc(var(--spacing) * 2.5 - 6px);
+        padding-inline: calc(var(--spacing) * 0.75);
+        border: 0;
+        border-radius: 4px;
+        background: transparent;
+        color: var(--gray-11);
+        font: 500 0.875rem/1 var(--font-sans);
+        cursor: pointer;
+      }
+
+      .segmented button[aria-pressed="true"] {
+        background: var(--gray-4);
+        color: var(--gray-12);
+      }
+
+      .btn:focus-visible,
+      .icon-btn:focus-visible,
+      .segmented button:focus-visible,
+      .sheet a:focus-visible {
+        outline: 2px solid var(--accent-9);
+        outline-offset: 2px;
+      }
+
+      .stage {
+        position: fixed;
+        inset: var(--nav-h) 0 0;
+      }
+
+      .stage iframe {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        background: #fff;
+      }
+
+      .missing {
+        display: grid;
+        place-items: center;
+        height: 100%;
+        color: var(--gray-11);
+      }
+
+      dialog.sheet {
+        position: fixed;
+        inset: 0 0 0 auto;
+        width: min(100vw, calc(var(--spacing) * 48));
+        max-width: none;
+        height: 100dvh;
+        max-height: none;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        border-left: 1px solid var(--gray-6);
+        background: var(--gray-1);
+        color: var(--gray-12);
+      }
+
+      dialog.sheet::backdrop {
+        background: var(--scrim);
+      }
+
+      .sheet-inner {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .sheet-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: calc(var(--spacing) * 1);
+        min-height: var(--nav-h);
+        padding-inline: calc(var(--spacing) * 1.5) calc(var(--spacing) * 1);
+        border-bottom: 1px solid var(--gray-6);
+      }
+
+      .sheet-head h2 {
+        margin: 0;
+        font-size: clamp(1.0625rem, 4.03vw, 1.25rem);
+        font-weight: 600;
+      }
+
+      .sheet-body {
+        flex: 1;
+        overflow-y: auto;
+        padding: calc(var(--spacing) * 1.5);
+        overscroll-behavior: contain;
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        dialog.sheet[open] {
+          animation: sheet-in 300ms var(--ease);
+        }
+        dialog.sheet[open]::backdrop {
+          animation: fade-in 300ms var(--ease);
+        }
+      }
+
+      @keyframes sheet-in {
+        from {
+          transform: translateX(100%);
+        }
+      }
+
+      @keyframes fade-in {
+        from {
+          opacity: 0;
+        }
+      }
+
+      .steps {
+        display: grid;
+        gap: calc(var(--spacing) * 1);
+        margin: 0 0 calc(var(--spacing) * 1.5);
+        padding: 0;
+        list-style: none;
+        counter-reset: step;
+      }
+
+      .steps li {
+        counter-increment: step;
+        display: grid;
+        grid-template-columns: calc(var(--spacing) * 2) 1fr;
+        gap: calc(var(--spacing) * 0.75);
+        color: var(--gray-11);
+      }
+
+      .steps li::before {
+        content: counter(step);
+        display: grid;
+        place-items: center;
+        width: calc(var(--spacing) * 2);
+        height: calc(var(--spacing) * 2);
+        border-radius: 50%;
+        background: var(--gray-3);
+        color: var(--gray-12);
+        font-size: 0.875rem;
+        font-weight: 600;
+      }
+
+      .steps strong {
+        color: var(--gray-12);
+      }
+
+      .linkbox {
+        display: grid;
+        gap: calc(var(--spacing) * 0.75);
+        padding: calc(var(--spacing) * 1);
+        border: 1px solid var(--gray-6);
+        border-radius: calc(var(--spacing) * 1);
+        background: var(--gray-2);
+      }
+
+      .linkbox code,
+      .steps code {
+        font-family: var(--font-mono);
+        font-size: 0.8125rem;
+        overflow-wrap: anywhere;
+      }
+
+      .linkbox .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: calc(var(--spacing) * 0.5);
+      }
+
+      .scales {
+        display: grid;
+        gap: calc(var(--spacing) * 1.5);
+      }
+
+      .scale h3 {
+        margin: 0 0 calc(var(--spacing) * 0.5);
+        font-size: 1rem;
+        font-weight: 600;
+      }
+
+      .swatches {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 6.5px;
+      }
+
+      .swatch {
+        display: grid;
+        gap: 4px;
+        color: var(--gray-11);
+        font-size: 0.75rem;
+      }
+
+      .swatch i {
+        height: calc(var(--spacing) * 3);
+        border: 1px solid var(--gray-6);
+        border-radius: 6.5px;
+      }
+
+      .swatch code {
+        font-family: var(--font-mono);
+        font-size: 0.6875rem;
+        overflow-wrap: anywhere;
+      }
+
+      .specs {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: calc(var(--spacing) * 0.75);
+        margin-top: calc(var(--spacing) * 1.5);
+      }
+
+      .spec {
+        padding: calc(var(--spacing) * 0.75) calc(var(--spacing) * 1);
+        border: 1px solid var(--gray-6);
+        border-radius: calc(var(--spacing) * 0.75);
+        background: var(--gray-2);
+      }
+
+      .spec span {
+        display: block;
+        color: var(--gray-11);
+        font-size: 0.8125rem;
+      }
+
+      .spec strong {
+        display: block;
+        margin-top: 2px;
+        font-weight: 500;
+        overflow-wrap: anywhere;
+      }
+
+      .markdown > :first-child {
+        margin-top: 0;
+      }
+
+      .markdown h1 {
+        font-size: clamp(1.58665rem, 4.03vw, 2.441rem);
+        line-height: 1.1;
+      }
+
+      .markdown h2 {
+        margin: calc(var(--spacing) * 2) 0 calc(var(--spacing) * 0.75);
+        font-size: clamp(1.17225rem, 4.03vw, 1.563rem);
+        font-weight: 600;
+      }
+
+      .markdown blockquote {
+        margin: calc(var(--spacing) * 1) 0;
+        padding-left: calc(var(--spacing) * 1);
+        border-left: 2px solid var(--accent-9);
+        color: var(--gray-11);
+      }
+
+      .markdown code {
+        padding: 1px 4px;
+        border-radius: 4px;
+        background: var(--gray-3);
+        font-family: var(--font-mono);
+        font-size: 0.85em;
+      }
+
+      .markdown pre {
+        overflow-x: auto;
+        padding: calc(var(--spacing) * 1);
+        border: 1px solid var(--gray-6);
+        border-radius: calc(var(--spacing) * 0.5);
+        background: var(--gray-2);
+      }
+
+      .markdown pre code {
+        padding: 0;
+        background: none;
+      }
+
+      .markdown table {
+        display: block;
+        overflow-x: auto;
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.875rem;
+      }
+
+      .markdown th,
+      .markdown td {
+        padding: calc(var(--spacing) * 0.5) calc(var(--spacing) * 0.75);
+        border-bottom: 1px solid var(--gray-6);
+        text-align: left;
+      }
+
+      .toast {
+        position: fixed;
+        left: 50%;
+        bottom: calc(var(--spacing) * 2);
+        z-index: 10;
+        padding: calc(var(--spacing) * 0.75) calc(var(--spacing) * 1.25);
+        border-radius: calc(var(--spacing) * 0.5);
+        background: var(--gray-12);
+        color: var(--gray-1);
+        font-size: 0.875rem;
+        opacity: 0;
+        transform: translate(-50%, 8px);
+        pointer-events: none;
+        transition: opacity 250ms var(--ease), transform 250ms var(--ease);
+      }
+
+      .toast[data-open="true"] {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+
+      .hide-sm {
+        display: inline-flex;
+      }
+
+      @media (max-width: 860px) {
+        .nav-title span,
+        .hide-md {
+          display: none;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .hide-sm,
+        .divider {
+          display: none;
+        }
+        .nav {
+          gap: 4px;
+          padding-inline: calc(var(--spacing) * 0.5);
+        }
+        .btn {
+          padding-inline: calc(var(--spacing) * 0.5);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .toast,
+        .btn,
+        .icon-btn {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="nav">
+      <a class="icon-btn" href="/" aria-label="All flavors">
+        <svg viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M12 7.5H3M6.5 4 3 7.5 6.5 11" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <div class="nav-title">
+        <strong data-slot="name">Loading…</strong>
+        <span data-slot="description"></span>
+      </div>
+      <div class="group">
+        <button type="button" class="btn" data-sheet="apply" aria-haspopup="dialog" aria-expanded="false">Apply</button>
+        <button type="button" class="btn" data-sheet="design" aria-haspopup="dialog" aria-expanded="false">DESIGN.md</button>
+        <button type="button" class="btn" data-sheet="tokens" aria-haspopup="dialog" aria-expanded="false">Tokens</button>
+      </div>
+      <span class="divider" aria-hidden="true"></span>
+      <div class="segmented hide-sm" role="group" aria-label="Result appearance">
+        <button type="button" data-appearance="light" aria-pressed="true">Light</button>
+        <button type="button" data-appearance="dark" aria-pressed="false">Dark</button>
+      </div>
+      <a class="icon-btn hide-md" data-slot="result-link" target="_blank" rel="noopener" aria-label="Open result in a new tab">
+        <svg viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M4.5 10.5 10.5 4.5M5 4.5h5.5V10" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <button type="button" class="btn primary" data-copy>
+        <svg viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M1 9.5V2a1 1 0 0 1 1-1h7.5M5 4h8a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-linecap="round"/></svg>
+        <span class="hide-sm">Copy link</span>
+      </button>
+    </header>
+
+    <main class="stage">
+      <iframe data-slot="result" title="Aura app with this flavor applied"></iframe>
+    </main>
+
+    <dialog class="sheet" id="sheet-apply" aria-labelledby="sheet-apply-title">
+      <div class="sheet-inner">
+        <div class="sheet-head">
+          <h2 id="sheet-apply-title">Apply to an Aura project</h2>
+          <button type="button" class="icon-btn" data-close aria-label="Close">
+            <svg viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M4 4l7 7M11 4l-7 7" stroke="currentColor" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <div class="sheet-body">
+          <ol class="steps">
+            <li><span><strong>Copy the link</strong> to this flavor's DESIGN.md.</span></li>
+            <li><span>In your Aura project, tell the agent: <code>Apply this design: &lt;link&gt;</code>.</span></li>
+            <li><span>The agent saves it as <code>DESIGN.theme.md</code>, appends its <code>theme.css</code> to <code>globals.css</code> and restyles with Aura components.</span></li>
+          </ol>
+          <div class="linkbox">
+            <code data-slot="design-url"></code>
+            <div class="row">
+              <button type="button" class="btn primary" data-copy>Copy link</button>
+              <a class="btn" data-slot="design-link" target="_blank" rel="noopener">Open DESIGN.md</a>
+              <a class="btn" data-slot="theme-link" target="_blank" rel="noopener">Open theme.css</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="sheet" id="sheet-design" aria-labelledby="sheet-design-title">
+      <div class="sheet-inner">
+        <div class="sheet-head">
+          <h2 id="sheet-design-title">DESIGN.md</h2>
+          <button type="button" class="icon-btn" data-close aria-label="Close">
+            <svg viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M4 4l7 7M11 4l-7 7" stroke="currentColor" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <div class="sheet-body">
+          <article class="markdown" data-slot="markdown"></article>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="sheet" id="sheet-tokens" aria-labelledby="sheet-tokens-title">
+      <div class="sheet-inner">
+        <div class="sheet-head">
+          <h2 id="sheet-tokens-title">Tokens</h2>
+          <button type="button" class="icon-btn" data-close aria-label="Close">
+            <svg viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M4 4l7 7M11 4l-7 7" stroke="currentColor" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <div class="sheet-body">
+          <div class="scales" data-slot="scales"></div>
+          <div class="specs" data-slot="specs"></div>
+        </div>
+      </div>
+    </dialog>
+
+    <div class="toast" role="status" aria-live="polite" id="toast"></div>
+
+    <script type="module">
+      const slug = (window.location.pathname.split("/").filter(Boolean)[1] || "").replace(/[^a-z0-9-]/g, "");
+      const toast = document.getElementById("toast");
+      const slot = (name) => document.querySelector(`[data-slot='${name}']`);
+      let design;
+      let appearance = "light";
+      let markdownLoaded = false;
+      let toastTimer;
+
+      function showToast(message) {
+        toast.textContent = message;
+        toast.dataset.open = "true";
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toast.dataset.open = "false";
+        }, 2000);
+      }
+
+      function designUrl() {
+        return new URL(`/${design.design}`, window.location.origin).href;
+      }
+
+      function resultUrl() {
+        if (design.result) return `/${design.result}?appearance=${appearance}`;
+        return `/result.html?design=${slug}&appearance=${appearance}`;
+      }
+
+      function renderTokens() {
+        const tokens = design.tokens[appearance];
+        const scales = slot("scales");
+        scales.replaceChildren();
+        for (const name of ["accent", "gray"]) {
+          const block = document.createElement("div");
+          block.className = "scale";
+          const title = document.createElement("h3");
+          title.textContent = `${name} · ${appearance}`;
+          const row = document.createElement("div");
+          row.className = "swatches";
+          for (let step = 1; step <= 12; step += 1) {
+            const value = tokens[`${name}-${step}`];
+            const swatch = document.createElement("div");
+            swatch.className = "swatch";
+            const chip = document.createElement("i");
+            chip.style.background = value;
+            const label = document.createElement("span");
+            label.textContent = String(step);
+            const code = document.createElement("code");
+            code.textContent = value;
+            swatch.append(chip, label, code);
+            row.append(swatch);
+          }
+          block.append(title, row);
+          scales.append(block);
+        }
+        const specs = slot("specs");
+        specs.replaceChildren();
+        const entries = [
+          ["Sans", design.fonts.sans],
+          ["Display", design.fonts.display ?? design.fonts.sans],
+          ["Label", design.fonts.label ?? design.fonts.sans],
+          ["Heading weight", String(design.headingWeight ?? 400)],
+          ["Button / input radius", `${design.radius.button} / ${design.radius.input}`],
+          ["Surface radius", design.radius.surface],
+        ];
+        for (const [label, value] of entries) {
+          const spec = document.createElement("div");
+          spec.className = "spec";
+          const name = document.createElement("span");
+          name.textContent = label;
+          const strong = document.createElement("strong");
+          strong.textContent = value;
+          spec.append(name, strong);
+          specs.append(spec);
+        }
+      }
+
+      function setAppearance(next) {
+        appearance = next;
+        for (const button of document.querySelectorAll("[data-appearance]")) {
+          button.setAttribute("aria-pressed", String(button.dataset.appearance === next));
+        }
+        slot("result").src = resultUrl();
+        slot("result-link").href = resultUrl();
+        renderTokens();
+      }
+
+      async function loadMarkdown() {
+        if (markdownLoaded) return;
+        markdownLoaded = true;
+        const markdown = await (await fetch(`/${design.design}`)).text();
+        const body = markdown.replace(/^---\n[\s\S]*?\n---\n/, "");
+        slot("markdown").innerHTML = window.marked.parse(body);
+      }
+
+      function openSheet(name, trigger) {
+        const sheet = document.getElementById(`sheet-${name}`);
+        for (const open of document.querySelectorAll("dialog.sheet[open]")) open.close();
+        if (name === "design") loadMarkdown();
+        sheet.showModal();
+        trigger.setAttribute("aria-expanded", "true");
+        sheet.addEventListener(
+          "close",
+          () => {
+            trigger.setAttribute("aria-expanded", "false");
+            trigger.focus();
+          },
+          { once: true },
+        );
+      }
+
+      function wireSheets() {
+        for (const trigger of document.querySelectorAll("[data-sheet]")) {
+          trigger.addEventListener("click", () => openSheet(trigger.dataset.sheet, trigger));
+        }
+        for (const sheet of document.querySelectorAll("dialog.sheet")) {
+          sheet.querySelector("[data-close]").addEventListener("click", () => sheet.close());
+          sheet.addEventListener("click", (event) => {
+            if (event.target === sheet) sheet.close();
+          });
+        }
+      }
+
+      async function copyLink() {
+        const url = designUrl();
+        try {
+          await navigator.clipboard.writeText(url);
+          showToast(`${design.name} link copied. Paste it to your Aura agent.`);
+        } catch {
+          window.prompt("Copy this DESIGN.md link", url);
+        }
+      }
+
+      try {
+        const { designs } = await (await fetch("/designs.json")).json();
+        design = designs.find((entry) => entry.slug === slug);
+      } catch {
+        design = undefined;
+      }
+
+      if (!design) {
+        slot("name").textContent = "Not found";
+        const message = document.createElement("p");
+        message.className = "missing";
+        message.textContent = "This flavor does not exist.";
+        document.querySelector(".stage").replaceChildren(message);
+        for (const control of document.querySelectorAll("[data-sheet], [data-copy], .segmented, [data-slot='result-link']")) {
+          control.hidden = true;
+        }
+      } else {
+        document.title = `${design.name} · Aura DESIGN.md`;
+        slot("name").textContent = design.name;
+        slot("description").textContent = design.description;
+        slot("design-url").textContent = designUrl();
+        slot("design-link").href = `/${design.design}`;
+        slot("theme-link").href = `/${design.theme}`;
+        for (const button of document.querySelectorAll("[data-copy]")) {
+          button.addEventListener("click", copyLink);
+        }
+        for (const button of document.querySelectorAll("[data-appearance]")) {
+          button.addEventListener("click", () => setAppearance(button.dataset.appearance));
+        }
+        wireSheets();
+        setAppearance("light");
+      }
+    </script>
+  </body>
+</html>

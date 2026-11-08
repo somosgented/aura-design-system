@@ -9,7 +9,7 @@
 | `.agents/rules/*` | Always-on process rules: `feature-map`, `no-comments`, `design-md`, monorepo `agents-md` | Color, type, spacing, icons, motion, forms, lint |
 | Other skills | Procedures (`aura-forms`, `verify-aura-ui`, `port-component-to-aura`, `update-feature-map`, `generate-brand-images`, upstream `shadcn`) | A second design policy |
 
-Cursor reads `.agents/rules/*.mdc` directly. The `rules/*.md` files in this skill are references linked from `SKILL.md`, same as the shadcn skill. They are not a second copy of the always-on rules.
+Every agent reads `.agents/rules/*.mdc` through the root `AGENTS.md`. The `rules/*.md` files in this skill are references linked from `SKILL.md`, same as the shadcn skill. They are not a second copy of the always-on rules.
 
 ## Keep
 
@@ -19,7 +19,7 @@ Do not weaken these when editing the skill or a component.
 - Fluid typography via `clamp()` and a global **≥ 17px** floor on editable form controls.
 - Strict **13px** spacing base (`unit * 13px`).
 - Icons use `className="icon"` only. No horizontal icon margins inside gap-owning controls.
-- The only project documentation is the feature map in `wiki/obsidian-{suffix}/Feature-Map/`, updated inside the PR that changes a feature. See `.agents/rules/feature-map.mdc`.
+- The only project documentation is the feature map in `wiki/obsidian-{suffix}/02-Documentación/Feature-Map/`, updated inside the PR that changes a feature. See `.agents/rules/feature-map.mdc`.
 - No code comments except external constraints (with the reason), directives, licenses, and generated code. See `.agents/rules/no-comments.mdc`.
 
 ## Upstream shadcn skill

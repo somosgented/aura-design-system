@@ -153,3 +153,5 @@ sonar-issues.json
 .scannerwork/
 
 .cursor/skills/web-animation-design/*
+# Obsidian editor state
+wiki/**/.obsidian/

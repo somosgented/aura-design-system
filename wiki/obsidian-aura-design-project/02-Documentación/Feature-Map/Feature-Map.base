@@ -1,6 +1,6 @@
 filters:
   and:
-    - file.inFolder("Feature-Map")
+    - file.inFolder("02-Documentación/Feature-Map")
     - 'file.ext == "md"'
 properties:
   note.feature:

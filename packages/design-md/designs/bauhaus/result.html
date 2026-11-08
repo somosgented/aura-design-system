@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bauhaus · Aura flavor</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/aura/main.css" />
+    <link rel="stylesheet" href="theme.css" />
+    <script>
+      (function () {
+        var appearance = new URLSearchParams(window.location.search).get("appearance") === "dark" ? "dark" : "light";
+        document.documentElement.classList.add(appearance);
+        document.documentElement.style.colorScheme = appearance;
+      })();
+    </script>
+    <style>
+      :root {
+        --aura-accents-primary: var(--accent-9);
+        --aura-text-primary-inverse: var(--accent-contrast);
+        --aura-button-hover: color-mix(in srgb, var(--accent-9) 78%, var(--ink));
+        --aura-outline: var(--cobalt) solid 3px;
+        --aura-input-bg: var(--gray-1);
+        --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+        --rule: var(--rule-weight) solid var(--ink);
+        --soft: color-mix(in srgb, var(--ink) 25%, transparent);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        font-size: 17px;
+        background: var(--gray-1);
+      }
+
+      body {
+        margin: 0;
+        overflow-x: hidden;
+        background: var(--gray-1);
+        color: var(--ink);
+        line-height: 1.5;
+        font-variant-numeric: tabular-nums;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      h1,
+      h2,
+      h3,
+      p,
+      figure,
+      blockquote {
+        margin: 0;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: var(--aura-font-display);
+        font-weight: 700;
+        letter-spacing: -0.03em;
+      }
+
+      em {
+        font-style: normal;
+        font-weight: 500;
+        color: var(--gray-11);
+      }
+
+      .wrap {
+        width: min(100% - var(--aura) * 7, var(--aura) * 92.5);
+        margin-inline: auto;
+      }
+
+      .label {
+        font: 700 calc(11 / 17 * 1rem) / 1.4 var(--aura-font-label);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .shape {
+        display: inline-block;
+        flex: none;
+        width: 11px;
+        height: 11px;
+        background: currentColor;
+      }
+
+      .shape.circle {
+        border-radius: 9999px;
+      }
+
+      .shape.triangle {
+        width: 13px;
+        clip-path: polygon(50% 0, 100% 100%, 0 100%);
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: calc(var(--aura) * 2.5);
+        height: calc(var(--aura) * 4.5);
+        padding-inline: calc(var(--aura) * 2);
+        border: 0;
+      }
+
+      .btn.button-fill:hover.button-fill:hover:not(:disabled),
+      .btn.button-pill:hover.button-pill:hover:not(:disabled) {
+        transform: none;
+      }
+
+      .btn .arr {
+        transition: transform 180ms var(--ease);
+      }
+
+      .btn:hover .arr {
+        transform: translateX(6px);
+      }
+
+      .btn.button-pill {
+        border: 1px solid var(--ink);
+        color: var(--ink);
+      }
+
+      .btn.button-pill:hover:not(:disabled) {
+        background: var(--ink);
+        color: var(--gray-1);
+      }
+
+      a:focus-visible,
+      button:focus-visible,
+      summary:focus-visible,
+      input:focus-visible,
+      select:focus-visible {
+        outline: var(--aura-outline);
+        outline-offset: 3px;
+      }
+
+      .site-header {
+        border-bottom: var(--rule);
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: calc(var(--aura) * 2.5);
+        min-height: calc(var(--aura) * 5);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: calc(var(--aura) * 1);
+        font: 700 1.1rem / 1 var(--aura-font-display);
+        letter-spacing: -0.03em;
+      }
+
+      .brand .shape {
+        width: 13px;
+        height: 13px;
+        color: var(--cobalt);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: calc(var(--aura) * 2);
+      }
+
+      .nav-links a,
+      .nav-cta {
+        padding-bottom: 2px;
+        border-bottom: 1px solid transparent;
+      }
+
+      .nav-links a:hover {
+        border-color: var(--ink);
+      }
+
+      .nav-cta {
+        border-color: var(--ink);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) calc(var(--aura) * 3.5) minmax(280px, 480px);
+        padding-block: calc(var(--aura) * 3) calc(var(--aura) * 4.5);
+      }
+
+      .hero-main {
+        display: flex;
+        flex-direction: column;
+        padding-right: calc(var(--aura) * 3);
+      }
+
+      .eyebrow {
+        align-self: flex-start;
+        padding: 8px calc(var(--aura) * 1);
+        background: var(--ochre);
+        color: var(--ochre-fg);
+      }
+
+      .hero h1 {
+        margin-top: calc(var(--aura) * 2);
+        font-size: clamp(3rem, 8vw, 6.5rem);
+        line-height: 0.86;
+        letter-spacing: -0.05em;
+      }
+
+      .hero h1 span {
+        display: block;
+        white-space: nowrap;
+      }
+
+      .hero h1 .light {
+        color: var(--gray-11);
+        font-weight: 500;
+      }
+
+      .hero-copy {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: calc(var(--aura) * 2) calc(var(--aura) * 2.5);
+        margin-top: auto;
+        padding-top: calc(var(--aura) * 2);
+        border-top: 1px solid var(--ink);
+      }
+
+      .hero-copy p {
+        max-width: 30ch;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .proof {
+        grid-column: 1 / -1;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--gray-11);
+      }
+
+      .proof .shape {
+        width: 7px;
+        height: 7px;
+        color: var(--cobalt);
+      }
+
+      .spine {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        padding-block: 6px;
+        border-left: var(--rule);
+      }
+
+      .spine span {
+        writing-mode: vertical-rl;
+        color: var(--gray-11);
+      }
+
+      .spine .shape {
+        color: var(--accent-9);
+      }
+
+      .plate-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: var(--rule-weight);
+        border: var(--rule);
+        background: var(--ink);
+      }
+
+      .plate {
+        position: relative;
+        aspect-ratio: 1;
+        overflow: hidden;
+        background-color: var(--cobalt);
+        background-image:
+          linear-gradient(color-mix(in srgb, var(--cobalt-fg) 16%, transparent) 1px, transparent 1px),
+          linear-gradient(90deg, color-mix(in srgb, var(--cobalt-fg) 16%, transparent) 1px, transparent 1px);
+        background-size: 40px 40px;
+      }
+
+      .plate svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      .plate .ghost {
+        fill: #141414;
+        transform: translate(7px, 7px);
+      }
+
+      .plate .bar {
+        transform: rotate(-32deg);
+        transform-box: fill-box;
+        transform-origin: center;
+      }
+
+      .plate text {
+        font: 700 11px var(--aura-font-label);
+        letter-spacing: 0.14em;
+        fill: var(--cobalt-fg);
+      }
+
+      .plate .lead,
+      .plate .ring {
+        fill: none;
+        stroke: var(--cobalt-fg);
+        stroke-width: 1;
+      }
+
+      .plate .ring {
+        stroke-dasharray: 3 5;
+      }
+
+      .corner {
+        position: absolute;
+        color: var(--cobalt-fg);
+      }
+
+      .corner.tl {
+        top: 14px;
+        left: 16px;
+      }
+
+      .corner.br {
+        right: 16px;
+        bottom: 12px;
+      }
+
+      .caption {
+        display: flex;
+        justify-content: space-between;
+        gap: calc(var(--aura) * 1);
+        padding: calc(var(--aura) * 1) calc(var(--aura) * 1.25);
+        background: var(--gray-1);
+      }
+
+      .caption span:last-child {
+        color: var(--gray-11);
+      }
+
+      .ink-grid {
+        display: grid;
+        grid-template-columns: repeat(var(--cols), 1fr);
+        gap: var(--rule-weight);
+        padding: var(--rule-weight);
+        margin-top: calc(var(--aura) * 3);
+        background: var(--ink);
+      }
+
+      .stats {
+        --cols: 4;
+        margin: 0 0 calc(var(--aura) * 6);
+      }
+
+      .stat {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: calc(var(--aura) * 2);
+        min-height: calc(var(--aura) * 12);
+        padding: calc(var(--aura) * 1.75);
+        background: var(--gray-1);
+      }
+
+      .stat:nth-child(2) {
+        background: var(--ochre);
+        color: var(--ochre-fg);
+      }
+
+      .stat:nth-child(3) {
+        background: var(--cobalt);
+        color: var(--cobalt-fg);
+      }
+
+      .stat strong {
+        font: 700 clamp(2.75rem, 6vw, 5rem) / 0.8 var(--aura-font-display);
+        letter-spacing: -0.05em;
+      }
+
+      .section {
+        padding-bottom: calc(var(--aura) * 6);
+      }
+
+      .section-head {
+        display: flex;
+        justify-content: space-between;
+        gap: calc(var(--aura) * 2);
+        padding-top: calc(var(--aura) * 1.25);
+        border-top: var(--rule);
+      }
+
+      .section-head b {
+        margin-right: calc(var(--aura) * 1);
+        color: var(--gray-11);
+      }
+
+      .section-head span:last-child {
+        color: var(--gray-11);
+        text-align: right;
+      }
+
+      .title {
+        margin-top: calc(var(--aura) * 2);
+        font-size: clamp(2.4rem, 6vw, 4.2rem);
+        line-height: 0.94;
+      }
+
+      .modules {
+        --cols: 6;
+      }
+
+      .module {
+        display: flex;
+        flex-direction: column;
+        gap: calc(var(--aura) * 1.75);
+        padding: calc(var(--aura) * 1.5);
+        background: var(--gray-1);
+        transition: background-color 180ms var(--ease), color 180ms var(--ease);
+      }
+
+      .module:hover {
+        background: var(--ink);
+        color: var(--gray-1);
+      }
+
+      .module-top {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .module svg {
+        display: block;
+        width: 100%;
+        aspect-ratio: 1;
+      }
+
+      .module svg * {
+        fill: var(--cobalt);
+        transform-box: fill-box;
+        transform-origin: center;
+        transition: fill 180ms var(--ease), transform 320ms var(--ease);
+      }
+
+      .module:nth-child(3n + 2) svg * {
+        fill: var(--ochre);
+      }
+
+      .module:nth-child(3n) svg * {
+        fill: var(--accent-9);
+      }
+
+      .module:hover svg * {
+        fill: var(--ochre);
+        transform: rotate(90deg);
+      }
+
+      .module h3 {
+        font-size: 1.1rem;
+      }
+
+      .module p {
+        margin-top: 4px;
+        color: var(--gray-11);
+        font-size: calc(12 / 17 * 1rem);
+        line-height: 1.45;
+      }
+
+      .module:hover p {
+        color: inherit;
+        opacity: 0.8;
+      }
+
+      .bom {
+        width: 100%;
+        margin-top: calc(var(--aura) * 3);
+        border-collapse: collapse;
+        border-top: var(--rule);
+        font-size: calc(14 / 17 * 1rem);
+      }
+
+      .bom th {
+        padding: calc(var(--aura) * 1) 0 calc(var(--aura) * 0.75);
+        border-bottom: 1px solid var(--ink);
+        text-align: left;
+      }
+
+      .bom td {
+        padding: calc(var(--aura) * 1.25) 0;
+        border-bottom: 1px solid var(--soft);
+      }
+
+      .bom tbody tr:hover td {
+        background: color-mix(in srgb, var(--ink) 6%, transparent);
+      }
+
+      .bom .num {
+        text-align: right;
+        font-family: var(--aura-font-display);
+        font-weight: 500;
+      }
+
+      .bom .part {
+        display: flex;
+        align-items: center;
+        gap: calc(var(--aura) * 1);
+        font: 700 1rem / 1 var(--aura-font-display);
+        letter-spacing: -0.02em;
+      }
+
+      .bom .part .shape {
+        width: 14px;
+        height: 14px;
+      }
+
+      .bom .muted {
+        color: var(--gray-11);
+      }
+
+      .bom tfoot td {
+        border-bottom: var(--rule);
+        font-weight: 700;
+      }
+
+      .order {
+        --cols: 2;
+      }
+
+      .order > * {
+        padding: calc(var(--aura) * 2);
+        background: var(--gray-1);
+      }
+
+      .order .note {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: calc(var(--aura) * 2);
+        background: var(--ochre);
+        color: var(--ochre-fg);
+      }
+
+      .order .note strong {
+        font: 700 3.25rem / 0.85 var(--aura-font-display);
+        letter-spacing: -0.04em;
+      }
+
+      .order form {
+        display: grid;
+        gap: calc(var(--aura) * 1.25);
+      }
+
+      .order label {
+        display: grid;
+        gap: 6px;
+      }
+
+      .order input,
+      .order select {
+        height: calc(var(--aura) * 3.5);
+        padding-inline: calc(var(--aura) * 1);
+        border: 1px solid var(--ink);
+        border-radius: 0;
+        background: var(--gray-1);
+        color: var(--ink);
+        font: inherit;
+        font-size: max(1rem, 17px);
+      }
+
+      .order .check {
+        display: flex;
+        align-items: center;
+        gap: calc(var(--aura) * 0.75);
+      }
+
+      .order .check input {
+        width: calc(var(--aura) * 1.5);
+        height: calc(var(--aura) * 1.5);
+        accent-color: var(--cobalt);
+      }
+
+      .order .btn {
+        justify-self: start;
+      }
+
+      .pricing {
+        --cols: 3;
+      }
+
+      .price {
+        display: flex;
+        flex-direction: column;
+        min-height: calc(var(--aura) * 30);
+        padding: calc(var(--aura) * 2.25);
+        background: var(--gray-1);
+      }
+
+      .price.featured {
+        background: var(--cobalt);
+        color: var(--cobalt-fg);
+      }
+
+      .price-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .price h3 {
+        margin-top: calc(var(--aura) * 2.75);
+        font-size: 2rem;
+      }
+
+      .amount {
+        margin-top: calc(var(--aura) * 1);
+        font: 700 3rem / 0.9 var(--aura-font-display);
+        letter-spacing: -0.04em;
+      }
+
+      .amount span {
+        font: 400 calc(13 / 17 * 1rem) / 1 var(--aura-font-stack);
+        letter-spacing: 0;
+      }
+
+      .price p {
+        margin-block: calc(var(--aura) * 1.5);
+        color: var(--gray-11);
+      }
+
+      .price.featured p {
+        color: color-mix(in srgb, var(--cobalt-fg) 80%, transparent);
+      }
+
+      .pips {
+        display: block;
+        width: calc(var(--n) * 13px - 4px);
+        height: calc(var(--rows, 1) * 13px - 4px);
+        margin-bottom: calc(var(--aura) * 2.25);
+        background: conic-gradient(at 9px 9px, transparent 0 270deg, var(--c) 270deg) 0 0 / 13px 13px;
+      }
+
+      .price .btn {
+        width: 100%;
+        margin-top: auto;
+      }
+
+      .price.featured .btn {
+        width: calc(100% - 88px);
+      }
+
+      .quarter {
+        width: 74px;
+        height: 74px;
+        margin: -74px 0 0 auto;
+        border-radius: 74px 0 0;
+        background: var(--ochre);
+      }
+
+      details {
+        border-bottom: 1px solid var(--soft);
+      }
+
+      summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: calc(var(--aura) * 2);
+        padding-block: calc(var(--aura) * 1.75);
+        font: 500 1.3rem / 1.2 var(--aura-font-display);
+        letter-spacing: -0.02em;
+        list-style: none;
+        cursor: pointer;
+        transition: color 180ms var(--ease);
+      }
+
+      summary:hover {
+        color: var(--cobalt);
+      }
+
+      summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .plus {
+        position: relative;
+        flex: none;
+        width: 16px;
+        height: 16px;
+      }
+
+      .plus::before,
+      .plus::after {
+        content: "";
+        position: absolute;
+        background: var(--ink);
+      }
+
+      .plus::before {
+        left: 0;
+        top: 7px;
+        width: 16px;
+        height: 2px;
+      }
+
+      .plus::after {
+        left: 7px;
+        top: 0;
+        width: 2px;
+        height: 16px;
+        transition: transform 180ms var(--ease);
+      }
+
+      details[open] .plus::after {
+        transform: scaleY(0);
+      }
+
+      details p {
+        max-width: 66ch;
+        padding-bottom: calc(var(--aura) * 1.75);
+        color: var(--gray-11);
+      }
+
+      .faq {
+        margin-top: calc(var(--aura) * 2);
+      }
+
+      .final {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: end;
+        gap: calc(var(--aura) * 4);
+        padding: calc(var(--aura) * 4) 0 calc(var(--aura) * 7);
+        border-top: var(--rule);
+      }
+
+      .final h2 {
+        font-size: clamp(3rem, 7.5vw, 5.4rem);
+        line-height: 0.9;
+      }
+
+      .final h2 span {
+        display: block;
+      }
+
+      .final small {
+        display: block;
+        margin-top: calc(var(--aura) * 1);
+        color: var(--gray-11);
+      }
+
+      .band {
+        background: var(--ink);
+        color: var(--gray-1);
+      }
+
+      .band .wrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: calc(var(--aura) * 2.5);
+        min-height: calc(var(--aura) * 8);
+      }
+
+      .band .shapes {
+        display: flex;
+        align-items: center;
+        gap: calc(var(--aura) * 1.5);
+      }
+
+      .band .shape {
+        width: 34px;
+        height: 34px;
+      }
+
+      .band .shape.circle {
+        color: var(--cobalt);
+      }
+
+      .band .shape.square {
+        color: var(--ochre);
+      }
+
+      .band .shape.triangle {
+        width: 40px;
+        color: var(--accent-9);
+      }
+
+      .band p {
+        font: 700 clamp(1.4rem, 2.6vw, 2.1rem) / 1 var(--aura-font-display);
+        letter-spacing: -0.03em;
+      }
+
+      .foot {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: calc(var(--aura) * 2);
+        min-height: calc(var(--aura) * 5.5);
+      }
+
+      .foot nav {
+        display: flex;
+        gap: calc(var(--aura) * 2);
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .rise {
+          animation: rise 520ms var(--ease) backwards;
+        }
+        .rise:nth-child(2) {
+          animation-delay: 70ms;
+        }
+        .rise:nth-child(3) {
+          animation-delay: 140ms;
+        }
+        .plate .bar {
+          animation: swing 900ms var(--ease) backwards;
+        }
+      }
+
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(18px);
+        }
+      }
+
+      @keyframes swing {
+        from {
+          transform: rotate(-82deg);
+        }
+      }
+
+      @media (max-width: 1000px) {
+        .modules {
+          --cols: 3;
+        }
+      }
+
+      @media (max-width: 800px) {
+        .wrap {
+          width: calc(100% - var(--aura) * 5);
+        }
+        .nav-links,
+        .hide {
+          display: none;
+        }
+        .hero {
+          grid-template-columns: 1fr;
+          gap: calc(var(--aura) * 2.5);
+        }
+        .hero-main {
+          padding: 0;
+        }
+        .spine {
+          display: none;
+        }
+        .hero-copy {
+          grid-template-columns: 1fr;
+          margin-top: calc(var(--aura) * 2.5);
+        }
+        .stats {
+          --cols: 2;
+        }
+        .order,
+        .pricing {
+          --cols: 1;
+        }
+        .final {
+          grid-template-columns: 1fr;
+          align-items: start;
+        }
+        .band .wrap {
+          flex-direction: column;
+          align-items: flex-start;
+          padding-block: calc(var(--aura) * 2);
+        }
+      }
+
+      @media (max-width: 520px) {
+        .wrap {
+          width: calc(100% - var(--aura) * 3);
+        }
+        .modules {
+          --cols: 2;
+        }
+        .section-head {
+          flex-direction: column;
+          gap: 8px;
+        }
+        .section-head span:last-child {
+          text-align: left;
+        }
+        .corner {
+          display: none;
+        }
+        .btn {
+          width: 100%;
+        }
+      }
+
+      .logo {
+        display: inline-flex;
+        align-items: center;
+        gap: calc(var(--aura) * 0.5);
+        font: 500 1.25rem / 1 var(--aura-font-display);
+        letter-spacing: -0.04em;
+      }
+
+      .logo i {
+        width: calc(var(--aura) * 1);
+        height: calc(var(--aura) * 1);
+        border-radius: var(--aura-button-radius);
+        background: var(--accent-9);
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap nav">
+        <a href="#" class="logo"><i aria-hidden="true"></i>Bauhaus</a>
+        <nav aria-label="Main"><div class="nav-links label"><a href="#">Modules</a><a href="#">Stückliste</a><a href="#">Pricing</a><a href="#">FAQ</a></div></nav>
+        <a href="#" class="nav-cta label">Get Formhaus</a>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-main">
+          <p class="eyebrow label rise">Series 6 · ships flat to 14 countries</p>
+          <h1 id="hero-title" class="rise"><span>Furniture</span><span class="light">in six</span><span>shapes.</span></h1>
+          <div class="hero-copy rise">
+            <p>Six modules, one hex key, no diagram to lose. Formhaus ships flat and arrives square, every time.</p>
+            <div class="hero-actions">
+              <a href="#" class="button button-fill btn label">Get Formhaus <span class="arr" aria-hidden="true">→</span></a>
+              <a href="#" class="button button-pill btn label">See the plate</a>
+            </div>
+            <p class="proof label"><span class="shape circle" aria-hidden="true"></span>Assembled in 41,000 flats and 12 cafés</p>
+          </div>
+        </div>
+        <div class="spine" aria-hidden="true"><span class="label"><b>Fig. 01</b> · Modulsystem · 32 mm grid</span><span class="shape"></span></div>
+        <figure class="plate-wrap" style="margin: 0">
+          <div class="plate" aria-hidden="true">
+            <svg viewBox="0 0 600 600">
+              <circle class="ring" cx="300" cy="300" r="250" />
+              <circle class="ghost" cx="372" cy="214" r="146" /><circle cx="372" cy="214" r="146" fill="var(--ochre)" />
+              <polygon class="ghost" points="62,262 216,262 139,118" /><polygon points="62,262 216,262 139,118" fill="var(--cobalt-fg)" />
+              <rect class="ghost" x="86" y="334" width="176" height="176" /><rect x="86" y="334" width="176" height="176" fill="var(--accent-9)" />
+              <path class="ghost" d="M312 512a112 112 0 0 1 224 0z" /><path d="M312 512a112 112 0 0 1 224 0z" fill="var(--cobalt-fg)" />
+              <path class="ghost" d="M600 324a140 140 0 0 1-140 140h140z" /><path d="M600 324a140 140 0 0 1-140 140h140z" fill="var(--ochre)" />
+              <rect class="bar" x="-120" y="282" width="840" height="40" fill="#141414" />
+              <path class="lead" d="M372 214h150 M139 118v-36 M120 400l-50 -50h-40 M540 420l40-30" />
+              <text x="526" y="208">01 KREIS</text>
+              <text x="139" y="70" text-anchor="middle">02 DREIECK</text>
+              <text x="30" y="336">03 QUADRAT</text>
+              <text x="586" y="380" text-anchor="end">05 VIERTEL</text>
+            </svg>
+            <span class="corner tl label">Formhaus Werke · Bremen</span>
+            <span class="corner br label">Plate 01 / 06</span>
+          </div>
+          <figcaption class="caption label"><span>Fig. 01 — six modules, one jig</span><span>Scale 1 : 8</span></figcaption>
+        </figure>
+      </section>
+
+      <section class="ink-grid stats" aria-label="Formhaus in numbers">
+        <div class="stat"><strong>6</strong><span class="label">modules</span></div>
+        <div class="stat"><strong>100%</strong><span class="label">birch ply</span></div>
+        <div class="stat"><strong>9 min</strong><span class="label">assembly</span></div>
+        <div class="stat"><strong>∞</strong><span class="label">arrangements, all square</span></div>
+      </section>
+
+      <section class="section" aria-labelledby="modules-title">
+        <div class="section-head label"><span><b>01</b>Module index</span><span>Everything sits on a 32 mm grid</span></div>
+        <h2 class="title" id="modules-title">Six shapes. <em>That is the whole catalog.</em></h2>
+        <div class="ink-grid modules">
+          <article class="module"><div class="module-top label"><span>FH-01</span><span>Ø 640</span></div><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" /></svg><div><h3>Kreis</h3><p>Table top or stool seat.</p></div></article>
+          <article class="module"><div class="module-top label"><span>FH-02</span><span>320²</span></div><svg viewBox="0 0 100 100" aria-hidden="true"><rect x="6" y="6" width="88" height="88" /></svg><div><h3>Quadrat</h3><p>The cube shelf. Stacks to any height.</p></div></article>
+          <article class="module"><div class="module-top label"><span>FH-03</span><span>320²</span></div><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,6 96,94 4,94" /></svg><div><h3>Dreieck</h3><p>Corner bracket and bookend.</p></div></article>
+          <article class="module"><div class="module-top label"><span>FH-04</span><span>640 × 320</span></div><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M4 74a46 46 0 0 1 92 0z" /></svg><div><h3>Halbkreis</h3><p>Bench end and headboard.</p></div></article>
+          <article class="module"><div class="module-top label"><span>FH-05</span><span>320²</span></div><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M8 92V8a84 84 0 0 1 84 84z" /></svg><div><h3>Viertel</h3><p>Four of them make a Kreis.</p></div></article>
+          <article class="module"><div class="module-top label"><span>FH-06</span><span>1280 × 80</span></div><svg viewBox="0 0 100 100" aria-hidden="true"><rect x="38" y="4" width="24" height="92" /></svg><div><h3>Balken</h3><p>Beam and leg. Solid birch.</p></div></article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="bom-title">
+        <div class="section-head label"><span><b>02</b>Stückliste</span><span>Set 02 · Room · packed weight 31.4 kg</span></div>
+        <h2 class="title" id="bom-title">Bill of materials.</h2>
+        <table class="bom">
+          <thead><tr class="label"><th scope="col">Part</th><th scope="col" class="hide">Material</th><th scope="col" class="hide">Size (mm)</th><th scope="col" class="num">Qty</th><th scope="col" class="num">kg</th></tr></thead>
+          <tbody>
+            <tr><td><span class="part"><span class="shape circle" style="color: var(--cobalt)"></span>FH-01 Kreis</span></td><td class="muted hide">Birch ply, 18</td><td class="muted hide">Ø 640</td><td class="num">1</td><td class="num">4.2</td></tr>
+            <tr><td><span class="part"><span class="shape" style="color: var(--ochre)"></span>FH-02 Quadrat</span></td><td class="muted hide">Birch ply, 18</td><td class="muted hide">320 × 320</td><td class="num">4</td><td class="num">6.4</td></tr>
+            <tr><td><span class="part"><span class="shape triangle" style="color: var(--accent-9)"></span>FH-03 Dreieck</span></td><td class="muted hide">Birch ply, 18</td><td class="muted hide">320 × 320</td><td class="num">2</td><td class="num">1.6</td></tr>
+            <tr><td><span class="part"><span class="shape"></span>FH-06 Balken</span></td><td class="muted hide">Solid birch</td><td class="muted hide">1280 × 80 × 32</td><td class="num">6</td><td class="num">12.6</td></tr>
+          </tbody>
+          <tfoot><tr><td class="label">Total</td><td class="hide"></td><td class="hide"></td><td class="num">13</td><td class="num">24.8</td></tr></tfoot>
+        </table>
+      </section>
+
+      <section class="section" aria-labelledby="order-title">
+        <div class="section-head label"><span><b>03</b>Bestellung</span><span>Ships from Bremen in 3 days</span></div>
+        <h2 class="title" id="order-title">Order a set. <em>Square, every time.</em></h2>
+        <div class="ink-grid order">
+          <div class="note"><span class="label">Assembly time</span><div><strong>9:00</strong><p class="label" style="margin-top: 10px">min, one person</p></div></div>
+          <form onsubmit="return false">
+            <label><span class="label">Set</span><select><option>Set 02 · Room</option><option>Set 01 · Shelf</option><option>Set 03 · Floor</option></select></label>
+            <label><span class="label">Postcode</span><input type="text" inputmode="numeric" placeholder="28195" /></label>
+            <label class="check"><input type="checkbox" checked /><span>Include a spare hex key</span></label>
+            <button type="submit" class="button button-fill btn label">Place order <span class="arr" aria-hidden="true">→</span></button>
+          </form>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="pricing-title">
+        <div class="section-head label"><span><b>04</b>Pricing</span><span>Ex VAT, ships from Bremen</span></div>
+        <h2 class="title" id="pricing-title">Three sets. <em>One grid.</em></h2>
+        <div class="ink-grid pricing">
+          <article class="price"><div class="price-top label"><span>Set 01</span><span class="shape circle"></span></div><h3>Shelf</h3><p class="amount">$240 <span>/module</span></p><p>One module. One wall.</p><span class="pips" role="img" aria-label="1 module" style="--n: 1; --c: var(--cobalt)"></span><a href="#" class="button button-pill btn label">Configure <span class="arr" aria-hidden="true">→</span></a></article>
+          <article class="price featured"><div class="price-top label"><span>Set 02 · most ordered</span><span class="shape"></span></div><h3>Room</h3><p class="amount">$1,180 <span>/set</span></p><p>Nine modules. One room.</p><span class="pips" role="img" aria-label="9 modules" style="--n: 9; --c: var(--ochre)"></span><a href="#" class="button button-fill btn label">Buy set <span class="arr" aria-hidden="true">→</span></a><span class="quarter" aria-hidden="true"></span></article>
+          <article class="price"><div class="price-top label"><span>Set 03</span><span class="shape triangle"></span></div><h3>Floor</h3><p class="amount">$9,400 <span>/floor</span></p><p>Forty modules, fitter included.</p><span class="pips" role="img" aria-label="40 modules" style="--n: 20; --rows: 2; --c: var(--accent-9)"></span><a href="#" class="button button-pill btn label">Talk to a fitter <span class="arr" aria-hidden="true">→</span></a></article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="faq-title">
+        <div class="section-head label"><span><b>05</b>FAQ</span><span>Answered by a fitter, within a day</span></div>
+        <h2 class="title" id="faq-title">Questions.</h2>
+        <div class="faq">
+          <details open><summary>What is in a set?<span class="plus" aria-hidden="true"></span></summary><p>Six module types, one hex key, 24 felt pads. The plate is the manual.</p></details>
+          <details><summary>Can I return it?<span class="plus" aria-hidden="true"></span></summary><p>Flat-packed both ways, 60 days, and we send the box.</p></details>
+          <details><summary>Why only six shapes?<span class="plus" aria-hidden="true"></span></summary><p>Because a seventh has never been needed. The list of requests is short.</p></details>
+        </div>
+      </section>
+
+      <section class="final" aria-labelledby="final-title">
+        <h2 id="final-title"><span class="light" style="color: var(--gray-11); font-weight: 500">Ready to</span><span>assemble?</span></h2>
+        <div><a href="#" class="button button-fill btn label">Get Formhaus <span class="arr" aria-hidden="true">→</span></a><small class="label">Free hex key. Free felt pads. No glue.</small></div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="band">
+        <div class="wrap"><span class="shapes" aria-hidden="true"><span class="shape circle"></span><span class="shape square"></span><span class="shape triangle"></span></span><p>Six shapes only.</p></div>
+      </div>
+      <div class="wrap foot label">
+        <span>© 2026 Formhaus Werke · built with Aura</span>
+        <nav aria-label="Footer"><a href="#">Catalog</a><a href="#">Fitters</a><a href="#">Privacy</a></nav>
+      </div>
+    </footer>
+  </body>
+</html>

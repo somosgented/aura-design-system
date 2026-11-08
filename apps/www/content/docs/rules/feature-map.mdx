@@ -9,9 +9,13 @@ description: "The only project documentation is a feature map in the Obsidian va
 ```bash
 pnpm dlx shadcn@latest add @aura/rule-feature-map
 ```
-The only project documentation is the feature map: one short note per feature in `wiki/obsidian-{suffix}/Feature-Map/`, shown as a table by `Feature-Map.base`. `{suffix}` is the project name with its first segment stripped. The name comes from `package.json`, `pyproject.toml`, `go.mod`, `pom.xml`, `composer.json`, `Cargo.toml`, or the folder. Aura's vault is `wiki/obsidian-aura-design-project/`.
+The only project documentation is the feature map: one short note per feature in `wiki/obsidian-{suffix}/02-Documentación/Feature-Map/`, shown as a table by `Feature-Map.base`. `{suffix}` is the project name with its first segment stripped. The name comes from `package.json`, `pyproject.toml`, `go.mod`, `pom.xml`, `composer.json`, `Cargo.toml`, or the folder. Aura's vault is `wiki/obsidian-aura-design-project/`.
+
+The vault has four sections: `00-General/` (product context), `01-Identidad/` (brand and image identity), `02-Documentación/` (the feature map), and `03-Configuración/` (services and environment variable names). `.obsidian/` is local editor state and is git-ignored.
 
 * **MUST**: When you open or update a PR, add or update the note of each feature the PR changes, inside that PR. Steps live in skill `update-feature-map`.
 * **MUST NOT**: Read or write the feature map before PR time. Code, types, and tests are the source of truth while you work.
-* **MUST NOT**: Read or write other wiki, progress, session, assumption, or decision-log files (for example `Internal-Progress.md`) as part of a task, or run `brain:progress`.
+* **MUST NOT**: Write `00-General/`, `01-Identidad/`, or `03-Configuración/` unless the user asks or a skill says so. Read them only when the task needs product context, identity, or configuration.
+* **MUST NOT**: Keep progress, session, assumption, or decision-log files (for example `Internal-Progress.md`) anywhere in the wiki, or run `brain:progress`.
+* **MUST NOT**: Commit `.obsidian/`.
 * **MUST NOT**: Write secrets into notes. Name environment variables only.
