@@ -51,7 +51,8 @@
       .skip { position: absolute; left: var(--aura); top: calc(var(--aura) * -5); z-index: 20; padding: calc(var(--aura) * 0.5) var(--aura); border-radius: 9999px; background: var(--accent-9); color: var(--accent-contrast); }
       .skip:focus { top: var(--aura); }
       .wrap { width: min(100% - var(--aura) * 3, var(--wrap)); margin-inline: auto; }
-      .sec { padding-block: clamp(calc(var(--aura) * 5), 9vw, calc(var(--aura) * 9)); }
+      .sec { padding-block: clamp(calc(var(--aura) * 5), 8vw, calc(var(--aura) * 7.5)); }
+      .sec:has(> .wrap > .rule:first-child) { padding-top: 0; }
       .rule { border-top: 1px solid var(--hair); }
       .muted { color: var(--gray-11); }
       .i { width: 1em; height: 1em; flex: none; }
@@ -132,7 +133,7 @@
       .acts { display: grid; gap: 2px; width: 100%; padding: calc(var(--aura) * 0.5); border-radius: calc(var(--aura) * 1.5); background: var(--phone-screen); color: var(--phone-ink); }
       .act { display: grid; grid-template-columns: auto 1fr; column-gap: var(--aura); align-items: center; padding: var(--aura); border-radius: var(--aura); background: var(--phone-row); }
       .act b { font-weight: 600; font-size: 0.95rem; }
-      .act span { grid-column: 2; color: var(--phone-muted); font-size: 0.78rem; line-height: 1.35; }
+      .act > span:last-child { grid-column: 2; color: var(--phone-muted); font-size: 0.78rem; line-height: 1.35; }
       .ic { grid-row: span 2; display: grid; place-items: center; width: calc(var(--aura) * 2.5); height: calc(var(--aura) * 2.5); border-radius: 50%; background: var(--c1); color: var(--face-ink); }
       .glow { padding: calc(var(--aura) * 0.75) calc(var(--aura) * 1.5); border-radius: 9999px; background: var(--leaf-green); color: var(--face-ink); font-weight: 600; box-shadow: 0 0 0 6px color-mix(in srgb, var(--leaf-green) 25%, transparent), 0 0 0 12px color-mix(in srgb, var(--leaf-green) 12%, transparent); }
       .steps { width: 100%; display: grid; padding: var(--aura); border-radius: var(--aura); background: var(--gray-1); border: 1px solid var(--hair); font-size: 0.82rem; }
@@ -177,7 +178,7 @@
       .split { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--aura) * 5); align-items: center; }
       .split .pf { height: calc(var(--aura) * 26); padding-top: calc(var(--aura) * 2); }
       .split .h2 { margin-top: calc(var(--aura) * 0.5); }
-      .checks { display: grid; gap: var(--aura); margin-top: calc(var(--aura) * 2); padding: 0; list-style: none; font-weight: 500; }
+      ul.checks { display: grid; gap: var(--aura); margin-top: calc(var(--aura) * 2); padding: 0; list-style: none; font-weight: 500; }
       .checks.two { grid-template-columns: 1fr 1fr; }
       .checks li { display: flex; align-items: center; gap: calc(var(--aura) * 0.5); }
       .tok { display: grid; grid-template-columns: auto 1fr auto; column-gap: 8px; align-items: center; padding-block: 7px; border-top: 1px solid var(--hair); }
@@ -203,7 +204,7 @@
       .badge { display: inline-block; padding: 0 calc(var(--aura) * 0.75); border-radius: 9999px; font-size: 12px; font-weight: 600; line-height: 1.8; }
       .b-ok { background: color-mix(in srgb, var(--leaf-green) 18%, var(--gray-1)); color: var(--ink-green); }
       .b-wait { background: color-mix(in srgb, var(--blob-blue) 18%, var(--gray-1)); color: var(--ink-blue); }
-      .b-look { background: color-mix(in srgb, var(--ember) 14%, var(--gray-1)); color: var(--ink-orange); }
+      .b-look { background: color-mix(in srgb, var(--ember) 6%, var(--gray-1)); color: var(--ink-orange); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ember) 30%, transparent); }
 
       .art { width: 100%; height: auto; max-width: calc(var(--aura) * 34); justify-self: center; }
 
@@ -211,7 +212,7 @@
       .plan { display: flex; flex-direction: column; gap: var(--aura); padding: calc(var(--aura) * 2); border-radius: calc(var(--aura) * 2); background: var(--panel); box-shadow: inset 0 0 0 1px var(--panel-ring); }
       .price { font-family: var(--aura-font-display); font-weight: 500; font-size: 2.6rem; letter-spacing: -0.03em; line-height: 1; }
       .price span { margin-left: calc(var(--aura) * 0.5); font-family: var(--aura-font-stack); font-size: 0.82rem; letter-spacing: 0; color: var(--gray-11); }
-      .plan .checks { flex: 1; margin-top: 0; font-size: 0.92rem; color: var(--gray-11); align-content: start; }
+      .plan ul.checks { flex: 1; margin-top: 0; font-size: 0.92rem; color: var(--gray-11); align-content: start; }
       .plan .button { width: 100%; }
 
       .quotes-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: var(--aura); margin-bottom: calc(var(--aura) * 3); }
@@ -297,12 +298,13 @@
       }
       @media (max-width: 860px) {
         .nav { gap: var(--aura); }
-        .toggle { display: inline-flex; order: 2; }
-        .nav-end { order: 1; }
+        .toggle { display: inline-flex; order: 1; margin-left: auto; }
+        .nav-end { order: 2; margin-left: 0; }
         .nav-end .soft { display: none; }
-        .menu { order: 3; flex-basis: 100%; flex-direction: column; align-items: stretch; padding-bottom: var(--aura); }
+        .menu { order: 3; flex-basis: 100%; flex-direction: column; align-items: stretch; gap: 2px; padding: calc(var(--aura) * 0.5); border-radius: calc(var(--aura) * 1.5); background: var(--panel); box-shadow: inset 0 0 0 1px var(--panel-ring); }
+        .menu .nl { width: 100%; justify-content: space-between; padding: var(--aura); font-size: 1rem; }
         .nav[data-open="false"] .menu { display: none; }
-        .drop { position: static; box-shadow: none; margin-top: calc(var(--aura) * 0.5); }
+        .drop { position: static; box-shadow: none; margin-top: calc(var(--aura) * 0.5); background: var(--gray-1); }
         .split { grid-template-columns: 1fr; gap: calc(var(--aura) * 3); }
         .split.flip > :first-child { order: 2; }
       }
@@ -348,6 +350,7 @@
     <header class="wrap">
       <nav class="nav" aria-label="Primary" data-open="false">
         <a class="logo" href="#top"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#mark" /></svg>Nestling</a>
+        <button class="button button-pill soft btn sm toggle" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
         <ul class="menu" id="menu">
           <li>
             <button class="nl" type="button" data-dd aria-expanded="false" aria-controls="dd-build">Builders<svg class="i chev" aria-hidden="true"><use href="#chev" /></svg></button>
@@ -371,7 +374,6 @@
           <a class="button button-pill soft btn sm" href="#faq">Sign in</a>
           <a class="button button-fill btn sm" href="#join">Get started</a>
         </div>
-        <button class="button button-pill soft btn sm toggle" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
       </nav>
     </header>
 
@@ -839,7 +841,10 @@
         document.addEventListener("click", function (event) {
           if (!event.target.closest(".menu > li")) dds.forEach(function (close) { close(false); });
         });
-        nav.addEventListener("keydown", function (event) {
+        nav.querySelectorAll(".menu > li > a").forEach(function (link) {
+          link.addEventListener("click", function () { setMenu(false); });
+        });
+        document.addEventListener("keydown", function (event) {
           if (event.key !== "Escape" || nav.dataset.open !== "true") return;
           setMenu(false);
           toggle.focus();

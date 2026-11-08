@@ -177,7 +177,8 @@ The accent is **ink**: the source's primary action is an ink pill, so `accent-9`
 | Phone | `--phone-*` | `--phone-*` | Mockup frame, screen, rows, text |
 
 - Focus ring: `--aura-outline: var(--gray-12) solid 2px` with 2px offset.
-- Badges: tint `color-mix(in srgb, <hue> 18%, var(--gray-1))` with the matching `--ink-*` text.
+- Badges: tint `color-mix(in srgb, <hue> 18%, var(--gray-1))` with the matching `--ink-*` text; for `--ember` use 6% plus a 1px ember ring at 30% so `--ink-orange` keeps ≥4.5:1.
+- Mobile nav: the menu toggle sits before the list in the DOM so Tab moves into the open menu; Escape closes it from anywhere and returns focus to the toggle; the open list is a `--panel` surface.
 
 > **Upstream limitation, `--gray-contrast: undefined`:** the shared generator writes `--gray-contrast: undefined` and Aura `main.css`/`globals.css` map `--aura-text-primary-inverse` to it, so `.button-fill` labels fall back to inherited ink, which vanishes on an ink pill. Setting `--aura-text-primary-inverse: var(--accent-contrast)` in `:root` is **required** for this flavor. The generator is not fixed by this flavor and generated files are never patched by hand.
 
