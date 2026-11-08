@@ -536,6 +536,83 @@
           "gray-12": "#eeeef1"
         }
       }
+    },
+    {
+      "slug": "plumline",
+      "name": "Plumline",
+      "description": "Dark plum stages, warm ivory paper, one violet accent and an expressive serif asking one question at a time. A conversational flavor of Aura for forms, surveys, onboarding and intake flows.",
+      "design": "designs/plumline/DESIGN.md",
+      "theme": "designs/plumline/theme.css",
+      "result": "designs/plumline/result.html",
+      "fonts": {
+        "sans": "Hanken Grotesk",
+        "display": "Fraunces",
+        "label": "Hanken Grotesk",
+        "href": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600&display=swap"
+      },
+      "hero": "field",
+      "headingWeight": 400,
+      "radius": {
+        "button": "9999px",
+        "input": "6.5px",
+        "surface": "19.5px"
+      },
+      "tokens": {
+        "light": {
+          "accent-contrast": "#fff",
+          "accent-1": "#f1f1f3",
+          "gray-1": "#f2f0f2",
+          "accent-2": "#ececf4",
+          "gray-2": "#efecf0",
+          "accent-3": "#e5e3f5",
+          "gray-3": "#e7e0e8",
+          "accent-4": "#dad7fa",
+          "gray-4": "#e0d7e1",
+          "accent-5": "#cfcafd",
+          "gray-5": "#d9cedb",
+          "accent-6": "#c1bafa",
+          "gray-6": "#d2c5d4",
+          "accent-7": "#aea4f3",
+          "gray-7": "#c9b9cb",
+          "accent-8": "#9686ec",
+          "gray-8": "#b8a3bb",
+          "accent-9": "#6b3fd9",
+          "gray-9": "#8a768d",
+          "accent-10": "#5d36bd",
+          "gray-10": "#7f6d81",
+          "accent-11": "#5b34bb",
+          "gray-11": "#605162",
+          "accent-12": "#321f69",
+          "gray-12": "#271c28"
+        },
+        "dark": {
+          "accent-contrast": "#fff",
+          "accent-1": "#110e1b",
+          "gray-1": "#120f13",
+          "accent-2": "#181527",
+          "gray-2": "#1b181c",
+          "accent-3": "#271e45",
+          "gray-3": "#252126",
+          "accent-4": "#33245d",
+          "gray-4": "#2d282f",
+          "accent-5": "#3c2c6b",
+          "gray-5": "#352f37",
+          "accent-6": "#47377a",
+          "gray-6": "#3e3842",
+          "accent-7": "#574591",
+          "gray-7": "#4d4451",
+          "accent-8": "#6d56b5",
+          "gray-8": "#685c6d",
+          "accent-9": "#9b7bff",
+          "gray-9": "#76697c",
+          "accent-10": "#906ff2",
+          "gray-10": "#84778a",
+          "accent-11": "#b9a5ff",
+          "gray-11": "#bbafc0",
+          "accent-12": "#e2dcff",
+          "gray-12": "#efedf1"
+        }
+      }
     }
   ]
 }
