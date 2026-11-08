@@ -81,8 +81,6 @@
   --code-bg: #f6f8fa;
   --code-inline-bg: #eff1f3;
   --code-border: #d1d9e0;
-  --counter-bg: #eaeef2;
-  --counter-text: #57606a;
   --green: #08872b;
   --green-pale: #dafbe1;
   --blue: #0969da;
@@ -164,8 +162,6 @@
     --code-bg: #161b22;
     --code-inline-bg: #1c2128;
     --code-border: #30363d;
-    --counter-bg: #1c2128;
-    --counter-text: #8b949e;
     --green: #3fb950;
     --green-pale: #0f3c1a;
     --blue: #58a6ff;
@@ -247,8 +243,6 @@
   --code-bg: #161b22;
   --code-inline-bg: #1c2128;
   --code-border: #30363d;
-  --counter-bg: #1c2128;
-  --counter-text: #8b949e;
   --green: #3fb950;
   --green-pale: #0f3c1a;
   --blue: #58a6ff;
