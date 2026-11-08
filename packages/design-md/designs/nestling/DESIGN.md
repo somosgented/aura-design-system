@@ -108,7 +108,7 @@ aura:
       sand: "#4a4238"
       blob-blue: "#5aa5e6"
       blob-blue-deep: "#2a86d6"
-      blob-blue-pale: "#2a4a66"
+      blob-blue-pale: "#5b86ad"
       leaf-green: "#3aae6f"
       leaf-deep: "#2b8f58"
       sun-yellow: "#e6b45f"
