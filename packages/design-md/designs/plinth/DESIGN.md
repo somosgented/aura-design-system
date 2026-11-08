@@ -158,7 +158,7 @@ An agent that receives this file's link inside an Aura project does this, in ord
 
 ## Overview
 
-Plinth is a bright, confident page with generous whitespace. The hero is paper: a massive centered headline (two or three lines), a short muted subline and two pill buttons (ink primary, soft gray secondary). Below, content alternates between full-white and soft gray bands. Feature sections use bento-style grids of product vignettes—rounded rectangles with subtle borders showing fictional UI. A logo wall with marquee motion sits below the hero. Section headlines are large and bold, left-aligned or centered. Cards have generous padding. The closing band restates the call to action over a soft background. Color is restrained: ink and gray carry the page, with small accent hues appearing only inside product vignettes.
+Plinth is a bright, confident page with generous whitespace. Just above the hero, a horizontal row of overlapping circular sketch avatars hints at community. The hero is paper: a massive centered headline (two or three lines), a short muted subline and two pill buttons (blue primary, soft gray secondary). Below, content alternates between full-white and soft gray bands. Feature sections use bento-style grids of product vignettes—rounded rectangles with subtle borders showing fictional UI. A logo wall with marquee motion sits below the hero. Section headlines are large and bold, left-aligned or centered. Cards have generous padding. The closing band restates the call to action over a soft background. Color is restrained: ink and gray carry the page, with small accent hues appearing only inside product vignettes.
 
 ## Colors
 

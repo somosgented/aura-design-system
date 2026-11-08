@@ -38,6 +38,11 @@
         --ui-purple: #9b51e0;
         --orange-pale: #fdf4eb;
         --blue-pale: #e8f1fc;
+        --blue: #2f80ed;
+        --hero-cta-primary-bg: var(--blue);
+        --hero-cta-primary-fg: #fff;
+        --hero-cta-secondary-bg: var(--blue-pale);
+        --hero-cta-secondary-fg: var(--blue);
         --green-pale: #e6f5ec;
         --purple-pale: #f4ecfb;
         --hair: #e5e5e3;
@@ -45,6 +50,10 @@
         --narrow: calc(var(--aura) * 83);
       }
       .dark {
+        --hero-cta-primary-bg: #4a9eff;
+        --hero-cta-primary-fg: #0a1628;
+        --hero-cta-secondary-bg: #1e3a5f;
+        --hero-cta-secondary-fg: #7bb8ff;
         --band: #1e1e1e;
         --band-alt: #252525;
         --vignette-bg: #1a1a1a;
@@ -115,6 +124,18 @@
       .hero h1 { max-width: calc(var(--aura) * 62); margin: 0 auto; }
       .hero .lead { margin: calc(var(--aura) * 1.5) auto 0; max-width: calc(var(--aura) * 36); }
       .cta { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--aura); margin-top: calc(var(--aura) * 2.5); }
+      .btn-hero-primary { background: var(--hero-cta-primary-bg); color: var(--hero-cta-primary-fg); }
+      .btn-hero-primary:hover { background: color-mix(in srgb, var(--blue) 88%, #000); }
+      .btn-hero-secondary { background: var(--hero-cta-secondary-bg); color: var(--hero-cta-secondary-fg); }
+      .btn-hero-secondary:hover { background: color-mix(in srgb, var(--blue-pale) 85%, var(--blue)); }
+      .hero-avatars { display: flex; justify-content: center; align-items: center; margin-bottom: calc(var(--aura) * 2); }
+      .hero-avatars svg { width: calc(var(--aura) * 5); height: calc(var(--aura) * 5); margin-right: calc(var(--aura) * -1); flex-shrink: 0; }
+      .hero-avatars svg:last-child { margin-right: 0; }
+      @media (max-width: 600px) {
+        .cta { flex-direction: column; align-items: stretch; }
+        .cta .btn { width: 100%; }
+        .hero-avatars svg { width: calc(var(--aura) * 4); height: calc(var(--aura) * 4); margin-right: calc(var(--aura) * -0.75); }
+      }
 
       .logos { padding: calc(var(--aura) * 4) 0; overflow: hidden; }
       .logos p { text-align: center; font-size: 0.78rem; color: var(--gray-9); margin-bottom: calc(var(--aura) * 2); }
@@ -364,11 +385,20 @@
 
     <main id="main">
       <section class="hero wrap" id="top" aria-labelledby="hero-title">
+        <div class="hero-avatars" aria-hidden="true">
+          <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="28" cy="28" r="26" fill="#fff" stroke="#2f80ed" stroke-width="3"/><path d="M20 38c-2-8 1-14 8-14s10 6 8 14" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M17 24c0-6 4-12 11-12s11 6 11 12c0 3-2 5-4 6-1-3-4-5-7-5s-6 2-7 5c-2-1-4-3-4-6z" fill="#1a1a1a"/><circle cx="23" cy="28" r="1.5" fill="#1a1a1a"/><circle cx="33" cy="28" r="1.5" fill="#1a1a1a"/><path d="M26 33c1 1 3 1 4 0" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>
+          <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="28" cy="28" r="26" fill="#fff" stroke="#1a1a1a" stroke-width="2"/><path d="M30 22c2 4 2 10 0 14" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round" fill="none"/><circle cx="34" cy="26" r="2" fill="#1a1a1a"/></svg>
+          <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="28" cy="28" r="26" fill="#eb5757" stroke="#c0392b" stroke-width="2"/><rect x="26" y="18" width="4" height="22" rx="1" fill="#fff"/><rect x="18" y="22" width="20" height="10" rx="2" fill="#fff"/><line x1="28" y1="27" x2="28" y2="32" stroke="#eb5757" stroke-width="2"/></svg>
+          <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="28" cy="28" r="26" fill="#fff" stroke="#f2c94c" stroke-width="3"/><path d="M18 20c2-4 6-6 10-6s8 2 10 6c-2 2-6 4-10 4s-8-2-10-4z" fill="#1a1a1a"/><path d="M16 22q2 4 0 8m24-8q-2 4 0 8" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round" fill="none"/><circle cx="22" cy="28" r="2" fill="#1a1a1a"/><circle cx="34" cy="28" r="2" fill="#1a1a1a"/><path d="M24 36c2 2 6 2 8 0" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+          <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="28" cy="28" r="26" fill="#fff" stroke="#1a1a1a" stroke-width="2"/><path d="M32 20c3 2 4 6 4 10s-1 8-4 10" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round" fill="none"/><circle cx="26" cy="26" r="2" fill="#1a1a1a"/></svg>
+          <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="28" cy="28" r="26" fill="#2f80ed" stroke="#2f80ed" stroke-width="2"/><rect x="14" y="22" width="28" height="18" rx="3" fill="#fff"/><path d="M14 25l10-6h8l10 6" stroke="#fff" stroke-width="2" fill="none"/><circle cx="24" cy="32" r="2" fill="#2f80ed"/><circle cx="32" cy="32" r="2" fill="#2f80ed"/></svg>
+          <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="28" cy="28" r="26" fill="#fff" stroke="#eb5757" stroke-width="3"/><path d="M16 18c4-4 10-4 14-2s8 1 10-2c0 4-2 8-6 8h-12c-4 0-6-2-6-4z" fill="#1a1a1a" opacity="0.3"/><rect x="18" y="24" width="10" height="6" rx="1" stroke="#1a1a1a" stroke-width="2" fill="none"/><rect x="28" y="24" width="10" height="6" rx="1" stroke="#1a1a1a" stroke-width="2" fill="none"/><line x1="16" y1="27" x2="18" y2="27" stroke="#1a1a1a" stroke-width="2"/><line x1="38" y1="27" x2="40" y2="27" stroke="#1a1a1a" stroke-width="2"/><path d="M24 36c2 1 6 1 8 0" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+        </div>
         <h1 class="h1" id="hero-title">Where teams and agents <span class="hero-pill"><span class="hero-pill-dot" aria-hidden="true"></span><span class="hero-pill-text" aria-live="polite"><span class="hero-pill-word">Write</span><span class="hero-pill-word">Plan</span><span class="hero-pill-word">Ship</span><span class="hero-pill-word">Build</span></span></span> together.</h1>
         <p class="lead">Capture context, find answers, and automate tasks with AI built for your team.</p>
         <div class="cta">
-          <a class="btn btn-fill lg" href="#demo">Get Plinth free</a>
-          <a class="btn btn-soft lg" href="#demo">Request a demo</a>
+          <a class="btn btn-hero-primary lg" href="#demo">Get Plinth free</a>
+          <a class="btn btn-hero-secondary lg" href="#demo">Request a demo</a>
         </div>
         <div class="hero-mock" aria-hidden="true">
           <div class="mock-bar">
