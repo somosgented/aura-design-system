@@ -1,7 +1,7 @@
 ---
 version: "alpha"
 name: "Verdantline"
-description: "A clean, open developer platform home with crisp green accents, monospaced code blocks, versatile tab navigation, repository cards and subdued gray prose. An Aura flavor for code hosts, API docs and developer portals, observed November 2026."
+description: "A clean, open developer platform home with crisp green accents, monospaced code blocks, email signup, and subdued gray prose. An Aura flavor for code hosts, API docs and developer portals, observed November 2026."
 extends: "../../DESIGN.md"
 colors:
   primary: "#1f2328"
@@ -100,10 +100,6 @@ aura:
       code-bg: "#f6f8fa"
       code-inline-bg: "#eff1f3"
       code-border: "#d1d9e0"
-      tab-bg: "#f6f8fa"
-      tab-hover: "#eaeef2"
-      tab-active: "#ffffff"
-      tab-border: "#d1d9e0"
       counter-bg: "#eaeef2"
       counter-text: "#57606a"
       green: "#08872b"
@@ -116,12 +112,7 @@ aura:
       red-pale: "#ffebe9"
       purple: "#8250df"
       purple-pale: "#fbefff"
-      ui-sidebar: "#f6f8fa"
       ui-row-hover: "#f3f4f6"
-      ui-accent-green: "#1a7f37"
-      ui-accent-blue: "#0969da"
-      ui-accent-red: "#cf222e"
-      ui-accent-orange: "#d4700a"
     dark:
       band: "#161b22"
       band-alt: "#1c2128"
@@ -130,10 +121,6 @@ aura:
       code-bg: "#161b22"
       code-inline-bg: "#1c2128"
       code-border: "#30363d"
-      tab-bg: "#161b22"
-      tab-hover: "#1c2128"
-      tab-active: "#0d1117"
-      tab-border: "#30363d"
       counter-bg: "#1c2128"
       counter-text: "#8b949e"
       green: "#3fb950"
@@ -146,17 +133,12 @@ aura:
       red-pale: "#4c1f1f"
       purple: "#a371f7"
       purple-pale: "#2e1f47"
-      ui-sidebar: "#161b22"
       ui-row-hover: "#1c2128"
-      ui-accent-green: "#3fb950"
-      ui-accent-blue: "#58a6ff"
-      ui-accent-red: "#f85149"
-      ui-accent-orange: "#f0883e"
 ---
 
 # Verdantline
 
-> A clean, open developer platform home with crisp green accents, monospaced code blocks, versatile tab navigation, repository cards and subdued gray prose. Built on Aura.
+> A clean, open developer platform home with crisp green accents, monospaced code blocks, email signup, and subdued gray prose. Built on Aura.
 
 Source flavor: https://github.com/ (observed 2026-11-08). This file adapts its visual language to Aura. It is a **theme over Aura**, not a separate system: it changes color seeds, type, radius, shape, motion and voice. Everything it does not mention follows the base Aura spec at `extends`, resolved against this file's URL (13px grid, accent/gray step roles, Radix icons, forms, accessibility). Verdantline is a fictional developer platform demo; no name, logo, wordmark, mascot, copy, testimonial, person, blog post or platform mark of the source is reused, and every product vignette is an original drawing.
 
@@ -172,9 +154,9 @@ Source flavor: https://github.com/ (observed 2026-11-08). This file adapts its v
 
 | Kind | What |
 | --- | --- |
-| Observed (measured) | IBM Plex Sans body (16px/1.6); IBM Plex Mono for code (14px/1.6); display headings 72px weight 600 with tracking `-0.03em`, section heads 40px/1.2 weight 600; green accent light / dark; soft rounded corners 6px buttons, 12px cards; tab navigation with underline; repository cards with language dot, star count, description; subtle gray bands, code blocks with background, inline code; content max-width about 1248px; section padding about 100–110px; counters with rounded background; timeline component; sticky header; email signup input with adjacent green CTA |
-| Adapted by Verdantline | All type set in IBM Plex Sans and IBM Plex Mono (source uses system fonts and SFMono); every spacing value rounded to the 13px grid; original repository cards with fictional projects; original brand hue set (green, blue, orange, red, purple) for labels and status indicators; all copy; the shared Aura skeleton placed into the source's visual rhythm |
-| Not legible | Exact animation keyframes for tab transitions, hover states on navigation dropdowns, any authenticated repository flows, octicon vector paths |
+| Observed (measured) | IBM Plex Sans body (16px/1.6); IBM Plex Mono for code (14px/1.6); display headings 72px weight 600 with tracking `-0.03em`, section heads 40px/1.2 weight 600; green accent light / dark; soft rounded corners 6px buttons, 12px cards; subtle gray bands, code blocks with background, inline code; content max-width about 1248px; section padding about 100–110px; counters with rounded background; email signup input with adjacent green CTA; primary CTA labeled "Sign up for GitHub" (adapted as "Sign up" in Verdantline) |
+| Adapted by Verdantline | All type set in IBM Plex Sans and IBM Plex Mono (source uses system fonts and SFMono); every spacing value rounded to the 13px grid; original brand hue set (green, blue, orange, red, purple) for labels and status indicators; all copy; the shared Aura skeleton placed into the source's visual rhythm |
+| Not legible | Exact animation keyframes for hover states, any authenticated flows |
 
 **Dark mode note:** The reference was captured in `prefers-color-scheme: dark` only; no independent logged-out dark reference was observed (the page appeared light-themed in the screenshot). Dark mode values in this spec are designed adaptations based on typical developer platform patterns and semantic variable naming, not measured from a dark-mode reference screenshot.
 
@@ -187,34 +169,32 @@ An agent that receives this file's link inside an Aura project does this, in ord
 3. If the app uses `next/font`, load `IBM Plex Sans` (400, 500, 600) and `IBM Plex Mono` (400, 500) there instead of the `@import`, and point `--font-sans`, `--font-display` and `--font-label` at the IBM Plex Sans variable, and `--font-mono` at the IBM Plex Mono variable.
 4. Restyle with Aura components and token classes only, following **Components** below. No new literals in components.
 5. Keep the product's content. Do not import Verdantline's sample copy into an unrelated product.
-6. Verify at 360px, in dark mode and with `prefers-reduced-motion: reduce`, then check the Don't list.
+6. Verify at 360px, in dark mode and with `prefers-reduced-motion: reduce`, then check the Don't list and see signature-checklist.md for signature-work guidelines.
 
 > **Gray contrast:** Verdantline uses a neutral gray scale with cooler undertones. In light mode, `--gray-9` provides the subdued muted text role; in dark mode `--gray-9` becomes a lighter value. Inline code and metadata use this step. Body text uses `--gray-12` for full contrast.
 
 ## Overview
 
-Verdantline is a crisp, functional page with a developer-first aesthetic. The hero is paper: a bold centered headline (one or two lines), a muted subline explaining the platform's purpose, an email input field with placeholder text, and a green "Sign up" button adjacent to the input. Below, content alternates between white and soft gray bands. Repository cards dominate—white rectangles with rounded corners, 1px gray borders, a language color dot, star count badge, and three-line description. Tab navigation sits above many sections, using underlined active state. Code blocks appear frequently, with light gray backgrounds and monospaced type. Section headlines are left-aligned, bold, and spacious. Small rounded counters (pale gray background) show metrics. Color is restrained: green for primary actions and success states, blue for links, orange for warnings, red for errors, purple for special labels—all appearing sparingly. The page feels open, organized, and technically competent.
+Verdantline is a crisp, functional page with a developer-first aesthetic. The hero is paper: a bold centered headline (one or two lines), a muted subline explaining the platform's purpose, an email input field with placeholder text (observed: "you@domain.com"), and a green "Sign up" button adjacent to the input. Below, content alternates between white and soft gray bands. Code blocks appear frequently, with light gray backgrounds and monospaced type. Section headlines are left-aligned, bold, and spacious. Small rounded counters (pale gray background) show metrics. Color is restrained: green for primary actions and success states, blue for links, orange for warnings, red for errors, purple for special labels—all appearing sparingly. The page feels open, organized, and technically competent.
 
 ## Colors
 
-The accent is **green**: the source's primary action is a green button, so `accent-9` fills primary buttons, success badges, and verified indicators. Brand hues are custom tokens for status, labels, and language dots only. Exact steps come from `theme.css`.
+The accent is **green**: the source's primary action is a green button, so `accent-9` fills primary buttons, success badges, and verified indicators. Brand hues are custom tokens for status and labels only. Exact steps come from `theme.css`.
 
 | Role | Light | Dark | Use |
 | --- | --- | --- | --- |
 | Canvas | `--gray-1` | `--gray-1` (near-black) | Page |
 | Green button | `--accent-9`, hover `--accent-10`, label `--accent-contrast` | same steps (brighter green, dark label) | Primary buttons, success |
-| Soft button | `--gray-3`, hover `--gray-4` | `--gray-3`, hover `--gray-4` | Secondary buttons, tab inactive |
+| Soft button | `--gray-3`, hover `--gray-4` | `--gray-3`, hover `--gray-4` | Secondary buttons |
 | Band | `--band` | `--band` | Alternating section backgrounds |
-| Card | `--card-bg`, 1px `--card-border` | `--card-bg`, 1px `--card-border` | Repository cards, feature boxes |
+| Card | `--card-bg`, 1px `--card-border` | `--card-bg`, 1px `--card-border` | Feature boxes |
 | Code block | `--code-bg`, 1px `--code-border` | `--code-bg`, 1px `--code-border` | Pre blocks |
 | Inline code | `--code-inline-bg` | `--code-inline-bg` | Code spans |
-| Tab border | `--tab-border` bottom 1px, active 2px `--accent-9` | same | Tab underline |
 | Hairline | `--gray-5` | `--gray-6` | Dividers, list separators |
 | Field border | `--gray-7` | `--gray-7` | Inputs, select |
 | Headline / body | `--gray-12` / `--gray-12` | same steps | Text |
 | Muted text | `--gray-9` | `--gray-9` | Descriptions, metadata, inline code text |
 | Counter | `--counter-bg`, `--counter-text` | `--counter-bg`, `--counter-text` | Star counts, metrics |
-| Language dots | `--green`, `--blue`, `--orange`, `--red`, `--purple` | brighter variants | Repository language indicators |
 | Badge tints | `--green-pale`, `--blue-pale`, `--orange-pale`, `--red-pale`, `--purple-pale` with matching hue text | darker variants | Status labels, tags |
 
 - Focus ring: `--aura-outline: var(--accent-9) solid 2px` with 2px offset.
@@ -234,12 +214,11 @@ Reinterpret, do not invert, through semantic variables in one `.dark` block.
 | `--card-border` | light border | darker border |
 | `--code-bg` | light gray | darker gray |
 | `--code-inline-bg` | lighter gray | dark gray |
-| `--tab-active` | white | near-black |
 | Accent | green dark | green bright |
 | Gray muted | mid-gray | lighter gray |
 | Blue link | blue dark | blue bright |
 
-In dark mode, card borders remain visible at 1px `--card-border`. Code blocks gain slightly lighter background than canvas to maintain hierarchy. Language dots shift to brighter, more saturated variants.
+In dark mode, card borders remain visible at 1px `--card-border`. Code blocks gain slightly lighter background than canvas to maintain hierarchy.
 
 ## Typography
 
@@ -261,13 +240,11 @@ In dark mode, card borders remain visible at 1px `--card-border`. Code blocks ga
 | 1248 content | `max-w-96` | 1248 | Main wrap |
 | 1024 narrow | `max-w-78.5` | 1020.5 | Text sections |
 | 100–110 section | `py-8` | 104 | Section rhythm |
-| 52 large gap | `gap-4` | 52 | Repository card grids |
 | 32 medium gap | `gap-2.5` | 32.5 | Feature grids |
 | 16 small gap | `gap-1` | 13 | Card internal spacing |
-| 12 tight gap | `gap-1` | 13 | Tab items |
 | 8 counter gap | `gap-0.5` | 6.5 | Icon + text in counters |
 
-Verdantline uses a narrow column for prose (78.5 steps, about 1020px) but full width (96 steps, 1248px) for repository grids and feature cards. Section padding is 8 steps (104px vertical), creating a measured, spacious rhythm. Tab navigation sits in a `border-b` container with `--tab-border`; active tab gets `border-b-2 border-[--accent-9]` and `bg-[--tab-active]`. Repository cards are `rounded-md` (12px) with 1px `--card-border`, padding 1.5 steps (19.5px). Language dots are 8px circles, positioned inline before the language name.
+Verdantline uses a narrow column for prose (78.5 steps, about 1020px) but full width (96 steps, 1248px) for feature cards. Section padding is 8 steps (104px vertical), creating a measured, spacious rhythm.
 
 ## Elevation & Depth
 
@@ -279,16 +256,16 @@ Verdantline avoids shadows in favor of borders. Cards use 1px `--card-border` on
 - Cards: 12px radius (`rounded-lg`), 1px border, 1.5-step internal padding.
 - Code blocks: 6px radius, 1px border.
 - Inline code: 3px radius.
-- Tabs: no border radius; only bottom border changes.
 - Counters: 12px full radius (`rounded-full`), 4px vertical padding, 6px horizontal padding.
-- Language dots: 8px circles (`rounded-full`).
 - Inputs: 6px radius, 1px border.
 - Badges: 12px radius, 2px vertical padding, 6px horizontal padding.
 
-Consistency: all interactive elements use 6px base radius except counters and dots (full). Cards and surfaces use 12px. Avoid mixing radii within a component.
+Consistency: all interactive elements use 6px base radius except counters (full). Cards and surfaces use 12px. Avoid mixing radii within a component.
 
 ## Components
 
 All components below use Aura primitives and semantic tokens only. No literals beyond format strings.
 
 ### Hero (Paper)
+
+Centered on `--gray-1`, max-width 78.5 steps (prose column).

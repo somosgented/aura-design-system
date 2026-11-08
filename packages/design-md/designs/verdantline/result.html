@@ -53,7 +53,7 @@ document.documentElement.style.colorScheme = appearance;
 }
 .dark {
 --hero-cta: var(--accent-9);
---hero-cta-fg: var(--accent-contrast);
+--hero-cta-fg: var(--gray-12);
 --ink-button-bg: var(--gray-1);
 --ink-button-fg: var(--gray-12);
 --band: #1e1e1e;
@@ -102,6 +102,7 @@ a { color: inherit; }
 .btn.sm { height: calc(var(--aura) * 2.5); padding: 0 var(--aura); font-size: 0.83rem; }
 .btn-fill { background: var(--accent-9); color: var(--accent-contrast); }
 .btn-fill:hover { background: var(--accent-10); }
+.dark .btn-fill { color: var(--hero-cta-fg); }
 .btn-soft { background: var(--pill-soft); color: var(--gray-12); }
 .btn-soft:hover { background: var(--pill-soft-hover); }
 .btn-ink { background: var(--ink-button-bg); color: var(--ink-button-fg); }
@@ -127,7 +128,7 @@ a { color: inherit; }
 .nav-search { position: relative; }
 .nav-search input { width: calc(var(--aura) * 12); height: calc(var(--aura) * 2.5); padding: 0 var(--aura); border: 1px solid var(--gray-7); border-radius: 6px; background: var(--aura-input-bg); color: var(--gray-12); font: inherit; font-size: 0.83rem; }
 .nav-search input::placeholder { color: var(--aura-input-placeholder-color); }
-.nav-search input:focus-visible { outline: 2px solid var(--accent-9); outline-offset: 2px; border-color: var(--accent-9); }
+.nav-search input:focus-visible { outline: 0; border-color: var(--accent-9); box-shadow: 0 0 0 2px var(--accent-9); }
 
 .hero { padding: calc(var(--aura) * 6) 0 calc(var(--aura) * 8); text-align: center; }
 .hero h1 { max-width: calc(var(--aura) * 62); margin: 0 auto; }
@@ -136,10 +137,11 @@ a { color: inherit; }
 .hero-pill { display: inline-block; padding: calc(var(--aura) * 0.4) calc(var(--aura) * 0.8); border-radius: 999px; background: var(--pill-soft); color: var(--gray-12); font-size: 0.83rem; font-weight: 500; margin-bottom: calc(var(--aura) * 2); }
 .btn-hero-primary { background: var(--hero-cta); color: var(--hero-cta-fg); }
 .btn-hero-primary:hover { opacity: 0.92; }
+.dark .btn-hero-primary { color: var(--hero-cta-fg); }
 .hero-email { display: flex; align-items: center; gap: 0; border: 1px solid var(--gray-7); border-radius: 6px; overflow: hidden; }
 .hero-email input { height: calc(var(--aura) * 3.5); width: calc(var(--aura) * 18); padding: 0 var(--aura); border: 0; background: var(--aura-input-bg); color: var(--gray-12); font: inherit; font-size: 0.94rem; }
 .hero-email input::placeholder { color: var(--aura-input-placeholder-color); }
-.hero-email input:focus-visible { outline: 2px solid var(--accent-9); outline-offset: 2px; border-color: var(--accent-9); }
+.hero-email input:focus-visible { outline: 0; border-color: var(--accent-9); box-shadow: 0 0 0 2px var(--accent-9); }
 .hero-email .btn { border-radius: 0; }
 @media (max-width: 600px) {
 .cta { flex-direction: column; align-items: stretch; }
@@ -248,7 +250,7 @@ form { display: grid; gap: calc(var(--aura) * 1.25); }
 .field label { font-weight: 500; font-size: 0.88rem; }
 .field input, .field select { height: calc(var(--aura) * 3); padding: 0 var(--aura); border: 1px solid var(--gray-7); border-radius: calc(var(--aura) * 0.75); background: var(--aura-input-bg); color: var(--gray-12); font: inherit; font-size: 0.94rem; }
 .field input::placeholder { color: var(--aura-input-placeholder-color); }
-.field input:focus-visible { outline: 2px solid var(--accent-9); outline-offset: 2px; border-color: var(--accent-9); }
+.field input:focus-visible, .field select:focus-visible { outline: 0; border-color: var(--accent-9); box-shadow: 0 0 0 2px var(--accent-9); }
 .field select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 15 15'%3E%3Cpath d='M4 6l3.5 3.5L11 6' fill='none' stroke='%235c5c5c' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right var(--aura) center; padding-right: calc(var(--aura) * 2.5); }
 .field [aria-invalid="true"] { border-color: var(--ui-red); }
 .err { color: var(--ui-red); font-size: 0.83rem; }
