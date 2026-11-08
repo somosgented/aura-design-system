@@ -7,6 +7,7 @@ import {
 
 import AuraAesthetic from "@/components/AuraAesthetic";
 import { HomeBand } from "@/components/home/HomeBand";
+import { HomeFlavors } from "@/components/home/HomeFlavors";
 import HeroSection from "@/components/HeroSection";
 import HomeAgentic from "@/components/HomeAgentic";
 import HomeDocSection from "@/components/HomeDocSection";
@@ -112,6 +113,8 @@ export default function HomePage() {
           ))}
         </div>
       </HomeBand>
+
+      <HomeFlavors />
 
       <HomeBand graph>
         <div className="flex flex-col gap-2">
