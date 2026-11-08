@@ -5,11 +5,13 @@ description: What an agent loads in an Aura project, when it loads it, and which
 
 ## How an agent reads an Aura project
 
+`.agents/` is the one home for agent files, whatever the tool. `aura blueprint` writes a managed block into the root `AGENTS.md` that tells every agent to apply `.agents/rules/` and load skills from `.agents/skills/`, and a `CLAUDE.md` that imports it. Leftover `.cursor/rules` and `.cursor/skills` move into `.agents/`.
+
 Three kinds of files steer an agent. A rule is a limit that always applies. A skill is a procedure the agent loads when the task matches its description. `DESIGN.md` is the narrative spec both point to.
 
 | Layer | Path | Loaded | Holds |
 | --- | --- | --- | --- |
-| Always-on rules | `.agents/rules/*.mdc` | Every turn. Cursor reads the directory directly | Process policy: feature map, no comments, the `DESIGN.md` pointer, and Bruno on backends |
+| Always-on rules | `.agents/rules/*.mdc` | Every turn. The root `AGENTS.md` points every agent at it | Process policy: feature map, no comments, the `DESIGN.md` pointer, and Bruno on backends |
 | Aura skill | `.agents/skills/aura/` | When the task is UI | Design guardrails: color, type, 13px spacing, icons, motion, forms, lint |
 | Procedure skills | `.agents/skills/<name>/` | When the task matches the skill description | Steps: forms, UI verify, porting, feature map, brand images |
 | Narrative spec | `DESIGN.md` | When reasoning about tokens or brand | Theme, color roles, the grid, motion, product principles |

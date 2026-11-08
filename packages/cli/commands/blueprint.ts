@@ -5,7 +5,8 @@ import { dirname, join, resolve } from "path";
 import { fileURLToPath } from "url";
 import { installFormStack, syncFormAgentFiles } from "./forms-stack.js";
 import { applyGdpToProject } from "./gdp.js";
-import { ensureAgentsRules, migrateLegacySkill } from "./rules-link.js";
+import { ensureAgentsRules, migrateCursorSkills, migrateLegacySkill } from "./rules-link.js";
+import { ensureAgentsEntry } from "./agents-entry.js";
 import { installerOptions } from "../utils/run.js";
 import {
   isNodeStack,
@@ -417,6 +418,8 @@ export function scaffoldBlueprintFiles(
   retireProjectBrain(projectRoot);
   ensureAgentsRules(projectRoot);
   retireUpstreamSkills(projectRoot);
+  migrateCursorSkills(projectRoot);
+  ensureAgentsEntry(projectRoot);
   scaffoldFeatureMap(projectRoot, suffix, force, profile.images);
   scaffoldNoCommentsRule(projectRoot, force);
   if (profile.react) syncFormAgentFiles(projectRoot, force);
