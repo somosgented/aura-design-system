@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reelnight · Aura flavor</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/aura/main.css" />
+    <link rel="stylesheet" href="theme.css" />
+    <script>
+      (function () {
+        var appearance = new URLSearchParams(window.location.search).get("appearance") === "dark" ? "dark" : "light";
+        document.documentElement.classList.add(appearance);
+        document.documentElement.style.colorScheme = appearance;
+      })();
+    </script>
+    <style>
+      :root {
+        --aura-accents-primary: var(--accent-9);
+        --aura-text-primary-inverse: var(--accent-contrast);
+        --aura-button-hover: var(--action-hover);
+        --aura-outline: var(--gray-12) solid 2px;
+        --aura-input-bg: var(--field-surface);
+        --ease-button: cubic-bezier(0.4, 0, 0.68, 0.06);
+        --ease-panel: cubic-bezier(0.32, 0.94, 0.6, 1);
+        --veil-strong: color-mix(in srgb, var(--screen) 92%, transparent);
+        --veil-soft: color-mix(in srgb, var(--screen) 70%, transparent);
+        --hero-ink: var(--screen-ink);
+        --arc-edge: linear-gradient(90deg, transparent 4%, var(--poster-plum) 18%, var(--accent-9) 50%, var(--poster-plum) 82%, transparent 96%);
+        --arc-light: color-mix(in srgb, var(--arc-glow) 28%, transparent);
+        --promo-bg: linear-gradient(91deg, var(--promo-from), var(--promo-to));
+        --reason-bg: linear-gradient(149deg, var(--card-from) 0%, var(--card-to) 96.86%);
+        --soft-fill: var(--gray-a5);
+        --soft-fill-hover: var(--gray-a6);
+        --rank-fill: var(--gray-1);
+        --rank-stroke: var(--gray-12);
+        --nav-chip: var(--gray-a3);
+        --field-under: color-mix(in srgb, var(--screen) 80%, transparent);
+      }
+
+      .dark {
+        --veil-strong: color-mix(in srgb, var(--screen) 85%, transparent);
+        --veil-soft: color-mix(in srgb, var(--screen) 60%, transparent);
+        --arc-light: color-mix(in srgb, var(--arc-glow) 40%, transparent);
+        --soft-fill: var(--gray-a8);
+        --soft-fill-hover: var(--gray-a7);
+      }
+
+      * { box-sizing: border-box; }
+
+      html { font-size: 16px; background: var(--gray-1); }
+
+      body {
+        margin: 0;
+        overflow-x: hidden;
+        background: var(--gray-1);
+        color: var(--gray-12);
+        font-family: var(--aura-font-stack);
+        line-height: 1.5;
+      }
+
+      a { color: inherit; }
+
+      h1, h2, h3, p, figure, ul, ol, dl, dd { margin: 0; }
+
+      ul, ol { padding: 0; list-style: none; }
+
+      h1, h2, h3 { font-family: var(--aura-font-display); text-wrap: balance; }
+
+      :focus-visible { outline: var(--aura-outline); outline-offset: 2px; }
+
+      [id] { scroll-margin-top: calc(var(--aura) * 2); }
+
+      .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+      .skip {
+        position: absolute;
+        left: calc(var(--aura) * 1);
+        top: calc(var(--aura) * -4);
+        padding: calc(var(--aura) * 0.5) calc(var(--aura) * 1);
+        background: var(--accent-9);
+        color: var(--accent-contrast);
+        border-radius: 4px;
+        z-index: 30;
+      }
+
+      .skip:focus { top: calc(var(--aura) * 1); }
+
+      .wrap { width: min(100% - var(--aura) * 3.5, var(--aura) * 75.5); margin-inline: auto; }
+
+      .icon { width: 15px; height: 15px; flex: none; }
+
+      .muted { color: var(--gray-11); }
+
+      .note { font-size: 0.8125rem; color: var(--gray-11); }
+
+      body .btn {
+        border: 0;
+        font-weight: 500;
+        line-height: 1;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: background-color 250ms var(--ease-button);
+      }
+
+      body .btn.btn:hover:hover:not(:disabled),
+      body .btn.btn:active:hover:not(:disabled) { transform: none; }
+
+      body .button-fill.btn:active:not(:disabled) { background-color: var(--action-pressed); outline: none; }
+
+      body .button-pill.btn.soft { background: var(--soft-fill); color: var(--gray-12); }
+
+      body .button-pill.btn.soft:hover:not(:disabled) { background: var(--soft-fill-hover); }
+
+      .btn-sm { height: calc(var(--aura) * 2.5); padding-inline: calc(var(--aura) * 1); font-size: 0.875rem; }
+
+      .btn-md { height: calc(var(--aura) * 3); padding-inline: calc(var(--aura) * 1.25); font-size: 1rem; }
+
+      .btn-lg { height: calc(var(--aura) * 4); padding-inline: calc(var(--aura) * 2); font-size: clamp(1.125rem, 2vw, 1.5rem); }
+
+      .btn-lg .icon { width: 1em; height: 1em; }
+
+      .wordmark {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        color: var(--accent-9);
+        font-family: var(--aura-font-display);
+        font-weight: 900;
+        font-size: clamp(1.375rem, 3vw, 2.25rem);
+        letter-spacing: -0.02em;
+        line-height: 1;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+
+      .wordmark svg { width: 100%; height: calc(var(--aura) * 0.5); margin-top: 2px; }
+
+      .site-head { position: relative; z-index: 3; }
+
+      .nav { display: flex; align-items: center; justify-content: space-between; gap: calc(var(--aura) * 1); padding-block: calc(var(--aura) * 2); }
+
+      .nav-end { display: flex; align-items: center; gap: calc(var(--aura) * 1); }
+
+      .lang { position: relative; display: inline-flex; align-items: center; }
+
+      .lang .globe { position: absolute; left: calc(var(--aura) * 0.75); pointer-events: none; }
+
+      .lang .caret { position: absolute; right: calc(var(--aura) * 0.75); pointer-events: none; }
+
+      .lang select {
+        appearance: none;
+        height: calc(var(--aura) * 2.5);
+        padding: 0 calc(var(--aura) * 2.5) 0 calc(var(--aura) * 2.5);
+        border: 1px solid var(--field-line);
+        border-radius: 4px;
+        background: var(--field-surface);
+        color: var(--gray-12);
+        font: inherit;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      .lang select option { color: var(--gray-12); background: var(--gray-2); }
+
+      .hero { position: relative; isolation: isolate; min-height: calc(var(--aura) * 62); margin-top: calc(var(--aura) * -7); overflow: clip; color: var(--hero-ink); }
+
+      .wall {
+        position: absolute;
+        inset: -30% -25% -20% -25%;
+        z-index: -2;
+        display: grid;
+        grid-template-columns: repeat(14, 1fr);
+        gap: calc(var(--aura) * 1);
+        transform: perspective(1200px) rotateX(16deg) rotateZ(-9deg) scale(1.05);
+        transform-origin: 50% 40%;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background:
+          radial-gradient(11% 56% at 17% 50%, color-mix(in srgb, var(--ember) 70%, transparent) 0%, transparent 100%),
+          radial-gradient(11% 56% at 83% 50%, color-mix(in srgb, var(--ember) 70%, transparent) 0%, transparent 100%),
+          linear-gradient(0deg, var(--veil-strong) 0%, var(--veil-soft) 45%, var(--veil-strong) 100%);
+      }
+
+      .hero-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: calc(var(--aura) * 1);
+        max-width: calc(var(--aura) * 45.5);
+        margin-inline: auto;
+        padding: calc(var(--aura) * 16) calc(var(--aura) * 1.5) calc(var(--aura) * 12.5);
+        text-align: center;
+      }
+
+      .hero h1 { font-size: clamp(2rem, 4.6vw, 3.5rem); font-weight: 800; line-height: 1.25; letter-spacing: -0.01em; }
+
+      .price-line { font-size: clamp(1rem, 1.6vw, 1.25rem); font-weight: 600; }
+
+      .ask { font-size: 1rem; line-height: 1.5; font-weight: 400; margin-top: calc(var(--aura) * 1); }
+
+      .signup { width: 100%; }
+
+      .signup-row { display: flex; gap: calc(var(--aura) * 0.5); justify-content: center; align-items: flex-start; }
+
+      .field { position: relative; flex: 1 1 auto; min-width: 0; text-align: left; }
+
+      .field input {
+        width: 100%;
+        height: calc(var(--aura) * 4);
+        padding: calc(var(--aura) * 1.75) calc(var(--aura) * 1.25) calc(var(--aura) * 0.5);
+        border: 1px solid var(--field-line);
+        border-radius: 4px;
+        background: linear-gradient(var(--field-surface), var(--field-surface)), var(--field-under);
+        color: var(--gray-12);
+        font: inherit;
+        font-size: 1rem;
+      }
+
+      .field label {
+        position: absolute;
+        left: calc(var(--aura) * 1.25);
+        top: 50%;
+        transform: translateY(-50%);
+        transform-origin: 0 0;
+        color: var(--gray-11);
+        font-size: 1rem;
+        pointer-events: none;
+      }
+
+      .field input:not(.default) + label { opacity: 1; z-index: 1; cursor: text; }
+
+      .field input:focus + label,
+      .field input:not(:placeholder-shown) + label { top: calc(var(--aura) * 0.5); transform: none; font-size: 0.75rem; }
+
+      .field input[aria-invalid="true"] { border-color: var(--alert-ink); }
+
+      .field-msg { display: flex; align-items: center; gap: calc(var(--aura) * 0.5); min-height: 0; margin-top: calc(var(--aura) * 0.5); font-size: 0.875rem; color: var(--alert-ink); }
+
+      .field-msg:empty { display: none; }
+
+      .hero .field-msg { width: fit-content; padding: 2px calc(var(--aura) * 0.5); border-radius: 4px; background: var(--field-under); }
+
+      .form-status { margin-top: calc(var(--aura) * 0.5); font-size: 0.875rem; color: var(--ok-ink); font-weight: 500; }
+
+      .form-status:empty { display: none; }
+
+      .hero .form-status { color: var(--hero-ink); }
+
+      .arc-clip { height: calc(var(--aura) * 7.5); margin-top: calc(var(--aura) * -7.5); overflow: clip; }
+
+      .arc {
+        position: relative;
+        height: calc(var(--aura) * 7.5);
+        margin-inline: -15%;
+        border-top: 4px solid transparent;
+        border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+        background:
+          radial-gradient(50% 500% at 50% -420%, var(--arc-light) 80%, transparent 100%) padding-box,
+          linear-gradient(var(--gray-1), var(--gray-1)) padding-box,
+          var(--arc-edge) border-box;
+      }
+
+      .promo {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: calc(var(--aura) * 1.5);
+        margin-top: calc(var(--aura) * -3.5);
+        padding: calc(var(--aura) * 1) calc(var(--aura) * 2.5);
+        border-radius: 16px;
+        background: var(--promo-bg);
+        color: var(--gray-12);
+      }
+
+      .promo-mark { flex: none; display: grid; place-items: center; width: calc(var(--aura) * 5); height: calc(var(--aura) * 5); margin-block: calc(var(--aura) * -2) 0; margin-left: calc(var(--aura) * -4); border-radius: 50%; background: radial-gradient(circle at 50% 40%, var(--accent-9), var(--poster-plum)); color: var(--accent-contrast); }
+
+      .promo-mark svg { width: 55%; height: 55%; }
+
+      .promo h3 { font-size: 1.25rem; font-weight: 600; line-height: 1.25; }
+
+      .promo p { font-size: 1rem; }
+
+      .promo .btn { margin-left: auto; }
+
+      .section { padding-top: calc(var(--aura) * 5.5); }
+
+      .section-title { font-size: clamp(1.125rem, 2vw, 1.5rem); font-weight: 600; line-height: 1.25; }
+
+      .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: calc(var(--aura) * 1); }
+
+      .trend { position: relative; margin-top: calc(var(--aura) * 2); }
+
+      .trend-list {
+        display: flex;
+        gap: calc(var(--aura) * 1);
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        padding-block: calc(var(--aura) * 1);
+        margin-block: calc(var(--aura) * -1);
+        padding-inline: 2px;
+      }
+
+      .trend-list::-webkit-scrollbar { display: none; }
+
+      .trend-item { position: relative; flex: none; scroll-snap-align: start; padding-left: calc(var(--aura) * 2.5); }
+
+      .trend-item button {
+        display: block;
+        padding: 0;
+        border: 0;
+        background: none;
+        color: inherit;
+        font: inherit;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: transform 200ms ease-in-out;
+      }
+
+      .rank {
+        position: absolute;
+        left: 0;
+        bottom: calc(var(--aura) * -0.5);
+        z-index: 1;
+        font-family: var(--aura-font-display);
+        font-weight: 800;
+        font-size: 100px;
+        line-height: 1;
+        color: var(--rank-fill);
+        -webkit-text-stroke: 4px var(--rank-stroke);
+        paint-order: stroke fill;
+        text-shadow: 0 0 1.5rem color-mix(in srgb, var(--screen) 50%, transparent);
+        pointer-events: none;
+      }
+
+      .poster {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        width: calc(var(--aura) * 14);
+        aspect-ratio: 182 / 253.5;
+        padding: calc(var(--aura) * 1);
+        overflow: hidden;
+        border-radius: 8px;
+        background: var(--tile);
+        color: var(--accent-contrast);
+        text-align: left;
+      }
+
+      .poster::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(60% 45% at var(--x, 70%) var(--y, 30%), color-mix(in srgb, var(--hue2) 85%, transparent), transparent 70%),
+          linear-gradient(160deg, var(--hue1), color-mix(in srgb, var(--hue1) 35%, black));
+      }
+
+      .poster::after {
+        content: "";
+        position: absolute;
+        left: 8%;
+        right: 8%;
+        top: 18%;
+        aspect-ratio: 1;
+        border-radius: var(--shape, 50%);
+        border: 3px solid color-mix(in srgb, white 35%, transparent);
+        transform: rotate(var(--turn, 0deg));
+      }
+
+      .poster .badge-mark { position: absolute; top: calc(var(--aura) * 0.5); left: calc(var(--aura) * 0.5); z-index: 1; width: 14px; height: 18px; border-radius: 2px; background: var(--accent-9); }
+
+      .poster .badge-mark::after { content: ""; position: absolute; left: 3px; right: 3px; bottom: 4px; height: 4px; border-top: 2px solid var(--accent-contrast); border-radius: 50% 50% 0 0 / 100% 100% 0 0; }
+
+      .poster b { position: relative; z-index: 1; font-family: var(--aura-font-display); font-weight: 800; font-size: 1.125rem; line-height: 1.05; text-transform: uppercase; text-shadow: 0 1px 2px color-mix(in srgb, black 60%, transparent); }
+
+      .p1 { --hue1: var(--poster-crimson); --hue2: var(--poster-amber); }
+      .p2 { --hue1: var(--poster-indigo); --hue2: var(--poster-teal); --shape: 12%; --turn: 18deg; --x: 30%; }
+      .p3 { --hue1: var(--poster-teal); --hue2: var(--poster-amber); --shape: 50% 50% 0 0; --y: 60%; }
+      .p4 { --hue1: var(--poster-plum); --hue2: var(--poster-crimson); --shape: 4%; --turn: 45deg; }
+      .p5 { --hue1: var(--poster-amber); --hue2: var(--poster-plum); --x: 20%; --y: 70%; }
+      .p6 { --hue1: var(--poster-indigo); --hue2: var(--poster-crimson); --shape: 50% 0; --turn: -20deg; }
+
+      .wall .poster { width: 100%; padding: calc(var(--aura) * 0.5); }
+
+      .wall .poster b { font-size: 0.5rem; }
+
+      .trend-arrow {
+        position: absolute;
+        top: 50%;
+        z-index: 2;
+        display: grid;
+        place-items: center;
+        width: calc(var(--aura) * 1.75);
+        height: calc(var(--aura) * 9);
+        transform: translateY(-50%);
+        padding: 0;
+        border: 0;
+        border-radius: 8px;
+        background: var(--nav-chip);
+        color: var(--gray-11);
+        cursor: pointer;
+        transition: opacity 400ms ease-in-out;
+      }
+
+      .trend-arrow[hidden] { display: grid; opacity: 0; pointer-events: none; visibility: hidden; }
+
+      .trend-arrow.prev { left: calc(var(--aura) * -2.25); }
+
+      .trend-arrow.next { right: calc(var(--aura) * -2.25); }
+
+      .trend-arrow:hover { color: var(--gray-12); }
+
+      .reasons { display: grid; grid-template-columns: repeat(4, 1fr); gap: calc(var(--aura) * 1); margin-top: calc(var(--aura) * 2); }
+
+      .reason {
+        position: relative;
+        min-height: calc(var(--aura) * 25);
+        padding: calc(var(--aura) * 2) calc(var(--aura) * 1) calc(var(--aura) * 10);
+        border-radius: 16px;
+        background: var(--reason-bg);
+      }
+
+      .reason h3 { font-size: clamp(1.25rem, 2vw, 1.5rem); font-weight: 600; line-height: 1.25; }
+
+      .reason p { margin-top: calc(var(--aura) * 1); color: var(--gray-11); font-size: 1rem; line-height: 1.35; }
+
+      .reason .art { position: absolute; right: calc(var(--aura) * 1); bottom: calc(var(--aura) * 1); width: calc(var(--aura) * 5.5); height: calc(var(--aura) * 5.5); }
+
+      .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: calc(var(--aura) * 0.5); margin-top: calc(var(--aura) * 2); }
+
+      .stat { padding: calc(var(--aura) * 1.5) calc(var(--aura) * 1.5); background: var(--panel); }
+
+      .stat:first-child { border-radius: 16px 0 0 16px; }
+
+      .stat:last-child { border-radius: 0 16px 16px 0; }
+
+      .stat strong { display: block; font-family: var(--aura-font-display); font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-weight: 800; line-height: 1.1; }
+
+      .stat span { color: var(--gray-11); font-size: 0.875rem; }
+
+      .seg { display: inline-flex; padding: 3px; gap: 3px; border-radius: 4px; background: var(--panel); }
+
+      .seg button {
+        height: calc(var(--aura) * 2.5);
+        padding-inline: calc(var(--aura) * 1);
+        border: 0;
+        border-radius: 3px;
+        background: transparent;
+        color: var(--gray-11);
+        font: inherit;
+        font-size: 0.875rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 250ms var(--ease-button);
+      }
+
+      .seg button:hover { color: var(--gray-12); }
+
+      .seg button[aria-pressed="true"] { background: var(--gray-1); color: var(--gray-12); }
+
+      .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: calc(var(--aura) * 1); margin-top: calc(var(--aura) * 2); }
+
+      .plan { display: flex; flex-direction: column; overflow: hidden; border-radius: 16px; background: var(--panel); }
+
+      .plan-head { padding: calc(var(--aura) * 1.5); background: var(--reason-bg); }
+
+      .plan.featured .plan-head { background: linear-gradient(149deg, var(--accent-9), var(--poster-plum)); color: var(--accent-contrast); }
+
+      .plan h3 { font-size: 1.25rem; font-weight: 600; }
+
+      .plan-head p { font-size: 0.875rem; opacity: 0.85; }
+
+      .plan dl { display: grid; gap: calc(var(--aura) * 0.75); padding: calc(var(--aura) * 1.5); flex: 1; }
+
+      .plan dl div { display: grid; gap: 2px; padding-bottom: calc(var(--aura) * 0.75); border-bottom: 1px solid var(--gray-a5); }
+
+      .plan dt { color: var(--gray-11); font-size: 0.875rem; }
+
+      .plan dd { font-weight: 600; }
+
+      .plan .btn { margin: 0 calc(var(--aura) * 1.5) calc(var(--aura) * 1.5); }
+
+      .table-wrap { margin-top: calc(var(--aura) * 2); overflow-x: auto; border-radius: 16px; background: var(--panel); }
+
+      table { width: 100%; border-collapse: collapse; font-size: 0.9375rem; }
+
+      caption { padding: calc(var(--aura) * 1) calc(var(--aura) * 1.5) 0; text-align: left; color: var(--gray-11); font-size: 0.8125rem; }
+
+      th, td { padding: calc(var(--aura) * 1) calc(var(--aura) * 1.5); text-align: left; white-space: nowrap; }
+
+      thead th { color: var(--gray-11); font-weight: 500; font-size: 0.8125rem; border-bottom: 1px solid var(--gray-a5); }
+
+      tbody tr + tr td { border-top: 1px solid var(--gray-a4); }
+
+      .badge { display: inline-flex; align-items: center; height: calc(var(--aura) * 1.75); padding-inline: calc(var(--aura) * 0.5); border-radius: 4px; background: var(--gray-a4); font-size: 0.8125rem; font-weight: 500; }
+
+      .badge.new { background: var(--accent-9); color: var(--accent-contrast); }
+
+      .faq { display: grid; gap: calc(var(--aura) * 0.5); margin-top: calc(var(--aura) * 2); }
+
+      .faq h3 { font-size: clamp(1.125rem, 2vw, 1.5rem); font-weight: 400; line-height: 1.25; font-family: var(--aura-font-stack); }
+
+      .faq-trigger {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: calc(var(--aura) * 1);
+        width: 100%;
+        padding: calc(var(--aura) * 2);
+        border: 0;
+        background: var(--panel);
+        color: var(--gray-12);
+        font: inherit;
+        text-align: left;
+        cursor: pointer;
+        transition: background-color 250ms var(--ease-button);
+      }
+
+      .faq-trigger:hover { background: var(--panel-hover); }
+
+      .faq-trigger svg { width: calc(var(--aura) * 2.5); height: calc(var(--aura) * 2.5); flex: none; transition: transform 250ms var(--ease-panel); }
+
+      .faq-trigger[aria-expanded="true"] svg { transform: rotate(45deg); }
+
+      .faq-panel { display: grid; grid-template-rows: 0fr; margin-top: 1px; background: var(--panel); transition: grid-template-rows 250ms var(--ease-panel); }
+
+      .faq-panel[data-open="true"] { grid-template-rows: 1fr; }
+
+      .faq-panel > div { overflow: hidden; }
+
+      .faq-panel p { padding: calc(var(--aura) * 2); font-size: clamp(1.125rem, 2vw, 1.5rem); line-height: 1.35; }
+
+      .faq-panel p + p { padding-top: 0; }
+
+      .faq-panel:not([data-open="true"]) { visibility: hidden; }
+
+      .closing { padding-top: calc(var(--aura) * 4); text-align: center; }
+
+      .closing .signup { max-width: calc(var(--aura) * 60); margin: calc(var(--aura) * 1) auto 0; }
+
+      footer { padding-block: calc(var(--aura) * 5.5) calc(var(--aura) * 5); color: var(--gray-11); }
+
+      .foot-q { font-size: 1rem; }
+
+      .foot-q a { color: inherit; }
+
+      .foot-links { display: grid; grid-template-columns: repeat(4, 1fr); gap: calc(var(--aura) * 1) calc(var(--aura) * 1); margin-top: calc(var(--aura) * 2); font-size: 0.875rem; }
+
+      .foot-links a { color: var(--gray-11); text-decoration: underline; text-underline-offset: 2px; border-radius: 2px; }
+
+      .foot-links a:hover { color: var(--gray-12); }
+
+      footer .lang { margin-top: calc(var(--aura) * 2.5); }
+
+      .legal { margin-top: calc(var(--aura) * 2); font-size: 0.8125rem; }
+
+      dialog {
+        width: min(100% - var(--aura) * 2, var(--aura) * 50);
+        padding: 0;
+        border: 0;
+        border-radius: 8px;
+        background: var(--gray-2);
+        color: var(--gray-12);
+        overflow: hidden;
+      }
+
+      dialog::backdrop { background: color-mix(in srgb, var(--screen) 75%, transparent); }
+
+      .dlg-media { position: relative; display: flex; align-items: flex-end; min-height: calc(var(--aura) * 17); padding: calc(var(--aura) * 2); }
+
+      .dlg-media .poster { position: absolute; inset: 0; width: auto; aspect-ratio: auto; border-radius: 0; }
+
+      .dlg-media .poster::after { left: 55%; right: 8%; top: 12%; }
+
+      .dlg-media h2 { position: relative; z-index: 1; color: var(--accent-contrast); font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 800; line-height: 1.05; text-transform: uppercase; }
+
+      .dlg-body { display: grid; gap: calc(var(--aura) * 1); padding: calc(var(--aura) * 2); }
+
+      .dlg-meta { display: flex; flex-wrap: wrap; gap: calc(var(--aura) * 0.5); }
+
+      .dlg-close {
+        position: absolute;
+        top: calc(var(--aura) * 1);
+        right: calc(var(--aura) * 1);
+        z-index: 2;
+        display: grid;
+        place-items: center;
+        width: calc(var(--aura) * 3);
+        height: calc(var(--aura) * 3);
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: color-mix(in srgb, var(--screen) 60%, transparent);
+        color: var(--screen-ink);
+        cursor: pointer;
+      }
+
+      .dlg-plain { display: grid; gap: calc(var(--aura) * 1); padding: calc(var(--aura) * 2.5) calc(var(--aura) * 2); }
+
+      .dlg-plain h2 { font-size: 1.5rem; font-weight: 700; }
+
+      .dlg-plain .btn { justify-self: start; }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .trend-item button:hover { transform: scale(1.05); }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; }
+      }
+
+      @media (max-width: 960px) {
+        .reasons { grid-template-columns: repeat(2, 1fr); }
+        .plans { grid-template-columns: 1fr; }
+        .stats { grid-template-columns: repeat(2, 1fr); }
+        .stat:first-child { border-radius: 16px 0 0 0; }
+        .stat:nth-child(2) { border-radius: 0 16px 0 0; }
+        .stat:nth-child(3) { border-radius: 0 0 0 16px; }
+        .stat:last-child { border-radius: 0 0 16px 0; }
+        .foot-links { grid-template-columns: repeat(2, 1fr); }
+      }
+
+      @media (max-width: 600px) {
+        .wrap { width: calc(100% - var(--aura) * 3.5); }
+        .nav { padding-block: calc(var(--aura) * 1.5); }
+        .lang.compact select { width: calc(var(--aura) * 5); padding-right: calc(var(--aura) * 1.5); color: transparent; }
+        .lang.compact .caret { right: calc(var(--aura) * 0.5); }
+        .hero { min-height: 0; margin-top: calc(var(--aura) * -6); }
+        .hero-body { padding: calc(var(--aura) * 9.5) calc(var(--aura) * 1) calc(var(--aura) * 7.5); gap: calc(var(--aura) * 0.75); }
+        .wall { grid-template-columns: repeat(9, 1fr); inset: -10% -70% -10% -70%; }
+        .signup-row { flex-direction: column; align-items: stretch; }
+        .field input { height: calc(var(--aura) * 3.5); padding-top: calc(var(--aura) * 1.5); }
+        .hero .signup-row .btn, .closing .signup-row .btn { align-self: center; }
+        .btn-lg { height: calc(var(--aura) * 3.5); padding-inline: calc(var(--aura) * 1.25); }
+        .promo { flex-wrap: wrap; padding: calc(var(--aura) * 1.5); }
+        .promo-mark { margin: calc(var(--aura) * -3.5) 0 0 0; width: calc(var(--aura) * 4); height: calc(var(--aura) * 4); }
+        .promo > div { flex-basis: 100%; }
+        .promo .btn { margin-left: 0; }
+        .trend-item { padding-left: calc(var(--aura) * 1.75); }
+        .poster { width: calc(var(--aura) * 8.5); }
+        .poster b { font-size: 0.8125rem; }
+        .rank { font-size: 64px; -webkit-text-stroke-width: 3px; }
+        .trend-arrow { display: none; }
+        .trend-arrow[hidden] { display: none; }
+        .reasons { grid-template-columns: 1fr; }
+        .reason { min-height: 0; padding: calc(var(--aura) * 1.5) calc(var(--aura) * 1.5) calc(var(--aura) * 7); }
+        .faq-trigger { padding: calc(var(--aura) * 1.5); }
+        .faq-trigger svg { width: calc(var(--aura) * 1.75); height: calc(var(--aura) * 1.75); }
+        .faq-panel p { padding: calc(var(--aura) * 1.5); }
+        .closing { text-align: left; }
+        .closing .signup-row .btn { align-self: flex-start; }
+        .foot-links { grid-template-columns: 1fr; }
+        th, td { padding-inline: calc(var(--aura) * 1); }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Saltar al contenido</a>
+    <header class="site-head">
+      <nav class="wrap nav" aria-label="Principal">
+        <a class="wordmark" href="#top" aria-label="Reelnight, inicio">Reelnight<svg viewBox="0 0 100 6" preserveAspectRatio="none" aria-hidden="true"><path d="M2 5.5Q50 -3 98 5.5" fill="none" stroke="currentColor" stroke-width="2" /></svg></a>
+        <div class="nav-end">
+          <span class="lang compact">
+            <svg class="icon globe" viewBox="0 0 15 15" fill="none" aria-hidden="true"><circle cx="7.5" cy="7.5" r="6" stroke="currentColor" stroke-width="1.1" /><path d="M1.5 7.5h12M7.5 1.5c-2 2-2 10 0 12M7.5 1.5c2 2 2 10 0 12" stroke="currentColor" stroke-width="1.1" /></svg>
+            <select id="lang-head" aria-label="Idioma" data-lang>
+              <option value="es">Español</option>
+              <option value="en">English</option>
+            </select>
+            <svg class="icon caret" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M4.5 6l3 3 3-3z" fill="currentColor" /></svg>
+          </span>
+          <button class="button button-fill btn btn-sm" type="button" data-open-dialog="signin-dialog">Entrar</button>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="wall" aria-hidden="true" id="wall"></div>
+        <div class="hero-body">
+          <h1 id="hero-title">Cine de medianoche, series y mucho más</h1>
+          <p class="price-line">Planes de ejemplo. Cancela cuando quieras.</p>
+          <form class="signup" id="signup-hero" novalidate>
+            <h2 class="ask">¿Listo para mirar? Deja tu correo para crear o reanudar tu cuenta de prueba.</h2>
+            <div class="signup-row" style="margin-top: calc(var(--aura) * 1)">
+              <div class="field">
+                <input id="email-hero" name="email" type="email" autocomplete="off" placeholder=" " required aria-describedby="email-hero-msg" />
+                <label for="email-hero">Correo electrónico</label>
+                <p class="field-msg" id="email-hero-msg" aria-live="polite"></p>
+              </div>
+              <button class="button button-fill btn btn-lg" type="submit">Empezar<svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M6 3.5l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></button>
+            </div>
+            <p class="form-status" role="status"></p>
+          </form>
+        </div>
+      </section>
+      <div class="arc-clip" aria-hidden="true"><div class="arc"></div></div>
+
+      <div class="wrap">
+        <aside class="promo" aria-labelledby="promo-title">
+          <span class="promo-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16v12H4z" stroke="currentColor" stroke-width="1.8" /><path d="M4 7l3-4M10 7l3-4M16 7l3-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /></svg></span>
+          <div>
+            <h3 id="promo-title">Reelnight con anuncios, a un precio de ejemplo.</h3>
+            <p>Nuestro plan más ligero de este demo. Ningún precio es real.</p>
+          </div>
+          <a class="button button-pill btn btn-md soft" href="#plans">Ver planes</a>
+        </aside>
+
+        <section class="section" id="trending" aria-labelledby="trending-title">
+          <div class="section-head">
+            <h2 class="section-title" id="trending-title">Tendencias</h2>
+            <p class="note">Títulos y carteles ficticios</p>
+          </div>
+          <div class="trend">
+            <button class="trend-arrow prev" type="button" aria-label="Ver títulos anteriores" aria-controls="trend-list" hidden><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M9 3.5l-4 4 4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></button>
+            <ol class="trend-list" id="trend-list" aria-label="Top 10 ficticio"></ol>
+            <button class="trend-arrow next" type="button" aria-label="Ver más títulos" aria-controls="trend-list"><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M6 3.5l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></button>
+          </div>
+        </section>
+
+        <section class="section" id="reasons" aria-labelledby="reasons-title">
+          <h2 class="section-title" id="reasons-title">Más razones para quedarte</h2>
+          <div class="reasons">
+            <article class="reason">
+              <h3>En la tele del salón</h3>
+              <p>Mira en televisores, consolas y reproductores conectados.</p>
+              <svg class="art" viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="10" width="36" height="24" rx="2" fill="var(--poster-plum)" /><circle cx="24" cy="22" r="8" fill="var(--accent-9)" opacity="0.7" /><path d="M18 40h12" stroke="var(--gray-12)" stroke-width="2" stroke-linecap="round" /></svg>
+            </article>
+            <article class="reason">
+              <h3>Descarga y mira sin conexión</h3>
+              <p>Guarda tus favoritos y ten siempre algo para el viaje.</p>
+              <svg class="art" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="17" fill="var(--poster-plum)" /><circle cx="24" cy="24" r="12" fill="var(--accent-9)" opacity="0.55" /><path d="M24 16v14M18 25l6 6 6-6" stroke="var(--accent-contrast)" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </article>
+            <article class="reason">
+              <h3>En cualquier pantalla</h3>
+              <p>Teléfono, tableta, portátil o tele: sigue donde lo dejaste.</p>
+              <svg class="art" viewBox="0 0 48 48" aria-hidden="true"><path d="M10 38l18-24 8 6-20 22z" fill="var(--accent-9)" /><circle cx="33" cy="16" r="6" fill="var(--poster-plum)" /><circle cx="12" cy="12" r="2" fill="var(--accent-9)" /><circle cx="40" cy="34" r="1.6" fill="var(--accent-9)" /></svg>
+            </article>
+            <article class="reason">
+              <h3>Perfiles para peques</h3>
+              <p>Un espacio propio con sus personajes, incluido en el plan de ejemplo.</p>
+              <svg class="art" viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="8" width="20" height="20" rx="4" fill="var(--poster-plum)" /><rect x="20" y="18" width="22" height="22" rx="4" fill="var(--accent-9)" /><circle cx="27" cy="27" r="1.6" fill="var(--accent-contrast)" /><circle cx="35" cy="27" r="1.6" fill="var(--accent-contrast)" /><path d="M26 33q5 4 10 0" stroke="var(--accent-contrast)" stroke-width="1.6" fill="none" stroke-linecap="round" /></svg>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="stats" aria-labelledby="stats-title">
+          <h2 class="section-title" id="stats-title">Reelnight en cifras de ejemplo</h2>
+          <div class="stats">
+            <div class="stat"><strong>4</strong><span>pantallas a la vez (ejemplo)</span></div>
+            <div class="stat"><strong>12</strong><span>idiomas de subtítulos ficticios</span></div>
+            <div class="stat"><strong>0</strong><span>compromisos de permanencia</span></div>
+            <div class="stat"><strong>5</strong><span>perfiles por cuenta de prueba</span></div>
+          </div>
+        </section>
+
+        <section class="section" id="plans" aria-labelledby="plans-title">
+          <div class="section-head">
+            <h2 class="section-title" id="plans-title">Elige un plan de ejemplo</h2>
+            <div class="seg" role="group" aria-label="Periodo de facturación">
+              <button type="button" data-period="month" aria-pressed="true">Mensual</button>
+              <button type="button" data-period="year" aria-pressed="false">Anual</button>
+            </div>
+          </div>
+          <div class="plans">
+            <article class="plan">
+              <div class="plan-head"><h3>Ligero</h3><p>Con anuncios · HD</p></div>
+              <dl>
+                <div><dt>Precio de ejemplo</dt><dd data-month="4,90 ¤ al mes" data-year="49 ¤ al año">4,90 ¤ al mes</dd></div>
+                <div><dt>Pantallas</dt><dd>2 a la vez</dd></div>
+                <div><dt>Descargas</dt><dd>2 dispositivos</dd></div>
+              </dl>
+              <a class="button button-pill btn btn-md soft" href="#close-title">Elegir Ligero</a>
+            </article>
+            <article class="plan featured">
+              <div class="plan-head"><h3>Estándar</h3><p>Sin anuncios · Full HD</p></div>
+              <dl>
+                <div><dt>Precio de ejemplo</dt><dd data-month="9,90 ¤ al mes" data-year="99 ¤ al año">9,90 ¤ al mes</dd></div>
+                <div><dt>Pantallas</dt><dd>2 a la vez</dd></div>
+                <div><dt>Descargas</dt><dd>2 dispositivos</dd></div>
+              </dl>
+              <a class="button button-fill btn btn-md" href="#close-title">Elegir Estándar</a>
+            </article>
+            <article class="plan">
+              <div class="plan-head"><h3>Premium</h3><p>Sin anuncios · 4K + HDR</p></div>
+              <dl>
+                <div><dt>Precio de ejemplo</dt><dd data-month="14,90 ¤ al mes" data-year="149 ¤ al año">14,90 ¤ al mes</dd></div>
+                <div><dt>Pantallas</dt><dd>4 a la vez</dd></div>
+                <div><dt>Descargas</dt><dd>6 dispositivos</dd></div>
+              </dl>
+              <a class="button button-pill btn btn-md soft" href="#close-title">Elegir Premium</a>
+            </article>
+          </div>
+          <p class="note" style="margin-top: calc(var(--aura) * 1)">Precios en una moneda ficticia (¤). No corresponden a ningún servicio real.</p>
+        </section>
+
+        <section class="section" id="schedule" aria-labelledby="schedule-title">
+          <h2 class="section-title" id="schedule-title">Estrenos de la semana</h2>
+          <div class="table-wrap" role="region" aria-labelledby="schedule-title" tabindex="0">
+            <table>
+              <caption>Calendario ficticio para este demo.</caption>
+              <thead><tr><th scope="col">Día</th><th scope="col">Título</th><th scope="col">Género</th><th scope="col">Formato</th><th scope="col">Estado</th></tr></thead>
+              <tbody>
+                <tr><td>Lunes</td><td>La Última Taquilla</td><td>Drama</td><td>Serie · 8 ep.</td><td><span class="badge new">Estreno</span></td></tr>
+                <tr><td>Miércoles</td><td>Faro Norte</td><td>Thriller</td><td>Película</td><td><span class="badge">Próximamente</span></td></tr>
+                <tr><td>Jueves</td><td>Cocina de Guardia</td><td>Docuserie</td><td>Serie · 6 ep.</td><td><span class="badge">Próximamente</span></td></tr>
+                <tr><td>Viernes</td><td>Órbita Lenta</td><td>Ciencia ficción</td><td>Película</td><td><span class="badge new">Estreno</span></td></tr>
+                <tr><td>Domingo</td><td>Los Turnos de Mara</td><td>Comedia</td><td>Serie · 10 ep.</td><td><span class="badge">Nueva temporada</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="section" id="faq" aria-labelledby="faq-title">
+          <h2 class="section-title" id="faq-title">Preguntas frecuentes</h2>
+          <ul class="faq">
+            <li>
+              <h3><button class="faq-trigger" type="button" id="faq-q1" aria-expanded="false" aria-controls="faq-a1">¿Qué es Reelnight?<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1.6" /></svg></button></h3>
+              <div class="faq-panel" id="faq-a1" role="region" aria-labelledby="faq-q1"><div><p>Reelnight es un servicio de streaming ficticio creado para mostrar un flavor de Aura. No hay catálogo real.</p><p>Todo lo que ves —títulos, carteles, cifras y planes— es contenido de ejemplo.</p></div></div>
+            </li>
+            <li>
+              <h3><button class="faq-trigger" type="button" id="faq-q2" aria-expanded="false" aria-controls="faq-a2">¿Cuánto cuesta?<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1.6" /></svg></button></h3>
+              <div class="faq-panel" id="faq-a2" role="region" aria-labelledby="faq-q2"><div><p>Los planes usan una moneda inventada (¤) y sirven solo para ver la composición de precios.</p></div></div>
+            </li>
+            <li>
+              <h3><button class="faq-trigger" type="button" id="faq-q3" aria-expanded="false" aria-controls="faq-a3">¿Dónde puedo mirarlo?<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1.6" /></svg></button></h3>
+              <div class="faq-panel" id="faq-a3" role="region" aria-labelledby="faq-q3"><div><p>En este demo, en ningún sitio: es una página estática. En un producto real irían aquí los dispositivos compatibles.</p></div></div>
+            </li>
+            <li>
+              <h3><button class="faq-trigger" type="button" id="faq-q4" aria-expanded="false" aria-controls="faq-a4">¿Cómo cancelo?<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1.6" /></svg></button></h3>
+              <div class="faq-panel" id="faq-a4" role="region" aria-labelledby="faq-q4"><div><p>No hay nada que cancelar. El formulario comprueba el correo en tu navegador y no lo envía ni lo guarda.</p></div></div>
+            </li>
+            <li>
+              <h3><button class="faq-trigger" type="button" id="faq-q5" aria-expanded="false" aria-controls="faq-a5">¿Qué puedo ver?<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1.6" /></svg></button></h3>
+              <div class="faq-panel" id="faq-a5" role="region" aria-labelledby="faq-q5"><div><p>Diez títulos inventados en la fila de tendencias, con carteles hechos con degradados de color.</p></div></div>
+            </li>
+            <li>
+              <h3><button class="faq-trigger" type="button" id="faq-q6" aria-expanded="false" aria-controls="faq-a6">¿Es apto para peques?<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1.6" /></svg></button></h3>
+              <div class="faq-panel" id="faq-a6" role="region" aria-labelledby="faq-q6"><div><p>El demo incluye una tarjeta de perfiles infantiles como ejemplo de composición; no hay control parental real.</p></div></div>
+            </li>
+          </ul>
+        </section>
+
+        <section class="closing" aria-labelledby="close-title">
+          <form class="signup" id="signup-close" novalidate>
+            <h2 class="ask" id="close-title">¿Listo para mirar? Deja tu correo para crear o reanudar tu cuenta de prueba.</h2>
+            <div class="signup-row" style="margin-top: calc(var(--aura) * 1)">
+              <div class="field">
+                <input id="email-close" name="email" type="email" autocomplete="off" placeholder=" " required aria-describedby="email-close-msg" />
+                <label for="email-close">Correo electrónico</label>
+                <p class="field-msg" id="email-close-msg" aria-live="polite"></p>
+              </div>
+              <button class="button button-fill btn btn-lg" type="submit">Empezar<svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M6 3.5l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></button>
+            </div>
+            <p class="form-status" role="status"></p>
+          </form>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <p class="foot-q">¿Preguntas? Escribe a <a href="#faq">ayuda@reelnight.example</a></p>
+        <ul class="foot-links">
+          <li><a href="#faq">Preguntas frecuentes</a></li>
+          <li><a href="#faq">Centro de ayuda</a></li>
+          <li><a href="#plans">Cuenta de prueba</a></li>
+          <li><a href="#trending">Tendencias</a></li>
+          <li><a href="#reasons">Dispositivos</a></li>
+          <li><a href="#plans">Planes de ejemplo</a></li>
+          <li><a href="#schedule">Estrenos</a></li>
+          <li><a href="#stats">Cifras de ejemplo</a></li>
+          <li><a href="#top">Condiciones del demo</a></li>
+          <li><a href="#top">Privacidad del demo</a></li>
+          <li><a href="#top">Preferencias</a></li>
+          <li><a href="#main">Volver al contenido</a></li>
+        </ul>
+        <span class="lang">
+          <svg class="icon globe" viewBox="0 0 15 15" fill="none" aria-hidden="true"><circle cx="7.5" cy="7.5" r="6" stroke="currentColor" stroke-width="1.1" /><path d="M1.5 7.5h12M7.5 1.5c-2 2-2 10 0 12M7.5 1.5c2 2 2 10 0 12" stroke="currentColor" stroke-width="1.1" /></svg>
+          <select id="lang-foot" aria-label="Idioma" data-lang>
+            <option value="es">Español</option>
+            <option value="en">English</option>
+          </select>
+          <svg class="icon caret" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M4.5 6l3 3 3-3z" fill="currentColor" /></svg>
+        </span>
+        <p class="legal">Reelnight es un demo ficticio del flavor Reelnight de Aura. Títulos, carteles, cifras y precios son inventados.</p>
+        <p class="sr-only" id="lang-status" role="status"></p>
+      </div>
+    </footer>
+
+    <dialog id="title-dialog" aria-labelledby="dlg-title">
+      <button class="dlg-close" type="button" data-close aria-label="Cerrar"><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M3.5 3.5l8 8M11.5 3.5l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg></button>
+      <div class="dlg-media"><div class="poster" id="dlg-poster" aria-hidden="true"></div><h2 id="dlg-title"></h2></div>
+      <div class="dlg-body">
+        <div class="dlg-meta"><span class="badge" id="dlg-year"></span><span class="badge" id="dlg-genre"></span><span class="badge">Ficticio</span></div>
+        <p class="muted" id="dlg-text"></p>
+        <div><a class="button button-fill btn btn-md" href="#close-title" data-close>Empezar<svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M6 3.5l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></a></div>
+      </div>
+    </dialog>
+
+    <dialog id="signin-dialog" aria-labelledby="signin-title">
+      <div class="dlg-plain">
+        <h2 id="signin-title">Este demo no tiene cuentas</h2>
+        <p class="muted">Reelnight es una muestra de diseño. No hay inicio de sesión ni se piden contraseñas.</p>
+        <button class="button button-fill btn btn-md" type="button" data-close>Entendido</button>
+      </div>
+    </dialog>
+
+    <script>
+      (function () {
+        var titles = [
+          ["La Última Taquilla", "p1", "2026", "Drama", "Una taquillera cuenta las entradas de la última función antes del cierre del cine."],
+          ["Faro Norte", "p2", "2025", "Thriller", "Una señal llega cada noche desde un faro abandonado."],
+          ["Órbita Lenta", "p3", "2026", "Ciencia ficción", "Dos técnicos reparan un satélite que gira demasiado despacio."],
+          ["Cocina de Guardia", "p4", "2024", "Docuserie", "Turnos de noche en la cocina de un hospital."],
+          ["Los Turnos de Mara", "p5", "2026", "Comedia", "Mara cubre todos los turnos del videoclub del barrio."],
+          ["Marea Baja", "p6", "2025", "Misterio", "Lo que aparece en la playa cuando baja la marea."],
+          ["Ruta Seis", "p2", "2023", "Aventura", "Un autobús nocturno con seis paradas y ninguna en el mapa."],
+          ["El Archivo Rojo", "p1", "2026", "Intriga", "Una archivera encuentra una cinta sin etiquetar."],
+          ["Verano en Pausa", "p3", "2024", "Romance", "Un verano que se repite cada vez que alguien rebobina."],
+          ["Club de Medianoche", "p4", "2025", "Animación", "Un club de cine para criaturas nocturnas."]
+        ];
+
+        var list = document.getElementById("trend-list");
+        titles.forEach(function (t, i) {
+          var li = document.createElement("li");
+          li.className = "trend-item";
+          li.innerHTML = '<span class="rank" aria-hidden="true">' + (i + 1) + '</span><button type="button" data-index="' + i + '" aria-label="' + (i + 1) + ". " + t[0] + ', ver detalles"><span class="poster ' + t[1] + '"><i class="badge-mark"></i><b>' + t[0] + "</b></span></button>";
+          list.appendChild(li);
+        });
+
+        var wall = document.getElementById("wall");
+        for (var w = 0; w < 112; w += 1) {
+          var tile = document.createElement("span");
+          var pick = titles[(w * 7) % titles.length];
+          tile.className = "poster " + pick[1];
+          tile.innerHTML = "<i class=\"badge-mark\"></i><b>" + pick[0] + "</b>";
+          wall.appendChild(tile);
+        }
+
+        var prev = document.querySelector(".trend-arrow.prev");
+        var next = document.querySelector(".trend-arrow.next");
+        function updateArrows() {
+          var max = list.scrollWidth - list.clientWidth - 2;
+          prev.hidden = list.scrollLeft <= 2;
+          next.hidden = list.scrollLeft >= max;
+        }
+        function page(direction) {
+          var smooth = window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
+          list.scrollBy({ left: direction * list.clientWidth * 0.8, behavior: smooth ? "smooth" : "auto" });
+        }
+        prev.addEventListener("click", function () { page(-1); });
+        next.addEventListener("click", function () { page(1); });
+        list.addEventListener("scroll", updateArrows, { passive: true });
+        window.addEventListener("resize", updateArrows);
+        updateArrows();
+
+        var opener = null;
+        function openDialog(dialog, from) {
+          opener = from;
+          dialog.showModal();
+        }
+        document.querySelectorAll("dialog").forEach(function (dialog) {
+          dialog.addEventListener("click", function (event) {
+            if (event.target === dialog || event.target.closest("[data-close]")) dialog.close();
+          });
+          dialog.addEventListener("close", function () {
+            if (opener) opener.focus();
+            opener = null;
+          });
+        });
+
+        var titleDialog = document.getElementById("title-dialog");
+        list.addEventListener("click", function (event) {
+          var button = event.target.closest("button[data-index]");
+          if (!button) return;
+          var t = titles[Number(button.dataset.index)];
+          document.getElementById("dlg-title").textContent = t[0];
+          document.getElementById("dlg-poster").className = "poster " + t[1];
+          document.getElementById("dlg-year").textContent = t[2];
+          document.getElementById("dlg-genre").textContent = t[3];
+          document.getElementById("dlg-text").textContent = t[4] + " Sinopsis ficticia.";
+          openDialog(titleDialog, button);
+        });
+
+        document.querySelectorAll("[data-open-dialog]").forEach(function (button) {
+          button.addEventListener("click", function () {
+            openDialog(document.getElementById(button.dataset.openDialog), button);
+          });
+        });
+
+        document.querySelectorAll(".faq-trigger").forEach(function (trigger) {
+          trigger.addEventListener("click", function () {
+            var willOpen = trigger.getAttribute("aria-expanded") !== "true";
+            document.querySelectorAll(".faq-trigger").forEach(function (other) {
+              var open = other === trigger && willOpen;
+              other.setAttribute("aria-expanded", String(open));
+              document.getElementById(other.getAttribute("aria-controls")).dataset.open = String(open);
+            });
+          });
+        });
+
+        var period = document.querySelector('[aria-label="Periodo de facturación"]');
+        period.addEventListener("click", function (event) {
+          var button = event.target.closest("button");
+          if (!button) return;
+          period.querySelectorAll("button").forEach(function (item) {
+            item.setAttribute("aria-pressed", String(item === button));
+          });
+          var key = button.dataset.period;
+          document.querySelectorAll(".plan dd[data-month]").forEach(function (price) {
+            price.textContent = price.dataset[key];
+          });
+        });
+
+        var langStatus = document.getElementById("lang-status");
+        var langs = document.querySelectorAll("[data-lang]");
+        langs.forEach(function (select) {
+          select.addEventListener("change", function () {
+            langs.forEach(function (other) { other.value = select.value; });
+            langStatus.textContent = "Demo: el selector de idioma no cambia el contenido.";
+          });
+        });
+
+        document.querySelectorAll("form.signup").forEach(function (form) {
+          var input = form.querySelector("input[type=email]");
+          var msg = document.getElementById(input.getAttribute("aria-describedby"));
+          var status = form.querySelector(".form-status");
+          var icon = '<svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><circle cx="7.5" cy="7.5" r="6" stroke="currentColor" stroke-width="1.2" /><path d="M5.5 5.5l4 4M9.5 5.5l-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" /></svg>';
+          function check() {
+            var value = input.value.trim();
+            var error = "";
+            if (!value) error = "El correo es obligatorio.";
+            else if (!input.checkValidity() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) error = "Escribe un correo válido, como nombre@ejemplo.com.";
+            input.setAttribute("aria-invalid", String(Boolean(error)));
+            msg.innerHTML = error ? icon + "<span>" + error + "</span>" : "";
+            return !error;
+          }
+          form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            status.textContent = "";
+            if (!check()) {
+              input.focus();
+              return;
+            }
+            status.textContent = "Correo con formato válido. Es un demo local: no se ha enviado ni guardado nada.";
+          });
+          input.addEventListener("input", function () {
+            if (input.getAttribute("aria-invalid") === "true") check();
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>

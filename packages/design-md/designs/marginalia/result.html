@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marginalia · Aura flavor</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/aura/main.css" />
+    <link rel="stylesheet" href="theme.css" />
+    <script>
+      (function () {
+        var appearance = new URLSearchParams(window.location.search).get("appearance") === "dark" ? "dark" : "light";
+        document.documentElement.classList.add(appearance);
+        document.documentElement.style.colorScheme = appearance;
+      })();
+    </script>
+    <style>
+      :root {
+        --aura-accents-primary: var(--ink);
+        --aura-text-primary-inverse: var(--on-ink);
+        --aura-button-hover: var(--ink);
+        --aura-outline: var(--accent-10) solid 2px;
+        --aura-input-bg: var(--paper);
+        --aura-input-placeholder-color: var(--gray-11);
+        --aura-link: var(--gray-12);
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+        --lift: 0 calc(var(--aura) * 1) calc(var(--aura) * 3) calc(var(--aura) * -1.5) var(--gray-a7);
+        --night-rule: transparent;
+      }
+
+      .dark {
+        --lift: 0 0 0 1px var(--gray-a5);
+        --night-rule: var(--gray-a5);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        font-size: 17px;
+        background: var(--paper);
+      }
+
+      body {
+        margin: 0;
+        overflow-x: hidden;
+        background: var(--paper);
+        color: var(--gray-12);
+        font-family: var(--aura-font-stack);
+        line-height: 1.55;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      p,
+      ul,
+      fieldset,
+      figure {
+        margin: 0;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: var(--aura-font-display);
+        font-weight: 400;
+        letter-spacing: -0.02em;
+        line-height: 1.05;
+        text-wrap: balance;
+      }
+
+      em {
+        font-style: italic;
+      }
+
+      :focus-visible {
+        outline: var(--aura-outline);
+        outline-offset: 2px;
+      }
+
+      .skip {
+        position: absolute;
+        left: calc(var(--aura) * 1);
+        top: calc(var(--aura) * 1);
+        z-index: 10;
+        padding: calc(var(--aura) * 0.5) calc(var(--aura) * 1);
+        border-radius: var(--aura-button-radius);
+        background: var(--ink);
+        color: var(--on-ink);
+        font-weight: 500;
+        transform: translateY(calc(var(--aura) * -6));
+      }
+
+      .skip:focus {
+        transform: none;
+      }
+
+      .wrap {
+        width: min(100% - var(--aura) * 4, var(--aura) * 92);
+        margin-inline: auto;
+      }
+
+      .section {
+        padding-block: calc(var(--aura) * 10);
+      }
+
+      .muted {
+        color: var(--gray-11);
+      }
+
+      .icon {
+        width: 15px;
+        height: 15px;
+        flex: none;
+      }
+
+      .button,
+      .button-fill,
+      .button-pill {
+        height: calc(var(--aura) * 3);
+        padding-inline: calc(var(--aura) * 1.5);
+        font-family: var(--aura-font-label);
+        font-weight: 500;
+        font-size: 15px;
+        border-width: 1px;
+      }
+
+      .button-fill:hover:not(:disabled) {
+        opacity: 0.9;
+      }
+
+      .button-pill {
+        border-color: var(--gray-7);
+        color: var(--gray-12);
+        background: transparent;
+      }
+
+      .button-pill:hover:not(:disabled) {
+        background: var(--gray-a3);
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: calc(var(--aura) * 2);
+        padding-block: calc(var(--aura) * 1);
+      }
+
+      .logo {
+        display: inline-flex;
+        align-items: center;
+        gap: calc(var(--aura) * 0.5);
+        font-family: var(--aura-font-display);
+        font-size: 1.35rem;
+        letter-spacing: -0.02em;
+      }
+
+      .logo i {
+        width: calc(var(--aura) * 1.5);
+        height: calc(var(--aura) * 1.5);
+        background: var(--accent-9);
+        border-radius: 3px;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: calc(var(--aura) * 2);
+        list-style: none;
+        padding: 0;
+        font-size: 15px;
+      }
+
+      .nav-links a:hover {
+        color: var(--clay-ink);
+      }
+
+      .nav-end {
+        display: flex;
+        align-items: center;
+        gap: calc(var(--aura) * 1);
+      }
+
+      .menu-toggle {
+        display: none;
+        width: calc(var(--aura) * 3);
+        padding: 0;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: calc(var(--aura) * 4);
+        align-items: center;
+        padding-block: calc(var(--aura) * 5) calc(var(--aura) * 7.5);
+      }
+
+      .hero-copy {
+        text-align: center;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.5rem, 6vw, 4.75rem);
+      }
+
+      .hero .lede {
+        margin-top: calc(var(--aura) * 1);
+        font-size: 1.1rem;
+      }
+
+      .composer {
+        margin: calc(var(--aura) * 2.5) auto 0;
+        max-width: calc(var(--aura) * 33);
+        padding: calc(var(--aura) * 2);
+        text-align: left;
+        border: 1px solid var(--gray-6);
+        border-radius: var(--aura-radius);
+        background: var(--paper);
+        box-shadow: var(--lift);
+      }
+
+      .composer label {
+        display: block;
+        font-family: var(--aura-font-label);
+        font-size: 15px;
+        font-weight: 500;
+      }
+
+      textarea,
+      input[type="text"],
+      input[type="email"],
+      select {
+        width: 100%;
+        font: inherit;
+        color: var(--gray-12);
+        background: var(--paper);
+        border: 1px solid var(--gray-7);
+        border-radius: var(--aura-input-radius);
+        padding: calc(var(--aura) * 0.5) calc(var(--aura) * 1);
+      }
+
+      input[type="text"],
+      input[type="email"],
+      select {
+        height: calc(var(--aura) * 3);
+      }
+
+      textarea {
+        min-height: calc(var(--aura) * 6);
+        resize: vertical;
+      }
+      .composer textarea {
+        margin-top: calc(var(--aura) * 0.5);
+      }
+
+      .composer-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: calc(var(--aura) * 1);
+        margin-top: calc(var(--aura) * 1);
+      }
+
+      .composer-row .button-fill {
+        margin-left: auto;
+      }
+
+      .modes {
+        display: inline-flex;
+        padding: 3px;
+        gap: 3px;
+        border: 1px solid var(--gray-6);
+        border-radius: var(--aura-input-radius);
+        background: var(--paper-raised);
+      }
+
+      .modes button {
+        font: inherit;
+        font-family: var(--aura-font-label);
+        font-size: 14px;
+        min-height: calc(var(--aura) * 2);
+        padding-inline: calc(var(--aura) * 0.75);
+        border: 0;
+        border-radius: 5px;
+        background: transparent;
+        color: var(--gray-11);
+        cursor: pointer;
+      }
+
+      .modes button[aria-pressed="true"] {
+        background: var(--paper);
+        color: var(--gray-12);
+        box-shadow: 0 0 0 1px var(--gray-6);
+      }
+
+      .fine {
+        margin-top: calc(var(--aura) * 1);
+        font-size: 13px;
+        color: var(--gray-11);
+      }
+
+      .desk {
+        position: relative;
+        aspect-ratio: 5 / 6;
+        border-radius: var(--aura-radius);
+        background: var(--paper-raised);
+        border: 1px solid var(--gray-6);
+        overflow: hidden;
+      }
+
+      .note {
+        position: absolute;
+        width: 52%;
+        padding: calc(var(--aura) * 1.5);
+        border-radius: 13px;
+        border: 1px solid var(--gray-6);
+        background: var(--paper);
+        box-shadow: var(--lift);
+        font-size: 14px;
+        line-height: 1.45;
+        transform: rotate(var(--tilt));
+      }
+
+      .note.oat {
+        background: var(--oat);
+      }
+
+      .note b {
+        display: block;
+        font-family: var(--aura-font-display);
+        font-weight: 400;
+        font-size: 1.25rem;
+        line-height: 1.15;
+        margin-bottom: calc(var(--aura) * 0.5);
+      }
+
+      .note ul {
+        list-style: none;
+        padding: 0;
+        display: grid;
+        gap: calc(var(--aura) * 0.25);
+      }
+
+      .note li::before {
+        content: "";
+        display: inline-block;
+        width: 9px;
+        height: 9px;
+        margin-right: calc(var(--aura) * 0.5);
+        border: 1px solid var(--gray-8);
+        border-radius: 2px;
+        vertical-align: -1px;
+      }
+
+      .note li.done::before {
+        background: var(--accent-9);
+        border-color: var(--accent-9);
+      }
+
+      .note-a {
+        --tilt: -4deg;
+        top: 8%;
+        left: 7%;
+      }
+
+      .note-b {
+        --tilt: 3deg;
+        top: 30%;
+        right: 6%;
+      }
+
+      .note-c {
+        --tilt: -1.5deg;
+        bottom: 14%;
+        left: 12%;
+        width: 60%;
+      }
+
+      .note-c q {
+        font-family: var(--aura-font-display);
+        font-size: 1.1rem;
+        font-style: italic;
+      }
+
+      .rule {
+        position: relative;
+        padding-left: calc(var(--aura) * 1);
+      }
+
+      .rule::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.2em;
+        width: 3px;
+        height: calc(var(--aura) * 2);
+        border-radius: 2px;
+        background: var(--accent-9);
+      }
+
+      .mark {
+        background: var(--oat);
+        border-radius: 3px;
+        padding-inline: 3px;
+      }
+
+      .head {
+        text-align: center;
+        max-width: calc(var(--aura) * 46);
+        margin: 0 auto calc(var(--aura) * 4);
+      }
+
+      .head h2 {
+        font-size: clamp(2rem, 4.5vw, 3.25rem);
+      }
+
+      .head p {
+        margin-top: calc(var(--aura) * 1);
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        border-block: 1px solid var(--gray-6);
+      }
+
+      .stat {
+        padding: calc(var(--aura) * 2);
+        text-align: center;
+      }
+
+      .stat + .stat {
+        border-left: 1px solid var(--gray-6);
+      }
+
+      .stat b {
+        display: block;
+        font-family: var(--aura-font-display);
+        font-weight: 400;
+        font-size: clamp(2rem, 4vw, 3rem);
+        letter-spacing: -0.02em;
+        line-height: 1;
+      }
+
+      .stat span {
+        display: block;
+        margin-top: calc(var(--aura) * 0.5);
+        color: var(--gray-11);
+        font-size: 15px;
+      }
+
+      .features {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: calc(var(--aura) * 2);
+      }
+
+      .card {
+        padding: calc(var(--aura) * 2);
+        border: 1px solid var(--gray-6);
+        border-radius: var(--aura-radius);
+        background: var(--paper-raised);
+      }
+
+      .feature h3 {
+        font-size: 1.5rem;
+        line-height: 1.15;
+      }
+
+      .feature p {
+        margin-top: calc(var(--aura) * 1);
+        color: var(--gray-11);
+      }
+
+      .work {
+        display: grid;
+        grid-template-columns: 1.35fr 1fr;
+        gap: calc(var(--aura) * 2);
+        align-items: start;
+      }
+
+      .card > h3 {
+        font-size: 1.5rem;
+        margin-bottom: calc(var(--aura) * 1.5);
+      }
+
+      .table-scroll {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 15px;
+      }
+
+      th {
+        text-align: left;
+        font-family: var(--aura-font-label);
+        font-weight: 500;
+        font-size: 13px;
+        color: var(--gray-11);
+        padding: calc(var(--aura) * 0.5) calc(var(--aura) * 0.75);
+        background: var(--paper);
+        border-bottom: 1px solid var(--gray-6);
+      }
+
+      td {
+        padding: calc(var(--aura) * 1) calc(var(--aura) * 0.75);
+        border-bottom: 1px solid var(--gray-6);
+      }
+
+      tbody tr:last-child td {
+        border-bottom: 0;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: calc(var(--aura) * 0.5);
+        padding: 2px calc(var(--aura) * 0.75);
+        border-radius: 9999px;
+        border: 1px solid var(--gray-6);
+        background: var(--paper);
+        font-size: 13px;
+        font-weight: 500;
+        white-space: nowrap;
+      }
+
+      .dot {
+        width: calc(var(--aura) * 0.5);
+        height: calc(var(--aura) * 0.5);
+        border-radius: 50%;
+        background: var(--gray-9);
+      }
+
+      .dot.clay {
+        background: var(--accent-9);
+      }
+
+      form.card {
+        display: grid;
+        gap: calc(var(--aura) * 1.5);
+      }
+
+      form.card > h3 {
+        margin-bottom: 0;
+      }
+
+      .field {
+        display: grid;
+        gap: calc(var(--aura) * 0.5);
+        font-size: 15px;
+        font-weight: 500;
+      }
+
+      .field input,
+      .field select,
+      .field textarea {
+        font-weight: 400;
+      }
+
+      .field [aria-invalid="true"] {
+        border-color: var(--clay-ink);
+      }
+
+      .error {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--clay-ink);
+      }
+
+      .error:empty {
+        display: none;
+      }
+
+      .check {
+        display: flex;
+        align-items: start;
+        gap: calc(var(--aura) * 0.75);
+        font-size: 15px;
+      }
+
+      .check input {
+        width: 17px;
+        height: 17px;
+        margin-top: 3px;
+        accent-color: var(--ink);
+      }
+
+      .status {
+        font-size: 15px;
+        color: var(--gray-12);
+      }
+
+      .status:empty {
+        display: none;
+      }
+
+      .tabs {
+        position: relative;
+        display: inline-grid;
+        grid-template-columns: 1fr 1fr;
+        margin: 0 auto calc(var(--aura) * 3);
+        padding: 3px;
+        border: 1px solid var(--gray-6);
+        border-radius: var(--aura-input-radius);
+        background: var(--paper-raised);
+      }
+
+      .tabs-center {
+        display: flex;
+        justify-content: center;
+      }
+
+      .tabs [role="tab"] {
+        position: relative;
+        z-index: 1;
+        min-width: calc(var(--aura) * 8);
+        min-height: calc(var(--aura) * 2.5);
+        font: inherit;
+        font-family: var(--aura-font-label);
+        font-size: 15px;
+        font-weight: 500;
+        border: 0;
+        border-radius: 5px;
+        background: transparent;
+        color: var(--gray-11);
+        cursor: pointer;
+      }
+
+      .tabs [role="tab"][aria-selected="true"] {
+        color: var(--gray-12);
+      }
+
+      .tabs .indicator {
+        position: absolute;
+        top: 3px;
+        bottom: 3px;
+        left: 3px;
+        width: calc(50% - 3px);
+        border-radius: 5px;
+        background: var(--paper);
+        box-shadow: 0 0 0 1px var(--gray-6);
+        transform: translateX(calc(var(--tab, 0) * 100%));
+      }
+
+      .plans {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: calc(var(--aura) * 2);
+      }
+
+      .plans[hidden] {
+        display: none;
+      }
+
+      .plan {
+        display: flex;
+        flex-direction: column;
+        gap: calc(var(--aura) * 1);
+      }
+
+      .plan.recommended {
+        border-color: var(--gray-12);
+      }
+
+      .plan h3 {
+        font-size: 1.5rem;
+      }
+
+      .plan .price {
+        font-family: var(--aura-font-display);
+        font-size: 2.5rem;
+        letter-spacing: -0.02em;
+        line-height: 1;
+      }
+
+      .plan .price small {
+        font-family: var(--aura-font-stack);
+        font-size: 15px;
+        letter-spacing: 0;
+        color: var(--gray-11);
+      }
+
+      .plan ul {
+        list-style: none;
+        padding: 0;
+        display: grid;
+        gap: calc(var(--aura) * 0.5);
+        flex: 1;
+        font-size: 15px;
+      }
+
+      .plan li {
+        display: flex;
+        gap: calc(var(--aura) * 0.5);
+      }
+
+      .plan li svg {
+        margin-top: 4px;
+        color: var(--clay-ink);
+      }
+
+      .plan .tag {
+        align-self: start;
+        font-size: 13px;
+        font-weight: 500;
+        padding: 2px calc(var(--aura) * 0.75);
+        border-radius: 9999px;
+        background: var(--oat);
+      }
+
+      .faq {
+        max-width: calc(var(--aura) * 60);
+        margin-inline: auto;
+        border-top: 1px solid var(--gray-6);
+      }
+
+      details {
+        border-bottom: 1px solid var(--gray-6);
+      }
+
+      summary {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: calc(var(--aura) * 1);
+        padding-block: calc(var(--aura) * 1.5);
+        font-size: 1.1rem;
+        font-weight: 500;
+        cursor: pointer;
+        list-style: none;
+      }
+
+      summary::-webkit-details-marker {
+        display: none;
+      }
+
+      details[open] summary svg {
+        transform: rotate(45deg);
+      }
+
+      details p {
+        padding-bottom: calc(var(--aura) * 1.5);
+        color: var(--gray-11);
+        max-width: 60ch;
+      }
+
+      .night {
+        background: var(--night);
+        color: var(--on-night);
+        border-top: 1px solid var(--night-rule);
+      }
+
+      .night .muted {
+        color: var(--on-night-muted);
+      }
+
+      .night .button-fill {
+        border-color: var(--on-night);
+        background: var(--on-night);
+        color: var(--night);
+      }
+
+      .night .button-pill {
+        border-color: var(--on-night-muted);
+        color: var(--on-night);
+      }
+
+      .night .button-pill:hover:not(:disabled) {
+        background: var(--night-raised);
+      }
+
+      .cta {
+        padding-block: calc(var(--aura) * 7.5);
+        text-align: center;
+      }
+
+      .cta h2 {
+        font-size: clamp(2.2rem, 5.5vw, 4rem);
+        max-width: 18ch;
+        margin-inline: auto;
+      }
+
+      .cta p {
+        margin-top: calc(var(--aura) * 1);
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: calc(var(--aura) * 1);
+        margin-top: calc(var(--aura) * 2.5);
+      }
+
+      footer {
+        padding-block: calc(var(--aura) * 5) calc(var(--aura) * 3);
+      }
+
+      footer .cols {
+        display: grid;
+        grid-template-columns: 2fr repeat(3, 1fr);
+        gap: calc(var(--aura) * 2);
+      }
+
+      footer h2 {
+        font-family: var(--aura-font-label);
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+        color: var(--on-night-muted);
+        margin-bottom: calc(var(--aura) * 1);
+      }
+
+      footer ul {
+        list-style: none;
+        padding: 0;
+        display: grid;
+        gap: calc(var(--aura) * 0.5);
+        font-size: 15px;
+      }
+
+      footer a:hover {
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+
+      .legal {
+        margin-top: calc(var(--aura) * 4);
+        padding-top: calc(var(--aura) * 1.5);
+        border-top: 1px solid var(--night-raised);
+        font-size: 13px;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .skip {
+          transition: transform 250ms var(--ease);
+        }
+        .tabs .indicator {
+          transition: transform 250ms var(--ease);
+        }
+        summary svg {
+          transition: transform 250ms var(--ease);
+        }
+        .note {
+          animation: settle 400ms var(--ease) both;
+        }
+        .note-b {
+          animation-delay: 60ms;
+        }
+        .note-c {
+          animation-delay: 120ms;
+        }
+        .reveal-ready .reveal {
+          opacity: 0;
+          transform: translateY(13px);
+          transition: opacity 250ms var(--ease), transform 250ms var(--ease);
+        }
+        .reveal-ready .reveal.in {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      @keyframes settle {
+        from {
+          opacity: 0;
+          transform: rotate(calc(var(--tilt) * 2)) translateY(13px);
+        }
+      }
+
+      @media (max-width: 960px) {
+        .nav {
+          flex-wrap: wrap;
+          gap: calc(var(--aura) * 1);
+        }
+        .logo {
+          margin-right: auto;
+        }
+        .nav > nav {
+          display: contents;
+        }
+        .nav-end {
+          order: 1;
+        }
+        .menu-toggle {
+          display: inline-flex;
+          order: 2;
+        }
+        .nav-links {
+          display: none;
+          order: 3;
+          width: 100%;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 0;
+          border-top: 1px solid var(--gray-6);
+        }
+        .nav-links.open {
+          display: flex;
+        }
+        .nav-links a {
+          display: block;
+          padding-block: calc(var(--aura) * 1);
+          border-bottom: 1px solid var(--gray-6);
+        }
+        .hero,
+        .work {
+          grid-template-columns: 1fr;
+        }
+        .desk {
+          max-width: calc(var(--aura) * 33);
+          width: 100%;
+          margin-inline: auto;
+        }
+        .features,
+        .plans {
+          grid-template-columns: 1fr;
+        }
+        .stats {
+          grid-template-columns: 1fr 1fr;
+        }
+        .stat:nth-child(3) {
+          border-left: 0;
+        }
+        .stat:nth-child(n + 3) {
+          border-top: 1px solid var(--gray-6);
+        }
+        footer .cols {
+          grid-template-columns: 1fr 1fr;
+        }
+        footer .about {
+          grid-column: 1 / -1;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .wrap {
+          width: calc(100% - var(--aura) * 3);
+        }
+        .nav {
+          gap: calc(var(--aura) * 0.5);
+        }
+        .logo {
+          font-size: 1.15rem;
+        }
+        .nav-end .talk {
+          display: none;
+        }
+        .nav-end .button-fill {
+          padding-inline: calc(var(--aura) * 1);
+        }
+        .desk {
+          aspect-ratio: 4 / 5;
+        }
+        .note-a {
+          top: 6%;
+          left: 6%;
+          width: 62%;
+        }
+        .note-b {
+          top: 38%;
+          right: 5%;
+          width: 60%;
+        }
+        .note-c {
+          bottom: 6%;
+          left: 8%;
+          width: 72%;
+        }
+        .cta {
+          padding-block: calc(var(--aura) * 5) calc(var(--aura) * 3);
+        }
+        footer {
+          padding-top: calc(var(--aura) * 3);
+        }
+        .hero {
+          padding-block: calc(var(--aura) * 3) calc(var(--aura) * 5);
+          gap: calc(var(--aura) * 3);
+        }
+        .section {
+          padding-block: calc(var(--aura) * 6);
+        }
+        .composer,
+        .card {
+          padding: calc(var(--aura) * 1.5);
+        }
+        .composer-row .button-fill {
+          margin-left: 0;
+          width: 100%;
+        }
+        .stat {
+          padding: calc(var(--aura) * 1.5) calc(var(--aura) * 0.5);
+        }
+        .tabs [role="tab"] {
+          min-width: calc(var(--aura) * 6.5);
+        }
+        .hide-sm {
+          display: none;
+        }
+        .note {
+          padding: calc(var(--aura) * 1);
+          font-size: 13px;
+        }
+        .note b {
+          font-size: 1.05rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="wrap nav">
+      <a href="#" class="logo"><i aria-hidden="true"></i>Marginalia</a>
+      <nav aria-label="Main" id="site-nav">
+        <button type="button" class="button button-pill menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
+          <svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M1.5 3a.5.5 0 0 0 0 1h12a.5.5 0 0 0 0-1h-12ZM1 7.5a.5.5 0 0 1 .5-.5h12a.5.5 0 0 1 0 1h-12a.5.5 0 0 1-.5-.5ZM1 11.5a.5.5 0 0 1 .5-.5h12a.5.5 0 0 1 0 1h-12a.5.5 0 0 1-.5-.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" /></svg>
+        </button>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#library">Library</a></li>
+          <li><a href="#plans">Plans</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </nav>
+      <div class="nav-end">
+        <a href="#contact" class="button button-pill talk">Talk to us</a>
+        <a href="#start" class="button button-fill">Open a notebook</a>
+      </div>
+    </header>
+
+    <main id="main" tabindex="-1">
+      <section class="wrap hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <h1 id="hero-title">Think it through, <em>on paper.</em></h1>
+          <p class="lede">A quiet notebook for sources, notes and drafts, side by side.</p>
+
+          <form class="composer" id="start" novalidate>
+            <label for="brief">What are you working through?</label>
+            <textarea id="brief" name="brief" placeholder="Compare three sources on river restoration…" aria-describedby="brief-help"></textarea>
+            <div class="composer-row">
+              <div class="modes" role="group" aria-label="Mode">
+                <button type="button" aria-pressed="true">Outline</button>
+                <button type="button" aria-pressed="false">Summarise</button>
+                <button type="button" aria-pressed="false">Question</button>
+              </div>
+              <button type="submit" class="button button-fill">Start<svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M8.15 3.15a.5.5 0 0 1 .7 0l4 4a.5.5 0 0 1 0 .7l-4 4a.5.5 0 0 1-.7-.7L11.29 8H2.5a.5.5 0 0 1 0-1h8.79L8.15 3.85a.5.5 0 0 1 0-.7Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" /></svg></button>
+            </div>
+            <p class="fine" id="brief-help">Demo only. Nothing you type leaves this page.</p>
+            <p class="status" role="status" id="brief-status"></p>
+          </form>
+        </div>
+
+        <figure class="desk" role="img" aria-label="Illustration: three paper notes on a desk, a checklist, a reading plan and a quote">
+          <div class="note note-a" aria-hidden="true">
+            <b>Reading plan</b>
+            <ul>
+              <li class="done">Field report, 2019</li>
+              <li class="done">Survey of weirs</li>
+              <li>Interview notes</li>
+            </ul>
+          </div>
+          <div class="note oat note-b" aria-hidden="true">
+            <b>Open question</b>
+            Which removals changed fish counts within two seasons?
+          </div>
+          <div class="note note-c" aria-hidden="true">
+            <q>The river remembers its old bends.</q>
+            <p class="muted" style="margin-top: calc(var(--aura) * 0.5); font-size: 13px">Margin note, p. 42</p>
+          </div>
+        </figure>
+      </section>
+
+      <section class="wrap" aria-label="In numbers">
+        <div class="stats">
+          <div class="stat"><b>3</b><span>panes: sources, notes, draft</span></div>
+          <div class="stat"><b>1</b><span>accent colour, used sparingly</span></div>
+          <div class="stat"><b>214</b><span>sample notes in the demo library</span></div>
+          <div class="stat"><b>0</b><span>accounts needed to try it</span></div>
+        </div>
+      </section>
+
+      <section class="wrap section" id="how" aria-labelledby="how-title">
+        <div class="head reveal">
+          <h2 id="how-title">Slow down where it <span class="mark">matters</span>.</h2>
+          <p class="muted">Marginalia is a fictional product used to show this Aura flavor. Its features are invented for the demo.</p>
+        </div>
+        <div class="features">
+          <article class="card feature">
+            <h3 class="rule">Keep sources beside you</h3>
+            <p>Pin a paper, a page or a transcript next to your draft and quote it without switching windows.</p>
+          </article>
+          <article class="card feature">
+            <h3 class="rule">Write in the margin</h3>
+            <p>Every highlight can hold a note. Notes gather into an outline you can reorder by hand.</p>
+          </article>
+          <article class="card feature">
+            <h3 class="rule">Draft with a clear trail</h3>
+            <p>Each paragraph links back to the notes that shaped it, so a reviewer can follow the thread.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="wrap section" id="library" aria-labelledby="library-title" style="padding-top: 0">
+        <div class="head reveal"><h2 id="library-title">A library that reads like a shelf.</h2></div>
+        <div class="work">
+          <div class="card">
+            <h3>Recent notebooks</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th scope="col">Notebook</th><th scope="col">Status</th><th scope="col" class="hide-sm">Sources</th><th scope="col" class="hide-sm">Edited</th></tr></thead>
+                <tbody>
+                  <tr><td>River restoration</td><td><span class="badge"><i class="dot clay" aria-hidden="true"></i>Drafting</span></td><td class="hide-sm">12</td><td class="muted hide-sm">Today</td></tr>
+                  <tr><td>Grant narrative</td><td><span class="badge"><i class="dot" aria-hidden="true"></i>Reviewed</span></td><td class="hide-sm">7</td><td class="muted hide-sm">Yesterday</td></tr>
+                  <tr><td>Oral history index</td><td><span class="badge"><i class="dot clay" aria-hidden="true"></i>Drafting</span></td><td class="hide-sm">31</td><td class="muted hide-sm">Tue</td></tr>
+                  <tr><td>Seminar reading list</td><td><span class="badge"><i class="dot" aria-hidden="true"></i>Reviewed</span></td><td class="hide-sm">18</td><td class="muted hide-sm">Last week</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <form class="card" id="contact" novalidate aria-labelledby="contact-title">
+            <h3 id="contact-title">Request a reading list</h3>
+            <label class="field">Name<input type="text" name="name" id="f-name" autocomplete="name" required aria-describedby="e-name" /></label>
+            <span class="error" id="e-name"></span>
+            <label class="field">Email<input type="email" name="email" id="f-email" autocomplete="email" required aria-describedby="e-email" /></label>
+            <span class="error" id="e-email"></span>
+            <label class="field">Topic<select name="topic"><option>Ecology</option><option>History</option><option>Policy</option><option>Design</option></select></label>
+            <label class="field">Anything we should know?<textarea name="notes" rows="3"></textarea></label>
+            <label class="check"><input type="checkbox" name="digest" />Send me one short digest a month.</label>
+            <button type="submit" class="button button-fill">Send request</button>
+            <p class="status" role="status" id="contact-status"></p>
+          </form>
+        </div>
+      </section>
+
+      <section class="wrap section" id="plans" aria-labelledby="plans-title" style="padding-top: 0">
+        <div class="head reveal"><h2 id="plans-title">Choose a desk size.</h2></div>
+        <div class="tabs-center">
+          <div class="tabs" role="tablist" aria-label="Plan type" id="plan-tabs">
+            <span class="indicator" aria-hidden="true"></span>
+            <button type="button" role="tab" id="tab-personal" aria-selected="true" aria-controls="panel-personal">Personal</button>
+            <button type="button" role="tab" id="tab-team" aria-selected="false" aria-controls="panel-team" tabindex="-1">Team</button>
+          </div>
+        </div>
+        <div class="plans" role="tabpanel" id="panel-personal" aria-labelledby="tab-personal" tabindex="0">
+          <div class="card plan"><h3>Notebook</h3><div class="price">$0 <small>/ month</small></div><p class="muted">For a single project and a handful of sources.</p><ul><li><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M11.47 3.84a.5.5 0 0 1 .06.7l-5 6a.5.5 0 0 1-.74.03l-2.5-2.5a.5.5 0 1 1 .7-.7l2.12 2.11 4.66-5.58a.5.5 0 0 1 .7-.06Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" /></svg>3 notebooks</li><li><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M11.47 3.84a.5.5 0 0 1 .06.7l-5 6a.5.5 0 0 1-.74.03l-2.5-2.5a.5.5 0 1 1 .7-.7l2.12 2.11 4.66-5.58a.5.5 0 0 1 .7-.06Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" /></svg>Margin notes</li></ul><a href="#start" class="button button-pill">Start free</a></div>
+          <div class="card plan recommended"><span class="tag">Most chosen</span><h3>Study</h3><div class="price">$12 <small>/ month</small></div><p class="muted">For long projects with many sources.</p><ul><li><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M11.47 3.84a.5.5 0 0 1 .06.7l-5 6a.5.5 0 0 1-.74.03l-2.5-2.5a.5.5 0 1 1 .7-.7l2.12 2.11 4.66-5.58a.5.5 0 0 1 .7-.06Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" /></svg>Unlimited notebooks</li><li><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M11.47 3.84a.5.5 0 0 1 .06.7l-5 6a.5.5 0 0 1-.74.03l-2.5-2.5a.5.5 0 1 1 .7-.7l2.12 2.11 4.66-5.58a.5.5 0 0 1 .7-.06Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" /></svg>Source trail on every paragraph</li><li><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M11.47 3.84a.5.5 0 0 1 .06.7l-5 6a.5.5 0 0 1-.74.03l-2.5-2.5a.5.5 0 1 1 .7-.7l2.12 2.11 4.66-5.58a.5.5 0 0 1 .7-.06Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" /></svg>Export to print</li></ul><a href="#start" class="button button-fill">Try Study</a></div>
+          <div class="card plan"><h3>Archive</h3><div class="price">$24 <small>/ month</small></div><p class="muted">For collections you keep for years.</p><ul><li><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M11.47 3.84a.5.5 0 0 1 .06.7l-5 6a.5.5 0 0 1-.74.03l-2.5-2.5a.5.5 0 1 1 .7-.7l2.12 2.11 4.66-5.58a.5.5 0 0 1 .7-.06Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" /></svg>Version history</li><li><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M11.47 3.84a.5.5 0 0 1 .06.7l-5 6a.5.5 0 0 1-.74.03l-2.5-2.5a.5.5 0 1 1 .7-.7l2.12 2.11 4.66-5.58a.5.5 0 0 1 .7-.06Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" /></svg>Large file shelf</li></ul><a href="#contact" class="button button-pill">Ask about Archive</a></div>
+        </div>
+        <div class="plans" role="tabpanel" id="panel-team" aria-labelledby="tab-team" tabindex="0" hidden>
+          <div class="card plan"><h3>Seminar</h3><div class="price">$9 <small>/ seat / month</small></div><p class="muted">For a class or reading group.</p><ul><li><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M11.47 3.84a.5.5 0 0 1 .06.7l-5 6a.5.5 0 0 1-.74.03l-2.5-2.5a.5.5 0 1 1 .7-.7l2.12 2.11 4.66-5.58a.5.5 0 0 1 .7-.06Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" /></svg>Shared shelves</li><li><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M11.47 3.84a.5.5 0 0 1 .06.7l-5 6a.5.5 0 0 1-.74.03l-2.5-2.5a.5.5 0 1 1 .7-.7l2.12 2.11 4.66-5.58a.5.5 0 0 1 .7-.06Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" /></svg>Comment threads</li></ul><a href="#contact" class="button button-pill">Set up a seminar</a></div>
+          <div class="card plan recommended"><span class="tag">Most chosen</span><h3>Studio</h3><div class="price">$18 <small>/ seat / month</small></div><p class="muted">For research teams that publish.</p><ul><li><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M11.47 3.84a.5.5 0 0 1 .06.7l-5 6a.5.5 0 0 1-.74.03l-2.5-2.5a.5.5 0 1 1 .7-.7l2.12 2.11 4.66-5.58a.5.5 0 0 1 .7-.06Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" /></svg>Review rounds</li><li><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M11.47 3.84a.5.5 0 0 1 .06.7l-5 6a.5.5 0 0 1-.74.03l-2.5-2.5a.5.5 0 1 1 .7-.7l2.12 2.11 4.66-5.58a.5.5 0 0 1 .7-.06Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" /></svg>Roles and shelves</li><li><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M11.47 3.84a.5.5 0 0 1 .06.7l-5 6a.5.5 0 0 1-.74.03l-2.5-2.5a.5.5 0 1 1 .7-.7l2.12 2.11 4.66-5.58a.5.5 0 0 1 .7-.06Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" /></svg>Citation styles</li></ul><a href="#contact" class="button button-fill">Try Studio</a></div>
+          <div class="card plan"><h3>Institute</h3><div class="price">Custom</div><p class="muted">For libraries and departments.</p><ul><li><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M11.47 3.84a.5.5 0 0 1 .06.7l-5 6a.5.5 0 0 1-.74.03l-2.5-2.5a.5.5 0 1 1 .7-.7l2.12 2.11 4.66-5.58a.5.5 0 0 1 .7-.06Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" /></svg>Single sign-on</li><li><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M11.47 3.84a.5.5 0 0 1 .06.7l-5 6a.5.5 0 0 1-.74.03l-2.5-2.5a.5.5 0 1 1 .7-.7l2.12 2.11 4.66-5.58a.5.5 0 0 1 .7-.06Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" /></svg>Retention rules</li></ul><a href="#contact" class="button button-pill">Talk to us</a></div>
+        </div>
+      </section>
+
+      <section class="wrap section" id="faq" aria-labelledby="faq-title" style="padding-top: 0">
+        <div class="head reveal"><h2 id="faq-title">Questions, answered plainly.</h2></div>
+        <div class="faq">
+          <details><summary>Is Marginalia a real product?<svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M8 2.75a.5.5 0 0 0-1 0V7H2.75a.5.5 0 0 0 0 1H7v4.25a.5.5 0 0 0 1 0V8h4.25a.5.5 0 0 0 0-1H8V2.75Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" /></svg></summary><p>No. It is a fictional product that shows how this Aura flavor looks on a real page. Prices and features are invented.</p></details>
+          <details><summary>Can I use the flavor without the serif?<svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M8 2.75a.5.5 0 0 0-1 0V7H2.75a.5.5 0 0 0 0 1H7v4.25a.5.5 0 0 0 1 0V8h4.25a.5.5 0 0 0 0-1H8V2.75Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" /></svg></summary><p>You can, but the serif headline is most of the personality. Keep it for display sizes and leave body copy in the sans.</p></details>
+          <details><summary>Why are the main buttons black, not clay?<svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M8 2.75a.5.5 0 0 0-1 0V7H2.75a.5.5 0 0 0 0 1H7v4.25a.5.5 0 0 0 1 0V8h4.25a.5.5 0 0 0 0-1H8V2.75Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" /></svg></summary><p>Ink keeps actions calm and readable on ivory. Clay stays small so that when it appears, it means something.</p></details>
+          <details><summary>How does dark mode work?<svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M8 2.75a.5.5 0 0 0-1 0V7H2.75a.5.5 0 0 0 0 1H7v4.25a.5.5 0 0 0 1 0V8h4.25a.5.5 0 0 0 0-1H8V2.75Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" /></svg></summary><p>The page turns to warm charcoal and the ink button flips to ivory. The footer stays the darkest band.</p></details>
+        </div>
+      </section>
+    </main>
+
+    <div class="night">
+      <section class="wrap cta" aria-labelledby="cta-title">
+        <h2 id="cta-title">Bring one question. <em>Leave with a draft.</em></h2>
+        <p class="muted">Open the demo notebook and see the flavor at work.</p>
+        <div class="actions"><a href="#start" class="button button-fill">Open a notebook</a><a href="#how" class="button button-pill">How it works</a></div>
+      </section>
+      <footer class="wrap">
+        <div class="cols">
+          <div class="about"><a href="#" class="logo"><i aria-hidden="true"></i>Marginalia</a><p class="muted" style="margin-top: calc(var(--aura) * 1); max-width: 32ch">A demo flavor of the Aura design system. Fictional product and sample content.</p></div>
+          <div><h2>Product</h2><ul><li><a href="#how">How it works</a></li><li><a href="#library">Library</a></li><li><a href="#plans">Plans</a></li></ul></div>
+          <div><h2>Learn</h2><ul><li><a href="#faq">FAQ</a></li><li><a href="#">Accessibility</a></li><li><a href="#">Changelog</a></li></ul></div>
+          <div><h2>Studio</h2><ul><li><a href="#contact">Contact</a></li><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li></ul></div>
+        </div>
+        <p class="legal muted">Built with Aura. Not affiliated with any existing product or company.</p>
+      </footer>
+    </div>
+
+    <script>
+      (function () {
+        var toggle = document.getElementById("menu-toggle");
+        var links = document.getElementById("nav-links");
+
+        function setMenu(open) {
+          toggle.setAttribute("aria-expanded", String(open));
+          links.classList.toggle("open", open);
+        }
+
+        toggle.addEventListener("click", function () {
+          setMenu(toggle.getAttribute("aria-expanded") !== "true");
+        });
+
+        links.addEventListener("click", function (event) {
+          if (event.target.closest("a")) setMenu(false);
+        });
+
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") {
+            setMenu(false);
+            toggle.focus();
+          }
+        });
+
+        document.querySelectorAll(".modes button").forEach(function (button, _, all) {
+          button.addEventListener("click", function () {
+            all.forEach(function (other) {
+              other.setAttribute("aria-pressed", String(other === button));
+            });
+          });
+        });
+
+        var brief = document.getElementById("start");
+        brief.addEventListener("submit", function (event) {
+          event.preventDefault();
+          var text = document.getElementById("brief").value.trim();
+          var mode = brief.querySelector('.modes [aria-pressed="true"]').textContent;
+          document.getElementById("brief-status").textContent = text
+            ? mode + " notebook started in the demo: “" + text.slice(0, 60) + "”."
+            : "Write a sentence first, then press Start.";
+        });
+
+        document.getElementById("brief").addEventListener("keydown", function (event) {
+          if (event.key === "Enter" && (event.metaKey || event.ctrlKey)) {
+            brief.requestSubmit();
+          }
+        });
+
+        var contact = document.getElementById("contact");
+        contact.addEventListener("submit", function (event) {
+          event.preventDefault();
+          var checks = [
+            ["f-name", "e-name", "Add your name."],
+            ["f-email", "e-email", "Add an email like name@example.org."],
+          ];
+          var firstInvalid = null;
+          checks.forEach(function (check) {
+            var input = document.getElementById(check[0]);
+            var error = document.getElementById(check[1]);
+            var valid = input.value.trim() !== "" && input.checkValidity();
+            input.setAttribute("aria-invalid", String(!valid));
+            error.textContent = valid ? "" : check[2];
+            if (!valid && !firstInvalid) firstInvalid = input;
+          });
+          var status = document.getElementById("contact-status");
+          if (firstInvalid) {
+            status.textContent = "";
+            firstInvalid.focus();
+            return;
+          }
+          status.textContent = "Thanks. This is a demo, so nothing was sent.";
+        });
+
+        var tabs = Array.prototype.slice.call(document.querySelectorAll('#plan-tabs [role="tab"]'));
+        var tablist = document.getElementById("plan-tabs");
+
+        function selectTab(index, focus) {
+          tabs.forEach(function (tab, i) {
+            var selected = i === index;
+            tab.setAttribute("aria-selected", String(selected));
+            tab.tabIndex = selected ? 0 : -1;
+            document.getElementById(tab.getAttribute("aria-controls")).hidden = !selected;
+          });
+          tablist.style.setProperty("--tab", String(index));
+          if (focus) tabs[index].focus();
+        }
+
+        tabs.forEach(function (tab, i) {
+          tab.addEventListener("click", function () {
+            selectTab(i, false);
+          });
+          tab.addEventListener("keydown", function (event) {
+            var next = null;
+            if (event.key === "ArrowRight") next = (i + 1) % tabs.length;
+            if (event.key === "ArrowLeft") next = (i - 1 + tabs.length) % tabs.length;
+            if (event.key === "Home") next = 0;
+            if (event.key === "End") next = tabs.length - 1;
+            if (next !== null) {
+              event.preventDefault();
+              selectTab(next, true);
+            }
+          });
+        });
+
+        var motion = window.matchMedia("(prefers-reduced-motion: no-preference)");
+        if (motion.matches && "IntersectionObserver" in window) {
+          document.documentElement.classList.add("reveal-ready");
+          var observer = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("in");
+                  observer.unobserve(entry.target);
+                }
+              });
+            },
+            { rootMargin: "0px 0px -10% 0px" }
+          );
+          document.querySelectorAll(".reveal").forEach(function (element) {
+            observer.observe(element);
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
