@@ -19,33 +19,36 @@
         --aura-accents-primary: var(--accent-9);
         --aura-text-primary-inverse: var(--accent-contrast);
         --aura-button-hover: var(--accent-10);
-        --aura-outline: var(--accent-12) solid 2px;
+        --aura-outline: var(--gray-12) solid 2px;
         --aura-input-bg: var(--gray-1);
-        --aura-accents-10: var(--gray-12);
         --ease: cubic-bezier(0.4, 0, 0.6, 1);
-        --field: linear-gradient(160deg, var(--sky-mist) 0%, var(--sky-mid) 70%);
-        --field-fg: var(--field-ink);
-        --sweep-opacity: 0.85;
-        --lift: 0 calc(var(--aura) * 1) calc(var(--aura) * 3) calc(var(--aura) * -1) var(--accent-a6);
-        --card-ring: transparent;
+        --hair: var(--gray-6);
+        --soft-pill: var(--gray-3);
+        --soft-pill-hover: var(--gray-4);
+        --panel: var(--cream);
+        --panel-ink: var(--cream-ink);
+        --panel-ring: transparent;
+        --frame-ring: var(--gray-5);
+        --frame-shadow: 0 calc(var(--aura) * 1) calc(var(--aura) * 4) calc(var(--aura) * -2) var(--gray-a3);
+        --band-bg: var(--band);
+        --band-fg: var(--band-ink);
+        --band-ring: transparent;
+        --ghost-mark: var(--gray-a4);
       }
 
       .dark {
-        --field: linear-gradient(160deg, var(--gray-2) 0%, color-mix(in srgb, var(--sky-mid) 30%, var(--gray-1)) 70%);
-        --sweep-opacity: 0.25;
-        --lift: 0 0 0 1px var(--accent-a5);
-        --card-ring: var(--accent-a5);
+        --soft-pill: var(--gray-4);
+        --soft-pill-hover: var(--gray-5);
+        --panel-ring: color-mix(in srgb, var(--cream-ink) 14%, transparent);
+        --frame-ring: var(--gray-6);
+        --frame-shadow: 0 0 0 1px var(--gray-a3);
+        --band-ring: var(--gray-a5);
+        --ghost-mark: var(--gray-a5);
       }
 
-      * {
-        box-sizing: border-box;
-      }
+      * { box-sizing: border-box; }
 
-      html {
-        font-size: 17px;
-        background: var(--gray-1);
-        scroll-behavior: auto;
-      }
+      html { font-size: 16px; background: var(--gray-1); }
 
       body {
         margin: 0;
@@ -53,39 +56,24 @@
         background: var(--gray-1);
         color: var(--gray-12);
         font-family: var(--aura-font-stack);
-        line-height: 1.55;
+        line-height: 1.5;
       }
 
-      a {
-        color: inherit;
-      }
+      a { color: inherit; }
 
-      h1,
-      h2,
-      h3,
-      p,
-      fieldset {
-        margin: 0;
-      }
+      h1, h2, h3, p, figure, fieldset { margin: 0; }
 
-      h1,
-      h2,
-      h3 {
+      h1, h2, h3 {
         font-family: var(--aura-font-display);
-        font-weight: 600;
-        letter-spacing: -0.03em;
-        line-height: 1;
+        font-weight: 500;
+        letter-spacing: -0.035em;
+        line-height: 1.02;
         text-wrap: balance;
       }
 
-      :focus-visible {
-        outline: var(--aura-outline);
-        outline-offset: 2px;
-      }
+      :focus-visible { outline: var(--aura-outline); outline-offset: 2px; }
 
-      [id] {
-        scroll-margin-top: calc(var(--aura) * 2);
-      }
+      [id] { scroll-margin-top: calc(var(--aura) * 2); }
 
       .skip {
         position: absolute;
@@ -94,64 +82,45 @@
         padding: calc(var(--aura) * 0.5) calc(var(--aura) * 1);
         background: var(--accent-9);
         color: var(--accent-contrast);
-        border-radius: var(--aura-button-radius);
+        border-radius: 9999px;
         z-index: 10;
       }
 
-      .skip:focus {
-        top: calc(var(--aura) * 1);
-      }
+      .skip:focus { top: calc(var(--aura) * 1); }
 
-      .wrap {
-        width: min(100% - var(--aura) * 3, var(--aura) * 92);
-        margin-inline: auto;
-      }
+      .wrap { width: min(100% - var(--aura) * 3, var(--aura) * 94); margin-inline: auto; }
 
-      .section {
-        padding-block: calc(var(--aura) * 9);
-      }
+      .section { padding-block: clamp(calc(var(--aura) * 6), 10vw, calc(var(--aura) * 11)); }
 
-      .kicker,
-      .status {
-        font-family: var(--aura-font-label);
-        font-size: 13px;
-        font-weight: 500;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-        color: var(--accent-11);
-      }
+      .muted { color: var(--gray-11); }
 
-      .muted {
-        color: var(--gray-11);
-      }
+      .note { font-family: var(--aura-font-label); font-size: 13px; color: var(--gray-11); }
 
-      .note {
-        font-family: var(--aura-font-label);
-        font-size: 13px;
-        color: var(--gray-11);
-      }
+      .icon { width: 15px; height: 15px; flex: none; }
 
-      .icon {
-        width: 15px;
-        height: 15px;
-        flex: none;
-      }
+      .mk { fill: currentColor; flex: none; }
 
       .btn {
         display: inline-flex;
         align-items: center;
+        justify-content: center;
         gap: calc(var(--aura) * 0.5);
-        font-weight: 600;
+        font-weight: 500;
         text-decoration: none;
+        white-space: nowrap;
       }
+
+      .button-pill.soft { background: var(--soft-pill); color: var(--gray-12); border: 0; }
+
+      .button-pill.soft:hover { background: var(--soft-pill-hover); }
 
       .nav {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        justify-content: space-between;
         gap: calc(var(--aura) * 1);
-        padding-block: calc(var(--aura) * 1.5);
+        padding-block: calc(var(--aura) * 1);
+        font-size: 0.875rem;
       }
 
       .logo {
@@ -160,291 +129,335 @@
         gap: calc(var(--aura) * 0.5);
         font-family: var(--aura-font-display);
         font-weight: 600;
-        font-size: 1.25rem;
+        font-size: 1.125rem;
         letter-spacing: -0.03em;
         text-decoration: none;
       }
 
-      .mark {
-        position: relative;
-        width: calc(var(--aura) * 1.5);
-        height: calc(var(--aura) * 1.5);
-        background: var(--accent-9);
-        border-radius: 3px;
-        clip-path: polygon(0 0, 60% 0, 100% 40%, 100% 100%, 0 100%);
-      }
-
-      .mark::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 40%;
-        height: 40%;
-        background: linear-gradient(225deg, transparent 50%, var(--accent-6) 50%);
-      }
+      .logo .mk { width: calc(var(--aura) * 2); height: calc(var(--aura) * 2); }
 
       .nav-links {
         display: flex;
         gap: calc(var(--aura) * 2);
         list-style: none;
-        margin: 0;
+        margin: 0 0 0 calc(var(--aura) * 3);
         padding: 0;
+        font-weight: 500;
       }
 
-      .nav-links a {
-        color: var(--gray-11);
-        text-decoration: none;
+      .nav-links a { text-decoration: none; font-weight: 400; }
+
+      .nav-links a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+      .menu-toggle { display: none; }
+
+      .nav-end { display: flex; gap: calc(var(--aura) * 0.5); margin-left: auto; }
+
+      .split { display: inline-flex; }
+
+      .split .button-fill:first-child { border-radius: 9999px 0 0 9999px; }
+
+      .split .button-fill.cell {
+        border-radius: 0 9999px 9999px 0;
+        padding-inline: calc(var(--aura) * 0.75);
+        box-shadow: inset 1px 0 0 color-mix(in srgb, var(--accent-contrast) 25%, transparent);
       }
 
-      .nav-links a:hover {
-        color: var(--gray-12);
-      }
+      .nav .btn { height: calc(var(--aura) * 2.5); padding-block: 0; padding-inline: calc(var(--aura) * 1.25); font-size: 0.875rem; }
 
-      .menu-toggle {
-        display: none;
-      }
+      .nav .split .cell { padding-inline: calc(var(--aura) * 0.75); }
 
-      .field {
-        position: relative;
-        isolation: isolate;
-        overflow: hidden;
-        background: var(--field);
-        color: var(--field-fg);
-      }
+      .hero { text-align: center; padding-top: calc(var(--aura) * 7.5); }
 
-      .field::before {
-        content: "";
-        position: absolute;
-        inset: -30% -10% auto -30%;
-        height: 70%;
-        z-index: -1;
-        background: linear-gradient(170deg, transparent 20%, var(--sweep) 50%, transparent 80%);
-        transform: rotate(-12deg);
-        filter: blur(calc(var(--aura) * 3));
-        opacity: var(--sweep-opacity);
-      }
+      .announce { display: inline-flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: calc(var(--aura) * 0.5); font-size: 0.8125rem; }
 
-      .hero {
-        display: grid;
-        grid-template-columns: 1.1fr 0.9fr;
-        gap: calc(var(--aura) * 4);
-        align-items: center;
-        padding-block: calc(var(--aura) * 5) calc(var(--aura) * 7);
-      }
+      .announce strong { font-weight: 600; }
+
+      .announce a { display: inline-flex; align-items: center; gap: calc(var(--aura) * 0.5); color: var(--gray-11); text-decoration: none; }
+
+      .announce a:hover { color: var(--gray-12); }
+
+      .chip { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 9999px; background: var(--gray-3); color: var(--gray-12); }
 
       .hero h1 {
-        font-size: clamp(2.5rem, 6vw, 5rem);
-      }
-
-      .hero p.lead {
-        margin-top: calc(var(--aura) * 1.5);
-        max-width: calc(var(--aura) * 38);
-        font-size: 1.15rem;
-      }
-
-      .actions {
         display: flex;
         flex-wrap: wrap;
-        gap: calc(var(--aura) * 1);
+        align-items: center;
+        justify-content: center;
+        gap: 0.2em;
         margin-top: calc(var(--aura) * 2.5);
+        font-size: clamp(2.25rem, 7vw, 4rem);
       }
 
-      .button-pill.ghost {
-        border: 1px solid var(--gray-7);
-        background: transparent;
-        color: inherit;
-      }
+      .hero h1 .mk { width: 0.8em; height: 0.8em; }
 
-      .runs {
+      .lead { max-width: calc(var(--aura) * 50); margin: calc(var(--aura) * 1.5) auto 0; color: var(--gray-11); font-size: 1.25rem; line-height: 1.45; }
+
+      .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: calc(var(--aura) * 1); margin-top: calc(var(--aura) * 2.5); }
+
+      .big { height: calc(var(--aura) * 3.5); padding-inline: calc(var(--aura) * 1.5); font-size: 1.0625rem; }
+
+      .app {
         display: grid;
-        gap: calc(var(--aura) * 1.5);
+        grid-template-columns: calc(var(--aura) * 20) 1fr;
+        max-width: calc(var(--aura) * 75);
+        height: calc(var(--aura) * 40);
+        margin: calc(var(--aura) * 5) auto 0;
+        text-align: left;
+        background: var(--window);
+        border: 1px solid var(--frame-ring);
+        border-radius: calc(var(--aura) * 1.5);
+        box-shadow: var(--frame-shadow);
+        overflow: hidden;
+        font-size: 0.8125rem;
       }
 
-      .run {
-        background: var(--sky-mist);
-        color: var(--gray-12);
-        border-radius: var(--aura-radius);
-        padding: calc(var(--aura) * 2);
-        box-shadow: var(--lift);
-      }
+      .side { display: flex; flex-direction: column; gap: calc(var(--aura) * 1); padding: calc(var(--aura) * 1); border-right: 1px solid var(--hair); min-width: 0; }
 
-      .run h3 {
-        font-size: 1.25rem;
-        margin-top: calc(var(--aura) * 0.5);
-      }
+      .dots { display: flex; align-items: center; gap: calc(var(--aura) * 0.5); color: var(--gray-11); }
 
-      .status {
-        display: inline-flex;
+      .dots i { width: 12px; height: 12px; border-radius: 9999px; }
+
+      .dots .r { background: var(--dot-red); }
+      .dots .a { background: var(--dot-amber); }
+      .dots .g { background: var(--dot-green); }
+      .dots svg { margin-left: auto; }
+
+      .search {
+        display: flex;
         align-items: center;
         gap: calc(var(--aura) * 0.5);
-      }
-
-      .dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 9999px;
-        background: var(--accent-9);
-      }
-
-      .status.done {
+        padding: calc(var(--aura) * 0.5) calc(var(--aura) * 0.75);
+        border: 1px solid var(--gray-6);
+        border-radius: calc(var(--aura) * 0.75);
+        background: var(--gray-2);
         color: var(--gray-11);
       }
 
-      .status.done .dot {
-        background: var(--gray-9);
+      .list { display: grid; gap: 2px; margin: 0; padding: 0; list-style: none; }
+
+      .row {
+        display: grid;
+        grid-template-columns: 30px minmax(0, 1fr) auto;
+        column-gap: calc(var(--aura) * 0.75);
+        align-items: center;
+        padding: calc(var(--aura) * 0.5) calc(var(--aura) * 0.75);
+        border-radius: calc(var(--aura) * 0.75);
       }
 
-      .track {
-        height: 3px;
-        margin-top: calc(var(--aura) * 1);
-        border-radius: 9999px;
-        background: var(--accent-a4);
+      .row.sel { background: var(--gray-3); }
+
+      .row .av { grid-row: span 2; }
+
+      .row b { font-weight: 500; font-size: 0.875rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+      .row time { font-size: 0.75rem; color: var(--gray-11); }
+
+      .row span { grid-column: 2 / span 2; color: var(--gray-11); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+      .av { display: block; width: 30px; height: 30px; border-radius: 9999px; }
+
+      .av.teal { background: var(--avatar-teal); }
+      .av.orange { background: var(--avatar-orange); }
+      .av.indigo { background: var(--avatar-indigo); }
+      .av.violet { background: var(--avatar-violet); }
+      .av.blue { background: var(--avatar-blue); }
+      .av.coral { background: var(--avatar-coral); }
+
+      .av.group { position: relative; }
+
+      .av.group i { position: absolute; width: 17px; height: 17px; border-radius: 9999px; box-shadow: 0 0 0 2px var(--window); }
+
+      .av.group i:nth-child(1) { top: 0; left: 6px; background: var(--avatar-teal); }
+      .av.group i:nth-child(2) { bottom: 0; left: 0; background: var(--avatar-indigo); }
+      .av.group i:nth-child(3) { bottom: 0; right: 0; background: var(--avatar-violet); }
+
+      .pane { display: flex; flex-direction: column; min-width: 0; }
+
+      .pane-head { display: flex; align-items: center; gap: calc(var(--aura) * 0.5); padding: calc(var(--aura) * 1) calc(var(--aura) * 1.5); border-bottom: 1px solid var(--hair); font-weight: 500; font-size: 0.875rem; }
+
+      .pane-head .av { width: 18px; height: 18px; }
+
+      .pane-head svg { margin-left: auto; color: var(--gray-11); }
+
+      .thread { display: flex; flex-direction: column; gap: calc(var(--aura) * 1.5); padding: calc(var(--aura) * 1.5); font-size: 0.875rem; }
+
+      .stamp, .sys { align-self: center; color: var(--gray-11); font-size: 0.8125rem; }
+
+      .bubble { max-width: 75%; padding: calc(var(--aura) * 0.75) calc(var(--aura) * 1); border-radius: calc(var(--aura) * 1); line-height: 1.45; }
+
+      .bubble.in { align-self: flex-start; background: var(--bubble); color: var(--gray-12); }
+
+      .bubble.out { align-self: flex-end; background: var(--accent-9); color: var(--accent-contrast); }
+
+      .thinking { display: flex; align-items: center; gap: calc(var(--aura) * 0.75); color: var(--gray-11); }
+
+      .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: calc(var(--aura) * 2); margin-top: calc(var(--aura) * 6); padding-block: calc(var(--aura) * 3); border-block: 1px solid var(--hair); }
+
+      .stat strong { display: block; font-family: var(--aura-font-display); font-weight: 500; font-size: 2.25rem; letter-spacing: -0.035em; line-height: 1.1; }
+
+      .stat span { color: var(--gray-11); font-size: 0.875rem; }
+
+      .stats-note { margin-top: calc(var(--aura) * 1); }
+
+      .h2 { font-size: clamp(1.75rem, 4vw, 3rem); }
+
+      .head { max-width: calc(var(--aura) * 46); margin-bottom: calc(var(--aura) * 4); }
+
+      .head.center { margin-inline: auto; text-align: center; }
+
+      .head p { margin-top: calc(var(--aura) * 1); }
+
+      .cream {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: calc(var(--aura) * 4);
+        padding: calc(var(--aura) * 6);
+        border-radius: calc(var(--aura) * 2);
+        background: var(--panel);
+        color: var(--panel-ink);
+        box-shadow: inset 0 0 0 1px var(--panel-ring);
         overflow: hidden;
       }
 
-      .track span {
-        display: block;
-        height: 100%;
-        background: var(--accent-9);
-        transform-origin: left;
-      }
+      .cream p { margin-top: calc(var(--aura) * 1.5); color: color-mix(in srgb, var(--cream-ink) 80%, var(--cream)); }
 
-      .run .note {
-        margin-top: calc(var(--aura) * 1);
-      }
+      .cream ul { margin: calc(var(--aura) * 2) 0 0; padding-left: calc(var(--aura) * 1.5); display: grid; gap: calc(var(--aura) * 0.5); }
 
-      .example {
-        margin-top: calc(var(--aura) * 1.5);
-        font-family: var(--aura-font-label);
-        font-size: 13px;
-      }
+      .cream .mk { width: 100%; max-width: calc(var(--aura) * 26); height: auto; aspect-ratio: 1; justify-self: center; color: var(--cream-ink); }
 
-      .stats {
+      .grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: calc(var(--aura) * 2); }
+
+      .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: calc(var(--aura) * 2); }
+
+      .card { padding: calc(var(--aura) * 2); border-radius: calc(var(--aura) * 1.5); background: var(--gray-2); }
+
+      .card h3 { font-size: 1.375rem; margin-top: calc(var(--aura) * 2); }
+
+      .card p { margin-top: calc(var(--aura) * 0.5); }
+
+      .vignette {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: calc(var(--aura) * 2);
-        padding-block: calc(var(--aura) * 4);
-        border-bottom: 1px solid var(--gray-6);
+        align-content: center;
+        gap: calc(var(--aura) * 0.75);
+        min-height: calc(var(--aura) * 12);
+        padding: calc(var(--aura) * 1.5);
+        border: 1px solid var(--hair);
+        border-radius: calc(var(--aura) * 1);
+        background: var(--window);
+        font-size: 0.8125rem;
       }
 
-      .stat strong {
-        display: block;
-        font-family: var(--aura-font-display);
-        font-weight: 600;
-        font-size: 2.5rem;
-        letter-spacing: -0.03em;
-        line-height: 1;
-      }
+      .mini { display: flex; align-items: center; gap: calc(var(--aura) * 0.75); }
 
-      .stat span {
-        color: var(--gray-11);
-      }
+      .mini .av { width: 22px; height: 22px; }
 
-      .head {
-        max-width: calc(var(--aura) * 46);
-        margin-bottom: calc(var(--aura) * 4);
-      }
+      .switch { display: inline-flex; width: 38px; height: 22px; padding: 3px; border-radius: 9999px; background: var(--accent-9); justify-content: flex-end; }
 
-      .head h2 {
-        font-size: clamp(2rem, 4vw, 3rem);
-        margin-top: calc(var(--aura) * 0.5);
-      }
+      .switch i { width: 16px; height: 16px; border-radius: 9999px; background: var(--accent-contrast); }
 
-      .head p {
-        margin-top: calc(var(--aura) * 1);
-      }
+      .steps { display: flex; flex-wrap: wrap; gap: calc(var(--aura) * 0.5); }
 
-      .grid3 {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: calc(var(--aura) * 2);
-      }
+      .steps span { padding: 2px calc(var(--aura) * 0.75); border-radius: 9999px; background: var(--gray-3); }
 
-      .card {
-        border: 1px solid var(--gray-6);
-        border-radius: var(--aura-radius);
-        padding: calc(var(--aura) * 2);
-        background: var(--gray-1);
-      }
+      .steps span:last-child { background: var(--accent-9); color: var(--accent-contrast); }
 
-      .card h3 {
-        font-size: 1.25rem;
-        margin-block: calc(var(--aura) * 1) calc(var(--aura) * 0.5);
-      }
+      .vignette .bubble { max-width: 85%; padding: calc(var(--aura) * 0.5) calc(var(--aura) * 0.75); }
 
-      .table-wrap {
-        overflow-x: auto;
-        border: 1px solid var(--gray-6);
-        border-radius: var(--aura-radius);
-      }
+      .vignette .bubble.in { justify-self: start; }
 
-      table {
-        width: 100%;
-        border-collapse: collapse;
+      .vignette .bubble.out { justify-self: end; }
+
+      .seg { display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 4px; border-radius: calc(var(--aura) * 1.5); background: var(--soft-pill); }
+
+      .seg button {
+        font: inherit;
         font-size: 0.875rem;
-      }
-
-      caption {
-        text-align: left;
-        padding: calc(var(--aura) * 1) calc(var(--aura) * 1.5);
-        color: var(--gray-11);
-        font-family: var(--aura-font-label);
-        font-size: 13px;
-      }
-
-      th,
-      td {
-        text-align: left;
-        padding: calc(var(--aura) * 1) calc(var(--aura) * 1.5);
-        border-top: 1px solid var(--gray-6);
-        white-space: nowrap;
-      }
-
-      thead th {
-        background: var(--sky-wash);
-        font-weight: 600;
-      }
-
-      .badge {
-        display: inline-block;
-        padding: 0 calc(var(--aura) * 0.5);
+        font-weight: 500;
+        min-height: calc(var(--aura) * 2.5);
+        padding: 0 calc(var(--aura) * 1.25);
+        border: 0;
         border-radius: 9999px;
-        font-family: var(--aura-font-label);
-        font-size: 12px;
-        background: var(--accent-a3);
-        color: var(--accent-11);
-      }
-
-      .badge.neutral {
-        background: var(--gray-a3);
+        background: transparent;
         color: var(--gray-11);
+        cursor: pointer;
       }
 
-      .split {
+      .seg button[aria-pressed="true"] { background: var(--gray-1); color: var(--gray-12); box-shadow: 0 0 0 1px var(--gray-6); }
+
+      .jobs-bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: calc(var(--aura) * 1); margin-bottom: calc(var(--aura) * 1.5); }
+
+      .table-wrap { overflow-x: auto; border: 1px solid var(--hair); border-radius: calc(var(--aura) * 1.5); }
+
+      table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+
+      caption { text-align: left; padding: calc(var(--aura) * 1) calc(var(--aura) * 1.5); color: var(--gray-11); font-size: 13px; }
+
+      th, td { text-align: left; padding: calc(var(--aura) * 1) calc(var(--aura) * 1.5); border-top: 1px solid var(--hair); white-space: nowrap; }
+
+      thead th { background: var(--gray-2); font-weight: 500; }
+
+      .who { display: inline-flex; align-items: center; gap: calc(var(--aura) * 0.5); font-weight: 500; }
+
+      .who .av { width: 18px; height: 18px; }
+
+      .badge { display: inline-block; padding: 0 calc(var(--aura) * 0.75); border-radius: 9999px; font-size: 12px; font-weight: 500; background: var(--accent-a3); color: var(--accent-12); }
+
+      .badge.neutral { background: var(--gray-a3); color: var(--gray-11); }
+
+      .band { background: var(--band-bg); color: var(--band-fg); border-block: 1px solid var(--band-ring); }
+
+      .band :focus-visible { outline-color: var(--band-ink); }
+
+      .band .head p { color: color-mix(in srgb, var(--band-ink) 72%, var(--band)); }
+
+      .frame {
+        position: relative;
         display: grid;
-        grid-template-columns: 0.9fr 1.1fr;
-        gap: calc(var(--aura) * 4);
-        align-items: start;
+        place-items: center;
+        aspect-ratio: 16 / 9;
+        max-width: calc(var(--aura) * 75);
+        margin-inline: auto;
+        border-radius: calc(var(--aura) * 1.5);
+        background: color-mix(in srgb, var(--band-ink) 7%, var(--band));
+        border: 1px solid color-mix(in srgb, var(--band-ink) 16%, var(--band));
+        overflow: hidden;
       }
 
-      form {
-        display: grid;
-        gap: calc(var(--aura) * 1.5);
-      }
+      .frame .mk { position: absolute; width: 46%; height: auto; aspect-ratio: 1; color: color-mix(in srgb, var(--band-ink) 10%, var(--band)); }
 
-      .field-row {
-        display: grid;
-        gap: calc(var(--aura) * 0.5);
-      }
+      .play { position: relative; display: inline-flex; align-items: center; gap: calc(var(--aura) * 0.5); padding: calc(var(--aura) * 0.75) calc(var(--aura) * 1.5); border-radius: 9999px; background: var(--band-ink); color: var(--band); font-weight: 500; }
 
-      label {
-        font-weight: 600;
-      }
+      .frame + figcaption { margin-top: calc(var(--aura) * 1); text-align: center; font-size: 13px; color: color-mix(in srgb, var(--band-ink) 72%, var(--band)); }
 
-      .field-row input,
-      .field-row select,
-      .field-row textarea {
+      .center-row { display: flex; justify-content: center; margin-bottom: calc(var(--aura) * 3); }
+
+      .plan { display: flex; flex-direction: column; gap: calc(var(--aura) * 1); padding: calc(var(--aura) * 2.5); border: 1px solid var(--hair); border-radius: calc(var(--aura) * 1.5); }
+
+      .plan.featured { background: var(--gray-2); border-color: var(--gray-2); }
+
+      .plan h3 { font-size: 1.375rem; }
+
+      .price { font-family: var(--aura-font-display); font-size: 2.75rem; font-weight: 500; letter-spacing: -0.035em; line-height: 1; }
+
+      .per { display: block; margin-top: calc(var(--aura) * 0.5); font-family: var(--aura-font-stack); font-size: 0.8125rem; letter-spacing: 0; color: var(--gray-11); }
+
+      .plan ul { flex: 1; margin: 0; padding-left: calc(var(--aura) * 1.5); color: var(--gray-11); display: grid; gap: calc(var(--aura) * 0.5); align-content: start; }
+
+      .plan .button { width: 100%; min-height: calc(var(--aura) * 3); }
+
+      .two { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: calc(var(--aura) * 4); align-items: start; }
+
+      .panel { padding: calc(var(--aura) * 2.5); border-radius: calc(var(--aura) * 1.5); background: var(--gray-2); }
+
+      form { display: grid; gap: calc(var(--aura) * 1.5); }
+
+      .field-row { display: grid; gap: calc(var(--aura) * 0.5); }
+
+      label { font-weight: 500; font-size: 0.9375rem; }
+
+      .field-row input, .field-row select, .field-row textarea {
         font: inherit;
         color: var(--gray-12);
         background: var(--aura-input-bg);
@@ -452,374 +465,393 @@
         border-radius: var(--aura-input-radius);
         padding: calc(var(--aura) * 0.5) calc(var(--aura) * 1);
         min-height: calc(var(--aura) * 3);
+        width: 100%;
       }
 
-      .field-row textarea {
-        min-height: calc(var(--aura) * 7);
-        resize: vertical;
-      }
+      .field-row textarea { min-height: calc(var(--aura) * 7); resize: vertical; }
 
-      .field-row [aria-invalid="true"] {
-        border-color: var(--alert-ink);
-      }
+      .field-row [aria-invalid="true"] { border-color: var(--alert-ink); }
 
-      .error {
-        color: var(--alert-ink);
-        font-size: 0.875rem;
-      }
+      .error { color: var(--alert-ink); font-size: 0.875rem; }
 
-      .error:empty {
-        display: none;
-      }
+      .error:empty, .form-status:empty { display: none; }
 
-      .form-status {
-        padding: calc(var(--aura) * 1);
-        border-radius: var(--aura-input-radius);
-        background: var(--sky-wash);
-        color: var(--gray-12);
-      }
+      .form-status { padding: calc(var(--aura) * 1); border-radius: var(--aura-input-radius); background: var(--gray-3); color: var(--gray-12); }
 
-      .form-status:empty {
-        display: none;
-      }
+      .guide { display: flex; flex-direction: column; gap: calc(var(--aura) * 1); }
 
-      .plans {
-        align-items: stretch;
-      }
+      .thumb { display: grid; place-items: center; aspect-ratio: 4 / 3; border-radius: calc(var(--aura) * 1.5); background: var(--gray-2); color: var(--gray-12); }
 
-      .plan {
-        display: flex;
-        flex-direction: column;
-        gap: calc(var(--aura) * 1);
-      }
+      .thumb.warm { background: var(--panel); color: var(--panel-ink); }
 
-      .plan.field {
-        border-color: transparent;
-        box-shadow: inset 0 0 0 1px var(--card-ring);
-      }
+      .thumb .mk { width: 28%; height: auto; aspect-ratio: 1; }
 
-      .plan .price {
-        font-family: var(--aura-font-display);
-        font-size: 2.25rem;
-        font-weight: 600;
-        letter-spacing: -0.03em;
-      }
+      .guide h3 { font-size: 1.25rem; }
 
-      .plan ul {
-        margin: 0;
-        padding-left: calc(var(--aura) * 1.5);
-        flex: 1;
-      }
+      details { border-bottom: 1px solid var(--hair); padding-block: calc(var(--aura) * 1.5); }
 
-      .plan.field .muted {
-        color: var(--field-fg);
-      }
+      details:first-child { border-top: 1px solid var(--hair); }
 
-      .faq {
-        max-width: calc(var(--aura) * 58);
-      }
+      summary { display: flex; justify-content: space-between; align-items: center; gap: calc(var(--aura) * 1); cursor: pointer; list-style: none; font-weight: 500; font-size: 1.0625rem; }
 
-      details {
-        border-bottom: 1px solid var(--gray-6);
-        padding-block: calc(var(--aura) * 1.5);
-      }
+      summary::-webkit-details-marker { display: none; }
 
-      summary {
-        cursor: pointer;
-        font-family: var(--aura-font-display);
-        font-weight: 600;
-        font-size: 1.15rem;
-        letter-spacing: -0.02em;
-      }
+      details[open] summary svg { transform: rotate(45deg); }
 
-      details p {
-        margin-top: calc(var(--aura) * 1);
-      }
+      details p { margin-top: calc(var(--aura) * 1); max-width: calc(var(--aura) * 46); }
 
-      .cta {
-        border-radius: var(--aura-radius);
-        padding: calc(var(--aura) * 6) calc(var(--aura) * 3);
-        text-align: center;
-        box-shadow: inset 0 0 0 1px var(--card-ring);
-      }
+      .closing { position: relative; isolation: isolate; overflow: hidden; text-align: center; padding-block: calc(var(--aura) * 11); }
 
-      .cta h2 {
-        font-size: clamp(2rem, 4.5vw, 3.5rem);
-      }
+      .closing .ghost { position: absolute; z-index: -1; top: 50%; left: 50%; width: min(90vw, calc(var(--aura) * 36)); height: auto; aspect-ratio: 1; transform: translate(-50%, -50%); color: var(--ghost-mark); fill: none; stroke: currentColor; stroke-width: 0.2; }
 
-      .cta .actions {
-        justify-content: center;
-      }
+      .closing h2 { font-size: clamp(2.25rem, 7vw, 4rem); }
 
-      footer {
-        border-top: 1px solid var(--gray-6);
-        padding-block: calc(var(--aura) * 4);
-        margin-top: calc(var(--aura) * 9);
-      }
+      footer { border-top: 1px solid var(--hair); padding-block: calc(var(--aura) * 5) calc(var(--aura) * 3); font-size: 0.875rem; }
 
-      .foot {
-        display: grid;
-        grid-template-columns: 2fr repeat(3, 1fr);
-        gap: calc(var(--aura) * 2);
-      }
+      .foot { display: grid; grid-template-columns: 1.4fr repeat(5, 1fr); gap: calc(var(--aura) * 2); }
 
-      .foot ul {
-        list-style: none;
-        margin: calc(var(--aura) * 0.5) 0 0;
-        padding: 0;
-        display: grid;
-        gap: calc(var(--aura) * 0.5);
-      }
+      .foot h2 { font-family: var(--aura-font-stack); font-size: 0.875rem; font-weight: 600; letter-spacing: 0; }
 
-      .foot a {
-        color: var(--gray-11);
-        text-decoration: none;
-      }
+      .foot ul { list-style: none; margin: calc(var(--aura) * 1) 0 0; padding: 0; display: grid; gap: calc(var(--aura) * 0.5); }
 
-      .foot a:hover {
-        color: var(--gray-12);
-        text-decoration: underline;
-      }
+      .foot a { color: var(--gray-11); text-decoration: none; }
 
-      .legal {
-        margin-top: calc(var(--aura) * 3);
-      }
+      .foot a:hover { color: var(--gray-12); text-decoration: underline; }
+
+      .legal { margin-top: calc(var(--aura) * 4); padding-top: calc(var(--aura) * 1.5); border-top: 1px solid var(--hair); }
 
       @media (prefers-reduced-motion: no-preference) {
-        .button,
-        .run,
-        .card {
-          transition: transform 250ms var(--ease);
-        }
-
-        .button:hover,
-        .run:hover {
-          transform: scale(1.03);
-        }
-
-        .button:active {
-          transform: scale(0.97);
-        }
-
-        .nav-links {
-          transition: opacity 250ms var(--ease), transform 250ms var(--ease);
+        .button { transition: transform 200ms var(--ease); }
+        .button:hover { transform: scale(1.03); }
+        .button:active { transform: scale(0.97); }
+        .pulse { animation: think 1.6s var(--ease) infinite; }
+        @keyframes think {
+          0%, 100% { opacity: 0.45; transform: scale(0.92); }
+          50% { opacity: 1; transform: scale(1); }
         }
       }
 
       @media (prefers-reduced-motion: reduce) {
-        .button,
-        .run,
-        .card,
-        .nav-links {
-          transition: none;
-        }
+        .button, .pulse { transition: none; animation: none; }
       }
 
       @media (max-width: 960px) {
-        .hero,
-        .split {
-          grid-template-columns: 1fr;
-        }
-
-        .stats {
-          grid-template-columns: repeat(2, 1fr);
-        }
+        .two, .cream { grid-template-columns: 1fr; }
+        .stats { grid-template-columns: repeat(2, 1fr); }
+        .grid3 { grid-template-columns: 1fr 1fr; }
+        .foot { grid-template-columns: repeat(3, 1fr); }
+        .foot > div:first-child { grid-column: 1 / -1; }
       }
 
       @media (max-width: 760px) {
-        .menu-toggle {
-          display: inline-flex;
-        }
-
-        .nav-links {
-          flex-basis: 100%;
-          flex-direction: column;
-          gap: calc(var(--aura) * 1);
-          padding-block: calc(var(--aura) * 1);
-        }
-
-        .nav[data-open="false"] .nav-links {
-          display: none;
-        }
-
-        .nav-end {
-          display: none;
-        }
-
-        .grid3,
-        .foot {
-          grid-template-columns: 1fr;
-        }
+        .logo-text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+        .menu-toggle { display: inline-flex; order: 1; margin-left: auto; }
+        .nav-end { order: 2; margin-left: 0; }
+        .nav-end .soft, .split .cell { display: none; }
+        .split .button-fill:first-child { border-radius: 9999px; }
+        .nav-links { order: 3; flex-basis: 100%; flex-direction: column; gap: calc(var(--aura) * 1); margin: 0; padding-block: calc(var(--aura) * 1); font-size: 1rem; }
+        .nav[data-open="false"] .nav-links { display: none; }
+        .hero { padding-top: calc(var(--aura) * 4); }
+        .announce { flex-direction: column; gap: calc(var(--aura) * 0.5); }
+        .announce .sep { display: none; }
+        .lead { font-size: 1.0625rem; }
+        .app { grid-template-columns: 1fr; height: auto; }
+        .side { border-right: 0; border-bottom: 1px solid var(--hair); }
+        .list li:nth-child(n + 4) { display: none; }
+        .bubble { max-width: 90%; }
+        .grid2, .grid3 { grid-template-columns: 1fr; }
+        .cream { padding: calc(var(--aura) * 3); }
+        .cream .mk { max-width: calc(var(--aura) * 14); }
+        .panel { padding: calc(var(--aura) * 1.5); }
+        .foot { grid-template-columns: repeat(2, 1fr); }
       }
     </style>
   </head>
   <body>
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true" focusable="false">
+      <symbol id="fold" viewBox="0 0 24 24">
+        <path d="M3 3h11v7h7v11H3z" />
+        <path d="M15 4v5h5z" opacity="0.5" />
+      </symbol>
+    </svg>
     <a class="skip" href="#main">Skip to content</a>
     <header class="wrap">
       <nav class="nav" aria-label="Primary" data-open="false">
-        <a class="logo" href="#top" aria-label="Bluefold home"><i class="mark" aria-hidden="true"></i>Bluefold</a>
-        <button class="button button-pill ghost btn menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
+        <a class="logo" href="#top" aria-label="Bluefold home"><svg class="mk" viewBox="0 0 24 24" aria-hidden="true"><use href="#fold" /></svg><span class="logo-text">Bluefold</span></a>
+        <button class="button button-pill soft btn menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
         <ul class="nav-links" id="nav-links">
-          <li><a href="#features">How it works</a></li>
-          <li><a href="#runs">Runs</a></li>
-          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#teammates">Helpers</a></li>
+          <li><a href="#jobs">Jobs</a></li>
+          <li><a href="#pricing">Plans</a></li>
+          <li><a href="#guides">Guides</a></li>
           <li><a href="#faq">FAQ</a></li>
         </ul>
         <div class="nav-end">
-          <a class="button button-fill btn" href="#brief">Write a brief</a>
+          <a class="button button-pill soft btn" href="#faq">Talk to us</a>
+          <span class="split">
+            <a class="button button-fill btn" href="#request">Download</a>
+            <a class="button button-fill btn cell" href="#request" aria-label="Choose a platform">
+              <svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M4 6l3.5 3.5L11 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </a>
+          </span>
         </div>
       </nav>
     </header>
 
     <main id="main">
-      <section class="field" id="top" aria-labelledby="hero-title">
-        <div class="wrap hero">
-          <div>
-            <p class="kicker">Bluefold Relay · fictional demo</p>
-            <h1 id="hero-title">Hand it off. Watch it land.</h1>
-            <p class="lead">A quiet crew of helpers that take the errands you keep postponing, run them side by side, and tell you plainly what they did.</p>
-            <div class="actions">
-              <a class="button button-fill btn" href="#brief">
-                Write a brief
-                <svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M8.15 3.15a.5.5 0 0 1 .7 0l4 4a.5.5 0 0 1 0 .7l-4 4a.5.5 0 0 1-.7-.7L11.29 8H2.5a.5.5 0 0 1 0-1h8.79L8.15 3.85a.5.5 0 0 1 0-.7Z" fill="currentColor" /></svg>
-              </a>
-              <a class="button button-pill ghost btn" href="#features">See how it works</a>
+      <section class="wrap hero" id="top" aria-labelledby="hero-title">
+        <p class="announce">
+          <strong>Bluefold is a fictional demo</strong><span class="sep" aria-hidden="true">·</span>
+          <a href="#guides">Read the sample guides <span class="chip" aria-hidden="true"><svg class="icon" viewBox="0 0 15 15" fill="none"><path d="M5 10l5-5M6 5h4v4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" /></svg></span></a>
+        </p>
+        <h1 id="hero-title">Work with <svg class="mk" viewBox="0 0 24 24" aria-hidden="true"><use href="#fold" /></svg> Bluefold</h1>
+        <p class="lead">A small crew of desktop helpers you hand real errands to. They open your tools and bring back finished work.</p>
+        <div class="actions">
+          <a class="button button-fill btn big" href="#request">
+            <svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M7.5 1.5v7M4.5 6l3 3 3-3M2.5 10.5V12a1.5 1.5 0 0 0 1.5 1.5h7a1.5 1.5 0 0 0 1.5-1.5v-1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            Download for desktop
+          </a>
+          <a class="button button-pill soft btn big" href="#pricing">See plans</a>
+        </div>
+
+        <section class="app" aria-label="Fictional app preview">
+          <div class="side">
+            <div class="dots" aria-hidden="true"><i class="r"></i><i class="a"></i><i class="g"></i><svg class="icon" viewBox="0 0 15 15" fill="none"><path d="M7.5 2.5v10M2.5 7.5h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" /></svg></div>
+            <div class="search" aria-hidden="true"><svg class="icon" viewBox="0 0 15 15" fill="none"><circle cx="6.5" cy="6.5" r="4" stroke="currentColor" stroke-width="1.2" /><path d="M9.5 9.5l3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" /></svg>Search</div>
+            <ul class="list">
+              <li class="row"><i class="av teal" aria-hidden="true"></i><b>Studio Desk</b><time>Yesterday</time><span>moved Thursday's fittings to 3 pm</span></li>
+              <li class="row sel"><i class="av orange" aria-hidden="true"></i><b>Quote Builder</b><time>10:42</time><span>Writing…</span></li>
+              <li class="row"><i class="av indigo" aria-hidden="true"></i><b>Mail Sorter</b><time>09:15</time><span>twelve threads labelled, two need you</span></li>
+              <li class="row"><i class="av violet" aria-hidden="true"></i><b>Client Log</b><time>08:30</time><span>notes from the Ruiz call are saved</span></li>
+              <li class="row"><i class="av blue" aria-hidden="true"></i><b>Shift Planner</b><time>07:55</time><span>next week's rota is ready to check</span></li>
+              <li class="row"><i class="av coral" aria-hidden="true"></i><b>Bookkeeper</b><time>07:10</time><span>October invoices match the bank feed</span></li>
+              <li class="row"><i class="av group" aria-hidden="true"><i></i><i></i><i></i></i><b>Launch team</b><time>06:40</time><span>three helpers on the spring sale</span></li>
+            </ul>
+          </div>
+          <div class="pane">
+            <div class="pane-head"><i class="av orange" aria-hidden="true"></i>Quote Builder<svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><rect x="2" y="3" width="11" height="7.5" rx="1" stroke="currentColor" stroke-width="1.2" /><path d="M5.5 12.5h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" /></svg></div>
+            <div class="thread">
+              <p class="stamp">10:42</p>
+              <p class="bubble in">Hello. Which quote do you want first?</p>
+              <p class="bubble out">The kitchen refit for the Ortega family. Use last month's supplier prices, add two options for the worktop, and keep it to one page.</p>
+              <p class="sys">Supplier price sheet attached</p>
+              <p class="thinking"><i class="av orange pulse" aria-hidden="true"></i>Thinking</p>
             </div>
           </div>
-          <div class="runs" aria-label="Example runs">
-            <article class="run">
-              <span class="status"><i class="dot" aria-hidden="true"></i>Running · 2 of 3</span>
-              <h3>Sort this week's invoices</h3>
-              <div class="track" role="progressbar" aria-label="Invoice run progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="66"><span style="transform: scaleX(0.66)"></span></div>
-              <p class="note">Learned: you file receipts by client first.</p>
-            </article>
-            <article class="run">
-              <span class="status done"><i class="dot" aria-hidden="true"></i>Done · 4 min</span>
-              <h3>Draft replies to the venue thread</h3>
-              <div class="track" role="progressbar" aria-label="Venue replies progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><span style="transform: scaleX(1)"></span></div>
-              <p class="note">Waiting for your approval before sending.</p>
-            </article>
-            <p class="example">Example tasks. Not real accounts or data.</p>
-          </div>
-        </div>
+        </section>
       </section>
 
       <div class="wrap">
         <section class="stats" aria-label="Example metrics">
-          <div class="stat"><strong>3</strong><span>errands in parallel (example)</span></div>
-          <div class="stat"><strong>12 min</strong><span>median run (example)</span></div>
-          <div class="stat"><strong>1 tap</strong><span>to approve or stop</span></div>
+          <div class="stat"><strong>6</strong><span>helpers in one crew (example)</span></div>
+          <div class="stat"><strong>3</strong><span>jobs running side by side</span></div>
+          <div class="stat"><strong>14 min</strong><span>typical errand (example)</span></div>
           <div class="stat"><strong>0</strong><span>sends without your OK</span></div>
         </section>
+        <p class="note stats-note">Example metrics for a fictional product.</p>
       </div>
 
-      <section class="section" id="features" aria-labelledby="features-title">
+      <section class="section" id="teammates" aria-labelledby="teammates-title">
         <div class="wrap">
-          <div class="head">
-            <p class="kicker">How it works</p>
-            <h2 id="features-title">Small handoffs, clear receipts.</h2>
-            <p class="muted">Six ideas that shape every run in this fictional product.</p>
-          </div>
-          <div class="grid3">
-            <article class="card"><span class="status">01 · Parallel</span><h3>Several errands at once</h3><p class="muted">Start a few briefs and let them run side by side instead of in a queue.</p></article>
-            <article class="card"><span class="status">02 · Thread</span><h3>One thread per task</h3><p class="muted">Every run keeps its own status line, so you always know where it stands.</p></article>
-            <article class="card"><span class="status">03 · Routine</span><h3>Routines it picks up</h3><p class="muted">Repeat a task twice and it offers to remember the steps for next time.</p></article>
-            <article class="card"><span class="status">04 · Memory</span><h3>Notes with a source</h3><p class="muted">Anything it remembers shows where it came from, and you can delete it.</p></article>
-            <article class="card"><span class="status">05 · Crew</span><h3>Helpers that hand off</h3><p class="muted">One helper drafts, another checks, and you see each handoff in the log.</p></article>
-            <article class="card"><span class="status">06 · Trades</span><h3>Built for small studios</h3><p class="muted">Bookkeeping, scheduling and client follow-ups for people who run the whole shop.</p></article>
+          <div class="cream">
+            <div>
+              <h2 class="h2" id="teammates-title">Write to them like a colleague.</h2>
+              <p>Write the way you would to a person. Each helper keeps its own thread, asks when it is unsure and reports back when the work is done.</p>
+              <ul>
+                <li>One thread per helper</li>
+                <li>Plain answers, no dashboards to learn</li>
+                <li>You approve anything that leaves your desk</li>
+              </ul>
+            </div>
+            <svg class="mk" viewBox="0 0 24 24" aria-hidden="true"><use href="#fold" /></svg>
           </div>
         </div>
       </section>
 
-      <section class="section" id="runs" aria-labelledby="runs-title">
+      <section class="section" id="many" aria-labelledby="many-title">
+        <div class="wrap">
+          <div class="head center">
+            <h2 class="h2" id="many-title">Several errands, side by side.</h2>
+            <p class="muted">Start a few errands and let them work in parallel while you do something else.</p>
+          </div>
+          <div class="grid2">
+            <article class="card">
+              <div class="vignette" aria-hidden="true">
+                <div class="mini"><i class="av teal"></i>Studio Desk · done</div>
+                <div class="mini"><i class="av orange"></i>Quote Builder · working</div>
+                <div class="mini"><i class="av indigo"></i>Mail Sorter · waiting on you</div>
+              </div>
+              <h3>Several threads, one view</h3>
+              <p class="muted">See every helper and where it stands at a glance.</p>
+            </article>
+            <article class="card">
+              <div class="vignette" aria-hidden="true">
+                <div class="mini"><span class="switch"><i></i></span>Ask before sending</div>
+                <div class="mini muted">Applies to mail, posts and payments.</div>
+              </div>
+              <h3>Ask before it sends</h3>
+              <p class="muted">Anything outgoing waits for a yes from you.</p>
+            </article>
+            <article class="card">
+              <div class="vignette" aria-hidden="true">
+                <div class="steps"><span>Draft</span><span>Check</span><span>Ready</span></div>
+                <div class="mini muted">Quote Builder handed off to Bookkeeper.</div>
+              </div>
+              <h3>Hand-offs you can follow</h3>
+              <p class="muted">One helper drafts, another checks, and you see each step.</p>
+            </article>
+            <article class="card">
+              <div class="vignette" aria-hidden="true">
+                <p class="bubble in">Too formal?</p>
+                <p class="bubble out">Shorter, and sign it with my first name.</p>
+              </div>
+              <h3>Your voice, kept</h3>
+              <p class="muted">Corrections stick, so the next draft sounds more like you.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="jobs" aria-labelledby="jobs-title">
         <div class="wrap">
           <div class="head">
-            <p class="kicker">Run log</p>
-            <h2 id="runs-title">Everything it did, in order.</h2>
+            <h2 class="h2" id="jobs-title">One clear job per helper.</h2>
+            <p class="muted">A clear job, the tools it may open and how often it runs.</p>
           </div>
-          <div class="table-wrap">
-            <table>
-              <caption>Example run log for a fictional studio.</caption>
+          <div class="jobs-bar">
+            <div class="seg" role="group" aria-label="Filter jobs">
+              <button type="button" data-filter="all" aria-pressed="true">All</button>
+              <button type="button" data-filter="inbox" aria-pressed="false">Inbox</button>
+              <button type="button" data-filter="sales" aria-pressed="false">Clients</button>
+              <button type="button" data-filter="expenses" aria-pressed="false">Money</button>
+              <button type="button" data-filter="hiring" aria-pressed="false">Team</button>
+            </div>
+            <p class="note" id="jobs-count" aria-live="polite">Showing 6 of 6 example jobs.</p>
+          </div>
+          <div class="table-wrap" role="region" aria-labelledby="jobs-title" tabindex="0">
+            <table id="jobs-table">
+              <caption>Example jobs for a fictional crew.</caption>
               <thead>
-                <tr><th scope="col">Task</th><th scope="col">Helper</th><th scope="col">Started</th><th scope="col">Duration</th><th scope="col">State</th></tr>
+                <tr><th scope="col">Helper</th><th scope="col">Job</th><th scope="col">Tools it opens</th><th scope="col">Runs</th><th scope="col">State</th></tr>
               </thead>
               <tbody>
-                <tr><td>Sort invoices</td><td>Ledger</td><td>09:12</td><td>14 min</td><td><span class="badge">Running</span></td></tr>
-                <tr><td>Venue replies</td><td>Courier</td><td>08:40</td><td>4 min</td><td><span class="badge neutral">Needs approval</span></td></tr>
-                <tr><td>Reschedule fittings</td><td>Planner</td><td>Yesterday</td><td>9 min</td><td><span class="badge neutral">Done</span></td></tr>
-                <tr><td>Supplier price check</td><td>Ledger</td><td>Yesterday</td><td>21 min</td><td><span class="badge neutral">Done</span></td></tr>
+                <tr data-job="inbox"><td><span class="who"><i class="av indigo" aria-hidden="true"></i>Mail Sorter</span></td><td>Sort mail, draft replies</td><td>Mail, calendar</td><td>Every morning</td><td><span class="badge">Active</span></td></tr>
+                <tr data-job="sales"><td><span class="who"><i class="av orange" aria-hidden="true"></i>Quote Builder</span></td><td>Price jobs from supplier sheets</td><td>Sheets, mail</td><td>Mondays</td><td><span class="badge">Active</span></td></tr>
+                <tr data-job="sales"><td><span class="who"><i class="av violet" aria-hidden="true"></i>Client Log</span></td><td>File call notes</td><td>Notes, contacts</td><td>After each call</td><td><span class="badge neutral">Paused</span></td></tr>
+                <tr data-job="expenses"><td><span class="who"><i class="av coral" aria-hidden="true"></i>Bookkeeper</span></td><td>Match invoices to the bank feed</td><td>Mail, expense app</td><td>Fridays</td><td><span class="badge">Active</span></td></tr>
+                <tr data-job="hiring"><td><span class="who"><i class="av blue" aria-hidden="true"></i>Shift Planner</span></td><td>Draft the weekly rota</td><td>Calendar, docs</td><td>On request</td><td><span class="badge neutral">Needs review</span></td></tr>
+                <tr data-job="inbox"><td><span class="who"><i class="av teal" aria-hidden="true"></i>Studio Desk</span></td><td>Reschedule client fittings</td><td>Calendar, mail</td><td>On request</td><td><span class="badge">Active</span></td></tr>
               </tbody>
             </table>
           </div>
         </div>
       </section>
 
-      <section class="section" id="brief" aria-labelledby="brief-title">
-        <div class="wrap split">
-          <div class="head">
-            <p class="kicker">Brief</p>
-            <h2 id="brief-title">Describe the errand.</h2>
-            <p class="muted">This is a design demo. The form checks your input locally and sends nothing anywhere.</p>
+      <section class="band section" id="demo" aria-labelledby="demo-title">
+        <div class="wrap">
+          <div class="head center">
+            <h2 class="h2" id="demo-title">Watch a morning go by.</h2>
+            <p>A still frame from a fictional walkthrough of one crew at work.</p>
           </div>
-          <form id="brief-form" novalidate aria-describedby="brief-note">
-            <p class="note" id="brief-note">Fields marked required must be filled.</p>
-            <div class="field-row">
-              <label for="task">Task (required)</label>
-              <input id="task" name="task" required minlength="4" aria-describedby="task-error" />
-              <p class="error" id="task-error" aria-live="polite"></p>
+          <figure>
+            <div class="frame">
+              <svg class="mk" viewBox="0 0 24 24" aria-hidden="true"><use href="#fold" /></svg>
+              <span class="play"><svg class="icon" viewBox="0 0 15 15" aria-hidden="true"><path d="M4.5 3v9l7.5-4.5z" fill="currentColor" /></svg>Demo · still frame</span>
             </div>
-            <div class="field-row">
-              <label for="helper">Helper</label>
-              <select id="helper" name="helper">
-                <option>Ledger</option>
-                <option>Courier</option>
-                <option>Planner</option>
-              </select>
-            </div>
-            <div class="field-row">
-              <label for="details">Details (required)</label>
-              <textarea id="details" name="details" required minlength="10" aria-describedby="details-error"></textarea>
-              <p class="error" id="details-error" aria-live="polite"></p>
-            </div>
-            <div><button class="button button-fill btn" type="submit">Check brief</button></div>
-            <p class="form-status" id="form-status" role="status"></p>
-          </form>
+            <figcaption>Static image for a design demo. Nothing plays.</figcaption>
+          </figure>
         </div>
       </section>
 
       <section class="section" id="pricing" aria-labelledby="pricing-title">
         <div class="wrap">
-          <div class="head">
-            <p class="kicker">Plans · example pricing</p>
-            <h2 id="pricing-title">Pay for the runs you use.</h2>
+          <div class="head center">
+            <h2 class="h2" id="pricing-title">Plans for every desk.</h2>
+            <p class="muted">Example prices for a fictional product.</p>
           </div>
-          <div class="grid3 plans">
-            <article class="card plan"><h3>Desk</h3><p class="price">$0</p><ul class="muted"><li>One errand at a time</li><li>7-day run log</li></ul><a class="button button-pill ghost btn" href="#brief">Start a brief</a></article>
-            <article class="card plan field"><h3>Studio</h3><p class="price">$18</p><ul class="muted"><li>Three errands in parallel</li><li>Saved routines</li><li>90-day run log</li></ul><a class="button button-fill btn" href="#brief">Start a brief</a></article>
-            <article class="card plan"><h3>Workshop</h3><p class="price">$54</p><ul class="muted"><li>Ten errands in parallel</li><li>Shared crew for a team</li></ul><a class="button button-pill ghost btn" href="#faq">Read the FAQ</a></article>
+          <div class="center-row">
+            <div class="seg" role="group" aria-label="Billing period">
+              <button type="button" data-period="month" aria-pressed="true">Monthly</button>
+              <button type="button" data-period="year" aria-pressed="false">Yearly</button>
+            </div>
+          </div>
+          <div class="grid3">
+            <article class="plan"><h3>Solo</h3><p class="price"><span data-month="$0" data-year="$0">$0</span><span class="per">per month, example</span></p><ul><li>One helper</li><li>Seven-day history</li></ul><a class="button button-fill btn" href="#request">Get the build</a></article>
+            <article class="plan featured"><h3>Crew</h3><p class="price"><span data-month="$16" data-year="$13">$16</span><span class="per">per month, example</span></p><ul><li>Six helpers</li><li>Parallel jobs</li><li>Hand-offs between helpers</li></ul><a class="button button-fill btn" href="#request">Get the build</a></article>
+            <article class="plan"><h3>Studio</h3><p class="price"><span data-month="$40" data-year="$32">$40</span><span class="per">per month, example</span></p><ul><li>Shared crews for a team</li><li>Ninety-day history</li></ul><a class="button button-fill btn" href="#request">Get the build</a></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="request" aria-labelledby="request-title">
+        <div class="wrap two">
+          <div class="head">
+            <h2 class="h2" id="request-title">Request the desktop build.</h2>
+            <p class="muted">This is a design demo. The form checks your input in the browser and sends nothing anywhere.</p>
+          </div>
+          <div class="panel">
+            <form id="request-form" novalidate aria-describedby="request-note">
+              <p class="note" id="request-note">Email and platform are required.</p>
+              <div class="field-row">
+                <label for="req-email">Email (required)</label>
+                <input id="req-email" name="email" type="email" autocomplete="email" required aria-describedby="req-email-error" />
+                <p class="error" id="req-email-error" aria-live="polite"></p>
+              </div>
+              <div class="field-row">
+                <label for="req-platform">Platform (required)</label>
+                <select id="req-platform" name="platform" required aria-describedby="req-platform-error">
+                  <option value="">Choose one</option>
+                  <option>macOS</option>
+                  <option>Windows</option>
+                  <option>Linux</option>
+                </select>
+                <p class="error" id="req-platform-error" aria-live="polite"></p>
+              </div>
+              <div class="field-row">
+                <label for="req-note">Note (optional)</label>
+                <textarea id="req-note" name="note" maxlength="280"></textarea>
+              </div>
+              <div><button class="button button-fill btn" type="submit">Check request</button></div>
+              <p class="form-status" id="form-status" role="status"></p>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="guides" aria-labelledby="guides-title">
+        <div class="wrap">
+          <div class="head center">
+            <h2 class="h2" id="guides-title">Guides to get going.</h2>
+            <p class="muted">Sample guides for a fictional product.</p>
+          </div>
+          <div class="grid3">
+            <article class="guide"><div class="thumb warm"><svg class="mk" viewBox="0 0 24 24" aria-hidden="true"><use href="#fold" /></svg></div><h3>Write your first job</h3><p class="note">Sample guide · 4 min</p></article>
+            <article class="guide"><div class="thumb"><svg class="mk" viewBox="0 0 24 24" aria-hidden="true"><use href="#fold" /></svg></div><h3>Choose what it may open</h3><p class="note">Sample guide · 6 min</p></article>
+            <article class="guide"><div class="thumb"><svg class="mk" viewBox="0 0 24 24" aria-hidden="true"><use href="#fold" /></svg></div><h3>Review before it sends</h3><p class="note">Sample guide · 3 min</p></article>
           </div>
         </div>
       </section>
 
       <section class="section" id="faq" aria-labelledby="faq-title">
-        <div class="wrap faq">
+        <div class="wrap two">
           <div class="head">
-            <p class="kicker">FAQ</p>
-            <h2 id="faq-title">Questions, answered plainly.</h2>
+            <h2 class="h2" id="faq-title">Questions, briefly.</h2>
+            <p class="muted">Answers about a fictional product.</p>
           </div>
-          <details><summary>Does it send anything without asking?</summary><p class="muted">No. In this fictional product every outgoing message waits for your approval.</p></details>
-          <details><summary>Can I see what it remembers?</summary><p class="muted">Yes. Each note lists the run it came from and can be removed.</p></details>
-          <details><summary>Does it work on my phone?</summary><p class="muted">The layout is designed for desktop and pocket screens alike.</p></details>
-          <details><summary>Is Bluefold a real product?</summary><p class="muted">No. Bluefold is a sample context for an Aura design flavor.</p></details>
+          <div>
+            <details><summary>Does a helper send anything on its own?<svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M7.5 3v9M3 7.5h9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" /></svg></summary><p class="muted">No. In this demo every outgoing message, post or payment waits for your yes.</p></details>
+            <details><summary>Which tools can it open?<svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M7.5 3v9M3 7.5h9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" /></svg></summary><p class="muted">Only the ones you list in its job. You can remove access at any time.</p></details>
+            <details><summary>Can I see what it remembers?<svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M7.5 3v9M3 7.5h9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" /></svg></summary><p class="muted">Each note shows the thread it came from and can be deleted.</p></details>
+            <details><summary>Is Bluefold a real product?<svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M7.5 3v9M3 7.5h9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" /></svg></summary><p class="muted">No. Bluefold is sample content for an Aura design flavor.</p></details>
+          </div>
         </div>
       </section>
 
-      <section class="wrap" aria-labelledby="cta-title">
-        <div class="field cta">
-          <h2 id="cta-title">Clear your desk by lunch.</h2>
-          <p class="lead">Write one brief and see how a calm handoff feels.</p>
-          <div class="actions"><a class="button button-fill btn" href="#brief">Write a brief</a></div>
-        </div>
+      <section class="wrap closing" aria-labelledby="closing-title">
+        <svg class="ghost" viewBox="0 0 24 24" aria-hidden="true"><use href="#fold" /></svg>
+        <h2 id="closing-title">Hand off one errand today.</h2>
+        <p class="lead">Pick a helper, give it a job and see what comes back.</p>
+        <div class="actions"><a class="button button-fill btn big" href="#request">Download for desktop</a></div>
       </section>
     </main>
 
@@ -827,14 +859,16 @@
       <div class="wrap">
         <div class="foot">
           <div>
-            <a class="logo" href="#top"><i class="mark" aria-hidden="true"></i>Bluefold</a>
+            <a class="logo" href="#top"><svg class="mk" viewBox="0 0 24 24" aria-hidden="true"><use href="#fold" /></svg>Bluefold</a>
             <p class="muted">A fictional demo for the Bluefold flavor of Aura.</p>
           </div>
-          <div><p class="kicker">Product</p><ul><li><a href="#features">How it works</a></li><li><a href="#runs">Run log</a></li></ul></div>
-          <div><p class="kicker">Plans</p><ul><li><a href="#pricing">Pricing</a></li><li><a href="#brief">Write a brief</a></li></ul></div>
-          <div><p class="kicker">Help</p><ul><li><a href="#faq">FAQ</a></li><li><a href="#top">Back to top</a></li></ul></div>
+          <div><h2>Product</h2><ul><li><a href="#teammates">Helpers</a></li><li><a href="#many">Parallel work</a></li><li><a href="#jobs">Jobs</a></li></ul></div>
+          <div><h2>Plans</h2><ul><li><a href="#pricing">Pricing</a></li><li><a href="#request">Desktop build</a></li></ul></div>
+          <div><h2>Learn</h2><ul><li><a href="#guides">Guides</a></li><li><a href="#demo">Demo</a></li></ul></div>
+          <div><h2>Help</h2><ul><li><a href="#faq">FAQ</a></li><li><a href="#request">Request form</a></li></ul></div>
+          <div><h2>Page</h2><ul><li><a href="#top">Back to top</a></li><li><a href="#main">Main content</a></li></ul></div>
         </div>
-        <p class="note legal">Sample content. Metrics and prices are examples.</p>
+        <p class="note legal">Sample content. Names, metrics and prices are fictional examples.</p>
       </div>
     </footer>
 
@@ -860,12 +894,50 @@
           });
         });
 
-        var form = document.getElementById("brief-form");
+        function pressOnly(group, button) {
+          group.querySelectorAll("button").forEach(function (item) {
+            item.setAttribute("aria-pressed", String(item === button));
+          });
+        }
+
+        var jobFilter = document.querySelector('[aria-label="Filter jobs"]');
+        var jobRows = document.querySelectorAll("#jobs-table tbody tr");
+        var jobCount = document.getElementById("jobs-count");
+        jobFilter.addEventListener("click", function (event) {
+          var button = event.target.closest("button");
+          if (!button) return;
+          pressOnly(jobFilter, button);
+          var filter = button.dataset.filter;
+          var shown = 0;
+          jobRows.forEach(function (row) {
+            var visible = filter === "all" || row.dataset.job === filter;
+            row.hidden = !visible;
+            if (visible) shown += 1;
+          });
+          jobCount.textContent = "Showing " + shown + " of " + jobRows.length + " example jobs.";
+        });
+
+        var period = document.querySelector('[aria-label="Billing period"]');
+        period.addEventListener("click", function (event) {
+          var button = event.target.closest("button");
+          if (!button) return;
+          pressOnly(period, button);
+          var key = button.dataset.period;
+          document.querySelectorAll(".price [data-month]").forEach(function (price) {
+            price.textContent = price.dataset[key];
+          });
+          document.querySelectorAll(".per").forEach(function (per) {
+            per.textContent = key === "year" ? "per month, billed yearly, example" : "per month, example";
+          });
+        });
+
+        var form = document.getElementById("request-form");
         var status = document.getElementById("form-status");
         var messages = {
-          task: "Name the task in at least 4 characters.",
-          details: "Add at least 10 characters of detail."
+          "req-email": "Enter an email address like name@example.com.",
+          "req-platform": "Choose a platform."
         };
+        var fields = [form.elements.namedItem("email"), form.elements.namedItem("platform")];
         function check(field) {
           var error = document.getElementById(field.id + "-error");
           var valid = field.checkValidity();
@@ -875,7 +947,6 @@
         }
         form.addEventListener("submit", function (event) {
           event.preventDefault();
-          var fields = [form.elements.namedItem("task"), form.elements.namedItem("details")];
           var firstInvalid = null;
           fields.forEach(function (field) {
             if (!check(field) && !firstInvalid) firstInvalid = field;
@@ -885,10 +956,10 @@
             firstInvalid.focus();
             return;
           }
-          status.textContent = "Brief looks complete. This demo has no backend, so nothing was sent.";
+          status.textContent = "Request looks complete. This demo has no backend, so nothing was sent.";
         });
-        [form.elements.namedItem("task"), form.elements.namedItem("details")].forEach(function (field) {
-          field.addEventListener("input", function () {
+        fields.forEach(function (field) {
+          field.addEventListener(field.tagName === "SELECT" ? "change" : "input", function () {
             if (field.getAttribute("aria-invalid") === "true") check(field);
           });
         });

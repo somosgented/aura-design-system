@@ -1,218 +1,257 @@
 ---
 version: "alpha"
 name: "Bluefold"
-description: "Pale sky fields, a white sweep of light, one clear working blue and a folded-square mark. A calm, airy flavor of Aura for agent dashboards, task runners and assistant products."
+description: "A white, quiet canvas with tight dark headlines, ink pills, a cream panel and a light desktop-app mockup, plus a folded-square mark. An Aura flavor for assistant apps, helper crews and desktop agent products."
 extends: "../../DESIGN.md"
 colors:
-  primary: "#1d6ee6"
+  primary: "#111111"
   on-primary: "#ffffff"
-  surface: "#f6faff"
-  surface-container: "#e5f1ff"
-  on-surface: "#0f1b2d"
-  on-surface-variant: "#4d5b70"
-  outline: "#d3e3f5"
-  sky-wash: "#e1effc"
-  sky-mid: "#80bdfc"
-  field-white: "#ffffff"
+  surface: "#ffffff"
+  surface-container: "#f2f2f2"
+  on-surface: "#111111"
+  on-surface-variant: "#6b6b6b"
+  outline: "#e5e5e5"
+  cream: "#f4efe4"
+  bubble: "#f1f1f1"
 typography:
   headline-display:
-    fontFamily: "Bricolage Grotesque"
-    fontWeight: 600
-    lineHeight: 1.0
-    letterSpacing: -0.03em
+    fontFamily: "Inter Tight"
+    fontWeight: 500
+    lineHeight: 1.02
+    letterSpacing: -0.035em
   body-md:
-    fontFamily: "Instrument Sans"
+    fontFamily: "Inter"
     fontWeight: 400
-    lineHeight: 1.55
+    lineHeight: 1.5
   label-md:
-    fontFamily: "JetBrains Mono"
+    fontFamily: "Inter"
     fontSize: 13px
     fontWeight: 500
-    letterSpacing: 0.04em
+    letterSpacing: 0em
 rounded:
-  sm: 6.5px
-  lg: 13px
+  md: 13px
+  lg: 19.5px
+  xl: 26px
   full: 9999px
 spacing:
   unit: 13px
-  section: 117px
-  max-width: 1196px
+  section: 143px
+  max-width: 1222px
 aura:
   theme:
     light:
-      accent: "#1d6ee6"
-      gray: "#6b7a8f"
-      background: "#f6faff"
+      accent: "#111111"
+      gray: "#737373"
+      background: "#ffffff"
     dark:
-      accent: "#1a5ecb"
-      gray: "#6c7889"
-      background: "#0b1220"
+      accent: "#ededed"
+      gray: "#7a7a7a"
+      background: "#0d0d0d"
   fonts:
-    sans: "Instrument Sans"
-    display: "Bricolage Grotesque"
-    label: "JetBrains Mono"
-    href: "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap"
-  hero: "field"
-  headingWeight: 600
+    sans: "Inter"
+    display: "Inter Tight"
+    label: "Inter"
+    href: "https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600&family=Inter:wght@400;500;600&display=swap"
+  hero: "paper"
+  headingWeight: 500
   radius:
     button: "9999px"
-    input: "6.5px"
-    surface: "13px"
+    input: "13px"
+    surface: "19.5px"
   tokens:
     light:
-      sky-mist: "#e5f1ff"
-      sky-wash: "#e1effc"
-      sky-mid: "#80bdfc"
-      sweep: "#ffffff"
-      field-ink: "#0f1b2d"
-      alert-ink: "#b3261e"
+      cream: "#f4efe4"
+      cream-ink: "#1a1712"
+      bubble: "#f1f1f1"
+      window: "#fbfbfb"
+      dot-red: "#ff5f57"
+      dot-amber: "#febc2e"
+      dot-green: "#28c840"
+      avatar-teal: "#4fb3a2"
+      avatar-orange: "#f5a33b"
+      avatar-indigo: "#5b5bd6"
+      avatar-violet: "#8e6cf0"
+      avatar-blue: "#3b82f6"
+      avatar-coral: "#ef6a3a"
+      band: "#0f0f0f"
+      band-ink: "#f5f5f5"
+      alert-ink: "#b42318"
     dark:
-      sky-mist: "#122036"
-      sky-wash: "#16273f"
-      sky-mid: "#2c5f9e"
-      sweep: "#9cc8ff"
-      field-ink: "#eaf3ff"
-      alert-ink: "#ff9b8f"
+      cream: "#221e17"
+      cream-ink: "#f2ead9"
+      bubble: "#1f1f1f"
+      window: "#141414"
+      dot-red: "#e0564f"
+      dot-amber: "#d9a43a"
+      dot-green: "#33a852"
+      avatar-teal: "#3f9a8b"
+      avatar-orange: "#d98c2b"
+      avatar-indigo: "#6e6ee0"
+      avatar-violet: "#9a7cf2"
+      avatar-blue: "#4b8ef0"
+      avatar-coral: "#e0663a"
+      band: "#171717"
+      band-ink: "#ededed"
+      alert-ink: "#ff8a7a"
 ---
 
 # Bluefold
 
-> Work that runs quietly in the background: a pale sky field, one sweep of white light and a clear blue for the next action. Built on Aura.
+> A white desk, one ink pill and a crew of helpers that come back with finished work. Built on Aura.
 
-Source flavor: <https://x.ai/bot>. **Limited observation:** the only visual input was the page's 1920×1080 Open Graph card (a blue field with a white sweep and a brand lockup) plus a previously captured text outline of the page's section topics. The live page was not viewed. Fonts, radii, motion, layout and dark mode are **Aura interpretations**, not facts about the source. No logo, circle mark, imagery, markup, copy or product claims are reused. Bluefold, its folded-square mark and its sample product "Bluefold Relay" are fictional. This file adapts that inspiration to Aura. It is a **theme over Aura**, not a separate system: it changes color seeds, type, radius and voice. Everything it does not mention follows the base Aura spec at `extends`, resolved against this file's URL (13px grid, accent/gray step roles, Radix icons, forms, accessibility).
+Source flavor: <https://x.ai/bot>. **Source.** (a) *Observed in detail* from a real 1920×1072 desktop screenshot of the page captured on 2026-11-08: the nav, the centered announcement line, the hero headline with an inline symbol, the muted subtitle, the ink and light-gray pill CTAs, and the light desktop-app mockup (window dots, search, avatar list, light and black chat bubbles, a "thinking" line), with measured proportions. (b) *Observed live only at general scale* (a full-page thumbnail): the order and rough rhythm of the later sections (cream panel, 2×2 cards, jobs, dark media band, pricing, download, guides, FAQ, closing, footer). Their details here are approximations. (c) *Bluefold's own interpretation*: fonts, dark mode, motion, exact spacing, every token not measured from the hero, the folded-square mark and all copy. The previous Bluefold version was based only on the page's Open Graph card (a blue field with a white sweep); this version replaces that direction. It is not an exact replica, and no name, logo, mascot, copy, imagery, price or claim of the source is reused. Bluefold and its "crew of desktop helpers" are fictional.
+
+This file adapts that visual language to Aura. It is a **theme over Aura**, not a separate system: it changes color seeds, type, radius and voice. Everything it does not mention follows the base Aura spec at `extends`, resolved against this file's URL (13px grid, accent/gray step roles, Radix icons, forms, accessibility).
 
 ## Apply to an Aura project
 
 An agent that receives this file's link inside an Aura project does this, in order:
 
 1. Save this file as `DESIGN.theme.md` at the project root. Keep the root `DESIGN.md` (Aura base). Where the two disagree, this file wins on color, type, radius, shape, motion and voice; the base wins on grid, accessibility, icons and forms.
-2. Fetch the sibling `theme.css` (same URL, `DESIGN.md` → `theme.css`). Paste its `@import`, `@theme inline` block, `:root` block, dark media block and `.dark` block **after** the existing ones in the project's `globals.css`. Do not hand-edit the generated values. After those blocks, set `--aura-text-primary-inverse: var(--accent-contrast)` in `:root` so filled buttons keep white text (see **Upstream limitation** below).
-3. If the app uses `next/font`, load `Bricolage Grotesque`, `Instrument Sans` and `JetBrains Mono` there instead of the `@import`, and point `--font-display`, `--font-sans` and `--font-label` at them.
+2. Fetch the sibling `theme.css` (same URL, `DESIGN.md` → `theme.css`). Paste its `@import`, `@theme inline` block, `:root` block, dark media block and `.dark` block **after** the existing ones in the project's `globals.css`. Do not hand-edit the generated values. After those blocks, set `--aura-text-primary-inverse: var(--accent-contrast)` in `:root` so filled buttons keep their inverse label (see **Upstream limitation** below).
+3. If the app uses `next/font`, load `Inter Tight` (500, 600) and `Inter` (400, 500, 600) there instead of the `@import`, and point `--font-display` at Inter Tight and `--font-sans` and `--font-label` at Inter.
 4. Restyle with Aura components and token classes only, following **Components** below. No new hex literals in components.
 5. Keep the product's content. Do not import Bluefold's sample copy into an unrelated product.
 6. Verify at 360px, in dark mode and with `prefers-reduced-motion: reduce`, then check the Don't list.
 
 ## Overview
 
-Bluefold is airy and unhurried. The hero is a **sky field**: pale blue with one soft **diagonal sweep of white light** crossing it. Everything else is near-white paper with cool gray ink. The signature object is the **run card**: a task with a `font-label` status line, a thin progress track and an attributed note of what it learned. Blue is the only saturated color and marks the next action, running state and focus. Use it for agent dashboards, background job tools and assistant products. It is not neon, not glassy and never busy.
+Bluefold is a white, neutral, generous page. The hero is paper: a small centered announcement, a very large tight headline with the **folded-square mark set inline at cap height**, a muted two-line subtitle and two pills (ink primary, light-gray secondary). Below sits the signature object: a **light desktop-app mockup** about half the page wide, with window dots, a list of helpers on colored avatar circles, a light incoming bubble, a black outgoing bubble and a quiet "Thinking" line. Color lives only in avatars and window dots; everything else is ink on white, one warm cream panel and one dark media band. Use it for assistant apps, agent crews and desktop tools.
 
 ## Colors
 
-The reference values `#e5f1ff`, `#e1effc`, `#80bdfc` and white were measured from the OG card. They inform the tokens below and are not a palette observed on the live page.
+The accent is **ink**: the source's primary action is a black pill, so the accent seed is near-black and `accent-9` is the pill fill. Gray is a true mid neutral, never the ink. Read exact generated steps from `theme.css`; do not restate them by hand.
 
-The table records exact static literals in the generated `theme.css`, not browser-computed or verified rendered colors. Background seeds differ from the generated canvas step; `--field-ink` is a separate custom token from `--gray-12`. Do not hand-edit generated files to match seeds.
+| Role | Token | Use |
+| --- | --- | --- |
+| Canvas | `--gray-1` | Page background (white seed) |
+| Ink pill | `--accent-9`, hover `--accent-10` | Primary buttons, outgoing chat bubble |
+| Text on ink | `--accent-contrast` | Pill labels, outgoing bubble text |
+| Soft pill | `--gray-3`, hover `--gray-4` | Secondary buttons, segmented tracks, selected list row |
+| Card surface | `--gray-2` | Feature cards, form panel, featured plan |
+| Hairline | `--gray-5`–`--gray-6` | Mockup frame, dividers, table rules |
+| Field border | `--gray-9` | Input, select and textarea borders |
+| Ink text | `--gray-12` | Headings, body, nav links |
+| Muted text | `--gray-11` | Subtitle, previews, timestamps, helper text |
+| Warm panel | `--cream` / `--cream-ink` | The teammates panel and its text and mark |
+| Chat bubble | `--bubble` | Incoming message |
+| Mockup surface | `--window` | App window and sidebar |
+| Window dots | `--dot-red`, `--dot-amber`, `--dot-green` | Decorative only |
+| Avatars | `--avatar-teal`, `-orange`, `-indigo`, `-violet`, `-blue`, `-coral` | Helper identity circles; never the only label |
+| Media band | `--band` / `--band-ink` | Full-bleed dark demo band |
+| Errors | `--alert-ink` | Inline form errors, invalid borders |
 
-| Flavor role | Source / intent | Generated light literal | Generated dark literal | Aura token | Use |
-| --- | --- | --- | --- | --- | --- |
-| Canvas | background seeds `#f6faff` light / `#0b1220` dark | `#f5f6f9` | `#101216` | `--gray-1` | Page background |
-| Mist surface | custom token | `#e5f1ff` | `#122036` | `--sky-mist` | Cards on the field, stat wells |
-| Wash | custom token | `#e1effc` | `#16273f` | `--sky-wash` | Table header, selected rows |
-| Sky mid | custom token | `#80bdfc` | `#2c5f9e` | `--sky-mid` | Hero field body; not alone behind small text |
-| Sweep | custom token | `#ffffff` | `#9cc8ff` | `--sweep` | Light band in hero and CTA |
-| Body ink | gray seed–derived | `#19202a` | `#ebeef2` | `--gray-12` | Body text, headings |
-| Field ink | custom token | `#0f1b2d` | `#eaf3ff` | `--field-ink` | Text on the hero field, separate from gray-12 |
-| Muted ink | gray seed–derived | `#515e6f` | `#abb4c2` | `--gray-11` | Body and helper text |
-| Hairline | gray seed–derived | `#c9d3e0` | `#333a45` | `--gray-6` | Borders, rules |
-| Working blue | accent seeds | `#1d6ee6` | `#1a5ecb` | `--accent-9` | Primary controls and progress |
-| Blue hover | accent scale | `#0760d6` | `#1952ae` | `--accent-10` | Hover scale step |
-| Focus ring | accent scale | `#0f3165` | `#cbe3ff` | `--accent-12` | 2px focus outline, also on the field |
-| Field border | gray seed–derived | `#77879d` | `#626f81` | `--gray-9` | Input, select and textarea borders |
-| Alert ink | custom token | `#b3261e` | `#ff9b8f` | `--alert-ink` | Inline form errors and invalid field borders |
+Measured in Chrome on the gallery showcase from computed colors (alpha composited over the real backgrounds), light / dark: ink pill label on `--accent-9` 18.88:1 / 13.89:1; `--gray-11` on `--gray-1` 5.86:1 / 9.37:1; `--alert-ink` on the form panel (`--gray-2`) 6.24:1 / 7.75:1 and on the canvas 6.41:1 / 8.49:1; `--cream-ink` on `--cream` 15.58:1 / 13.86:1; field border `--gray-9` against the form panel 3.19:1 / 3.48:1. These are computed-color checks in one browser, not a full audit. In dark, `--accent-contrast` is a generated near-black with a faint warm tint; keep it, do not hand-edit it.
 
-White text on `--accent-9` measures 4.75:1 in light and 5.99:1 in dark in the gallery showcase (Chrome, rendered pixels), and 5.75:1 / 7.34:1 on `--accent-10` hover. Light is close to the 4.5:1 floor: keep primary labels at weight 600 and do not lighten the accent seed.
+- Focus ring is `--gray-12` at 2px with a 2px offset (`--aura-outline: var(--gray-12) solid 2px`). It must hold ≥3:1 against `--gray-1`, `--gray-3` and `--cream` in both appearances; the lowest measured value is 14.37:1 light / 12.54:1 dark. Inside the band the ring switches to `--band-ink`.
+- `--alert-ink` must keep ≥4.5:1 on the canvas in both appearances.
+- Avatars and window dots carry no text and no meaning on their own.
 
-- Text on the hero field uses `--field-ink`, not `--gray-12`. Small text on the field sits on `--sky-mist` cards, not directly on `--sky-mid`.
-- Focus rings use `--accent-12`, not `--accent-8`: `--accent-8` falls below 3:1 on the canvas and on the field.
-- Form fields sit on `--gray-1` with a `--gray-9` border, the lightest gray step that keeps 3:1 against the canvas in both appearances.
-
-> **Upstream limitation — `--gray-contrast: undefined`:** The generator interpolates `scales.grayContrast`, which `generateRadixColors` does not return, so every generated `theme.css` (this one included) declares `--gray-contrast: undefined`. The gallery showcase does not read it. Aura project `globals.css` does: it maps `--aura-text-primary-inverse` and the `gray-contrast` color utility to `var(--gray-contrast)`, and `.button-fill` uses `--aura-text-primary-inverse` for its label. Measured in Chrome with Aura `main.css`, a consumer `:root` and this `theme.css` pasted after it, the filled button label falls back to the inherited body ink: `#19202a` on `#1d6ee6` (3.45:1, below 4.5:1) in light and `#ebeef2` on `#1a5ecb` (5.15:1) in dark. Setting `--aura-text-primary-inverse: var(--accent-contrast)` (step 2 of **Apply**) restores white labels at 4.75:1 / 5.99:1. Utilities that read `--gray-contrast` directly stay invalid until the shared generator is fixed; that fix is outside this flavor and generated files are not patched by hand.
+> **Upstream limitation — `--gray-contrast: undefined`:** The shared generator interpolates `scales.grayContrast`, which `generateRadixColors` does not return, so every generated flavor `theme.css` (this one included) declares `--gray-contrast: undefined`. The gallery showcase does not read it. Aura projects do: `globals.css` maps `--aura-text-primary-inverse` and the `gray-contrast` utility to `var(--gray-contrast)`, and `.button-fill` uses `--aura-text-primary-inverse` for its label, so filled button labels fall back to inherited body ink. With this flavor that is ink on an ink pill: measured in Chrome with Aura `main.css`, a consumer `:root` and this `theme.css`, the label is `#1f1f1f` on `#111111` (1.15:1) in light and `#eeeeee` on `#ededed` (1.01:1) in dark, so it disappears. Step 2 of **Apply** sets `--aura-text-primary-inverse: var(--accent-contrast)`, which restores the inverse label (18.88:1 light / 13.89:1 dark). The mitigation is required, not optional, for this flavor. Utilities that read `--gray-contrast` directly stay invalid until the shared generator is fixed; that fix is outside this flavor and generated files are not patched by hand.
 
 ### Dark mode
 
-Reinterpret, do not invert. The field becomes a night sky and the sweep becomes a faint blue haze.
+Not observed on the source; this is Bluefold's adaptation. Reinterpret, do not invert, through a few semantic variables switched in one `.dark` block.
 
 | Variable | Light | Dark |
 | --- | --- | --- |
-| `--field` | `--sky-mid` → `--sky-mist` | `color-mix(in srgb, var(--sky-mid) 30%, var(--gray-1))` |
-| `--field-fg` | `--field-ink` (dark ink) | `--field-ink` (pale) |
-| `--sweep-opacity` | `0.85` | `0.25` |
-| `--heading` | `gray-12` | `gray-12` |
-| Cards on field | `--sky-mist` | `--sky-mist` with a 1px `accent-a5` ring |
+| Ink pill | `--accent-9` near-black, `--accent-contrast` light | `--accent-9` near-white, `--accent-contrast` dark |
+| `--soft-pill` | `--gray-3` | `--gray-4` |
+| `--panel` | `--cream` | `--cream` (warm dark) with a 1px `--cream-ink` ring at 14% |
+| `--frame-shadow` | faint `--gray-a3` drop | 1px `--gray-a3` ring, no drop |
+| `--band-bg` | `--band` (dark on white) | `--band` (raised over the canvas) with `--gray-a5` hairlines |
+| `--ghost-mark` | `--gray-a4` | `--gray-a5` |
 
 ## Typography
 
-Font choices are Aura interpretations; the source page's fonts were not observed.
+Fonts were not inspected on the source; Inter Tight and Inter approximate the neutral, tight grotesk seen in the screenshot.
 
-- Display: `Bricolage Grotesque` through `font-display`, weight 600, `tracking-[-0.03em]`, `leading-none`.
-- Body: `Instrument Sans` through `--aura-font-stack`, weight 400, `gray-11`, `leading-[1.55]`.
-- Labels and status: `JetBrains Mono` through `font-label`, weight 500, `text-xs`, `tracking-[0.04em]`, for run states, timestamps and kickers.
-- Hero `.h1` at `text-[clamp(2.5rem,6vw,5rem)]`.
+- Display: `Inter Tight` via `font-display`, weight 500, `tracking-[-0.035em]`, `leading-[1.02]`.
+- Hero `.h1`: `text-[clamp(2.25rem,7vw,4rem)]` (the screenshot's ~47px cap height at 1920 maps to about 4rem).
+- Section headings: `text-[clamp(1.75rem,4vw,3rem)]`, same weight and tracking.
+- Body: `Inter` 400, `text-gray-11` for subtitles, `leading-normal`.
+- UI text: nav links `Inter` 400 `text-sm`; list names 500 `text-sm`; timestamps `text-xs`. No uppercase kickers, no mono.
+- Hero subtitle: `text-xl` (`1.25rem`), `leading-[1.45]`, two lines.
 
 ## Layout
 
-| Intent | Aura |
-| --- | --- |
-| 1196px content width | `max-w-92` |
-| 117px section rhythm | `py-9` |
-| 64px hero padding | `py-5` |
-| 26px card gaps | `gap-2` |
-| 13px surface radius | `rounded-[13px]` |
-| 6.5px input radius | `rounded-[6.5px]` |
+| Source px | Aura step | px | Use |
+| --- | --- | --- | --- |
+| ≈1220 nav width | `max-w-94` | 1222 | Content width |
+| ≈975 mockup width | `max-w-75` | 975 | App mockup |
+| ≈650 subtitle measure | `max-w-50` | 650 | Hero subtitle |
+| ≈100 nav → announcement | `pt-7.5` | 97.5 | Hero top |
+| ≈46 pill height | `h-3.5` | 45.5 | Hero CTAs |
+| ≈34 nav pill | `h-2.5` | 32.5 | Nav Contact and Download pills |
+| ≈64 CTAs → mockup | `mt-5` | 65 | Mockup offset |
+| ≈140 section rhythm | `py-11` | 143 | Sections |
+| ≈26 card gap | `gap-2` | 26 | Grids |
+| ≈260 sidebar | `w-20` | 260 | Mockup sidebar |
 
-- Hero is two columns from 960px: headline left, two stacked run cards right. One column below.
-- Features use a three-column grid that collapses to one at 640px.
+- Everything in the hero is centered; later sections alternate centered heads and left/right splits (cream panel, form, FAQ).
+- Below 760px: nav becomes mark + Menu + Download, grids go to one column, the mockup stacks inside its own clipped frame, footer goes to two columns.
 
 ## Elevation & Depth
 
-- Paper cards are flat with a `gray-6` hairline.
-- Cards on the field use `--sky-mist` and `shadow-[0_13px_39px_-13px_var(--accent-a6)]` in light, a 1px `accent-a5` ring in dark.
-- One sweep per field: a static diagonal `linear-gradient` of `--sweep`. No circles, orbs or glossy highlights.
+- Flat by default: cards are `--gray-2` fills, plans use a `--gray-6` hairline, no shadows.
+- One shadow on the page: the mockup's faint `--frame-shadow` (a `--gray-a3` drop) plus a 1px `--gray-5` border, `rounded-[19.5px]`. The border defines the window; the shadow stays barely visible.
+- Depth in dark comes from steps and hairlines, never glow.
 
 ## Shapes
 
-- Buttons are `9999px` pills, inputs `6.5px`, surfaces `13px`. Keep them.
-- The **folded square** mark: an accent square with its top-right corner cut by a diagonal fold in `--sweep`. It replaces any round mark.
-- Progress tracks are `h-[3px] rounded-full` in `accent-a4` with an `accent-9` fill.
+- Buttons and segmented controls are `9999px` pills. Inputs `13px`. Surfaces `19.5px`; the cream panel `26px`.
+- Avatars are full circles; window dots are 12px circles.
+- The **folded square**: an ink square whose top-right corner is folded along a diagonal, the flap shown at half opacity. It is the logo, the inline hero mark, the cream-panel hero object and, as a stroked outline at `--ghost-mark`, the closing backdrop. Always `currentColor`.
 
 ## Components
 
-- **Primary button** → `Button variant="fill"`, weight 600, trailing `ArrowRightIcon className="icon"`.
-- **Secondary button** → `Button variant="pill"` with `border border-gray-7 bg-transparent`.
-- **Nav** → `NavigationMenu` with the folded-square mark. Below 760px a disclosure button with `aria-expanded` reveals the links. The button sits before the links in source order so `Tab` moves into the open list; `Escape` closes it and returns focus to the button.
-- **Run card** → `Card` on `--sky-mist` with a `font-label` status (`StatusDot` + `RUNNING` / `DONE`), title, progress track and a small attributed "learned" note.
-- **Stats** → `Stat`, `StatValue className="font-display"`, `StatLabel` in `gray-11`.
-- **Runs table** → `Table` with `text-sm` cells, `--sky-wash` header and `Badge` states.
-- **Brief form** → `Input`, `NativeSelect`, `Textarea`, `Button variant="fill"`, inline errors in `--alert-ink` with `aria-describedby`, and a `role="status"` line on `--sky-wash` after a valid check.
-- **Plans** → `Card`s on paper; the recommended plan sits on the field.
-- **FAQ** → `Accordion`.
+- **Primary** → `Button variant="fill"`, `h-3.5 px-1.5 font-medium`, optional leading `DownloadIcon className="icon"`.
+- **Secondary** → `Button variant="pill"` with `border-0 bg-gray-3 text-gray-12 hover:bg-gray-4`.
+- **Download split** → `ButtonGroup`: a fill `Button` and an icon fill `Button size="icon-md"` with `ChevronDownIcon`, separated by a 1px `--accent-contrast` hairline at 25%.
+- **Nav** → `NavigationMenu`, `text-sm font-medium text-gray-12`; disclosure toggle before the list below 760px (`aria-expanded`, `aria-controls`, Escape closes and returns focus).
+- **Announcement** → bold label, `·`, `text-gray-11` link and a small `--gray-3` circular arrow chip.
+- **Mockup** → `Card` on `--window` with window dots, `Input` look-alike, helper rows (`Avatar` circle on an avatar token, name, `text-xs text-gray-11` time, truncated preview; selected row `bg-gray-3`), incoming bubble on `--bubble`, outgoing bubble on `--accent-9`, system line, `StatusDot`-style thinking avatar. Label it as a fictional preview.
+- **Stats** → `Stat`, `StatValue className="font-display font-medium"`, `StatLabel className="text-gray-11"`, marked as examples.
+- **Jobs** → `ToggleGroup` filter (pressed item `bg-gray-1` on a `bg-gray-3` track) above a `Table` with `text-sm` cells, `bg-gray-2` header and `Badge` states.
+- **Plans** → three `Card`s, segmented `ToggleGroup` for period, fill `Button` in each; prices marked as examples.
+- **Request form** → `Input type="email"`, `NativeSelect`, `Textarea`, fill `Button`; errors in `--alert-ink` via `aria-describedby`, a `role="status"` line after a local check.
+- **FAQ** → `Accordion` with a plus icon that turns 45°.
 
 ## Do's and Don'ts
 
-- Do keep one sweep per field and let the page breathe.
-- Do label every status in text, not color alone.
-- Do mark sample metrics and demos as examples.
-- Do write short, plain, second-person copy.
-
-- Don't draw circles, orbs or round mascot marks.
-- Don't add gradients beyond the field sweep.
-- Don't reuse the source's brand name, logo, imagery, copy or claims.
-- Don't put small text directly on `--sky-mid`.
+- Do keep the canvas white and let the hero breathe.
+- Do keep exactly one ink primary per view and gray pills for the rest.
+- Do label every helper by name, not by avatar color.
+- Do mark mockups, metrics, prices and demos as fictional examples.
+- Don't use gradients, blue fields or dark cards on the light page.
+- Don't draw round mascots, eyes or circle logos; the mark is the folded square.
+- Don't reuse the source's names, copy, prices, logo or video.
+- Don't autoplay anything in the media band.
 
 ## Motion
 
-Motion is an Aura interpretation; the source's motion was not observed. `transform` and `opacity` only, about 250ms, only in response to input. Buttons and cards scale to `1.03` on hover and `0.97` on press with `cubic-bezier(0.4, 0, 0.6, 1)`. The mobile menu is shown and hidden with a `display` toggle; no animated entry is implemented. The sweep is static; nothing autoplays. Under `prefers-reduced-motion: reduce` every transition is removed.
+Not observed on the source; Aura interpretation. `transform` and `opacity` only, inside `@media (prefers-reduced-motion: no-preference)`.
+
+- Buttons: `scale(1.03)` on hover, `scale(0.97)` on press, 200ms `cubic-bezier(0.4, 0, 0.6, 1)`.
+- Mockup: one looping "thinking" pulse on the thinking avatar (opacity 0.45→1, scale 0.92→1, 1.6s).
+- Under `reduce` nothing animates or transitions.
 
 ## Reference
 
 ```tsx
-<Card className="rounded-[13px] border-transparent bg-(--sky-mist) p-2 shadow-[0_13px_39px_-13px_var(--accent-a6)]">
-  <div className="flex items-center gap-0.5 font-label text-xs tracking-[0.04em] text-accent-11">
-    <StatusDot /> RUNNING · 2 of 3
+<section className="mx-auto max-w-94 pt-7.5 text-center">
+  <h1 className="flex flex-wrap items-center justify-center gap-[0.2em] font-display text-[clamp(2.25rem,7vw,4rem)] font-medium tracking-[-0.035em] text-gray-12">
+    Work with <FoldedSquare className="size-[0.8em]" aria-hidden /> Bluefold
+  </h1>
+  <p className="mx-auto mt-1.5 max-w-50 text-gray-11">Helpers that open your tools and bring back finished work.</p>
+  <div className="mt-2.5 flex flex-wrap justify-center gap-1">
+    <Button variant="fill" className="h-3.5 px-1.5 font-medium">
+      <DownloadIcon className="icon" /> Download for desktop
+    </Button>
+    <Button variant="pill" className="h-3.5 border-0 bg-gray-3 px-1.5 text-gray-12 hover:bg-gray-4">See plans</Button>
   </div>
-  <h3 className="h5 mt-0.5 font-display tracking-[-0.03em]">Sort this week's invoices</h3>
-  <div className="mt-1 h-[3px] rounded-full bg-accent-a4">
-    <div className="h-full w-2/3 rounded-full bg-accent-9" />
-  </div>
-  <p className="small mt-1 text-gray-11">Learned: you file receipts by client first.</p>
-</Card>
+  <Card className="mx-auto mt-6 max-w-75 overflow-hidden rounded-[19.5px] border-gray-5 bg-(--window) shadow-none" aria-label="Fictional app preview">
+    <div className="ml-auto max-w-[75%] rounded-[13px] bg-accent-9 px-1 py-0.5 text-sm text-(--accent-contrast)">Draft the weekly lead list.</div>
+  </Card>
+</section>
 ```
