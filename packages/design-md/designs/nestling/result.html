@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nestling · Aura flavor</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/aura/main.css" />
+    <link rel="stylesheet" href="theme.css" />
+    <script>
+      (function () {
+        var appearance = new URLSearchParams(window.location.search).get("appearance") === "dark" ? "dark" : "light";
+        document.documentElement.classList.add(appearance);
+        document.documentElement.style.colorScheme = appearance;
+      })();
+    </script>
+    <style>
+      :root {
+        --aura-accents-primary: var(--accent-9);
+        --aura-text-primary-inverse: var(--accent-contrast);
+        --aura-button-hover: var(--accent-10);
+        --aura-text-primary: var(--gray-12);
+        --aura-bg: var(--gray-1);
+        --aura-link: var(--gray-12);
+        --aura-outline: var(--gray-12) solid 2px;
+        --aura-input-bg: var(--gray-1);
+        --aura-input-placeholder-color: var(--gray-11);
+        --ease: cubic-bezier(0.4, 0, 0.6, 1);
+        --hair: var(--gray-5);
+        --panel: var(--beige);
+        --panel-ring: transparent;
+        --soft: var(--cream);
+        --soft-hover: var(--stone);
+        --disc: var(--stone);
+        --wrap: calc(var(--aura) * 79);
+      }
+      .dark {
+        --hair: var(--gray-6);
+        --panel-ring: var(--gray-a4);
+        --soft: var(--gray-3);
+        --soft-hover: var(--gray-4);
+      }
+      html { font-size: 17px; background: var(--gray-1); }
+      body { margin: 0; background: var(--gray-1); color: var(--gray-12); font-family: var(--aura-font-stack); line-height: 1.5; }
+      h1, h2, h3, p, figure, ul, ol { margin: 0; }
+      h1, h2, h3 { font-family: var(--aura-font-display); font-weight: 500; line-height: 1.1; letter-spacing: -0.03em; text-wrap: balance; }
+      a { color: inherit; }
+      :focus-visible { outline: var(--aura-outline); outline-offset: 2px; }
+      [id] { scroll-margin-top: calc(var(--aura) * 2); }
+      .defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+      .skip { position: absolute; left: var(--aura); top: calc(var(--aura) * -5); z-index: 20; padding: calc(var(--aura) * 0.5) var(--aura); border-radius: 9999px; background: var(--accent-9); color: var(--accent-contrast); }
+      .skip:focus { top: var(--aura); }
+      .wrap { width: min(100% - var(--aura) * 3, var(--wrap)); margin-inline: auto; }
+      .sec { padding-block: clamp(calc(var(--aura) * 5), 8vw, calc(var(--aura) * 7.5)); }
+      .sec:has(> .wrap > .rule:first-child) { padding-top: 0; }
+      .rule { border-top: 1px solid var(--hair); }
+      .muted { color: var(--gray-11); }
+      .i { width: 1em; height: 1em; flex: none; }
+      .eb { font-size: 0.82rem; font-weight: 600; }
+      .blue { color: var(--ink-blue); }
+      .green { color: var(--ink-green); }
+      .gold { color: var(--ink-gold); }
+      .orange { color: var(--ink-orange); }
+      .h2 { --min: 1.75rem; --val: 4.4vw; --max: 2.6rem; line-height: 1.09; }
+      .t { --min: 1.0625rem; --val: 2vw; --max: 1.125rem; letter-spacing: -0.01em; }
+      .lead { --min: 1rem; --val: 2.2vw; --max: 1.12rem; color: var(--gray-11); line-height: 1.42; letter-spacing: -0.016em; }
+      .sample { display: inline-flex; align-items: center; padding: 0 calc(var(--aura) * 0.75); border-radius: 9999px; border: 1px solid var(--gray-7); color: var(--gray-11); font-size: 12px; font-weight: 600; line-height: 1.8; }
+      .btn { height: calc(var(--aura) * 3.5); padding: 0 calc(var(--aura) * 1.5); font-weight: 500; text-decoration: none; white-space: nowrap; }
+      .btn.sm { height: calc(var(--aura) * 2.5); padding: 0 var(--aura); font-size: 0.88rem; }
+      .button-pill.soft { background: var(--soft); border-color: var(--soft); color: var(--gray-12); }
+      .button-pill.soft:hover:not(:disabled) { background: var(--soft-hover); }
+      .tl { display: inline-flex; align-items: center; gap: calc(var(--aura) * 0.5); font-weight: 500; text-decoration: none; }
+      .tl:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+      .nav { display: flex; flex-wrap: wrap; align-items: center; gap: calc(var(--aura) * 2); padding-block: calc(var(--aura) * 1.5); }
+      .logo { display: inline-flex; align-items: center; gap: calc(var(--aura) * 0.5); font-family: var(--aura-font-display); font-weight: 600; font-size: 1.06rem; letter-spacing: -0.02em; text-decoration: none; color: var(--gray-12); }
+      .logo svg { width: calc(var(--aura) * 1.5); height: calc(var(--aura) * 1.5); }
+      .menu { display: flex; align-items: center; gap: calc(var(--aura) * 0.5); list-style: none; padding: 0; }
+      .menu > li { position: relative; }
+      .nl { display: inline-flex; align-items: center; gap: calc(var(--aura) * 0.5); padding: calc(var(--aura) * 0.5) var(--aura); border: 0; border-radius: 9999px; background: transparent; color: var(--gray-12); font: inherit; font-size: 0.88rem; font-weight: 500; text-decoration: none; cursor: pointer; }
+      .nl:hover { background: var(--soft); }
+      .nl[aria-expanded="true"] .chev { transform: rotate(180deg); }
+      .drop { position: absolute; top: calc(100% + var(--aura) * 0.5); left: 0; z-index: 5; min-width: calc(var(--aura) * 15); padding: calc(var(--aura) * 0.5); list-style: none; background: var(--gray-1); border: 1px solid var(--hair); border-radius: var(--aura); box-shadow: 0 var(--aura) calc(var(--aura) * 3) calc(var(--aura) * -1) var(--gray-a5); }
+      .drop[hidden] { display: none; }
+      .drop a { display: block; padding: calc(var(--aura) * 0.5) var(--aura); border-radius: calc(var(--aura) * 0.5); font-size: 0.88rem; text-decoration: none; }
+      .drop a:hover { background: var(--soft); }
+      .drop small { display: block; color: var(--gray-11); font-size: 12px; }
+      .nav-end { display: flex; gap: calc(var(--aura) * 0.5); margin-left: auto; }
+      .toggle { display: none; }
+
+      .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, calc(var(--aura) * 36)) minmax(0, 1fr); align-items: center; padding-block: calc(var(--aura) * 3) calc(var(--aura) * 7.5); }
+      .flank { display: flex; overflow: hidden; }
+      .flank svg { flex: none; width: 112%; height: auto; }
+      .flank.l { justify-content: flex-end; }
+      .hero-c { padding-inline: calc(var(--aura) * 1.5); text-align: center; }
+      .hero h1 { --min: 2.35rem; --val: 5.4vw; --max: 4rem; letter-spacing: -0.02em; }
+      .hero .sub { --min: 1rem; --val: 1.6vw; --max: 1rem; max-width: calc(var(--aura) * 30); margin: calc(var(--aura) * 1.5) auto 0; font-weight: 500; color: var(--gray-11); line-height: 1.53; }
+      .cta { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--aura); margin-top: calc(var(--aura) * 2); }
+      .mini-row { display: none; }
+      .disc { fill: var(--disc); }
+      .limb { fill: none; stroke: var(--limb); stroke-width: 9; stroke-linecap: round; }
+      .limb.thin { stroke-width: 4; }
+      .tile { fill: var(--stone); }
+      .trail { fill: none; stroke: var(--sand); stroke-width: 3; stroke-dasharray: 2 9; stroke-linecap: round; }
+      .c-blue { --c1: var(--blob-blue); --c2: var(--blob-blue-deep); }
+      .c-pale { --c1: var(--blob-blue-pale); --c2: var(--blob-blue); }
+      .c-green { --c1: var(--leaf-green); --c2: var(--leaf-deep); }
+      .c-yellow { --c1: var(--sun-yellow); --c2: var(--coin-gold); }
+      .c-gold { --c1: var(--coin-gold); --c2: var(--coin-shine); }
+      .c-red { --c1: var(--heart-red); --c2: var(--coin-shine); }
+      .c-ember { --c1: var(--ember); --c2: var(--heart-red); }
+      .c-sand { --c1: var(--sand); --c2: var(--stone); }
+      .c-gear { --c1: var(--sand); --c2: var(--gray-1); }
+      .c-pink { --c1: var(--petal-pink); --c2: var(--plum); }
+      .c-plum { --c1: var(--plum); --c2: var(--petal-pink); }
+      .bob, .tw, .spin { transform-box: fill-box; transform-origin: center; }
+
+      .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: calc(var(--aura) * 2); padding: calc(var(--aura) * 2.5); border-radius: calc(var(--aura) * 2); background: var(--panel); box-shadow: inset 0 0 0 1px var(--panel-ring); }
+      .stat { display: grid; grid-template-columns: auto 1fr; column-gap: var(--aura); align-items: center; }
+      .stat svg { grid-row: span 2; width: calc(var(--aura) * 3); height: calc(var(--aura) * 3); }
+      .stat strong { font-family: var(--aura-font-display); font-weight: 500; font-size: 2rem; letter-spacing: -0.03em; line-height: 1.1; }
+      .stat span { color: var(--gray-11); font-size: 0.82rem; }
+      .stats-foot { display: flex; justify-content: flex-end; margin-top: var(--aura); }
+
+      .head { margin-bottom: calc(var(--aura) * 4); }
+      .head.c { text-align: center; }
+      .head .lead, .head .h2 + p { margin-top: calc(var(--aura) * 1.5); }
+      .fgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(var(--aura) * 2); }
+      .fc { display: flex; flex-direction: column; gap: calc(var(--aura) * 0.5); padding: calc(var(--aura) * 1.5); border-radius: calc(var(--aura) * 2); background: var(--panel); box-shadow: inset 0 0 0 1px var(--panel-ring); }
+      .fc.tall { grid-row: span 2; }
+      .fc p { color: var(--gray-11); font-size: 0.88rem; }
+      .vig { flex: 1; display: grid; place-items: center; min-height: calc(var(--aura) * 10); margin-bottom: var(--aura); }
+      .acts { display: grid; gap: 2px; width: 100%; padding: calc(var(--aura) * 0.5); border-radius: calc(var(--aura) * 1.5); background: var(--phone-screen); color: var(--phone-ink); }
+      .act { display: grid; grid-template-columns: auto 1fr; column-gap: var(--aura); align-items: center; padding: var(--aura); border-radius: var(--aura); background: var(--phone-row); }
+      .act b { font-weight: 600; font-size: 0.95rem; }
+      .act > span:last-child { grid-column: 2; color: var(--phone-muted); font-size: 0.78rem; line-height: 1.35; }
+      .ic { grid-row: span 2; display: grid; place-items: center; width: calc(var(--aura) * 2.5); height: calc(var(--aura) * 2.5); border-radius: 50%; background: var(--c1); color: var(--face-ink); }
+      .glow { padding: calc(var(--aura) * 0.75) calc(var(--aura) * 1.5); border-radius: 9999px; background: var(--leaf-green); color: var(--face-ink); font-weight: 600; box-shadow: 0 0 0 6px color-mix(in srgb, var(--leaf-green) 25%, transparent), 0 0 0 12px color-mix(in srgb, var(--leaf-green) 12%, transparent); }
+      .steps { width: 100%; display: grid; padding: var(--aura); border-radius: var(--aura); background: var(--gray-1); border: 1px solid var(--hair); font-size: 0.82rem; }
+      .steps li { display: flex; align-items: center; gap: calc(var(--aura) * 0.5); padding-block: calc(var(--aura) * 0.5); color: var(--gray-11); }
+      .steps li + li { border-top: 1px solid var(--hair); }
+      .steps i { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--gray-8); }
+      .steps .on { color: var(--ink-blue); font-weight: 600; }
+      .steps .on i { border-color: var(--ink-blue); background: var(--ink-blue); }
+      .pace { display: flex; align-items: center; gap: calc(var(--aura) * 1.5); padding: var(--aura) calc(var(--aura) * 1.5); border-radius: var(--aura); background: var(--gray-1); border: 1px solid var(--hair); }
+      .pace b { display: block; font-family: var(--aura-font-display); font-weight: 500; font-size: 1.3rem; }
+      .pace span { color: var(--gray-11); }
+      .meter { display: grid; gap: 4px; padding: 6px; border-radius: 9999px; border: 1px solid var(--hair); }
+      .meter i { width: 7px; height: 7px; border-radius: 50%; background: var(--c1); }
+      .faces { display: flex; gap: var(--aura); }
+      .faces svg { width: calc(var(--aura) * 4.5); height: calc(var(--aura) * 4.5); }
+      .faces svg:nth-child(2) { width: calc(var(--aura) * 5.5); height: calc(var(--aura) * 5.5); }
+
+      .phones { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(var(--aura) * 2); }
+      .pf { display: flex; justify-content: center; height: calc(var(--aura) * 20); padding-top: calc(var(--aura) * 1.5); overflow: hidden; border-radius: calc(var(--aura) * 2); background: var(--panel); box-shadow: inset 0 0 0 1px var(--panel-ring); }
+      .phone { width: min(100% - var(--aura) * 2, calc(var(--aura) * 14)); padding: var(--aura); border: 6px solid var(--phone-frame); border-bottom: 0; border-radius: calc(var(--aura) * 2.5) calc(var(--aura) * 2.5) 0 0; background: var(--phone-screen); color: var(--phone-ink); font-size: 11px; line-height: 1.4; }
+      .phone.lt { background: var(--gray-1); color: var(--gray-12); }
+      .isl { width: 40%; height: 14px; margin: 0 auto var(--aura); border-radius: 9999px; background: var(--phone-frame); }
+      .ph-h { display: flex; justify-content: space-between; font-weight: 600; font-size: 13px; margin-bottom: calc(var(--aura) * 0.5); }
+      .fld { padding: 4px 8px; border-radius: 8px; background: var(--phone-row); color: var(--phone-muted); margin-bottom: calc(var(--aura) * 0.5); }
+      .fld b { color: var(--phone-ink); font-weight: 500; }
+      .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+      .tiles span { display: grid; place-items: center; aspect-ratio: 1; border-radius: 8px; background: var(--c1); }
+      .tiles svg { width: 70%; height: 70%; }
+      .qr { display: block; width: 100%; height: auto; padding: 8px; border-radius: 10px; background: var(--phone-ink); }
+      .qr-n { margin-top: 8px; text-align: center; color: var(--phone-muted); }
+      .amt { padding: var(--aura); border-radius: 10px; background: var(--phone-row); text-align: center; }
+      .amt b { display: block; font-size: 28px; font-weight: 600; }
+      .amt span { color: var(--phone-muted); }
+      .keys { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px; text-align: center; font-size: 14px; font-weight: 500; }
+      .keys span { padding: 4px; }
+      .phones figcaption { display: flex; justify-content: center; align-items: center; gap: calc(var(--aura) * 0.5); margin-top: var(--aura); font-weight: 500; font-size: 0.92rem; }
+
+      .band { background: var(--panel); box-shadow: inset 0 1px 0 var(--panel-ring), inset 0 -1px 0 var(--panel-ring); }
+      .blurbs { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--aura) * 4) calc(var(--aura) * 3.5); }
+      .blurbs p:last-child { margin-top: calc(var(--aura) * 0.5); }
+
+      .split { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--aura) * 5); align-items: center; }
+      .split .pf { height: calc(var(--aura) * 26); padding-top: calc(var(--aura) * 2); }
+      .split .h2 { margin-top: calc(var(--aura) * 0.5); }
+      ul.checks { display: grid; gap: var(--aura); margin-top: calc(var(--aura) * 2); padding: 0; list-style: none; font-weight: 500; }
+      .checks.two { grid-template-columns: 1fr 1fr; }
+      .checks li { display: flex; align-items: center; gap: calc(var(--aura) * 0.5); }
+      .tok { display: grid; grid-template-columns: auto 1fr auto; column-gap: 8px; align-items: center; padding-block: 7px; border-top: 1px solid var(--hair); }
+      .tok .av { grid-row: span 2; width: 24px; height: 24px; }
+      .tok b { font-weight: 600; }
+      .tok em { font-style: normal; text-align: right; }
+      .tok small { color: var(--gray-11); font-size: 10px; }
+      .tok .up { color: var(--ink-green); text-align: right; }
+      .av { display: inline-block; flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--c1); }
+      .watch { margin-bottom: 8px; padding: 4px; border-radius: 8px; background: var(--soft); text-align: center; color: var(--gray-11); }
+
+      .bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--aura); margin: calc(var(--aura) * 3) 0 calc(var(--aura) * 1.5); }
+      .seg { display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 4px; border-radius: calc(var(--aura) * 1.5); background: var(--soft); }
+      .seg button { min-height: calc(var(--aura) * 2.5); padding: 0 var(--aura); border: 0; border-radius: 9999px; background: transparent; color: var(--gray-11); font: inherit; font-size: 0.88rem; font-weight: 500; cursor: pointer; }
+      .seg button[aria-pressed="true"] { background: var(--gray-1); color: var(--gray-12); box-shadow: 0 0 0 1px var(--gray-6); }
+      .tw-wrap { overflow-x: auto; padding: var(--aura) calc(var(--aura) * 1.5); border-radius: calc(var(--aura) * 2); background: var(--panel); box-shadow: inset 0 0 0 1px var(--panel-ring); }
+      table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+      caption { padding-block: calc(var(--aura) * 0.5); text-align: left; color: var(--gray-11); font-size: 13px; }
+      th, td { padding: var(--aura) calc(var(--aura) * 0.5); text-align: left; white-space: nowrap; border-top: 1px solid var(--hair); }
+      thead th { border-top: 0; color: var(--gray-11); font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+      td.num { font-variant-numeric: tabular-nums; font-weight: 500; }
+      .who { display: inline-flex; align-items: center; gap: calc(var(--aura) * 0.5); font-weight: 500; }
+      .badge { display: inline-block; padding: 0 calc(var(--aura) * 0.75); border-radius: 9999px; font-size: 12px; font-weight: 600; line-height: 1.8; }
+      .b-ok { background: color-mix(in srgb, var(--leaf-green) 18%, var(--gray-1)); color: var(--ink-green); }
+      .b-wait { background: color-mix(in srgb, var(--blob-blue) 18%, var(--gray-1)); color: var(--ink-blue); }
+      .b-look { background: color-mix(in srgb, var(--ember) 6%, var(--gray-1)); color: var(--ink-orange); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ember) 30%, transparent); }
+
+      .art { width: 100%; height: auto; max-width: calc(var(--aura) * 34); justify-self: center; }
+
+      .plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(var(--aura) * 2); }
+      .plan { display: flex; flex-direction: column; gap: var(--aura); padding: calc(var(--aura) * 2); border-radius: calc(var(--aura) * 2); background: var(--panel); box-shadow: inset 0 0 0 1px var(--panel-ring); }
+      .price { font-family: var(--aura-font-display); font-weight: 500; font-size: 2.6rem; letter-spacing: -0.03em; line-height: 1; }
+      .price span { margin-left: calc(var(--aura) * 0.5); font-family: var(--aura-font-stack); font-size: 0.82rem; letter-spacing: 0; color: var(--gray-11); }
+      .plan ul.checks { flex: 1; margin-top: 0; font-size: 0.92rem; color: var(--gray-11); align-content: start; }
+      .plan .button { width: 100%; }
+
+      .quotes-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: var(--aura); margin-bottom: calc(var(--aura) * 3); }
+      .mq { margin-bottom: calc(var(--aura) * 1.5); }
+      .track { display: flex; flex-wrap: wrap; gap: calc(var(--aura) * 1.5); width: min(100% - var(--aura) * 3, var(--wrap)); margin-inline: auto; }
+      .q { flex: none; width: min(100%, calc(var(--aura) * 23)); padding: calc(var(--aura) * 1.5); border-radius: calc(var(--aura) * 1.5); border: 1px solid var(--hair); background: var(--gray-1); }
+      .q header { display: flex; align-items: center; gap: calc(var(--aura) * 0.75); margin-bottom: var(--aura); }
+      .q header svg { width: 36px; height: 36px; }
+      .q b { display: block; font-size: 0.92rem; }
+      .q small { color: var(--gray-11); font-size: 12px; }
+      .q p { color: var(--gray-11); font-size: 0.92rem; }
+      .dup { display: none; }
+      .pause { display: none; }
+
+      .formp { padding: calc(var(--aura) * 2); border-radius: calc(var(--aura) * 2); background: var(--panel); box-shadow: inset 0 0 0 1px var(--panel-ring); }
+      form { display: grid; gap: calc(var(--aura) * 1.5); }
+      .field { display: grid; gap: calc(var(--aura) * 0.5); }
+      .field label { font-weight: 500; font-size: 0.92rem; }
+      .field input, .field select { height: calc(var(--aura) * 3.5); padding: 0 var(--aura); border: 1px solid var(--gray-8); border-radius: var(--aura-input-radius); background: var(--aura-input-bg); color: var(--gray-12); line-height: normal; }
+      .field select { background-image: linear-gradient(45deg, transparent 50%, var(--gray-11) 50%), linear-gradient(135deg, var(--gray-11) 50%, transparent 50%); background-position: calc(100% - 19px) 50%, calc(100% - 13px) 50%; background-size: 6px 6px; background-repeat: no-repeat; padding-right: calc(var(--aura) * 3); }
+      .field [aria-invalid="true"] { border-color: var(--ink-orange); }
+      .err { color: var(--ink-orange); font-size: 0.875rem; }
+      .err:empty, .status:empty { display: none; }
+      .status { padding: var(--aura); border-radius: var(--aura); background: color-mix(in srgb, var(--leaf-green) 18%, var(--gray-1)); color: var(--gray-12); }
+      .hint { color: var(--gray-11); font-size: 0.82rem; }
+
+      .acc { border-bottom: 1px solid var(--hair); }
+      .acc h3 { font-family: var(--aura-font-stack); letter-spacing: 0; --min: 1rem; --val: 1rem; --max: 1rem; }
+      .acc-b { display: flex; align-items: center; gap: calc(var(--aura) * 1.5); width: 100%; padding: calc(var(--aura) * 1.5) 0; border: 0; background: transparent; color: var(--gray-12); font: inherit; font-weight: 500; text-align: left; cursor: pointer; }
+      .acc-b svg { color: var(--ink-orange); }
+      .acc-b[aria-expanded="true"] svg { transform: rotate(45deg); }
+      .acc-p { padding: 0 0 calc(var(--aura) * 1.5) calc(var(--aura) * 2.5); color: var(--gray-11); }
+      .more { margin-top: calc(var(--aura) * 2); color: var(--ink-orange); }
+
+      .closing { padding-block: calc(var(--aura) * 6); }
+      .closing .split { gap: calc(var(--aura) * 3); }
+      .closing .lead { margin-top: calc(var(--aura) * 1.5); max-width: calc(var(--aura) * 26); }
+      .closing .tl { margin-top: calc(var(--aura) * 1.5); color: var(--ink-blue); }
+
+      footer { padding-block: calc(var(--aura) * 5) calc(var(--aura) * 3); font-size: 0.82rem; }
+      .foot { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr) auto; gap: calc(var(--aura) * 2); }
+      .foot h2 { font-family: var(--aura-font-stack); font-size: 0.82rem; font-weight: 600; letter-spacing: 0; }
+      .foot ul { display: grid; gap: calc(var(--aura) * 0.5); margin-top: var(--aura); padding: 0; list-style: none; }
+      .foot ul a { color: var(--gray-11); text-decoration: none; }
+      .foot ul a:hover { color: var(--gray-12); text-decoration: underline; }
+      .legal { margin-top: calc(var(--aura) * 3); padding-top: calc(var(--aura) * 1.5); border-top: 1px solid var(--hair); color: var(--gray-11); }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .button { transition: transform 200ms var(--ease), background-color 100ms ease; }
+        .button:hover:not(:disabled) { transform: scale(1.03); }
+        .button:active:not(:disabled) { transform: scale(0.97); }
+        .nl, .drop a, .seg button { transition: background-color 100ms ease; }
+        .chev, .acc-b svg { transition: transform 250ms ease; }
+        .acc-p:not([hidden]) { animation: fade 250ms ease; }
+        .bob { animation: bob 3.6s ease-in-out var(--d, 0s) infinite; }
+        .tw { animation: tw 2.4s ease-in-out var(--d, 0s) infinite; }
+        .spin { animation: spin 14s linear infinite; }
+        .mq { overflow: hidden; }
+        .track { flex-wrap: nowrap; gap: 0; width: max-content; margin: 0; animation: slide 48s linear infinite; }
+        .q { width: calc(var(--aura) * 23); margin-right: calc(var(--aura) * 1.5); }
+        .mq.rev .track { animation-direction: reverse; margin-left: calc(var(--aura) * -8); }
+        .dup { display: block; }
+        .pause { display: inline-flex; }
+        .quotes:hover .track, .quotes:focus-within .track, .quotes[data-paused="true"] .track { animation-play-state: paused; }
+        @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+        @keyframes tw { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.85); opacity: 0.7; } }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes slide { to { transform: translateX(-50%); } }
+        @keyframes fade { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+        .button:hover, .button:active { transform: none; }
+      }
+
+      @media (max-width: 960px) {
+        .hero { grid-template-columns: minmax(0, 1fr); padding-top: calc(var(--aura) * 1.5); }
+        .flank { display: none; }
+        .mini-row { display: block; width: min(100%, calc(var(--aura) * 20)); height: auto; margin: 0 auto calc(var(--aura) * 1.5); }
+        .stats { grid-template-columns: 1fr 1fr; }
+        .foot { grid-template-columns: repeat(3, 1fr); }
+        .foot > div:first-child, .foot > p { grid-column: 1 / -1; }
+      }
+      @media (max-width: 860px) {
+        .nav { gap: var(--aura); }
+        .toggle { display: inline-flex; order: 1; margin-left: auto; }
+        .nav-end { order: 2; margin-left: 0; }
+        .nav-end .soft { display: none; }
+        .menu { order: 3; flex-basis: 100%; flex-direction: column; align-items: stretch; gap: 2px; padding: calc(var(--aura) * 0.5); border-radius: calc(var(--aura) * 1.5); background: var(--panel); box-shadow: inset 0 0 0 1px var(--panel-ring); }
+        .menu .nl { width: 100%; justify-content: space-between; padding: var(--aura); font-size: 1rem; }
+        .nav[data-open="false"] .menu { display: none; }
+        .drop { position: static; box-shadow: none; margin-top: calc(var(--aura) * 0.5); background: var(--gray-1); }
+        .split { grid-template-columns: 1fr; gap: calc(var(--aura) * 3); }
+        .split.flip > :first-child { order: 2; }
+      }
+      @media (max-width: 760px) {
+        .fgrid, .phones, .plans, .blurbs { grid-template-columns: 1fr; }
+        .fc.tall { grid-row: auto; }
+        .stats { grid-template-columns: 1fr; padding: calc(var(--aura) * 1.5); }
+        .checks.two { grid-template-columns: 1fr; }
+        .formp { padding: calc(var(--aura) * 1.5); }
+        .foot { grid-template-columns: 1fr 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <svg class="defs" aria-hidden="true" focusable="false">
+      <symbol id="cloud" viewBox="0 -12 120 132"><path d="M60 0c-5-7-14-6-17 1 7-1 12 2 17 9 5-7 10-10 17-9-3-7-12-8-17-1z" style="fill:var(--c2)"/><g style="fill:var(--c1)"><circle cx="60" cy="60" r="40"/><circle cx="60" cy="22" r="21"/><circle cx="87" cy="33" r="21"/><circle cx="98" cy="60" r="21"/><circle cx="87" cy="87" r="21"/><circle cx="60" cy="98" r="21"/><circle cx="33" cy="87" r="21"/><circle cx="22" cy="60" r="21"/><circle cx="33" cy="33" r="21"/></g><ellipse cx="60" cy="62" rx="27" ry="24" style="fill:var(--c2)"/></symbol>
+      <symbol id="dots" viewBox="0 -12 120 132"><g style="fill:var(--face-ink)"><ellipse cx="50" cy="60" rx="4.5" ry="6.5"/><ellipse cx="70" cy="60" rx="4.5" ry="6.5"/></g></symbol>
+      <symbol id="calm" viewBox="0 -12 120 132"><path d="M43 57q5 6 10 0M67 57q5 6 10 0M52 68q8 8 16 0" fill="none" stroke-width="3.5" stroke-linecap="round" style="stroke:var(--face-ink)"/></symbol>
+      <symbol id="coin" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" style="fill:var(--c1)"/><path d="M8 26 26 8a14 14 0 0 1 6 6L14 32a14 14 0 0 1-6-6z" style="fill:var(--c2)"/></symbol>
+      <symbol id="heart" viewBox="0 0 40 40"><path d="M20 35C6 26 2 18 5 11c3-7 12-8 15-1 3-7 12-6 15 1 3 7-1 15-15 24z" style="fill:var(--c1)"/><ellipse cx="12" cy="14" rx="3" ry="4.5" transform="rotate(-30 12 14)" style="fill:var(--c2)"/></symbol>
+      <symbol id="star" viewBox="0 0 40 40"><path d="M20 5l4.4 9 9.9 1.4-7.2 7 1.7 9.8L20 27.6l-8.8 4.6 1.7-9.8-7.2-7 9.9-1.4z" stroke-width="4" stroke-linejoin="round" style="fill:var(--c1);stroke:var(--c1)"/></symbol>
+      <symbol id="spark" viewBox="0 0 20 20"><path d="M10 0q1.5 8.5 10 10-8.5 1.5-10 10-1.5-8.5-10-10 8.5-1.5 10-10z" style="fill:var(--c1)"/></symbol>
+      <symbol id="gear" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke-width="7" stroke-dasharray="5.9 5.9" style="stroke:var(--c1)"/><circle cx="20" cy="20" r="12" style="fill:var(--c1)"/><circle cx="20" cy="20" r="5" style="fill:var(--c2)"/></symbol>
+      <symbol id="lock" viewBox="0 0 40 40"><path d="M12 18v-5a8 8 0 0 1 16 0v5" fill="none" stroke-width="5" style="stroke:var(--c1)"/><rect x="6" y="17" width="28" height="20" rx="7" style="fill:var(--c1)"/><circle cx="20" cy="26" r="3.2" style="fill:var(--c2)"/></symbol>
+      <symbol id="lens" viewBox="0 0 40 40"><circle cx="17" cy="17" r="11" fill="none" stroke-width="6" style="stroke:var(--c1)"/><path d="M25 25l9 9" stroke-width="7" stroke-linecap="round" style="stroke:var(--c1)"/></symbol>
+      <symbol id="check" viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" style="stroke:var(--c1)"/></symbol>
+      <symbol id="leaf" viewBox="0 0 40 40"><path d="M7 34C5 18 15 6 34 6c1 17-9 28-27 28z" style="fill:var(--c1)"/><path d="M10 31 26 15" fill="none" stroke-width="2.5" stroke-linecap="round" style="stroke:var(--c2)"/></symbol>
+      <symbol id="egg" viewBox="0 0 40 40"><ellipse cx="20" cy="22" rx="13" ry="16" style="fill:var(--c1)"/><circle cx="15" cy="18" r="2" style="fill:var(--c2)"/><circle cx="24" cy="27" r="2.5" style="fill:var(--c2)"/></symbol>
+      <symbol id="arrow" viewBox="0 0 40 40"><path d="M21 7 7 20l14 13M8 20h25" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" style="stroke:var(--c1)"/></symbol>
+      <symbol id="mark" viewBox="0 0 24 24"><rect x="1" y="1" width="22" height="22" rx="6" style="fill:var(--accent-9)"/><ellipse cx="12" cy="13" rx="5" ry="6.2" style="fill:var(--accent-contrast)"/></symbol>
+      <symbol id="tick" viewBox="0 0 15 15"><path d="M3 7.8l2.8 2.8L12 4.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="chev" viewBox="0 0 15 15"><path d="M4 6l3.5 3.5L11 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="plus" viewBox="0 0 15 15"><path d="M7.5 2.5v10M2.5 7.5h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+      <symbol id="right" viewBox="0 0 15 15"><path d="M2.5 7.5h10M8.5 3.5l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="up" viewBox="0 0 15 15"><path d="M7.5 12V3M3.5 7l4-4 4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="down" viewBox="0 0 15 15"><path d="M7.5 3v9M3.5 8l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="swap" viewBox="0 0 15 15"><path d="M3 5h9l-2.5-2.5M12 10H3l2.5 2.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="face" viewBox="0 0 120 120"><circle cx="60" cy="60" r="56" style="fill:var(--c1)"/><g style="fill:var(--face-ink)"><ellipse cx="48" cy="56" rx="5" ry="7"/><ellipse cx="72" cy="56" rx="5" ry="7"/></g><path d="M50 74q10 9 20 0" fill="none" stroke-width="4" stroke-linecap="round" style="stroke:var(--face-ink)"/></symbol>
+    </svg>
+
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="wrap">
+      <nav class="nav" aria-label="Primary" data-open="false">
+        <a class="logo" href="#top"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#mark" /></svg>Nestling</a>
+        <button class="button button-pill soft btn sm toggle" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+        <ul class="menu" id="menu">
+          <li>
+            <button class="nl" type="button" data-dd aria-expanded="false" aria-controls="dd-build">Builders<svg class="i chev" aria-hidden="true"><use href="#chev" /></svg></button>
+            <ul class="drop" id="dd-build" hidden>
+              <li><a href="#activity">Sample activity<small>Read a demo ledger</small></a></li>
+              <li><a href="#plans">Demo plans<small>Three nest sizes</small></a></li>
+              <li><a href="#join">Hatch list<small>A local-only form</small></a></li>
+            </ul>
+          </li>
+          <li>
+            <button class="nl" type="button" data-dd aria-expanded="false" aria-controls="dd-learn">Learn<svg class="i chev" aria-hidden="true"><use href="#chev" /></svg></button>
+            <ul class="drop" id="dd-learn" hidden>
+              <li><a href="#secure">Safety notes<small>What this demo never asks</small></a></li>
+              <li><a href="#faq">Questions<small>Short answers</small></a></li>
+              <li><a href="#friends">Friends<small>Notes from critters</small></a></li>
+            </ul>
+          </li>
+          <li><a class="nl" href="#explore">Tour</a></li>
+        </ul>
+        <div class="nav-end">
+          <a class="button button-pill soft btn sm" href="#faq">Sign in</a>
+          <a class="button button-fill btn sm" href="#join">Get started</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="flank l" aria-hidden="true">
+          <svg viewBox="0 0 380 420">
+            <circle class="disc" cx="215" cy="200" r="78" />
+            <circle class="disc" cx="40" cy="380" r="56" />
+            <g class="bob" style="--d:-1.2s"><path class="limb" d="M110 320q-6 34-30 52M150 322q14 28 4 54M210 230q26-4 38 10" /><ellipse cx="78" cy="374" rx="15" ry="9" style="fill:var(--coin-gold)" /><ellipse cx="158" cy="378" rx="15" ry="9" style="fill:var(--coin-gold)" /><use href="#cloud" class="c-blue" x="-20" y="70" width="240" height="264" /><use href="#dots" x="-20" y="70" width="240" height="264" /></g>
+            <g class="bob" style="--d:-.3s"><use href="#coin" class="c-gold" x="50" y="6" width="70" height="70" /></g>
+            <g class="bob" style="--d:-2s"><use href="#coin" class="c-gold" x="222" y="250" width="64" height="64" /></g>
+            <g class="bob" style="--d:-1.6s"><use href="#heart" class="c-red" x="238" y="140" width="78" height="78" /></g>
+            <g class="tw"><use href="#star" class="c-yellow" x="196" y="104" width="34" height="34" /></g>
+            <g class="tw" style="--d:-1s"><use href="#star" class="c-sand" x="168" y="372" width="36" height="36" /></g>
+            <g class="tw" style="--d:-.5s"><use href="#spark" class="c-blue" x="56" y="120" width="22" height="22" /></g>
+            <g class="tw" style="--d:-1.4s"><use href="#spark" class="c-blue" x="84" y="134" width="16" height="16" /></g>
+            <g class="tw" style="--d:-.8s"><use href="#spark" class="c-yellow" x="200" y="30" width="22" height="22" /></g>
+            <g class="spin"><use href="#gear" class="c-gear" x="172" y="300" width="64" height="64" /></g>
+            <g class="bob" style="--d:-.9s"><use href="#leaf" class="c-blue" x="290" y="300" width="52" height="52" /></g>
+            <g class="bob" style="--d:-2.6s"><use href="#arrow" class="c-blue" x="300" y="80" width="40" height="40" transform="rotate(135 320 100)" /></g>
+            <circle cx="110" cy="402" r="22" style="fill:var(--ember)" />
+            <circle cx="180" cy="262" r="8" style="fill:var(--blob-blue)" />
+          </svg>
+        </div>
+        <div class="hero-c">
+          <svg class="mini-row" viewBox="0 0 300 80" aria-hidden="true">
+            <g class="bob"><use href="#coin" class="c-gold" x="6" y="8" width="64" height="64" /></g>
+            <g class="bob" style="--d:-.8s"><use href="#heart" class="c-red" x="78" y="6" width="68" height="68" /></g>
+            <g class="bob" style="--d:-1.6s"><use href="#cloud" class="c-blue" x="152" y="2" width="70" height="77" /><use href="#calm" x="152" y="2" width="70" height="77" /></g>
+            <g class="bob" style="--d:-2.4s"><use href="#leaf" class="c-green" x="230" y="8" width="64" height="64" /></g>
+          </svg>
+          <h1 id="hero-title">Your coziest little wallet.</h1>
+          <p class="sub">Look after a few fictional coins with friendly steps. Nothing here is real money and nothing ever leaves this page.</p>
+          <div class="cta">
+            <a class="button button-fill btn" href="#join"><svg class="i" viewBox="0 0 15 15" aria-hidden="true"><rect x="4" y="1.5" width="7" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4" /><path d="M6.5 11.5h2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" /></svg>Get the demo app</a>
+            <a class="button button-pill soft btn" href="#explore"><svg class="i" viewBox="0 0 15 15" aria-hidden="true"><path d="M4.5 2.5v10l8-5z" fill="currentColor" /></svg>Take the tour</a>
+          </div>
+        </div>
+        <div class="flank r" aria-hidden="true">
+          <svg viewBox="0 0 380 420">
+            <circle class="disc" cx="150" cy="180" r="80" />
+            <circle class="disc" cx="300" cy="240" r="60" />
+            <g class="bob" style="--d:-.4s"><rect class="tile" x="250" y="26" width="64" height="64" rx="20" /><use href="#check" class="c-green" x="262" y="38" width="40" height="40" /></g>
+            <g class="bob" style="--d:-1.4s"><rect class="tile" x="104" y="20" width="58" height="58" rx="18" /><use href="#egg" class="c-yellow" x="113" y="29" width="40" height="40" /></g>
+            <g class="bob" style="--d:-2.2s"><use href="#cloud" class="c-ember" x="300" y="96" width="140" height="154" /><use href="#calm" x="300" y="96" width="140" height="154" /></g>
+            <g class="bob" style="--d:-.7s"><path class="limb" d="M110 206q-8 26-28 36M150 206q10 24 4 40M190 160q22 4 28 24" /><ellipse cx="80" cy="244" rx="14" ry="9" style="fill:var(--ember)" /><ellipse cx="156" cy="250" rx="14" ry="9" style="fill:var(--ember)" /><path d="M66 172c-4-40 30-62 72-58 40 4 62 30 54 62-8 30-40 40-74 38-30-2-50-14-52-42z" style="fill:var(--leaf-green)" /><use href="#calm" x="70" y="94" width="120" height="132" /></g>
+            <g class="bob" style="--d:-1s"><use href="#lock" class="c-yellow" x="214" y="112" width="62" height="62" /></g>
+            <g class="bob" style="--d:-1.8s"><use href="#lens" class="c-blue" x="150" y="252" width="66" height="66" /></g>
+            <g class="bob" style="--d:-2.8s"><use href="#arrow" class="c-green" x="14" y="250" width="58" height="58" /></g>
+            <g class="bob" style="--d:-1.3s"><path class="limb" d="M246 366q-6 22-18 30M276 366q8 20 20 26" /><ellipse cx="226" cy="398" rx="13" ry="8" style="fill:var(--leaf-green)" /><ellipse cx="298" cy="394" rx="13" ry="8" style="fill:var(--leaf-green)" /><path d="M220 300h80c4 40-14 66-40 70-26-4-44-30-40-70z" style="fill:var(--sun-yellow)" /><path d="M214 304c4-28 22-40 46-40s42 12 46 40z" style="fill:var(--coin-gold)" /><rect x="256" y="252" width="8" height="14" rx="4" style="fill:var(--limb)" /><use href="#calm" x="200" y="257" width="120" height="132" /></g>
+            <g class="bob" style="--d:-.2s"><use href="#coin" class="c-gold" x="304" y="180" width="54" height="54" /></g>
+            <g class="tw"><use href="#star" class="c-yellow" x="70" y="100" width="28" height="28" /></g>
+            <g class="tw" style="--d:-1.2s"><use href="#star" class="c-sand" x="326" y="360" width="30" height="30" /></g>
+            <g class="tw" style="--d:-.6s"><use href="#spark" class="c-yellow" x="48" y="48" width="20" height="20" /></g>
+            <g class="tw" style="--d:-1.8s"><use href="#spark" class="c-sand" x="204" y="214" width="18" height="18" /></g>
+            <circle cx="40" cy="350" r="13" style="fill:var(--blob-blue)" />
+            <circle cx="174" cy="346" r="9" style="fill:var(--leaf-green)" />
+            <circle cx="368" cy="330" r="18" style="fill:var(--plum)" />
+          </svg>
+        </div>
+      </section>
+
+      <section class="wrap" aria-labelledby="stats-title">
+        <h2 class="defs" id="stats-title">Demo numbers</h2>
+        <div class="stats">
+          <div class="stat"><svg viewBox="0 0 40 40" aria-hidden="true"><use href="#egg" class="c-yellow" /></svg><strong>4</strong><span>sample nests in the demo</span></div>
+          <div class="stat"><svg viewBox="0 0 40 40" aria-hidden="true"><use href="#gear" class="c-gear" /></svg><strong>12 s</strong><span>typical demo settle time</span></div>
+          <div class="stat"><svg viewBox="0 0 40 40" aria-hidden="true"><use href="#lock" class="c-pale" /></svg><strong>0</strong><span>secrets ever asked for</span></div>
+          <div class="stat"><svg viewBox="0 0 40 40" aria-hidden="true"><use href="#heart" class="c-red" /></svg><strong>24</strong><span>critters drawn by hand</span></div>
+        </div>
+        <p class="stats-foot"><span class="sample">Sample data</span></p>
+      </section>
+
+      <section class="sec" id="explore" aria-labelledby="explore-title">
+        <div class="wrap">
+          <div class="head c"><h2 class="h2" id="explore-title">Explore your coins in a cozier way.</h2></div>
+          <div class="fgrid">
+            <article class="fc tall">
+              <div class="vig" aria-hidden="true">
+                <div class="acts">
+                  <div class="act"><span class="ic c-blue"><svg class="i"><use href="#up" /></svg></span><b>Send</b><span>Pass coins to a friend by nickname.</span></div>
+                  <div class="act"><span class="ic c-sand"><svg class="i"><use href="#swap" /></svg></span><b>Swap</b><span>Trade one sample coin for another.</span></div>
+                  <div class="act"><span class="ic c-green"><svg class="i"><use href="#down" /></svg></span><b>Receive</b><span>Share a pretend address.</span></div>
+                  <div class="act"><span class="ic c-pink"><svg class="i"><use href="#plus" /></svg></span><b>Top up</b><span>Fill the demo nest with play coins.</span></div>
+                </div>
+              </div>
+              <h3 class="t">Easy</h3>
+              <p>First coin or fiftieth, every step reads plainly.</p>
+            </article>
+            <article class="fc">
+              <div class="vig" aria-hidden="true"><span class="glow">Tucked in safely</span></div>
+              <h3 class="t">Secure</h3>
+              <p>Your coins, your control. Gentle checks at every step.</p>
+            </article>
+            <article class="fc">
+              <div class="vig" aria-hidden="true">
+                <ol class="steps"><li class="on"><i></i>Sent</li><li class="on"><i></i>On its way</li><li><i></i>Settled</li></ol>
+              </div>
+              <h3 class="t">Fast</h3>
+              <p>Clear progress from sent to settled.</p>
+            </article>
+            <article class="fc">
+              <div class="vig" aria-hidden="true">
+                <div class="pace"><div><b>Normal</b><span>about 60 secs</span></div><div class="meter"><i class="c-blue"></i><i class="c-yellow"></i><i class="c-ember"></i></div></div>
+              </div>
+              <h3 class="t">Calm fees</h3>
+              <p>Pick a pace and see the wait before you tap.</p>
+            </article>
+            <article class="fc">
+              <div class="vig" aria-hidden="true">
+                <div class="faces"><svg viewBox="0 0 120 120" class="c-yellow"><use href="#face" /></svg><svg viewBox="0 0 120 120" class="c-ember"><use href="#face" /></svg><svg viewBox="0 0 120 120" class="c-pink"><use href="#face" /></svg></div>
+              </div>
+              <h3 class="t">Fun</h3>
+              <p>Little characters cheer on every tap.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec" aria-labelledby="srs-title">
+        <div class="wrap">
+          <div class="rule"></div>
+          <div class="head" style="padding-top: calc(var(--aura) * 7.5)"><h2 class="h2" id="srs-title">Send, receive, swap.<br />All in one cozy place.</h2></div>
+          <div class="phones">
+            <figure>
+              <div class="pf"><div class="phone" role="img" aria-label="Sample send screen with four collectible critters">
+                <div class="isl"></div><div class="ph-h"><span>Send</span><span>×</span></div>
+                <div class="fld">To <b>pip.nest</b></div>
+                <div class="tiles"><span class="c-ember"><svg viewBox="0 0 120 120" class="c-yellow"><use href="#face" /></svg></span><span class="c-blue"><svg viewBox="0 0 120 120" class="c-green"><use href="#face" /></svg></span><span class="c-pink"><svg viewBox="0 0 120 120" class="c-gold"><use href="#face" /></svg></span><span class="c-green"><svg viewBox="0 0 120 120" class="c-pale"><use href="#face" /></svg></span></div>
+              </div></div>
+              <figcaption class="blue"><svg class="i"><use href="#up" /></svg>Send</figcaption>
+            </figure>
+            <figure>
+              <div class="pf"><div class="phone" role="img" aria-label="Sample receive screen with a decorative code pattern">
+                <div class="isl"></div>
+                <svg class="qr" viewBox="0 0 100 100" aria-hidden="true"><defs><pattern id="qd" width="10" height="10" patternUnits="userSpaceOnUse"><rect x="1" y="1" width="4" height="4" rx="1.5" style="fill:var(--phone-screen)" /><rect x="6" y="6" width="3" height="3" rx="1" style="fill:var(--phone-screen)" /></pattern></defs><rect width="100" height="100" fill="url(#qd)" /><g style="fill:var(--phone-ink);stroke:var(--phone-screen)" stroke-width="5"><rect x="4" y="4" width="22" height="22" rx="6" /><rect x="74" y="4" width="22" height="22" rx="6" /><rect x="4" y="74" width="22" height="22" rx="6" /></g><rect x="38" y="38" width="24" height="24" rx="6" style="fill:var(--phone-ink)" /><use href="#mark" x="41" y="41" width="18" height="18" /></svg>
+                <p class="qr-n">Pretend address · sample only</p>
+              </div></div>
+              <figcaption class="green"><svg class="i"><use href="#down" /></svg>Receive</figcaption>
+            </figure>
+            <figure>
+              <div class="pf"><div class="phone" role="img" aria-label="Sample swap screen, twenty dollars of Acorn to Clover">
+                <div class="isl"></div><div class="ph-h"><span>Swap</span><span>×</span></div>
+                <div class="amt"><b>$20</b><span>Acorn → Clover</span></div>
+                <div class="keys"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span></div>
+              </div></div>
+              <figcaption class="muted"><svg class="i"><use href="#swap" /></svg>Swap</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="band sec" aria-labelledby="blurbs-title">
+        <div class="wrap">
+          <h2 class="defs" id="blurbs-title">What the demo covers</h2>
+          <div class="blurbs">
+            <div><p class="eb blue">Send &amp; Receive</p><p class="lead">Pass sample coins with the fewest taps, or show a pretend code so a friend can send some back.</p></div>
+            <div><p class="eb blue">Simple Swaps</p><p class="lead">Trade one fictional coin for another and see the full cost before you agree.</p></div>
+            <div><p class="eb blue">Collectibles</p><p class="lead">Keep little critter cards in a tidy shelf, sorted the way you like.</p></div>
+            <div><p class="eb blue">Many Nests</p><p class="lead">Group several sample wallets into nests and switch between them in one tap.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec" aria-labelledby="watch-title">
+        <div class="wrap split">
+          <div>
+            <p class="eb green">Simple</p>
+            <h2 class="h2" id="watch-title">Watch the nests you care about.</h2>
+            <p class="lead" style="margin-top: calc(var(--aura) * 1.5)">Follow any sample nest in view-only mode and get a gentle note when something moves.</p>
+            <ul class="checks green">
+              <li><svg class="i"><use href="#tick" /></svg>Watch any public nest</li>
+              <li><svg class="i"><use href="#tick" /></svg>Gentle alerts</li>
+              <li><svg class="i"><use href="#tick" /></svg>Your own colors</li>
+            </ul>
+          </div>
+          <div class="pf"><div class="phone lt" role="img" aria-label="Sample watch-only nest holding four fictional coins">
+            <div class="isl"></div>
+            <div class="ph-h"><span>Juniper's nest</span><span>$9,530</span></div>
+            <p class="watch">Watch-only · sample data</p>
+            <div class="tok"><i class="av c-gold"></i><b>Acorn</b><em>$1,535.41</em><small>242 ACN</small><small class="up">+2.17%</small></div>
+            <div class="tok"><i class="av c-blue"></i><b>Dewdrop</b><em>$694.50</em><small>150 DEW</small><small class="up">+3.13%</small></div>
+            <div class="tok"><i class="av c-green"></i><b>Clover</b><em>$689.53</em><small>1,498 CLV</small><small>flat</small></div>
+            <div class="tok"><i class="av c-plum"></i><b>Pebble</b><em>$388.30</em><small>10,000 PBL</small><small>-0.70%</small></div>
+          </div></div>
+        </div>
+      </section>
+
+      <section class="sec" id="activity" aria-labelledby="activity-title">
+        <div class="wrap">
+          <div class="rule"></div>
+          <div class="split" style="padding-top: calc(var(--aura) * 7.5); align-items: start">
+            <div><p class="eb orange">Understandable</p><h2 class="h2" id="activity-title">Activity you can actually read.</h2></div>
+            <div>
+              <p class="lead">Every row says who, what and how much in plain words. No puzzling event names.</p>
+              <ul class="checks orange checks two">
+                <li><svg class="i"><use href="#tick" /></svg>Plain-language rows</li>
+                <li><svg class="i"><use href="#tick" /></svg>Live status</li>
+                <li><svg class="i"><use href="#tick" /></svg>Quick filters</li>
+              </ul>
+            </div>
+          </div>
+          <div class="bar">
+            <div class="seg" role="group" aria-label="Filter activity">
+              <button type="button" data-f="all" aria-pressed="true">All</button>
+              <button type="button" data-f="sent" aria-pressed="false">Sent</button>
+              <button type="button" data-f="got" aria-pressed="false">Received</button>
+              <button type="button" data-f="swap" aria-pressed="false">Swaps</button>
+            </div>
+            <p class="hint" id="act-count" aria-live="polite">Showing 6 of 6 sample rows.</p>
+          </div>
+          <div class="tw-wrap" role="region" aria-label="Sample activity table" tabindex="0">
+            <table id="act">
+              <caption>Sample data: fictional activity in a demo nest.</caption>
+              <thead><tr><th scope="col">When</th><th scope="col">Activity</th><th scope="col">Amount</th><th scope="col">Status</th></tr></thead>
+              <tbody>
+                <tr data-k="sent"><td>Today 09:12</td><td><span class="who"><i class="av c-yellow" aria-hidden="true"></i>Sent to Pip</span></td><td class="num">12.00 ACN</td><td><span class="badge b-ok">Settled</span></td></tr>
+                <tr data-k="got"><td>Today 08:40</td><td><span class="who"><i class="av c-green" aria-hidden="true"></i>Received from Moss</span></td><td class="num">40.00 CLV</td><td><span class="badge b-ok">Settled</span></td></tr>
+                <tr data-k="swap"><td>Yesterday</td><td><span class="who"><i class="av c-blue" aria-hidden="true"></i>Swapped Acorn for Dewdrop</span></td><td class="num">5.50 ACN</td><td><span class="badge b-ok">Settled</span></td></tr>
+                <tr data-k="sent"><td>Yesterday</td><td><span class="who"><i class="av c-ember" aria-hidden="true"></i>Sent to Wren</span></td><td class="num">3.25 DEW</td><td><span class="badge b-wait">On its way</span></td></tr>
+                <tr data-k="got"><td>Monday</td><td><span class="who"><i class="av c-plum" aria-hidden="true"></i>Received from Juniper</span></td><td class="num">18.00 PBL</td><td><span class="badge b-ok">Settled</span></td></tr>
+                <tr data-k="swap"><td>Sunday</td><td><span class="who"><i class="av c-pink" aria-hidden="true"></i>Swapped Pebble for Clover</span></td><td class="num">9.00 PBL</td><td><span class="badge b-look">Needs a look</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec" id="secure" aria-labelledby="secure-title">
+        <div class="wrap">
+          <div class="rule"></div>
+          <div class="split" style="padding-top: calc(var(--aura) * 7.5)">
+            <svg class="art" viewBox="0 0 400 340" aria-hidden="true">
+              <ellipse cx="200" cy="304" rx="150" ry="16" style="fill:var(--blob-blue-pale)" />
+              <g style="fill:var(--limb)"><ellipse cx="150" cy="296" rx="18" ry="11" /><ellipse cx="222" cy="292" rx="24" ry="15" /><ellipse cx="262" cy="300" rx="12" ry="8" /></g>
+              <g class="bob" style="--d:-.6s"><path class="limb" d="M104 196q-36-4-44-44M296 196q36-4 44-44M164 262q36 26 72 0" /><ellipse cx="164" cy="264" rx="15" ry="9" style="fill:var(--blob-blue-deep)" /><ellipse cx="236" cy="264" rx="15" ry="9" style="fill:var(--blob-blue-deep)" /><use href="#cloud" class="c-blue" x="90" y="30" width="220" height="242" /><use href="#calm" x="90" y="30" width="220" height="242" /></g>
+              <g class="bob" style="--d:-1.5s"><use href="#check" class="c-blue" x="36" y="44" width="48" height="48" /></g>
+              <g class="bob" style="--d:-2.2s"><use href="#lock" class="c-pale" x="16" y="140" width="58" height="58" /></g>
+              <g class="bob" style="--d:-.9s"><use href="#leaf" class="c-blue" x="318" y="50" width="54" height="54" /></g>
+              <g class="tw"><use href="#spark" class="c-blue" x="332" y="150" width="22" height="22" /></g>
+              <g class="tw" style="--d:-1s"><use href="#spark" class="c-blue" x="356" y="176" width="16" height="16" /></g>
+            </svg>
+            <div>
+              <p class="eb blue">Secure</p>
+              <h2 class="h2">Steady keys.<br />Soft landings.</h2>
+              <p class="lead" style="margin-top: calc(var(--aura) * 1.5)">In this fictional story Nestling is self-custody: only you would hold access. This page never asks for a password, recovery phrase or key, and it never connects to a real wallet.</p>
+              <ul class="checks blue two">
+                <li><svg class="i"><use href="#tick" /></svg>You hold access</li>
+                <li><svg class="i"><use href="#tick" /></svg>No name needed</li>
+                <li><svg class="i"><use href="#tick" /></svg>No lock-in</li>
+                <li><svg class="i"><use href="#tick" /></svg>No secret fields</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec" id="plans" aria-labelledby="plans-title">
+        <div class="wrap">
+          <div class="rule"></div>
+          <div class="head" style="padding-top: calc(var(--aura) * 7.5)">
+            <h2 class="h2" id="plans-title">Pick a nest size.<br />Keep it tidy.</h2>
+            <p class="muted">Demo prices for a fictional product. Nothing can be bought here.</p>
+          </div>
+          <div class="plans">
+            <article class="plan">
+              <p class="eb green">Sprout</p>
+              <p class="price">$0<span>per month, demo</span></p>
+              <ul class="checks"><li><svg class="i green"><use href="#tick" /></svg>One nest</li><li><svg class="i green"><use href="#tick" /></svg>Plain activity rows</li></ul>
+              <a class="button button-pill soft btn" href="#join">Start small</a>
+            </article>
+            <article class="plan">
+              <p class="eb gold">Nest</p>
+              <p class="price">$4<span>per month, demo</span></p>
+              <ul class="checks"><li><svg class="i gold"><use href="#tick" /></svg>Four nests</li><li><svg class="i gold"><use href="#tick" /></svg>Watch-only nests</li><li><svg class="i gold"><use href="#tick" /></svg>Gentle alerts</li></ul>
+              <a class="button button-fill btn" href="#join">Choose Nest</a>
+            </article>
+            <article class="plan">
+              <p class="eb orange">Flock</p>
+              <p class="price">$9<span>per month, demo</span></p>
+              <ul class="checks"><li><svg class="i orange"><use href="#tick" /></svg>Unlimited nests</li><li><svg class="i orange"><use href="#tick" /></svg>Shared family view</li></ul>
+              <a class="button button-pill soft btn" href="#join">Choose Flock</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec quotes" id="friends" aria-labelledby="friends-title" data-paused="false">
+        <div class="wrap">
+          <div class="rule"></div>
+          <div class="quotes-head" style="padding-top: calc(var(--aura) * 7.5)">
+            <div><h2 class="h2" id="friends-title">Friends of the nest</h2><p class="muted" style="margin-top: var(--aura)">Notes from fictional critters in the demo.</p></div>
+            <button class="button button-pill soft btn sm pause" type="button" aria-pressed="false">Pause motion</button>
+          </div>
+        </div>
+        <div class="mq">
+          <div class="track">
+            <article class="q"><header><svg viewBox="0 0 120 120" class="c-green" aria-hidden="true"><use href="#face" /></svg><div><b>Moss</b><small>Sample note</small></div></header><p>I sent my first acorn and the little puff waved at me. Lovely.</p></article>
+            <article class="q"><header><svg viewBox="0 0 120 120" class="c-yellow" aria-hidden="true"><use href="#face" /></svg><div><b>Pebble</b><small>Sample note</small></div></header><p>The activity list finally reads like sentences.</p></article>
+            <article class="q"><header><svg viewBox="0 0 120 120" class="c-blue" aria-hidden="true"><use href="#face" /></svg><div><b>Juniper</b><small>Sample note</small></div></header><p>Watching my sister's nest without touching it is so calm.</p></article>
+            <article class="q"><header><svg viewBox="0 0 120 120" class="c-pink" aria-hidden="true"><use href="#face" /></svg><div><b>Wren</b><small>Sample note</small></div></header><p>The fee pace picker told me the wait before I tapped.</p></article>
+            <article class="q dup" aria-hidden="true"><header><svg viewBox="0 0 120 120" class="c-green"><use href="#face" /></svg><div><b>Moss</b><small>Sample note</small></div></header><p>I sent my first acorn and the little puff waved at me. Lovely.</p></article>
+            <article class="q dup" aria-hidden="true"><header><svg viewBox="0 0 120 120" class="c-yellow"><use href="#face" /></svg><div><b>Pebble</b><small>Sample note</small></div></header><p>The activity list finally reads like sentences.</p></article>
+            <article class="q dup" aria-hidden="true"><header><svg viewBox="0 0 120 120" class="c-blue"><use href="#face" /></svg><div><b>Juniper</b><small>Sample note</small></div></header><p>Watching my sister's nest without touching it is so calm.</p></article>
+            <article class="q dup" aria-hidden="true"><header><svg viewBox="0 0 120 120" class="c-pink"><use href="#face" /></svg><div><b>Wren</b><small>Sample note</small></div></header><p>The fee pace picker told me the wait before I tapped.</p></article>
+          </div>
+        </div>
+        <div class="mq rev">
+          <div class="track">
+            <article class="q"><header><svg viewBox="0 0 120 120" class="c-ember" aria-hidden="true"><use href="#face" /></svg><div><b>Clover</b><small>Sample note</small></div></header><p>Swapping felt like trading stickers at school.</p></article>
+            <article class="q"><header><svg viewBox="0 0 120 120" class="c-plum" aria-hidden="true"><use href="#face" /></svg><div><b>Bramble</b><small>Sample note</small></div></header><p>It never once asked me for a secret. Good bird.</p></article>
+            <article class="q"><header><svg viewBox="0 0 120 120" class="c-gold" aria-hidden="true"><use href="#face" /></svg><div><b>Fig</b><small>Sample note</small></div></header><p>Four nests, one tap to switch. My shelf is tidy now.</p></article>
+            <article class="q"><header><svg viewBox="0 0 120 120" class="c-pale" aria-hidden="true"><use href="#face" /></svg><div><b>Tansy</b><small>Sample note</small></div></header><p>The night colors are gentle on my eyes.</p></article>
+            <article class="q dup" aria-hidden="true"><header><svg viewBox="0 0 120 120" class="c-ember"><use href="#face" /></svg><div><b>Clover</b><small>Sample note</small></div></header><p>Swapping felt like trading stickers at school.</p></article>
+            <article class="q dup" aria-hidden="true"><header><svg viewBox="0 0 120 120" class="c-plum"><use href="#face" /></svg><div><b>Bramble</b><small>Sample note</small></div></header><p>It never once asked me for a secret. Good bird.</p></article>
+            <article class="q dup" aria-hidden="true"><header><svg viewBox="0 0 120 120" class="c-gold"><use href="#face" /></svg><div><b>Fig</b><small>Sample note</small></div></header><p>Four nests, one tap to switch. My shelf is tidy now.</p></article>
+            <article class="q dup" aria-hidden="true"><header><svg viewBox="0 0 120 120" class="c-pale"><use href="#face" /></svg><div><b>Tansy</b><small>Sample note</small></div></header><p>The night colors are gentle on my eyes.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec" id="join" aria-labelledby="join-title">
+        <div class="wrap">
+          <div class="rule"></div>
+          <div class="split" style="padding-top: calc(var(--aura) * 7.5); align-items: start">
+            <div>
+              <h2 class="h2" id="join-title">Join the hatch list.</h2>
+              <p class="lead" style="margin-top: calc(var(--aura) * 1.5)">Ask for a sample update when the demo grows. This form only checks your entries in the browser. It sends nothing and asks for no secrets.</p>
+            </div>
+            <div class="formp">
+              <form id="join-form" novalidate>
+                <p class="hint">All three fields are required. Demo only.</p>
+                <div class="field">
+                  <label for="f-nick">Nickname</label>
+                  <input id="f-nick" name="nick" type="text" autocomplete="nickname" required minlength="2" aria-describedby="f-nick-err" />
+                  <p class="err" id="f-nick-err" aria-live="polite"></p>
+                </div>
+                <div class="field">
+                  <label for="f-email">Email</label>
+                  <input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="f-email-err" />
+                  <p class="err" id="f-email-err" aria-live="polite"></p>
+                </div>
+                <div class="field">
+                  <label for="f-device">Phone type</label>
+                  <select id="f-device" name="device" required aria-describedby="f-device-err">
+                    <option value="">Choose one</option>
+                    <option>iPhone</option>
+                    <option>Android</option>
+                    <option>Just browsing</option>
+                  </select>
+                  <p class="err" id="f-device-err" aria-live="polite"></p>
+                </div>
+                <div><button class="button button-fill btn" type="submit">Check my entry</button></div>
+                <p class="status" id="f-status" role="status"></p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec" id="faq" aria-labelledby="faq-title">
+        <div class="wrap">
+          <div class="rule"></div>
+          <div class="split" style="padding-top: calc(var(--aura) * 7.5); align-items: start">
+            <h2 class="h2" id="faq-title">Questions from the nest</h2>
+            <div>
+              <div class="acc"><h3><button class="acc-b" type="button" id="q1" aria-expanded="false" aria-controls="a1"><svg class="i" aria-hidden="true"><use href="#plus" /></svg>Is Nestling a real wallet?</button></h3><div class="acc-p" id="a1" role="region" aria-labelledby="q1" hidden><p>No. Nestling is a fictional demo flavor for the Aura design gallery. Coins, nests and prices are samples.</p></div></div>
+              <div class="acc"><h3><button class="acc-b" type="button" id="q2" aria-expanded="false" aria-controls="a2"><svg class="i" aria-hidden="true"><use href="#plus" /></svg>Will this page ever ask for a secret?</button></h3><div class="acc-p" id="a2" role="region" aria-labelledby="q2" hidden><p>Never. There is no field for passwords, recovery phrases or keys, and you should not type them anywhere like this.</p></div></div>
+              <div class="acc"><h3><button class="acc-b" type="button" id="q3" aria-expanded="false" aria-controls="a3"><svg class="i" aria-hidden="true"><use href="#plus" /></svg>Can I connect a real wallet here?</button></h3><div class="acc-p" id="a3" role="region" aria-labelledby="q3" hidden><p>No. The page makes no network calls and has no wallet connection of any kind.</p></div></div>
+              <div class="acc"><h3><button class="acc-b" type="button" id="q4" aria-expanded="false" aria-controls="a4"><svg class="i" aria-hidden="true"><use href="#plus" /></svg>Is there a night look?</button></h3><div class="acc-p" id="a4" role="region" aria-labelledby="q4" hidden><p>Yes. Open the page with appearance set to dark to see warm night panels and softer critters.</p></div></div>
+              <a class="tl more" href="#top">Back to the top<svg class="i" aria-hidden="true"><use href="#right" /></svg></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band closing" aria-labelledby="closing-title">
+        <div class="wrap split">
+          <div>
+            <h2 class="h2" id="closing-title">Explore Nestling</h2>
+            <p class="lead">A small, friendly self-custody wallet story, drawn to show how this Aura flavor feels.</p>
+            <a class="tl" href="#join">Get the demo app<svg class="i" aria-hidden="true"><use href="#right" /></svg></a>
+          </div>
+          <svg class="art" viewBox="0 0 440 220" aria-hidden="true">
+            <path class="trail" d="M70 76c40-30 70 20 110 0s60-40 90-10" />
+            <ellipse cx="340" cy="208" rx="90" ry="9" style="fill:var(--leaf-green)" />
+            <path d="M150 210q-6-50 4-92" fill="none" stroke-width="6" stroke-linecap="round" style="stroke:var(--leaf-deep)" />
+            <g class="bob" style="--d:-.5s"><g style="fill:var(--sun-yellow)"><circle cx="152" cy="74" r="20" /><circle cx="175" cy="90" r="20" /><circle cx="167" cy="118" r="20" /><circle cx="137" cy="118" r="20" /><circle cx="129" cy="90" r="20" /></g><circle cx="152" cy="98" r="15" style="fill:var(--ember)" /></g>
+            <g style="fill:var(--leaf-green)"><circle cx="90" cy="194" r="40" /><circle cx="132" cy="188" r="32" /><circle cx="56" cy="204" r="28" /></g>
+            <g style="fill:var(--leaf-deep)"><circle cx="204" cy="200" r="28" /><circle cx="228" cy="206" r="20" /></g>
+            <g class="bob" style="--d:-1.4s"><g style="fill:var(--blob-blue)"><circle cx="240" cy="134" r="12" /><circle cx="253" cy="144" r="12" /><circle cx="248" cy="159" r="12" /><circle cx="232" cy="159" r="12" /><circle cx="227" cy="144" r="12" /></g><circle cx="240" cy="148" r="7" style="fill:var(--coin-gold)" /></g>
+            <g class="bob" style="--d:-2s"><ellipse cx="44" cy="52" rx="10" ry="7" style="fill:var(--blob-blue-pale)" /><ellipse cx="44" cy="70" rx="22" ry="15" style="fill:var(--sun-yellow)" /><path class="limb thin" d="M40 57v26M52 58v24" /><circle cx="28" cy="66" r="2.5" style="fill:var(--face-ink)" /></g>
+            <g class="bob" style="--d:-.9s"><path class="limb" d="M334 186q22-12 38 2" /><ellipse cx="378" cy="196" rx="12" ry="7" style="fill:var(--coin-gold)" /><use href="#cloud" class="c-blue" x="296" y="56" width="124" height="136" /><use href="#dots" x="296" y="56" width="124" height="136" /></g>
+            <g class="tw"><use href="#spark" class="c-yellow" x="272" y="34" width="18" height="18" /></g>
+            <g class="tw" style="--d:-1s"><use href="#spark" class="c-sand" x="250" y="72" width="14" height="14" /></g>
+            <g class="tw" style="--d:-.4s"><use href="#star" class="c-yellow" x="196" y="40" width="20" height="20" /></g>
+          </svg>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <div class="foot">
+          <div><a class="logo" href="#top"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#mark" /></svg>Nestling</a></div>
+          <div><h2>Builders</h2><ul><li><a href="#activity">Sample activity</a></li><li><a href="#plans">Demo plans</a></li><li><a href="#join">Hatch list</a></li></ul></div>
+          <div><h2>Learn</h2><ul><li><a href="#explore">Tour</a></li><li><a href="#secure">Safety notes</a></li><li><a href="#faq">Questions</a></li></ul></div>
+          <div><h2>Nest</h2><ul><li><a href="#friends">Friends</a></li><li><a href="#top">Back to top</a></li><li><a href="#main">Main content</a></li></ul></div>
+          <p class="muted">© 2026 Nestling demo</p>
+        </div>
+        <p class="legal">Nestling is a fictional demo flavor; not affiliated with any wallet. All names, coins, amounts and notes are sample data.</p>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        var nav = document.querySelector(".nav");
+        var toggle = document.querySelector(".toggle");
+        var dds = [];
+        function setMenu(open) {
+          toggle.setAttribute("aria-expanded", String(open));
+          nav.dataset.open = String(open);
+        }
+        toggle.addEventListener("click", function () {
+          setMenu(toggle.getAttribute("aria-expanded") !== "true");
+        });
+        document.querySelectorAll("[data-dd]").forEach(function (btn) {
+          var panel = document.getElementById(btn.getAttribute("aria-controls"));
+          var item = btn.parentElement;
+          function set(open) {
+            btn.setAttribute("aria-expanded", String(open));
+            panel.hidden = !open;
+          }
+          dds.push(set);
+          btn.addEventListener("click", function () {
+            var open = btn.getAttribute("aria-expanded") !== "true";
+            dds.forEach(function (close) { close(false); });
+            set(open);
+          });
+          btn.addEventListener("keydown", function (event) {
+            if (event.key === "ArrowDown") {
+              event.preventDefault();
+              set(true);
+              panel.querySelector("a").focus();
+            }
+          });
+          item.addEventListener("keydown", function (event) {
+            if (event.key === "Escape" && btn.getAttribute("aria-expanded") === "true") {
+              event.stopPropagation();
+              set(false);
+              btn.focus();
+            }
+          });
+          item.addEventListener("focusout", function (event) {
+            if (!item.contains(event.relatedTarget)) set(false);
+          });
+          panel.querySelectorAll("a").forEach(function (link) {
+            link.addEventListener("click", function () {
+              set(false);
+              setMenu(false);
+            });
+          });
+        });
+        document.addEventListener("click", function (event) {
+          if (!event.target.closest(".menu > li")) dds.forEach(function (close) { close(false); });
+        });
+        nav.querySelectorAll(".menu > li > a").forEach(function (link) {
+          link.addEventListener("click", function () { setMenu(false); });
+        });
+        document.addEventListener("keydown", function (event) {
+          if (event.key !== "Escape" || nav.dataset.open !== "true") return;
+          setMenu(false);
+          toggle.focus();
+        });
+
+        var seg = document.querySelector('[aria-label="Filter activity"]');
+        var rows = document.querySelectorAll("#act tbody tr");
+        var count = document.getElementById("act-count");
+        seg.addEventListener("click", function (event) {
+          var button = event.target.closest("button");
+          if (!button) return;
+          seg.querySelectorAll("button").forEach(function (b) { b.setAttribute("aria-pressed", String(b === button)); });
+          var shown = 0;
+          rows.forEach(function (row) {
+            var visible = button.dataset.f === "all" || row.dataset.k === button.dataset.f;
+            row.hidden = !visible;
+            if (visible) shown += 1;
+          });
+          count.textContent = "Showing " + shown + " of " + rows.length + " sample rows.";
+        });
+
+        var quotes = document.querySelector(".quotes");
+        var pause = quotes.querySelector(".pause");
+        pause.addEventListener("click", function () {
+          var paused = quotes.dataset.paused !== "true";
+          quotes.dataset.paused = String(paused);
+          pause.setAttribute("aria-pressed", String(paused));
+          pause.textContent = paused ? "Play motion" : "Pause motion";
+        });
+
+        document.querySelectorAll(".acc-b").forEach(function (btn) {
+          var panel = document.getElementById(btn.getAttribute("aria-controls"));
+          btn.addEventListener("click", function () {
+            var open = btn.getAttribute("aria-expanded") !== "true";
+            btn.setAttribute("aria-expanded", String(open));
+            panel.hidden = !open;
+          });
+        });
+
+        var form = document.getElementById("join-form");
+        var status = document.getElementById("f-status");
+        var messages = {
+          "f-nick": "Enter a nickname of at least two characters.",
+          "f-email": "Enter an email like name@example.com.",
+          "f-device": "Choose a phone type."
+        };
+        var fields = [document.getElementById("f-nick"), document.getElementById("f-email"), document.getElementById("f-device")];
+        function check(field) {
+          var valid = field.checkValidity() && field.value.trim().length > 0;
+          field.setAttribute("aria-invalid", String(!valid));
+          document.getElementById(field.id + "-err").textContent = valid ? "" : messages[field.id];
+          return valid;
+        }
+        form.addEventListener("submit", function (event) {
+          event.preventDefault();
+          var firstInvalid = null;
+          fields.forEach(function (field) {
+            if (!check(field) && !firstInvalid) firstInvalid = field;
+          });
+          if (firstInvalid) {
+            status.textContent = "";
+            firstInvalid.focus();
+            return;
+          }
+          status.textContent = "Looks good. This is a local demo, so nothing was sent.";
+        });
+        fields.forEach(function (field) {
+          field.addEventListener(field.tagName === "SELECT" ? "change" : "input", function () {
+            if (field.getAttribute("aria-invalid") === "true") check(field);
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>
