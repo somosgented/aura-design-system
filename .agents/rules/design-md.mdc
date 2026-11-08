@@ -1,7 +1,7 @@
 ---
 alwaysApply: true
 title: DESIGN.md
-description: Point agents at DESIGN.md as the Aura narrative design specification.
+description: Point agents at DESIGN.md as the Aura narrative design specification, and apply DESIGN.md flavor links on top of it.
 ---
 
 # Aura DESIGN.md
@@ -11,3 +11,12 @@ description: Point agents at DESIGN.md as the Aura narrative design specificatio
 * **MUST**: When implementing UI, aligning with brand, or reasoning about Aura tokens, read and follow `DESIGN.md` together with the Aura skill at `.agents/skills/aura/`.
 * **SHOULD**: Prefer tokens and patterns in `DESIGN.md` over ad-hoc styling or one-off hex values.
 * **MUST NOT**: Duplicate long design tables into rules or skills. Always-on rules state process policy; the Aura skill holds design guardrails; `DESIGN.md` holds the narrative detail.
+
+## Design flavors (`DESIGN.theme.md`)
+
+A flavor is a `DESIGN.md` whose YAML frontmatter has `extends` (the Aura base spec) and an `aura` block (`theme` seeds, `fonts`, `radius`). The Aura DESIGN.md gallery publishes them at `<host>/designs/<slug>/DESIGN.md`, each with a generated `theme.css` beside it.
+
+* **MUST**: When the user shares a flavor link or asks to apply one, fetch it and follow its **Apply to an Aura project** section: save it as `DESIGN.theme.md` at the project root, fetch the sibling `theme.css` and append its blocks after the existing theme blocks in `globals.css`, then restyle with Aura components and token classes.
+* **MUST**: Keep the root `DESIGN.md`. `DESIGN.theme.md` wins on color, type, radius, shape, motion and voice; `DESIGN.md` and the Aura skill win on the 13px grid, accessibility, icons and forms.
+* **MUST NOT**: Copy hex values from the flavor into components, hand-edit generated scales in `theme.css`, or import the flavor's sample copy into the product.
+* **SHOULD**: When `DESIGN.theme.md` exists, read it after `DESIGN.md` before any UI work.

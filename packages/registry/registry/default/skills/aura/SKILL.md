@@ -8,7 +8,7 @@ user-invocable: true
 
 A registry-first design system. Components are copied into the app and updated with the Aura CLI and the `@aura` shadcn registry. Narrative tokens live in root `DESIGN.md`. Monorepo policy lives in root `AGENTS.md`. This skill is the design guardrail agents load when the task is UI.
 
-Always-on process rules stay outside this skill, in `.agents/rules/` (`feature-map`, `no-comments`, `design-md`, and in this monorepo `agents-md`). Cursor reads that directory directly. Do not fold them into this folder.
+Always-on process rules stay outside this skill, in `.agents/rules/` (`feature-map`, `no-comments`, `design-md`, and in this monorepo `agents-md`). Every agent finds it through the root `AGENTS.md`. Do not fold them into this folder.
 
 ## Principles
 
@@ -107,5 +107,6 @@ The first block is the pattern: gray step 2 surface, fluid heading, `gap-2` (26p
 | Theming without new hex values | [customization.md](./customization.md) |
 | shadcn CLI, registries, presets | skill `shadcn` — Aura Keep still wins |
 | Forms end to end | skill `aura-forms` |
+| Create a DESIGN.md flavor (adapt a design, site or brief to Aura) | skill `generate-design-md` |
 | Port a component | skill `port-component-to-aura` |
 | Feature-map note | skill `update-feature-map` |

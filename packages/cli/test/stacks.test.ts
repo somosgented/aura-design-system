@@ -201,8 +201,8 @@ describe("blueprint per stack", () => {
         assert.ok(exists(root, ".agents/rules/feature-map.mdc"));
         assert.ok(exists(root, ".agents/rules/no-comments.mdc"));
         assert.ok(exists(root, ".agents/skills/update-feature-map/SKILL.md"));
-        assert.ok(exists(root, "wiki/obsidian-billing/Feature-Map/Feature-Map.base"));
-        assert.equal(exists(root, "wiki/obsidian-billing/01-Identity/Image-Identity.md"), false);
+        assert.ok(exists(root, "wiki/obsidian-billing/02-Documentación/Feature-Map/Feature-Map.base"));
+        assert.equal(exists(root, "wiki/obsidian-billing/01-Identidad/Image-Identity.md"), false);
 
         assert.match(read(root, "sonar-project.properties"), /sonar\.python\.version=3/);
         const sonar = read(root, "scripts/sonar.sh");
@@ -239,11 +239,11 @@ describe("blueprint per stack", () => {
     withFiles({ "main.c": "int main(){}" }, async (root) => {
       await blueprint(root, { suffix: "firmware" });
       assert.ok(exists(root, ".agents/rules/feature-map.mdc"));
-      assert.ok(exists(root, "wiki/obsidian-firmware/Feature-Map/Feature-Map.base"));
+      assert.ok(exists(root, "wiki/obsidian-firmware/02-Documentación/Feature-Map/Feature-Map.base"));
       for (const rel of ["sonar-project.properties", "scripts/sonar.sh", "bruno", "scripts/preflight.ts"]) {
         assert.equal(exists(root, rel), false, rel);
       }
-      assert.equal(read(root, ".gitignore"), ".env\n");
+      assert.equal(read(root, ".gitignore"), ".env\nwiki/**/.obsidian/\n");
     }),
   );
 
@@ -305,6 +305,7 @@ describe("blueprint per stack", () => {
       assert.deepEqual(Object.keys(pkg.devDependencies), ["sonarqube-scanner", "tsx"]);
       assert.deepEqual(gitignoreLines(NEXT_PROFILE), [
         ".env",
+        "wiki/**/.obsidian/",
         ".sonar-token",
         "sonar-issues.json",
         ".scannerwork/",

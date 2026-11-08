@@ -17,6 +17,7 @@ A skill is a folder with a `SKILL.md`. The agent reads the `description` in its 
 | Add, search, or debug a shadcn registry item | `shadcn` | The `aura` skill wins on icons, forms, spacing, type, and restyle |
 | Write a function that reads or changes data only some callers may touch | `gdp-ts` | Run `pnpm typecheck` and `pnpm lint` |
 | Landing, hero, or marketing page that needs images | `generate-brand-images` | Record the asset paths in the feature map at PR time |
+| Turn a design, site, screenshot or brief into a DESIGN.md flavor | `generate-design-md` | Apply it with the `design-md` rule. See [DESIGN.md flavors](/docs/rules/design-md-flavors) |
 | Open or update a PR | `update-feature-map` | Once per PR, after the code is final |
 | Review UI, motion, performance, or auth before a PR | An [audit](/docs/audits) | Apply the findings you accept |
 
@@ -32,6 +33,7 @@ These ship with Aura. `@aura/skill-aura` installs the design skill. `@aura/skill
 | `port-component-to-aura` | A pasted component URL or a request to recreate one in Aura | JavaScript frontends | `@aura/skills` |
 | `update-feature-map` | Opening or updating a PR | Every stack | `@aura/skills`, or `aura blueprint` on any project |
 | `generate-brand-images` | A page that needs generated images | Frontends | `@aura/skills`, or `aura blueprint` on frontend projects |
+| `generate-design-md` | A pasted DESIGN.md, site, screenshot or brief to adapt into an Aura flavor | JavaScript frontends | `pnpm dlx shadcn@latest add @aura/skill-generate-design-md`, or `@aura/skills` |
 
 Design guardrails behind `aura` are listed on [Aura skill](/docs/rules/aura-skill).
 

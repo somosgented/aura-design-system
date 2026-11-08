@@ -15,6 +15,7 @@ import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 import {
   deriveSuffix,
+  migrateVaultLayout,
   retireProjectBrain,
   scaffoldBlueprintFiles,
   scaffoldFeatureMap,
@@ -57,14 +58,14 @@ describe("feature map blueprint", () => {
       scaffoldFeatureMap(root, "shop", false);
       scaffoldFeatureMapAgentFiles(root, "shop", false);
       const vault = join(root, "wiki", "obsidian-shop");
-      const base = readFileSync(join(vault, "Feature-Map", "Feature-Map.base"), "utf8");
-      assert.match(base, /file\.inFolder\("Feature-Map"\)/);
+      const base = readFileSync(join(vault, "02-Documentación", "Feature-Map", "Feature-Map.base"), "utf8");
+      assert.match(base, /file\.inFolder\("02-Documentación\/Feature-Map"\)/);
       assert.match(base, /type: table/);
-      assert.ok(existsSync(join(vault, "01-Identity", "Image-Identity.md")));
+      assert.ok(existsSync(join(vault, "01-Identidad", "Image-Identity.md")));
       assert.ok(existsSync(join(root, ".agents/rules/feature-map.mdc")));
       assert.equal(existsSync(join(root, ".cursor/rules")), false);
       const rule = readFileSync(join(root, ".agents/rules/feature-map.mdc"), "utf8");
-      assert.ok(rule.includes("wiki/obsidian-shop/Feature-Map/"));
+      assert.ok(rule.includes("wiki/obsidian-shop/02-Documentación/Feature-Map/"));
       assert.equal(rule.includes("{{SUFFIX}}"), false);
       assert.equal(rule.includes("aura-design-project"), false);
       assert.ok(existsSync(join(root, ".agents/skills/update-feature-map/SKILL.md")));
@@ -158,11 +159,11 @@ describe("feature map blueprint", () => {
       writeFileSync(join(root, "package.json"), JSON.stringify({ name: "@scope/my-app" }));
       scaffoldFeatureMap(root, deriveSuffix("@scope/my-app"), false);
       scaffoldFeatureMapAgentFiles(root, deriveSuffix("@scope/my-app"), false);
-      assert.ok(existsSync(join(root, "wiki", "obsidian-app", "Feature-Map", "Feature-Map.base")));
+      assert.ok(existsSync(join(root, "wiki", "obsidian-app", "02-Documentación", "Feature-Map", "Feature-Map.base")));
       assert.equal(existsSync(join(root, "wiki", "obsidian-@scope")), false);
       assert.ok(
         readFileSync(join(root, ".agents/rules/feature-map.mdc"), "utf8").includes(
-          "wiki/obsidian-app/Feature-Map/",
+          "wiki/obsidian-app/02-Documentación/Feature-Map/",
         ),
       );
     } finally {
@@ -184,14 +185,14 @@ describe("feature map blueprint", () => {
       scaffoldFeatureMap(root, "shop", false);
       scaffoldFeatureMapAgentFiles(root, "shop", false);
       const owned = join(root, ".agents/rules/feature-map.mdc");
-      const identity = join(root, "wiki/obsidian-shop/01-Identity/Image-Identity.md");
+      const identity = join(root, "wiki/obsidian-shop/01-Identidad/Image-Identity.md");
       writeFileSync(owned, "stale\n");
       writeFileSync(identity, "team identity\n");
 
       scaffoldFeatureMap(root, "shop", true);
       scaffoldFeatureMapAgentFiles(root, "shop", true);
 
-      assert.ok(readFileSync(owned, "utf8").includes("wiki/obsidian-shop/Feature-Map/"));
+      assert.ok(readFileSync(owned, "utf8").includes("wiki/obsidian-shop/02-Documentación/Feature-Map/"));
       assert.equal(readFileSync(identity, "utf8"), "team identity\n");
     });
   });
@@ -213,6 +214,52 @@ describe("feature map blueprint", () => {
         "sonar.projectKey=team\n",
       );
       assert.ok(existsSync(join(root, ".agents/rules/no-comments.mdc")));
+    });
+  });
+  it("scaffolds the four vault sections", () => {
+    withProject((root) => {
+      scaffoldFeatureMap(root, "shop", false, false);
+      const vault = join(root, "wiki", "obsidian-shop");
+      for (const section of ["00-General", "01-Identidad", "03-Configuración"]) {
+        assert.ok(existsSync(join(vault, section, "README.md")), section);
+      }
+      assert.ok(existsSync(join(vault, "02-Documentación", "Feature-Map", "Feature-Map.base")));
+      assert.equal(existsSync(join(vault, "01-Identidad", "Image-Identity.md")), false);
+    });
+  });
+
+  it("moves a legacy vault into the sections and repoints the base", () => {
+    withProject((root) => {
+      const vault = join(root, "wiki", "obsidian-shop");
+      mkdirSync(join(vault, "Feature-Map"), { recursive: true });
+      mkdirSync(join(vault, "01-Identity"), { recursive: true });
+      writeFileSync(join(vault, "Feature-Map", "Checkout.md"), "note\n");
+      writeFileSync(
+        join(vault, "Feature-Map", "Feature-Map.base"),
+        'filters:\n  and:\n    - file.inFolder("Feature-Map")\n',
+      );
+      writeFileSync(join(vault, "01-Identity", "Image-Identity.md"), "team identity\n");
+
+      const log = console.log;
+      console.log = () => {};
+      try {
+        migrateVaultLayout(vault, "wiki/obsidian-shop");
+      } finally {
+        console.log = log;
+      }
+
+      const docs = join(vault, "02-Documentación", "Feature-Map");
+      assert.equal(readFileSync(join(docs, "Checkout.md"), "utf8"), "note\n");
+      assert.match(
+        readFileSync(join(docs, "Feature-Map.base"), "utf8"),
+        /file\.inFolder\("02-Documentación\/Feature-Map"\)/,
+      );
+      assert.equal(
+        readFileSync(join(vault, "01-Identidad", "Image-Identity.md"), "utf8"),
+        "team identity\n",
+      );
+      assert.equal(existsSync(join(vault, "Feature-Map")), false);
+      assert.equal(existsSync(join(vault, "01-Identity")), false);
     });
   });
 });

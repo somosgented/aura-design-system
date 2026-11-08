@@ -39,7 +39,7 @@ pnpm dlx @aura-design/cli@latest colors --accent "#4015ca" --gray "#7254cb"
 
 ## Agent files
 
-`blueprint` writes skills and rules under `.agents/`. Cursor reads that directory directly. A legacy `.cursor/rules` symlink is removed. A real `.cursor/rules` directory is moved into `.agents/rules/`, and a procedure skill still under `.cursor/skills/<name>` is moved to `.agents/skills/<name>` when that destination is missing.
+`blueprint` writes skills and rules under `.agents/`, the one home for every agent, and a managed block in the root `AGENTS.md` (plus a `CLAUDE.md` that imports it) that points agents there. A legacy `.cursor/rules` or `.cursor/skills` symlink is removed. Real `.cursor/rules` and `.cursor/skills` directories are moved into `.agents/`. An identical duplicate is dropped, and a differing one is kept with a warning.
 
 ## Third-party audits
 

@@ -2,8 +2,8 @@
 name: update-feature-map
 description: >-
   Add or update the feature's note in the Obsidian feature map
-  (wiki/obsidian-*/Feature-Map/) when opening or updating a PR. Use only at PR
-  time; never read or write other wiki or progress files.
+  (wiki/obsidian-*/02-Documentación/Feature-Map/) when opening or updating a PR. Use only at PR
+  time; never write other wiki sections or progress files.
 ---
 
 # Update feature map
@@ -12,8 +12,8 @@ Run once per PR, after the code is final. Guardrails live in `.agents/rules/feat
 
 ## Steps
 
-1. Open `wiki/obsidian-*/Feature-Map/`. Find the note whose `feature` matches what the PR changes. Read that note only.
-2. Update it, or create `Feature-Map/<Feature-Name>.md` with the shape below. One note per feature, not per PR.
+1. Open `wiki/obsidian-*/02-Documentación/Feature-Map/`. Find the note whose `feature` matches what the PR changes. Read that note only.
+2. Update it, or create `02-Documentación/Feature-Map/<Feature-Name>.md` with the shape below. One note per feature, not per PR.
 3. Set `pr` to this PR's URL and `updated` to today. Fix `status`, `routes`, and `components` if they moved.
 4. Keep the body to 2–4 sentences: what the feature does for the user and where it lives. No session log, no history.
 5. Commit the note in the same PR. Do not edit `Feature-Map.base`.
@@ -39,4 +39,4 @@ What it does for the user, in one or two sentences. Where the entry points live.
 ## Done when
 
 * [ ] Every feature the PR changes has a note with this PR in `pr`.
-* [ ] No other wiki, progress, or assumptions file was read or written.
+* [ ] No other wiki section was written, and no progress or assumptions file exists.

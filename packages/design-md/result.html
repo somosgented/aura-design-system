@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aura flavor result</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/aura/main.css" />
+    <link rel="stylesheet" id="flavor-theme" />
+    <style>
+      :root {
+        --aura-accents-primary: var(--accent-9);
+        --aura-text-primary-inverse: var(--accent-contrast);
+        --aura-button-hover: var(--accent-10);
+        --aura-link: var(--gray-12);
+        --aura-link-hover: var(--gray-a3);
+        --aura-outline: var(--accent-8) solid 2px;
+        --aura-base-color: var(--gray-12);
+        --font-label: var(--aura-font-stack);
+        --font-display: var(--aura-font-stack);
+        --aura-input-bg: var(--gray-1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        font-size: 17px;
+        background: var(--gray-1);
+        color: var(--gray-12);
+      }
+
+      body {
+        margin: 0;
+        background: var(--gray-1);
+        color: var(--gray-12);
+        line-height: 1.5;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-weight: var(--heading-weight, 400);
+        letter-spacing: -0.03em;
+        line-height: 1.08;
+      }
+
+      p {
+        margin: 0;
+      }
+
+      .stats strong,
+      .plan strong,
+      .note strong {
+        font-family: var(--font-display);
+        font-weight: var(--heading-weight, 400);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .container {
+        width: min(100% - var(--aura) * 4, var(--aura) * 106.5);
+        margin-inline: auto;
+      }
+
+      .label {
+        font: 500 calc(13 / 17 * 1rem) / 1.4 var(--font-label);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .muted {
+        color: var(--gray-11);
+      }
+
+      .split {
+        display: inline-flex;
+        gap: 2px;
+      }
+
+      .split .button {
+        height: calc(var(--aura) * 3.5);
+        padding-inline: calc(var(--aura) * 1.5);
+        border-width: 0;
+        font: 500 calc(13 / 17 * 1rem) / 1 var(--font-label);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .split .button[data-icon] {
+        width: calc(var(--aura) * 3.5);
+        padding: 0;
+      }
+
+      .split .button.secondary {
+        background: var(--gray-3);
+        color: var(--gray-12);
+      }
+
+      .split .button.secondary:hover {
+        background: var(--gray-4);
+      }
+
+      .split:hover .button[data-icon] svg {
+        transform: translateX(2px);
+      }
+
+      .field {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        background: var(--gray-1);
+        color: var(--gray-12);
+      }
+
+      .field::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background:
+          radial-gradient(ellipse at 28% 0%, var(--accent-7), transparent 75%),
+          linear-gradient(178deg, var(--accent-8), var(--gray-1) 83%);
+        opacity: 0.8;
+      }
+
+      .field[data-hero="paper"]::before,
+      .field[data-hero="paper"]::after,
+      .field[data-hero="band"]::before,
+      .field[data-hero="band"]::after {
+        display: none;
+      }
+
+      .field[data-hero="band"] {
+        background: var(--accent-9);
+        color: var(--accent-contrast);
+      }
+
+      .field[data-hero="band"] .split .button {
+        background: var(--gray-1);
+        color: var(--accent-11);
+      }
+
+      .field[data-hero="band"] .split .button.secondary {
+        background: var(--accent-11);
+        color: var(--accent-contrast);
+      }
+
+      .field[data-hero="band"] .note,
+      .field[data-hero="band"] .ticker {
+        border-color: var(--accent-a8);
+      }
+
+      .field[data-hero="band"] .status::before {
+        background: var(--accent-contrast);
+      }
+
+      .field::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background: linear-gradient(0deg, var(--gray-1), transparent 65%);
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        gap: calc(var(--aura) * 2);
+        height: calc(var(--aura) * 6);
+      }
+
+      .wordmark {
+        display: inline-flex;
+        align-items: center;
+        gap: calc(var(--aura) * 0.5);
+        font-size: 1.25rem;
+        font-weight: 500;
+        letter-spacing: -0.04em;
+      }
+
+      .wordmark i {
+        width: calc(var(--aura) * 1);
+        height: calc(var(--aura) * 1);
+        border-radius: var(--aura-button-radius);
+        background: var(--accent-9);
+      }
+
+      .nav {
+        display: flex;
+        gap: 2px;
+        margin-left: auto;
+      }
+
+      .nav a {
+        padding: calc(var(--aura) * 0.75) calc(var(--aura) * 1.25);
+        border-radius: var(--aura-button-radius);
+        background: var(--accent-a3);
+      }
+
+      .nav a:hover {
+        background: var(--accent-a5);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.15fr 1fr;
+        gap: calc(var(--aura) * 2);
+        align-items: end;
+        padding-block: calc(var(--aura) * 8) calc(var(--aura) * 4);
+      }
+
+      .hero h1 {
+        max-width: 11ch;
+        margin-block: calc(var(--aura) * 1.5);
+        line-height: 1.02;
+        letter-spacing: -0.035em;
+      }
+
+      .hero .lead {
+        max-width: 36ch;
+        margin-bottom: calc(var(--aura) * 2.5);
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: calc(var(--aura) * 1);
+      }
+
+      .note {
+        display: grid;
+        gap: calc(var(--aura) * 0.25);
+        justify-self: end;
+        padding-left: calc(var(--aura) * 1.25);
+        border-left: 1px solid var(--gray-a8);
+      }
+
+      .note strong {
+        font-size: 1.75rem;
+        font-weight: 400;
+        letter-spacing: -0.03em;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .ticker {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: calc(var(--aura) * 1);
+        padding-block: calc(var(--aura) * 1.5);
+        border-top: 1px solid var(--gray-a6);
+      }
+
+      .status {
+        display: inline-flex;
+        align-items: center;
+        gap: calc(var(--aura) * 0.5);
+      }
+
+      .status::before {
+        content: "";
+        width: 5px;
+        height: 5px;
+        border-radius: var(--aura-button-radius);
+        background: var(--accent-9);
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        border-bottom: 1px solid var(--gray-6);
+      }
+
+      .stats > div {
+        padding: calc(var(--aura) * 3) calc(var(--aura) * 2);
+        border-right: 1px solid var(--gray-6);
+      }
+
+      .stats > div:first-child {
+        padding-left: 0;
+      }
+
+      .stats > div:last-child {
+        border-right: 0;
+      }
+
+      .stats strong {
+        display: block;
+        margin-bottom: calc(var(--aura) * 1);
+        letter-spacing: -0.04em;
+        line-height: 1.1;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .section {
+        padding-block: calc(var(--aura) * 8.5) 0;
+      }
+
+      .heading {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: calc(var(--aura) * 2);
+        margin-bottom: calc(var(--aura) * 5);
+      }
+
+      .heading h2 {
+        max-width: 20ch;
+      }
+
+      .features {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .feature {
+        padding: calc(var(--aura) * 1.5) calc(var(--aura) * 2) 0 0;
+        border-top: 1px solid var(--gray-12);
+      }
+
+      .feature + .feature {
+        padding-left: calc(var(--aura) * 2);
+        border-left: 1px solid var(--gray-6);
+      }
+
+      .feature h3 {
+        margin-block: calc(var(--aura) * 3) calc(var(--aura) * 1);
+      }
+
+      .feature p {
+        max-width: 34ch;
+      }
+
+      .chart {
+        display: flex;
+        align-items: end;
+        gap: 7px;
+        height: calc(var(--aura) * 11.5);
+        margin-top: calc(var(--aura) * 3);
+        border-bottom: 1px solid var(--gray-6);
+        background-image: linear-gradient(var(--gray-6) 1px, transparent 1px);
+        background-size: 100% calc(var(--aura) * 4);
+      }
+
+      .chart i {
+        flex: 1;
+        height: var(--h);
+        background: var(--accent-a5);
+      }
+
+      .chart i:last-child {
+        background: var(--accent-9);
+      }
+
+      .ledger {
+        margin-top: calc(var(--aura) * 3);
+      }
+
+      .ledger div {
+        display: flex;
+        justify-content: space-between;
+        padding-block: calc(var(--aura) * 1);
+        border-bottom: 1px solid var(--gray-6);
+      }
+
+      .stamp {
+        display: grid;
+        place-items: center;
+        height: calc(var(--aura) * 11.5);
+        margin-top: calc(var(--aura) * 3);
+        background:
+          linear-gradient(90deg, transparent 49.8%, var(--gray-6) 50%, transparent 50.2%),
+          linear-gradient(transparent 49.6%, var(--gray-6) 50%, transparent 50.4%);
+      }
+
+      .stamp span {
+        padding: calc(var(--aura) * 1.5) calc(var(--aura) * 2);
+        border: 1px solid var(--accent-9);
+        border-radius: var(--aura-radius);
+        background: var(--gray-1);
+        color: var(--accent-11);
+      }
+
+      .split-panel {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        margin-top: calc(var(--aura) * 5.5);
+        border: 1px solid var(--gray-6);
+        border-radius: var(--aura-radius);
+        overflow: hidden;
+      }
+
+      .plate {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: calc(var(--aura) * 2.5);
+        padding: calc(var(--aura) * 2);
+        background: var(--gray-3);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: calc(var(--aura) * 1) calc(var(--aura) * 1.5);
+        border-bottom: 1px solid var(--gray-6);
+        text-align: left;
+        font-size: calc(14 / 17 * 1rem);
+      }
+
+      th {
+        color: var(--gray-11);
+      }
+
+      tbody tr:last-child td {
+        border-bottom: 0;
+      }
+
+      tbody tr:hover {
+        background: var(--gray-2);
+      }
+
+      td.mono {
+        color: var(--gray-11);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: calc(var(--aura) * 0.5);
+        padding: 2px calc(var(--aura) * 0.5);
+        border-radius: var(--aura-button-radius);
+        background: var(--accent-3);
+        color: var(--accent-11);
+      }
+
+      .badge.neutral {
+        background: var(--gray-3);
+        color: var(--gray-11);
+      }
+
+      .form {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: calc(var(--aura) * 1.5);
+        padding: calc(var(--aura) * 2);
+        border: 1px solid var(--gray-6);
+        border-radius: var(--aura-radius);
+        background: var(--gray-2);
+      }
+
+      .field-control {
+        display: grid;
+        gap: calc(var(--aura) * 0.5);
+      }
+
+      .field-control.full {
+        grid-column: 1 / -1;
+      }
+
+      input,
+      select {
+        height: calc(var(--aura) * 3.5);
+        padding-inline: calc(var(--aura) * 1);
+        border: 1px solid var(--gray-7);
+        border-radius: var(--aura-input-radius);
+        background: var(--gray-1);
+        color: var(--gray-12);
+        font: inherit;
+        font-size: max(1rem, 17px);
+      }
+
+      input:focus-visible,
+      select:focus-visible,
+      summary:focus-visible,
+      a:focus-visible {
+        outline: var(--aura-outline);
+        outline-offset: 2px;
+      }
+
+      .check {
+        display: flex;
+        align-items: center;
+        gap: calc(var(--aura) * 0.5);
+      }
+
+      .check input {
+        width: calc(var(--aura) * 1.5);
+        height: calc(var(--aura) * 1.5);
+        accent-color: var(--accent-9);
+      }
+
+      .plans {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        border: 1px solid var(--gray-6);
+        border-radius: var(--aura-radius);
+        overflow: hidden;
+      }
+
+      .plan {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        gap: calc(var(--aura) * 1.5);
+        padding: calc(var(--aura) * 2.5);
+      }
+
+      .plan + .plan {
+        border-left: 1px solid var(--gray-6);
+      }
+
+      .plan.highlight {
+        background: var(--gray-12);
+        color: var(--gray-1);
+      }
+
+      .plan.highlight .muted {
+        color: var(--gray-6);
+      }
+
+      .plan strong {
+        letter-spacing: -0.04em;
+      }
+
+      .plan ul {
+        line-height: 2;
+      }
+
+      .plan .split {
+        margin-top: auto;
+      }
+
+      .faq {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: calc(var(--aura) * 2);
+      }
+
+      details {
+        padding-block: calc(var(--aura) * 2);
+        border-top: 1px solid var(--gray-6);
+      }
+
+      summary {
+        display: flex;
+        justify-content: space-between;
+        gap: calc(var(--aura) * 1.5);
+        list-style: none;
+        cursor: pointer;
+      }
+
+      summary::-webkit-details-marker {
+        display: none;
+      }
+
+      summary::after {
+        content: "+";
+        font-family: var(--font-label);
+      }
+
+      details[open] summary::after {
+        content: "−";
+      }
+
+      details p {
+        max-width: 60ch;
+        margin-top: calc(var(--aura) * 1.5);
+      }
+
+      .empty {
+        display: grid;
+        justify-items: center;
+        gap: calc(var(--aura) * 1);
+        padding: calc(var(--aura) * 4) calc(var(--aura) * 2);
+        border: 1px dashed var(--gray-6);
+        border-radius: var(--aura-radius);
+        background: var(--gray-2);
+        text-align: center;
+      }
+
+      .end {
+        margin-top: calc(var(--aura) * 8.5);
+        padding-block: calc(var(--aura) * 5.5);
+        background: var(--accent-4);
+      }
+
+      .end .container {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: calc(var(--aura) * 2.5);
+      }
+
+      footer {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: calc(var(--aura) * 1.5);
+        padding-block: calc(var(--aura) * 4) calc(var(--aura) * 2);
+        color: var(--gray-11);
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .nav a,
+        .split .button,
+        .split .button svg {
+          transition:
+            background-color 250ms cubic-bezier(0.45, 0, 0.55, 1),
+            transform 250ms cubic-bezier(0.45, 0, 0.55, 1);
+        }
+      }
+
+      @media (max-width: 900px) {
+        .heading,
+        .split-panel,
+        .faq,
+        .features,
+        .plans,
+        .form {
+          grid-template-columns: 1fr;
+        }
+        .feature,
+        .feature + .feature {
+          padding: calc(var(--aura) * 2) 0 calc(var(--aura) * 3);
+          border-left: 0;
+        }
+        .plan + .plan {
+          border-left: 0;
+          border-top: 1px solid var(--gray-6);
+        }
+      }
+
+      @media (max-width: 600px) {
+        .container {
+          width: calc(100% - var(--aura) * 3);
+        }
+        .nav {
+          display: none;
+        }
+        .topbar .split {
+          margin-left: auto;
+        }
+        .hero {
+          grid-template-columns: 1fr;
+          padding-top: calc(var(--aura) * 4);
+        }
+        .note {
+          justify-self: start;
+        }
+        .stats {
+          grid-template-columns: 1fr 1fr;
+        }
+        .stats > div {
+          padding: calc(var(--aura) * 2) calc(var(--aura) * 1);
+        }
+        .stats > div:nth-child(odd) {
+          padding-left: 0;
+        }
+        .stats > div:nth-child(2) {
+          border-right: 0;
+        }
+        .stats > div:nth-child(-n + 2) {
+          border-bottom: 1px solid var(--gray-6);
+        }
+        .mono-col {
+          display: none;
+        }
+      }
+
+      @media (min-width: 601px) {
+        .topbar .split {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="field" data-field>
+      <nav class="topbar container" aria-label="Main">
+        <a href="#" class="wordmark"><i aria-hidden="true"></i><span data-slot="name">Flavor</span></a>
+        <div class="nav label">
+          <a href="#">Overview</a><a href="#">Reports</a><a href="#">Policies</a><a href="#">Settings</a>
+        </div>
+        <div class="split" data-slot="button-group">
+          <a href="#" class="button button-fill">Explore</a>
+          <a href="#" class="button button-fill" data-icon aria-label="Explore">
+            <svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M4.5 10.5 10.5 4.5M5 4.5h5.5V10" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </nav>
+      <div class="hero container">
+        <div>
+          <span class="label">01 / Workspace</span>
+          <h1>Every number has a trail.</h1>
+          <p class="lead">
+            One workspace for reports, policies and the people who sign them. Every figure shows
+            where it came from and when it last changed.
+          </p>
+          <div class="actions">
+            <div class="split" data-slot="button-group">
+              <a href="#" class="button button-fill">Open workspace</a>
+              <a href="#" class="button button-fill" data-icon aria-label="Open workspace">
+                <svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M4.5 10.5 10.5 4.5M5 4.5h5.5V10" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+            <div class="split" data-slot="button-group">
+              <a href="#" class="button button-fill secondary">Read the policy</a>
+              <a href="#" class="button button-fill secondary" data-icon aria-label="Read the policy">
+                <svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M3 7.5h9M8.5 4l3.5 3.5L8.5 11" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="note">
+          <span class="label">Balance / 01</span>
+          <strong>$24,800,000</strong>
+          <span class="label">Reconciled 08:00 UTC</span>
+        </div>
+      </div>
+      <div class="ticker container label">
+        <span class="status">Report · 29 October 2026</span>
+        <span>Coverage 18.4 months</span>
+        <span>View statement ↗</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="stats container" aria-label="Key figures">
+        <div><strong class="h2">$2.6bn</strong><span class="label muted">Tracked</span></div>
+        <div><strong class="h2">164</strong><span class="label muted">Teams</span></div>
+        <div><strong class="h2">18.4 mo</strong><span class="label muted">Median runway</span></div>
+        <div><strong class="h2">08:00</strong><span class="label muted">Daily sync</span></div>
+      </section>
+
+      <section class="section container">
+        <div class="heading">
+          <span class="label muted">02 / Components</span>
+          <h2>Aura components, one flavor.</h2>
+        </div>
+        <div class="features">
+          <article class="feature">
+            <span class="label muted">02.1 / Chart</span>
+            <h3 class="h5">A balance with context.</h3>
+            <p class="small muted">Series use accent alpha steps. The latest value is the solid accent.</p>
+            <div class="chart" aria-hidden="true">
+              <i style="--h: 28%"></i><i style="--h: 39%"></i><i style="--h: 37%"></i><i style="--h: 52%"></i
+              ><i style="--h: 63%"></i><i style="--h: 59%"></i><i style="--h: 75%"></i><i style="--h: 88%"></i>
+            </div>
+          </article>
+          <article class="feature">
+            <span class="label muted">02.2 / Ledger</span>
+            <h3 class="h5">Rules before reactions.</h3>
+            <p class="small muted">Ruled rows on gray step 6, condensed labels, tabular figures.</p>
+            <div class="ledger small">
+              <div><span>Operating floor</span><b>$4,200,000</b></div>
+              <div><span>Tax reserve</span><b>$820,000</b></div>
+              <div><span>Approval threshold</span><b>2 signatures</b></div>
+            </div>
+          </article>
+          <article class="feature">
+            <span class="label muted">02.3 / Status</span>
+            <h3 class="h5">Every figure is traced.</h3>
+            <p class="small muted">Outlined accent surfaces mark verified state without glow.</p>
+            <div class="stamp" aria-hidden="true"><span class="label">Reconciled ✓</span></div>
+          </article>
+        </div>
+
+        <div class="split-panel">
+          <div class="plate">
+            <span class="label">Table</span>
+            <h3 class="h4">Nothing hidden in the footnotes.</h3>
+            <span class="label muted">Latest statements →</span>
+          </div>
+          <table>
+            <thead class="label">
+              <tr><th scope="col">Statement</th><th scope="col" class="mono-col">File</th><th scope="col">Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>October statement</td><td class="mono mono-col">ST-2026-10</td><td><span class="badge label">Ready</span></td></tr>
+              <tr><td>Quarterly review</td><td class="mono mono-col">QR-2026-Q3</td><td><span class="badge label">Ready</span></td></tr>
+              <tr><td>Policy v2.4</td><td class="mono mono-col">PL-0024</td><td><span class="badge neutral label">Draft</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section container">
+        <div class="heading">
+          <span class="label muted">03 / Form</span>
+          <h2>Inputs keep the 17px floor.</h2>
+        </div>
+        <form class="form" onsubmit="return false">
+          <label class="field-control">
+            <span class="label muted">Workspace name</span>
+            <input type="text" value="North entity" />
+          </label>
+          <label class="field-control">
+            <span class="label muted">Reporting period</span>
+            <select>
+              <option>Monthly</option>
+              <option>Quarterly</option>
+            </select>
+          </label>
+          <label class="field-control full">
+            <span class="label muted">Approval email</span>
+            <input type="email" placeholder="finance@company.com" />
+          </label>
+          <label class="check full"><input type="checkbox" checked /> <span class="small">Require two signatures for transfers</span></label>
+          <div class="actions full">
+            <div class="split" data-slot="button-group">
+              <button type="submit" class="button button-fill">Save policy</button>
+              <button type="submit" class="button button-fill" data-icon aria-label="Save policy">
+                <svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M3 7.5h9M8.5 4l3.5 3.5L8.5 11" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <section class="section container">
+        <div class="heading">
+          <span class="label muted">04 / Cards</span>
+          <h2>Attached panels, one highlight.</h2>
+        </div>
+        <div class="plans">
+          <article class="plan">
+            <span class="label muted">01 / Observe</span>
+            <h3 class="h5">One clear picture.</h3>
+            <strong class="h2">$0</strong>
+            <ul class="small"><li>3 connected sources</li><li>Daily reports</li><li>90-day history</li></ul>
+            <div class="split" data-slot="button-group">
+              <a href="#" class="button button-fill secondary">Start</a>
+              <a href="#" class="button button-fill secondary" data-icon aria-label="Start"><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M4.5 10.5 10.5 4.5M5 4.5h5.5V10" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+          </article>
+          <article class="plan highlight">
+            <span class="label muted">02 / Steward · Recommended</span>
+            <h3 class="h5">Make the rules stick.</h3>
+            <strong class="h2">$120</strong>
+            <ul class="small"><li>20 connected sources</li><li>Approval policies</li><li>Board-ready reports</li></ul>
+            <div class="split" data-slot="button-group">
+              <a href="#" class="button button-fill">Choose</a>
+              <a href="#" class="button button-fill" data-icon aria-label="Choose"><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M4.5 10.5 10.5 4.5M5 4.5h5.5V10" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+          </article>
+          <article class="plan">
+            <span class="label muted">03 / Institution</span>
+            <h3 class="h5">Room for complexity.</h3>
+            <strong class="h2">$480</strong>
+            <ul class="small"><li>Unlimited entities</li><li>Custom periods</li><li>Dedicated onboarding</li></ul>
+            <div class="split" data-slot="button-group">
+              <a href="#" class="button button-fill secondary">Talk to us</a>
+              <a href="#" class="button button-fill secondary" data-icon aria-label="Talk to us"><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M4.5 10.5 10.5 4.5M5 4.5h5.5V10" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section container faq">
+        <div>
+          <span class="label muted">05 / Accordion</span>
+          <h2 class="h3" style="margin-top: calc(var(--aura) * 1.5)">Before you begin.</h2>
+        </div>
+        <div>
+          <details open>
+            <summary class="h6">What does a flavor change?</summary>
+            <p class="muted">Color seeds, fonts, radius and voice. The 13px grid, components, icons and forms stay Aura.</p>
+          </details>
+          <details>
+            <summary class="h6">Where do the colors come from?</summary>
+            <p class="muted">theme.css holds generated 12-step accent and gray scales for light and dark. Components read tokens only.</p>
+          </details>
+          <details>
+            <summary class="h6">How does my agent apply it?</summary>
+            <p class="muted">Give it the DESIGN.md link. It saves DESIGN.theme.md, appends theme.css to globals.css and restyles with Aura components.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="section container">
+        <div class="empty">
+          <span class="label muted">06 / Empty state</span>
+          <h3 class="h5">No statements yet.</h3>
+          <p class="small muted">Connect a source to see its first report tomorrow at 08:00.</p>
+          <div class="split" data-slot="button-group">
+            <a href="#" class="button button-fill">Connect a source</a>
+            <a href="#" class="button button-fill" data-icon aria-label="Connect a source"><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M7.5 3v9M3 7.5h9" stroke="currentColor" stroke-linecap="round"/></svg></a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <section class="end">
+      <div class="container">
+        <h2>Know what tomorrow can afford.</h2>
+        <div class="split" data-slot="button-group">
+          <a href="#" class="button button-fill">Open your workspace</a>
+          <a href="#" class="button button-fill" data-icon aria-label="Open your workspace"><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M4.5 10.5 10.5 4.5M5 4.5h5.5V10" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="container label">
+      <span>Built with Aura · <span data-slot="name">Flavor</span> flavor</span>
+      <span class="status">All sources reporting · 08:00 UTC</span>
+    </footer>
+
+    <script>
+      (function () {
+        var params = new URLSearchParams(window.location.search);
+        var slug = (params.get("design") || "").replace(/[^a-z0-9-]/g, "");
+        var appearance = params.get("appearance") === "dark" ? "dark" : "light";
+        var root = document.documentElement;
+        root.classList.add(appearance);
+        root.style.colorScheme = appearance;
+        var field = document.querySelector("[data-field]");
+        if (!slug) {
+          field.classList.add("dark");
+          return;
+        }
+        document.getElementById("flavor-theme").href = "/designs/" + slug + "/theme.css";
+        fetch("/designs.json")
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            var design = data.designs.find(function (entry) {
+              return entry.slug === slug;
+            });
+            if (!design) return;
+            var hero = design.hero || "field";
+            field.dataset.hero = hero;
+            if (hero === "field") field.classList.add("dark");
+            document.title = design.name + " · Aura flavor";
+            document.querySelectorAll("[data-slot='name']").forEach(function (node) {
+              node.textContent = design.name;
+            });
+            var label = design.fonts.label || design.fonts.sans;
+            root.style.setProperty("--font-label", '"' + label + '", ' + "var(--aura-font-stack)");
+            if (design.fonts.display) {
+              root.style.setProperty("--font-display", '"' + design.fonts.display + '", ' + "var(--aura-font-stack)");
+            }
+            if (design.headingWeight) {
+              root.style.setProperty("--heading-weight", String(design.headingWeight));
+            }
+          })
+          .catch(function () {});
+      })();
+    </script>
+  </body>
+</html>

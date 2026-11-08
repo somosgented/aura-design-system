@@ -7,7 +7,7 @@ description: Design guardrails for agents. One skill at .agents/skills/aura, sam
 
 Color, type, the 13px grid, icons, motion, forms, lint, and product principles live in **`.agents/skills/aura/`**. `SKILL.md` is the entry. `rules/*.md` holds Incorrect/Correct pairs. `DESIGN.md` at the repo root stays the narrative spec. `AGENTS.md` stays monorepo policy.
 
-Always-on process rules stay in `.agents/rules/` (`feature-map`, `no-comments`, `design-md`). Cursor reads that directory directly. They are not inside the skill.
+Always-on process rules stay in `.agents/rules/` (`feature-map`, `no-comments`, `design-md`). Every agent finds it through the root `AGENTS.md`. They are not inside the skill.
 
 ## Install
 
@@ -46,6 +46,8 @@ Those land in `.agents/skills/`.
 | `rules/lint.md` | `@shadcn/lint` after UI edits |
 | `rules/principles.md` | Accessibility, consistency, control, forgiveness |
 | `rules/surface.md` | Aura wins over the upstream shadcn skill |
+
+To adapt another design to Aura as a theme, use the `generate-design-md` procedure skill. See [DESIGN.md flavors](/docs/rules/design-md-flavors).
 
 When the shadcn skill disagrees on icons, forms, spacing, color, type, or restyle, the Aura skill wins.
 
