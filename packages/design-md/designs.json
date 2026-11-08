@@ -998,6 +998,84 @@
           "gray-12": "#eee"
         }
       }
+    },
+    {
+      "slug": "verdantline",
+      "name": "Verdantline",
+      "description": "A clean, open developer platform home with crisp green accents, monospaced code blocks, email signup, and subdued gray prose. An Aura flavor for code hosts, API docs and developer portals, observed November 2026.",
+      "design": "designs/verdantline/DESIGN.md",
+      "theme": "designs/verdantline/theme.css",
+      "result": "designs/verdantline/result.html",
+      "fonts": {
+        "sans": "IBM Plex Sans",
+        "display": "IBM Plex Sans",
+        "label": "IBM Plex Sans",
+        "mono": "IBM Plex Mono",
+        "href": "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      },
+      "hero": "paper",
+      "headingWeight": 600,
+      "radius": {
+        "button": "6px",
+        "input": "6px",
+        "surface": "12px"
+      },
+      "tokens": {
+        "light": {
+          "accent-contrast": "#fff",
+          "accent-1": "#fafefa",
+          "gray-1": "#fbfcfe",
+          "accent-2": "#f4fbf5",
+          "gray-2": "#f7f9fc",
+          "accent-3": "#e6f8e7",
+          "gray-3": "#edf1f5",
+          "accent-4": "#d6f2d7",
+          "gray-4": "#e4e9ee",
+          "accent-5": "#c3ebc4",
+          "gray-5": "#dce2e8",
+          "accent-6": "#abe1ad",
+          "gray-6": "#d4dbe3",
+          "accent-7": "#89d28e",
+          "gray-7": "#c7d0da",
+          "accent-8": "#54be61",
+          "gray-8": "#b2bdca",
+          "accent-9": "#08872b",
+          "gray-9": "#848f9c",
+          "accent-10": "#00791b",
+          "gray-10": "#798491",
+          "accent-11": "#008225",
+          "gray-11": "#5c656f",
+          "accent-12": "#1b3e1e",
+          "gray-12": "#1b2026"
+        },
+        "dark": {
+          "accent-contrast": "#fff",
+          "accent-1": "#0c130c",
+          "gray-1": "#0f1113",
+          "accent-2": "#131a13",
+          "gray-2": "#18191b",
+          "accent-3": "#192a1a",
+          "gray-3": "#212326",
+          "accent-4": "#1a3b1d",
+          "gray-4": "#272a2e",
+          "accent-5": "#214924",
+          "gray-5": "#2e3236",
+          "accent-6": "#27592c",
+          "gray-6": "#363b40",
+          "accent-7": "#2e6934",
+          "gray-7": "#43494f",
+          "accent-8": "#347c3c",
+          "gray-8": "#5a626b",
+          "accent-9": "#3fb950",
+          "gray-9": "#677079",
+          "accent-10": "#30ad44",
+          "gray-10": "#747d87",
+          "accent-11": "#61d46d",
+          "gray-11": "#adb5be",
+          "accent-12": "#b9f3bb",
+          "gray-12": "#edeef0"
+        }
+      }
     }
   ]
 }

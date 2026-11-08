@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Verdantline · Ship code with confidence</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="stylesheet" href="/aura/main.css"/>
+<link rel="stylesheet" href="theme.css"/>
+<script>
+(function () {
+var appearance = new URLSearchParams(window.location.search).get("appearance") === "dark" ? "dark" : "light";
+document.documentElement.classList.add(appearance);
+document.documentElement.style.colorScheme = appearance;
+})();
+</script>
+<style>
+:root {
+--aura-text-primary-inverse: var(--accent-contrast);
+--aura-text-primary: var(--gray-12);
+--aura-bg: var(--gray-1);
+--aura-link: var(--gray-12);
+--aura-outline: var(--accent-9) solid 2px;
+--aura-input-bg: var(--gray-1);
+--aura-input-placeholder-color: var(--gray-10);
+--band: #f7f7f5;
+--band-alt: #f0efed;
+--vignette-bg: #fafafa;
+--vignette-border: #e8e8e6;
+--pill-soft: #f7f7f5;
+--pill-soft-hover: #ededeb;
+--ui-sidebar: #fbfbfa;
+--ui-row-hover: #f5f5f3;
+--ui-orange: #ff9500;
+--ui-blue: #0099ff;
+--ui-green: #00c853;
+--ui-red: #ff4d4d;
+--ui-purple: #9b51e0;
+--orange-pale: #fdf4eb;
+--blue-pale: #e8f1fc;
+--blue: #2f80ed;
+--green: #10b981;
+--hero-cta: var(--accent-9);
+--hero-cta-fg: var(--accent-contrast);
+--ink-button-bg: var(--gray-12);
+--ink-button-fg: var(--gray-1);
+--green-pale: #e6f5ec;
+--purple-pale: #f4ecfb;
+--hair: #e5e5e3;
+--wrap: calc(var(--aura) * 98.5);
+--narrow: calc(var(--aura) * 83);
+--footer-mint: 3px solid var(--green);
+--transition-rule: linear-gradient(90deg, #0099ff 0%, #00c853 25%, #9b51e0 75%, #ff4d4d 100%);
+}
+.dark {
+--aura-input-placeholder-color: var(--gray-10);
+--hero-cta: var(--accent-9);
+--hero-cta-fg: var(--gray-1);
+--ink-button-bg: var(--gray-1);
+--ink-button-fg: var(--gray-12);
+--band: #1e1e1e;
+--band-alt: #252525;
+--vignette-bg: #1a1a1a;
+--vignette-border: #333333;
+--pill-soft: #2a2a2a;
+--pill-soft-hover: #353535;
+--ui-sidebar: #181818;
+--ui-row-hover: #252525;
+--ui-orange: #ffaa33;
+--ui-blue: #33aaff;
+--ui-green: #33d970;
+--ui-red: #ff6666;
+--ui-purple: #b072e8;
+--orange-pale: #2a2118;
+--blue-pale: #1a2433;
+--green-pale: #182a1e;
+--purple-pale: #261a33;
+--hair: var(--gray-6);
+--footer-mint: 3px solid var(--accent-9);
+}
+html { font-size: 18px; background: var(--gray-1); }
+body { margin: 0; background: var(--gray-1); color: var(--gray-12); font-family: var(--aura-font-stack); line-height: 1.55; letter-spacing: -0.01em; }
+h1, h2, h3, p, figure, ul, ol { margin: 0; }
+h1, h2, h3 { font-family: var(--aura-font-display); font-weight: 600; line-height: 1.1; letter-spacing: -0.03em; text-wrap: balance; }
+a { color: inherit; }
+:focus-visible { outline: var(--aura-outline); outline-offset: 2px; }
+[id] { scroll-margin-top: calc(var(--aura) * 5); }
+.defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+.skip { position: absolute; left: var(--aura); top: calc(var(--aura) * -5); z-index: 20; padding: calc(var(--aura) * 0.5) calc(var(--aura) * 1.5); border-radius: 6px; background: var(--accent-9); color: var(--accent-contrast); font-weight: 500; text-decoration: none; }
+.skip:focus { top: var(--aura); }
+.wrap { width: min(100% - var(--aura) * 3, var(--wrap)); margin-inline: auto; }
+.narrow { max-width: var(--narrow); }
+.sec { padding-block: calc(var(--aura) * 8); }
+.band { background: var(--band); }
+.muted { color: var(--gray-11); }
+.i { width: 1em; height: 1em; flex: none; }
+.eb { font-size: 0.78rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray-9); margin-bottom: calc(var(--aura) * 0.5); }
+.h1 { --min: 2.5rem; --val: 7.5vw; --max: 5.33rem; font-size: clamp(var(--min), var(--val), var(--max)); line-height: 1.0; letter-spacing: -0.04em; }
+.h2 { --min: 1.75rem; --val: 4vw; --max: 2.67rem; font-size: clamp(var(--min), var(--val), var(--max)); line-height: 1.1; letter-spacing: -0.03em; }
+.h3 { font-size: 1.33rem; line-height: 1.25; letter-spacing: -0.02em; }
+.lead { font-size: 1rem; color: var(--gray-11); line-height: 1.55; max-width: calc(var(--aura) * 38); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: calc(var(--aura) * 0.5); height: calc(var(--aura) * 3); padding: 0 calc(var(--aura) * 1.5); border-radius: 6px; font-weight: 500; font-size: 0.94rem; text-decoration: none; white-space: nowrap; border: 0; cursor: pointer; }
+.btn.lg { height: calc(var(--aura) * 3.5); padding: 0 calc(var(--aura) * 2); }
+.btn.sm { height: calc(var(--aura) * 2.5); padding: 0 var(--aura); font-size: 0.83rem; }
+.btn-fill { background: var(--accent-9); color: var(--accent-contrast); }
+.btn-fill:hover { background: var(--accent-10); }
+.dark .btn-fill { color: var(--hero-cta-fg); }
+.btn-soft { background: var(--pill-soft); color: var(--gray-12); }
+.btn-soft:hover { background: var(--pill-soft-hover); }
+.btn-ink { background: var(--ink-button-bg); color: var(--ink-button-fg); }
+.btn-ink:hover { opacity: 0.9; }
+.tl { display: inline-flex; align-items: center; gap: calc(var(--aura) * 0.5); font-weight: 500; text-decoration: none; }
+.tl:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+.nav { display: flex; flex-wrap: wrap; align-items: center; gap: calc(var(--aura) * 2); padding-block: calc(var(--aura) * 1.5); }
+.logo { display: inline-flex; align-items: center; gap: calc(var(--aura) * 0.5); font-family: var(--aura-font-display); font-weight: 600; font-size: 1.1rem; letter-spacing: -0.02em; text-decoration: none; color: var(--gray-12); }
+.logo svg { width: calc(var(--aura) * 2); height: calc(var(--aura) * 2); }
+.menu { display: flex; align-items: center; gap: calc(var(--aura) * 0.25); list-style: none; padding: 0; }
+.menu > li { position: relative; }
+.nl { display: inline-flex; align-items: center; gap: calc(var(--aura) * 0.5); padding: calc(var(--aura) * 0.5) var(--aura); border: 0; border-radius: 6px; background: transparent; color: var(--gray-12); font: inherit; font-size: 0.83rem; font-weight: 500; text-decoration: none; cursor: pointer; }
+.nl:hover { background: var(--pill-soft); }
+.nl[aria-expanded="true"] .chev { transform: rotate(180deg); }
+.drop { position: absolute; top: calc(100% + calc(var(--aura) * 0.5)); left: 0; z-index: 10; min-width: calc(var(--aura) * 16); padding: calc(var(--aura) * 0.5); list-style: none; background: var(--gray-1); border: 1px solid var(--hair); border-radius: calc(var(--aura) * 0.75); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.drop[hidden] { display: none; }
+.drop a { display: block; padding: calc(var(--aura) * 0.5) var(--aura); border-radius: calc(var(--aura) * 0.5); font-size: 0.83rem; text-decoration: none; }
+.drop a:hover { background: var(--pill-soft); }
+.drop small { display: block; color: var(--gray-9); font-size: 0.72rem; margin-top: 2px; }
+.nav-end { display: flex; align-items: center; gap: calc(var(--aura) * 0.5); margin-left: auto; }
+.toggle { display: none; }
+.nav-search { position: relative; }
+.nav-search input { width: calc(var(--aura) * 12); height: calc(var(--aura) * 2.5); padding: 0 var(--aura); border: 1px solid var(--gray-7); border-radius: 6px; background: var(--aura-input-bg); color: var(--gray-12); font: inherit; font-size: 0.83rem; }
+.nav-search input::placeholder { color: var(--aura-input-placeholder-color); }
+.nav-search input:focus-visible, .nav-search input:focus { outline: 0 !important; border-color: var(--accent-9) !important; box-shadow: 0 0 0 2px var(--accent-9) !important; }
+
+.recap-pill { position: absolute; top: calc(var(--aura) * 6); left: 50%; transform: translateX(-50%); z-index: 50; display: inline-flex; align-items: center; gap: calc(var(--aura) * 0.75); padding: calc(var(--aura) * 0.75) calc(var(--aura) * 1.5); border-radius: 9999px; background: var(--vignette-bg); border: 1px solid var(--vignette-border); box-shadow: 0 2px 8px rgba(0,0,0,0.05); font-size: 0.88rem; font-weight: 500; text-decoration: none; color: var(--gray-12); max-width: calc(var(--aura) * 46); }
+.recap-pill:hover { background: var(--pill-soft-hover); }
+.recap-icon { width: calc(var(--aura) * 2); height: calc(var(--aura) * 2); flex: none; }
+
+.hero { padding: calc(var(--aura) * 10) 0 calc(var(--aura) * 8); text-align: center; position: relative; }
+.hero h1 { max-width: calc(var(--aura) * 62); margin: 0 auto; }
+.hero .lead { margin: calc(var(--aura) * 1.5) auto 0; max-width: calc(var(--aura) * 36); }
+.cta { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--aura); margin-top: calc(var(--aura) * 2.5); }
+.btn-hero-primary { background: var(--hero-cta); color: var(--hero-cta-fg); }
+.btn-hero-primary:hover { opacity: 0.92; }
+.dark .btn-hero-primary { color: var(--hero-cta-fg); }
+.hero-email { display: flex; align-items: center; gap: 0; border: 1px solid var(--gray-7); border-radius: 6px; overflow: hidden; }
+.hero-email input { height: calc(var(--aura) * 3.5); width: calc(var(--aura) * 18); padding: 0 var(--aura); border: 0; background: var(--aura-input-bg); color: var(--gray-12); font: inherit; font-size: 0.94rem; }
+.hero-email input::placeholder { color: #57606e !important; }
+.hero-email input:focus-visible, .hero-email input:focus { outline: 0 !important; }
+.hero-email:focus-within { outline: 2px solid var(--accent-9) !important; outline-offset: 2px; box-shadow: 0 0 0 2px var(--accent-9); }
+.dark .hero-email input::placeholder { color: #8b949e !important; }
+.hero-email .btn { border-radius: 0; }
+
+.logos { padding: calc(var(--aura) * 4) 0; overflow: hidden; background: var(--band); }
+.logos p { text-align: center; font-size: 0.78rem; color: var(--gray-9); margin-bottom: calc(var(--aura) * 2); }
+.mq { position: relative; }
+.mq::before, .mq::after { content: ""; position: absolute; top: 0; bottom: 0; width: calc(var(--aura) * 6); z-index: 2; pointer-events: none; }
+.mq::before { left: 0; background: linear-gradient(90deg, var(--band), transparent); }
+.mq::after { right: 0; background: linear-gradient(270deg, var(--band), transparent); }
+.mq-ctrl { display: flex; justify-content: center; margin-top: calc(var(--aura) * 1.5); }
+.mq-ctrl button { height: calc(var(--aura) * 2.5); padding: 0 var(--aura); border: 1px solid var(--gray-7); border-radius: 6px; background: var(--gray-1); color: var(--gray-12); font: inherit; font-size: 0.83rem; font-weight: 500; cursor: pointer; }
+.mq-ctrl button:hover { background: var(--pill-soft); }
+.track { display: flex; align-items: center; gap: calc(var(--aura) * 4); width: max-content; }
+.track svg { height: calc(var(--aura) * 1.5); width: auto; color: var(--gray-11); flex: none; fill: currentColor; }
+.dup { display: none; }
+
+.repo-mosaic { padding: calc(var(--aura) * 6) 0; overflow: hidden; }
+.repo-scroll { overflow-x: auto; overflow-y: hidden; padding-bottom: var(--aura); -webkit-overflow-scrolling: touch; scrollbar-width: thin; scrollbar-color: var(--gray-7) transparent; }
+.repo-scroll::-webkit-scrollbar { height: 8px; }
+.repo-scroll::-webkit-scrollbar-track { background: transparent; }
+.repo-scroll::-webkit-scrollbar-thumb { background: var(--gray-7); border-radius: 4px; }
+.repo-track { display: flex; gap: var(--aura); padding: 0 calc(var(--aura) * 1.5); }
+.repo-card { min-width: calc(var(--aura) * 20); width: calc(var(--aura) * 20); padding: calc(var(--aura) * 1.5); border-radius: calc(var(--aura) * 0.75); background: var(--vignette-bg); border: 1px solid var(--vignette-border); flex: none; }
+.repo-card.empty { border: 2px solid var(--ui-purple); background: transparent; display: flex; align-items: center; justify-content: center; font-size: 0.83rem; color: var(--gray-9); font-weight: 500; }
+.repo-card h4 { font-size: 0.94rem; font-weight: 600; margin-bottom: calc(var(--aura) * 0.5); }
+.repo-card .meta { font-size: 0.72rem; color: var(--gray-9); margin-bottom: calc(var(--aura) * 0.5); }
+.repo-card p { font-size: 0.83rem; color: var(--gray-11); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.repo-star { display: inline-flex; align-items: center; gap: 4px; font-size: 0.78rem; color: var(--gray-9); margin-top: calc(var(--aura) * 0.75); }
+
+.transition-scene { position: relative; padding: calc(var(--aura) * 8) 0 calc(var(--aura) * 6); overflow: hidden; }
+.transition-peek { position: absolute; top: 0; left: 50%; transform: translate(-50%, 42%); width: calc(var(--aura) * 7); height: calc(var(--aura) * 7); z-index: 2; pointer-events: none; }
+.transition-peek svg { width: 100%; height: 100%; display: block; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.12)); }
+.transition-rule { height: 3px; background: var(--transition-rule); margin: 0; position: relative; z-index: 1; }
+.transition-grid { position: absolute; inset: calc(var(--aura) * 4) 0 0; background-image: linear-gradient(var(--gray-4) 1px, transparent 1px), linear-gradient(90deg, var(--gray-4) 1px, transparent 1px); background-size: calc(var(--aura) * 2) calc(var(--aura) * 2); opacity: 0.55; pointer-events: none; }
+.dark .transition-grid { opacity: 0.25; }
+.transition-pixel { position: absolute; width: calc(var(--aura) * 0.5); height: calc(var(--aura) * 0.5); border-radius: 1px; pointer-events: none; }
+.transition-pixel.pa { left: 12%; top: 28%; background: #7ee787; box-shadow: calc(var(--aura) * 0.5) 0 0 0 #3fb950, 0 calc(var(--aura) * 0.5) 0 0 #8957e5, calc(var(--aura) * 0.5) calc(var(--aura) * 0.5) 0 0 #8957e5; }
+.transition-pixel.pb { right: 14%; top: 32%; background: #ffa657; box-shadow: calc(var(--aura) * -0.5) 0 0 0 #3fb950, 0 calc(var(--aura) * 0.5) 0 0 #58a6ff, calc(var(--aura) * -0.5) calc(var(--aura) * 0.5) 0 0 #1f6feb; }
+.transition-scene .h2 { text-align: center; position: relative; z-index: 3; margin-top: calc(var(--aura) * 4); }
+
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: calc(var(--aura) * 2); padding: calc(var(--aura) * 3); border-radius: calc(var(--aura) * 1.5); background: var(--band); }
+.stat { text-align: center; }
+.stat strong { display: block; font-family: var(--aura-font-display); font-weight: 600; font-size: 2.2rem; letter-spacing: -0.03em; line-height: 1.1; }
+.stat span { font-size: 0.83rem; color: var(--gray-11); }
+
+.head { margin-bottom: calc(var(--aura) * 4); }
+.head.c { text-align: center; }
+.head.c .lead { margin-inline: auto; }
+.head .lead { margin-top: calc(var(--aura) * 1); }
+
+.demo-workbench { display: grid; grid-template-columns: calc(var(--aura) * 18) 1fr; gap: 0; border-radius: calc(var(--aura) * 1.5); border: 1px solid var(--vignette-border); border-left: calc(var(--aura) * 0.6) solid var(--ui-green); border-bottom: calc(var(--aura) * 0.6) solid var(--ui-green); background: var(--vignette-bg); overflow: hidden; min-height: calc(var(--aura) * 38); margin-bottom: calc(var(--aura) * 4); box-shadow: 4px 6px 0 rgba(31, 136, 61, 0.15); }
+.wb-sidebar { background: var(--ui-sidebar); padding: calc(var(--aura) * 1.5); display: flex; flex-direction: column; border-right: 1px solid var(--vignette-border); }
+.wb-nav { display: flex; flex-direction: column; gap: 2px; margin-bottom: calc(var(--aura) * 2); }
+.wb-nav-item { display: flex; align-items: center; gap: calc(var(--aura) * 0.5); padding: calc(var(--aura) * 0.5) calc(var(--aura) * 0.75); border-radius: 6px; font-size: 0.83rem; font-weight: 500; color: var(--gray-11); text-decoration: none; }
+.wb-nav-item:hover, .wb-nav-item.active { background: var(--ui-row-hover); color: var(--gray-12); }
+.wb-nav-item svg { width: 16px; height: 16px; }
+.wb-sessions { margin-top: auto; }
+.wb-sessions-head { display: flex; align-items: center; justify-content: space-between; padding: calc(var(--aura) * 0.5) 0; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray-9); margin-bottom: calc(var(--aura) * 0.5); }
+.wb-session-item { padding: calc(var(--aura) * 0.5) calc(var(--aura) * 0.75); border-radius: 6px; font-size: 0.83rem; margin-bottom: 2px; }
+.wb-session-item:hover { background: var(--ui-row-hover); }
+.wb-session-repo { display: flex; align-items: center; gap: calc(var(--aura) * 0.5); font-weight: 500; margin-bottom: 2px; }
+.wb-session-repo svg { width: 14px; height: 14px; }
+.wb-session-pr { font-size: 0.78rem; color: var(--gray-11); padding-left: calc(var(--aura) * 1.5); }
+.wb-user { display: flex; align-items: center; gap: calc(var(--aura) * 0.5); margin-top: calc(var(--aura) * 2); padding-top: calc(var(--aura) * 1); border-top: 1px solid var(--vignette-border); }
+.wb-user-av { width: calc(var(--aura) * 2); height: calc(var(--aura) * 2); border-radius: 50%; background: var(--ui-blue); flex: none; }
+.wb-user-name { font-size: 0.83rem; font-weight: 500; }
+.wb-main { padding: calc(var(--aura) * 2); display: flex; flex-direction: column; }
+.wb-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: calc(var(--aura) * 2); }
+.wb-logo { width: calc(var(--aura) * 3); height: calc(var(--aura) * 3); }
+.wb-tools { display: flex; gap: calc(var(--aura) * 0.5); }
+.wb-tool { width: calc(var(--aura) * 2); height: calc(var(--aura) * 2); border-radius: 6px; background: var(--pill-soft); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.wb-tool:hover { background: var(--pill-soft-hover); }
+.wb-prompt { margin-bottom: calc(var(--aura) * 2); }
+.wb-prompt input { width: 100%; height: calc(var(--aura) * 3.5); padding: 0 var(--aura); border: 1px solid var(--gray-7); border-radius: 6px; background: var(--gray-1); color: var(--gray-12); font: inherit; font-size: 0.94rem; }
+.wb-prompt input::placeholder { color: var(--gray-9); }
+.wb-mode { display: flex; align-items: center; gap: var(--aura); margin-bottom: calc(var(--aura) * 1.5); font-size: 0.83rem; color: var(--gray-11); }
+.wb-context { display: flex; gap: var(--aura); margin-bottom: calc(var(--aura) * 2); }
+.wb-context-item { display: inline-flex; align-items: center; gap: calc(var(--aura) * 0.5); padding: calc(var(--aura) * 0.4) calc(var(--aura) * 0.75); border-radius: 6px; background: var(--pill-soft); font-size: 0.83rem; }
+.wb-actions { display: grid; grid-template-columns: 1fr 1fr; gap: var(--aura); margin-bottom: calc(var(--aura) * 2); }
+.wb-action-card { padding: calc(var(--aura) * 1.5); border-radius: calc(var(--aura) * 0.75); border: 1px solid var(--vignette-border); background: var(--gray-1); display: flex; align-items: flex-start; gap: var(--aura); }
+.wb-action-icon { width: calc(var(--aura) * 2.5); height: calc(var(--aura) * 2.5); border-radius: 6px; background: var(--pill-soft); display: flex; align-items: center; justify-content: center; flex: none; }
+.wb-action-text h5 { font-size: 0.88rem; font-weight: 600; margin-bottom: 4px; }
+.wb-action-text p { font-size: 0.78rem; color: var(--gray-11); }
+.wb-upnext { }
+.wb-upnext h4 { font-size: 0.94rem; font-weight: 600; margin-bottom: calc(var(--aura) * 0.5); }
+.wb-upnext p { font-size: 0.83rem; color: var(--gray-11); margin-bottom: var(--aura); }
+.wb-pr-item { display: flex; align-items: center; gap: calc(var(--aura) * 0.75); padding: calc(var(--aura) * 0.75); border-radius: 6px; margin-bottom: calc(var(--aura) * 0.5); }
+.wb-pr-item:hover { background: var(--ui-row-hover); }
+.wb-pr-icon { width: 16px; height: 16px; color: var(--ui-green); flex: none; }
+.wb-pr-text { flex: 1; }
+.wb-pr-title { font-size: 0.88rem; font-weight: 500; margin-bottom: 2px; }
+.wb-pr-meta { font-size: 0.72rem; color: var(--gray-9); }
+.wb-pr-diff { display: inline-flex; align-items: center; gap: 4px; margin-left: calc(var(--aura) * 0.5); }
+.wb-pr-badge { display: inline-block; padding: 1px 6px; border-radius: 4px; font-size: 0.72rem; font-weight: 500; }
+.wb-pr-badge.add { background: var(--green-pale); color: var(--ui-green); }
+.wb-pr-badge.del { background: var(--orange-pale); color: var(--ui-red); }
+
+.bento { display: grid; grid-template-columns: repeat(3, 1fr); gap: calc(var(--aura) * 1.5); }
+.card { padding: calc(var(--aura) * 1.5); border-radius: calc(var(--aura) * 1.25); border: 1px solid var(--vignette-border); background: var(--vignette-bg); }
+.card.span2 { grid-column: span 2; }
+.card.tall { grid-row: span 2; display: flex; flex-direction: column; }
+.card h3 { margin-bottom: calc(var(--aura) * 0.5); }
+.card > p { font-size: 0.83rem; color: var(--gray-11); }
+.vig { flex: 1; display: flex; align-items: center; justify-content: center; min-height: calc(var(--aura) * 12); margin-bottom: calc(var(--aura) * 1.5); border-radius: var(--aura); background: var(--ui-sidebar); overflow: hidden; }
+
+.security-bento { display: grid; grid-template-columns: repeat(3, 1fr); gap: calc(var(--aura) * 1.5); }
+.security-card { padding: calc(var(--aura) * 2); border-radius: calc(var(--aura) * 1.25); background: var(--vignette-bg); position: relative; overflow: hidden; }
+.security-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.security-card.pink::before { background: linear-gradient(90deg, #ff006e, #8338ec); }
+.security-card.orange::before { background: linear-gradient(90deg, #ff9500, #ff006e); }
+.security-card.blue::before { background: linear-gradient(90deg, #0099ff, #00c853); }
+.security-card-icon { width: calc(var(--aura) * 3); height: calc(var(--aura) * 3); border-radius: calc(var(--aura) * 0.75); background: var(--pill-soft); display: flex; align-items: center; justify-content: center; margin-bottom: calc(var(--aura) * 1.5); }
+.security-card-icon svg { width: 24px; height: 24px; }
+.security-card h3 { margin-bottom: calc(var(--aura) * 0.75); }
+.security-card p { font-size: 0.83rem; color: var(--gray-11); margin-bottom: calc(var(--aura) * 1.5); }
+
+.ui-doc { width: 100%; padding: var(--aura); font-size: 11px; font-family: 'IBM Plex Mono', monospace; }
+.ui-row { display: flex; align-items: center; gap: calc(var(--aura) * 0.5); padding: calc(var(--aura) * 0.4) calc(var(--aura) * 0.5); border-radius: 4px; }
+.ui-row:hover { background: var(--ui-row-hover); }
+.ui-icon { width: 16px; height: 16px; border-radius: 4px; flex: none; }
+.ui-row b { font-weight: 500; flex: 1; }
+.ui-row span { color: var(--gray-9); font-size: 10px; }
+.ui-badge { display: inline-block; padding: 1px 6px; border-radius: 4px; font-size: 10px; font-weight: 500; }
+.bg-orange { background: var(--orange-pale); color: var(--ui-orange); }
+.bg-blue { background: var(--blue-pale); color: var(--ui-blue); }
+.bg-green { background: var(--green-pale); color: var(--ui-green); }
+.bg-purple { background: var(--purple-pale); color: var(--ui-purple); }
+
+.ui-board { width: 100%; padding: var(--aura); display: grid; grid-template-columns: repeat(3, 1fr); gap: calc(var(--aura) * 0.5); font-size: 10px; font-family: 'IBM Plex Mono', monospace; }
+.ui-col { background: var(--gray-1); border-radius: 6px; padding: calc(var(--aura) * 0.5); }
+.ui-col-head { font-weight: 600; font-size: 9px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray-9); margin-bottom: calc(var(--aura) * 0.5); }
+.ui-task { background: var(--vignette-bg); border: 1px solid var(--vignette-border); border-radius: 4px; padding: 6px; margin-bottom: 4px; }
+.ui-task:last-child { margin-bottom: 0; }
+
+.ui-chat { width: 100%; max-width: calc(var(--aura) * 18); padding: var(--aura); font-size: 11px; font-family: 'IBM Plex Mono', monospace; }
+.ui-msg { display: flex; gap: calc(var(--aura) * 0.5); margin-bottom: var(--aura); }
+.ui-av { width: 20px; height: 20px; border-radius: 50%; flex: none; }
+.ui-bubble { padding: calc(var(--aura) * 0.5); border-radius: 8px; background: var(--gray-1); border: 1px solid var(--hair); }
+.ui-bubble.ai { background: var(--blue-pale); border-color: transparent; }
+
+.ui-table { width: 100%; padding: var(--aura); font-size: 10px; font-family: 'IBM Plex Mono', monospace; }
+.ui-table table { width: 100%; border-collapse: collapse; }
+.ui-table th, .ui-table td { padding: 6px 8px; text-align: left; border-bottom: 1px solid var(--hair); }
+.ui-table th { font-weight: 600; font-size: 9px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray-9); }
+
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--aura) * 5); align-items: center; }
+.split .lead { margin-top: calc(var(--aura) * 1); }
+ul.checks { display: grid; gap: calc(var(--aura) * 0.75); margin-top: calc(var(--aura) * 2); padding: 0; list-style: none; }
+.checks li { display: flex; align-items: center; gap: calc(var(--aura) * 0.5); font-weight: 500; font-size: 0.94rem; }
+.checks svg { color: var(--ui-green); }
+
+.bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--aura); margin-bottom: calc(var(--aura) * 1.5); }
+.seg { display: inline-flex; gap: 4px; padding: 4px; border-radius: calc(var(--aura) * 0.75); background: var(--pill-soft); }
+.seg button { height: calc(var(--aura) * 2); padding: 0 var(--aura); border: 0; border-radius: 6px; background: transparent; color: var(--gray-11); font: inherit; font-size: 0.83rem; font-weight: 500; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--gray-1); color: var(--gray-12); box-shadow: 0 0 0 1px var(--hair); }
+.tw-wrap { overflow-x: auto; border-radius: calc(var(--aura) * 1.25); border: 1px solid var(--vignette-border); background: var(--vignette-bg); }
+table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+th, td { padding: var(--aura); text-align: left; white-space: nowrap; border-bottom: 1px solid var(--hair); }
+thead th { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--gray-9); background: var(--band); }
+td.num { font-variant-numeric: tabular-nums; }
+.who { display: inline-flex; align-items: center; gap: calc(var(--aura) * 0.5); font-weight: 500; }
+.av { width: 24px; height: 24px; border-radius: 50%; flex: none; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 500; }
+.b-done { background: var(--green-pale); color: var(--ui-green); }
+.b-prog { background: var(--blue-pale); color: var(--ui-blue); }
+.b-rev { background: var(--orange-pale); color: var(--ui-orange); }
+
+.teams-table { margin-top: calc(var(--aura) * 3); }
+.teams-table table { width: 100%; }
+.teams-table th:first-child { text-align: left; }
+.teams-table th { text-align: center; font-size: 0.88rem; padding: calc(var(--aura) * 1) var(--aura); }
+.teams-table td:first-child { font-weight: 500; }
+.teams-table td { text-align: center; padding: calc(var(--aura) * 0.75) var(--aura); }
+.teams-pill { display: inline-block; padding: calc(var(--aura) * 0.4) calc(var(--aura) * 0.75); border-radius: 6px; background: var(--green-pale); color: var(--ui-green); font-size: 0.78rem; font-weight: 500; }
+
+.plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: calc(var(--aura) * 1.5); }
+.plan { display: flex; flex-direction: column; padding: calc(var(--aura) * 2); border-radius: calc(var(--aura) * 1.5); border: 1px solid var(--vignette-border); background: var(--vignette-bg); }
+.plan.pop { border-color: var(--accent-9); border-width: 2px; box-shadow: 0 0 0 1px var(--accent-9); }
+.plan h3 { margin-bottom: calc(var(--aura) * 0.5); }
+.price { font-family: var(--aura-font-display); font-weight: 600; font-size: 2.67rem; letter-spacing: -0.03em; line-height: 1; margin-bottom: calc(var(--aura) * 1.5); }
+.price span { font-family: var(--aura-font-stack); font-size: 0.83rem; font-weight: 400; color: var(--gray-11); margin-left: calc(var(--aura) * 0.25); }
+.plan ul { flex: 1; margin-bottom: calc(var(--aura) * 2); }
+.plan .btn { width: 100%; }
+
+.formp { padding: calc(var(--aura) * 2); border-radius: calc(var(--aura) * 1.5); border: 1px solid var(--vignette-border); background: var(--vignette-bg); }
+form { display: grid; gap: calc(var(--aura) * 1.25); }
+.field { display: grid; gap: calc(var(--aura) * 0.4); }
+.field label { font-weight: 500; font-size: 0.88rem; }
+.field input, .field select { height: calc(var(--aura) * 3); padding: 0 var(--aura); border: 1px solid var(--gray-7); border-radius: calc(var(--aura) * 0.75); background: var(--aura-input-bg); color: var(--gray-12); font: inherit; font-size: 0.94rem; }
+.field input::placeholder { color: var(--aura-input-placeholder-color); }
+.field input:focus-visible, .field select:focus-visible, .field input:focus, .field select:focus { outline: 0 !important; border-color: var(--accent-9) !important; box-shadow: 0 0 0 2px var(--accent-9) !important; }
+#f-name:focus, #f-name:focus-visible, #f-email:focus, #f-email:focus-visible, #f-size:focus, #f-size:focus-visible { outline: 0 !important; border-color: var(--accent-9) !important; box-shadow: 0 0 0 2px var(--accent-9) !important; }
+.field select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 15 15'%3E%3Cpath d='M4 6l3.5 3.5L11 6' fill='none' stroke='%235c5c5c' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right var(--aura) center; padding-right: calc(var(--aura) * 2.5); }
+.field [aria-invalid="true"] { border-color: var(--ui-red); }
+.err { color: var(--ui-red); font-size: 0.83rem; }
+.err:empty, .status:empty { display: none; }
+.status { padding: var(--aura); border-radius: calc(var(--aura) * 0.75); background: var(--green-pale); color: var(--gray-12); font-size: 0.88rem; }
+.hint { color: var(--gray-9); font-size: 0.78rem; }
+
+.acc { border-bottom: 1px solid var(--hair); }
+.acc h3 { font-family: var(--aura-font-stack); font-weight: 500; font-size: 1rem; letter-spacing: 0; }
+.acc-b { display: flex; align-items: center; gap: var(--aura); width: 100%; padding: calc(var(--aura) * 1.25) 0; border: 0; background: transparent; color: var(--gray-12); font: inherit; font-weight: 500; text-align: left; cursor: pointer; }
+.acc-b svg { flex: none; }
+.acc-b[aria-expanded="true"] svg { transform: rotate(45deg); }
+.acc-p { padding: 0 0 calc(var(--aura) * 1.25) calc(var(--aura) * 2); color: var(--gray-11); font-size: 0.94rem; line-height: 1.6; }
+
+.closing { padding: calc(var(--aura) * 8) 0; text-align: center; }
+.closing .h2 { margin-bottom: calc(var(--aura) * 2); }
+
+footer { padding: calc(var(--aura) * 5) 0 calc(var(--aura) * 3); border-top: var(--footer-mint); font-size: 0.78rem; }
+.foot { display: grid; grid-template-columns: 1.5fr repeat(4, 1fr); gap: calc(var(--aura) * 2); }
+.foot h2 { font-family: var(--aura-font-stack); font-size: 0.78rem; font-weight: 600; letter-spacing: 0; margin-bottom: calc(var(--aura) * 0.75); }
+.foot ul { padding: 0; list-style: none; display: grid; gap: calc(var(--aura) * 0.4); }
+.foot a { color: var(--gray-11); text-decoration: none; }
+.foot a:hover { color: var(--gray-12); }
+.legal { margin-top: calc(var(--aura) * 3); padding-top: calc(var(--aura) * 1.5); border-top: 1px solid var(--hair); color: var(--gray-9); display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--aura); }
+
+@media (prefers-reduced-motion: no-preference) {
+.btn { transition: background-color 150ms ease-out, transform 100ms ease; }
+.btn:active { transform: scale(0.98); }
+.nl, .seg button { transition: background-color 100ms ease; }
+.chev, .acc-b svg { transition: transform 200ms ease; }
+.acc-p:not([hidden]) { animation: fade 200ms ease-in-out; }
+.track { animation: slide 30s linear infinite; }
+.track.paused { animation-play-state: paused; }
+.dup { display: flex; }
+@keyframes slide { to { transform: translateX(-50%); } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+}
+@media (prefers-reduced-motion: reduce) {
+*, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+@media (max-width: 960px) {
+.stats { grid-template-columns: repeat(2, 1fr); }
+.bento { grid-template-columns: 1fr; }
+.card.span2 { grid-column: auto; }
+.security-bento { grid-template-columns: 1fr; }
+.demo-workbench { grid-template-columns: 1fr; }
+.wb-sidebar { border-right: 0; border-bottom: 1px solid var(--vignette-border); }
+.foot { grid-template-columns: repeat(2, 1fr); }
+.foot > div:first-child { grid-column: 1 / -1; }
+}
+@media (max-width: 860px) {
+.nav { gap: var(--aura); }
+.toggle { display: inline-flex; order: 1; margin-left: auto; }
+.nav-end { order: 2; margin-left: 0; }
+.nav-end .btn-soft { display: none; }
+.nav-search { display: none; }
+.menu { order: 3; flex-basis: 100%; flex-direction: column; align-items: stretch; gap: 2px; padding: calc(var(--aura) * 0.5); border-radius: calc(var(--aura) * 0.75); background: var(--band); }
+.menu .nl { width: 100%; justify-content: space-between; padding: var(--aura); }
+.nav[data-open="false"] .menu { display: none; }
+.drop { position: static; box-shadow: none; border: 0; background: var(--gray-1); margin-top: calc(var(--aura) * 0.5); border-radius: calc(var(--aura) * 0.5); }
+.split { grid-template-columns: 1fr; gap: calc(var(--aura) * 3); }
+.plans { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+.stats { grid-template-columns: 1fr; padding: calc(var(--aura) * 2); }
+.foot { grid-template-columns: 1fr; }
+.legal { flex-direction: column; }
+.cta { flex-direction: column; align-items: stretch; }
+.cta .btn { width: 100%; }
+.hero-email { flex-direction: column; width: 100%; border-radius: 6px; }
+.hero-email input { width: 100%; border-radius: 6px; border: 1px solid var(--gray-7); }
+.hero-email .btn { border-radius: 6px; }
+.wb-actions { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<svg class="defs" aria-hidden="true">
+<symbol id="mark" viewBox="0 0 32 32">
+<rect width="32" height="32" rx="6" fill="var(--accent-9)"/>
+<path d="M8 12 L16 8 L24 12 L16 16 Z" fill="var(--accent-contrast)" opacity="0.9"/>
+<path d="M8 16 L8 20 L16 24 L16 20 Z" fill="var(--accent-contrast)" opacity="0.7"/>
+<path d="M24 16 L24 20 L16 24 L16 20 Z" fill="var(--accent-contrast)" opacity="0.5"/>
+</symbol>
+<symbol id="chev" viewBox="0 0 15 15"><path d="M4 6l3.5 3.5L11 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="plus" viewBox="0 0 15 15"><path d="M7.5 2.5v10M2.5 7.5h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+<symbol id="tick" viewBox="0 0 15 15"><path d="M3 7.8l2.8 2.8L12 4.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="right" viewBox="0 0 15 15"><path d="M2.5 7.5h10M8.5 3.5l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="home" viewBox="0 0 15 15"><path d="M2 8l5.5-5L13 8M3 7v6a1 1 0 001 1h2a1 1 0 001-1v-3h2v3a1 1 0 001 1h2a1 1 0 001-1V7" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="pr" viewBox="0 0 15 15"><circle cx="4" cy="3" r="2" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="4" cy="12" r="2" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="11" cy="8" r="2" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M4 5v5M11 6V3H7" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></symbol>
+<symbol id="issue" viewBox="0 0 15 15"><circle cx="7.5" cy="7.5" r="6" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="7.5" cy="10" r="0.5" fill="currentColor"/><path d="M7.5 4v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></symbol>
+<symbol id="auto" viewBox="0 0 15 15"><path d="M13.5 7.5l-1.5-1.5M10.5 4.5L9 3M7.5 1.5V3M4.5 4.5L3 3M1.5 7.5L3 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><circle cx="7.5" cy="7.5" r="3" fill="none" stroke="currentColor" stroke-width="1.2"/></symbol>
+<symbol id="grid" viewBox="0 0 15 15"><rect x="2" y="2" width="4" height="4" rx="0.5" fill="none" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="2" width="4" height="4" rx="0.5" fill="none" stroke="currentColor" stroke-width="1.2"/><rect x="2" y="9" width="4" height="4" rx="0.5" fill="none" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="9" width="4" height="4" rx="0.5" fill="none" stroke="currentColor" stroke-width="1.2"/></symbol>
+<symbol id="dots" viewBox="0 0 15 15"><circle cx="7.5" cy="3" r="1" fill="currentColor"/><circle cx="7.5" cy="7.5" r="1" fill="currentColor"/><circle cx="7.5" cy="12" r="1" fill="currentColor"/></symbol>
+<symbol id="repo" viewBox="0 0 15 15"><path d="M3 2.5A1.5 1.5 0 014.5 1h6A1.5 1.5 0 0112 2.5v10a1.5 1.5 0 01-1.5 1.5h-6A1.5 1.5 0 013 12.5v-10z" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M5 5h5M5 8h3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></symbol>
+<symbol id="star" viewBox="0 0 15 15"><path d="M7.5 1l2 4 4.5.5-3.25 3 .75 4.5-4-2.5-4 2.5.75-4.5L1 5.5 5.5 5z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></symbol>
+<symbol id="bell" viewBox="0 0 15 15"><path d="M11 5a3.5 3.5 0 00-7 0c0 3-1 4-1 4h9s-1-1-1-4zM6 13a1.5 1.5 0 003 0" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="settings" viewBox="0 0 15 15"><circle cx="7.5" cy="7.5" r="2" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M7.5 1v2M7.5 12v2M13.5 7.5h-2M3.5 7.5h-2M11.5 3.5l-1.5 1.5M5 9l-1.5 1.5M11.5 11.5L10 10M5 5L3.5 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></symbol>
+<symbol id="rocket" viewBox="0 0 15 15"><path d="M10 1s3 0 4 4c0 0-2 3-5 6l-2-2c3-3 3-8 3-8zM5 10l-3 3s-1 1 0 2 2 0 2 0l3-3M6 9L2 13" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="shield" viewBox="0 0 15 15"><path d="M7.5 1L2 3v4c0 3.5 2.5 6 5.5 7 3-1 5.5-3.5 5.5-7V3z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></symbol>
+<symbol id="lock" viewBox="0 0 15 15"><rect x="3" y="7" width="9" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M5 7V5a2.5 2.5 0 015 0v2" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></symbol>
+<symbol id="code" viewBox="0 0 15 15"><path d="M4.5 5L2 7.5 4.5 10M10.5 5L13 7.5 10.5 10M8.5 3l-2 9" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="spark" viewBox="0 0 16 16"><path d="M8 1c.5 3 2.5 5 5.5 5.5-3 .5-5 2.5-5.5 5.5-.5-3-2.5-5-5.5-5.5 3-.5 5-2.5 5.5-5.5z" fill="currentColor"/></symbol>
+<symbol id="vl-mascot" viewBox="0 0 96 96">
+<ellipse cx="48" cy="58" rx="34" ry="28" fill="#1a1428"/>
+<ellipse cx="48" cy="52" rx="28" ry="24" fill="url(#vl-face)"/>
+<path d="M24 38 Q20 20 32 14 Q48 6 64 14 Q76 20 72 38" fill="#1a1428"/>
+<circle cx="36" cy="48" r="8" fill="#6e40c9"/>
+<circle cx="60" cy="48" r="8" fill="#6e40c9"/>
+<circle cx="38" cy="46" r="3" fill="#fff"/>
+<circle cx="62" cy="46" r="3" fill="#fff"/>
+<ellipse cx="48" cy="58" rx="6" ry="4" fill="#2d2040"/>
+<path d="M44 62 Q48 66 52 62" stroke="#ff8fab" stroke-width="2" fill="none" stroke-linecap="round"/>
+<defs>
+<linearGradient id="vl-face" x1="48" y1="30" x2="48" y2="70" gradientUnits="userSpaceOnUse">
+<stop stop-color="#ffc8a8"/>
+<stop offset="1" stop-color="#f4a4c8"/>
+</linearGradient>
+</defs>
+</symbol>
+<symbol id="duck" viewBox="0 0 64 64">
+<ellipse cx="32" cy="38" rx="20" ry="16" fill="#FFD700" opacity="0.9"/>
+<ellipse cx="32" cy="38" rx="18" ry="14" fill="#FFA500" opacity="0.7"/>
+<ellipse cx="32" cy="38" rx="16" ry="12" fill="#FF6B6B" opacity="0.5"/>
+<ellipse cx="32" cy="38" rx="14" ry="10" fill="#4ECDC4" opacity="0.4"/>
+<ellipse cx="32" cy="38" rx="12" ry="8" fill="#95E1D3" opacity="0.3"/>
+<circle cx="32" cy="20" r="12" fill="#FFD700"/>
+<ellipse cx="28" cy="18" rx="3" ry="4" fill="#000"/>
+<ellipse cx="36" cy="18" rx="3" ry="4" fill="#000"/>
+<ellipse cx="28.5" cy="17" rx="1.5" ry="2" fill="#FFF"/>
+<ellipse cx="36.5" cy="17" rx="1.5" ry="2" fill="#FFF"/>
+<path d="M28 24 Q32 26 36 24" fill="none" stroke="#FF6B6B" stroke-width="2" stroke-linecap="round"/>
+<ellipse cx="32" cy="24" rx="4" ry="2" fill="#FFA500"/>
+</symbol>
+</svg>
+
+<a class="recap-pill" href="#summit">
+<svg class="recap-icon" aria-hidden="true"><use href="#duck"/></svg>
+<span>Verdantline Summit '26 Recap</span>
+<svg class="i" aria-hidden="true"><use href="#right"/></svg>
+</a>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="wrap">
+<nav class="nav" aria-label="Primary" data-open="false">
+<a class="logo" href="#top"><svg viewBox="0 0 32 32" aria-hidden="true"><use href="#mark"/></svg>Verdantline</a>
+<button class="btn btn-soft sm toggle" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+<ul class="menu" id="menu">
+<li>
+<button class="nl" type="button" data-dd aria-expanded="false" aria-controls="dd-product">Product<svg class="i chev" aria-hidden="true"><use href="#chev"/></svg></button>
+<ul class="drop" id="dd-product" hidden>
+<li><a href="#features">Features<small>Ship faster together</small></a></li>
+<li><a href="#ai">Code review<small>Automated insights</small></a></li>
+<li><a href="#projects">Analytics<small>Track performance</small></a></li>
+</ul>
+</li>
+<li>
+<button class="nl" type="button" data-dd aria-expanded="false" aria-controls="dd-solutions">Solutions<svg class="i chev" aria-hidden="true"><use href="#chev"/></svg></button>
+<ul class="drop" id="dd-solutions" hidden>
+<li><a href="#teams">Engineering teams<small>Scale development</small></a></li>
+<li><a href="#enterprise">Enterprise<small>Security & compliance</small></a></li>
+</ul>
+</li>
+<li><a class="nl" href="#pricing">Pricing</a></li>
+</ul>
+<div class="nav-end">
+<div class="nav-search"><input type="search" placeholder="Search..." aria-label="Search"/></div>
+<a class="btn btn-soft sm" href="#demo">Sign in</a>
+<a class="btn btn-ink sm" href="#demo">Sign up</a>
+</div>
+</nav>
+</header>
+
+<main id="main">
+<section class="hero wrap" id="top" aria-labelledby="hero-title">
+<h1 class="h1" id="hero-title">Build software that grows<br/>with your vision</h1>
+<p class="lead">Ship quality code faster with intelligent tools that scale. Trusted by teams who value collaboration and precision.</p>
+<div class="cta">
+<div class="hero-email">
+<input type="email" placeholder="you@company.com" aria-label="Email address"/>
+<a class="btn btn-hero-primary lg" href="#demo">Get started free</a>
+</div>
+<a class="btn btn-soft lg" href="#demo">Watch demo</a>
+</div>
+</section>
+
+<section class="logos" aria-label="Trusted by leading companies">
+<p>Trusted by teams at</p>
+<div class="mq">
+<div class="track" id="logo-track">
+<svg viewBox="0 0 80 24" aria-label="Acme"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16" fill="currentColor">Acme</text></svg>
+<svg viewBox="0 0 90 24" aria-label="Globex"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16" fill="currentColor">Globex</text></svg>
+<svg viewBox="0 0 80 24" aria-label="Initech"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16" fill="currentColor">Initech</text></svg>
+<svg viewBox="0 0 90 24" aria-label="Massive"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16" fill="currentColor">Massive</text></svg>
+<svg viewBox="0 0 80 24" aria-label="Hooli"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16" fill="currentColor">Hooli</text></svg>
+<svg viewBox="0 0 90 24" aria-label="Umbrella"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16" fill="currentColor">Umbrella</text></svg>
+<svg viewBox="0 0 100 24" aria-label="Soylent"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16" fill="currentColor">Soylent</text></svg>
+<svg viewBox="0 0 85 24" aria-label="Cyberdyne"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16" fill="currentColor">Cyberdyne</text></svg>
+<svg viewBox="0 0 80 24" aria-label="Acme" class="dup"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16" fill="currentColor">Acme</text></svg>
+<svg viewBox="0 0 90 24" aria-label="Globex" class="dup"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16" fill="currentColor">Globex</text></svg>
+<svg viewBox="0 0 80 24" aria-label="Initech" class="dup"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16" fill="currentColor">Initech</text></svg>
+<svg viewBox="0 0 90 24" aria-label="Massive" class="dup"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16" fill="currentColor">Massive</text></svg>
+<svg viewBox="0 0 80 24" aria-label="Hooli" class="dup"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16" fill="currentColor">Hooli</text></svg>
+<svg viewBox="0 0 90 24" aria-label="Umbrella" class="dup"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16" fill="currentColor">Umbrella</text></svg>
+<svg viewBox="0 0 100 24" aria-label="Soylent" class="dup"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16" fill="currentColor">Soylent</text></svg>
+<svg viewBox="0 0 85 24" aria-label="Cyberdyne" class="dup"><text x="0" y="18" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="16" fill="currentColor">Cyberdyne</text></svg>
+</div>
+</div>
+<div class="mq-ctrl">
+<button type="button" id="mq-pause" aria-pressed="false">Pause animation</button>
+</div>
+</section>
+
+<section class="sec wrap" aria-labelledby="stats-title">
+<h2 class="defs" id="stats-title">Platform statistics</h2>
+<div class="stats">
+<div class="stat"><strong>50M+</strong><span>lines reviewed daily</span></div>
+<div class="stat"><strong>90%</strong><span>faster reviews</span></div>
+<div class="stat"><strong>2.5M</strong><span>developers</span></div>
+<div class="stat"><strong>180+</strong><span>countries</span></div>
+</div>
+</section>
+
+<section class="sec wrap" aria-labelledby="workbench-title">
+<div class="head c">
+<p class="eb">Demo</p>
+<h2 class="h2" id="workbench-title">Your workspace, reimagined.</h2>
+<p class="lead">Experience the full power of Verdantline with AI-powered code reviews, smart sessions, and instant insights.</p>
+</div>
+<div class="demo-workbench">
+<div class="wb-sidebar">
+<div class="wb-nav">
+<a href="#" class="wb-nav-item active"><svg aria-hidden="true"><use href="#home"/></svg>Home</a>
+<a href="#" class="wb-nav-item"><svg aria-hidden="true"><use href="#pr"/></svg>Pull requests</a>
+<a href="#" class="wb-nav-item"><svg aria-hidden="true"><use href="#issue"/></svg>Issues</a>
+<a href="#" class="wb-nav-item"><svg aria-hidden="true"><use href="#auto"/></svg>Automations</a>
+<a href="#" class="wb-nav-item"><svg aria-hidden="true"><use href="#grid"/></svg>Customize</a>
+<a href="#" class="wb-nav-item"><svg aria-hidden="true"><use href="#dots"/></svg>More</a>
+</div>
+<div class="wb-sessions">
+<div class="wb-sessions-head">
+<span>Sessions</span>
+<button type="button" style="background:transparent;border:0;padding:0;cursor:pointer;"><svg class="i" aria-label="Add session" style="color:var(--gray-9);"><use href="#plus"/></svg></button>
+</div>
+<div class="wb-session-item">
+<div>Chats</div>
+</div>
+<div class="wb-session-item">
+<div class="wb-session-repo"><svg aria-hidden="true"><use href="#repo"/></svg>aurora</div>
+<div class="wb-session-pr"><svg class="i" style="width:12px;height:12px;display:inline-block;vertical-align:middle;margin-right:4px;" aria-hidden="true"><use href="#pr"/></svg>Fix dark mode toggle</div>
+</div>
+</div>
+<div class="wb-user">
+<div class="wb-user-av"></div>
+<div class="wb-user-name">Alex Rivera</div>
+</div>
+</div>
+<div class="wb-main">
+<div class="wb-header">
+<svg class="wb-logo" viewBox="0 0 32 32" aria-label="Verdantline"><use href="#mark"/></svg>
+<div class="wb-tools">
+<button class="wb-tool" aria-label="Notifications"><svg class="i" style="width:16px;height:16px;"><use href="#bell"/></svg></button>
+<button class="wb-tool" aria-label="Settings"><svg class="i" style="width:16px;height:16px;"><use href="#settings"/></svg></button>
+</div>
+</div>
+<div class="wb-prompt">
+<input type="text" placeholder="Ask anything or paste a URL. Use / for commands, & sessions, # issues..."/>
+</div>
+<div class="wb-mode">
+<button style="background:transparent;border:0;padding:0;color:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:4px;"><svg class="i" style="width:14px;height:14px;"><use href="#plus"/></svg><span>Interactive</span></button>
+<span style="color:var(--gray-9);">Copilot Fusion · Standard</span>
+</div>
+<div class="wb-context">
+<div class="wb-context-item"><svg class="i" style="width:14px;height:14px;"><use href="#repo"/></svg>aurora</div>
+<div class="wb-context-item"><svg class="i" style="width:14px;height:14px;"><use href="#code"/></svg>Choose environment</div>
+<div class="wb-context-item"><svg class="i" style="width:14px;height:14px;"><use href="#rocket"/></svg>New worktree · main</div>
+</div>
+<div class="wb-actions">
+<div class="wb-action-card">
+<div class="wb-action-icon"><svg class="i" style="width:18px;height:18px;"><use href="#code"/></svg></div>
+<div class="wb-action-text">
+<h5>Add tests for the most critical untested paths.</h5>
+<p>Identify edge cases</p>
+</div>
+</div>
+<div class="wb-action-card">
+<div class="wb-action-icon"><svg class="i" style="width:18px;height:18px;"><use href="#spark"/></svg></div>
+<div class="wb-action-text">
+<h5>Summarize this project for someone new to the team.</h5>
+<p>Onboard quickly</p>
+</div>
+</div>
+</div>
+<div class="wb-upnext">
+<h4>Up next</h4>
+<p>Recently updated pull requests and issues across your connected repos.</p>
+<div class="wb-pr-item">
+<svg class="wb-pr-icon" aria-hidden="true"><use href="#pr"/></svg>
+<div class="wb-pr-text">
+<div class="wb-pr-title">Add dark mode toggle #184</div>
+<div class="wb-pr-meta">acme/aurora · maya-chen · 1mo ago<span class="wb-pr-diff"><span class="wb-pr-badge add">+4</span><span class="wb-pr-badge del">-2</span></span></div>
+</div>
+</div>
+<div class="wb-pr-item">
+<svg class="wb-pr-icon" aria-hidden="true"><use href="#pr"/></svg>
+<div class="wb-pr-text">
+<div class="wb-pr-title">Improve keyboard focus in settings #181</div>
+<div class="wb-pr-meta">acme/aurora · jordan-kim · 2w ago<span class="wb-pr-diff"><span class="wb-pr-badge add">+12</span><span class="wb-pr-badge del">-3</span></span></div>
+</div>
+</div>
+<div class="wb-pr-item">
+<svg class="wb-pr-icon" style="color:var(--ui-orange);" aria-hidden="true"><use href="#issue"/></svg>
+<div class="wb-pr-text">
+<div class="wb-pr-title">Mobile nav overlay z-index conflict #179</div>
+<div class="wb-pr-meta">acme/aurora · sam-taylor · 3d ago</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="repo-mosaic wrap" aria-labelledby="repos-title">
+<div class="head">
+<p class="eb">Explore</p>
+<h2 class="h2" id="repos-title">Trending repositories.</h2>
+</div>
+<div class="repo-scroll">
+<div class="repo-track">
+<div class="repo-card">
+<h4>generate-policy-bot-config</h4>
+<p class="meta">Updated 2 hours ago</p>
+<p>Automated policy generation for compliance workflows with custom rulesets.</p>
+<div class="repo-star"><svg class="i" style="width:14px;height:14px;"><use href="#star"/></svg>1.2k</div>
+</div>
+<div class="repo-card">
+<h4>fictional/monolith-kit</h4>
+<p class="meta">Updated 5 hours ago</p>
+<p>Unified deep learning framework for large-scale recommendation systems.</p>
+<div class="repo-star"><svg class="i" style="width:14px;height:14px;"><use href="#star"/></svg>3.8k</div>
+</div>
+<div class="repo-card">
+<h4>riverwayse-sudo/valoria-site</h4>
+<p class="meta">Updated 1 day ago</p>
+<p>Static site generator with built-in accessibility audits and performance scoring.</p>
+<div class="repo-star"><svg class="i" style="width:14px;height:14px;"><use href="#star"/></svg>890</div>
+</div>
+<div class="repo-card empty">
+<span>Your next project</span>
+</div>
+<div class="repo-card">
+<h4>acme/design-tokens</h4>
+<p class="meta">Updated 3 days ago</p>
+<p>Cross-platform design token library with Figma plugin and code generation.</p>
+<div class="repo-star"><svg class="i" style="width:14px;height:14px;"><use href="#star"/></svg>2.1k</div>
+</div>
+<div class="repo-card">
+<h4>globex/edge-cache</h4>
+<p class="meta">Updated 1 week ago</p>
+<p>Distributed caching layer optimized for serverless edge deployments.</p>
+<div class="repo-star"><svg class="i" style="width:14px;height:14px;"><use href="#star"/></svg>1.5k</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="transition-scene" aria-labelledby="platform-title">
+<div class="transition-peek" aria-hidden="true"><svg><use href="#vl-mascot"/></svg></div>
+<div class="transition-rule"></div>
+<div class="transition-grid" aria-hidden="true">
+<span class="transition-pixel pa"></span>
+<span class="transition-pixel pb"></span>
+</div>
+<div class="wrap">
+<h2 class="h2" id="platform-title">Verdantline Platform</h2>
+</div>
+</section>
+
+<section class="band sec" id="features" aria-labelledby="features-title">
+<div class="wrap">
+<div class="head c">
+<p class="eb">Features</p>
+<h2 class="h2" id="features-title">More ways to use Verdantline</h2>
+<p class="lead">From code review to deployment, Verdantline brings your workflow into one powerful platform.</p>
+</div>
+<div class="bento">
+<article class="card span2">
+<div class="vig">
+<div class="ui-doc" aria-hidden="true">
+<div class="ui-row"><span class="ui-icon" style="background:var(--ui-blue)"></span><b>PR #483: Refactor auth flow</b><span class="ui-badge bg-blue">Open</span></div>
+<div class="ui-row"><span class="ui-icon" style="background:var(--ui-green)"></span><b>PR #482: Add dashboard metrics</b><span>Merged 3h ago</span></div>
+<div class="ui-row"><span class="ui-icon" style="background:var(--ui-orange)"></span><b>PR #479: Fix mobile layout</b><span class="ui-badge bg-orange">Changes requested</span></div>
+<div class="ui-row"><span class="ui-icon" style="background:var(--ui-purple)"></span><b>PR #477: Update dependencies</b><span>6 comments</span></div>
+</div>
+</div>
+<h3 class="h3">Actions</h3>
+<p>CI/CD and automation for every commit, pull request, and deployment.</p>
+<a class="btn btn-soft" href="#demo">Explore Actions</a>
+</article>
+<article class="card tall">
+<div class="vig" style="flex-direction:column;padding:var(--aura);">
+<div class="ui-chat" aria-hidden="true">
+<div class="ui-msg"><span class="ui-av" style="background:var(--ui-blue)"></span><div class="ui-bubble">Does this implementation handle edge cases?</div></div>
+<div class="ui-msg"><span class="ui-av" style="background:var(--ui-purple)"></span><div class="ui-bubble ai">Yes. Null checks on lines 42-45, validation in the middleware, and error boundary at component level.</div></div>
+</div>
+</div>
+<h3 class="h3">Code Quality</h3>
+<p>Quality analysis, fixes, and enforcement across every file and pull request.</p>
+<a class="btn btn-soft" href="#demo">Explore Code Quality</a>
+</article>
+<article class="card">
+<div class="vig">
+<div class="ui-board" aria-hidden="true">
+<div class="ui-col"><div class="ui-col-head">To do</div><div class="ui-task">Auth API</div><div class="ui-task">Tests</div></div>
+<div class="ui-col"><div class="ui-col-head">In review</div><div class="ui-task">Dashboard</div></div>
+<div class="ui-col"><div class="ui-col-head">Merged</div><div class="ui-task">Login UI</div><div class="ui-task">Routing</div></div>
+</div>
+</div>
+<h3 class="h3">Security</h3>
+<p>Automated security scanning and vulnerability detection in every commit.</p>
+<a class="btn btn-soft" href="#demo">Explore Security</a>
+</article>
+<article class="card">
+<div class="vig">
+<div class="ui-table" aria-hidden="true">
+<table>
+<thead><tr><th>Branch</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>main</td><td><span class="ui-badge bg-green">Passing</span></td></tr>
+<tr><td>dev</td><td><span class="ui-badge bg-blue">Building</span></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 class="h3">Secret Protection</h3>
+<p>Scan for exposed tokens and credentials before they reach production.</p>
+<a class="btn btn-soft" href="#demo">Explore Secrets</a>
+</article>
+<article class="card span2">
+<div class="vig" style="background:var(--vignette-bg);border:1px solid var(--vignette-border);padding:var(--aura);">
+<div style="font-family:var(--aura-font-mono);font-size:11px;color:var(--gray-11);">
+<div style="margin-bottom:8px;color:var(--gray-9);">// .devcontainer/devcontainer.json</div>
+<div><span style="color:var(--ui-purple);">{</span></div>
+<div style="padding-left:16px;"><span style="color:var(--ui-blue);">"name"</span>: <span style="color:var(--ui-green);">"Verdantline Dev"</span>,</div>
+<div style="padding-left:16px;"><span style="color:var(--ui-blue);">"image"</span>: <span style="color:var(--ui-green);">"node:20"</span></div>
+<div><span style="color:var(--ui-purple);">}</span></div>
+</div>
+</div>
+<h3 class="h3">Codespaces</h3>
+<p>Cloud-powered dev environments ready in seconds, right from your browser.</p>
+<a class="btn btn-soft" href="#demo">Explore Codespaces</a>
+</article>
+<article class="card">
+<div class="vig">
+<div class="ui-doc" aria-hidden="true">
+<div class="ui-row"><span class="ui-icon" style="background:var(--ui-green)"></span><b>sprint-24 release</b><span class="ui-badge bg-green">On track</span></div>
+<div class="ui-row"><span class="ui-icon" style="background:var(--ui-blue)"></span><b>Design system sync</b><span>Due Friday</span></div>
+<div class="ui-row"><span class="ui-icon" style="background:var(--ui-orange)"></span><b>API migration</b><span class="ui-badge bg-orange">3 owners</span></div>
+</div>
+</div>
+<h3 class="h3">Projects</h3>
+<p>Plan roadmaps, track milestones, and keep delivery visible across teams.</p>
+<a class="btn btn-soft" href="#demo">Explore Projects</a>
+</article>
+</div>
+</div>
+</section>
+
+<section class="sec wrap" id="ai" aria-labelledby="ai-title">
+<div class="split">
+<div>
+<p class="eb">Intelligence</p>
+<h2 class="h2" id="ai-title">Your AI coding partner.</h2>
+<p class="lead">Verdantline AI understands your codebase, reviews pull requests, and suggests improvements in real time.</p>
+<ul class="checks">
+<li><svg class="i"><use href="#tick"/></svg>Automated code reviews</li>
+<li><svg class="i"><use href="#tick"/></svg>Security vulnerability detection</li>
+<li><svg class="i"><use href="#tick"/></svg>Performance recommendations</li>
+<li><svg class="i"><use href="#tick"/></svg>Test coverage analysis</li>
+</ul>
+</div>
+<div class="card" style="padding:calc(var(--aura)*2);">
+<div style="display:flex;align-items:center;gap:calc(var(--aura)*0.5);margin-bottom:calc(var(--aura)*1.5);">
+<svg class="i" style="color:var(--ui-purple);width:20px;height:20px;"><use href="#spark"/></svg>
+<span style="font-weight:600;">Code Review Assistant</span>
+</div>
+<div style="background:var(--code-bg);border:1px solid var(--code-border);border-radius:8px;padding:var(--aura);font-family:var(--aura-font-mono);font-size:12px;line-height:1.6;">
+<div style="color:var(--gray-9);margin-bottom:8px;">src/utils/metrics.js</div>
+<div style="color:var(--gray-11);">44   if (average === <span style="color:var(--ui-red);text-decoration:line-through;">NaN</span>) {</div>
+<div style="background:var(--green-pale);color:var(--ui-green);padding:2px 4px;border-radius:2px;display:inline-block;margin:4px 0;">+ if (Number.isNaN(average)) {</div>
+<div style="color:var(--gray-11);margin-top:8px;">45     return 0;</div>
+<div style="color:var(--gray-11);">46   }</div>
+</div>
+<div style="margin-top:var(--aura);font-size:0.83rem;color:var(--gray-11);">
+<strong style="color:var(--gray-12);">Suggested change</strong><br/>
+Use Number.isNaN() instead of strict equality. Direct comparison with NaN always returns false.
+</div>
+<div style="margin-top:var(--aura);display:flex;gap:var(--aura);">
+<button class="btn btn-fill sm">Commit suggestion</button>
+<button class="btn btn-soft sm">Add to batch</button>
+</div>
+</div>
+</div>
+</section>
+
+<section class="band sec">
+<div class="wrap">
+<div class="head c">
+<p class="eb">Security</p>
+<h2 class="h2">Built-in protection for every line of code.</h2>
+</div>
+<div class="security-bento">
+<div class="security-card pink">
+<div class="security-card-icon"><svg aria-hidden="true"><use href="#shield"/></svg></div>
+<h3 class="h3">Code Security</h3>
+<p>Scan for vulnerabilities, outdated dependencies, and security patterns with every commit.</p>
+<a class="btn btn-soft" href="#demo">Learn more</a>
+</div>
+<div class="security-card orange">
+<div class="security-card-icon"><svg aria-hidden="true"><use href="#lock"/></svg></div>
+<h3 class="h3">Secret Protection</h3>
+<p>Prevent accidental exposure of API keys, tokens, and credentials before they reach your repo.</p>
+<a class="btn btn-soft" href="#demo">Learn more</a>
+</div>
+<div class="security-card blue">
+<div class="security-card-icon"><svg aria-hidden="true"><use href="#code"/></svg></div>
+<h3 class="h3">Codespaces</h3>
+<p>Secure, cloud-hosted development environments with pre-configured tooling and instant setup.</p>
+<a class="btn btn-soft" href="#demo">Learn more</a>
+</div>
+</div>
+</div>
+</section>
+
+<section class="sec" id="teams" aria-labelledby="teams-title">
+<div class="wrap">
+<div class="head c">
+<p class="eb">Collaboration</p>
+<h2 class="h2" id="teams-title">Built for teams.</h2>
+<p class="lead">Manage pull requests, track milestones, and ship features with visibility across your entire organization.</p>
+</div>
+<div class="teams-table tw-wrap">
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Free</th>
+<th>Pro</th>
+<th>Enterprise</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Code review</td>
+<td><svg class="i" style="color:var(--ui-green);"><use href="#tick"/></svg></td>
+<td><svg class="i" style="color:var(--ui-green);"><use href="#tick"/></svg></td>
+<td><svg class="i" style="color:var(--ui-green);"><use href="#tick"/></svg></td>
+</tr>
+<tr>
+<td>Issues & projects</td>
+<td><svg class="i" style="color:var(--ui-green);"><use href="#tick"/></svg></td>
+<td><svg class="i" style="color:var(--ui-green);"><use href="#tick"/></svg></td>
+<td><svg class="i" style="color:var(--ui-green);"><use href="#tick"/></svg></td>
+</tr>
+<tr>
+<td>Automated workflows</td>
+<td>Basic</td>
+<td><svg class="i" style="color:var(--ui-green);"><use href="#tick"/></svg></td>
+<td><svg class="i" style="color:var(--ui-green);"><use href="#tick"/></svg></td>
+</tr>
+<tr>
+<td>Advanced security</td>
+<td>—</td>
+<td><svg class="i" style="color:var(--ui-green);"><use href="#tick"/></svg></td>
+<td><svg class="i" style="color:var(--ui-green);"><use href="#tick"/></svg></td>
+</tr>
+<tr>
+<td>Team members</td>
+<td>5</td>
+<td>Unlimited</td>
+<td>Unlimited</td>
+</tr>
+<tr>
+<td>SSO & SAML</td>
+<td>—</td>
+<td>—</td>
+<td><svg class="i" style="color:var(--ui-green);"><use href="#tick"/></svg></td>
+</tr>
+<tr>
+<td></td>
+<td><span class="teams-pill">View plans</span></td>
+<td><span class="teams-pill">View plans</span></td>
+<td><span class="teams-pill">View plans</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+
+<section class="sec" id="pricing" aria-labelledby="pricing-title">
+<div class="wrap">
+<div class="head c">
+<p class="eb">Pricing</p>
+<h2 class="h2" id="pricing-title">Start free, scale fast.</h2>
+<p class="lead">Every plan includes unlimited repositories and collaborators. Upgrade for advanced features and support.</p>
+</div>
+<div class="plans">
+<article class="plan">
+<h3 class="h3">Free</h3>
+<p class="price">$0<span>/month</span></p>
+<ul class="checks">
+<li><svg class="i"><use href="#tick"/></svg>Unlimited repositories</li>
+<li><svg class="i"><use href="#tick"/></svg>5 team members</li>
+<li><svg class="i"><use href="#tick"/></svg>Basic CI/CD</li>
+</ul>
+<a class="btn btn-soft" href="#demo">Start free</a>
+</article>
+<article class="plan pop">
+<h3 class="h3">Pro</h3>
+<p class="price">$12<span>/user/month</span></p>
+<ul class="checks">
+<li><svg class="i"><use href="#tick"/></svg>Everything in Free</li>
+<li><svg class="i"><use href="#tick"/></svg>Unlimited team members</li>
+<li><svg class="i"><use href="#tick"/></svg>Advanced analytics</li>
+<li><svg class="i"><use href="#tick"/></svg>Priority support</li>
+</ul>
+<a class="btn btn-fill" href="#demo">Start trial</a>
+</article>
+<article class="plan">
+<h3 class="h3">Enterprise</h3>
+<p class="price">Custom<span></span></p>
+<ul class="checks">
+<li><svg class="i"><use href="#tick"/></svg>Everything in Pro</li>
+<li><svg class="i"><use href="#tick"/></svg>SSO & SAML</li>
+<li><svg class="i"><use href="#tick"/></svg>SLA guarantee</li>
+<li><svg class="i"><use href="#tick"/></svg>Dedicated support</li>
+</ul>
+<a class="btn btn-soft" href="#demo">Contact sales</a>
+</article>
+</div>
+</div>
+</section>
+
+<section class="band sec" id="demo" aria-labelledby="demo-title">
+<div class="wrap">
+<div class="split" style="align-items:start;">
+<div>
+<h2 class="h2" id="demo-title">Try Verdantline today.</h2>
+<p class="lead">Join thousands of teams shipping better code. This form is for demonstration only and does not submit data.</p>
+</div>
+<div class="formp">
+<form id="demo-form" novalidate>
+<p class="hint">Demo form. No data will be submitted.</p>
+<div class="field">
+<label for="f-name">Full name</label>
+<input class="default" id="f-name" name="name" type="text" autocomplete="name" required minlength="2" aria-describedby="f-name-err"/>
+<p class="err" id="f-name-err" aria-live="polite"></p>
+</div>
+<div class="field">
+<label for="f-email">Work email</label>
+<input class="default" id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="f-email-err"/>
+<p class="err" id="f-email-err" aria-live="polite"></p>
+</div>
+<div class="field">
+<label for="f-size">Team size</label>
+<select class="default" id="f-size" name="size" required aria-describedby="f-size-err">
+<option value="">Select team size</option>
+<option>1–10</option>
+<option>11–50</option>
+<option>51–200</option>
+<option>201+</option>
+</select>
+<p class="err" id="f-size-err" aria-live="polite"></p>
+</div>
+<div><button class="btn btn-fill" type="submit">Request demo</button></div>
+<p class="status" id="f-status" role="status"></p>
+</form>
+</div>
+</div>
+</div>
+</section>
+
+<section class="sec" id="faq" aria-labelledby="faq-title">
+<div class="wrap">
+<div class="split" style="align-items:start;">
+<h2 class="h2" id="faq-title">Frequently asked questions</h2>
+<div>
+<div class="acc"><h3><button class="acc-b" type="button" id="q1" aria-expanded="false" aria-controls="a1"><svg class="i" aria-hidden="true"><use href="#plus"/></svg>Is Verdantline a real product?</button></h3><div class="acc-p" id="a1" role="region" aria-labelledby="q1" hidden><p>No. Verdantline is a fictional developer platform created for the Aura design gallery. All features, pricing, and data shown are for demonstration purposes only.</p></div></div>
+<div class="acc"><h3><button class="acc-b" type="button" id="q2" aria-expanded="false" aria-controls="a2"><svg class="i" aria-hidden="true"><use href="#plus"/></svg>Can I import my repositories?</button></h3><div class="acc-p" id="a2" role="region" aria-labelledby="q2" hidden><p>In this demo scenario, Verdantline would support importing from popular version control platforms with one-click migration and history preservation.</p></div></div>
+<div class="acc"><h3><button class="acc-b" type="button" id="q3" aria-expanded="false" aria-controls="a3"><svg class="i" aria-hidden="true"><use href="#plus"/></svg>How does AI review code?</button></h3><div class="acc-p" id="a3" role="region" aria-labelledby="q3" hidden><p>In this fictional product, AI would analyze code quality, security patterns, test coverage, and suggest improvements based on your team's coding standards.</p></div></div>
+<div class="acc"><h3><button class="acc-b" type="button" id="q4" aria-expanded="false" aria-controls="a4"><svg class="i" aria-hidden="true"><use href="#plus"/></svg>Is there a dark mode?</button></h3><div class="acc-p" id="a4" role="region" aria-labelledby="q4" hidden><p>Yes. Add <code>?appearance=dark</code> to the URL to see this page in dark mode. The design system adapts all colors while maintaining accessibility standards.</p></div></div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="band closing" aria-labelledby="closing-title">
+<div class="wrap">
+<h2 class="h2" id="closing-title">Ship code with confidence.</h2>
+<div class="cta">
+<a class="btn btn-fill lg" href="#demo"><svg class="i" aria-hidden="true"><use href="#rocket"/></svg>Start free trial</a>
+<a class="btn btn-soft lg" href="#demo">Contact sales</a>
+</div>
+</div>
+</section>
+</main>
+
+<footer>
+<div class="wrap">
+<div class="foot">
+<div>
+<a class="logo" href="#top"><svg viewBox="0 0 32 32" aria-hidden="true"><use href="#mark"/></svg>Verdantline</a>
+<p class="muted" style="margin-top:calc(var(--aura)*1.5);max-width:calc(var(--aura)*18);">The modern platform for code review and collaboration. Demo only.</p>
+</div>
+<div>
+<h2>Product</h2>
+<ul>
+<li><a href="#features">Features</a></li>
+<li><a href="#ai">AI assistant</a></li>
+<li><a href="#projects">Collaboration</a></li>
+<li><a href="#pricing">Pricing</a></li>
+</ul>
+</div>
+<div>
+<h2>Solutions</h2>
+<ul>
+<li><a href="#teams">Engineering teams</a></li>
+<li><a href="#demo">Enterprise</a></li>
+<li><a href="#demo">Open source</a></li>
+<li><a href="#demo">Startups</a></li>
+</ul>
+</div>
+<div>
+<h2>Resources</h2>
+<ul>
+<li><a href="#demo">Documentation</a></li>
+<li><a href="#demo">API reference</a></li>
+<li><a href="#demo">Community</a></li>
+<li><a href="#faq">FAQ</a></li>
+</ul>
+</div>
+<div>
+<h2>Company</h2>
+<ul>
+<li><a href="#demo">About</a></li>
+<li><a href="#demo">Blog</a></li>
+<li><a href="#demo">Careers</a></li>
+<li><a href="#demo">Contact</a></li>
+</ul>
+</div>
+</div>
+<div class="legal">
+<p>© 2026 Verdantline Demo. Fictional product for Aura design gallery.</p>
+<p><a href="#demo">Privacy</a> · <a href="#demo">Terms</a> · <a href="#demo">Security</a></p>
+</div>
+</div>
+</footer>
+
+<script>
+(function(){
+var nav=document.querySelector(".nav"),toggle=document.querySelector(".toggle"),dds=[];
+function setMenu(open){toggle.setAttribute("aria-expanded",String(open));nav.dataset.open=String(open);}
+toggle.addEventListener("click",function(){setMenu(toggle.getAttribute("aria-expanded")!=="true");});
+document.querySelectorAll("[data-dd]").forEach(function(btn){
+var panel=document.getElementById(btn.getAttribute("aria-controls")),item=btn.parentElement;
+function set(open){btn.setAttribute("aria-expanded",String(open));panel.hidden=!open;}
+dds.push(set);
+btn.addEventListener("click",function(){var open=btn.getAttribute("aria-expanded")!=="true";dds.forEach(function(c){c(false);});set(open);});
+btn.addEventListener("keydown",function(e){if(e.key==="ArrowDown"){e.preventDefault();set(true);panel.querySelector("a").focus();}});
+item.addEventListener("keydown",function(e){if(e.key==="Escape"&&btn.getAttribute("aria-expanded")==="true"){e.stopPropagation();set(false);btn.focus();}});
+item.addEventListener("focusout",function(e){if(!item.contains(e.relatedTarget))set(false);});
+panel.querySelectorAll("a").forEach(function(link){link.addEventListener("click",function(){set(false);setMenu(false);});});
+});
+document.addEventListener("click",function(e){if(!e.target.closest(".menu > li"))dds.forEach(function(c){c(false);});});
+nav.querySelectorAll(".menu > li > a").forEach(function(link){link.addEventListener("click",function(){setMenu(false);});});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&nav.dataset.open==="true"){setMenu(false);toggle.focus();}});
+
+var mqPause=document.getElementById("mq-pause"),mqTrack=document.getElementById("logo-track");
+mqPause.addEventListener("click",function(){
+var paused=mqPause.getAttribute("aria-pressed")==="true";
+mqPause.setAttribute("aria-pressed",String(!paused));
+mqPause.textContent=paused?"Pause animation":"Resume animation";
+if(paused){mqTrack.classList.remove("paused");}else{mqTrack.classList.add("paused");}
+});
+
+document.querySelectorAll(".acc-b").forEach(function(btn){
+var panel=document.getElementById(btn.getAttribute("aria-controls"));
+btn.addEventListener("click",function(){var open=btn.getAttribute("aria-expanded")!=="true";btn.setAttribute("aria-expanded",String(open));panel.hidden=!open;});
+});
+
+var form=document.getElementById("demo-form"),status=document.getElementById("f-status");
+var msgs={"f-name":"Enter your full name.","f-email":"Enter a valid work email.","f-size":"Select your team size."};
+var fields=[document.getElementById("f-name"),document.getElementById("f-email"),document.getElementById("f-size")];
+function check(f){var valid=f.checkValidity()&&f.value.trim().length>0;f.setAttribute("aria-invalid",String(!valid));document.getElementById(f.id+"-err").textContent=valid?"":msgs[f.id];return valid;}
+form.addEventListener("submit",function(e){
+e.preventDefault();var first=null;
+fields.forEach(function(f){if(!check(f)&&!first)first=f;});
+if(first){status.textContent="";first.focus();return;}
+status.textContent="Looks good! This is a local demo—nothing was sent.";
+});
+fields.forEach(function(f){f.addEventListener(f.tagName==="SELECT"?"change":"input",function(){if(f.getAttribute("aria-invalid")==="true")check(f);});});
+})();
+</script>
+</body>
+</html>
