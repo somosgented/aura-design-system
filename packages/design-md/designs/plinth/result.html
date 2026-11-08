@@ -225,6 +225,41 @@
       .acc-b[aria-expanded="true"] svg { transform: rotate(45deg); }
       .acc-p { padding: 0 0 calc(var(--aura) * 1.25) calc(var(--aura) * 2); color: var(--gray-11); font-size: 0.94rem; line-height: 1.6; }
 
+      .hero-pill { display: inline-flex; align-items: center; gap: 0.35em; padding: 0.12em 0.55em; background: #dcfce7; border-radius: 999px; vertical-align: middle; white-space: nowrap; }
+      .hero-pill-dot { width: 0.45em; height: 0.45em; background: #22c55e; border-radius: 50%; flex-shrink: 0; }
+      .hero-pill-text { position: relative; height: 1.15em; overflow: hidden; display: inline-flex; color: #16a34a; }
+      .hero-pill-word { position: absolute; left: 0; opacity: 0; }
+      .hero-pill-word:first-child { position: relative; opacity: 1; }
+      .hero-mock { margin-top: calc(var(--aura) * 4); max-width: 920px; margin-inline: auto; aspect-ratio: 16 / 10; background: var(--gray-1); border: 1px solid var(--hair); border-radius: calc(var(--aura) * 0.75); box-shadow: 0 4px 24px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04); overflow: hidden; display: flex; flex-direction: column; }
+      .mock-bar { height: 2.4rem; background: var(--gray-2); border-bottom: 1px solid var(--hair); display: flex; align-items: center; gap: 0.5rem; padding: 0 0.9rem; }
+      .mock-dots { display: flex; gap: 0.35rem; }
+      .mock-dots span { width: 0.55rem; height: 0.55rem; border-radius: 50%; }
+      .mock-dots span:nth-child(1) { background: #f87171; }
+      .mock-dots span:nth-child(2) { background: #fbbf24; }
+      .mock-dots span:nth-child(3) { background: #4ade80; }
+      .mock-nav { margin-left: 0.75rem; display: flex; gap: 0.4rem; color: var(--gray-8); font-size: 0.7rem; }
+      .mock-tab { margin-left: auto; padding: 0.25rem 0.7rem; background: var(--gray-1); border-radius: 0.25rem; font-size: 0.65rem; color: var(--gray-10); border: 1px solid var(--hair); }
+      .mock-body { flex: 1; display: flex; min-height: 0; }
+      .mock-side { width: 160px; background: var(--gray-2); border-right: 1px solid var(--hair); padding: 0.75rem 0.6rem; flex-shrink: 0; }
+      .mock-side-item { padding: 0.35rem 0.5rem; border-radius: 0.25rem; font-size: 0.6rem; color: var(--gray-10); margin-bottom: 0.2rem; display: flex; align-items: center; gap: 0.35rem; }
+      .mock-side-item.active { background: var(--gray-4); color: var(--gray-12); }
+      .mock-side-dot { width: 0.35rem; height: 0.35rem; border-radius: 50%; flex-shrink: 0; }
+      .mock-side-label { font-size: 0.5rem; color: var(--gray-8); padding: 0.5rem 0.5rem 0.25rem; text-transform: uppercase; letter-spacing: 0.05em; }
+      .mock-main { flex: 1; padding: 1.25rem; overflow: hidden; }
+      .mock-title { font-size: 1rem; font-weight: 600; color: var(--gray-12); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.4rem; }
+      .mock-title-icon { width: 1.3rem; height: 1.3rem; background: linear-gradient(135deg, #a78bfa, #818cf8); border-radius: 0.25rem; }
+      .mock-tabs { display: flex; gap: 1rem; margin-bottom: 0.75rem; font-size: 0.6rem; color: var(--gray-9); border-bottom: 1px solid var(--hair); padding-bottom: 0.4rem; }
+      .mock-tabs span:first-child { color: var(--gray-12); box-shadow: inset 0 -2px 0 var(--gray-12); padding-bottom: 0.4rem; margin-bottom: -0.4rem; }
+      .mock-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+      .mock-card { background: var(--gray-2); border-radius: 0.35rem; padding: 0.6rem; }
+      .mock-card-head { display: flex; align-items: center; gap: 0.3rem; margin-bottom: 0.4rem; }
+      .mock-card-badge { width: 0.4rem; height: 0.4rem; border-radius: 50%; }
+      .mock-card-title { font-size: 0.55rem; font-weight: 500; color: var(--gray-11); }
+      .mock-card-lines { display: flex; flex-direction: column; gap: 0.25rem; }
+      .mock-card-line { height: 0.3rem; background: var(--gray-5); border-radius: 0.15rem; }
+      @media (max-width: 860px) { .hero-mock { aspect-ratio: 4 / 3; } .mock-side { display: none; } .mock-cards { grid-template-columns: repeat(2, 1fr); } }
+      @media (max-width: 600px) { .mock-cards { grid-template-columns: 1fr; } }
+
       .closing { padding: calc(var(--aura) * 8) 0; text-align: center; }
       .closing .h2 { margin-bottom: calc(var(--aura) * 2); }
 
@@ -247,6 +282,11 @@
         .logos:hover .track { animation-play-state: paused; }
         @keyframes slide { to { transform: translateX(-50%); } }
         @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes pill-cycle { 0%, 20% { opacity: 1; transform: translateY(0); } 25%, 100% { opacity: 0; transform: translateY(-100%); } }
+        .hero-pill-word { animation: pill-cycle 8s infinite; }
+        .hero-pill-word:nth-child(2) { animation-delay: 2s; }
+        .hero-pill-word:nth-child(3) { animation-delay: 4s; }
+        .hero-pill-word:nth-child(4) { animation-delay: 6s; }
       }
       @media (prefers-reduced-motion: reduce) {
         *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -324,11 +364,40 @@
 
     <main id="main">
       <section class="hero wrap" id="top" aria-labelledby="hero-title">
-        <h1 class="h1" id="hero-title">Where teams build together.</h1>
+        <h1 class="h1" id="hero-title">Where teams and agents <span class="hero-pill"><span class="hero-pill-dot" aria-hidden="true"></span><span class="hero-pill-text" aria-live="polite"><span class="hero-pill-word">Write</span><span class="hero-pill-word">Plan</span><span class="hero-pill-word">Ship</span><span class="hero-pill-word">Build</span></span></span> together.</h1>
         <p class="lead">Capture context, find answers, and automate tasks with AI built for your team.</p>
         <div class="cta">
           <a class="btn btn-fill lg" href="#demo">Get Plinth free</a>
           <a class="btn btn-soft lg" href="#demo">Request a demo</a>
+        </div>
+        <div class="hero-mock" aria-hidden="true">
+          <div class="mock-bar">
+            <div class="mock-dots"><span></span><span></span><span></span></div>
+            <div class="mock-nav">‹ ›</div>
+            <span class="mock-tab">Acme HQ</span>
+          </div>
+          <div class="mock-body">
+            <div class="mock-side">
+              <div class="mock-side-item active"><span class="mock-side-dot" style="background:#818cf8"></span>Home</div>
+              <div class="mock-side-item"><span class="mock-side-dot" style="background:#4ade80"></span>Inbox</div>
+              <div class="mock-side-item"><span class="mock-side-dot" style="background:#fbbf24"></span>Docs</div>
+              <div class="mock-side-label">Workspace</div>
+              <div class="mock-side-item"><span class="mock-side-dot" style="background:#f87171"></span>Projects</div>
+              <div class="mock-side-item"><span class="mock-side-dot" style="background:#60a5fa"></span>Roadmap</div>
+              <div class="mock-side-label">Agents</div>
+              <div class="mock-side-item"><span class="mock-side-dot" style="background:#a78bfa"></span>Task router</div>
+              <div class="mock-side-item"><span class="mock-side-dot" style="background:#f472b6"></span>Q&amp;A agent</div>
+            </div>
+            <div class="mock-main">
+              <div class="mock-title"><span class="mock-title-icon"></span>Acme HQ</div>
+              <div class="mock-tabs"><span>Tasks</span><span>My work</span><span>Sprint</span><span>Timeline</span></div>
+              <div class="mock-cards">
+                <div class="mock-card"><div class="mock-card-head"><span class="mock-card-badge" style="background:#4ade80"></span><span class="mock-card-title">In progress</span></div><div class="mock-card-lines"><span class="mock-card-line" style="width:90%"></span><span class="mock-card-line" style="width:70%"></span></div></div>
+                <div class="mock-card"><div class="mock-card-head"><span class="mock-card-badge" style="background:#fbbf24"></span><span class="mock-card-title">In review</span></div><div class="mock-card-lines"><span class="mock-card-line" style="width:80%"></span><span class="mock-card-line" style="width:60%"></span></div></div>
+                <div class="mock-card"><div class="mock-card-head"><span class="mock-card-badge" style="background:#818cf8"></span><span class="mock-card-title">Done</span></div><div class="mock-card-lines"><span class="mock-card-line" style="width:100%"></span><span class="mock-card-line" style="width:85%"></span></div></div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
