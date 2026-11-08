@@ -19,7 +19,9 @@
         --aura-accents-primary: var(--accent-9);
         --aura-text-primary-inverse: var(--accent-contrast);
         --aura-button-hover: var(--accent-10);
-        --aura-outline: var(--accent-8) solid 2px;
+        --aura-outline: var(--accent-12) solid 2px;
+        --aura-input-bg: var(--gray-1);
+        --aura-accents-10: var(--gray-12);
         --ease: cubic-bezier(0.4, 0, 0.6, 1);
         --field: linear-gradient(160deg, var(--sky-mist) 0%, var(--sky-mid) 70%);
         --field-fg: var(--field-ink);
@@ -440,29 +442,29 @@
         font-weight: 600;
       }
 
-      input,
-      select,
-      textarea {
+      .field-row input,
+      .field-row select,
+      .field-row textarea {
         font: inherit;
         color: var(--gray-12);
-        background: var(--gray-1);
-        border: 1px solid var(--gray-7);
+        background: var(--aura-input-bg);
+        border: 1px solid var(--gray-9);
         border-radius: var(--aura-input-radius);
         padding: calc(var(--aura) * 0.5) calc(var(--aura) * 1);
         min-height: calc(var(--aura) * 3);
       }
 
-      textarea {
+      .field-row textarea {
         min-height: calc(var(--aura) * 7);
         resize: vertical;
       }
 
-      [aria-invalid="true"] {
-        border-color: var(--red-9, #d93025);
+      .field-row [aria-invalid="true"] {
+        border-color: var(--alert-ink);
       }
 
       .error {
-        color: var(--red-11, #b3261e);
+        color: var(--alert-ink);
         font-size: 0.875rem;
       }
 
@@ -640,7 +642,7 @@
           display: none;
         }
 
-        .nav-end .button-fill {
+        .nav-end {
           display: none;
         }
 
@@ -656,6 +658,7 @@
     <header class="wrap">
       <nav class="nav" aria-label="Primary" data-open="false">
         <a class="logo" href="#top" aria-label="Bluefold home"><i class="mark" aria-hidden="true"></i>Bluefold</a>
+        <button class="button button-pill ghost btn menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
         <ul class="nav-links" id="nav-links">
           <li><a href="#features">How it works</a></li>
           <li><a href="#runs">Runs</a></li>
@@ -664,7 +667,6 @@
         </ul>
         <div class="nav-end">
           <a class="button button-fill btn" href="#brief">Write a brief</a>
-          <button class="button button-pill ghost btn menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
         </div>
       </nav>
     </header>
@@ -840,15 +842,21 @@
       (function () {
         var nav = document.querySelector(".nav");
         var toggle = document.querySelector(".menu-toggle");
-        toggle.addEventListener("click", function () {
-          var open = toggle.getAttribute("aria-expanded") !== "true";
+        function setOpen(open) {
           toggle.setAttribute("aria-expanded", String(open));
           nav.dataset.open = String(open);
+        }
+        toggle.addEventListener("click", function () {
+          setOpen(toggle.getAttribute("aria-expanded") !== "true");
+        });
+        nav.addEventListener("keydown", function (event) {
+          if (event.key !== "Escape" || nav.dataset.open !== "true") return;
+          setOpen(false);
+          toggle.focus();
         });
         nav.querySelectorAll(".nav-links a").forEach(function (link) {
           link.addEventListener("click", function () {
-            toggle.setAttribute("aria-expanded", "false");
-            nav.dataset.open = "false";
+            setOpen(false);
           });
         });
 

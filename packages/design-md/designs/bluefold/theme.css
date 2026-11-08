@@ -79,6 +79,7 @@
   --sky-mid: #80bdfc;
   --sweep: #ffffff;
   --field-ink: #0f1b2d;
+  --alert-ink: #b3261e;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -147,6 +148,7 @@
     --sky-mid: #2c5f9e;
     --sweep: #9cc8ff;
     --field-ink: #eaf3ff;
+    --alert-ink: #ff9b8f;
   }
 }
 
@@ -215,4 +217,5 @@
   --sky-mid: #2c5f9e;
   --sweep: #9cc8ff;
   --field-ink: #eaf3ff;
+  --alert-ink: #ff9b8f;
 }

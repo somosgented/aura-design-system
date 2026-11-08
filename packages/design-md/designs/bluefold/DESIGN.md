@@ -65,12 +65,14 @@ aura:
       sky-mid: "#80bdfc"
       sweep: "#ffffff"
       field-ink: "#0f1b2d"
+      alert-ink: "#b3261e"
     dark:
       sky-mist: "#122036"
       sky-wash: "#16273f"
       sky-mid: "#2c5f9e"
       sweep: "#9cc8ff"
       field-ink: "#eaf3ff"
+      alert-ink: "#ff9b8f"
 ---
 
 # Bluefold
@@ -84,7 +86,7 @@ Source flavor: <https://x.ai/bot>. **Limited observation:** the only visual inpu
 An agent that receives this file's link inside an Aura project does this, in order:
 
 1. Save this file as `DESIGN.theme.md` at the project root. Keep the root `DESIGN.md` (Aura base). Where the two disagree, this file wins on color, type, radius, shape, motion and voice; the base wins on grid, accessibility, icons and forms.
-2. Fetch the sibling `theme.css` (same URL, `DESIGN.md` → `theme.css`). Paste its `@import`, `@theme inline` block, `:root` block, dark media block and `.dark` block **after** the existing ones in the project's `globals.css`. Do not hand-edit the generated values.
+2. Fetch the sibling `theme.css` (same URL, `DESIGN.md` → `theme.css`). Paste its `@import`, `@theme inline` block, `:root` block, dark media block and `.dark` block **after** the existing ones in the project's `globals.css`. Do not hand-edit the generated values. After those blocks, set `--aura-text-primary-inverse: var(--accent-contrast)` in `:root` so filled buttons keep white text (see **Upstream limitation** below).
 3. If the app uses `next/font`, load `Bricolage Grotesque`, `Instrument Sans` and `JetBrains Mono` there instead of the `@import`, and point `--font-display`, `--font-sans` and `--font-label` at them.
 4. Restyle with Aura components and token classes only, following **Components** below. No new hex literals in components.
 5. Keep the product's content. Do not import Bluefold's sample copy into an unrelated product.
@@ -113,12 +115,17 @@ The table records exact static literals in the generated `theme.css`, not browse
 | Hairline | gray seed–derived | `#c9d3e0` | `#333a45` | `--gray-6` | Borders, rules |
 | Working blue | accent seeds | `#1d6ee6` | `#1a5ecb` | `--accent-9` | Primary controls and progress |
 | Blue hover | accent scale | `#0760d6` | `#1952ae` | `--accent-10` | Hover scale step |
+| Focus ring | accent scale | `#0f3165` | `#cbe3ff` | `--accent-12` | 2px focus outline, also on the field |
+| Field border | gray seed–derived | `#77879d` | `#626f81` | `--gray-9` | Input, select and textarea borders |
+| Alert ink | custom token | `#b3261e` | `#ff9b8f` | `--alert-ink` | Inline form errors and invalid field borders |
 
-The dark accent seed (`#1a5ecb`) remains a proposed correction. Runtime foreground/background contrast on primary buttons and the focused skip link is PENDING_UNTESTED; no contrast pass is claimed from static literals. Local browser access was blocked by environment loopback policy, not demonstrated to be an application defect.
+White text on `--accent-9` measures 4.75:1 in light and 5.99:1 in dark in the gallery showcase (Chrome, rendered pixels), and 5.75:1 / 7.34:1 on `--accent-10` hover. Light is close to the 4.5:1 floor: keep primary labels at weight 600 and do not lighten the accent seed.
 
 - Text on the hero field uses `--field-ink`, not `--gray-12`. Small text on the field sits on `--sky-mist` cards, not directly on `--sky-mid`.
+- Focus rings use `--accent-12`, not `--accent-8`: `--accent-8` falls below 3:1 on the canvas and on the field.
+- Form fields sit on `--gray-1` with a `--gray-9` border, the lightest gray step that keeps 3:1 against the canvas in both appearances.
 
-> **Upstream limitation — `--gray-contrast: undefined`:** The generator unconditionally interpolates `scales.grayContrast`, but the direct `generateRadixColors` return has no `grayContrast` property. The generated declaration is literally `undefined`. No DIRECT consumer was found in Bluefold HTML; indirect shared-CSS consumers were not inspected, so absence of runtime impact is not established. The shared producer/generator fix is outside this flavor's scope; generated files are not patched by hand.
+> **Upstream limitation — `--gray-contrast: undefined`:** The generator interpolates `scales.grayContrast`, which `generateRadixColors` does not return, so every generated `theme.css` (this one included) declares `--gray-contrast: undefined`. The gallery showcase does not read it. Aura project `globals.css` does: it maps `--aura-text-primary-inverse` and the `gray-contrast` color utility to `var(--gray-contrast)`, and `.button-fill` uses `--aura-text-primary-inverse` for its label. Measured in Chrome with Aura `main.css`, a consumer `:root` and this `theme.css` pasted after it, the filled button label falls back to the inherited body ink: `#19202a` on `#1d6ee6` (3.45:1, below 4.5:1) in light and `#ebeef2` on `#1a5ecb` (5.15:1) in dark. Setting `--aura-text-primary-inverse: var(--accent-contrast)` (step 2 of **Apply**) restores white labels at 4.75:1 / 5.99:1. Utilities that read `--gray-contrast` directly stay invalid until the shared generator is fixed; that fix is outside this flavor and generated files are not patched by hand.
 
 ### Dark mode
 
@@ -171,11 +178,11 @@ Font choices are Aura interpretations; the source page's fonts were not observed
 
 - **Primary button** → `Button variant="fill"`, weight 600, trailing `ArrowRightIcon className="icon"`.
 - **Secondary button** → `Button variant="pill"` with `border border-gray-7 bg-transparent`.
-- **Nav** → `NavigationMenu` with the folded-square mark. Below 760px a disclosure button with `aria-expanded` reveals the links.
+- **Nav** → `NavigationMenu` with the folded-square mark. Below 760px a disclosure button with `aria-expanded` reveals the links. The button sits before the links in source order so `Tab` moves into the open list; `Escape` closes it and returns focus to the button.
 - **Run card** → `Card` on `--sky-mist` with a `font-label` status (`StatusDot` + `RUNNING` / `DONE`), title, progress track and a small attributed "learned" note.
 - **Stats** → `Stat`, `StatValue className="font-display"`, `StatLabel` in `gray-11`.
 - **Runs table** → `Table` with `text-sm` cells, `--sky-wash` header and `Badge` states.
-- **Brief form** → `Input`, `NativeSelect`, `Textarea`, `Button variant="fill"`, inline errors with `aria-describedby`.
+- **Brief form** → `Input`, `NativeSelect`, `Textarea`, `Button variant="fill"`, inline errors in `--alert-ink` with `aria-describedby`, and a `role="status"` line on `--sky-wash` after a valid check.
 - **Plans** → `Card`s on paper; the recommended plan sits on the field.
 - **FAQ** → `Accordion`.
 
