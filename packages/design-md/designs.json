@@ -921,6 +921,83 @@
           "gray-12": "#eeeeec"
         }
       }
+    },
+    {
+      "slug": "reelnight",
+      "name": "Reelnight",
+      "description": "Una pantalla negra de cine con un muro de carteles inclinado, un solo rojo de acción, titulares grotescos en negrita, un arco luminoso que corta el hero, filas numeradas con cifras gigantes y un FAQ de bloques grises. Un flavor de Aura para servicios de streaming, catálogos de vídeo y portadas de suscripción.",
+      "design": "designs/reelnight/DESIGN.md",
+      "theme": "designs/reelnight/theme.css",
+      "result": "designs/reelnight/result.html",
+      "fonts": {
+        "sans": "Figtree",
+        "display": "Figtree",
+        "label": "Figtree",
+        "href": "https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&display=swap"
+      },
+      "hero": "field",
+      "headingWeight": 800,
+      "radius": {
+        "button": "4px",
+        "input": "4px",
+        "surface": "16px"
+      },
+      "tokens": {
+        "light": {
+          "accent-contrast": "#fff",
+          "accent-1": "#f2efee",
+          "gray-1": "#efefef",
+          "accent-2": "#f2eae8",
+          "gray-2": "#ebebeb",
+          "accent-3": "#f2dbd8",
+          "gray-3": "#e1e1e1",
+          "accent-4": "#facac3",
+          "gray-4": "#d8d8d8",
+          "accent-5": "#f8bab1",
+          "gray-5": "#d0d0d0",
+          "accent-6": "#f3a89e",
+          "gray-6": "#c7c7c7",
+          "accent-7": "#eb9286",
+          "gray-7": "#bcbcbc",
+          "accent-8": "#e27569",
+          "gray-8": "#a9a9a9",
+          "accent-9": "#e50914",
+          "gray-9": "#7b7b7b",
+          "accent-10": "#d40000",
+          "gray-10": "#717171",
+          "accent-11": "#c70000",
+          "gray-11": "#545454",
+          "accent-12": "#651c17",
+          "gray-12": "#202020"
+        },
+        "dark": {
+          "accent-contrast": "#fff",
+          "accent-1": "#000",
+          "gray-1": "#000",
+          "accent-2": "#1a0c0b",
+          "gray-2": "#121212",
+          "accent-3": "#3a0c09",
+          "gray-3": "#1f1f1f",
+          "accent-4": "#540203",
+          "gray-4": "#282828",
+          "accent-5": "#660908",
+          "gray-5": "#303030",
+          "accent-6": "#781a16",
+          "gray-6": "#3a3a3a",
+          "accent-7": "#932b24",
+          "gray-7": "#484848",
+          "accent-8": "#be3a31",
+          "gray-8": "#606060",
+          "accent-9": "#e50914",
+          "gray-9": "#6e6e6e",
+          "accent-10": "#d50000",
+          "gray-10": "#7b7b7b",
+          "accent-11": "#ff9082",
+          "gray-11": "#b4b4b4",
+          "accent-12": "#ffd0c8",
+          "gray-12": "#eee"
+        }
+      }
     }
   ]
 }
