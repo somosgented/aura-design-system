@@ -1,6 +1,6 @@
 import { Command } from "commander";
 import { execa } from "execa";
-import { readFileSync, writeFileSync, existsSync, mkdirSync, rmSync } from "fs";
+import { readFileSync, writeFileSync, existsSync, mkdirSync, renameSync, rmSync } from "fs";
 import { dirname, join, resolve } from "path";
 import { fileURLToPath } from "url";
 import { installFormStack, syncFormAgentFiles } from "./forms-stack.js";
@@ -78,6 +78,7 @@ function enabledGroups(profile: ProjectProfile): Set<ScriptGroup> {
 export function gitignoreLines(profile: ProjectProfile): string[] {
   return [
     ".env",
+    OBSIDIAN_GITIGNORE_LINE,
     ...(profile.sonar ? sonarGitignoreLines(profile.stack) : []),
     ...(profile.bruno ? BRUNO_GITIGNORE_LINES : []),
   ];
@@ -224,6 +225,47 @@ const LEGACY_AGENT_PATHS = [
 
 export const FEATURE_MAP_DIR = "Feature-Map";
 
+export const VAULT_SECTIONS = {
+  general: "00-General",
+  identity: "01-Identidad",
+  docs: "02-Documentación",
+  config: "03-Configuración",
+} as const;
+
+export const FEATURE_MAP_PATH = `${VAULT_SECTIONS.docs}/${FEATURE_MAP_DIR}`;
+
+export const OBSIDIAN_GITIGNORE_LINE = "wiki/**/.obsidian/";
+
+const LEGACY_VAULT_MOVES: [string, string][] = [
+  [FEATURE_MAP_DIR, FEATURE_MAP_PATH],
+  ["01-Identity", VAULT_SECTIONS.identity],
+];
+
+const LEGACY_BASE_FILTER = 'file.inFolder("Feature-Map")';
+
+export function migrateVaultLayout(obsidianDir: string, label: string): void {
+  for (const [from, to] of LEGACY_VAULT_MOVES) {
+    const src = join(obsidianDir, from);
+    const dest = join(obsidianDir, to);
+    if (!existsSync(src)) continue;
+    if (existsSync(dest)) {
+      console.warn(`  keep: ${label}/${from} (${label}/${to} already exists; merge by hand)`);
+      continue;
+    }
+    mkdirSync(dirname(dest), { recursive: true });
+    renameSync(src, dest);
+    console.log(`  move: ${label}/${from} -> ${label}/${to}`);
+  }
+  const base = join(obsidianDir, FEATURE_MAP_PATH, `${FEATURE_MAP_DIR}.base`);
+  if (existsSync(base)) {
+    const content = readFileSync(base, "utf-8");
+    if (content.includes(LEGACY_BASE_FILTER)) {
+      writeFileSync(base, content.split(LEGACY_BASE_FILTER).join(`file.inFolder("${FEATURE_MAP_PATH}")`), "utf-8");
+      console.log(`  patch: ${label}/${FEATURE_MAP_PATH}/${FEATURE_MAP_DIR}.base (folder filter)`);
+    }
+  }
+}
+
 export function scaffoldFeatureMap(
   projectRoot: string,
   suffix: string,
@@ -232,6 +274,9 @@ export function scaffoldFeatureMap(
 ): void {
   const obsidianName = `obsidian-${suffix}`;
   const obsidianDir = join(projectRoot, "wiki", obsidianName);
+  const label = `wiki/${obsidianName}`;
+
+  migrateVaultLayout(obsidianDir, label);
 
   for (const f of ["app.json", "appearance.json", "core-plugins.json"]) {
     const src = join(templatesRoot(), "obsidian", "dotobsidian", f);
@@ -239,24 +284,40 @@ export function scaffoldFeatureMap(
       join(obsidianDir, ".obsidian", f),
       readFileSync(src, "utf-8"),
       force,
-      `wiki/${obsidianName}/.obsidian/${f}`,
+      `${label}/.obsidian/${f}`,
     );
   }
 
+  writeIfMissing(
+    join(obsidianDir, VAULT_SECTIONS.general, "README.md"),
+    readTpl("obsidian/sections/00-General.md"),
+    `${label}/${VAULT_SECTIONS.general}/README.md`,
+  );
+  writeIfMissing(
+    join(obsidianDir, VAULT_SECTIONS.identity, "README.md"),
+    readTpl("obsidian/sections/01-Identidad.md"),
+    `${label}/${VAULT_SECTIONS.identity}/README.md`,
+  );
+  writeIfMissing(
+    join(obsidianDir, VAULT_SECTIONS.config, "README.md"),
+    readTpl("obsidian/sections/03-Configuracion.md"),
+    `${label}/${VAULT_SECTIONS.config}/README.md`,
+  );
+
   writeManaged(
-    join(obsidianDir, FEATURE_MAP_DIR, `${FEATURE_MAP_DIR}.base`),
+    join(obsidianDir, FEATURE_MAP_PATH, `${FEATURE_MAP_DIR}.base`),
     readTpl("obsidian/Feature-Map.base"),
     force,
-    `wiki/${obsidianName}/${FEATURE_MAP_DIR}/${FEATURE_MAP_DIR}.base`,
+    `${label}/${FEATURE_MAP_PATH}/${FEATURE_MAP_DIR}.base`,
   );
 
   if (!withImageIdentity) return;
   writeIfMissing(
-    join(obsidianDir, "01-Identity", "Image-Identity.md"),
+    join(obsidianDir, VAULT_SECTIONS.identity, "Image-Identity.md"),
     interpolate(readTpl("obsidian/Image-Identity.md"), {
       DATE: new Date().toISOString().slice(0, 10),
     }),
-    `wiki/${obsidianName}/01-Identity/Image-Identity.md`,
+    `${label}/${VAULT_SECTIONS.identity}/Image-Identity.md`,
   );
 }
 

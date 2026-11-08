@@ -19,7 +19,7 @@ Do not weaken these when editing the skill or a component.
 - Fluid typography via `clamp()` and a global **≥ 17px** floor on editable form controls.
 - Strict **13px** spacing base (`unit * 13px`).
 - Icons use `className="icon"` only. No horizontal icon margins inside gap-owning controls.
-- The only project documentation is the feature map in `wiki/obsidian-{suffix}/Feature-Map/`, updated inside the PR that changes a feature. See `.agents/rules/feature-map.mdc`.
+- The only project documentation is the feature map in `wiki/obsidian-{suffix}/02-Documentación/Feature-Map/`, updated inside the PR that changes a feature. See `.agents/rules/feature-map.mdc`.
 - No code comments except external constraints (with the reason), directives, licenses, and generated code. See `.agents/rules/no-comments.mdc`.
 
 ## Upstream shadcn skill

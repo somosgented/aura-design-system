@@ -16,7 +16,7 @@ Aura is a **design system monorepo**: tokens, UI components, Ladle stories, docs
 | CLI | `packages/cli/` |
 | Docs / marketing site | `apps/www/` |
 | Agent rules & project skills | `.agents/skills/` and `.agents/rules/`, the one home for every agent. Never `.cursor/rules` or `.cursor/skills` |
-| Feature map (only docs; update on PR) | `wiki/obsidian-aura-design-project/Feature-Map/` |
+| Feature map (only docs; update on PR) | `wiki/obsidian-aura-design-project/02-Documentación/Feature-Map/` |
 
 `apps/www/AGENTS.md` is Next.js / site lint guidance only. Prefer **this** file for repo-wide agent policy.
 

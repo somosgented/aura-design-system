@@ -55,7 +55,7 @@ Check and record **present / missing** for each:
 | Agent rules | Always-on process rules in `.agents/rules/*.mdc`. Every agent finds it through the root `AGENTS.md`. Design guardrails in `.agents/skills/aura/` |
 | Cursor skills | `.agents/skills/port-component-to-aura/SKILL.md` and `.agents/skills/generate-brand-images/SKILL.md` |
 | Third-party audits | Not installed by Aura. Older Emil and Vercel copies under `.cursor/skills/` and `.agents/skills/` are gone after blueprint. See [Audits](/docs/audits) |
-| Image identity | `wiki/obsidian-*/01-Identity/Image-Identity.md`; `status: ready` only when style, palette, composition/motifs, and exclusions are concrete |
+| Image identity | `wiki/obsidian-*/01-Identidad/Image-Identity.md`; `status: ready` only when style, palette, composition/motifs, and exclusions are concrete |
 | Gemini image env | `.env.example` names `GOOGLE_API_KEY`; only check whether `.env` has `GOOGLE_API_KEY` or `GEMINI_API_KEY`, never print its value |
 | `AGENTS.md` entry | Root `AGENTS.md` has the block between `<!-- aura:agents:start -->` and `<!-- aura:agents:end -->`; `CLAUDE.md` has `@AGENTS.md` |
 | Leftover `.cursor` agent files | `.cursor/rules/` and `.cursor/skills/` are absent, or each leftover is a differing duplicate to merge |
@@ -264,7 +264,7 @@ Confirm after installs:
 - `.agents/rules/` has the always-on process rules (`feature-map`, `no-comments`, `design-md`) when `@aura/rules` was installed
 - `.cursor/rules` and `.cursor/skills` are absent, or the only leftovers are differing duplicates named in the report
 - Root `AGENTS.md` has the `aura:agents` block and `CLAUDE.md` has `@AGENTS.md`
-- `.agents/rules/feature-map.mdc`, `.agents/rules/no-comments.mdc`, `.agents/skills/update-feature-map/SKILL.md`, and `wiki/obsidian-*/Feature-Map/Feature-Map.base` exist on every stack
+- `.agents/rules/feature-map.mdc`, `.agents/rules/no-comments.mdc`, `.agents/skills/update-feature-map/SKILL.md`, and `wiki/obsidian-*/02-Documentación/Feature-Map/Feature-Map.base` exist on every stack
 - Sonar: `sonar-project.properties` plus `sonar:*` scripts on Node, or `scripts/sonar.sh` on Python, Go, Java/Kotlin, PHP, and Ruby; `scripts/sonar.sh` without properties on .NET; nothing on Rust or unknown stacks
 - Backends: `bruno/bruno.json`, `bruno/environments/local.bru`, and `.agents/rules/bruno.mdc` exist, and `.gitignore` has `bruno/.env`
 - The checks below about components, forms, images, lint, MCP, and gdp-ts apply to JavaScript projects only
@@ -274,7 +274,8 @@ Confirm after installs:
 - `.cursor/skills/` and `.agents/skills/` do not contain `emil-design-eng`, `react-best-practices`, or `vercel-react-best-practices` unless someone installed that audit for this task and has not committed it
 - `.agents/skills/aura/rules/forms.md`, `.agents/skills/aura-forms/SKILL.md`, and the `form`, `field`, `use-dynamic-form`, and `web-validation` registry items exist
 - `.agents/skills/shadcn/SKILL.md` exists (or document the gap)
-- `wiki/obsidian-*/01-Identity/Image-Identity.md` and `wiki/obsidian-*/Feature-Map/Feature-Map.base` exist
+- `wiki/obsidian-*/` has `00-General/`, `01-Identidad/`, `02-Documentación/Feature-Map/Feature-Map.base`, and `03-Configuración/`; frontends also have `01-Identidad/Image-Identity.md`
+- `.gitignore` has `wiki/**/.obsidian/` and `git ls-files wiki` lists no `.obsidian/` file (otherwise run `git rm -r --cached wiki/*/.obsidian`)
 - `package.json` has `ai:image` and no `brain:progress`; `.env.example` names `GOOGLE_API_KEY`
 - Root `DESIGN.md` exists (or user declined design-md)
 - `components.json` includes `@aura`
@@ -290,7 +291,7 @@ Optional smoke: `pnpm dlx shadcn@latest add @aura/button` only if the user asked
 
 - **Consumer app:** follow the skill `port-component-to-aura` in **project** mode — write into `@/components` aliases; do **not** create Ladle/registry metadata.
 - **Aura monorepo:** skill **registry** mode — component + Ladle `Default` story + `metadata/{kebab}.yml` + `registry:generate` / `registry:build`.
-- **Landing with images:** follow `generate-brand-images`. Read the blueprint `01-Identity` notes first. If image identity is undefined, ask focused identity questions and update `Image-Identity.md` before generating.
+- **Landing with images:** follow `generate-brand-images`. Read the blueprint `01-Identidad` notes first. If image identity is undefined, ask focused identity questions and update `Image-Identity.md` before generating.
 - **Gemini access:** the bundled command reads `GOOGLE_API_KEY` or `GEMINI_API_KEY` directly from root `.env`. If absent, ask whether the user wants to add a key, use agent-native image generation when available, or continue with placeholders; never fabricate a key.
 - **Batch landing flow:** inspect the landing, create one manifest for the necessary image set, run `pnpm ai:image -- --manifest <path>`, integrate accepted local assets, then record their paths in the wiki.
 - **Mobile form UX (critical):** `input` / `textarea` / `select` font-size **MUST be ≥ 17px**. Never put `text-sm` or `text-xs` on editable fields—iOS Safari zooms on focus below that size. Keep `html { font-size: 17px; }` and the global floor in `styles/main.css` (`font-size: max(1rem, 17px)`). See the [Aura skill](/docs/rules/aura-skill) and `DESIGN.md`.
@@ -316,7 +317,7 @@ Optional smoke: `pnpm dlx shadcn@latest add @aura/button` only if the user asked
 | .agents/skills/aura | … | … | … |
 | .agents/rules | … | … | … |
 | .agents/skills | … | … | … |
-| Feature map + agent rules | … | … | … |
+| Feature map + agent rules + vault sections | … | … | … |
 | Sonar (when the stack is scannable) | … | … | … |
 | Bruno (backends) | … | … | … |
 | Third-party audits | … | … | … |
