@@ -186,7 +186,7 @@ img{display:block;max-width:100%;}
 .lv-drawer-chev{margin-left:auto;width:16px;height:16px;stroke:rgba(255,255,255,0.6);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
 .lv-drawer-locale{display:flex;align-items:center;gap:calc(var(--aura)*1);padding:calc(var(--aura)*1) calc(var(--aura)*1.5);color:rgba(255,255,255,0.8);font-size:0.9rem;font-family:var(--aura-font-stack);}
 
-.lv-hero{position:relative;min-height:72vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:visible;padding:calc(var(--aura)*5) calc(var(--aura)*2) calc(var(--aura)*14);background-color:var(--lv-hero-base);}
+.lv-hero{position:relative;min-height:72vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:visible;padding:calc(var(--aura)*5) calc(var(--aura)*2) calc(var(--aura)*5);background-color:var(--lv-hero-base);}
 .lv-hero-sky{position:absolute;inset:0;z-index:0;background:linear-gradient(to bottom,#061830 0%,#0a2a50 35%,#0d3060 55%,#0a2a40 70%,#071a2e 100%);}
 .lv-hero-radial{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse at 25% 40%,rgba(14,143,160,0.3) 0%,transparent 50%),radial-gradient(ellipse at 75% 25%,rgba(24,123,183,0.25) 0%,transparent 45%),radial-gradient(ellipse at 50% 70%,rgba(10,60,120,0.4) 0%,transparent 55%);}
 .lv-hero-hills{position:absolute;bottom:28%;left:0;right:0;z-index:2;height:120px;overflow:hidden;}
@@ -201,18 +201,19 @@ img{display:block;max-width:100%;}
 .lv-hero-actions{display:flex;flex-wrap:wrap;gap:calc(var(--aura)*1.5);justify-content:center;margin-top:calc(var(--aura)*2.5);}
 .lv-pause-btn{position:absolute;top:calc(var(--aura)*1.5);right:calc(var(--aura)*1.5);z-index:8;width:44px;height:44px;border-radius:50%;background:rgba(0,0,0,0.75);border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .lv-pause-btn:focus-visible{outline:3px solid #fff;outline-offset:2px;}
-.lv-pause-btn svg{width:20px;height:20px;fill:#fff;}
+.lv-pause-btn{color:#fff;}
+.lv-pause-btn svg{width:20px;height:20px;fill:currentColor;}
 .lv-pause-btn .play-icon{display:none;}
 .lv-pause-btn[aria-pressed="true"] .pause-icon{display:none;}
 .lv-pause-btn[aria-pressed="true"] .play-icon{display:block;}
 
-.lv-hero-booking-anchor{position:absolute;bottom:0;left:0;right:0;z-index:10;transform:translateY(50%);}
-.lv-booking-outer-desktop{display:block;padding:0 calc(var(--aura)*4.5);}
+.lv-booking-outer-desktop{display:block;padding:calc(var(--aura)*1.5) calc(var(--aura)*4.5);background:var(--lv-band);}
 .lv-booking-outer-mobile{display:none;padding:calc(var(--aura)*1.5) calc(var(--aura)*1.5);}
 .lv-booking-wrap{background:var(--lv-card-bg);box-shadow:var(--lv-shadow-strip);border-radius:16px;padding:calc(var(--aura)*1.5) calc(var(--aura)*2.5);display:flex;align-items:flex-end;gap:calc(var(--aura)*2);flex-wrap:wrap;max-width:calc(var(--aura)*98.5);margin-inline:auto;}
 .lv-booking-field{display:flex;flex-direction:column;gap:calc(var(--aura)*0.35);}
 .lv-booking-label{font-size:0.75rem;font-weight:600;color:var(--gray-11);}
 .lv-booking-select{height:calc(var(--aura)*3);padding:0 calc(var(--aura)*2.5) 0 calc(var(--aura)*1);border:1px solid var(--lv-hair);border-radius:16px;background:var(--lv-card-bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 15 15'%3E%3Cpath d='M4 6l3.5 3.5L11 6' fill='none' stroke='%234b6781' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right calc(var(--aura)*1) center;color:var(--gray-12);font:inherit;font-size:0.95rem;appearance:none;min-width:calc(var(--aura)*14);}
+.lv-booking-wrap select.lv-booking-select:not(.default){background-color:var(--lv-card-bg);color:var(--gray-12);}
 .lv-booking-select:focus-visible{outline:3px solid var(--accent-9);outline-offset:2px;}
 .lv-stepper{display:flex;align-items:center;gap:calc(var(--aura)*0.75);}
 .lv-stepper-btn{width:32px;height:32px;border-radius:50%;border:2px solid var(--accent-9);background:var(--lv-card-bg);color:var(--accent-9);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;line-height:1;}
@@ -241,9 +242,9 @@ img{display:block;max-width:100%;}
 .lv-offer-links a:first-child{color:var(--accent-9);font-weight:600;font-size:0.9rem;text-decoration:underline;text-underline-offset:3px;}
 .lv-offer-links a:first-child:hover{color:var(--accent-10);}
 
-.lv-exp-grid{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:auto auto;gap:calc(var(--aura)*1.5);}
+.lv-exp-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:calc(var(--aura)*1.5);}
 .lv-exp-card{border-radius:24px;overflow:hidden;position:relative;min-height:calc(var(--aura)*16);box-shadow:var(--lv-shadow-card);background-color:var(--lv-art-1-base);}
-.lv-exp-card--hero{grid-row:1/3;min-height:calc(var(--aura)*34);}
+.lv-exp-card--hero{grid-column:1/-1;grid-row:auto;min-height:calc(var(--aura)*22);}
 .lv-exp-art{position:absolute;inset:0;}
 .lv-exp-art-1{background:radial-gradient(ellipse at 40% 55%,#1a7a9a 0%,#0a3050 55%,transparent 100%);}
 .lv-exp-art-2{background-color:var(--lv-art-2-base);background:radial-gradient(ellipse at 55% 45%,#2a7a55 0%,#104030 55%,transparent 100%);}
@@ -264,9 +265,9 @@ img{display:block;max-width:100%;}
 .lv-plan-art-4{background-color:var(--lv-art-6-base);background:radial-gradient(ellipse at 35% 50%,#1a3080 0%,#0a1840 50%,transparent 100%);}
 .lv-plan-art-shapes{position:absolute;inset:0;}
 
-.lv-season-grid{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:auto auto;gap:calc(var(--aura)*1.5);}
+.lv-season-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:calc(var(--aura)*1.5);}
 .lv-season-card{border-radius:24px;overflow:hidden;position:relative;min-height:calc(var(--aura)*18);box-shadow:var(--lv-shadow-card);background-color:var(--lv-art-6-base);}
-.lv-season-card--large{grid-row:1/3;min-height:calc(var(--aura)*38);}
+.lv-season-card--large{grid-column:1/-1;grid-row:auto;min-height:calc(var(--aura)*24);}
 .lv-season-art{position:absolute;inset:0;}
 .lv-season-art-winter{background:radial-gradient(ellipse at 50% 35%,#3a6aaa 0%,#1a3a7a 45%,transparent 100%);}
 .lv-season-art-spring{background-color:var(--lv-art-2-base);background:radial-gradient(ellipse at 42% 55%,#2a8a40 0%,#0a4020 45%,transparent 100%);}
@@ -405,16 +406,16 @@ dialog::backdrop{background:var(--lv-scrim);}
 .lv-hamburger{display:flex;}
 .lv-mobile-tickets{display:inline-block;}
 .lv-mobile-search-btn{display:flex;}
-.lv-booking-outer-desktop{display:none;}
+.lv-booking-outer-desktop{display:none !important;}
 .lv-booking-outer-mobile{display:block;}
 .lv-sheet{padding-top:0;}
 .lv-offer-grid{grid-template-columns:1fr;}
-.lv-exp-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto auto auto;}
-.lv-exp-card--hero{grid-row:auto;min-height:calc(var(--aura)*20);}
+.lv-exp-grid{grid-template-columns:1fr 1fr 1fr;}
+.lv-exp-card--hero{grid-column:1/-1;grid-row:auto;min-height:calc(var(--aura)*20);}
 .lv-plan-row{grid-template-columns:1fr;}
 .lv-plan-row--right .lv-plan-art{order:0;}
-.lv-season-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto auto auto;}
-.lv-season-card--large{grid-row:auto;min-height:calc(var(--aura)*18);}
+.lv-season-grid{grid-template-columns:1fr 1fr 1fr;}
+.lv-season-card--large{grid-column:1/-1;grid-row:auto;min-height:calc(var(--aura)*18);}
 .lv-stats{grid-template-columns:repeat(2,1fr);}
 .lv-features{grid-template-columns:1fr 1fr;}
 .lv-pricing{grid-template-columns:1fr;}
@@ -429,6 +430,7 @@ dialog::backdrop{background:var(--lv-scrim);}
 .lv-mobile-tickets{font-size:0.65rem;padding:calc(var(--aura)*0.2) calc(var(--aura)*0.55);}
 }
 @media (max-width: 600px){
+.wrap{width:min(100% - calc(var(--aura)*2.5), calc(var(--aura)*98.5));margin-inline:auto;}
 .lv-main-row{padding:0 calc(var(--aura)*1);}
 .lv-booking-outer-mobile{padding:calc(var(--aura)*1);}
 .lv-booking-wrap{flex-direction:column;align-items:stretch;border-radius:12px;padding:calc(var(--aura)*1.5);}
@@ -545,13 +547,13 @@ Explore Areas
 </div>
 <div class="lv-mega-right">
 <div class="lv-mega-hours-title">Today's Hours</div>
-<div class="lv-mega-hours-sub">Example — Saturday, 8 November 2026</div>
+<div class="lv-mega-hours-sub">Example — Sunday, 8 November 2026</div>
 <ul class="lv-hours-list">
 <li class="lv-hours-item"><span class="lv-hours-dot open"></span><div><span class="lv-hours-name">Lantern Quay</span><span class="lv-hours-time">9:00 AM – 10:00 PM</span></div></li>
 <li class="lv-hours-item"><span class="lv-hours-dot open"></span><div><span class="lv-hours-name">Fernhollow Gardens</span><span class="lv-hours-time">9:00 AM – 9:00 PM</span></div></li>
 <li class="lv-hours-item"><span class="lv-hours-dot open"></span><div><span class="lv-hours-name">Starwake Pier</span><span class="lv-hours-time">10:00 AM – 11:00 PM</span></div></li>
 <li class="lv-hours-item"><span class="lv-hours-dot open"></span><div><span class="lv-hours-name">Tidepool Cove</span><span class="lv-hours-time">10:00 AM – 8:00 PM</span></div></li>
-<li class="lv-hours-item"><span class="lv-hours-dot closed"></span><div><span class="lv-hours-name">Copperline Rails</span><span class="lv-hours-closed-label">Closed for refurbishment</span></div></li>
+<li class="lv-hours-item"><span class="lv-hours-dot closed"></span><div><span class="lv-hours-name">Copperline Rails</span><span class="lv-hours-closed-label">Temporarily unavailable</span></div></li>
 <li class="lv-hours-item"><span class="lv-hours-dot open"></span><div><span class="lv-hours-name">Meadowlight Commons</span><span class="lv-hours-time">8:00 AM – 11:00 PM</span></div></li>
 </ul>
 </div>
@@ -606,6 +608,39 @@ Explore Areas
 </div>
 
 <main id="main">
+<div class="lv-booking-outer-desktop">
+<form class="lv-booking-wrap" id="booking-form" novalidate aria-label="Check availability — demo only">
+<div class="lv-booking-field">
+<label class="lv-booking-label" for="pass-type">Pass type</label>
+<select class="lv-booking-select" id="pass-type" name="pass-type">
+<option>Day Pass</option>
+<option>Weekend Pass</option>
+<option>Annual Pass</option>
+<option>Twilight Pass</option>
+</select>
+</div>
+<div class="lv-booking-field">
+<div class="lv-booking-label" id="adults-label">Adults (13 +)</div>
+<div class="lv-stepper" role="group" aria-labelledby="adults-label">
+<button class="lv-stepper-btn" type="button" aria-label="Decrease adults" data-stepper="adults" data-dir="-1">−</button>
+<span class="lv-stepper-val" id="adults-val" aria-live="polite" aria-atomic="true">0</span>
+<button class="lv-stepper-btn" type="button" aria-label="Increase adults" data-stepper="adults" data-dir="1">+</button>
+</div>
+</div>
+<div class="lv-booking-field">
+<div class="lv-booking-label" id="children-label">Children (3 – 12)</div>
+<div class="lv-stepper" role="group" aria-labelledby="children-label">
+<button class="lv-stepper-btn" type="button" aria-label="Decrease children" data-stepper="children" data-dir="-1">−</button>
+<span class="lv-stepper-val" id="children-val" aria-live="polite" aria-atomic="true">0</span>
+<button class="lv-stepper-btn" type="button" aria-label="Increase children" data-stepper="children" data-dir="1">+</button>
+</div>
+</div>
+<div>
+<button class="lv-pill lv-pill-green" type="submit">Check Availability</button>
+<div class="lv-booking-status" aria-live="polite" aria-atomic="true" id="booking-status"></div>
+</div>
+</form>
+</div>
 <section id="top" class="lv-hero" aria-labelledby="hero-title">
 <div class="lv-hero-sky"></div>
 <div class="lv-hero-radial"></div>
@@ -645,41 +680,6 @@ Find a Lodge
 <svg class="pause-icon" aria-hidden="true"><use href="#lv-pause-icon"/></svg>
 <svg class="play-icon" aria-hidden="true"><use href="#lv-play-icon"/></svg>
 </button>
-<div class="lv-hero-booking-anchor">
-<div class="lv-booking-outer-desktop">
-<form class="lv-booking-wrap" id="booking-form" novalidate aria-label="Check availability — demo only">
-<div class="lv-booking-field">
-<label class="lv-booking-label" for="pass-type">Pass type</label>
-<select class="lv-booking-select" id="pass-type" name="pass-type">
-<option>Day Pass</option>
-<option>Weekend Pass</option>
-<option>Annual Pass</option>
-<option>Twilight Pass</option>
-</select>
-</div>
-<div class="lv-booking-field">
-<div class="lv-booking-label" id="adults-label">Adults (13 +)</div>
-<div class="lv-stepper" role="group" aria-labelledby="adults-label">
-<button class="lv-stepper-btn" type="button" aria-label="Decrease adults" data-stepper="adults" data-dir="-1">−</button>
-<span class="lv-stepper-val" id="adults-val" aria-live="polite" aria-atomic="true">0</span>
-<button class="lv-stepper-btn" type="button" aria-label="Increase adults" data-stepper="adults" data-dir="1">+</button>
-</div>
-</div>
-<div class="lv-booking-field">
-<div class="lv-booking-label" id="children-label">Children (3 – 12)</div>
-<div class="lv-stepper" role="group" aria-labelledby="children-label">
-<button class="lv-stepper-btn" type="button" aria-label="Decrease children" data-stepper="children" data-dir="-1">−</button>
-<span class="lv-stepper-val" id="children-val" aria-live="polite" aria-atomic="true">0</span>
-<button class="lv-stepper-btn" type="button" aria-label="Increase children" data-stepper="children" data-dir="1">+</button>
-</div>
-</div>
-<div>
-<button class="lv-pill lv-pill-green" type="submit">Search Prices</button>
-<div class="lv-booking-status" aria-live="polite" aria-atomic="true" id="booking-status"></div>
-</div>
-</form>
-</div>
-</div>
 </section>
 
 <div class="lv-booking-outer-mobile">
@@ -710,7 +710,7 @@ Find a Lodge
 </div>
 </div>
 <div>
-<button class="lv-pill lv-pill-green" type="submit" style="width:100%;justify-content:center;">Search Prices</button>
+<button class="lv-pill lv-pill-green" type="submit" style="width:100%;justify-content:center;">Check Availability</button>
 <div class="lv-booking-status" aria-live="polite" aria-atomic="true" id="booking-status-m"></div>
 </div>
 </form>
@@ -723,7 +723,7 @@ Find a Lodge
 <svg viewBox="0 0 24 24"><path d="M12 3l1.5 3.5L17 8l-3 2.5.8 3.5-3-1.5-3 1.5.8-3.5L7 8l3.5-.5z"/></svg>
 </div>
 <h2 class="lv-h2" id="hours-heading" style="margin-bottom:calc(var(--aura)*1);">Open Tonight Across the Six Areas</h2>
-<p class="muted" style="text-align:center;margin-bottom:calc(var(--aura)*1.5);font-size:0.9rem;">Example — Saturday, 8 November 2026</p>
+<p class="muted" style="text-align:center;margin-bottom:calc(var(--aura)*1.5);font-size:0.9rem;">Example — Sunday, 8 November 2026</p>
 <div style="text-align:center;margin-bottom:calc(var(--aura)*1.5);">
 <button class="lv-hours-toggle-btn" type="button" aria-expanded="false" aria-controls="hours-panel" id="hours-toggle">
 <svg class="chev" aria-hidden="true" width="14" height="14"><use href="#lv-chev-down"/></svg>
@@ -750,7 +750,7 @@ Find a Lodge
 </div>
 <div style="display:flex;align-items:flex-start;gap:calc(var(--aura)*0.75);padding:calc(var(--aura)*1);border-radius:16px;background:var(--lv-card-bg);border:1px solid var(--lv-card-border);">
 <span class="lv-hours-dot closed" style="margin-top:4px;"></span>
-<div><span class="lv-hours-name">Copperline Rails</span><span class="lv-hours-closed-label">Closed for refurbishment</span></div>
+<div><span class="lv-hours-name">Copperline Rails</span><span class="lv-hours-closed-label">Temporarily unavailable</span></div>
 </div>
 <div style="display:flex;align-items:flex-start;gap:calc(var(--aura)*0.75);padding:calc(var(--aura)*1);border-radius:16px;background:var(--lv-card-bg);border:1px solid var(--lv-card-border);">
 <span class="lv-hours-dot open" style="margin-top:4px;"></span>
@@ -788,8 +788,8 @@ Find a Lodge
 <h3 class="lv-h3" style="margin-bottom:calc(var(--aura)*0.75);">Lakeside Lantern Escape</h3>
 <p style="font-size:0.9rem;color:var(--gray-11);line-height:1.6;">Stay three nights, explore all six resort areas, and enjoy a guided lantern-floating evening on Lake Lumenvale. Rates from <strong>$299</strong> per night. <em>Example pricing only.</em></p>
 <div class="lv-offer-links">
-<a href="#offers">Offer details</a>
-<a class="lv-pill lv-pill-secondary" href="#offers" style="padding:calc(var(--aura)*0.5) calc(var(--aura)*1.5);font-size:0.875rem;">All offers</a>
+<a href="#offers">View this offer</a>
+<a class="lv-pill lv-pill-secondary" href="#offers" style="padding:calc(var(--aura)*0.5) calc(var(--aura)*1.5);font-size:0.875rem;">Browse offers</a>
 </div>
 </div>
 </article>
@@ -812,8 +812,8 @@ Find a Lodge
 <h3 class="lv-h3" style="margin-bottom:calc(var(--aura)*0.75);">Fernhollow Family Bundle</h3>
 <p style="font-size:0.9rem;color:var(--gray-11);line-height:1.6;">Two adults and two children admitted to Fernhollow Gardens for a full day of trails, waterways, and the seasonal blooms display. From <strong>$89</strong> per family. <em>Example pricing only.</em></p>
 <div class="lv-offer-links">
-<a href="#offers">Offer details</a>
-<a class="lv-pill lv-pill-secondary" href="#offers" style="padding:calc(var(--aura)*0.5) calc(var(--aura)*1.5);font-size:0.875rem;">All offers</a>
+<a href="#offers">See bundle details</a>
+<a class="lv-pill lv-pill-secondary" href="#offers" style="padding:calc(var(--aura)*0.5) calc(var(--aura)*1.5);font-size:0.875rem;">All packages</a>
 </div>
 </div>
 </article>
@@ -825,7 +825,7 @@ Find a Lodge
 <div class="ornament-divider" aria-hidden="true">
 <svg viewBox="0 0 24 24"><path d="M12 3l1.5 3.5L17 8l-3 2.5.8 3.5-3-1.5-3 1.5.8-3.5L7 8l3.5-.5z"/></svg>
 </div>
-<h2 class="lv-h2" id="exp-heading" style="margin-bottom:calc(var(--aura)*3);">Not-to-Miss Experiences</h2>
+<h2 class="lv-h2" id="exp-heading" style="margin-bottom:calc(var(--aura)*3);">Unmissable Lumenvale Experiences</h2>
 <div class="lv-exp-grid">
 <article class="lv-exp-card lv-exp-card--hero">
 <div class="lv-exp-art lv-exp-art-1" aria-hidden="true">
@@ -1231,7 +1231,7 @@ Find a Lodge
 <li><svg aria-hidden="true"><use href="#lv-tick"/></svg>Priority trail booking</li>
 <li><svg aria-hidden="true"><use href="#lv-tick"/></svg>Dining discount</li>
 </ul>
-<a class="lv-pill lv-pill-primary" href="#passes">Our most popular</a>
+<a class="lv-pill lv-pill-primary" href="#passes">Choose this pass</a>
 </article>
 <article class="lv-plan">
 <div class="lv-plan-name">Annual Pass</div>
@@ -1313,7 +1313,7 @@ Are the booking and enquiry forms real?
 <div class="lv-closing-actions">
 <a class="lv-pill lv-closing-primary" href="#passes">
 <svg width="20" height="20" viewBox="0 0 24 24" style="fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;" aria-hidden="true"><use href="#lv-ticket"/></svg>
-Get Your Passes
+Secure Your Passes
 </a>
 <a class="lv-pill lv-closing-secondary" href="#lodging">Explore Lodging</a>
 </div>
@@ -1327,7 +1327,7 @@ Get Your Passes
 </div>
 <button class="lv-footer-show-more" type="button" id="footer-more-toggle" aria-expanded="false" aria-controls="footer-extra">
 <svg aria-hidden="true"><use href="#lv-chev-right"/></svg>
-<span id="footer-more-txt">Show more links</span>
+<span id="footer-more-txt">Expand footer links</span>
 </button>
 <div class="lv-footer-extra" id="footer-extra">
 <ul>
@@ -1376,7 +1376,7 @@ Get Your Passes
 </ul>
 </div>
 <div class="lv-footer-col">
-<h4>Stay Connected</h4>
+<h4>Keep in Touch</h4>
 <div class="lv-footer-social">
 <p>Follow Lumenvale</p>
 <div class="lv-footer-social-links">
@@ -1385,9 +1385,9 @@ Get Your Passes
 </div>
 </div>
 <div style="margin-top:calc(var(--aura)*2);">
-<p style="font-size:0.875rem;font-weight:600;color:var(--gray-12);margin-bottom:calc(var(--aura)*0.5);">Create a Lumenvale Account</p>
-<p style="font-size:0.8rem;color:var(--gray-11);margin-bottom:calc(var(--aura)*0.75);">Get personalised event reminders and exclusive member offers. Demo only.</p>
-<a class="lv-pill lv-pill-secondary" href="#signin" style="font-size:0.85rem;padding:calc(var(--aura)*0.5) calc(var(--aura)*1.5);">Create account</a>
+<p style="font-size:0.875rem;font-weight:600;color:var(--gray-12);margin-bottom:calc(var(--aura)*0.5);">Join Lumenvale Members</p>
+<p style="font-size:0.8rem;color:var(--gray-11);margin-bottom:calc(var(--aura)*0.75);">Receive tailored event alerts and member-only previews. Demo only.</p>
+<a class="lv-pill lv-pill-secondary" href="#signin" style="font-size:0.85rem;padding:calc(var(--aura)*0.5) calc(var(--aura)*1.5);">Become a member</a>
 </div>
 </div>
 </div>
@@ -1402,7 +1402,7 @@ Get Your Passes
 <span class="lv-footer-legal-sep" aria-hidden="true"></span>
 <a href="#legal">Site Map</a>
 <span class="lv-footer-legal-sep" aria-hidden="true"></span>
-<a href="#legal">Interest-Based Ads</a>
+<a href="#legal">Ad Preferences</a>
 </nav>
 </footer>
 
@@ -1581,7 +1581,7 @@ footerMoreToggle.addEventListener("click",function(){
 var open=footerMoreToggle.getAttribute("aria-expanded")==="true";
 footerMoreToggle.setAttribute("aria-expanded",String(!open));
 footerExtra.classList.toggle("open",!open);
-footerMoreTxt.textContent=open?"Show more links":"Hide links";
+footerMoreTxt.textContent=open?"Expand footer links":"Collapse footer links";
 });
 })();
 </script>

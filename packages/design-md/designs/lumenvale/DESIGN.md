@@ -143,7 +143,7 @@ The source has **no dark mode**: Aura **light** is the faithful appearance match
 
 | Kind | What |
 | --- | --- |
-| Observed (measured) | Header bar deep royal blue; two-row sticky header: utility row (sign-in, globe locale pill, slim search pill ~22px tall) + main row (wordmark + 5 nav items + cart + account); primary button blue / hover darker / focus border 4px / disabled bg pale blue text muted; secondary button white with blue text; search CTA green; hero pause rgba(0,0,0,0.7) background, 3px white focus; pill radius 999px; h3 24px/700; desktop side padding ~57px from 1200px; hero: full-bleed scene, two-line centered headline, two large pill CTAs with blue-to-teal gradient + 2px white border; booking strip: white rounded card floating over hero bottom at desktop (below hero on mobile), ticket-type select, two steppers (adults/children, circular ± buttons), green search pill; mega-menu: left link groups + right pale-blue panel with six venues and hours (one closed for renovation); 360: hamburger + wordmark + tickets pill + search icon; drawer full-height blue with icon+label rows, locale row, sign-in row; footer: white area with 4 link columns, stay-connected social icons, create-account blurb, then full-width royal-blue bottom bar with legal links; locale dialog: centered white modal, two columns of region links, pill cancel button over blue scrim; page body begins with a large-radius rounded "sheet" that rises over the hero's lower edge |
+| Observed (measured) | Header bar deep royal blue; two-row sticky header: utility row (sign-in, globe locale pill, slim search pill ~22px tall) + main row (wordmark + 5 nav items + cart + account); primary button blue / hover darker / focus border 4px / disabled bg pale blue text muted; secondary button white with blue text; search CTA green; hero pause rgba(0,0,0,0.7) background, 3px white focus; pill radius 999px; h3 24px/700; desktop side padding ~16px each side; hero: full-bleed scene, two-line centered headline, two large pill CTAs with blue-to-teal gradient + 2px white border; booking strip: white rounded card sitting directly under the sticky header and above the hero at desktop (below hero on mobile), ticket-type select, two steppers (adults/children, circular ± buttons), green check-availability pill; mega-menu: left link groups + right pale-blue panel with six venues and hours (one temporarily unavailable); 360: hamburger + wordmark + tickets pill + search icon; drawer full-height blue with icon+label rows, locale row, sign-in row; footer: white area with 4 link columns, keep-in-touch social icons, join-members blurb, then full-width royal-blue bottom bar with legal links; locale dialog: centered white modal, two columns of region links, pill cancel button over blue scrim; page body begins with a large-radius rounded "sheet" that rises over the hero's lower edge |
 | Adapted by Lumenvale | All type set in Nunito (display) and Nunito Sans (body/label); every spacing rounded to 13px grid; hero scene replaced with original layered CSS gradient animation (sky gradient, distant hills, lake band with reflections, lantern dots, radial bursts); all images replaced with CSS-only art; all copy is original Lumenvale fiction; six fictional resort areas replace source venues; booking strip is demo-only with aria-live status, no submission; locale dialog uses native dialog element with focus trap, Escape closes |
 | Not legible | Exact animation keyframes for hover states, section scroll behaviour, authenticated flows, cookie banner internals |
 
@@ -160,7 +160,7 @@ An agent that receives this file's link inside an Aura project does this, in ord
 
 ## Overview
 
-Lumenvale is a warm, immersive leisure page. The header is a sticky deep-blue two-row bar: a slim utility row above a wordmark-and-nav row with a mega-menu panel on the primary tab. At desktop, a white rounded booking strip overlaps the bottom of the hero (positioned absolutely so it floats over the hero's lower edge); on mobile it sits below the hero. The page body begins with a large-radius rounded "sheet" (48px top corners) that visually rises over the hero. The hero is full-bleed: a layered CSS animation (slow gradient pan + drifting lantern-light particles + hill silhouettes + lake reflection band) with a centered two-line headline in white and two large pill CTAs carrying a blue-to-teal gradient fill with a 2px white ring. Sections alternate between white and a soft sky-blue band, each preceded by an ornamental divider (thin rule + small centered lantern glyph) and a centered dark-navy heading. Cards use 24px radius, soft border, and subtle shadow. Motion is rich but strictly behind `prefers-reduced-motion: no-preference`; the hero pause button stops all animation with correct aria state.
+Lumenvale is a warm, immersive leisure page. The header is a sticky deep-blue two-row bar: a slim utility row above a wordmark-and-nav row with a mega-menu panel on the primary tab. At desktop, a white rounded booking strip sits directly beneath the sticky header and above the hero section as a normal flow block; on mobile it sits below the hero. The page body begins with a large-radius rounded "sheet" (48px top corners) that visually rises over the hero. The hero is full-bleed: a layered CSS animation (slow gradient pan + drifting lantern-light particles + hill silhouettes + lake reflection band) with a centered two-line headline in white and two large pill CTAs carrying a blue-to-teal gradient fill with a 2px white ring. Sections alternate between white and a soft sky-blue band, each preceded by an ornamental divider (thin rule + small centered lantern glyph) and a centered dark-navy heading. Cards use 24px radius, soft border, and subtle shadow. Motion is rich but strictly behind `prefers-reduced-motion: no-preference`; the hero pause button stops all animation with correct aria state.
 
 ## Colors
 
@@ -231,13 +231,13 @@ Reinterpret, do not invert. Dark surfaces shift to a deep lake-night palette thr
 | 24 radius lg | `rounded-lg` | 24px | Card, strip radius |
 | 8 radius sm | `rounded-sm` | 8px | Badge radius |
 
-Page maximum width: `min(100% - 2*57px, 1280px)`. At 360px the full width is used with 16px gutter.
+Page maximum width: `min(100% - calc(var(--aura)*9), 1280px)` (~57px gutters on desktop). At ≤600px gutters narrow to `calc(var(--aura)*2.5)` (~16px each side).
 
-The booking strip at desktop overlaps the hero: it is positioned so its top edge sits inside the hero's lower region, giving the floating-card-over-scene effect. On mobile (≤600px) the strip is a normal block below the hero.
+The booking strip at desktop is a normal flow block placed directly under the sticky header and above the hero, giving immediate access to availability before the scene begins. On mobile (≤600px) the strip is a normal block below the hero.
 
 ## Elevation & Depth
 
-Cards use 1px `--card-border` and a soft box-shadow (`0 2px 12px rgba(28,70,142,0.08)` light / `0 2px 12px rgba(0,0,0,0.3)` dark). The booking strip floats with `box-shadow: 0 4px 24px rgba(28,70,142,0.12)`. The mega-menu uses 1px border and an 8px border-radius drop panel. The sticky header gains no extra shadow — border-bottom only. The locale dialog uses a blue scrim and a white card with 24px radius and soft shadow.
+Cards use 1px `--card-border` and a soft box-shadow (`0 2px 12px rgba(28,70,142,0.08)` light / `0 2px 12px rgba(0,0,0,0.3)` dark). The booking strip uses `box-shadow: 0 4px 24px rgba(28,70,142,0.12)` and sits in normal document flow beneath the header. The mega-menu uses 1px border and an 8px border-radius drop panel. The sticky header gains no extra shadow — border-bottom only. The locale dialog uses a blue scrim and a white card with 24px radius and soft shadow.
 
 ## Shapes
 
@@ -269,7 +269,7 @@ White card overlapping the hero's lower edge at desktop (absolute or negative-ma
 
 ### Hero animation
 
-`position: relative; overflow: hidden`. Background layers: deep-sky gradient base, distant hill silhouette (SVG `<path>`), lake reflection band (semi-transparent lighter strip), lantern-dot particles, soft radial bursts. The hero container has a solid dark `background-color` (#061830) so white text contrast holds without the gradient art. Particle layer: 20 `<span>` elements animated via `@keyframes lv-float`. Pause button `aria-pressed="true"` stops all animations. Under `prefers-reduced-motion: reduce`: static gradient only, particles hidden.
+`position: relative; overflow: hidden`. Background layers: deep-sky gradient base, distant hill silhouette (SVG `<path>`), lake reflection band (semi-transparent lighter strip), lantern-dot particles, soft radial bursts. The hero container has a solid dark `background-color` (token `var(--lv-hero-base)`) so white text contrast holds without the gradient art. Particle layer: 20 `<span>` elements animated via `@keyframes lv-float`. Pause button `aria-pressed="true"` stops all animations. Under `prefers-reduced-motion: reduce`: static gradient only, particles hidden.
 
 ### Primary pill
 
@@ -348,7 +348,7 @@ export function HeroActions() {
           padding: "calc(var(--aura)*0.75) calc(var(--aura)*2)",
         }}
       >
-        <a href="#lodging">Find a Lodge</a>
+        <a href="#passes">Find a Lodge</a>
       </Button>
     </div>
   );
