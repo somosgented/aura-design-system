@@ -150,7 +150,7 @@ aura:
 
 > Night-black calm: thin white line drawings, softly glowing ink controls and gray prose that let sound be the loudest thing on the page. Built on Aura.
 
-Source flavor: https://endel.io (public logged-out home, observed 2026-11-09, dark only). This file adapts its visual language to Aura. It is a **theme over Aura**, not a separate system: it changes color seeds, type, radius, shape, motion and voice. Everything it does not mention follows the base Aura spec at `extends`, resolved against this file's URL (13px grid, accent/gray step roles, Radix icons, forms, accessibility). Hushtone is a fictional adaptive-sound product; no name, logo, wordmark, illustration, video, cover art, copy, review, award, press mark, device brand or platform mark of the source is reused, and every device scene is an original drawing.
+Source flavor: original Hushtone brief, dark first. It is a **theme over Aura**, not a separate system: it changes color seeds, type, radius, shape, motion and voice. Everything it does not mention follows the base Aura spec at `extends`, resolved against this file's URL (13px grid, accent/gray step roles, Radix icons, forms, accessibility). Hushtone is a fictional adaptive-sound product; its name, mark, copy, reviews, awards, press marks and device scenes are original, and no third-party brand, device brand or platform mark appears.
 
 ## Apply to an Aura project
 
@@ -177,26 +177,26 @@ Signature moves, each expressed with Aura tokens:
 - **Typographic press wall and laurel awards**: fictional publication names in mixed faces in `currentColor`, and award lines framed by drawn laurels.
 - **Review waterfall**: masonry review cards with five stars that fade out into a "load more" control.
 
-The reference is only dark. Dark follows it; light is a designed daylight adaptation without a reference (see **Dark mode**).
+Dark is the primary mode; light is a designed daylight adaptation (see **Dark mode**).
 
 ## Colors
 
-The source is monochrome. The accent is therefore ink: `#262626` in light and the source's light gray `#e0e0e0` in dark, used for the brand square, focus rings and selection only. Gray seeds are the source's mid gray `#808080` in both modes. Exact steps come from `theme.css`.
+The palette is monochrome. The accent is therefore ink: `#262626` in light and the light gray `#e0e0e0` in dark, used for the brand square, focus rings and selection only. Gray seeds are the mid gray `#808080` in both modes. Exact steps come from `theme.css`.
 
-Observed values (from the served stylesheets' `:root` variables and computed styles):
+Dark palette values and their roles:
 
-| Source value | Where observed | Hushtone role |
+| Value | Where it appears | Hushtone role |
 | --- | --- | --- |
-| `#000` (`--color-black`) | `body` background | `--night`, dark `--gray-1` |
-| `#191919` (`--color-gray-1`) | FAQ accordion buttons | `--panel` (dark), `--night-raised` |
-| `#262626` (`--color-gray-2`) | every button fill | `--control`, `--night-control` |
-| `gray` = `#808080` (`--color-gray-3`) | e-mail input border | gray seed, `--field-edge` |
-| `#bfbfbf` (`--color-gray-4`) | paragraphs | `--night-muted`; page prose uses `--gray-11` |
-| `#e0e0e0` (`--color-gray-5`) | variable only | dark accent seed |
-| `#fff` (`--color-white`) | headings, links, button ring | `--gray-12` in dark, `--control-edge` |
-| `#ff7a00` (`--color-orange`) | input error border and label | `--signal-warn` |
-| `#82d133` (`--color-green`) | success notification | `--signal-ok` |
-| `linear-gradient(180deg,#181818 0%,#0000 100%)` (`--color-gradient-1`) | cards, menus | `--fade-start` to transparent |
+| `#000` | page background | `--night`, dark `--gray-1` |
+| `#191919` | accordion rows | `--panel` (dark), `--night-raised` |
+| `#262626` | control fills | `--control`, `--night-control` |
+| `#808080` | input border | gray seed, `--field-edge` |
+| `#bfbfbf` | prose on night islands | `--night-muted`; page prose uses `--gray-11` |
+| `#e0e0e0` | accent only | dark accent seed |
+| `#fff` | headings, links, control ring | `--gray-12` in dark, `--control-edge` |
+| `#ff7a00` | input error border and message | `--signal-warn` |
+| `#82d133` | success message | `--signal-ok` |
+| `#181818` to transparent | cards and menus | `--fade-start` to transparent |
 
 | Role | Light | Dark | Use |
 | --- | --- | --- | --- |
@@ -218,24 +218,24 @@ Observed values (from the served stylesheets' `:root` variables and computed sty
 
 ### Dark mode
 
-Dark is the reference. Light is a daylight adaptation designed for Hushtone, not an inversion: the page becomes warm paper, line art turns ink, and the scenes that carry sound (hero field, screen scene, release covers) stay as night islands so the product still feels like evening.
+Dark is the primary mode. Light is a daylight adaptation designed for Hushtone, not an inversion: the page becomes warm paper, line art turns ink, and the scenes that carry sound (hero field, screen scene, release covers) stay as night islands so the product still feels like evening.
 
 | Variable | Light | Dark |
 | --- | --- | --- |
 | `--line-art` | ink strokes on paper cards | white strokes on black |
-| `--fade-start` | warm light gray fade | the source's `#181818` fade |
-| `--panel` | warm light gray | source gray 1 |
+| `--fade-start` | warm light gray fade | `#181818` fade |
+| `--panel` | warm light gray | night raised gray |
 | `--control-edge` | ink (ring merges with the fill) | white ring |
 | `--glow` | soft ink halo | white halo |
-| `--soft-control` | light gray pill with ink label | source gray 2 with white label |
+| `--soft-control` | light gray pill with ink label | night control gray with white label |
 | Night islands | stay black with white ink | page itself |
 
 ## Typography
 
-- One family: **Figtree** (OFL 1.1, https://github.com/erikdkennedy/figtree), replacing the source's commercial grotesque. Weights 400 for headings and prose, 500 for labels, 700 for stat figures.
+- One family: **Figtree** (OFL 1.1, https://github.com/erikdkennedy/figtree). Weights 400 for headings and prose, 500 for labels, 700 for stat figures.
 - **Instrument Serif** (OFL 1.1, https://github.com/Instrument/instrument-serif) appears only inside fictional publication marks.
 - Headings are regular weight with `letter-spacing: 0.35px`, sentence case, two short lines split with `<br>` at the period.
-- Responsive scale (observed): `h1` 36/48/60px, `h2` 28/32/38/44px, card titles 24–36px, lead 16–22px, card prose 14–18px, small labels 12–16px.
+- Responsive scale: `h1` 36/48/60px, `h2` 28/32/38/44px, card titles 24–36px, lead 16–22px, card prose 14–18px, small labels 12–16px.
 
 | Role | Aura | Size |
 | --- | --- | --- |
@@ -249,7 +249,7 @@ Dark is the reference. Light is a daylight adaptation designed for Hushtone, not
 
 ## Layout
 
-| Source px | Aura step | px | Use |
+| Target px | Aura step | px | Use |
 | --- | --- | --- | --- |
 | 1152 content | `max-w-88.5` | 1150.5 | Main wrap |
 | 760 prose | `max-w-58.5` | 760.5 | Section intro |
