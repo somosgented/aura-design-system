@@ -1,0 +1,2454 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hushtone · Adaptive sound for calm, focus and rest</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/aura/main.css" />
+    <link rel="stylesheet" href="theme.css" />
+    <script>
+      (function () {
+        var appearance = new URLSearchParams(window.location.search).get("appearance") === "dark" ? "dark" : "light";
+        document.documentElement.classList.add(appearance);
+        document.documentElement.style.colorScheme = appearance;
+      })();
+    </script>
+    <style>
+      @property --ray-turn {
+        syntax: "<angle>";
+        inherits: false;
+        initial-value: 0deg;
+      }
+      :root {
+        --aura-text-primary: var(--gray-12);
+        --aura-text-primary-inverse: var(--control-ink);
+        --aura-bg: var(--gray-1);
+        --aura-link: var(--gray-12);
+        --aura-link-hover: transparent;
+        --aura-accents-primary: var(--control);
+        --aura-button-hover: var(--control);
+        --aura-outline: var(--accent-9) solid 2px;
+        --aura-input-bg: transparent;
+        --aura-input-placeholder-color: var(--gray-11);
+        --aura-selector: var(--accent-5);
+        --soft-edge: var(--gray-9);
+        --card-fade: linear-gradient(180deg, var(--fade-start) 0%, transparent 100%);
+        --art-fade: linear-gradient(180deg, var(--fade-start) 0%, var(--gray-1) 100%);
+        --island-edge: var(--gray-6);
+        --ease-out: cubic-bezier(0.2, 0.8, 0.4, 1);
+      }
+      .dark {
+        --aura-input-placeholder-color: var(--gray-10);
+        --soft-edge: var(--gray-8);
+        --island-edge: transparent;
+      }
+      html {
+        scroll-padding-top: calc(var(--aura) * 7);
+      }
+      body {
+        background: var(--gray-1);
+        color: var(--gray-12);
+        font-family: var(--aura-font-stack);
+        font-weight: 400;
+      }
+      a {
+        color: inherit;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      :focus-visible {
+        outline: var(--aura-outline);
+        outline-offset: 3px;
+      }
+      .night :focus-visible {
+        outline-color: var(--night-ink);
+      }
+      .skip {
+        position: absolute;
+        left: calc(var(--aura) * 1);
+        top: calc(var(--aura) * -6);
+        z-index: 400;
+        padding: calc(var(--aura) * 0.5) var(--aura);
+        background: var(--control);
+        color: var(--control-ink);
+        border-radius: var(--aura-button-radius);
+      }
+      .skip:focus-visible {
+        top: calc(var(--aura) * 1);
+      }
+      .sr {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+      .wrap {
+        width: 100%;
+        max-width: calc(var(--aura) * 98.5);
+        margin-inline: auto;
+        padding-inline: calc(var(--aura) * 1.5);
+      }
+      .block {
+        padding-block: calc(var(--aura) * 3.5);
+      }
+      .intro {
+        max-width: calc(var(--aura) * 58.5);
+        margin: 0 auto calc(var(--aura) * 3);
+        text-align: center;
+      }
+      .h1,
+      .h2,
+      .h3,
+      .h4 {
+        font-family: var(--aura-font-display);
+        font-weight: 400;
+        letter-spacing: 0.35px;
+        margin: 0;
+        color: var(--gray-12);
+      }
+      .h1 {
+        --min: 2.25rem;
+        --val: 5vw;
+        --max: 3.75rem;
+        line-height: 1.2;
+      }
+      .h2 {
+        --min: 1.75rem;
+        --val: 3.6vw;
+        --max: 2.75rem;
+        line-height: 1.24;
+      }
+      .h3 {
+        --min: 1.5rem;
+        --val: 2.8vw;
+        --max: 2.25rem;
+        line-height: 1.17;
+      }
+      .h4 {
+        --min: 1.25rem;
+        --val: 1.9vw;
+        --max: 1.375rem;
+        line-height: 1.27;
+      }
+      .lead {
+        --min: 1rem;
+        --val: 1.7vw;
+        --max: 1.375rem;
+        line-height: 1.3;
+        color: var(--gray-11);
+      }
+      .prose {
+        --min: 0.875rem;
+        --val: 1.4vw;
+        --max: 1.125rem;
+        line-height: 1.34;
+        color: var(--gray-11);
+      }
+      .label {
+        font-family: var(--aura-font-label);
+        font-size: 0.75rem;
+        letter-spacing: 0.02em;
+        color: var(--gray-11);
+      }
+      .ctl {
+        font-weight: 500;
+        white-space: nowrap;
+        transition: background-color 200ms ease, border-color 200ms ease, box-shadow 200ms ease, transform 250ms var(--ease-out);
+      }
+      .ctl .icon {
+        font-size: 1.1em;
+      }
+      .ctl-primary {
+        height: calc(var(--aura) * 4.5);
+        padding-inline: calc(var(--aura) * 2);
+        font-size: 1.25rem;
+        background: var(--control);
+        color: var(--control-ink);
+        border-color: var(--control-edge);
+      }
+      .ctl-primary:hover:not(:disabled) {
+        background: color-mix(in srgb, var(--control) 84%, var(--gray-12));
+      }
+      .ctl-soft {
+        height: calc(var(--aura) * 3.5);
+        padding-inline: var(--aura);
+        font-size: 1rem;
+        background: var(--soft-control);
+        color: var(--soft-control-ink);
+        border-color: var(--soft-edge);
+      }
+      .ctl-soft:hover:not(:disabled) {
+        background: color-mix(in srgb, var(--soft-control) 82%, var(--gray-12));
+      }
+      .ctl-glow {
+        height: calc(var(--aura) * 3.5);
+        padding-inline: var(--aura);
+        font-size: 1rem;
+        background: var(--control);
+        color: var(--control-ink);
+        border-color: transparent;
+        box-shadow: 0 0 15px 0 var(--glow);
+      }
+      .ctl-glow:hover:not(:disabled) {
+        box-shadow: 0 0 22px 2px var(--glow);
+      }
+      .ctl:disabled {
+        cursor: not-allowed;
+      }
+      .round {
+        width: calc(var(--aura) * 3);
+        height: calc(var(--aura) * 3);
+        padding: 0;
+        border-radius: 9999px;
+        background: var(--control);
+        color: var(--control-ink);
+        border-color: var(--control);
+      }
+      .round:hover:not(:disabled) {
+        border-color: var(--control-edge);
+      }
+      .round-lg {
+        width: calc(var(--aura) * 5);
+        height: calc(var(--aura) * 5);
+        font-size: 1.5rem;
+        background: var(--night-ink);
+        color: var(--night);
+        border-color: var(--night-ink);
+      }
+      .round-lg:hover:not(:disabled) {
+        border-color: var(--night-muted);
+      }
+      .arrow-link {
+        display: inline-flex;
+        align-items: center;
+        gap: calc(var(--aura) * 0.5);
+        font-weight: 500;
+        color: var(--gray-12);
+        text-decoration: none;
+        border-radius: 4px;
+      }
+      .arrow-link .icon {
+        transition: transform 200ms var(--ease-out);
+      }
+      .arrow-link:hover {
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+      .arrow-link:hover .icon {
+        transform: translate(2px, -2px);
+      }
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: calc(var(--aura) * 0.5);
+        font-size: 1.25rem;
+        font-weight: 500;
+        letter-spacing: 0.35px;
+        text-decoration: none;
+        color: var(--gray-12);
+        border-radius: 4px;
+      }
+      .brand-mark {
+        width: calc(var(--aura) * 2);
+        height: calc(var(--aura) * 2);
+        border-radius: 6px;
+        background: var(--accent-9);
+        display: grid;
+        place-items: center;
+      }
+      .brand-mark::after {
+        content: "";
+        width: 46%;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        border: 2px solid var(--accent-contrast);
+        box-shadow: inset 0 0 0 2.5px var(--accent-9), inset 0 0 0 4.5px var(--accent-contrast);
+      }
+      .top {
+        position: fixed;
+        inset: 0 0 auto;
+        z-index: 200;
+        height: calc(var(--aura) * 4.5);
+        background: linear-gradient(180deg, var(--gray-1) 0%, color-mix(in srgb, var(--gray-1) 65%, transparent) 50%, transparent 100%);
+      }
+      .top-in {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--aura);
+      }
+      .nav {
+        display: none;
+        align-items: center;
+        gap: calc(var(--aura) * 0.5);
+      }
+      .nav > li {
+        position: relative;
+      }
+      .nav-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        height: calc(var(--aura) * 3);
+        padding-inline: var(--aura);
+        font: inherit;
+        font-size: 1.0625rem;
+        color: var(--gray-12);
+        background: none;
+        border: 0;
+        border-radius: 8px;
+        cursor: pointer;
+        text-decoration: none;
+      }
+      .nav-link:hover {
+        background: var(--gray-a3);
+      }
+      .nav-link[aria-expanded="true"] .icon {
+        transform: rotate(180deg);
+      }
+      .nav-link .icon {
+        transition: transform 200ms var(--ease-out);
+      }
+      .more-panel {
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 50%;
+        translate: -50% 0;
+        min-width: calc(var(--aura) * 17);
+        padding: calc(var(--aura) * 1.5);
+        border-radius: 12px;
+        background: var(--card-fade), var(--gray-1);
+        border: 1px solid var(--gray-6);
+        display: grid;
+        gap: 4px;
+      }
+      .more-panel a {
+        padding: calc(var(--aura) * 0.5) var(--aura);
+        border-radius: 8px;
+        text-decoration: none;
+      }
+      .more-panel a:hover {
+        background: var(--gray-a3);
+      }
+      .actions {
+        display: flex;
+        align-items: center;
+        gap: calc(var(--aura) * 0.5);
+      }
+      .menu-btn .icon {
+        font-size: 1rem;
+      }
+      .sheet {
+        position: fixed;
+        top: calc(var(--aura) * 4.5);
+        left: var(--aura);
+        right: var(--aura);
+        z-index: 190;
+        padding: calc(var(--aura) * 1.5);
+        border-radius: 12px;
+        background: var(--card-fade), var(--gray-1);
+        border: 1px solid var(--gray-6);
+        display: grid;
+        gap: 4px;
+        max-height: calc(100vh - var(--aura) * 6);
+        overflow: auto;
+      }
+      .sheet a {
+        padding: var(--aura);
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 1.125rem;
+      }
+      .sheet a:hover {
+        background: var(--gray-a3);
+      }
+      .sheet hr {
+        height: 1px;
+        background: var(--gray-6);
+        margin: calc(var(--aura) * 0.5) 0;
+      }
+      .hide-wide {
+        display: inline-flex;
+      }
+      .hero {
+        padding-top: calc(var(--aura) * 6);
+        text-align: center;
+      }
+      .hero .lead {
+        max-width: calc(var(--aura) * 37);
+        margin: calc(var(--aura) * 1.5) auto calc(var(--aura) * 2.5);
+      }
+      .night {
+        background: var(--night);
+        color: var(--night-ink);
+        box-shadow: inset 0 0 0 1px var(--island-edge);
+      }
+      .field {
+        position: relative;
+        container-type: inline-size;
+        margin-top: calc(var(--aura) * 2.5);
+        aspect-ratio: 1150 / 470;
+        border-radius: 24px;
+        overflow: hidden;
+        isolation: isolate;
+      }
+      .rays {
+        position: absolute;
+        inset: -10% -20% 20%;
+        z-index: -2;
+        background: repeating-conic-gradient(from calc(-90deg + var(--ray-turn)) at 50% 100%, color-mix(in srgb, var(--night-ink) 55%, transparent) 0deg 0.35deg, transparent 0.35deg 6deg);
+        mask: radial-gradient(ellipse 60% 85% at 50% 100%, black 0%, black 35%, transparent 75%);
+        opacity: 0.55;
+      }
+      .stars {
+        position: absolute;
+        inset: 0;
+        z-index: -2;
+        background-image: radial-gradient(1.5px 1.5px at 8% 18%, var(--night-ink) 99%, transparent), radial-gradient(1px 1px at 17% 42%, var(--night-ink) 99%, transparent), radial-gradient(1.5px 1.5px at 29% 12%, var(--night-ink) 99%, transparent), radial-gradient(1px 1px at 38% 30%, var(--night-ink) 99%, transparent), radial-gradient(1.5px 1.5px at 61% 16%, var(--night-ink) 99%, transparent), radial-gradient(1px 1px at 72% 36%, var(--night-ink) 99%, transparent), radial-gradient(1.5px 1.5px at 84% 10%, var(--night-ink) 99%, transparent), radial-gradient(1px 1px at 93% 28%, var(--night-ink) 99%, transparent), radial-gradient(1px 1px at 50% 6%, var(--night-ink) 99%, transparent);
+        opacity: 0.8;
+      }
+      .ridges {
+        position: absolute;
+        left: -6%;
+        width: 112%;
+        bottom: 0;
+        height: 62%;
+        z-index: -1;
+      }
+      .ridge-a {
+        fill: var(--night-raised);
+      }
+      .ridge-b {
+        fill: color-mix(in srgb, var(--night-raised) 70%, var(--night));
+      }
+      .ridge-c {
+        fill: var(--night);
+      }
+      .ridge-line {
+        fill: none;
+        stroke: color-mix(in srgb, var(--night-ink) 35%, transparent);
+        stroke-width: 1;
+      }
+      .devices {
+        position: absolute;
+        inset: auto 0 0 0;
+        height: 78%;
+      }
+      .dev {
+        position: absolute;
+        bottom: 6cqw;
+        background: var(--night);
+        border: 0.2cqw solid var(--night-line);
+        overflow: hidden;
+      }
+      .dev svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .dev-phone {
+        left: 6cqw;
+        width: 13cqw;
+        height: 27cqw;
+        border-radius: 2.2cqw;
+        z-index: 3;
+      }
+      .dev-slab {
+        left: 15cqw;
+        width: 14cqw;
+        height: 31cqw;
+        bottom: 9cqw;
+        border-radius: 1.6cqw;
+        z-index: 1;
+      }
+      .dev-pad {
+        left: 26cqw;
+        width: 15cqw;
+        height: 19cqw;
+        border-radius: 1.4cqw;
+        z-index: 2;
+      }
+      .dev-puck {
+        left: 18cqw;
+        width: 13cqw;
+        height: 13cqw;
+        bottom: 3cqw;
+        border-radius: 50%;
+        background: radial-gradient(circle at 35% 30%, var(--night-control), var(--night) 70%);
+        z-index: 4;
+      }
+      .dev-watch {
+        right: 26cqw;
+        width: 9cqw;
+        height: 11cqw;
+        border-radius: 2cqw;
+        z-index: 4;
+      }
+      .dev-watch-round {
+        right: 37cqw;
+        width: 10cqw;
+        height: 10cqw;
+        border-radius: 50%;
+        z-index: 3;
+      }
+      .dev-box {
+        right: 6cqw;
+        width: 13cqw;
+        height: 9cqw;
+        bottom: 15cqw;
+        border-radius: 1.6cqw;
+        background: linear-gradient(160deg, var(--night-control), var(--night));
+        z-index: 1;
+      }
+      .dev-tower {
+        right: 15cqw;
+        width: 12cqw;
+        height: 16cqw;
+        bottom: 17cqw;
+        border-radius: 2cqw;
+        background: linear-gradient(180deg, var(--night-control), var(--night-raised));
+        z-index: 0;
+      }
+      .dev-visor {
+        right: 4cqw;
+        width: 20cqw;
+        height: 11cqw;
+        bottom: 4cqw;
+        border-radius: 5cqw 5cqw 4cqw 4cqw;
+        background: radial-gradient(ellipse at 40% 30%, var(--night-control), var(--night) 75%);
+        z-index: 5;
+      }
+      .scr-ln {
+        fill: none;
+        stroke: var(--night-ink);
+        stroke-width: 1.2;
+        stroke-linecap: round;
+      }
+      .scr-dim {
+        fill: none;
+        stroke: var(--night-line);
+        stroke-width: 1;
+      }
+      .scr-fill {
+        fill: var(--night-ink);
+      }
+      .scr-tx {
+        fill: var(--night-ink);
+        font-family: var(--aura-font-stack);
+      }
+      .scr-mu {
+        fill: var(--night-muted);
+        font-family: var(--aura-font-stack);
+      }
+      .field-pause {
+        position: absolute;
+        right: calc(var(--aura) * 1.5);
+        top: calc(var(--aura) * 1.5);
+        z-index: 10;
+        height: calc(var(--aura) * 3);
+        padding-inline: var(--aura);
+        font-size: 0.875rem;
+        background: color-mix(in srgb, var(--night-control) 85%, transparent);
+        color: var(--night-ink);
+        border-color: var(--night-line);
+      }
+      .field-pause:hover:not(:disabled) {
+        border-color: var(--night-ink);
+      }
+      .press {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: calc(var(--aura) * 2) var(--aura);
+        align-items: center;
+        justify-items: center;
+        margin: 0;
+        color: var(--gray-11);
+      }
+      .mark {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.8rem;
+        line-height: 1;
+        white-space: nowrap;
+        color: currentColor;
+      }
+      .mark svg {
+        width: 1.3em;
+        height: 1.3em;
+        flex: none;
+      }
+      .mk-serif {
+        font-family: "Instrument Serif", serif;
+        font-size: 1.05rem;
+        letter-spacing: 0.02em;
+      }
+      .mk-serif-i {
+        font-family: "Instrument Serif", serif;
+        font-style: italic;
+        font-size: 1.1rem;
+      }
+      .mk-heavy {
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: -0.03em;
+        font-size: 0.95rem;
+      }
+      .mk-wide {
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.32em;
+        font-size: 0.7rem;
+      }
+      .mk-round {
+        font-weight: 700;
+        font-size: 1rem;
+        letter-spacing: -0.02em;
+      }
+      .mk-thin {
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+      }
+      .scene {
+        position: relative;
+        display: grid;
+        justify-items: center;
+        isolation: isolate;
+        padding-top: calc(var(--aura) * 1);
+      }
+      .scene-glow {
+        position: absolute;
+        inset: 0 0 20%;
+        z-index: -1;
+        background: radial-gradient(circle at 22% 38%, color-mix(in srgb, var(--line-art) 12%, transparent) 0 11%, transparent 11.2%), radial-gradient(circle at 30% 60%, color-mix(in srgb, var(--line-art) 8%, transparent) 0 9%, transparent 9.2%), radial-gradient(circle at 76% 30%, color-mix(in srgb, var(--line-art) 10%, transparent) 0 10%, transparent 10.2%), radial-gradient(circle at 70% 62%, color-mix(in srgb, var(--line-art) 7%, transparent) 0 12%, transparent 12.2%), radial-gradient(ellipse 55% 60% at 50% 45%, color-mix(in srgb, var(--line-art) 9%, transparent), transparent 70%);
+      }
+      .scene-stars {
+        position: absolute;
+        inset: 0 0 25%;
+        z-index: -1;
+        background-image: radial-gradient(2px 2px at 12% 20%, var(--line-art) 99%, transparent), radial-gradient(1.5px 1.5px at 20% 48%, var(--line-art) 99%, transparent), radial-gradient(2px 2px at 26% 70%, var(--line-art) 99%, transparent), radial-gradient(1.5px 1.5px at 33% 28%, var(--line-art) 99%, transparent), radial-gradient(2px 2px at 69% 18%, var(--line-art) 99%, transparent), radial-gradient(1.5px 1.5px at 78% 44%, var(--line-art) 99%, transparent), radial-gradient(2px 2px at 86% 26%, var(--line-art) 99%, transparent), radial-gradient(1.5px 1.5px at 90% 66%, var(--line-art) 99%, transparent), radial-gradient(2px 2px at 74% 74%, var(--line-art) 99%, transparent);
+        opacity: 0.7;
+      }
+      .big-phone {
+        position: relative;
+        width: min(72vw, calc(var(--aura) * 22));
+        aspect-ratio: 286 / 470;
+        border-radius: 40px;
+        border: 3px solid var(--night-line);
+        overflow: hidden;
+      }
+      .big-phone svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .big-phone .round-lg {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        translate: -50% -50%;
+      }
+      .scene-pause {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: calc(var(--aura) * 3);
+        padding-inline: var(--aura);
+        font-size: 0.875rem;
+      }
+      .modes {
+        display: grid;
+        gap: calc(var(--aura) * 1.5);
+        width: 100%;
+        margin-top: calc(var(--aura) * -4);
+        position: relative;
+      }
+      .mode {
+        position: relative;
+        padding: calc(var(--aura) * 1.5);
+        padding-top: calc(var(--aura) * 1.5);
+        border-radius: 12px;
+        background: var(--card-fade), var(--gray-1);
+        transition: background 200ms ease;
+      }
+      .mode:hover,
+      .fcard:hover .fcard-body,
+      .review:hover {
+        background: linear-gradient(180deg, color-mix(in srgb, var(--fade-start) 88%, var(--gray-12)) 0%, transparent 100%), var(--gray-1);
+      }
+      .mode .round {
+        position: absolute;
+        top: calc(var(--aura) * -1.5);
+        right: calc(var(--aura) * 1.5);
+      }
+      .mode .h4 {
+        margin-bottom: calc(var(--aura) * 0.5);
+      }
+      .mode .prose {
+        margin: 0 0 var(--aura);
+      }
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: calc(var(--aura) * 3) var(--aura);
+        text-align: center;
+      }
+      .stat {
+        display: grid;
+        justify-items: center;
+        gap: calc(var(--aura) * 0.5);
+      }
+      .stat-fig {
+        position: relative;
+        display: inline-block;
+        font-family: var(--aura-font-display);
+        font-weight: 700;
+        font-size: clamp(3.5rem, 7.6vw, 6rem);
+        line-height: 1;
+        letter-spacing: -0.01em;
+        color: var(--gray-12);
+        padding-top: calc(var(--aura) * 2);
+      }
+      .stat-fig svg {
+        position: absolute;
+        width: 0.9em;
+        height: 0.7em;
+        right: -0.45em;
+        top: -0.05em;
+        color: var(--gray-12);
+      }
+      .stat-label {
+        max-width: calc(var(--aura) * 17);
+        font-size: 0.95rem;
+        color: var(--gray-11);
+      }
+      .notes {
+        max-width: calc(var(--aura) * 30);
+        margin: calc(var(--aura) * 3) auto 0;
+        text-align: center;
+        font-size: 0.8125rem;
+        color: var(--gray-11);
+        display: grid;
+        gap: var(--aura);
+      }
+      .notes p {
+        margin: 0;
+      }
+      .pair {
+        display: grid;
+        gap: calc(var(--aura) * 1.5);
+      }
+      .fcard {
+        display: grid;
+        gap: calc(var(--aura) * 1.5);
+        align-content: start;
+      }
+      .fcard-art {
+        position: relative;
+        aspect-ratio: 564 / 330;
+        border-radius: 8px;
+        overflow: hidden;
+        background: var(--art-fade);
+        color: var(--line-art);
+      }
+      .fcard-art svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .fcard-art.night {
+        background: var(--night);
+      }
+      .fcard-body {
+        padding: calc(var(--aura) * 1.5);
+        border-radius: 8px;
+        background: var(--card-fade), var(--gray-1);
+        transition: background 200ms ease;
+      }
+      .fcard-body .prose {
+        margin: var(--aura) 0 calc(var(--aura) * 1.5);
+      }
+      .la {
+        fill: none;
+        stroke: var(--line-art);
+        stroke-width: 1.6;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .la-thin {
+        fill: none;
+        stroke: color-mix(in srgb, var(--line-art) 45%, transparent);
+        stroke-width: 1;
+      }
+      .la-fill {
+        fill: var(--line-art);
+      }
+      .la-tx {
+        fill: var(--line-art);
+        font-family: var(--aura-font-stack);
+      }
+      .la-panel {
+        fill: color-mix(in srgb, var(--gray-1) 70%, transparent);
+        stroke: var(--line-art);
+        stroke-width: 1.6;
+      }
+      .tv {
+        position: relative;
+        border-radius: 24px;
+        overflow: hidden;
+        padding: calc(var(--aura) * 2) calc(var(--aura) * 1.5) calc(var(--aura) * 3);
+        isolation: isolate;
+      }
+      .tv-frame {
+        position: relative;
+        max-width: calc(var(--aura) * 72);
+        margin: 0 auto;
+        aspect-ratio: 16 / 9;
+        border: 4px solid var(--night-line);
+        border-radius: 6px;
+        overflow: hidden;
+        container-type: inline-size;
+        background: var(--night);
+      }
+      .tv-frame svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .tv-ui {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        justify-items: center;
+        align-content: space-between;
+        padding: 5cqw 0 4cqw;
+        text-align: center;
+      }
+      .tv-kicker {
+        font-size: max(0.75rem, 1.6cqw);
+        color: var(--night-muted);
+        margin: 0;
+      }
+      .tv-title {
+        font-family: var(--aura-font-display);
+        font-weight: 700;
+        font-size: 11cqw;
+        line-height: 0.9;
+        letter-spacing: 0.04em;
+        color: transparent;
+        -webkit-text-stroke: max(1px, 0.25cqw) var(--night-ink);
+        margin: 0;
+      }
+      .tv-begin {
+        height: max(32px, 5cqw);
+        padding-inline: max(13px, 2.5cqw);
+        font-size: max(0.8125rem, 1.6cqw);
+        background: var(--night-control);
+        color: var(--night-ink);
+        border-color: var(--night-control);
+      }
+      .tv-begin:hover:not(:disabled) {
+        border-color: var(--night-ink);
+      }
+      .tv-stand {
+        width: 30%;
+        max-width: calc(var(--aura) * 26);
+        height: 10px;
+        margin: 0 auto;
+        border-radius: 0 0 8px 8px;
+        background: linear-gradient(180deg, var(--night-line), var(--night-raised));
+      }
+      .tv-box {
+        position: absolute;
+        right: 6%;
+        bottom: calc(var(--aura) * 2);
+        width: clamp(56px, 11%, 120px);
+        aspect-ratio: 1;
+        border-radius: 22%;
+        background: linear-gradient(160deg, var(--night-control), var(--night));
+        border: 1px solid var(--night-line);
+        display: grid;
+        place-items: center;
+      }
+      .tv-box span {
+        width: 30%;
+        aspect-ratio: 1;
+        border-radius: 22%;
+        background: var(--night-ink);
+        opacity: 0.85;
+      }
+      .tv-hills {
+        position: absolute;
+        inset: auto 0 0;
+        height: 55%;
+        z-index: -1;
+        width: 100%;
+      }
+      .covers {
+        position: relative;
+        overflow: hidden;
+        display: grid;
+        gap: 8px;
+        padding-block: 4px;
+        mask: linear-gradient(90deg, transparent, black 8%, black 92%, transparent), linear-gradient(180deg, black 85%, transparent);
+        mask-composite: intersect;
+      }
+      .cover-row {
+        display: flex;
+        gap: 8px;
+        width: max-content;
+      }
+      .cover-row:nth-child(2) {
+        margin-left: -60px;
+      }
+      .cover-row:nth-child(3) {
+        margin-left: -24px;
+      }
+      .cover {
+        position: relative;
+        flex: none;
+        width: clamp(92px, 11vw, 132px);
+        aspect-ratio: 1;
+        border-radius: 8px;
+        overflow: hidden;
+        display: flex;
+        align-items: flex-end;
+      }
+      .cover span {
+        width: 100%;
+        padding: 18px 8px 6px;
+        font-size: 0.75rem;
+        line-height: 1.2;
+        color: var(--night-ink);
+        background: linear-gradient(180deg, transparent, var(--night) 70%);
+      }
+      .c1 {
+        background: radial-gradient(circle at 30% 30%, var(--cover-dusk), transparent 65%), linear-gradient(160deg, var(--cover-orchid), var(--night));
+      }
+      .c2 {
+        background: radial-gradient(circle at 70% 35%, var(--cover-sand), transparent 50%), linear-gradient(200deg, var(--cover-ember), var(--night) 80%);
+      }
+      .c3 {
+        background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--cover-tide) 70%, var(--night)) 0 6px, var(--night) 6px 12px);
+      }
+      .c4 {
+        background: radial-gradient(circle at 50% 110%, var(--cover-moss) 0 40%, transparent 41%), linear-gradient(180deg, var(--night), color-mix(in srgb, var(--cover-moss) 40%, var(--night)));
+      }
+      .c5 {
+        background: conic-gradient(from 200deg at 50% 60%, var(--cover-dusk), var(--cover-tide), var(--cover-orchid), var(--cover-dusk));
+      }
+      .c6 {
+        background: radial-gradient(circle at 50% 40%, var(--night-ink) 0 3%, transparent 3.5%), radial-gradient(circle at 50% 40%, color-mix(in srgb, var(--night-ink) 20%, transparent) 0 30%, transparent 31%), var(--night-raised);
+      }
+      .c7 {
+        background: linear-gradient(135deg, var(--cover-sand), var(--cover-ember) 55%, var(--cover-orchid));
+      }
+      .c8 {
+        background: repeating-radial-gradient(circle at 30% 70%, var(--cover-tide) 0 3px, var(--night) 3px 12px);
+      }
+      .c9 {
+        background: linear-gradient(180deg, var(--cover-dusk), var(--cover-tide) 60%, var(--cover-moss));
+      }
+      .platforms {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--aura) calc(var(--aura) * 2.5);
+        margin-top: calc(var(--aura) * 3);
+      }
+      .tbl-wrap {
+        overflow-x: auto;
+        border-radius: 12px;
+        border: 1px solid var(--gray-6);
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.875rem;
+        min-width: calc(var(--aura) * 40);
+      }
+      caption {
+        text-align: left;
+        padding: var(--aura) calc(var(--aura) * 1.5);
+        color: var(--gray-11);
+        font-size: 0.8125rem;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: var(--aura) calc(var(--aura) * 1.5);
+        border-top: 1px solid var(--gray-6);
+      }
+      th {
+        font-weight: 500;
+        color: var(--gray-11);
+        background: var(--panel);
+      }
+      td.num {
+        font-variant-numeric: tabular-nums;
+      }
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 2px 10px;
+        border-radius: 9999px;
+        border: 1px solid var(--gray-7);
+        font-size: 0.75rem;
+        color: var(--gray-12);
+      }
+      .awards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: calc(var(--aura) * 2) calc(var(--aura) * 3);
+        margin-bottom: calc(var(--aura) * 3.5);
+      }
+      .award {
+        display: flex;
+        align-items: center;
+        gap: var(--aura);
+        text-align: center;
+        line-height: 1.35;
+        font-size: 1.0625rem;
+        color: var(--gray-12);
+      }
+      .award svg {
+        width: 22px;
+        height: 52px;
+        flex: none;
+        color: var(--gray-12);
+      }
+      .award svg:last-child {
+        transform: scaleX(-1);
+      }
+      .reviews {
+        position: relative;
+        max-height: calc(var(--aura) * 36);
+        overflow: hidden;
+      }
+      .reviews[data-open="true"] {
+        max-height: none;
+      }
+      .reviews-cols {
+        columns: 1;
+        column-gap: calc(var(--aura) * 1.5);
+      }
+      .review {
+        break-inside: avoid;
+        margin-bottom: calc(var(--aura) * 1.5);
+        padding: calc(var(--aura) * 1.5);
+        border-radius: 20px;
+        background: var(--card-fade), var(--gray-1);
+        transition: background 200ms ease;
+      }
+      .review-head {
+        display: flex;
+        align-items: center;
+        gap: var(--aura);
+        margin-bottom: var(--aura);
+      }
+      .avatar {
+        width: calc(var(--aura) * 2.5);
+        height: calc(var(--aura) * 2.5);
+        border-radius: 9px;
+        display: grid;
+        place-items: center;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: var(--gray-12);
+        border: 1.5px solid var(--gray-12);
+        background: radial-gradient(circle at 70% 25%, var(--gray-5), transparent 60%), var(--gray-2);
+        flex: none;
+      }
+      .avatar.av-b {
+        border-radius: 50%;
+      }
+      .avatar.av-c {
+        border-radius: 50% 50% 9px 9px;
+      }
+      .who {
+        display: grid;
+        gap: 2px;
+        font-size: 0.875rem;
+      }
+      .stars-row {
+        display: inline-flex;
+        gap: 1px;
+        color: var(--gray-12);
+        font-size: 0.75rem;
+      }
+      .review h3 {
+        margin: 0 0 6px;
+        font-size: 1rem;
+        font-weight: 500;
+      }
+      .review p {
+        margin: 0;
+        font-size: 0.9375rem;
+        line-height: 1.4;
+        color: var(--gray-11);
+      }
+      .reviews-fade {
+        position: absolute;
+        inset: auto 0 0;
+        height: calc(var(--aura) * 9);
+        display: grid;
+        place-items: end center;
+        padding-bottom: calc(var(--aura) * 1.5);
+        background: linear-gradient(180deg, transparent, var(--gray-1) 70%);
+      }
+      .reviews[data-open="true"] .reviews-fade {
+        position: static;
+        height: auto;
+        background: none;
+      }
+      .reviews .review.added {
+        animation: none;
+      }
+      .plans {
+        display: grid;
+        gap: calc(var(--aura) * 1.5);
+      }
+      .plan {
+        padding: calc(var(--aura) * 2);
+        border-radius: 12px;
+        background: var(--panel);
+        display: grid;
+        gap: var(--aura);
+        align-content: start;
+        border: 2px solid transparent;
+      }
+      .plan.is-main {
+        border-color: var(--control-edge);
+      }
+      .plan .price {
+        font-family: var(--aura-font-display);
+        font-size: 2.5rem;
+        line-height: 1;
+      }
+      .plan .price small {
+        font-size: 1rem;
+        color: var(--gray-11);
+      }
+      .plan ul {
+        display: grid;
+        gap: calc(var(--aura) * 0.5);
+        margin: calc(var(--aura) * 0.5) 0 var(--aura);
+        color: var(--gray-11);
+        font-size: 0.9375rem;
+      }
+      .plan li {
+        display: flex;
+        gap: calc(var(--aura) * 0.5);
+        align-items: center;
+      }
+      .plan li .icon {
+        color: var(--gray-12);
+      }
+      .plan .ctl {
+        width: 100%;
+      }
+      .circle-art {
+        width: min(100%, calc(var(--aura) * 44));
+        margin: 0 auto calc(var(--aura) * 1.5);
+        display: block;
+      }
+      .ca-orb-a {
+        fill: color-mix(in srgb, var(--line-art) 18%, transparent);
+      }
+      .ca-orb-b {
+        fill: color-mix(in srgb, var(--line-art) 10%, transparent);
+      }
+      .faq {
+        display: grid;
+        gap: calc(var(--aura) * 1.5);
+        max-width: calc(var(--aura) * 88.5);
+        margin: 0 auto;
+      }
+      .faq-q {
+        width: 100%;
+        min-height: calc(var(--aura) * 6);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--aura);
+        padding: var(--aura) calc(var(--aura) * 1.5);
+        border: 0;
+        border-radius: 12px;
+        background: var(--panel);
+        color: var(--gray-12);
+        font: inherit;
+        font-size: 1.0625rem;
+        font-weight: 400;
+        text-align: left;
+        cursor: pointer;
+        transition: background 200ms ease;
+      }
+      .faq-q:hover {
+        background: color-mix(in srgb, var(--panel) 88%, var(--gray-12));
+      }
+      .faq-q .icon {
+        font-size: 1.25rem;
+        transition: transform 200ms var(--ease-out);
+      }
+      .faq-q[aria-expanded="true"] {
+        border-radius: 12px 12px 0 0;
+      }
+      .faq-q[aria-expanded="true"] .icon {
+        transform: rotate(180deg);
+      }
+      .faq-a {
+        padding: 0 calc(var(--aura) * 1.5) calc(var(--aura) * 1.5);
+        background: var(--panel);
+        border-radius: 0 0 12px 12px;
+        color: var(--gray-11);
+      }
+      .faq-a p {
+        margin: 0;
+      }
+      .closing {
+        text-align: center;
+        padding: calc(var(--aura) * 4) calc(var(--aura) * 1.5);
+        border-radius: 24px;
+        background: var(--card-fade), var(--gray-1);
+      }
+      .closing .ctls {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--aura);
+      }
+      .closing .ctl-soft {
+        height: calc(var(--aura) * 4.5);
+        padding-inline: calc(var(--aura) * 2);
+        font-size: 1.25rem;
+      }
+      .foot {
+        padding-block: calc(var(--aura) * 3) calc(var(--aura) * 2);
+      }
+      .foot-grid {
+        display: grid;
+        gap: calc(var(--aura) * 3);
+      }
+      .foot-links {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: calc(var(--aura) * 2) calc(var(--aura) * 1.5);
+      }
+      .foot-col h2 {
+        margin: 0 0 var(--aura);
+        font-size: 0.75rem;
+        font-weight: 400;
+        color: var(--gray-11);
+      }
+      .foot-col ul {
+        display: grid;
+        gap: calc(var(--aura) * 0.5);
+      }
+      .foot-col ul + h2 {
+        margin-top: calc(var(--aura) * 1.5);
+      }
+      .foot-col a {
+        text-decoration: none;
+        font-size: 0.9375rem;
+        border-radius: 4px;
+      }
+      .foot-col a:hover,
+      .legal a:hover {
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      .news .h3 {
+        --max: 2.25rem;
+        margin-bottom: var(--aura);
+      }
+      .news .prose {
+        margin: 0 0 calc(var(--aura) * 1.5);
+      }
+      .news label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 0.8125rem;
+        color: var(--gray-11);
+      }
+      .news input.field-input {
+        height: calc(var(--aura) * 3.5);
+        padding: 0 var(--aura);
+        background: transparent;
+        color: var(--gray-12);
+        border: 2px solid var(--field-edge);
+        border-radius: 10px;
+        transition: border-color 200ms ease;
+      }
+      .news input.field-input:hover {
+        border-color: var(--gray-12);
+      }
+      .news input.field-input:focus {
+        outline: none;
+      }
+      .news input.field-input:focus-visible {
+        border-color: var(--gray-12);
+        outline: var(--aura-outline);
+        outline-offset: 2px;
+      }
+      .news input.field-input[aria-invalid="true"] {
+        border-color: var(--signal-warn);
+      }
+      .news .ctl-soft {
+        width: 100%;
+        height: calc(var(--aura) * 3.5);
+        margin-top: calc(var(--aura) * 1.5);
+        font-size: 1.0625rem;
+      }
+      .msg {
+        display: flex;
+        align-items: center;
+        gap: calc(var(--aura) * 0.5);
+        margin-top: var(--aura);
+        font-size: 0.875rem;
+      }
+      .msg:empty {
+        display: none;
+      }
+      .msg-warn {
+        color: var(--signal-warn);
+      }
+      .msg-ok {
+        padding: var(--aura);
+        border-radius: 10px;
+        background: var(--panel);
+        color: var(--gray-12);
+        box-shadow: inset 4px 0 0 0 var(--signal-ok);
+      }
+      .msg-ok .icon {
+        color: var(--signal-ok);
+      }
+      .legal {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--aura);
+        margin-top: calc(var(--aura) * 3);
+        padding-top: calc(var(--aura) * 1.5);
+        border-top: 1px solid var(--gray-6);
+        font-size: 0.9375rem;
+      }
+      .legal ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: calc(var(--aura) * 0.5) calc(var(--aura) * 1.5);
+        align-items: center;
+      }
+      .legal a {
+        text-decoration: none;
+        border-radius: 4px;
+      }
+      .legal .copy {
+        color: var(--gray-11);
+      }
+      .social {
+        display: flex;
+        gap: calc(var(--aura) * 0.5);
+      }
+      .social a {
+        width: calc(var(--aura) * 3);
+        height: calc(var(--aura) * 3);
+        display: grid;
+        place-items: center;
+        border-radius: 9999px;
+        color: var(--gray-12);
+        font-size: 1.125rem;
+      }
+      .social a:hover {
+        background: var(--gray-a3);
+      }
+      @media (min-width: 768px) {
+        .wrap {
+          padding-inline: calc(var(--aura) * 5);
+        }
+        .block {
+          padding-block: calc(var(--aura) * 5);
+        }
+        .press {
+          grid-template-columns: repeat(5, minmax(0, 1fr));
+          gap: calc(var(--aura) * 2.5) calc(var(--aura) * 1.5);
+        }
+        .mark {
+          font-size: 1rem;
+        }
+        .mk-serif {
+          font-size: 1.35rem;
+        }
+        .mk-serif-i {
+          font-size: 1.45rem;
+        }
+        .mk-heavy {
+          font-size: 1.3rem;
+        }
+        .mk-wide {
+          font-size: 0.875rem;
+        }
+        .mk-round {
+          font-size: 1.35rem;
+        }
+        .modes {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .stats {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+        .pair {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .fcard-body {
+          padding: calc(var(--aura) * 1.5) calc(var(--aura) * 1.5) calc(var(--aura) * 2);
+        }
+        .reviews-cols {
+          columns: 3;
+        }
+        .plans {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+        .foot-grid {
+          grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+          gap: calc(var(--aura) * 5);
+        }
+        .foot-links {
+          grid-template-columns: auto repeat(3, minmax(0, 1fr));
+        }
+        .tv {
+          padding: calc(var(--aura) * 3) calc(var(--aura) * 3) calc(var(--aura) * 4);
+        }
+      }
+      @media (min-width: 1000px) {
+        .nav {
+          display: flex;
+        }
+        .hide-wide {
+          display: none;
+        }
+        .modes {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+        .top {
+          height: calc(var(--aura) * 5.5);
+        }
+        .sheet {
+          display: none;
+        }
+      }
+      @media (max-width: 767px) {
+        .field {
+          aspect-ratio: 360 / 230;
+          border-radius: 16px;
+        }
+        .foot-brand {
+          display: none;
+        }
+        .brand {
+          font-size: 1.0625rem;
+        }
+        .scene-pause {
+          position: static;
+          justify-self: end;
+          margin-bottom: var(--aura);
+        }
+        .news {
+          order: -1;
+        }
+        .award {
+          width: 100%;
+          justify-content: space-between;
+        }
+      }
+      @media (max-width: 999px) {
+        .hide-narrow {
+          display: none;
+        }
+        .ctl-glow {
+          height: calc(var(--aura) * 3);
+          font-size: 0.875rem;
+        }
+        .menu-btn {
+          height: calc(var(--aura) * 3);
+          font-size: 0.875rem;
+        }
+      }
+      @keyframes slide-in-bottom {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes ray-sway {
+        from {
+          --ray-turn: -3deg;
+        }
+        to {
+          --ray-turn: 3deg;
+        }
+      }
+      @keyframes ridge-drift {
+        from {
+          transform: translateX(-2.5%);
+        }
+        to {
+          transform: translateX(2.5%);
+        }
+      }
+      @keyframes twinkle {
+        0%,
+        100% {
+          opacity: 0.85;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+      @keyframes wave-shift {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-40px);
+        }
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        .rise {
+          animation: slide-in-bottom 400ms var(--ease-out) both;
+        }
+        .rise-2 {
+          animation-delay: 80ms;
+        }
+        .rise-3 {
+          animation-delay: 160ms;
+        }
+        .rise-4 {
+          animation-delay: 240ms;
+        }
+        .amb-rays {
+          animation: ray-sway 14s ease-in-out infinite alternate;
+        }
+        .amb-ridge {
+          animation: ridge-drift 16s ease-in-out infinite alternate;
+        }
+        .amb-ridge-slow {
+          animation: ridge-drift 24s ease-in-out infinite alternate-reverse;
+        }
+        .amb-stars {
+          animation: twinkle 5s ease-in-out infinite;
+        }
+        .amb-wave {
+          animation: wave-shift 6s linear infinite;
+        }
+        .more-panel:not([hidden]),
+        .sheet:not([hidden]),
+        .msg:not(:empty),
+        .review.added {
+          animation: slide-in-bottom 300ms var(--ease-out) both;
+        }
+        html[data-motion="paused"] .amb-rays,
+        html[data-motion="paused"] .amb-ridge,
+        html[data-motion="paused"] .amb-ridge-slow,
+        html[data-motion="paused"] .amb-stars,
+        html[data-motion="paused"] .amb-wave {
+          animation-play-state: paused;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .ctl,
+        .arrow-link .icon,
+        .nav-link .icon,
+        .faq-q .icon,
+        .mode,
+        .fcard-body,
+        .review {
+          transition: none;
+        }
+        .arrow-link:hover .icon {
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true" focusable="false">
+      <symbol id="i-play" viewBox="0 0 15 15"><path d="M3.24182 2.32181C3.3919 2.23132 3.5784 2.22601 3.73338 2.30781L12.7334 7.05781C12.8974 7.14436 13 7.31457 13 7.5C13 7.68543 12.8974 7.85564 12.7334 7.94219L3.73338 12.6922C3.5784 12.774 3.3919 12.7687 3.24182 12.6782C3.09175 12.5877 3 12.4252 3 12.25V2.75C3 2.57476 3.09175 2.4123 3.24182 2.32181ZM4 3.57925V11.4207L11.4288 7.5L4 3.57925Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></symbol>
+      <symbol id="i-pause" viewBox="0 0 15 15"><path d="M6.04995 2.74998C6.04995 2.44623 5.80371 2.19998 5.49995 2.19998C5.19619 2.19998 4.94995 2.44623 4.94995 2.74998V12.25C4.94995 12.5537 5.19619 12.8 5.49995 12.8C5.80371 12.8 6.04995 12.5537 6.04995 12.25V2.74998ZM10.05 2.74998C10.05 2.44623 9.80371 2.19998 9.49995 2.19998C9.19619 2.19998 8.94995 2.44623 8.94995 2.74998V12.25C8.94995 12.5537 9.19619 12.8 9.49995 12.8C9.80371 12.8 10.05 12.5537 10.05 12.25V2.74998Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></symbol>
+      <symbol id="i-chevron" viewBox="0 0 15 15"><path d="M3.13523 6.15803C3.3241 5.95657 3.64052 5.94637 3.84197 6.13523L7.5 9.56464L11.158 6.13523C11.3595 5.94637 11.6759 5.95657 11.8648 6.15803C12.0536 6.35949 12.0434 6.67591 11.842 6.86477L7.84197 10.6148C7.64964 10.7951 7.35036 10.7951 7.15803 10.6148L3.15803 6.86477C2.95657 6.67591 2.94637 6.35949 3.13523 6.15803Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 15 15"><path d="M3.64645 11.3536C3.45118 11.1583 3.45118 10.8417 3.64645 10.6465L10.2929 4L6 4C5.72386 4 5.5 3.77614 5.5 3.5C5.5 3.22386 5.72386 3 6 3L11.5 3C11.6326 3 11.7598 3.05268 11.8536 3.14645C11.9473 3.24022 12 3.36739 12 3.5L12 9.00001C12 9.27615 11.7761 9.50001 11.5 9.50001C11.2239 9.50001 11 9.27615 11 9.00001V4.70711L4.35355 11.3536C4.15829 11.5488 3.84171 11.5488 3.64645 11.3536Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></symbol>
+      <symbol id="i-menu" viewBox="0 0 15 15"><path d="M1.5 3C1.22386 3 1 3.22386 1 3.5C1 3.77614 1.22386 4 1.5 4H13.5C13.7761 4 14 3.77614 14 3.5C14 3.22386 13.7761 3 13.5 3H1.5ZM1 7.5C1 7.22386 1.22386 7 1.5 7H13.5C13.7761 7 14 7.22386 14 7.5C14 7.77614 13.7761 8 13.5 8H1.5C1.22386 8 1 7.77614 1 7.5ZM1 11.5C1 11.2239 1.22386 11 1.5 11H13.5C13.7761 11 14 11.2239 14 11.5C14 11.7761 13.7761 12 13.5 12H1.5C1.22386 12 1 11.7761 1 11.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></symbol>
+      <symbol id="i-close" viewBox="0 0 15 15"><path d="M11.7816 4.03157C12.0062 3.80702 12.0062 3.44295 11.7816 3.2184C11.5571 2.99385 11.193 2.99385 10.9685 3.2184L7.50005 6.68682L4.03164 3.2184C3.80708 2.99385 3.44301 2.99385 3.21846 3.2184C2.99391 3.44295 2.99391 3.80702 3.21846 4.03157L6.68688 7.49999L3.21846 10.9684C2.99391 11.193 2.99391 11.557 3.21846 11.7816C3.44301 12.0061 3.80708 12.0061 4.03164 11.7816L7.50005 8.31316L10.9685 11.7816C11.193 12.0061 11.5571 12.0061 11.7816 11.7816C12.0062 11.557 12.0062 11.193 11.7816 10.9684L8.31322 7.49999L11.7816 4.03157Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></symbol>
+      <symbol id="i-star" viewBox="0 0 15 15"><path d="M7.22303 0.665992C7.32551 0.419604 7.67454 0.419604 7.77702 0.665992L9.41343 4.60039C9.45663 4.70426 9.55432 4.77523 9.66645 4.78422L13.914 5.12475C14.18 5.14607 14.2878 5.47802 14.0852 5.65162L10.849 8.42374C10.7636 8.49692 10.7263 8.61176 10.7524 8.72118L11.7411 12.866C11.803 13.1256 11.5206 13.3308 11.2929 13.1917L7.6564 10.9705C7.5604 10.9119 7.43965 10.9119 7.34365 10.9705L3.70718 13.1917C3.47945 13.3308 3.19708 13.1256 3.25899 12.866L4.24769 8.72118C4.2738 8.61176 4.23648 8.49692 4.15105 8.42374L0.914889 5.65162C0.712228 5.47802 0.820086 5.14607 1.08608 5.12475L5.3336 4.78422C5.44573 4.77523 5.54342 4.70426 5.58662 4.60039L7.22303 0.665992Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></symbol>
+      <symbol id="i-chat" viewBox="0 0 15 15"><path d="M12.5 3L2.5 3.00002C1.67157 3.00002 1 3.6716 1 4.50002V9.50003C1 10.3285 1.67157 11 2.5 11H7.50003C7.63264 11 7.75982 11.0527 7.85358 11.1465L10 13.2929V11.5C10 11.2239 10.2239 11 10.5 11H12.5C13.3284 11 14 10.3285 14 9.50003V4.5C14 3.67157 13.3284 3 12.5 3ZM2.49999 2.00002L12.5 2C13.8807 2 15 3.11929 15 4.5V9.50003C15 10.8807 13.8807 12 12.5 12H11V14.5C11 14.7022 10.8782 14.8845 10.6913 14.9619C10.5045 15.0393 10.2894 14.9965 10.1464 14.8536L7.29292 12H2.5C1.11929 12 0 10.8807 0 9.50003V4.50002C0 3.11931 1.11928 2.00003 2.49999 2.00002Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></symbol>
+      <symbol id="i-camera" viewBox="0 0 15 15"><path d="M2 3C1.44772 3 1 3.44772 1 4V11C1 11.5523 1.44772 12 2 12H13C13.5523 12 14 11.5523 14 11V4C14 3.44772 13.5523 3 13 3H2ZM0 4C0 2.89543 0.895431 2 2 2H13C14.1046 2 15 2.89543 15 4V11C15 12.1046 14.1046 13 13 13H2C0.895431 13 0 12.1046 0 11V4ZM2 4.25C2 4.11193 2.11193 4 2.25 4H4.75C4.88807 4 5 4.11193 5 4.25V5.75454C5 5.89261 4.88807 6.00454 4.75 6.00454H2.25C2.11193 6.00454 2 5.89261 2 5.75454V4.25ZM12.101 7.58421C12.101 9.02073 10.9365 10.1853 9.49998 10.1853C8.06346 10.1853 6.89893 9.02073 6.89893 7.58421C6.89893 6.14769 8.06346 4.98315 9.49998 4.98315C10.9365 4.98315 12.101 6.14769 12.101 7.58421ZM13.101 7.58421C13.101 9.57302 11.4888 11.1853 9.49998 11.1853C7.51117 11.1853 5.89893 9.57302 5.89893 7.58421C5.89893 5.5954 7.51117 3.98315 9.49998 3.98315C11.4888 3.98315 13.101 5.5954 13.101 7.58421Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></symbol>
+      <symbol id="i-mail" viewBox="0 0 15 15"><path d="M1 2C0.447715 2 0 2.44772 0 3V12C0 12.5523 0.447715 13 1 13H14C14.5523 13 15 12.5523 15 12V3C15 2.44772 14.5523 2 14 2H1ZM1 3L14 3V3.92494C13.9174 3.92486 13.8338 3.94751 13.7589 3.99505L7.5 7.96703L1.24112 3.99505C1.16621 3.94751 1.0826 3.92486 1 3.92494V3ZM1 4.90797V12H14V4.90797L7.74112 8.87995C7.59394 8.97335 7.40606 8.97335 7.25888 8.87995L1 4.90797Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></symbol>
+      <symbol id="i-speaker" viewBox="0 0 15 15"><path d="M7.46968 1.05085C7.64122 1.13475 7.75 1.30904 7.75 1.5V13.5C7.75 13.691 7.64122 13.8653 7.46968 13.9492C7.29813 14.0331 7.09377 14.0119 6.94303 13.8947L3.2213 11H1.5C0.671571 11 0 10.3284 0 9.5V5.5C0 4.67158 0.671573 4 1.5 4H3.2213L6.94303 1.10533C7.09377 0.988085 7.29813 0.966945 7.46968 1.05085ZM6.75 2.52232L3.69983 4.89468C3.61206 4.96294 3.50405 5 3.39286 5H1.5C1.22386 5 1 5.22386 1 5.5V9.5C1 9.77615 1.22386 10 1.5 10H3.39286C3.50405 10 3.61206 10.0371 3.69983 10.1053L6.75 12.4777V2.52232ZM10.2784 3.84804C10.4623 3.72567 10.7106 3.77557 10.833 3.95949C12.2558 6.09798 12.2558 8.90199 10.833 11.0405C10.7106 11.2244 10.4623 11.2743 10.2784 11.1519C10.0944 11.0296 10.0445 10.7813 10.1669 10.5973C11.4111 8.72728 11.4111 6.27269 10.1669 4.40264C10.0445 4.21871 10.0944 3.97041 10.2784 3.84804ZM12.6785 1.43044C12.5356 1.2619 12.2832 1.24104 12.1147 1.38386C11.9462 1.52667 11.9253 1.77908 12.0681 1.94762C14.7773 5.14488 14.7773 9.85513 12.0681 13.0524C11.9253 13.2209 11.9462 13.4733 12.1147 13.6161C12.2832 13.759 12.5356 13.7381 12.6785 13.5696C15.6406 10.0739 15.6406 4.92612 12.6785 1.43044Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></symbol>
+      <symbol id="i-check" viewBox="0 0 15 15"><path d="M11.4669 3.72684C11.7558 3.91574 11.8369 4.30308 11.648 4.59198L7.39799 11.092C7.29783 11.2452 7.13556 11.3467 6.95402 11.3699C6.77247 11.3931 6.58989 11.3355 6.45446 11.2124L3.70446 8.71241C3.44905 8.48022 3.43023 8.08494 3.66242 7.82953C3.89461 7.57412 4.28989 7.55529 4.5453 7.78749L6.75292 9.79441L10.6018 3.90792C10.7907 3.61902 11.178 3.53795 11.4669 3.72684Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></symbol>
+      <symbol id="i-warn" viewBox="0 0 15 15"><path d="M8.4449 0.608765C8.0183 -0.107015 6.9817 -0.107015 6.55509 0.608766L0.161178 11.3368C-0.275824 12.07 0.252503 13 1.10608 13H13.8939C14.7475 13 15.2758 12.07 14.8388 11.3368L8.4449 0.608765ZM7.4141 1.12073C7.45288 1.05566 7.54712 1.05566 7.5859 1.12073L13.9798 11.8488C14.0196 11.9154 13.9715 12 13.8939 12H1.10608C1.02849 12 0.980454 11.9154 1.02018 11.8488L7.4141 1.12073ZM6.8269 4.48611C6.81221 4.10423 7.11783 3.78663 7.5 3.78663C7.88217 3.78663 8.18778 4.10423 8.1731 4.48612L8.01921 8.48701C8.00848 8.766 7.7792 8.98664 7.5 8.98664C7.2208 8.98664 6.99151 8.766 6.98078 8.48701L6.8269 4.48611ZM8.24989 10.476C8.24989 10.8902 7.9141 11.226 7.49989 11.226C7.08567 11.226 6.74989 10.8902 6.74989 10.476C6.74989 10.0618 7.08567 9.72599 7.49989 9.72599C7.9141 9.72599 8.24989 10.0618 8.24989 10.476Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></symbol>
+      <symbol id="i-heart" viewBox="0 0 15 15"><path d="M4.89346 2.35248C3.49195 2.35248 2.35248 3.49359 2.35248 4.90532C2.35248 6.38164 3.20954 7.9168 4.37255 9.33522C5.39396 10.581 6.59464 11.6702 7.50002 12.4778C8.4054 11.6702 9.60608 10.581 10.6275 9.33522C11.7905 7.9168 12.6476 6.38164 12.6476 4.90532C12.6476 3.49359 11.5081 2.35248 10.1066 2.35248C9.27059 2.35248 8.81894 2.64323 8.5397 2.95843C8.27877 3.25295 8.14623 3.58566 8.02501 3.88993C8.00391 3.9429 7.98315 3.99501 7.96211 4.04591C7.88482 4.23294 7.7024 4.35494 7.50002 4.35494C7.29765 4.35494 7.11523 4.23295 7.03793 4.04592C7.01689 3.99501 6.99612 3.94289 6.97502 3.8899C6.8538 3.58564 6.72126 3.25294 6.46034 2.95843C6.18109 2.64323 5.72945 2.35248 4.89346 2.35248ZM1.35248 4.90532C1.35248 2.94498 2.936 1.35248 4.89346 1.35248C6.0084 1.35248 6.73504 1.76049 7.20884 2.2953C7.32062 2.42147 7.41686 2.55382 7.50002 2.68545C7.58318 2.55382 7.67941 2.42147 7.79119 2.2953C8.265 1.76049 8.99164 1.35248 10.1066 1.35248C12.064 1.35248 13.6476 2.94498 13.6476 4.90532C13.6476 6.74041 12.6013 8.50508 11.4008 9.96927C10.2636 11.3562 8.92194 12.5508 8.00601 13.3664C7.94645 13.4194 7.88869 13.4709 7.83291 13.5206C7.64324 13.6899 7.3568 13.6899 7.16713 13.5206C7.11135 13.4709 7.05359 13.4194 6.99403 13.3664C6.0781 12.5508 4.73641 11.3562 3.59926 9.96927C2.39872 8.50508 1.35248 6.74041 1.35248 4.90532Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></symbol>
+      <symbol id="m-rings" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="16" cy="16" r="15"/><circle cx="16" cy="16" r="10"/><circle cx="16" cy="16" r="5"/><circle cx="16" cy="16" r="1.2" fill="currentColor"/></g></symbol>
+      <symbol id="m-bars" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="16" cy="16" r="15"/><path d="M9 14v4M12.5 10v12M16 7v18M19.5 11v10M23 14v4"/></g></symbol>
+      <symbol id="m-drop" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="16" cy="16" r="15"/><path d="M16 7c3 4.5 5 7.4 5 9.8a5 5 0 0 1-10 0C11 14.4 13 11.5 16 7Z"/><path d="M8.5 24.5c2.5-1.4 5-1.4 7.5 0s5 1.4 7.5 0"/></g></symbol>
+      <symbol id="m-steps" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="15"/><path d="M8 22h5v-4h5v-4h5V10"/><path d="M20.5 10H23v2.5"/></g></symbol>
+      <symbol id="laurel" viewBox="0 0 22 52"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M17 50C7 42 4 30 7 16 8.5 9 11 5 14 2"/><path d="M8.6 44c-4 0-6.6-2-7.6-4.6 3.2-.6 6 .6 7.6 4.6Z"/><path d="M6 37c-3.6-.8-5.6-3.2-5.8-6 3.2.2 5.6 2.2 5.8 6Z"/><path d="M5.2 29.4c-3.2-1.6-4.6-4.4-4.2-7.2 3 .8 4.8 3.4 4.2 7.2Z"/><path d="M5.8 21.6c-2.6-2.2-3.2-5.2-2.2-7.8 2.6 1.4 3.6 4.4 2.2 7.8Z"/><path d="M8 14.4c-1.8-2.6-1.8-5.6-.2-7.8 2 1.8 2.2 4.8.2 7.8Z"/><path d="M9.4 39.6c1.6-3.4 4.4-4.8 7.4-4.4-.8 3-3.6 4.8-7.4 4.4Z"/><path d="M8 31.4c2-3 5-4 7.8-3.2-1.2 2.8-4.2 4.2-7.8 3.2Z"/><path d="M8.6 23.2c2.2-2.6 5.2-3.2 7.8-2-1.4 2.6-4.6 3.6-7.8 2Z"/></g></symbol>
+      <symbol id="swoosh-up" viewBox="0 0 60 46"><g fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 42C14 26 30 16 52 8"/><path d="M40 4l13 4-6 12"/></g></symbol>
+      <symbol id="swoosh-down" viewBox="0 0 60 46"><g fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6C22 6 40 14 52 36"/><path d="M41 34l11 4 4-12"/></g></symbol>
+    </svg>
+
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="top">
+      <div class="wrap top-in">
+        <a class="brand" href="#main" aria-label="Hushtone home"><span class="brand-mark" aria-hidden="true"></span><span>Hushtone</span></a>
+        <nav aria-label="Listening modes">
+          <ul class="nav">
+            <li><a class="nav-link" href="#modes">Unwind</a></li>
+            <li><a class="nav-link" href="#modes">Deep work</a></li>
+            <li><a class="nav-link" href="#modes">Drift</a></li>
+            <li><a class="nav-link" href="#modes">Breathe</a></li>
+            <li><a class="nav-link" href="#modes">Move</a></li>
+            <li>
+              <button class="nav-link" type="button" aria-expanded="false" aria-controls="more-panel" data-more>More <svg class="icon" aria-hidden="true"><use href="#i-chevron" /></svg></button>
+              <div class="more-panel" id="more-panel" hidden>
+                <a href="#science">Method notes</a>
+                <a href="#albums">Albums</a>
+                <a href="#plans">Plans</a>
+                <a href="#circle">The Circle</a>
+                <a href="#faq">Help</a>
+              </div>
+            </li>
+          </ul>
+        </nav>
+        <div class="actions">
+          <a class="button ctl ctl-glow" href="#plans">Start free</a>
+          <a class="button ctl ctl-soft hide-narrow" href="#plans">Log in</a>
+          <button class="button ctl ctl-soft menu-btn hide-wide" type="button" aria-expanded="false" aria-controls="sheet" data-menu><svg class="icon" aria-hidden="true"><use href="#i-menu" /></svg><span>Menu</span></button>
+        </div>
+      </div>
+    </header>
+    <div class="sheet" id="sheet" hidden>
+      <a href="#modes">Unwind</a>
+      <a href="#modes">Deep work</a>
+      <a href="#modes">Drift</a>
+      <a href="#modes">Breathe</a>
+      <a href="#modes">Move</a>
+      <hr />
+      <a href="#science">Method notes</a>
+      <a href="#albums">Albums</a>
+      <a href="#circle">The Circle</a>
+      <a href="#plans">Log in</a>
+    </div>
+
+    <main id="main" tabindex="-1">
+      <section class="hero wrap" aria-labelledby="hero-title">
+        <h1 class="h1 rise" id="hero-title">Hushtone</h1>
+        <p class="lead rise rise-2">Sound that shifts with your day, so you can settle, think clearly and fall asleep without trying.</p>
+        <a class="button ctl ctl-primary rise rise-3" href="#plans">Start listening</a>
+        <div class="field night rise rise-4">
+          <div class="rays amb-rays" aria-hidden="true"></div>
+          <div class="stars amb-stars" aria-hidden="true"></div>
+          <svg class="ridges" viewBox="0 0 1300 300" preserveAspectRatio="none" aria-hidden="true">
+            <g class="amb-ridge-slow"><path class="ridge-a" d="M0 120C120 80 220 60 340 90S560 150 700 110 960 40 1100 80 1260 120 1300 100V300H0Z" /><path class="ridge-line" d="M0 120C120 80 220 60 340 90S560 150 700 110 960 40 1100 80 1260 120 1300 100" /></g>
+            <g class="amb-ridge"><path class="ridge-b" d="M0 180C140 150 260 130 400 160S640 210 800 170 1060 120 1200 150 1280 170 1300 165V300H0Z" /><path class="ridge-line" d="M0 180C140 150 260 130 400 160S640 210 800 170 1060 120 1200 150 1280 170 1300 165" /></g>
+            <path class="ridge-c" d="M0 240C160 220 320 210 480 228S800 250 960 232 1200 214 1300 226V300H0Z" />
+          </svg>
+          <div class="devices" aria-hidden="true">
+            <div class="dev dev-slab">
+              <svg viewBox="0 0 140 310" preserveAspectRatio="none"><text class="scr-mu" x="12" y="20" font-size="9">9:41</text><text class="scr-tx" x="70" y="46" font-size="11" text-anchor="middle">Deep work</text><text class="scr-mu" x="70" y="60" font-size="7" text-anchor="middle">Late morning push</text><path class="scr-dim" d="M14 80h112v200H14z M14 130h112 M14 180h112 M14 230h112 M70 80v200" /><path class="scr-ln" d="M20 100h20v20 M90 150h28 M30 200h24v18 M84 250h16v16" /></svg>
+            </div>
+            <div class="dev dev-phone">
+              <svg viewBox="0 0 130 270" preserveAspectRatio="none"><text class="scr-mu" x="12" y="18" font-size="9">9:41</text><text class="scr-tx" x="65" y="40" font-size="11" text-anchor="middle">Unwind</text><text class="scr-mu" x="65" y="53" font-size="7" text-anchor="middle">Evening slow-down</text><g class="scr-ln"><circle cx="65" cy="140" r="52" /><circle cx="65" cy="140" r="38" /><circle cx="65" cy="140" r="24" /><circle cx="65" cy="140" r="10" /></g><g class="scr-dim"><circle cx="30" cy="232" r="9" /><circle cx="54" cy="232" r="9" /><circle cx="78" cy="232" r="9" /><circle cx="102" cy="232" r="9" /></g></svg>
+            </div>
+            <div class="dev dev-pad">
+              <svg viewBox="0 0 150 190" preserveAspectRatio="none"><text class="scr-tx" x="14" y="26" font-size="12">Drift</text><g class="scr-ln"><circle cx="36" cy="64" r="14" /><circle cx="75" cy="64" r="14" /><circle cx="114" cy="64" r="14" /><circle cx="36" cy="110" r="14" /><circle cx="75" cy="110" r="14" /><circle cx="114" cy="110" r="14" /></g><g class="scr-dim"><rect x="14" y="144" width="36" height="14" rx="7" /><rect x="56" y="144" width="36" height="14" rx="7" /><rect x="98" y="144" width="36" height="14" rx="7" /></g></svg>
+            </div>
+            <div class="dev dev-puck">
+              <svg viewBox="0 0 100 100"><g class="scr-ln"><circle cx="50" cy="50" r="30" /><path d="M36 50c4-8 8-8 12 0s8 8 12 0" /></g></svg>
+            </div>
+            <div class="dev dev-tower"></div>
+            <div class="dev dev-box"></div>
+            <div class="dev dev-watch-round">
+              <svg viewBox="0 0 100 100"><g class="scr-ln"><circle cx="50" cy="50" r="26" /><path d="M32 54l18-20 18 20" /></g><text class="scr-mu" x="50" y="88" font-size="8" text-anchor="middle">Breathe</text></svg>
+            </div>
+            <div class="dev dev-watch">
+              <svg viewBox="0 0 90 110"><text class="scr-tx" x="62" y="20" font-size="10" text-anchor="middle">9:40</text><path class="scr-ln" d="M10 62c8-16 14-16 22 0s14 16 22 0 14-16 22 0" /><text class="scr-mu" x="45" y="94" font-size="9" text-anchor="middle">Move</text></svg>
+            </div>
+            <div class="dev dev-visor">
+              <svg viewBox="0 0 200 110" preserveAspectRatio="none"><path class="scr-dim" d="M20 60c20-30 140-30 160 0" /><path class="scr-dim" d="M30 74c22-18 118-18 140 0" /></svg>
+            </div>
+          </div>
+          <button class="button ctl field-pause" type="button" aria-pressed="false" data-motion-toggle><svg class="icon" aria-hidden="true"><use href="#i-pause" /></svg><span>Pause motion</span></button>
+        </div>
+      </section>
+
+      <section class="block wrap" aria-label="Featured in">
+        <h2 class="sr">Featured in these fictional publications</h2>
+        <ul class="press">
+          <li class="mark mk-serif" role="img" aria-label="The Quiet Ledger">The Quiet Ledger</li>
+          <li class="mark mk-heavy" role="img" aria-label="Lowband">Lowband</li>
+          <li class="mark mk-wide" role="img" aria-label="Overtone">Overtone</li>
+          <li class="mark mk-round" role="img" aria-label="hertz weekly"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2 10c2-6 4-6 6 0s4 6 6 0 3-5 4-2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" /></svg>hertz weekly</li>
+          <li class="mark mk-serif-i" role="img" aria-label="Dusk Review">Dusk Review</li>
+          <li class="mark mk-thin" role="img" aria-label="Field Notes">Field Notes</li>
+          <li class="mark mk-heavy" role="img" aria-label="Sustain">Sustain</li>
+          <li class="mark mk-round" role="img" aria-label="ambit"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="2.4" /><circle cx="10" cy="10" r="2.5" fill="currentColor" /></svg>ambit</li>
+          <li class="mark mk-serif" role="img" aria-label="Monograph">MONOGRAPH</li>
+          <li class="mark mk-wide" role="img" aria-label="Undertow">Undertow</li>
+          <li class="mark mk-serif-i" role="img" aria-label="Murmur Daily">Murmur Daily</li>
+          <li class="mark mk-heavy" role="img" aria-label="Tide Desk"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2" y="2" width="16" height="16" rx="3" fill="currentColor" /></svg>Tide Desk</li>
+          <li class="mark mk-thin" role="img" aria-label="Resonant">Resonant</li>
+          <li class="mark mk-round" role="img" aria-label="pale blue">pale blue</li>
+          <li class="mark mk-serif" role="img" aria-label="The Drift Report">The Drift Report</li>
+        </ul>
+      </section>
+
+      <section class="block wrap" id="modes" aria-labelledby="modes-title">
+        <h2 class="sr" id="modes-title">Listening modes</h2>
+        <div class="scene">
+          <div class="scene-glow" aria-hidden="true"></div>
+          <div class="scene-stars amb-stars" aria-hidden="true"></div>
+          <button class="button ctl ctl-soft scene-pause" type="button" aria-pressed="false" data-motion-toggle><svg class="icon" aria-hidden="true"><use href="#i-pause" /></svg><span>Pause motion</span></button>
+          <div class="big-phone night">
+            <svg viewBox="0 0 286 470" aria-hidden="true">
+              <text class="scr-tx" x="40" y="40" font-size="13">9:41</text>
+              <rect class="scr-fill" x="112" y="14" width="62" height="10" rx="5" opacity="0.25" />
+              <g class="scr-dim" opacity="0.7">
+                <path d="M143 235L-40 120M143 235L-40 170M143 235L-40 220M143 235L-40 270M143 235L-40 320M143 235L-40 370M143 235L326 120M143 235L326 170M143 235L326 220M143 235L326 270M143 235L326 320M143 235L326 370M143 235L20 -20M143 235L80 -20M143 235L206 -20M143 235L266 -20M143 235L20 500M143 235L80 500M143 235L206 500M143 235L266 500" />
+              </g>
+              <rect class="scr-fill" x="103" y="70" width="80" height="330" rx="40" opacity="1" style="fill: var(--night)" />
+              <g style="color: var(--night-ink)">
+                <use href="#m-rings" x="113" y="80" width="60" height="60" />
+                <use href="#m-bars" x="113" y="155" width="60" height="60" />
+                <use href="#m-drop" x="113" y="255" width="60" height="60" />
+                <use href="#m-steps" x="113" y="330" width="60" height="60" />
+              </g>
+            </svg>
+            <button class="button ctl round round-lg" type="button" aria-pressed="false" aria-label="Play a 30 second sample" data-play><svg class="icon" aria-hidden="true"><use href="#i-play" /></svg></button>
+          </div>
+          <div class="modes">
+            <article class="mode">
+              <button class="button ctl round" type="button" aria-pressed="false" aria-label="Preview Unwind" data-play><svg class="icon" aria-hidden="true"><use href="#i-play" /></svg></button>
+              <h3 class="h4">Unwind</h3>
+              <p class="prose">Slow, warm tones that loosen the shoulders after a long day.</p>
+              <a class="arrow-link" href="#app">Explore <svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></a>
+            </article>
+            <article class="mode">
+              <button class="button ctl round" type="button" aria-pressed="false" aria-label="Preview Deep work" data-play><svg class="icon" aria-hidden="true"><use href="#i-play" /></svg></button>
+              <h3 class="h4">Deep work</h3>
+              <p class="prose">A steady pulse that keeps one task in front of you for longer.</p>
+              <a class="arrow-link" href="#desk">Explore <svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></a>
+            </article>
+            <article class="mode">
+              <button class="button ctl round" type="button" aria-pressed="false" aria-label="Preview Drift" data-play><svg class="icon" aria-hidden="true"><use href="#i-play" /></svg></button>
+              <h3 class="h4">Drift</h3>
+              <p class="prose">Low swells that fade as you breathe slower and nod off.</p>
+              <a class="arrow-link" href="#voice">Explore <svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></a>
+            </article>
+            <article class="mode">
+              <button class="button ctl round" type="button" aria-pressed="false" aria-label="Preview Move" data-play><svg class="icon" aria-hidden="true"><use href="#i-play" /></svg></button>
+              <h3 class="h4">Move</h3>
+              <p class="prose">Rhythms that follow your stride on a walk, a run or a ride.</p>
+              <a class="arrow-link" href="#wrist">Explore <svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="block wrap" id="science" aria-labelledby="science-title">
+        <div class="intro">
+          <h2 class="h2" id="science-title">Tuned by listening research</h2>
+          <p class="lead">Hushtone reads the hour, the light outside, your pace and your pulse, then rewrites the sound around you every few seconds.</p>
+        </div>
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-fig">#1<svg aria-hidden="true"><use href="#swoosh-up" /></svg></span>
+            <span class="stat-label">most replayed calm mode in our example panel<sup>1</sup></span>
+          </div>
+          <div class="stat">
+            <span class="stat-fig">6x<svg aria-hidden="true"><use href="#swoosh-up" /></svg></span>
+            <span class="stat-label">longer unbroken focus blocks<sup>1</sup></span>
+          </div>
+          <div class="stat">
+            <span class="stat-fig">2.8x<svg aria-hidden="true"><use href="#swoosh-down" /></svg></span>
+            <span class="stat-label">drop in self-rated tension after two weeks<sup>2</sup></span>
+          </div>
+          <div class="stat">
+            <span class="stat-fig">93%<svg aria-hidden="true"><use href="#swoosh-up" /></svg></span>
+            <span class="stat-label">of evening sessions finished without a skip<sup>2</sup></span>
+          </div>
+        </div>
+        <div class="notes">
+          <p>1) Example figures for this showcase, not measured results. <a class="arrow-link" href="#faq">Read the method note <svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></a></p>
+          <p>2) Fictional diary study: twelve listeners rated their evenings on a five-point scale for fourteen nights.</p>
+        </div>
+      </section>
+
+      <section class="block wrap" id="app" aria-labelledby="app-title">
+        <div class="intro">
+          <h2 class="h2" id="app-title">Hushtone on your phone.<br />Calm that fits in a pocket.</h2>
+          <p class="lead">One tap starts a sound that listens back: it slows when you settle and lifts when the afternoon drags.</p>
+        </div>
+        <div class="pair">
+          <article class="fcard">
+            <div class="fcard-art" aria-hidden="true">
+              <svg viewBox="0 0 564 330" preserveAspectRatio="xMidYMid slice">
+                <g class="la-thin"><path d="M0 60h564M0 120h564M0 180h564M0 240h564M0 300h564M70 0v330M140 0v330M210 0v330M280 0v330M350 0v330M420 0v330M490 0v330" /></g>
+                <g class="la"><path d="M0 230C40 230 50 110 95 110S150 230 190 230 245 110 285 110 340 230 380 230 435 110 475 110 530 230 564 230" /><path d="M0 270C80 270 120 150 200 140S330 180 400 120 520 60 564 50" /><path d="M210 40v250M350 70v220" stroke-dasharray="8 8" /><path d="M222 60h116M326 52l12 8-12 8" /><path d="M120 300h120M228 292l12 8-12 8" /></g>
+                <circle class="la-fill" cx="280" cy="286" r="7" />
+              </svg>
+            </div>
+            <div class="fcard-body">
+              <h3 class="h3">Sound that rewrites itself</h3>
+              <p class="prose">Every session is generated on the spot from a few hundred short tones, so no two evenings repeat and nothing loops back to the start.</p>
+              <a class="arrow-link" href="#plans">Open the app <svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></a>
+            </div>
+          </article>
+          <article class="fcard">
+            <div class="fcard-art" aria-hidden="true">
+              <svg viewBox="0 0 564 330" style="color: var(--line-art)">
+                <g class="la-thin"><path d="M282 165L150 75M282 165L414 75M282 165L150 255M282 165L414 255M282 165H150M282 165H414M282 165V45M282 165V285" /></g>
+                <circle cx="282" cy="165" r="36" class="la-panel" />
+                <use href="#m-rings" x="258" y="141" width="48" height="48" />
+                <use href="#m-bars" x="118" y="133" width="64" height="64" />
+                <use href="#m-drop" x="382" y="133" width="64" height="64" />
+                <use href="#m-steps" x="250" y="13" width="64" height="64" />
+                <use href="#m-rings" x="250" y="253" width="64" height="64" />
+                <circle cx="150" cy="75" r="24" class="la" />
+                <circle cx="414" cy="75" r="24" class="la" />
+                <circle cx="150" cy="255" r="24" class="la" />
+                <circle cx="414" cy="255" r="24" class="la" />
+                <path class="la" d="M140 75h20M150 65v20M404 255h20M141 248l18 14M406 68l16 14" />
+              </svg>
+            </div>
+            <div class="fcard-body">
+              <h3 class="h3">A day that plays itself</h3>
+              <p class="prose">Autoflow picks the right mode for the hour: a lift before noon, a soft landing at six, a long fade when the lights go out. Press start once.</p>
+              <a class="arrow-link" href="#plans">Open the app <svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="block wrap" id="wrist" aria-labelledby="wrist-title">
+        <div class="intro">
+          <h2 class="h2" id="wrist-title">Hushtone on your wrist.<br />A small screen, a full calm.</h2>
+          <p class="lead">Your pulse and step rhythm steer the sound in real time, even with the phone left at home.</p>
+        </div>
+        <div class="pair">
+          <article class="fcard">
+            <div class="fcard-art" aria-hidden="true">
+              <svg viewBox="0 0 564 330" preserveAspectRatio="xMidYMid slice" style="color: var(--line-art)">
+                <path class="la" d="M60 40h444v90H60zM208 40v90M356 40v90" />
+                <use href="#i-heart" x="110" y="61" width="48" height="48" />
+                <use href="#m-steps" x="258" y="61" width="48" height="48" />
+                <use href="#m-drop" x="406" y="61" width="48" height="48" />
+                <path class="la" d="M282 130v60" />
+                <path class="la-thin" d="M0 250C30 190 60 190 90 250S150 310 180 250 240 190 270 250 330 310 360 250 420 190 450 250 510 310 540 250 560 220 564 230" />
+                <path class="la" d="M0 260C50 160 100 160 150 260S250 360 300 260 400 160 450 260 540 330 564 290" />
+                <circle class="la-fill" cx="282" cy="196" r="8" />
+              </svg>
+            </div>
+            <div class="fcard-body">
+              <h3 class="h3">Reads your rhythm</h3>
+              <p class="prose">Heart rate, motion and the light around you shape each minute, so the sound gets more personal the longer you wear it.</p>
+              <a class="arrow-link" href="#plans">Get it for your wrist <svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></a>
+            </div>
+          </article>
+          <article class="fcard">
+            <div class="fcard-art" aria-hidden="true">
+              <svg viewBox="0 0 564 330" preserveAspectRatio="xMidYMid slice">
+                <g class="la-thin"><path d="M0 70C120 40 200 120 300 90S470 30 564 60M0 140C110 110 220 190 320 160S480 100 564 130M0 250C130 220 230 300 330 270S470 210 564 240" /></g>
+                <rect x="232" y="0" width="100" height="40" rx="10" class="la-panel" />
+                <rect x="232" y="290" width="100" height="40" rx="10" class="la-panel" />
+                <rect x="187" y="38" width="190" height="254" rx="46" class="la-panel" />
+                <rect x="377" y="120" width="10" height="40" rx="4" class="la-fill" />
+                <rect x="203" y="54" width="158" height="222" rx="34" style="fill: var(--night)" />
+                <text class="scr-tx" x="318" y="92" font-size="18" text-anchor="middle">06:30</text>
+                <path class="scr-ln" d="M222 168c14-40 26-40 40 0s26 40 40 0 26-40 40 0" />
+                <text class="scr-mu" x="282" y="204" font-size="10" text-anchor="middle">5 · 6 · 7 · 8 · 9</text>
+                <text class="scr-tx" x="282" y="232" font-size="16" text-anchor="middle">Morning lift</text>
+                <g style="color: var(--night-ink)"><use href="#m-steps" x="250" y="242" width="28" height="28" /><use href="#m-rings" x="286" y="242" width="28" height="28" /></g>
+              </svg>
+            </div>
+            <div class="fcard-body">
+              <h3 class="h3">Leave the phone behind</h3>
+              <p class="prose">The wrist app generates sound on its own, so a walk, a nap or a quiet desk hour never waits for a connection.</p>
+              <a class="arrow-link" href="#plans">Get it for your wrist <svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="block wrap" id="voice" aria-labelledby="voice-title">
+        <div class="intro">
+          <h2 class="h2" id="voice-title">Hushtone on smart speakers.<br />Say it, then close your eyes.</h2>
+          <p class="lead">Works with the speakers, displays and car systems that answer to your voice. Nothing to set up first.</p>
+        </div>
+        <div class="pair">
+          <article class="fcard">
+            <div class="fcard-art" aria-hidden="true">
+              <svg viewBox="0 0 564 330" preserveAspectRatio="xMidYMid slice">
+                <g class="la-fill" opacity="0.6"><circle cx="60" cy="40" r="2" /><circle cx="160" cy="80" r="1.5" /><circle cx="420" cy="50" r="2" /><circle cx="510" cy="120" r="1.5" /><circle cx="90" cy="270" r="1.5" /><circle cx="480" cy="290" r="2" /><circle cx="300" cy="30" r="1.5" /><circle cx="250" cy="300" r="1.5" /></g>
+                <path class="la-panel" d="M110 100h330a20 20 0 0 1 20 20v100a20 20 0 0 1-20 20H110a20 20 0 0 1-20-20v-36l-18-14 18-14v-36a20 20 0 0 1 20-20Z" />
+                <text class="la-tx" x="275" y="160" font-size="27" text-anchor="middle">“Speaker, play Drift</text>
+                <text class="la-tx" x="275" y="198" font-size="27" text-anchor="middle">by Hushtone”</text>
+              </svg>
+            </div>
+            <div class="fcard-body">
+              <h3 class="h3">Lights out, no screen</h3>
+              <p class="prose">Ask for Drift from the pillow and the room fills with a slow swell that fades on its own once your breathing evens out.</p>
+              <a class="arrow-link" href="#plans">Connect a speaker <svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></a>
+            </div>
+          </article>
+          <article class="fcard">
+            <div class="fcard-art" aria-hidden="true">
+              <svg viewBox="0 0 564 330" style="color: var(--line-art)">
+                <use href="#m-bars" x="150" y="40" width="70" height="70" />
+                <use href="#m-drop" x="344" y="40" width="70" height="70" />
+                <use href="#m-rings" x="110" y="170" width="70" height="70" />
+                <use href="#m-steps" x="384" y="170" width="70" height="70" />
+                <ellipse cx="282" cy="250" rx="110" ry="26" class="la-thin" />
+                <circle cx="282" cy="180" r="92" class="la-panel" />
+                <circle cx="282" cy="180" r="66" class="la" />
+                <path class="la" d="M242 180c10-22 20-22 30 0s20 22 30 0 14-16 20-8" />
+              </svg>
+            </div>
+            <div class="fcard-body">
+              <h3 class="h3">Routines that run themselves</h3>
+              <p class="prose">Tie a mode to a phrase like “wind down” and the speaker dims the lamps, sets a timer and starts Drift in one go.</p>
+              <a class="arrow-link" href="#plans">Connect a speaker <svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="block wrap" id="screen" aria-labelledby="screen-title">
+        <div class="intro">
+          <h2 class="h2" id="screen-title">Hushtone on the big screen.<br />Rest at room scale.</h2>
+          <p class="lead">Turn the living-room screen into a slow window: wide visuals that move with the sound, and a new evening release every month.</p>
+        </div>
+        <div class="tv night">
+          <div class="stars amb-stars" aria-hidden="true"></div>
+          <svg class="tv-hills" viewBox="0 0 1200 300" preserveAspectRatio="none" aria-hidden="true"><path class="ridge-b" d="M0 120C150 80 300 70 450 110S750 160 900 110 1120 70 1200 90V300H0Z" /><path class="ridge-a" d="M0 190C180 160 330 150 500 180S820 220 1000 180 1150 160 1200 170V300H0Z" /></svg>
+          <div class="tv-frame">
+            <div class="rays amb-rays" aria-hidden="true"></div>
+            <svg viewBox="0 0 160 90" preserveAspectRatio="none" aria-hidden="true"><g class="amb-ridge"><path class="ridge-b" d="M-10 60C20 52 40 50 70 56S120 64 170 54V90H-10Z" /></g><path class="ridge-a" d="M-10 72C30 66 60 66 90 70S140 76 170 70V90H-10Z" /></svg>
+            <div class="tv-ui">
+              <p class="tv-kicker">Your evening starts here</p>
+              <p class="tv-title" aria-label="Low Tide">LOW<br />TIDE</p>
+              <button class="button ctl tv-begin" type="button">Begin</button>
+            </div>
+          </div>
+          <div class="tv-stand" aria-hidden="true"></div>
+          <div class="tv-box" aria-hidden="true"><span></span></div>
+        </div>
+      </section>
+
+      <section class="block wrap" id="desk" aria-labelledby="desk-title">
+        <div class="intro">
+          <h2 class="h2" id="desk-title">Hushtone on your desk.<br />Deep work, then real rest.</h2>
+          <p class="lead">A quiet desktop companion and a browser player, both built to stay out of the way while you finish the thing.</p>
+        </div>
+        <div class="pair">
+          <article class="fcard">
+            <div class="fcard-art" aria-hidden="true">
+              <svg viewBox="0 0 564 330" preserveAspectRatio="xMidYMin slice" style="color: var(--line-art)">
+                <rect x="-20" y="34" width="530" height="340" rx="30" class="la-panel" />
+                <path class="la-thin" d="M-20 76h530" />
+                <use href="#m-rings" x="268" y="44" width="22" height="22" />
+                <text class="la-tx" x="298" y="61" font-size="15">Deep work</text>
+                <text class="la-tx" x="460" y="61" font-size="15" text-anchor="end">24:00</text>
+                <rect x="30" y="96" width="420" height="260" rx="20" class="la-panel" />
+                <use href="#i-pause" x="52" y="114" width="22" height="22" />
+                <use href="#i-speaker" x="98" y="114" width="22" height="22" />
+                <path class="la" d="M140 125h140" />
+                <circle class="la-fill" cx="226" cy="125" r="7" />
+                <text class="la-tx" x="420" y="131" font-size="16" text-anchor="end">···</text>
+                <path class="la-thin" d="M30 152h420" />
+                <text class="la-tx" x="54" y="200" font-size="28">Deep work</text>
+                <use href="#m-bars" x="54" y="222" width="54" height="54" />
+                <use href="#m-rings" x="140" y="222" width="54" height="54" opacity="0.6" />
+                <use href="#m-drop" x="226" y="222" width="54" height="54" opacity="0.6" />
+                <use href="#m-steps" x="312" y="222" width="54" height="54" opacity="0.6" />
+              </svg>
+            </div>
+            <div class="fcard-body">
+              <h3 class="h3">The desktop companion</h3>
+              <p class="prose">Lives in the menu bar, starts with a shortcut and dims itself when you are presenting, so focus sessions never get in the way of the work.</p>
+              <a class="arrow-link" href="#plans">Download for desktop <svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></a>
+            </div>
+          </article>
+          <article class="fcard">
+            <div class="fcard-art" aria-hidden="true">
+              <svg viewBox="0 0 564 330" preserveAspectRatio="xMidYMid slice">
+                <rect x="34" y="30" width="496" height="280" rx="14" class="la-panel" />
+                <path class="la" d="M58 58l-8 6 8 6M84 58l8 6-8 6M116 56a8 8 0 1 0 6 3" />
+                <rect x="140" y="52" width="370" height="24" rx="6" class="la-thin" />
+                <text class="la-tx" x="152" y="69" font-size="13">hushtone.example/listen</text>
+                <text class="la-tx" x="282" y="114" font-size="14" text-anchor="middle">Drift</text>
+                <text class="la-tx" x="282" y="132" font-size="10" text-anchor="middle" opacity="0.8">Late evening wind-down</text>
+                <path class="la" d="M54 236C140 266 210 250 280 190S430 130 512 150" />
+                <circle cx="282" cy="276" r="16" class="la" />
+                <use href="#i-pause" x="272" y="266" width="20" height="20" style="color: var(--line-art)" />
+                <rect x="70" y="264" width="40" height="24" rx="6" class="la-thin" />
+                <path class="la" d="M410 276h70" />
+                <circle class="la-fill" cx="462" cy="276" r="5" />
+              </svg>
+            </div>
+            <div class="fcard-body">
+              <h3 class="h3">The browser player</h3>
+              <p class="prose">Open a tab at school, at work or on a borrowed laptop. Every mode and its moving visual runs right in the page, with nothing to install.</p>
+              <a class="arrow-link" href="#plans">Open the player <svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="block" id="albums" aria-labelledby="albums-title">
+        <div class="wrap">
+          <div class="intro">
+            <h2 class="h2" id="albums-title">Hushtone albums, wherever you stream</h2>
+            <p class="lead">Fixed releases cut from the same engine: they do not adapt to you, but they carry the same slow sound to any player you already use.</p>
+          </div>
+        </div>
+        <div class="covers" role="list" aria-label="Album covers">
+          <div class="cover-row">
+            <div class="cover c1" role="listitem"><span>Low Tide</span></div>
+            <div class="cover c4" role="listitem"><span>Pine Hours</span></div>
+            <div class="cover c7" role="listitem"><span>First Light</span></div>
+            <div class="cover c3" role="listitem"><span>Study Hall</span></div>
+            <div class="cover c6" role="listitem"><span>Night Shift</span></div>
+            <div class="cover c9" role="listitem"><span>Glasswater</span></div>
+            <div class="cover c2" role="listitem"><span>Warm Static</span></div>
+            <div class="cover c5" role="listitem"><span>Slow Orbit</span></div>
+            <div class="cover c8" role="listitem"><span>Rainroom</span></div>
+            <div class="cover c1" role="listitem"><span>Halflight</span></div>
+          </div>
+          <div class="cover-row">
+            <div class="cover c5" role="listitem"><span>Long Exhale</span></div>
+            <div class="cover c2" role="listitem"><span>Lantern</span></div>
+            <div class="cover c8" role="listitem"><span>Still Pond</span></div>
+            <div class="cover c6" role="listitem"><span>Deep Field</span></div>
+            <div class="cover c9" role="listitem"><span>North Window</span></div>
+            <div class="cover c3" role="listitem"><span>Quiet Engine</span></div>
+            <div class="cover c7" role="listitem"><span>Afterglow</span></div>
+            <div class="cover c4" role="listitem"><span>Meadow Noise</span></div>
+            <div class="cover c1" role="listitem"><span>Undertone</span></div>
+            <div class="cover c2" role="listitem"><span>Woolgather</span></div>
+            <div class="cover c6" role="listitem"><span>Small Rain</span></div>
+          </div>
+          <div class="cover-row">
+            <div class="cover c9" role="listitem"><span>Silver Hour</span></div>
+            <div class="cover c6" role="listitem"><span>Late Train</span></div>
+            <div class="cover c3" role="listitem"><span>Soft Focus</span></div>
+            <div class="cover c8" role="listitem"><span>Driftwood</span></div>
+            <div class="cover c1" role="listitem"><span>Hum</span></div>
+            <div class="cover c7" role="listitem"><span>Paper Sky</span></div>
+            <div class="cover c4" role="listitem"><span>Moss Room</span></div>
+            <div class="cover c5" role="listitem"><span>Night Bus</span></div>
+            <div class="cover c2" role="listitem"><span>Ember</span></div>
+            <div class="cover c9" role="listitem"><span>Blue Hour</span></div>
+          </div>
+        </div>
+        <div class="wrap">
+          <ul class="platforms" aria-label="Listen on fictional platforms">
+            <li><a class="arrow-link" href="#albums">Listen on Wavelength <svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></a></li>
+            <li><a class="arrow-link" href="#albums">Listen on Tonearm <svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></a></li>
+            <li><a class="arrow-link" href="#albums">Listen on Riverbed <svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></a></li>
+            <li><a class="arrow-link" href="#albums">Listen on Quiet FM <svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></a></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="block wrap" id="week" aria-labelledby="week-title">
+        <div class="intro">
+          <h2 class="h2" id="week-title">Your week in sound</h2>
+          <p class="lead">A gentle log, not a scoreboard: when you listened, what you chose and how the evening ended.</p>
+        </div>
+        <div class="tbl-wrap" tabindex="0" role="region" aria-labelledby="week-caption">
+          <table>
+            <caption id="week-caption">Sample listening log for one fictional listener</caption>
+            <thead>
+              <tr><th scope="col">Day</th><th scope="col">Mode</th><th scope="col">Started</th><th scope="col">Minutes</th><th scope="col">Ended</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Monday</td><td>Deep work</td><td class="num">09:40</td><td class="num">52</td><td><span class="tag">Task done</span></td></tr>
+              <tr><td>Monday</td><td>Drift</td><td class="num">23:05</td><td class="num">31</td><td><span class="tag">Asleep</span></td></tr>
+              <tr><td>Tuesday</td><td>Move</td><td class="num">07:15</td><td class="num">24</td><td><span class="tag">Walk home</span></td></tr>
+              <tr><td>Wednesday</td><td>Unwind</td><td class="num">18:30</td><td class="num">18</td><td><span class="tag">Paused</span></td></tr>
+              <tr><td>Thursday</td><td>Deep work</td><td class="num">14:00</td><td class="num">75</td><td><span class="tag">Task done</span></td></tr>
+              <tr><td>Friday</td><td>Breathe</td><td class="num">12:10</td><td class="num">6</td><td><span class="tag">Calmer</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block wrap" id="voices" aria-labelledby="voices-title">
+        <div class="intro">
+          <h2 class="h2" id="voices-title">Trusted by sound people.<br />Kept by quiet ones.</h2>
+          <p class="lead">Listeners in many time zones use Hushtone to start the day steadier and end it softer.</p>
+        </div>
+        <ul class="awards" aria-label="Fictional awards">
+          <li class="award"><svg aria-hidden="true"><use href="#laurel" /></svg><span>Calm Interface Award<br />Best of 2025</span><svg aria-hidden="true"><use href="#laurel" /></svg></li>
+          <li class="award"><svg aria-hidden="true"><use href="#laurel" /></svg><span>Listening Lab<br />Editors' pick</span><svg aria-hidden="true"><use href="#laurel" /></svg></li>
+          <li class="award"><svg aria-hidden="true"><use href="#laurel" /></svg><span>Quiet Design Prize<br />Sound category 2024</span><svg aria-hidden="true"><use href="#laurel" /></svg></li>
+          <li class="award"><svg aria-hidden="true"><use href="#laurel" /></svg><span>Ambient Makers<br />Golden Ear 2023</span><svg aria-hidden="true"><use href="#laurel" /></svg></li>
+          <li class="award"><svg aria-hidden="true"><use href="#laurel" /></svg><span>Wellbeing Tools<br />Rising sound 2026</span><svg aria-hidden="true"><use href="#laurel" /></svg></li>
+        </ul>
+        <div class="reviews" id="reviews" data-open="false">
+          <div class="reviews-cols">
+            <article class="review">
+              <div class="review-head"><span class="avatar" aria-hidden="true">MO</span><div class="who"><span>Mara O.</span><span class="stars-row" role="img" aria-label="5 out of 5 stars"><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg></span></div></div>
+              <h3>My afternoon reset</h3>
+              <p>I teach three classes back to back. Ten minutes of Unwind in the staff room and I walk into the last one sounding like myself again. The visuals are lovely too, but I mostly keep my eyes closed.</p>
+            </article>
+            <article class="review">
+              <div class="review-head"><span class="avatar av-b" aria-hidden="true">TK</span><div class="who"><span>tkwrites</span><span class="stars-row" role="img" aria-label="5 out of 5 stars"><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg></span></div></div>
+              <h3>Finally finished the draft</h3>
+              <p>I have tried rain tracks, café noise and silence. Deep work is the first thing that kept me in the chapter for a full hour. It never builds to anything, which is exactly the point. I set the timer and forget it is on.</p>
+            </article>
+            <article class="review">
+              <div class="review-head"><span class="avatar av-c" aria-hidden="true">JL</span><div class="who"><span>Jules L.</span><span class="stars-row" role="img" aria-label="5 out of 5 stars"><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg></span></div></div>
+              <p>Two weeks of Drift and I am out before the fade ends most nights. My partner uses it too, from the other side of the bed.</p>
+            </article>
+            <article class="review">
+              <div class="review-head"><span class="avatar av-b" aria-hidden="true">RN</span><div class="who"><span>night_owl_rn</span><span class="stars-row" role="img" aria-label="5 out of 5 stars"><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg></span></div></div>
+              <h3>Night shifts, solved-ish</h3>
+              <p>Sleeping at 9 a.m. is hard. The sound shifts with the light, so it does not fight the sunrise outside my curtains. I wake up less foggy.</p>
+            </article>
+            <article class="review">
+              <div class="review-head"><span class="avatar" aria-hidden="true">AP</span><div class="who"><span>Ana P.</span><span class="stars-row" role="img" aria-label="5 out of 5 stars"><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg></span></div></div>
+              <h3>Runs feel lighter</h3>
+              <p>Move picks up my cadence after about a minute and then just sits under my steps. I stopped skipping songs because there are none to skip.</p>
+            </article>
+            <article class="review">
+              <div class="review-head"><span class="avatar av-c" aria-hidden="true">DS</span><div class="who"><span>dsound</span><span class="stars-row" role="img" aria-label="5 out of 5 stars"><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg></span></div></div>
+              <p>As someone who mixes sound for a living I expected loops. There are none. Quietly impressive engineering.</p>
+            </article>
+            <article class="review" data-extra hidden>
+              <div class="review-head"><span class="avatar av-b" aria-hidden="true">BE</span><div class="who"><span>Bea E.</span><span class="stars-row" role="img" aria-label="5 out of 5 stars"><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg></span></div></div>
+              <h3>Good for a busy head</h3>
+              <p>Breathe is three minutes long and I use it before every hard call. Small habit, big difference.</p>
+            </article>
+            <article class="review" data-extra hidden>
+              <div class="review-head"><span class="avatar" aria-hidden="true">KW</span><div class="who"><span>kai.w</span><span class="stars-row" role="img" aria-label="5 out of 5 stars"><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg></span></div></div>
+              <p>The big-screen release last month turned our living room into a campsite. The kids asked for it again the next night.</p>
+            </article>
+          </div>
+          <div class="reviews-fade">
+            <button class="button ctl ctl-primary" type="button" aria-expanded="false" aria-controls="reviews" data-reviews>Load more reviews</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="block wrap" id="plans" aria-labelledby="plans-title">
+        <div class="intro">
+          <h2 class="h2" id="plans-title">Pick a listening plan</h2>
+          <p class="lead">Start free, keep what helps. Every plan works on every device you own.</p>
+        </div>
+        <div class="plans">
+          <article class="plan">
+            <h3 class="h4">Sampler</h3>
+            <p class="price">0 <small>per month</small></p>
+            <ul>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check" /></svg>Two modes, thirty minutes a day</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check" /></svg>Phone and browser</li>
+            </ul>
+            <button class="button ctl ctl-soft" type="button" disabled>Your current plan</button>
+          </article>
+          <article class="plan is-main">
+            <h3 class="h4">Hushtone Plus</h3>
+            <p class="price">6 <small>per month, billed yearly</small></p>
+            <ul>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check" /></svg>Every mode, no time limit</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check" /></svg>Wrist, speaker and big screen</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check" /></svg>Autoflow through the day</li>
+            </ul>
+            <a class="button ctl ctl-primary" href="#news">Start a free month</a>
+          </article>
+          <article class="plan">
+            <h3 class="h4">Household</h3>
+            <p class="price">10 <small>per month, up to five people</small></p>
+            <ul>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check" /></svg>Everything in Plus</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check" /></svg>Shared bedtime routines</li>
+            </ul>
+            <a class="button ctl ctl-soft" href="#news">Share with your home</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="block wrap" id="circle" aria-labelledby="circle-title">
+        <div class="intro" style="margin-bottom: 0">
+          <svg class="circle-art" viewBox="0 0 560 260" aria-hidden="true">
+            <circle class="ca-orb-a" cx="200" cy="150" r="100" />
+            <circle class="ca-orb-b" cx="350" cy="130" r="110" />
+            <circle class="ca-orb-a" cx="290" cy="200" r="60" />
+            <g class="la"><circle cx="200" cy="150" r="56" /><circle cx="200" cy="150" r="34" /><circle cx="350" cy="130" r="70" /><circle cx="350" cy="130" r="46" /><circle cx="350" cy="130" r="22" /><circle cx="290" cy="200" r="30" /></g>
+            <path class="la" d="M120 60c14 8 14 24 0 32M96 48c24 14 24 42 0 56M450 60c-14 8-14 24 0 32M474 48c-24 14-24 42 0 56" />
+            <g class="la-fill"><circle cx="200" cy="150" r="5" /><circle cx="350" cy="130" r="5" /><circle cx="290" cy="200" r="4" /><path d="M470 190l4 10 10 4-10 4-4 10-4-10-10-4 10-4Z" /><path d="M86 196l3 7 7 3-7 3-3 7-3-7-7-3 7-3Z" /></g>
+          </svg>
+          <h2 class="h2" id="circle-title">Join the Hushtone Circle.</h2>
+          <p class="lead">Early releases, test builds, listening tips from the sound team and monthly open sessions where you ask us anything.</p>
+          <a class="button ctl ctl-primary" href="#news">Visit the Circle</a>
+        </div>
+      </section>
+
+      <section class="block wrap" id="faq" aria-labelledby="faq-title">
+        <div class="intro">
+          <h2 class="h2" id="faq-title">Questions</h2>
+        </div>
+        <div class="faq">
+          <div>
+            <h3 style="margin: 0"><button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-1" id="faq-1-q">How is a mode different from an album?<svg class="icon" aria-hidden="true"><use href="#i-chevron" /></svg></button></h3>
+            <div class="faq-a" id="faq-1" role="region" aria-labelledby="faq-1-q" hidden><p>A mode is generated live and reacts to the hour, your pace and your pulse. An album is a fixed recording cut from the same engine for players that cannot adapt.</p></div>
+          </div>
+          <div>
+            <h3 style="margin: 0"><button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-2" id="faq-2-q">Does Hushtone use a special tuning?<svg class="icon" aria-hidden="true"><use href="#i-chevron" /></svg></button></h3>
+            <div class="faq-a" id="faq-2" role="region" aria-labelledby="faq-2-q" hidden><p>No single magic pitch. The engine keeps every tone soft and slow-moving, and avoids sudden changes in loudness that pull attention.</p></div>
+          </div>
+          <div>
+            <h3 style="margin: 0"><button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-3" id="faq-3-q">Will it work with ordinary headphones?<svg class="icon" aria-hidden="true"><use href="#i-chevron" /></svg></button></h3>
+            <div class="faq-a" id="faq-3" role="region" aria-labelledby="faq-3-q" hidden><p>Yes. Any headphones or speaker will do. Nothing in the sound depends on a left and right split.</p></div>
+          </div>
+          <div>
+            <h3 style="margin: 0"><button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-4" id="faq-4-q">Where do I get help with my account?<svg class="icon" aria-hidden="true"><use href="#i-chevron" /></svg></button></h3>
+            <div class="faq-a" id="faq-4" role="region" aria-labelledby="faq-4-q" hidden><p>Write to the help desk from the app menu. A person from the sound team answers within a working day.</p></div>
+          </div>
+          <div>
+            <h3 style="margin: 0"><button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-5" id="faq-5-q">Why is there a paid plan?<svg class="icon" aria-hidden="true"><use href="#i-chevron" /></svg></button></h3>
+            <div class="faq-a" id="faq-5" role="region" aria-labelledby="faq-5-q" hidden><p>Generating sound live costs compute every minute you listen. The plan pays for that and keeps Hushtone free of ads.</p></div>
+          </div>
+          <div>
+            <h3 style="margin: 0"><button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-6" id="faq-6-q">Do I have to follow a schedule?<svg class="icon" aria-hidden="true"><use href="#i-chevron" /></svg></button></h3>
+            <div class="faq-a" id="faq-6" role="region" aria-labelledby="faq-6-q" hidden><p>No. Autoflow suggests a mode for the hour, and you can override it whenever you like.</p></div>
+          </div>
+          <div>
+            <h3 style="margin: 0"><button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-7" id="faq-7-q">How soon will I notice a difference?<svg class="icon" aria-hidden="true"><use href="#i-chevron" /></svg></button></h3>
+            <div class="faq-a" id="faq-7" role="region" aria-labelledby="faq-7-q" hidden><p>Most people in our fictional diary study felt calmer within the first week. Your evenings are your own measure.</p></div>
+          </div>
+          <div>
+            <h3 style="margin: 0"><button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-8" id="faq-8-q">Is this a medical product?<svg class="icon" aria-hidden="true"><use href="#i-chevron" /></svg></button></h3>
+            <div class="faq-a" id="faq-8" role="region" aria-labelledby="faq-8-q" hidden><p>No. Hushtone is a listening tool for everyday calm and focus. It does not diagnose or treat any condition.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="block wrap" aria-labelledby="closing-title">
+        <div class="closing">
+          <h2 class="h2" id="closing-title">Your first quiet hour is on us.</h2>
+          <p class="lead">Thirty days of every mode on every device. Cancel from the app in two taps.</p>
+          <div class="ctls">
+            <a class="button ctl ctl-primary" href="#plans">Start listening</a>
+            <a class="button ctl ctl-soft" href="#faq">Read the questions</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot wrap">
+      <div class="foot-grid">
+        <div class="foot-links">
+          <div class="foot-brand"><span class="brand-mark" aria-hidden="true"></span></div>
+          <div class="foot-col">
+            <h2>Listen</h2>
+            <ul>
+              <li><a href="#modes">Unwind</a></li>
+              <li><a href="#modes">Deep work</a></li>
+              <li><a href="#modes">Drift</a></li>
+              <li><a href="#modes">Breathe</a></li>
+              <li><a href="#modes">Move</a></li>
+            </ul>
+            <h2>Science</h2>
+            <ul>
+              <li><a href="#science">Method notes</a></li>
+              <li><a href="#science">Sound engine</a></li>
+              <li><a href="#albums">Albums</a></li>
+            </ul>
+          </div>
+          <div class="foot-col">
+            <h2>Studio</h2>
+            <ul>
+              <li><a href="#circle">Our story</a></li>
+              <li><a href="#circle">Principles</a></li>
+              <li><a href="#voices">Press room</a></li>
+              <li><a href="#circle">The Circle</a></li>
+              <li><a href="#faq">Journal</a></li>
+            </ul>
+          </div>
+          <div class="foot-col">
+            <h2>Offers</h2>
+            <ul>
+              <li><a href="#plans">For students</a></li>
+              <li><a href="#plans">For teams</a></li>
+              <li><a href="#plans">Gift a year</a></li>
+            </ul>
+            <h2>Get Hushtone</h2>
+            <ul>
+              <li><a href="#app">Phone</a></li>
+              <li><a href="#wrist">Wrist</a></li>
+              <li><a href="#voice">Speaker</a></li>
+              <li><a href="#screen">Big screen</a></li>
+              <li><a href="#desk">Desktop</a></li>
+            </ul>
+          </div>
+        </div>
+        <section class="news" id="news" aria-labelledby="news-title">
+          <h2 class="h3" id="news-title">Hushtone Letters</h2>
+          <p class="prose">One short letter a month: new modes, quiet releases and a single habit worth trying before bed.</p>
+          <form novalidate data-news>
+            <label for="news-email">E-mail</label>
+            <input class="field-input" id="news-email" name="email" type="email" autocomplete="email" placeholder="you@quietmail.test" aria-describedby="news-msg" />
+            <button class="button ctl ctl-soft" type="submit">Join the letters</button>
+            <p class="msg" id="news-msg" role="status" aria-live="polite"></p>
+          </form>
+        </section>
+      </div>
+      <div class="legal">
+        <ul>
+          <li class="copy">Hushtone © 2026</li>
+          <li><a href="#main">Privacy</a></li>
+          <li><a href="#main">Legal notice</a></li>
+          <li><a href="#faq">Help</a></li>
+        </ul>
+        <ul class="social" aria-label="Hushtone elsewhere">
+          <li><a href="#circle" aria-label="Community forum"><svg class="icon" aria-hidden="true"><use href="#i-chat" /></svg></a></li>
+          <li><a href="#albums" aria-label="Photo journal"><svg class="icon" aria-hidden="true"><use href="#i-camera" /></svg></a></li>
+          <li><a href="#albums" aria-label="Listening channel"><svg class="icon" aria-hidden="true"><use href="#i-speaker" /></svg></a></li>
+          <li><a href="#news" aria-label="Mailing list"><svg class="icon" aria-hidden="true"><use href="#i-mail" /></svg></a></li>
+        </ul>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        var root = document.documentElement;
+        var more = document.querySelector("[data-more]");
+        var morePanel = document.getElementById("more-panel");
+        function setMore(open) {
+          more.setAttribute("aria-expanded", String(open));
+          morePanel.hidden = !open;
+        }
+        more.addEventListener("click", function () {
+          setMore(more.getAttribute("aria-expanded") !== "true");
+        });
+        more.parentElement.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && more.getAttribute("aria-expanded") === "true") {
+            setMore(false);
+            more.focus();
+          }
+        });
+        more.parentElement.addEventListener("focusout", function (event) {
+          if (!more.parentElement.contains(event.relatedTarget)) setMore(false);
+        });
+
+        var menu = document.querySelector("[data-menu]");
+        var sheet = document.getElementById("sheet");
+        function setMenu(open) {
+          menu.setAttribute("aria-expanded", String(open));
+          menu.querySelector("use").setAttribute("href", open ? "#i-close" : "#i-menu");
+          sheet.hidden = !open;
+        }
+        menu.addEventListener("click", function () {
+          setMenu(menu.getAttribute("aria-expanded") !== "true");
+        });
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && menu.getAttribute("aria-expanded") === "true") {
+            setMenu(false);
+            menu.focus();
+          }
+        });
+        sheet.addEventListener("click", function (event) {
+          if (event.target.closest("a")) setMenu(false);
+        });
+
+        var motionToggles = document.querySelectorAll("[data-motion-toggle]");
+        function setMotion(paused) {
+          if (paused) root.setAttribute("data-motion", "paused");
+          else root.removeAttribute("data-motion");
+          motionToggles.forEach(function (button) {
+            button.setAttribute("aria-pressed", String(paused));
+            button.querySelector("span").textContent = paused ? "Play motion" : "Pause motion";
+            button.querySelector("use").setAttribute("href", paused ? "#i-play" : "#i-pause");
+          });
+        }
+        motionToggles.forEach(function (button) {
+          button.addEventListener("click", function () {
+            setMotion(root.getAttribute("data-motion") !== "paused");
+          });
+        });
+
+        document.querySelectorAll("[data-play]").forEach(function (button) {
+          var label = button.getAttribute("aria-label");
+          button.addEventListener("click", function () {
+            var playing = button.getAttribute("aria-pressed") !== "true";
+            button.setAttribute("aria-pressed", String(playing));
+            button.querySelector("use").setAttribute("href", playing ? "#i-pause" : "#i-play");
+            button.setAttribute("aria-label", playing ? label.replace(/^(Play|Preview)/, "Stop") : label);
+          });
+        });
+
+        var reviews = document.getElementById("reviews");
+        var reviewsButton = document.querySelector("[data-reviews]");
+        reviewsButton.addEventListener("click", function () {
+          var open = reviews.getAttribute("data-open") !== "true";
+          reviews.setAttribute("data-open", String(open));
+          reviewsButton.setAttribute("aria-expanded", String(open));
+          reviewsButton.textContent = open ? "Show fewer reviews" : "Load more reviews";
+          reviews.querySelectorAll("[data-extra]").forEach(function (card) {
+            card.hidden = !open;
+            card.classList.toggle("added", open);
+          });
+        });
+
+        document.querySelectorAll(".faq-q").forEach(function (button) {
+          button.addEventListener("click", function () {
+            var open = button.getAttribute("aria-expanded") !== "true";
+            button.setAttribute("aria-expanded", String(open));
+            document.getElementById(button.getAttribute("aria-controls")).hidden = !open;
+          });
+        });
+
+        var form = document.querySelector("[data-news]");
+        var input = document.getElementById("news-email");
+        var message = document.getElementById("news-msg");
+        form.addEventListener("submit", function (event) {
+          event.preventDefault();
+          var valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim());
+          message.className = "msg " + (valid ? "msg-ok" : "msg-warn");
+          message.innerHTML = valid
+            ? '<svg class="icon" aria-hidden="true"><use href="#i-check" /></svg><span>You are on the list. The next letter arrives at the start of the month.</span>'
+            : '<svg class="icon" aria-hidden="true"><use href="#i-warn" /></svg><span>Enter an e-mail address like name@example.com.</span>';
+          if (valid) {
+            input.removeAttribute("aria-invalid");
+            input.value = "";
+          } else {
+            input.setAttribute("aria-invalid", "true");
+            input.focus();
+          }
+        });
+        input.addEventListener("input", function () {
+          if (input.getAttribute("aria-invalid") === "true") {
+            input.removeAttribute("aria-invalid");
+            message.textContent = "";
+            message.className = "msg";
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

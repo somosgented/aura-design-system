@@ -204,7 +204,7 @@ Observed values (from the served stylesheets' `:root` variables and computed sty
 | Ink / muted ink | `--gray-12` / `--gray-11` | `--gray-12` / `--gray-11` | Headings / prose |
 | Primary control | `--control` fill, `--control-ink` label, 2px `--control-edge` | same tokens | Hero and section actions |
 | Header control | `--control` fill, `--glow` halo | same tokens | Header call to action |
-| Soft control | `--soft-control`, `--soft-control-ink` | same tokens | Log in, Menu, Subscribe |
+| Soft control | `--soft-control`, `--soft-control-ink`, 2px `--gray-9` edge | `--soft-control`, `--soft-control-ink`, 2px `--gray-8` edge | Log in, Menu, Subscribe |
 | Panel | `--panel` | `--panel` | Accordion rows |
 | Fade card | `--fade-start` → transparent | same | Feature, mode and review cards |
 | Field | transparent, 2px `--field-edge`, placeholder `--gray-11` | transparent, 2px `--field-edge`, placeholder `--gray-10` | E-mail input |
@@ -288,7 +288,7 @@ Every block is centered: intro heading and lead at `max-w-58.5`, then a two-colu
 | Header | `NavigationMenu` with a disclosure "More" item; mobile `Button` "Menu" opens a sheet | fixed, `--gray-1` fade, links `--gray-12` |
 | Header action | `Button` | `--control`, `--control-ink`, `--glow` halo, `rounded-[var(--aura-button-radius)]` |
 | Primary action | `Button variant="fill"` restyled | `--control` fill, 2px `--control-edge` |
-| Soft action | `Button` | `--soft-control`, `--soft-control-ink`, border same as fill |
+| Soft action | `Button` | `--soft-control`, `--soft-control-ink`, 2px `--gray-9` border in light and `--gray-8` in dark so the edge keeps 3:1 |
 | Arrow link | `Button variant="link"` with `ArrowTopRightIcon` | `--gray-12`, no underline, underline on hover |
 | Round play / pause | `Button size="icon-md"` with `PlayIcon` / `PauseIcon`, `aria-pressed` | `--control`, full pill |
 | Mode and feature cards | `Card` with `shadow-none border-0` | `--fade-start` gradient, `rounded-md` (mode, 12px) or `rounded-[8px]` (feature pairs) |

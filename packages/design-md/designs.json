@@ -237,7 +237,7 @@
       "description": "A night-black, monochrome sound-wellness home with thin white line drawings, glowing ink controls, device scenes and quiet gray prose. An Aura flavor for audio, wellbeing and focus products that need calm density.",
       "design": "designs/hushtone/DESIGN.md",
       "theme": "designs/hushtone/theme.css",
-      "result": null,
+      "result": "designs/hushtone/result.html",
       "fonts": {
         "sans": "Figtree",
         "display": "Figtree",
