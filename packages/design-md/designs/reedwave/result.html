@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reedwave · Aura flavor</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/aura/main.css" />
+    <link rel="stylesheet" href="theme.css" />
+    <script>
+      (function () {
+        var appearance = new URLSearchParams(window.location.search).get("appearance") === "dark" ? "dark" : "light";
+        var root = document.documentElement;
+        root.classList.add(appearance);
+        root.style.colorScheme = appearance;
+        if (window.matchMedia("(prefers-reduced-motion: no-preference)").matches) root.classList.add("motion");
+      })();
+    </script>
+    <style>
+      :root {
+        --aura-accents-primary: var(--accent-9);
+        --aura-text-primary-inverse: var(--on-reed);
+        --aura-button-hover: var(--accent-10);
+        --aura-outline: var(--ink) solid 2px;
+        --aura-input-bg: var(--paper);
+        --aura-input-placeholder-color: var(--gray-11);
+        --aura-link: var(--ink);
+        --aura-link-hover: var(--gray-a3);
+        --surface-card: var(--paper);
+        --band-night: var(--night);
+        --band-mint: var(--mint);
+        --pill-line: var(--ink);
+        --hero-veil: transparent;
+        --shadow-pop: 0 10px 30px color-mix(in srgb, black 18%, transparent), 0 4px 6px color-mix(in srgb, black 8%, transparent);
+        --ease: cubic-bezier(0.33, 0, 0, 1);
+        --head-h: calc(var(--aura) * 6);
+        --notice-h: 0px;
+      }
+
+      .dark {
+        --pill-line: var(--gray-a8);
+        --hero-veil: color-mix(in srgb, var(--gray-1) 20%, transparent);
+        --shadow-pop: 0 6px 20px color-mix(in srgb, black 50%, transparent), 0 2px 4px color-mix(in srgb, black 40%, transparent);
+      }
+
+      * { box-sizing: border-box; }
+
+      html { font-size: 16px; background: var(--canvas); scroll-padding-top: calc(var(--head-h) + var(--aura)); }
+
+      body {
+        margin: 0;
+        overflow-x: clip;
+        background: var(--canvas);
+        color: var(--ink);
+        font-family: var(--aura-font-stack);
+        font-size: 17px;
+        line-height: 1.5;
+      }
+
+      a { color: inherit; }
+
+      h1, h2, h3, p, figure, ul, ol, dl, dd, blockquote { margin: 0; }
+
+      ul, ol { padding: 0; list-style: none; }
+
+      h1, h2, h3 { font-family: var(--aura-font-display); font-weight: 400; text-wrap: balance; }
+
+      :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+      .on-dark :focus-visible { outline-color: var(--night-ink); }
+
+      .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+      .skip { position: absolute; left: calc(var(--aura) * 1); top: calc(var(--aura) * -5); z-index: 60; padding: calc(var(--aura) * 0.5) calc(var(--aura) * 1.5); border-radius: 9999px; background: var(--accent-9); color: var(--on-reed); }
+
+      .skip:focus { top: calc(var(--aura) * 1); }
+
+      .wrap { width: min(100% - var(--aura) * 4, var(--aura) * 83); margin-inline: auto; }
+
+      .icon { width: 15px; height: 15px; flex: none; }
+
+      .muted { color: var(--gray-11); }
+
+      .tag { display: inline-flex; align-items: center; gap: calc(var(--aura) * 0.5); font-size: 0.8125rem; color: var(--gray-11); }
+
+      body .pill {
+        height: calc(var(--aura) * 4);
+        padding-inline: calc(var(--aura) * 2.5);
+        border: 1px solid var(--pill-line);
+        font-size: 1rem;
+        font-weight: 500;
+        line-height: 1;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: background-color 250ms var(--ease);
+      }
+
+      body .pill.pill:hover:hover:not(:disabled),
+      body .pill.pill:active:hover:not(:disabled) { transform: none; outline: none; }
+
+      body .pill-sm { height: calc(var(--aura) * 3.5); padding-inline: calc(var(--aura) * 1.5); }
+
+      body .button-fill.pill { border-color: var(--ink); color: var(--on-reed); }
+
+      body .button-pill.pill { background: var(--paper); color: var(--ink); }
+
+      body .button-pill.pill:hover:not(:disabled) { background: var(--gray-3); }
+
+      .on-dark .button-fill.pill { border-color: transparent; }
+
+      .more {
+        display: inline-flex;
+        align-items: center;
+        gap: calc(var(--aura) * 1);
+        padding: 0;
+        border: 0;
+        background: none;
+        color: inherit;
+        font: inherit;
+        font-size: 1rem;
+        font-weight: 500;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .more span { padding-bottom: 3px; border-bottom: 3px solid var(--reed-line); }
+
+      .more:hover span { border-bottom-color: var(--accent-9); }
+
+      .mark { display: inline-grid; place-items: center; width: calc(var(--aura) * 2.5); height: calc(var(--aura) * 2.5); border-radius: 9px; background: var(--accent-9); color: var(--on-reed); flex: none; }
+
+      .mark svg { width: 70%; height: 70%; }
+
+      .wordmark { display: inline-flex; align-items: center; gap: calc(var(--aura) * 0.75); color: var(--ink); font-family: var(--aura-font-display); font-weight: 600; font-size: 1.375rem; letter-spacing: -0.01em; text-decoration: none; border-radius: 6px; }
+
+      .strip { display: none; align-items: center; gap: calc(var(--aura) * 1); padding: calc(var(--aura) * 1) calc(var(--aura) * 2); background: var(--paper); border-bottom: 1px solid var(--gray-a5); }
+
+      .strip .mark { width: calc(var(--aura) * 4); height: calc(var(--aura) * 4); border-radius: 13px; }
+
+      .strip p { flex: 1; font-size: 0.9375rem; line-height: 1.3; }
+
+      .strip b { display: block; font-weight: 600; }
+
+      .strip .x { order: -1; }
+
+      .x { display: inline-grid; place-items: center; width: calc(var(--aura) * 3); height: calc(var(--aura) * 3); padding: 0; border: 0; border-radius: 50%; background: transparent; color: inherit; cursor: pointer; }
+
+      .x:hover { background: var(--gray-a3); }
+
+      .site-head { position: sticky; top: 0; z-index: 40; background: var(--canvas); }
+
+      .nav { display: flex; align-items: center; gap: calc(var(--aura) * 2); height: var(--head-h); }
+
+      .nav-links { display: flex; align-items: center; gap: calc(var(--aura) * 2.5); margin-inline: auto; }
+
+      .nav-links > li > a, .nav-trigger { display: inline-flex; align-items: center; gap: calc(var(--aura) * 0.5); padding: calc(var(--aura) * 0.5) 2px; border: 0; border-bottom: 2px solid transparent; background: none; color: var(--ink); font: inherit; font-size: 1rem; font-weight: 500; text-decoration: none; cursor: pointer; }
+
+      .nav-links > li > a:hover, .nav-trigger:hover, .nav-trigger[aria-expanded="true"] { border-bottom-color: var(--accent-9); }
+
+      .nav-trigger svg { transition: transform 250ms var(--ease); }
+
+      .nav-trigger[aria-expanded="true"] svg { transform: rotate(180deg); }
+
+      .menu-wrap { position: relative; }
+
+      .dropdown { position: absolute; top: calc(100% + var(--aura) * 1); left: calc(var(--aura) * -3.5); width: calc(var(--aura) * 14); padding: calc(var(--aura) * 1.25) 0; border-radius: 26px; background: var(--surface-card); box-shadow: var(--shadow-pop); }
+
+      .dropdown[hidden] { display: none; }
+
+      .dropdown a { display: block; padding: calc(var(--aura) * 0.5) calc(var(--aura) * 2.5); color: var(--ink); font-size: 0.9375rem; text-decoration: none; }
+
+      .dropdown a:hover { background: var(--gray-a3); }
+
+      .nav-end { display: flex; align-items: center; gap: calc(var(--aura) * 1); }
+
+      .burger, .round-dl { display: none; place-items: center; width: calc(var(--aura) * 3.5); height: calc(var(--aura) * 3.5); padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--ink); cursor: pointer; }
+
+      .burger svg { width: 26px; height: 26px; }
+
+      .round-dl { width: calc(var(--aura) * 2.5); height: calc(var(--aura) * 2.5); border: 1px solid var(--ink); background: var(--accent-9); color: var(--on-reed); }
+
+      .mobile-menu { position: fixed; inset: var(--head-h) 0 0 0; z-index: 39; display: flex; flex-direction: column; overflow-y: auto; background: var(--surface-card); border-top: 1px solid var(--gray-a5); }
+
+      .mobile-menu[hidden] { display: none; }
+
+      .mobile-menu ul { padding: calc(var(--aura) * 1) calc(var(--aura) * 2); }
+
+      .mobile-menu li + li { border-top: 1px solid var(--gray-6); }
+
+      .mobile-menu a, .mobile-menu .sub-open { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: calc(var(--aura) * 1.5) 0; border: 0; background: none; color: var(--ink); font: inherit; font-size: 1.5rem; text-align: left; text-decoration: none; cursor: pointer; }
+
+      .mobile-menu .sub-open svg, .mobile-menu .back svg { width: 20px; height: 20px; color: var(--reed-line); }
+
+      .mobile-menu .back { display: flex; align-items: center; gap: calc(var(--aura) * 1.5); width: 100%; padding: calc(var(--aura) * 1.5) 0; border: 0; border-bottom: 1px solid var(--gray-6); background: none; color: var(--ink); font: inherit; font-size: 1.75rem; cursor: pointer; }
+
+      .mobile-menu .sub a { font-size: 1.125rem; padding-block: calc(var(--aura) * 1); }
+
+      .mobile-menu .sub li + li { border-top: 0; }
+
+      .mobile-menu .menu-foot { margin-top: auto; padding: calc(var(--aura) * 1.5) calc(var(--aura) * 2); background: var(--band-night); }
+
+      .mobile-menu .menu-foot .pill { width: 100%; }
+
+      .hero { padding: calc(var(--aura) * 2.5); padding-top: 0; }
+
+      .hero-card {
+        position: relative;
+        isolation: isolate;
+        display: grid;
+        grid-template-columns: 1fr calc(var(--aura) * 25);
+        align-items: center;
+        gap: calc(var(--aura) * 4);
+        min-height: calc(var(--aura) * 55);
+        padding: calc(var(--aura) * 7.5);
+        overflow: clip;
+        border-radius: 26px;
+        color: var(--night-ink);
+        background:
+          linear-gradient(90deg, color-mix(in srgb, var(--scene-reed) 78%, transparent) 0%, color-mix(in srgb, var(--scene-reed) 35%, transparent) 48%, transparent 72%),
+          linear-gradient(var(--hero-veil), var(--hero-veil)),
+          radial-gradient(22% 30% at var(--glow-at, 68% 46%), color-mix(in srgb, var(--scene-glow) 90%, white) 0%, var(--scene-glow) 35%, transparent 100%),
+          linear-gradient(180deg, var(--scene-sky) 0%, color-mix(in srgb, var(--scene-glow) 55%, var(--scene-sky)) 50%, var(--scene-water) 58%, var(--scene-reed) 100%);
+      }
+
+      .hero-card .reeds { position: absolute; inset: auto 0 0 0; z-index: -1; width: 100%; height: 60%; color: var(--scene-reed); }
+
+      .hero-copy { position: relative; display: grid; gap: calc(var(--aura) * 1.5); align-content: center; max-width: calc(var(--aura) * 33); }
+
+      .hero h1 { font-size: 80px; line-height: 1; letter-spacing: -0.01em; }
+
+      .hero-copy p { font-size: 1.1875rem; line-height: 1.4; max-width: calc(var(--aura) * 27); }
+
+      .hero-copy .pill { justify-self: start; display: none; }
+
+      .bubbles { position: relative; display: grid; gap: calc(var(--aura) * 1); margin-top: calc(var(--aura) * 2); justify-items: start; }
+
+      .bubble { position: relative; display: inline-grid; gap: 2px; max-width: calc(var(--aura) * 20); padding: calc(var(--aura) * 0.5) calc(var(--aura) * 1); border-radius: 13px; background: var(--bubble-in); color: var(--bubble-ink); font-size: 0.9375rem; line-height: 1.3; box-shadow: 0 1px 2px color-mix(in srgb, black 12%, transparent); }
+
+      .bubble.out { background: var(--bubble-out); border-top-right-radius: 3px; }
+
+      .bubble.in { border-top-left-radius: 3px; }
+
+      .bubble small { justify-self: end; color: var(--gray-11); font-size: 0.75rem; }
+
+      .bubble b { color: var(--accent-11); font-weight: 600; font-size: 0.8125rem; }
+
+      .bubble-row { display: flex; align-items: flex-start; gap: calc(var(--aura) * 0.75); }
+
+      .bubbles .out { margin-left: calc(var(--aura) * 13.5); }
+
+      .reacts { display: inline-flex; gap: 4px; margin-top: -6px; margin-left: calc(var(--aura) * 4); padding: 2px calc(var(--aura) * 0.5); border-radius: 9999px; background: var(--bubble-in); color: var(--bubble-ink); font-size: 0.8125rem; box-shadow: 0 1px 2px color-mix(in srgb, black 12%, transparent); }
+
+      .avatar { display: inline-grid; place-items: center; flex: none; width: calc(var(--aura) * 3); height: calc(var(--aura) * 3); border-radius: 50%; background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--h, var(--hue-amber)) 55%, white), var(--h, var(--hue-amber))); color: var(--on-reed); font-size: 0.8125rem; font-weight: 600; }
+
+      .h-sky { --h: var(--hue-sky); }
+      .h-rose { --h: var(--hue-rose); }
+      .h-leaf { --h: var(--hue-leaf); }
+      .h-lilac { --h: var(--hue-lilac); }
+
+      .signup-panel { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); gap: calc(var(--aura) * 1.25); padding: calc(var(--aura) * 2.5) calc(var(--aura) * 2); border: 1px solid color-mix(in srgb, var(--night-ink) 18%, transparent); border-radius: 26px; background: color-mix(in srgb, var(--scene-reed) 70%, transparent); backdrop-filter: blur(13px); text-align: center; }
+
+      .signup-panel h2 { font-size: 2rem; line-height: 1.1; }
+
+      .signup-panel .lead { font-size: 1.0625rem; }
+
+      .signup-panel .fine { font-size: 0.8125rem; line-height: 1.4; color: var(--night-muted); }
+
+      .signup-panel .fine button, .signup-panel .have button { padding: 0; border: 0; border-bottom: 2px solid var(--accent-9); background: none; color: var(--night-ink); font: inherit; cursor: pointer; }
+
+      .tel { display: flex; align-items: center; height: calc(var(--aura) * 3.5); padding-inline: calc(var(--aura) * 1.5); border: 1px solid var(--ink); border-radius: 9999px; background: var(--paper); color: var(--ink); }
+
+      .tel:focus-within { outline: 2px solid var(--night-ink); outline-offset: 2px; }
+
+      .tel select.default { height: 100%; padding: 0 calc(var(--aura) * 0.5) 0 0; border: 0; background: transparent; color: var(--ink); font: inherit; font-size: 1.0625rem; }
+
+      .tel input.default { flex: 1; min-width: 0; height: 100%; padding: 0 0 0 calc(var(--aura) * 0.75); border: 0; border-left: 1px solid var(--gray-a6); background: transparent; color: var(--ink); font: inherit; font-size: 1.0625rem; outline: none; }
+
+      .tel input.default::placeholder { color: var(--gray-11); }
+
+      .signup-panel .go { width: 100%; height: calc(var(--aura) * 3.5); border: 1px solid color-mix(in srgb, var(--night-ink) 35%, transparent); border-radius: 9999px; background: color-mix(in srgb, var(--night-ink) 14%, transparent); color: var(--night-ink); font: inherit; font-weight: 500; cursor: pointer; }
+
+      .signup-panel .go:disabled { cursor: not-allowed; color: var(--night-muted); }
+
+      .signup-panel .status { min-height: 1.3em; font-size: 0.875rem; color: var(--night-ink); }
+
+      .hero-note { margin-top: calc(var(--aura) * 1); text-align: center; font-size: 0.875rem; color: var(--gray-11); }
+
+      .block { padding-block: calc(var(--aura) * 7.5); }
+
+      .split { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: calc(var(--aura) * 5); }
+
+      .split.flip .copy { order: 2; }
+
+      .copy { display: grid; gap: calc(var(--aura) * 2); justify-items: start; max-width: calc(var(--aura) * 34.5); }
+
+      .copy h2 { font-size: 60px; line-height: 1; }
+
+      .copy p { font-size: 1.0625rem; }
+
+      .copy .accent-line { display: block; color: var(--accent-9); }
+
+      .art { display: grid; place-items: center; }
+
+      .phone { position: relative; width: calc(var(--aura) * 25.5); aspect-ratio: 331.5 / 650; padding: 9px; border-radius: 39px; background: var(--ink); box-shadow: var(--shadow-pop); }
+
+      .dark .phone { background: var(--gray-6); }
+
+      .screen { position: relative; display: flex; flex-direction: column; height: 100%; overflow: hidden; border-radius: 31px; background: var(--canvas); color: var(--ink); font-size: 0.8125rem; }
+
+      .screen .bar { display: flex; align-items: center; gap: calc(var(--aura) * 0.75); padding: calc(var(--aura) * 2) calc(var(--aura) * 1.25) calc(var(--aura) * 1); background: var(--surface-card); border-bottom: 1px solid var(--gray-a4); }
+
+      .screen .bar b { font-size: 0.875rem; font-weight: 600; }
+
+      .screen .bar div span { display: block; color: var(--gray-11); font-size: 0.75rem; }
+
+      .screen .body { flex: 1; display: grid; align-content: start; gap: calc(var(--aura) * 0.75); padding: calc(var(--aura) * 1.25); }
+
+      .vgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; flex: 1; padding: 6px; background: var(--ink); }
+
+      .dark .vgrid { background: var(--night); }
+
+      .vtile { position: relative; display: grid; place-items: center; border-radius: 13px; background: linear-gradient(160deg, color-mix(in srgb, var(--h, var(--hue-amber)) 70%, var(--scene-sky)), var(--scene-sky)); }
+
+      .vtile .avatar { width: calc(var(--aura) * 4.5); height: calc(var(--aura) * 4.5); font-size: 1rem; }
+
+      .vtile i { position: absolute; left: 8px; bottom: 6px; color: var(--night-ink); font-style: normal; font-size: 0.6875rem; }
+
+      .controls { display: flex; justify-content: center; gap: calc(var(--aura) * 1); padding: calc(var(--aura) * 1); background: var(--ink); }
+
+      .dark .controls { background: var(--night); }
+
+      .controls span { display: grid; place-items: center; width: calc(var(--aura) * 3); height: calc(var(--aura) * 3); border-radius: 50%; background: color-mix(in srgb, var(--night-ink) 16%, transparent); color: var(--night-ink); }
+
+      .controls span.end { background: var(--accent-9); color: var(--on-reed); }
+
+      .controls svg { width: 16px; height: 16px; }
+
+      .desk { width: min(100%, calc(var(--aura) * 37)); border-radius: 13px; overflow: hidden; background: var(--surface-card); border: 1px solid var(--gray-a5); box-shadow: var(--shadow-pop); font-size: 0.6875rem; }
+
+      .desk-top { display: flex; gap: 6px; padding: 8px 10px; background: var(--gray-3); }
+
+      .desk-top i { width: 9px; height: 9px; border-radius: 50%; background: var(--gray-8); }
+
+      .desk-main { display: grid; grid-template-columns: 34% 1fr; min-height: calc(var(--aura) * 20); }
+
+      .desk-side { display: grid; align-content: start; gap: 8px; padding: 10px; border-right: 1px solid var(--gray-a4); }
+
+      .desk-side div { display: flex; align-items: center; gap: 6px; }
+
+      .desk-side .avatar { width: 22px; height: 22px; font-size: 0.5625rem; }
+
+      .desk-side em { flex: 1; height: 6px; border-radius: 3px; background: var(--gray-a5); }
+
+      .desk-side em.on { background: var(--accent-a8); }
+
+      .desk .vgrid { grid-template-columns: repeat(3, 1fr); border-radius: 0; }
+
+      .desk .vtile { min-height: calc(var(--aura) * 5.5); border-radius: 8px; }
+
+      .desk .vtile .avatar { width: calc(var(--aura) * 2.5); height: calc(var(--aura) * 2.5); font-size: 0.6875rem; }
+
+      .crowd { position: relative; height: calc(var(--aura) * 20.5); overflow: clip; }
+
+      .crowd .person { position: absolute; display: flex; align-items: center; gap: calc(var(--aura) * 0.5); }
+
+      .crowd .avatar { width: calc(var(--aura) * 3); height: calc(var(--aura) * 3); }
+
+      .crowd .bubble { white-space: nowrap; }
+
+      .statement { padding-block: calc(var(--aura) * 4); text-align: center; }
+
+      .statement h2 { max-width: calc(var(--aura) * 69); margin-inline: auto; font-size: 48px; line-height: 1; }
+
+      .night { background: var(--band-night); color: var(--night-ink); }
+
+      .dark .night { border-block: 1px solid var(--gray-a4); }
+
+      .night .copy p { color: var(--night-muted); }
+
+      .night .phone { background: color-mix(in srgb, var(--night-ink) 14%, var(--night)); }
+
+      .night .screen { background: color-mix(in srgb, var(--night-ink) 6%, var(--night)); color: var(--night-ink); }
+
+      .night .screen .bar { background: color-mix(in srgb, var(--night-ink) 10%, var(--night)); border-color: color-mix(in srgb, var(--night-ink) 12%, transparent); }
+
+      .night .screen .bar div span { color: var(--night-muted); }
+
+      .secret-art { position: relative; display: grid; place-items: center; width: 100%; }
+
+      .secret-art::before { content: ""; position: absolute; inset: 15% 6%; border-radius: 26px; background: color-mix(in srgb, var(--night-ink) 6%, transparent); }
+
+      .scramble { position: absolute; top: 46%; left: 0; right: 0; z-index: 2; overflow: hidden; color: var(--accent-9); font-family: var(--aura-font-label); font-size: clamp(15px, 2vw, 26px); line-height: 1.2; text-align: center; white-space: nowrap; }
+
+      .scramble .noise { color: color-mix(in srgb, var(--accent-9) 70%, transparent); }
+
+      .composer { display: flex; align-items: center; gap: 8px; margin: auto calc(var(--aura) * 1) calc(var(--aura) * 1.5); padding: 8px 12px; border-radius: 9999px; background: color-mix(in srgb, var(--night-ink) 12%, transparent); color: var(--night-ink); }
+
+      .composer i { flex: 1; font-style: normal; }
+
+      .composer span { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--accent-9); color: var(--on-reed); }
+
+      .toggle { display: inline-flex; align-items: center; gap: calc(var(--aura) * 0.5); height: calc(var(--aura) * 3); padding-inline: calc(var(--aura) * 1.25); border: 1px solid color-mix(in srgb, var(--night-ink) 40%, transparent); border-radius: 9999px; background: transparent; color: var(--night-ink); font: inherit; font-size: 0.9375rem; cursor: pointer; }
+
+      .toggle:hover { background: color-mix(in srgb, var(--night-ink) 10%, transparent); }
+
+      .event { position: absolute; right: calc(var(--aura) * -4); top: 32%; z-index: 2; display: grid; gap: 4px; width: calc(var(--aura) * 16); padding: calc(var(--aura) * 1.25); border-radius: 19.5px; background: var(--surface-card); color: var(--ink); box-shadow: var(--shadow-pop); font-size: 0.8125rem; }
+
+      .event b { font-size: 1rem; font-weight: 600; }
+
+      .event .faces { display: flex; margin-top: 4px; }
+
+      .event .faces .avatar { width: 26px; height: 26px; margin-right: -6px; border: 2px solid var(--surface-card); font-size: 0.5625rem; }
+
+      .status-shot { position: relative; flex: 1; display: grid; place-items: center; background: linear-gradient(170deg, var(--hue-lilac), var(--hue-rose) 55%, var(--hue-amber)); }
+
+      .status-shot .avatar { width: calc(var(--aura) * 8); height: calc(var(--aura) * 8); font-size: 1.75rem; --h: var(--hue-leaf); }
+
+      .sticker { position: absolute; width: calc(var(--aura) * 5.5); height: calc(var(--aura) * 5.5); filter: drop-shadow(0 3px 4px color-mix(in srgb, black 22%, transparent)); }
+
+      .react-pill { position: absolute; left: calc(var(--aura) * -3); bottom: 18%; z-index: 2; display: flex; gap: 6px; padding: 8px 12px; border-radius: 9999px; background: var(--surface-card); color: var(--ink); box-shadow: var(--shadow-pop); font-size: 1.125rem; }
+
+      .shop { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--aura) * 0.75); }
+
+      .item { display: grid; gap: 4px; padding: 6px; border-radius: 13px; background: var(--surface-card); border: 1px solid var(--gray-a4); }
+
+      .item i { display: block; aspect-ratio: 1; border-radius: 9px; background: radial-gradient(circle at 50% 55%, var(--h, var(--hue-amber)) 0 32%, transparent 33%), color-mix(in srgb, var(--h, var(--hue-amber)) 25%, var(--canvas)); }
+
+      .item b { font-size: 0.75rem; font-weight: 600; }
+
+      .item span { color: var(--gray-11); font-size: 0.6875rem; }
+
+      .shop-head { display: flex; align-items: center; gap: 8px; padding: 8px; border-radius: 13px; background: var(--mint); }
+
+      .section-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: calc(var(--aura) * 1); margin-bottom: calc(var(--aura) * 2.5); }
+
+      .section-head h2 { font-size: 48px; line-height: 1; }
+
+      .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: calc(var(--aura) * 1.5); }
+
+      .stat { display: grid; gap: calc(var(--aura) * 0.5); padding: calc(var(--aura) * 2); border-radius: 26px; background: var(--surface-card); }
+
+      .stat strong { font-family: var(--aura-font-display); font-size: 48px; font-weight: 400; line-height: 1; }
+
+      .stat span { color: var(--gray-11); font-size: 0.9375rem; }
+
+      .table-wrap { overflow-x: auto; border-radius: 26px; background: var(--surface-card); }
+
+      table { width: 100%; border-collapse: collapse; font-size: 0.9375rem; }
+
+      caption { padding: calc(var(--aura) * 1.5) calc(var(--aura) * 2) 0; text-align: left; color: var(--gray-11); font-size: 0.875rem; }
+
+      th, td { padding: calc(var(--aura) * 1) calc(var(--aura) * 2); text-align: left; white-space: nowrap; }
+
+      thead th { color: var(--gray-11); font-weight: 500; font-size: 0.875rem; border-bottom: 1px solid var(--gray-a5); }
+
+      tbody tr + tr td { border-top: 1px solid var(--gray-a4); }
+
+      .badge { display: inline-flex; align-items: center; height: calc(var(--aura) * 2); padding-inline: calc(var(--aura) * 0.75); border-radius: 9999px; background: var(--gray-a4); font-size: 0.8125rem; font-weight: 500; }
+
+      .badge.live { background: var(--accent-9); color: var(--on-reed); }
+
+      .form-card { display: grid; grid-template-columns: 1fr 1.4fr; gap: calc(var(--aura) * 4); padding: calc(var(--aura) * 4); border-radius: 26px; background: var(--surface-card); }
+
+      .form-card h2 { font-size: 48px; line-height: 1; }
+
+      .fields { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--aura) * 1.5); }
+
+      .field { display: grid; gap: calc(var(--aura) * 0.5); }
+
+      .field.full { grid-column: 1 / -1; }
+
+      .field label { font-size: 0.9375rem; font-weight: 500; color: var(--ink); }
+
+      body .field input:not(.default), body .field textarea:not(.default), body .field select:not(.default) { height: calc(var(--aura) * 4); padding: 0 calc(var(--aura) * 1.5); border: 1px solid var(--gray-8); background: var(--canvas); color: var(--ink); font-size: 1.0625rem; }
+
+      body .field textarea:not(.default) { height: calc(var(--aura) * 9); padding: calc(var(--aura) * 1) calc(var(--aura) * 1.5); border-radius: 26px; resize: vertical; }
+
+      body .field select:not(.default) { border-radius: 9999px; appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%), linear-gradient(135deg, var(--ink) 50%, transparent 50%); background-position: calc(100% - 22px) 50%, calc(100% - 16px) 50%; background-size: 6px 6px; background-repeat: no-repeat; }
+
+      body .field [aria-invalid="true"] { border-color: var(--alert-ink); }
+
+      .field-msg { font-size: 0.875rem; color: var(--alert-ink); }
+
+      .field-msg:empty { display: none; }
+
+      .form-status { font-size: 0.9375rem; font-weight: 500; }
+
+      .form-status:empty { display: none; }
+
+      .seg { display: inline-flex; gap: 4px; padding: 4px; border-radius: 9999px; background: var(--surface-card); }
+
+      .seg button { height: calc(var(--aura) * 3); padding-inline: calc(var(--aura) * 1.5); border: 0; border-radius: 9999px; background: transparent; color: var(--gray-11); font: inherit; font-size: 0.9375rem; font-weight: 500; cursor: pointer; }
+
+      .seg button[aria-pressed="true"] { background: var(--ink); color: var(--canvas); }
+
+      .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: calc(var(--aura) * 1.5); }
+
+      .plan { display: grid; align-content: start; gap: calc(var(--aura) * 1.5); padding: calc(var(--aura) * 2.5); border-radius: 26px; background: var(--surface-card); }
+
+      .plan.featured { background: var(--band-mint); }
+
+      .plan h3 { font-size: 1.5rem; }
+
+      .plan .price { font-family: var(--aura-font-display); font-size: 48px; line-height: 1; }
+
+      .plan .price small { font-size: 1rem; color: var(--gray-11); }
+
+      .plan ul { display: grid; gap: calc(var(--aura) * 0.5); font-size: 0.9375rem; }
+
+      .plan li { display: flex; gap: calc(var(--aura) * 0.5); align-items: center; }
+
+      .plan li svg { color: var(--reed-line); }
+
+      .faq { display: grid; gap: calc(var(--aura) * 1); }
+
+      .faq-trigger { display: flex; align-items: center; justify-content: space-between; gap: calc(var(--aura) * 1); width: 100%; padding: calc(var(--aura) * 1.5) calc(var(--aura) * 2); border: 0; border-radius: 26px; background: var(--surface-card); color: var(--ink); font: inherit; font-size: 1.1875rem; text-align: left; cursor: pointer; }
+
+      .faq-trigger:hover { background: var(--gray-3); }
+
+      .faq-trigger svg { width: 18px; height: 18px; flex: none; transition: transform 250ms var(--ease); }
+
+      .faq-trigger[aria-expanded="true"] svg { transform: rotate(45deg); }
+
+      .faq-panel { padding: calc(var(--aura) * 1) calc(var(--aura) * 2) calc(var(--aura) * 0.5); color: var(--gray-11); }
+
+      .faq-panel[hidden] { display: none; }
+
+      .closing { padding-block: calc(var(--aura) * 7.5); text-align: center; }
+
+      .closing h2 { font-size: 60px; line-height: 1; }
+
+      .closing p { margin-top: calc(var(--aura) * 1.5); color: var(--gray-11); }
+
+      .closing .row { display: flex; flex-wrap: wrap; justify-content: center; gap: calc(var(--aura) * 1); margin-top: calc(var(--aura) * 2.5); }
+
+      .news-shell { background: var(--band-night); }
+
+      .news { padding-block: calc(var(--aura) * 7.5); border-radius: 0 0 26px 26px; background: var(--band-mint); }
+
+      .news-grid { display: grid; grid-template-columns: calc(var(--aura) * 27) 1fr; gap: calc(var(--aura) * 4); align-items: start; }
+
+      .news-intro { display: grid; gap: calc(var(--aura) * 2); }
+
+      .news-intro h2 { font-size: 60px; line-height: 1; }
+
+      .arrows { display: flex; gap: calc(var(--aura) * 1); margin-top: calc(var(--aura) * 1); }
+
+      .arrow { display: grid; place-items: center; width: calc(var(--aura) * 3.5); height: calc(var(--aura) * 3.5); padding: 0; border: 1px solid var(--ink); border-radius: 50%; background: transparent; color: var(--ink); cursor: pointer; }
+
+      .arrow:hover:not(:disabled) { background: var(--gray-a3); }
+
+      .arrow:disabled { opacity: 0.45; cursor: default; }
+
+      .track { display: flex; gap: calc(var(--aura) * 2); overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 4px; scrollbar-width: none; padding: 4px; margin: -4px; }
+
+      .track::-webkit-scrollbar { display: none; }
+
+      .news-card { display: grid; align-content: start; gap: calc(var(--aura) * 1.5); flex: 0 0 calc(var(--aura) * 30); min-height: calc(var(--aura) * 30); padding: calc(var(--aura) * 4); scroll-snap-align: start; border-radius: 26px; background: var(--surface-card); }
+
+      .news-card .mark { width: calc(var(--aura) * 2); height: calc(var(--aura) * 2); border-radius: 7px; }
+
+      .news-card h3 { font-size: 1.875rem; line-height: 1.1; }
+
+      .news-card p { color: var(--gray-11); font-size: 0.9375rem; }
+
+      .news-card .pill { justify-self: start; margin-top: auto; }
+
+      .site-foot { padding-block: calc(var(--aura) * 6) calc(var(--aura) * 4 + var(--notice-h)); background: var(--band-night); color: var(--night-ink); }
+
+      .foot-top { display: grid; grid-template-columns: calc(var(--aura) * 20) 1fr; gap: calc(var(--aura) * 4); }
+
+      .foot-brand { display: grid; align-content: start; justify-items: start; gap: calc(var(--aura) * 3); }
+
+      .foot-brand .wordmark { color: var(--night-ink); }
+
+      .foot-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: calc(var(--aura) * 2); }
+
+      .foot-cols h3 { font-family: var(--aura-font-stack); font-size: 0.9375rem; font-weight: 600; color: var(--night-ink); }
+
+      .foot-cols ul { display: grid; gap: calc(var(--aura) * 0.75); margin-top: calc(var(--aura) * 1.5); }
+
+      .foot-cols a { color: var(--night-muted); font-size: 0.9375rem; text-decoration: none; }
+
+      .foot-cols a:hover { color: var(--night-ink); text-decoration: underline; }
+
+      .foot-bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: calc(var(--aura) * 2); margin-top: calc(var(--aura) * 4); padding-top: calc(var(--aura) * 2.5); border-top: 1px solid color-mix(in srgb, var(--night-ink) 18%, transparent); font-size: 0.875rem; color: var(--night-muted); }
+
+      .foot-bottom nav { display: flex; gap: calc(var(--aura) * 1.5); }
+
+      .foot-bottom nav a { color: var(--night-muted); }
+
+      .socials { display: flex; gap: calc(var(--aura) * 1); }
+
+      .socials a { display: grid; place-items: center; width: calc(var(--aura) * 3.5); height: calc(var(--aura) * 3.5); border: 1px solid color-mix(in srgb, var(--night-ink) 45%, transparent); border-radius: 50%; color: var(--night-ink); }
+
+      .socials a:hover { background: color-mix(in srgb, var(--night-ink) 10%, transparent); }
+
+      .lang-btn { display: inline-flex; align-items: center; gap: calc(var(--aura) * 0.5); padding: calc(var(--aura) * 0.5) calc(var(--aura) * 0.75); border: 0; border-radius: 9999px; background: transparent; color: var(--night-ink); font: inherit; font-size: 0.9375rem; font-weight: 500; cursor: pointer; }
+
+      .lang-btn:hover { background: color-mix(in srgb, var(--night-ink) 10%, transparent); }
+
+      .lang-btn svg { transform: rotate(180deg); }
+
+      .notice { position: fixed; inset: auto 0 0 0; z-index: 35; display: flex; align-items: center; justify-content: center; gap: calc(var(--aura) * 1); min-height: calc(var(--aura) * 5); padding: calc(var(--aura) * 0.75) calc(var(--aura) * 5); background: var(--band-mint); color: var(--ink); font-size: 1rem; font-weight: 500; box-shadow: 0 -1px 0 var(--gray-a4); }
+
+      .notice[hidden] { display: none; }
+
+      .notice a { color: var(--ink); text-decoration: none; border-bottom: 2px solid var(--reed-line); }
+
+      .notice .x { position: absolute; right: calc(var(--aura) * 1); top: 50%; transform: translateY(-50%); width: calc(var(--aura) * 2.5); height: calc(var(--aura) * 2.5); }
+
+      dialog { width: min(100% - var(--aura) * 2, var(--aura) * 58.5); max-height: min(100% - var(--aura) * 2, var(--aura) * 46); padding: 0; border: 0; border-radius: 26px; background: var(--surface-card); color: var(--ink); overflow: auto; }
+
+      dialog::backdrop { background: color-mix(in srgb, var(--night) 55%, transparent); }
+
+      .dlg { display: grid; gap: calc(var(--aura) * 2); padding: calc(var(--aura) * 2.5); }
+
+      .dlg-head { display: flex; align-items: center; justify-content: space-between; gap: calc(var(--aura) * 1); }
+
+      .dlg-head h2 { font-size: 1.625rem; font-weight: 600; }
+
+      .dlg-head .x { border: 1px solid var(--ink); border-radius: 8px; }
+
+      body .dlg select:not(.default) { max-width: calc(var(--aura) * 16); height: calc(var(--aura) * 3.5); padding: 0 calc(var(--aura) * 1.25); border-radius: 13px; background: var(--gray-3); color: var(--ink); font-size: 1rem; }
+
+      .langs { display: grid; grid-template-columns: repeat(4, 1fr); gap: calc(var(--aura) * 0.5); }
+
+      .langs button { padding: calc(var(--aura) * 1); border: 0; border-radius: 13px; background: transparent; color: var(--ink); font: inherit; font-size: 1rem; text-align: left; cursor: pointer; }
+
+      .langs button:hover { background: var(--gray-a3); }
+
+      .langs button[aria-current="true"] { font-weight: 600; }
+
+      .langs button[hidden] { display: none; }
+
+      .dlg-small { width: min(100% - var(--aura) * 2, var(--aura) * 34); }
+
+      .dlg .pill { justify-self: start; }
+
+      .motion .pop { opacity: 0; transform: translateY(13px) scale(0.96); transition: opacity 330ms var(--ease) var(--d, 0ms), transform 330ms var(--ease) var(--d, 0ms); }
+
+      .motion .pop.in { opacity: 1; transform: none; }
+
+      .motion .reveal { opacity: 0; transform: translateY(26px); transition: opacity 1000ms var(--ease), transform 1000ms var(--ease); }
+
+      .motion .reveal.in { opacity: 1; transform: none; }
+
+      .motion .track { scroll-behavior: smooth; }
+
+      @media (max-width: 1023px) {
+        .nav-links, .nav-end .pill { display: none; }
+        .nav { justify-content: space-between; gap: calc(var(--aura) * 1); }
+        .burger, .round-dl { display: grid; }
+        .nav .wordmark { position: absolute; left: 50%; transform: translateX(-50%); }
+        .hero-card { grid-template-columns: 1fr; min-height: 0; padding: calc(var(--aura) * 5) calc(var(--aura) * 2.5); }
+        .hero h1 { font-size: 44px; }
+        .hero-copy .pill { display: inline-flex; }
+        .signup-panel, .bubbles { display: none; }
+        .split, .split.flip { grid-template-columns: 1fr; gap: calc(var(--aura) * 4); }
+        .split.flip .copy { order: 0; }
+        .copy { max-width: none; }
+        .copy h2, .closing h2, .news-intro h2 { font-size: 32px; }
+        .statement h2 { font-size: 24px; max-width: calc(var(--aura) * 40); }
+        .section-head h2, .form-card h2 { font-size: 32px; }
+        .stats { grid-template-columns: repeat(2, 1fr); }
+        .plans { grid-template-columns: 1fr; }
+        .form-card { grid-template-columns: 1fr; gap: calc(var(--aura) * 2.5); padding: calc(var(--aura) * 2.5); }
+        .news-grid { grid-template-columns: 1fr; gap: calc(var(--aura) * 2.5); }
+        .foot-top { grid-template-columns: 1fr; }
+        .foot-cols { grid-template-columns: repeat(2, 1fr); }
+        .event { right: calc(var(--aura) * -1); }
+        .react-pill { left: calc(var(--aura) * -1); }
+      }
+
+      @media (min-width: 768px) {
+        body.has-notice { --notice-h: calc(var(--aura) * 5); }
+      }
+
+      @media (max-width: 767px) {
+        :root { --head-h: calc(var(--aura) * 4.5); }
+        .strip:not([hidden]) { display: flex; }
+        .notice { display: none; }
+        .wrap { width: calc(100% - var(--aura) * 4); }
+        .hero { padding: calc(var(--aura) * 1); padding-top: calc(var(--aura) * 1); }
+        .hero-card { border-radius: 13px; padding: calc(var(--aura) * 4.5) calc(var(--aura) * 2) calc(var(--aura) * 2.5); }
+        .hero-copy p { font-size: 1.0625rem; }
+        .block { padding-block: calc(var(--aura) * 5); }
+        .phone { width: calc(var(--aura) * 21); }
+        .crowd { height: calc(var(--aura) * 16); }
+        .crowd .wide { display: none; }
+        .stats { grid-template-columns: 1fr; }
+        .stat strong { font-size: 36px; }
+        .fields { grid-template-columns: 1fr; }
+        .news-card { flex-basis: calc(100% - var(--aura) * 1); padding: calc(var(--aura) * 2.5); min-height: calc(var(--aura) * 26); }
+        .news-card h3 { font-size: 1.5rem; }
+        .arrows { order: 3; }
+        .news-grid { display: flex; flex-direction: column; align-items: stretch; }
+        .foot-cols { grid-template-columns: 1fr; }
+        .foot-bottom { flex-direction: column; align-items: flex-start; }
+        .scramble { font-size: 4.2vw; }
+        .hero-card { --glow-at: 86% 14%; }
+        .langs { grid-template-columns: repeat(2, 1fr); }
+        dialog.sheet { width: 100%; max-width: 100%; max-height: 80vh; margin: auto 0 0 0; border-radius: 26px 26px 0 0; }
+        .desk-main { min-height: calc(var(--aura) * 15); }
+        .desk .vtile { min-height: calc(var(--aura) * 3.5); }
+      }
+    </style>
+  </head>
+  <body class="has-notice">
+    <a class="skip" href="#main">Saltar al contenido</a>
+
+    <div class="strip" id="app-strip" role="region" aria-label="Instalar la app de demo">
+      <button class="x" type="button" data-dismiss="app-strip" aria-label="Cerrar aviso de instalación"><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M3.5 3.5l8 8M11.5 3.5l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg></button>
+      <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 10c2.3-2 4.7-2 7 0s4.7 2 7 0M5 15c2.3-2 4.7-2 7 0s4.7 2 7 0" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" /></svg></span>
+      <p><b>Reedwave</b>Demo de conversación · sin descarga real</p>
+      <a class="more" href="#cierre"><span>Ver</span></a>
+    </div>
+
+    <header class="site-head" id="site-head">
+      <nav class="wrap nav" aria-label="Principal">
+        <button class="burger" type="button" id="burger" aria-expanded="false" aria-controls="mobile-menu" aria-label="Menú de navegación"><svg viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M3 8h20M3 18h20" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" /></svg></button>
+        <a class="wordmark" href="#top" aria-label="Reedwave, inicio"><span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 10c2.3-2 4.7-2 7 0s4.7 2 7 0M5 15c2.3-2 4.7-2 7 0s4.7 2 7 0" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" /></svg></span>Reedwave</a>
+        <ul class="nav-links">
+          <li class="menu-wrap" id="menu-wrap">
+            <button class="nav-trigger" type="button" id="features-trigger" aria-expanded="false" aria-controls="features-menu">Funciones<svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M4 6l3.5 3.5L11 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></button>
+            <div class="dropdown" id="features-menu" hidden>
+              <ul>
+                <li><a href="#llamadas">Llamadas</a></li>
+                <li><a href="#privacidad">Mensajes</a></li>
+                <li><a href="#grupos">Grupos</a></li>
+                <li><a href="#estados">Estados</a></li>
+                <li><a href="#negocios">Catálogo</a></li>
+                <li><a href="#llamar-web">En el navegador</a></li>
+                <li><a href="#novedades">Novedades</a></li>
+              </ul>
+            </div>
+          </li>
+          <li><a href="#privacidad">Privacidad</a></li>
+          <li><a href="#novedades">Novedades</a></li>
+          <li><a href="#planes">Planes</a></li>
+          <li><a href="#ayuda">Ayuda</a></li>
+          <li><a href="#negocios">Empresas</a></li>
+        </ul>
+        <div class="nav-end">
+          <button class="button button-pill pill pill-sm" type="button" data-open="signin-dialog">Entrar<svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M6 3.5l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></button>
+          <a class="button button-fill pill pill-sm" href="#cierre">Descargar<svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M7.5 2v8M4 7l3.5 3.5L11 7M3 13h9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
+          <a class="round-dl" href="#cierre" aria-label="Descargar la app de demo"><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M7.5 2v8M4 7l3.5 3.5L11 7M3 13h9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
+        </div>
+      </nav>
+    </header>
+
+    <div class="mobile-menu" id="mobile-menu" hidden>
+      <ul class="main-list">
+        <li><a href="#top">Inicio</a></li>
+        <li><button class="sub-open" type="button" id="sub-open" aria-controls="sub-list">Funciones<svg viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M2.5 7.5h10M9 4l3.5 3.5L9 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg></button></li>
+        <li><a href="#privacidad">Privacidad</a></li>
+        <li><a href="#novedades">Novedades</a></li>
+        <li><a href="#planes">Planes</a></li>
+        <li><a href="#ayuda">Ayuda</a></li>
+        <li><a href="#negocios">Empresas</a></li>
+      </ul>
+      <div class="sub" id="sub-list" hidden>
+        <ul>
+          <li><button class="back" type="button" id="sub-back"><svg viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M12.5 7.5h-10M6 4L2.5 7.5 6 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg>Funciones</button></li>
+          <li><a href="#llamadas">Llamadas</a></li>
+          <li><a href="#privacidad">Mensajes</a></li>
+          <li><a href="#grupos">Grupos</a></li>
+          <li><a href="#estados">Estados</a></li>
+          <li><a href="#negocios">Catálogo</a></li>
+          <li><a href="#llamar-web">En el navegador</a></li>
+        </ul>
+      </div>
+      <div class="menu-foot on-dark"><a class="button button-fill pill" href="#cierre">Descargar<svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M7.5 2v8M4 7l3.5 3.5L11 7M3 13h9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></a></div>
+    </div>
+
+    <main id="main">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="hero-card on-dark">
+          <svg class="reeds" viewBox="0 0 1200 420" preserveAspectRatio="none" aria-hidden="true"><path d="M0 420V300c90-30 170-10 260 10s190 30 300 0 200-40 320-10 190 30 320 0v130z" fill="currentColor" opacity="0.55" /><g stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none"><path d="M880 420c-6-90 4-170 30-250" /><path d="M920 420c0-80 14-150 44-210" /><path d="M960 420c-4-70 10-130 6-190" /><path d="M1010 420c6-90-8-160-40-230" /><path d="M1060 420c-2-60 10-120 40-170" /><path d="M1110 420c4-80-4-150-26-210" /><path d="M130 420c-4-50 6-100 24-140" /><path d="M170 420c2-60-6-110-30-160" /></g><g fill="currentColor"><ellipse cx="910" cy="170" rx="8" ry="30" transform="rotate(14 910 170)" /><ellipse cx="964" cy="210" rx="7" ry="26" transform="rotate(20 964 210)" /><ellipse cx="970" cy="190" rx="8" ry="28" transform="rotate(-14 970 190)" /><ellipse cx="1100" cy="250" rx="7" ry="24" transform="rotate(26 1100 250)" /><ellipse cx="154" cy="280" rx="6" ry="20" transform="rotate(14 154 280)" /></g></svg>
+          <div class="hero-copy">
+            <h1 id="hero-title">Habla con calma</h1>
+            <p>Mensajes y llamadas de ejemplo, sencillos y cercanos, para mostrar cómo se ve una conversación en Aura.*</p>
+            <a class="button button-fill pill" href="#cierre">Descargar<svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M7.5 2v8M4 7l3.5 3.5L11 7M3 13h9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
+            <div class="bubbles" aria-label="Conversación de ejemplo" role="group">
+              <p class="bubble out pop" style="--d: 400ms">¿Salimos a remar mañana?<small>08:12 ✓✓</small></p>
+              <div class="bubble-row pop" style="--d: 800ms">
+                <span class="avatar h-sky" aria-hidden="true">IR</span>
+                <p class="bubble in"><b>Inés</b>¡Sí! Llevo el termo.<small>08:14</small></p>
+              </div>
+              <p class="reacts pop" style="--d: 1000ms" aria-label="Reacciones: pulgar arriba, corazón, sol">👍 💚 ☀️</p>
+            </div>
+          </div>
+          <form class="signup-panel" id="signup" novalidate aria-labelledby="signup-title">
+            <h2 id="signup-title">Crea una cuenta de demo</h2>
+            <p class="lead">Escribe un número de ejemplo</p>
+            <p class="fine">Demo local: el número no se envía ni se guarda. Al continuar aceptas las <button type="button" data-open="terms-dialog">condiciones del demo</button>.</p>
+            <div class="tel">
+              <label class="sr-only" for="tel-prefix">Prefijo de ejemplo</label>
+              <select class="default" id="tel-prefix"><option>+00</option><option>+01</option><option>+02</option></select>
+              <label class="sr-only" for="tel-number">Número de ejemplo</label>
+              <input class="default" id="tel-number" type="tel" inputmode="numeric" autocomplete="off" placeholder="000 000 000" aria-describedby="signup-status" />
+            </div>
+            <button class="go" type="submit" id="signup-go" disabled>Empezar ›</button>
+            <p class="status" id="signup-status" role="status"></p>
+            <p class="have">¿Ya tienes cuenta? <button type="button" data-open="signin-dialog">Entrar</button></p>
+          </form>
+        </div>
+        <p class="hero-note">* Ejemplo de diseño. Reedwave no envía mensajes ni hace llamadas.</p>
+      </section>
+
+      <section class="block reveal" id="llamar-web" aria-labelledby="web-title">
+        <div class="wrap split flip">
+          <div class="copy">
+            <h2 id="web-title">Nuevo: llama desde el navegador</h2>
+            <p class="muted">Llamadas de voz y video de ejemplo, de uno a uno o en grupo, sin instalar nada en este demo.</p>
+            <a class="more" href="#llamadas"><span>Probarlo</span><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M6 3.5l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
+          </div>
+          <figure class="art" role="img" aria-label="Ilustración: ventana de escritorio con una videollamada de seis personas ficticias">
+            <div class="desk">
+              <div class="desk-top"><i></i><i></i><i></i></div>
+              <div class="desk-main">
+                <div class="desk-side">
+                  <div><span class="avatar h-leaf">LM</span><em class="on"></em></div>
+                  <div><span class="avatar h-rose">CA</span><em></em></div>
+                  <div><span class="avatar h-sky">TO</span><em></em></div>
+                  <div><span class="avatar h-lilac">NB</span><em></em></div>
+                  <div><span class="avatar">PE</span><em></em></div>
+                </div>
+                <div class="vgrid">
+                  <div class="vtile h-rose"><span class="avatar h-rose">CA</span></div>
+                  <div class="vtile h-sky"><span class="avatar h-sky">TO</span></div>
+                  <div class="vtile"><span class="avatar">PE</span></div>
+                  <div class="vtile h-leaf"><span class="avatar h-leaf">LM</span></div>
+                  <div class="vtile h-lilac"><span class="avatar h-lilac">NB</span></div>
+                  <div class="vtile h-sky"><span class="avatar h-rose">JU</span></div>
+                </div>
+              </div>
+            </div>
+          </figure>
+        </div>
+      </section>
+
+      <div class="crowd" role="img" aria-label="Ilustración: personas ficticias saludándose en varios idiomas">
+        <span class="person" style="left: 7%; top: 22%"><span class="avatar h-amber">AL</span></span>
+        <span class="person" style="left: 14%; top: 58%"><span class="bubble out">Bonjour à tous<small>11:59</small></span><span class="avatar h-rose">CE</span></span>
+        <span class="person" style="left: 45%; top: 14%"><span class="avatar h-lilac">MI</span><span class="bubble in">¡Hola!<small>11:59</small></span></span>
+        <span class="person wide" style="left: 74%; top: 40%"><span class="avatar h-sky">RO</span></span>
+        <span class="person wide" style="left: 80%; top: 72%"><span class="bubble out">Hallo zusammen<small>12:00</small></span><span class="avatar h-leaf">JO</span></span>
+      </div>
+
+      <section class="statement reveal" aria-labelledby="statement-title">
+        <div class="wrap"><h2 id="statement-title">Escribe, llama y comparte sin prisa: Reedwave deja a tu gente a un mensaje de distancia, estés donde estés.</h2></div>
+      </section>
+
+      <div class="crowd" role="img" aria-label="Ilustración: más personas ficticias conversando">
+        <span class="person" style="left: 4%; top: 30%"><span class="avatar h-leaf">DA</span><span class="bubble in">Olá, tudo bem?<small>12:01</small></span></span>
+        <span class="person wide" style="left: 36%; top: 62%"><span class="avatar h-amber">SO</span></span>
+        <span class="person" style="left: 58%; top: 18%"><span class="bubble out">Ciao!<small>12:02</small></span><span class="avatar h-sky">EL</span></span>
+        <span class="person wide" style="left: 86%; top: 52%"><span class="avatar h-rose">KI</span></span>
+      </div>
+
+      <section class="block reveal" id="llamadas" aria-labelledby="calls-title">
+        <div class="wrap split">
+          <div class="copy">
+            <h2 id="calls-title">Que ninguna llamada se quede en el aire</h2>
+            <p class="muted">Llamadas de voz y video de muestra con hasta ocho personas, para planear, reír o simplemente saludar.</p>
+            <a class="more" href="#faq"><span>Ver más</span><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M6 3.5l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
+          </div>
+          <figure class="art" role="img" aria-label="Ilustración: teléfono con una videollamada de cuatro personas ficticias">
+            <div class="phone">
+              <div class="screen">
+                <div class="bar"><span class="avatar h-leaf">CL</span><div><b>Club del lago</b><span>4 en la llamada</span></div></div>
+                <div class="vgrid">
+                  <div class="vtile h-sky"><span class="avatar h-sky">TO</span><i>Tomás</i></div>
+                  <div class="vtile h-rose"><span class="avatar h-rose">CA</span><i>Carla</i></div>
+                  <div class="vtile"><span class="avatar">PE</span><i>Pedro</i></div>
+                  <div class="vtile h-lilac"><span class="avatar h-lilac">NB</span><i>Nuria</i></div>
+                </div>
+                <div class="controls">
+                  <span><svg viewBox="0 0 16 16" fill="none"><rect x="5" y="2" width="6" height="8" rx="3" stroke="currentColor" stroke-width="1.5" /><path d="M3 8a5 5 0 0010 0M8 13v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg></span>
+                  <span><svg viewBox="0 0 16 16" fill="none"><rect x="1.5" y="4" width="9" height="8" rx="2" stroke="currentColor" stroke-width="1.5" /><path d="M10.5 7l4-2v6l-4-2" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" /></svg></span>
+                  <span class="end"><svg viewBox="0 0 16 16" fill="none"><path d="M2 9c3.5-3 8.5-3 12 0l-1.5 2-2.5-1V8.5a8 8 0 00-4 0V10l-2.5 1z" fill="currentColor" /></svg></span>
+                </div>
+              </div>
+            </div>
+          </figure>
+        </div>
+      </section>
+
+      <section class="block night on-dark reveal" id="privacidad" aria-labelledby="private-title">
+        <div class="wrap split flip">
+          <div class="copy">
+            <h2 id="private-title">Habla con<span class="accent-line">tranquilidad</span></h2>
+            <p>En este demo cada mensaje es de ejemplo y se queda en tu pantalla. Así se contaría una función de privacidad: clara, breve y sin promesas que el producto no cumpla.</p>
+            <a class="more" href="#faq"><span>Ver más</span><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M6 3.5l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
+            <button class="toggle" type="button" id="scramble-toggle" aria-pressed="false"><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M5 3.5v8M10 3.5v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /></svg><span>Pausar animación</span></button>
+          </div>
+          <figure class="art secret-art" role="img" aria-label="Ilustración: chat oscuro con una frase de ejemplo que se descifra, «solo entre nosotros»">
+            <div class="phone">
+              <div class="screen">
+                <div class="bar"><span class="avatar h-rose">AN</span><div><b>Ana</b><span>en línea</span></div></div>
+                <div class="composer"><i>Queda entre nosotros|</i><span><svg width="14" height="14" viewBox="0 0 15 15" fill="none"><path d="M2 7.5h10M8 3.5l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></span></div>
+              </div>
+            </div>
+            <p class="scramble" id="scramble" aria-hidden="true"><span class="noise">#%&gt;{</span><span id="scramble-text">solo entre nosotros</span><span class="noise">}/&lt;%</span></p>
+          </figure>
+        </div>
+      </section>
+
+      <section class="block reveal" id="grupos" aria-labelledby="groups-title">
+        <div class="wrap split">
+          <div class="copy">
+            <h2 id="groups-title">Tu grupo, siempre a mano</h2>
+            <p class="muted">Planes, fotos y encuestas de ejemplo en un mismo hilo, para que nadie se pierda el próximo encuentro.</p>
+            <a class="more" href="#faq"><span>Ver más</span><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M6 3.5l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
+          </div>
+          <figure class="art" role="img" aria-label="Ilustración: chat de grupo ficticio con una tarjeta de evento flotante">
+            <div class="phone">
+              <div class="screen">
+                <div class="bar"><span class="avatar h-amber">PS</span><div><b>Paseo del sábado</b><span>Inés, Tomás, Carla y 3 más</span></div></div>
+                <div class="body">
+                  <p class="bubble in"><b>Tomás</b>¿Quién trae el mapa?<small>09:02</small></p>
+                  <p class="bubble out" style="justify-self: end">Yo, y bocadillos.<small>09:03 ✓✓</small></p>
+                  <p class="bubble in"><b>Carla</b>Salimos a las 10 desde el muelle.<small>09:05</small></p>
+                </div>
+              </div>
+              <div class="event"><b>Paseo del sábado</b><span class="muted">Sáb · 10:00 · Muelle norte</span><span class="faces"><span class="avatar h-sky">TO</span><span class="avatar h-rose">CA</span><span class="avatar h-leaf">IN</span><span class="avatar">+3</span></span></div>
+            </div>
+          </figure>
+        </div>
+      </section>
+
+      <section class="block reveal" id="estados" aria-labelledby="status-title">
+        <div class="wrap split flip">
+          <div class="copy">
+            <h2 id="status-title">Dilo a tu manera</h2>
+            <p class="muted">Estados, stickers y reacciones de ejemplo para contestar con una imagen cuando las palabras sobran.</p>
+            <a class="more" href="#faq"><span>Ver más</span><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M6 3.5l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
+          </div>
+          <figure class="art" role="img" aria-label="Ilustración: estado ficticio con stickers de sol, hoja y estrella y una fila de reacciones">
+            <div class="phone">
+              <div class="screen">
+                <div class="bar"><span class="avatar h-leaf">MI</span><div><b>Mi estado</b><span>hace 2 min</span></div></div>
+                <div class="status-shot">
+                  <span class="avatar">MI</span>
+                  <svg class="sticker" style="left: 10%; top: 12%" viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="13" fill="var(--hue-amber)" stroke="var(--paper)" stroke-width="4" /><g stroke="var(--hue-amber)" stroke-width="4" stroke-linecap="round"><path d="M30 4v8M30 48v8M4 30h8M48 30h8M12 12l6 6M42 42l6 6M48 12l-6 6M18 42l-6 6" /></g></svg>
+                  <svg class="sticker" style="right: 8%; top: 40%" viewBox="0 0 60 60" aria-hidden="true"><path d="M10 50C10 24 26 10 52 8c-2 26-16 42-42 42z" fill="var(--hue-leaf)" stroke="var(--paper)" stroke-width="4" stroke-linejoin="round" /><path d="M14 46L40 20" stroke="var(--paper)" stroke-width="3" stroke-linecap="round" /></svg>
+                  <svg class="sticker" style="left: 16%; bottom: 10%" viewBox="0 0 60 60" aria-hidden="true"><path d="M30 6l7 15 16 2-12 11 3 16-14-8-14 8 3-16L7 23l16-2z" fill="var(--hue-lilac)" stroke="var(--paper)" stroke-width="4" stroke-linejoin="round" /></svg>
+                </div>
+              </div>
+              <p class="react-pill" aria-hidden="true">😊 🌿 ⭐ 💚</p>
+            </div>
+          </figure>
+        </div>
+      </section>
+
+      <section class="block reveal" id="negocios" aria-labelledby="biz-title">
+        <div class="wrap split">
+          <div class="copy">
+            <h2 id="biz-title">Atiende a tu clientela</h2>
+            <p class="muted">Un catálogo y respuestas rápidas de ejemplo para que un pequeño taller muestre lo que hace y conteste a tiempo.</p>
+            <a class="more" href="#planes"><span>Ver más</span><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M6 3.5l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
+          </div>
+          <figure class="art" role="img" aria-label="Ilustración: catálogo ficticio de un taller de cerámica con cuatro productos">
+            <div class="phone">
+              <div class="screen">
+                <div class="bar"><span class="avatar h-amber">TB</span><div><b>Taller Barro Vivo</b><span>Catálogo de ejemplo</span></div></div>
+                <div class="body">
+                  <div class="shop-head"><span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 10c2.3-2 4.7-2 7 0s4.7 2 7 0M5 15c2.3-2 4.7-2 7 0s4.7 2 7 0" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" /></svg></span><span>Responde en minutos</span></div>
+                  <div class="shop">
+                    <div class="item"><i></i><b>Taza de barro</b><span>12 ¤</span></div>
+                    <div class="item h-sky"><i></i><b>Cuenco azul</b><span>18 ¤</span></div>
+                    <div class="item h-rose"><i></i><b>Jarrón rosa</b><span>26 ¤</span></div>
+                    <div class="item h-leaf"><i></i><b>Maceta verde</b><span>15 ¤</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </figure>
+        </div>
+      </section>
+
+      <section class="block" id="cifras" aria-labelledby="stats-title">
+        <div class="wrap">
+          <div class="section-head"><h2 id="stats-title">Reedwave en cifras</h2><span class="tag">Ejemplo · datos ficticios</span></div>
+          <div class="stats">
+            <div class="stat"><strong>3,2 s</strong><span>respuesta media en grupos de muestra</span></div>
+            <div class="stat"><strong>48</strong><span>grupos activos en el demo</span></div>
+            <div class="stat"><strong>8</strong><span>personas por videollamada de ejemplo</span></div>
+            <div class="stat"><strong>0</strong><span>datos enviados desde esta página</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="block" id="actividad" aria-labelledby="table-title">
+        <div class="wrap">
+          <div class="section-head"><h2 id="table-title">Actividad de la semana</h2><span class="tag">Ejemplo · datos ficticios</span></div>
+          <div class="table-wrap" role="region" aria-labelledby="table-title" tabindex="0">
+            <table>
+              <caption>Grupos ficticios de este demo.</caption>
+              <thead><tr><th scope="col">Grupo</th><th scope="col">Miembros</th><th scope="col">Mensajes</th><th scope="col">Llamadas</th><th scope="col">Estado</th></tr></thead>
+              <tbody>
+                <tr><td>Club del lago</td><td>12</td><td>214</td><td>6</td><td><span class="badge live">Activo</span></td></tr>
+                <tr><td>Paseo del sábado</td><td>6</td><td>88</td><td>2</td><td><span class="badge live">Activo</span></td></tr>
+                <tr><td>Taller Barro Vivo</td><td>3</td><td>41</td><td>0</td><td><span class="badge">Tranquilo</span></td></tr>
+                <tr><td>Vecinos del 4.º</td><td>18</td><td>130</td><td>1</td><td><span class="badge">Silenciado</span></td></tr>
+                <tr><td>Coro de los jueves</td><td>24</td><td>302</td><td>4</td><td><span class="badge live">Activo</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="block" id="ayuda" aria-labelledby="form-title">
+        <div class="wrap">
+          <div class="form-card">
+            <div class="copy">
+              <span class="tag">Ejemplo · formulario local</span>
+              <h2 id="form-title">Escríbenos</h2>
+              <p class="muted">Este formulario comprueba los campos en tu navegador. No envía ni guarda nada.</p>
+            </div>
+            <form id="contact" novalidate>
+              <div class="fields">
+                <div class="field"><label for="c-name">Nombre</label><input id="c-name" name="name" autocomplete="off" placeholder="Tu nombre" required aria-describedby="c-name-msg" /><p class="field-msg" id="c-name-msg"></p></div>
+                <div class="field"><label for="c-email">Correo</label><input id="c-email" name="email" type="email" autocomplete="off" placeholder="nombre@ejemplo.com" required aria-describedby="c-email-msg" /><p class="field-msg" id="c-email-msg"></p></div>
+                <div class="field full"><label for="c-topic">Tema</label><select id="c-topic" name="topic"><option>Llamadas</option><option>Grupos</option><option>Catálogo</option><option>Otro</option></select></div>
+                <div class="field full"><label for="c-msg">Mensaje</label><textarea id="c-msg" name="message" placeholder="Cuéntanos en qué te ayudamos" required aria-describedby="c-msg-msg"></textarea><p class="field-msg" id="c-msg-msg"></p></div>
+              </div>
+              <div style="display: flex; flex-wrap: wrap; align-items: center; gap: calc(var(--aura) * 1.5); margin-top: calc(var(--aura) * 2)">
+                <button class="button button-fill pill" type="submit">Enviar mensaje</button>
+                <p class="form-status" role="status"></p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section class="block" id="planes" aria-labelledby="plans-title">
+        <div class="wrap">
+          <div class="section-head">
+            <h2 id="plans-title">Planes de ejemplo</h2>
+            <div class="seg" role="group" aria-label="Periodo de facturación">
+              <button type="button" data-period="month" aria-pressed="true">Mensual</button>
+              <button type="button" data-period="year" aria-pressed="false">Anual</button>
+            </div>
+          </div>
+          <div class="plans">
+            <article class="plan">
+              <h3>Personal</h3>
+              <p class="price" data-month="0 ¤" data-year="0 ¤">0 ¤</p>
+              <ul><li><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M3 8l3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Chats y grupos</li><li><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M3 8l3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Llamadas de 4 personas</li></ul>
+              <a class="button button-pill pill" href="#cierre">Elegir Personal</a>
+            </article>
+            <article class="plan featured">
+              <h3>Equipo</h3>
+              <p class="price" data-month="4 ¤ &lt;small&gt;/ mes&lt;/small&gt;" data-year="40 ¤ &lt;small&gt;/ año&lt;/small&gt;">4 ¤ <small>/ mes</small></p>
+              <ul><li><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M3 8l3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Llamadas de 8 personas</li><li><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M3 8l3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Encuestas y eventos</li></ul>
+              <a class="button button-fill pill" href="#cierre">Elegir Equipo</a>
+            </article>
+            <article class="plan">
+              <h3>Taller</h3>
+              <p class="price" data-month="12 ¤ &lt;small&gt;/ mes&lt;/small&gt;" data-year="120 ¤ &lt;small&gt;/ año&lt;/small&gt;">12 ¤ <small>/ mes</small></p>
+              <ul><li><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M3 8l3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Catálogo de ejemplo</li><li><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M3 8l3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Respuestas rápidas</li></ul>
+              <a class="button button-pill pill" href="#cierre">Elegir Taller</a>
+            </article>
+          </div>
+          <p class="tag" style="margin-top: calc(var(--aura) * 1.5)">Precios en una moneda ficticia (¤). No corresponden a ningún servicio real.</p>
+        </div>
+      </section>
+
+      <section class="block" id="faq" aria-labelledby="faq-title">
+        <div class="wrap">
+          <div class="section-head"><h2 id="faq-title">Preguntas frecuentes</h2><span class="tag">Ejemplo</span></div>
+          <ul class="faq">
+            <li><h3><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-1" id="faq-q1">¿Qué es Reedwave?<svg viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 2v14M2 9h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg></button></h3><div class="faq-panel" id="faq-1" role="region" aria-labelledby="faq-q1" hidden><p>Un producto de conversación ficticio que muestra un flavor de Aura. No hay servicio detrás.</p></div></li>
+            <li><h3><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-2" id="faq-q2">¿Mis mensajes están cifrados?<svg viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 2v14M2 9h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg></button></h3><div class="faq-panel" id="faq-2" role="region" aria-labelledby="faq-q2" hidden><p>Esta página no envía mensajes, así que no cifra nada. La banda de privacidad solo enseña cómo presentar esa función.</p></div></li>
+            <li><h3><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-3" id="faq-q3">¿Se guarda el número del panel de alta?<svg viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 2v14M2 9h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg></button></h3><div class="faq-panel" id="faq-3" role="region" aria-labelledby="faq-q3" hidden><p>No. El panel solo comprueba el formato en tu navegador y lo olvida al recargar.</p></div></li>
+            <li><h3><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-4" id="faq-q4">¿Puedo llamar desde aquí?<svg viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 2v14M2 9h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg></button></h3><div class="faq-panel" id="faq-4" role="region" aria-labelledby="faq-q4" hidden><p>No. Las llamadas son dibujos de ejemplo; ningún botón abre micrófono ni cámara.</p></div></li>
+            <li><h3><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-5" id="faq-q5">¿Quiénes son las personas del demo?<svg viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 2v14M2 9h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg></button></h3><div class="faq-panel" id="faq-5" role="region" aria-labelledby="faq-q5" hidden><p>Nadie: nombres, iniciales y conversaciones son inventados.</p></div></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="closing" id="cierre" aria-labelledby="close-title">
+        <div class="wrap">
+          <h2 id="close-title">¿Te animas a probarlo?</h2>
+          <p>Reedwave es un demo: no hay nada que descargar todavía.</p>
+          <div class="row">
+            <button class="button button-fill pill" type="button" data-open="download-dialog">Descargar<svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M7.5 2v8M4 7l3.5 3.5L11 7M3 13h9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></button>
+            <button class="button button-pill pill" type="button" data-open="signin-dialog">Entrar</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="news-shell">
+        <section class="news" id="novedades" aria-labelledby="news-title">
+          <div class="wrap news-grid">
+            <div class="news-intro">
+              <h2 id="news-title">Al día con Reedwave</h2>
+              <p class="muted">Novedades ficticias del demo: ideas, ajustes y pequeñas mejoras para conversar mejor.</p>
+            </div>
+            <div class="track" id="news-track" role="region" aria-roledescription="carrusel" aria-label="Novedades ficticias">
+              <article class="news-card" aria-roledescription="diapositiva" aria-label="1 de 5"><span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 10c2.3-2 4.7-2 7 0s4.7 2 7 0M5 15c2.3-2 4.7-2 7 0s4.7 2 7 0" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" /></svg></span><h3>Encuestas rápidas para decidir en grupo</h3><p>Pregunta, vota y cierra el plan sin cien mensajes de por medio.</p><button class="button button-pill pill pill-sm" type="button" data-news="0">Leer más</button></article>
+              <article class="news-card" aria-roledescription="diapositiva" aria-label="2 de 5"><span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 10c2.3-2 4.7-2 7 0s4.7 2 7 0M5 15c2.3-2 4.7-2 7 0s4.7 2 7 0" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" /></svg></span><h3>Notas de voz con texto de ejemplo</h3><p>Escucha o lee: el demo muestra dónde iría la transcripción.</p><button class="button button-pill pill pill-sm" type="button" data-news="1">Leer más</button></article>
+              <article class="news-card" aria-roledescription="diapositiva" aria-label="3 de 5"><span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 10c2.3-2 4.7-2 7 0s4.7 2 7 0M5 15c2.3-2 4.7-2 7 0s4.7 2 7 0" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" /></svg></span><h3>Llamadas de grupo más grandes</h3><p>Hasta ocho personas en la misma videollamada de muestra.</p><button class="button button-pill pill pill-sm" type="button" data-news="2">Leer más</button></article>
+              <article class="news-card" aria-roledescription="diapositiva" aria-label="4 de 5"><span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 10c2.3-2 4.7-2 7 0s4.7 2 7 0M5 15c2.3-2 4.7-2 7 0s4.7 2 7 0" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" /></svg></span><h3>Fondos nuevos para tus chats</h3><p>Cinco texturas suaves pensadas para leer bien de día y de noche.</p><button class="button button-pill pill pill-sm" type="button" data-news="3">Leer más</button></article>
+              <article class="news-card" aria-roledescription="diapositiva" aria-label="5 de 5"><span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 10c2.3-2 4.7-2 7 0s4.7 2 7 0M5 15c2.3-2 4.7-2 7 0s4.7 2 7 0" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" /></svg></span><h3>Ajustes de privacidad más claros</h3><p>Una sola pantalla con lo que ves, lo que compartes y con quién.</p><button class="button button-pill pill pill-sm" type="button" data-news="4">Leer más</button></article>
+            </div>
+            <div class="arrows">
+              <button class="arrow" type="button" id="news-prev" aria-controls="news-track" aria-label="Novedad anterior" disabled><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M9 3.5l-4 4 4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></button>
+              <button class="arrow" type="button" id="news-next" aria-controls="news-track" aria-label="Novedad siguiente"><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M6 3.5l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></button>
+              <p class="sr-only" id="news-status" aria-live="polite">Novedad 1 de 5</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-foot on-dark">
+      <div class="wrap">
+        <div class="foot-top">
+          <div class="foot-brand">
+            <a class="wordmark" href="#top" aria-label="Reedwave, inicio"><span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 10c2.3-2 4.7-2 7 0s4.7 2 7 0M5 15c2.3-2 4.7-2 7 0s4.7 2 7 0" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" /></svg></span>Reedwave</a>
+            <button class="button button-fill pill" type="button" data-open="download-dialog">Descargar<svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M7.5 2v8M4 7l3.5 3.5L11 7M3 13h9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></button>
+          </div>
+          <div class="foot-cols">
+            <div><h3>Qué ofrece</h3><ul><li><a href="#llamadas">Llamadas</a></li><li><a href="#grupos">Grupos</a></li><li><a href="#estados">Estados</a></li><li><a href="#negocios">Catálogo</a></li></ul></div>
+            <div><h3>El demo</h3><ul><li><a href="#top">Sobre Reedwave</a></li><li><a href="#novedades">Novedades</a></li><li><a href="#cifras">Cifras de ejemplo</a></li><li><a href="#actividad">Actividad</a></li></ul></div>
+            <div><h3>Dónde usarlo</h3><ul><li><a href="#cierre">Teléfono</a></li><li><a href="#cierre">Tableta</a></li><li><a href="#cierre">Escritorio</a></li><li><a href="#llamar-web">Navegador</a></li></ul></div>
+            <div><h3>Ayuda</h3><ul><li><a href="#faq">Preguntas frecuentes</a></li><li><a href="#ayuda">Contacto</a></li><li><a href="#privacidad">Privacidad</a></li><li><a href="#planes">Planes</a></li></ul></div>
+          </div>
+        </div>
+        <div class="foot-bottom">
+          <p>© 2026 Reedwave · demo ficticio de Aura</p>
+          <nav aria-label="Legal"><a href="#top" data-open-link="terms-dialog">Condiciones del demo</a><a href="#main">Mapa del sitio</a></nav>
+          <div class="socials" aria-label="Canales de ejemplo" role="group">
+            <a href="#novedades" aria-label="Boletín de ejemplo"><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M3 12a1 1 0 100-.01M2.5 7a5.5 5.5 0 015.5 5.5M2.5 2.5a10 10 0 0110 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg></a>
+            <a href="#ayuda" aria-label="Correo de ejemplo"><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><rect x="1.5" y="3" width="12" height="9" rx="1.5" stroke="currentColor" stroke-width="1.4" /><path d="M2 4l5.5 4L13 4" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" /></svg></a>
+            <a href="#llamadas" aria-label="Vídeos de ejemplo"><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><circle cx="7.5" cy="7.5" r="6" stroke="currentColor" stroke-width="1.4" /><path d="M6 5v5l4-2.5z" fill="currentColor" /></svg></a>
+            <a href="#grupos" aria-label="Foro de ejemplo"><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M2 3.5h8v5.5H5l-3 2.5zM10 6h3v5.5l-2-1.5H7" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" /></svg></a>
+          </div>
+          <button class="lang-btn" type="button" id="lang-open" aria-haspopup="dialog" aria-controls="lang-dialog"><span id="lang-current">Español</span><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M4 6l3.5 3.5L11 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></button>
+        </div>
+        <p class="sr-only" id="lang-status" role="status"></p>
+      </div>
+    </footer>
+
+    <aside class="notice" id="notice" aria-label="Aviso del demo">
+      <p>Nuevo en el demo: llama desde el navegador. <a href="#llamar-web">Probarlo</a></p>
+      <button class="x" type="button" data-dismiss="notice" aria-label="Cerrar aviso"><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M3.5 3.5l8 8M11.5 3.5l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg></button>
+    </aside>
+
+    <dialog class="sheet" id="lang-dialog" aria-labelledby="lang-title">
+      <div class="dlg">
+        <div class="dlg-head"><h2 id="lang-title">Elige una región</h2><button class="x" type="button" data-close aria-label="Cerrar selector de idioma"><svg class="icon" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M3.5 3.5l8 8M11.5 3.5l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg></button></div>
+        <label class="sr-only" for="region">Región</label>
+        <select id="region">
+          <option value="all">Todos los idiomas (8)</option>
+          <option value="am">Américas (3)</option>
+          <option value="eu">Europa (5)</option>
+        </select>
+        <div class="langs" id="langs">
+          <button type="button" data-region="am eu" aria-current="true">Español</button>
+          <button type="button" data-region="am eu">English</button>
+          <button type="button" data-region="am eu">Português</button>
+          <button type="button" data-region="eu">Français</button>
+          <button type="button" data-region="eu">Deutsch</button>
+          <button type="button" data-region="eu">Italiano</button>
+          <button type="button" data-region="eu">Nederlands</button>
+          <button type="button" data-region="eu">Català</button>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="dlg-small" id="signin-dialog" aria-labelledby="signin-title">
+      <div class="dlg">
+        <h2 id="signin-title" style="font-size: 1.625rem; font-weight: 600">Este demo no tiene cuentas</h2>
+        <p class="muted">Reedwave es una muestra de diseño. No hay inicio de sesión ni se piden contraseñas.</p>
+        <button class="button button-fill pill" type="button" data-close>Entendido</button>
+      </div>
+    </dialog>
+
+    <dialog class="dlg-small" id="download-dialog" aria-labelledby="download-title">
+      <div class="dlg">
+        <h2 id="download-title" style="font-size: 1.625rem; font-weight: 600">Aún no hay app</h2>
+        <p class="muted">Los botones de descarga de este demo no descargan nada. En un producto real enlazarían a su tienda.</p>
+        <button class="button button-fill pill" type="button" data-close>Entendido</button>
+      </div>
+    </dialog>
+
+    <dialog class="dlg-small" id="terms-dialog" aria-labelledby="terms-title">
+      <div class="dlg">
+        <h2 id="terms-title" style="font-size: 1.625rem; font-weight: 600">Condiciones del demo</h2>
+        <p class="muted">Todo el contenido es ficticio. La página no recoge datos, no usa cookies propias y no se conecta a ningún servicio.</p>
+        <button class="button button-fill pill" type="button" data-close>Entendido</button>
+      </div>
+    </dialog>
+
+    <dialog class="dlg-small" id="news-dialog" aria-labelledby="news-dlg-title">
+      <div class="dlg">
+        <span class="tag">Novedad ficticia</span>
+        <h2 id="news-dlg-title" style="font-size: 1.625rem; font-weight: 600"></h2>
+        <p class="muted" id="news-dlg-text"></p>
+        <button class="button button-fill pill" type="button" data-close>Cerrar</button>
+      </div>
+    </dialog>
+
+    <script>
+      (function () {
+        var root = document.documentElement;
+        var motionOk = root.classList.contains("motion");
+        var opener = null;
+
+        function openDialog(dialog, from) {
+          opener = from || document.activeElement;
+          dialog.showModal();
+        }
+        document.querySelectorAll("dialog").forEach(function (dialog) {
+          dialog.addEventListener("click", function (event) {
+            if (event.target === dialog || event.target.closest("[data-close]")) dialog.close();
+          });
+          dialog.addEventListener("close", function () {
+            if (opener && document.contains(opener)) opener.focus();
+            opener = null;
+          });
+        });
+        document.querySelectorAll("[data-open]").forEach(function (button) {
+          button.addEventListener("click", function () {
+            openDialog(document.getElementById(button.dataset.open), button);
+          });
+        });
+        document.querySelectorAll("[data-open-link]").forEach(function (link) {
+          link.addEventListener("click", function (event) {
+            event.preventDefault();
+            openDialog(document.getElementById(link.dataset.openLink), link);
+          });
+        });
+
+        document.querySelectorAll("[data-dismiss]").forEach(function (button) {
+          button.addEventListener("click", function () {
+            var target = document.getElementById(button.dataset.dismiss);
+            target.hidden = true;
+            if (target.id === "notice") document.body.classList.remove("has-notice");
+            var main = document.getElementById("main");
+            main.setAttribute("tabindex", "-1");
+            main.focus({ preventScroll: true });
+          });
+        });
+
+        var trigger = document.getElementById("features-trigger");
+        var menu = document.getElementById("features-menu");
+        var wrap = document.getElementById("menu-wrap");
+        function setMenu(open, focusFirst) {
+          trigger.setAttribute("aria-expanded", String(open));
+          menu.hidden = !open;
+          if (open && focusFirst) menu.querySelector("a").focus();
+        }
+        trigger.addEventListener("click", function () { setMenu(trigger.getAttribute("aria-expanded") !== "true", false); });
+        trigger.addEventListener("keydown", function (event) {
+          if (event.key === "ArrowDown") { event.preventDefault(); setMenu(true, true); }
+        });
+        menu.addEventListener("keydown", function (event) {
+          var links = Array.prototype.slice.call(menu.querySelectorAll("a"));
+          var index = links.indexOf(document.activeElement);
+          if (event.key === "ArrowDown") { event.preventDefault(); links[(index + 1) % links.length].focus(); }
+          if (event.key === "ArrowUp") { event.preventDefault(); links[(index - 1 + links.length) % links.length].focus(); }
+        });
+        menu.addEventListener("click", function (event) { if (event.target.closest("a")) setMenu(false); });
+        wrap.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && trigger.getAttribute("aria-expanded") === "true") { setMenu(false); trigger.focus(); }
+        });
+        wrap.addEventListener("focusout", function (event) { if (!wrap.contains(event.relatedTarget)) setMenu(false); });
+        if (window.matchMedia("(hover: hover)").matches) {
+          wrap.addEventListener("mouseenter", function () { setMenu(true); });
+          wrap.addEventListener("mouseleave", function () { setMenu(false); });
+        }
+        document.addEventListener("click", function (event) { if (!wrap.contains(event.target)) setMenu(false); });
+
+        var burger = document.getElementById("burger");
+        var mobile = document.getElementById("mobile-menu");
+        var mainList = mobile.querySelector(".main-list");
+        var sub = document.getElementById("sub-list");
+        var subOpen = document.getElementById("sub-open");
+        var outside = [document.getElementById("main"), document.querySelector(".site-foot"), document.getElementById("app-strip"), document.getElementById("notice")];
+        function setMobile(open) {
+          burger.setAttribute("aria-expanded", String(open));
+          burger.setAttribute("aria-label", open ? "Cerrar menú de navegación" : "Menú de navegación");
+          burger.innerHTML = open
+            ? '<svg viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M6 6l14 14M20 6L6 20" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" /></svg>'
+            : '<svg viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M3 8h20M3 18h20" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" /></svg>';
+          mobile.hidden = !open;
+          document.body.style.overflow = open ? "hidden" : "";
+          outside.forEach(function (el) { if (el) el.inert = open; });
+          sub.hidden = true;
+          mainList.hidden = false;
+          if (open) mainList.querySelector("a").focus();
+        }
+        burger.addEventListener("click", function () { setMobile(burger.getAttribute("aria-expanded") !== "true"); });
+        subOpen.addEventListener("click", function () { mainList.hidden = true; sub.hidden = false; document.getElementById("sub-back").focus(); });
+        document.getElementById("sub-back").addEventListener("click", function () { sub.hidden = true; mainList.hidden = false; subOpen.focus(); });
+        mobile.addEventListener("click", function (event) { if (event.target.closest("a")) setMobile(false); });
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && burger.getAttribute("aria-expanded") === "true") { setMobile(false); burger.focus(); }
+        });
+        window.matchMedia("(min-width: 1024px)").addEventListener("change", function (event) { if (event.matches) setMobile(false); });
+
+        var signup = document.getElementById("signup");
+        var tel = document.getElementById("tel-number");
+        var go = document.getElementById("signup-go");
+        var signupStatus = document.getElementById("signup-status");
+        tel.addEventListener("input", function () {
+          go.disabled = tel.value.replace(/\D/g, "").length < 6;
+          signupStatus.textContent = "";
+        });
+        signup.addEventListener("submit", function (event) {
+          event.preventDefault();
+          signupStatus.textContent = "Formato válido. Demo local: no se envió ni se guardó nada.";
+          tel.value = "";
+          go.disabled = true;
+        });
+
+        var contact = document.getElementById("contact");
+        contact.addEventListener("submit", function (event) {
+          event.preventDefault();
+          var ok = true;
+          var first = null;
+          [["c-name", "Escribe tu nombre."], ["c-email", "Escribe un correo válido, como nombre@ejemplo.com."], ["c-msg", "Escribe un mensaje."]].forEach(function (pair) {
+            var input = document.getElementById(pair[0]);
+            var value = input.value.trim();
+            var bad = !value || (input.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value));
+            input.setAttribute("aria-invalid", String(bad));
+            document.getElementById(pair[0] + "-msg").textContent = bad ? pair[1] : "";
+            if (bad) { ok = false; first = first || input; }
+          });
+          var status = contact.querySelector(".form-status");
+          status.textContent = ok ? "Mensaje con formato válido. Demo local: no se envió nada." : "";
+          if (!ok) first.focus();
+        });
+
+        var period = document.querySelector('[aria-label="Periodo de facturación"]');
+        period.addEventListener("click", function (event) {
+          var button = event.target.closest("button");
+          if (!button) return;
+          period.querySelectorAll("button").forEach(function (item) { item.setAttribute("aria-pressed", String(item === button)); });
+          document.querySelectorAll(".plan .price").forEach(function (price) { price.innerHTML = price.dataset[button.dataset.period]; });
+        });
+
+        document.querySelectorAll(".faq-trigger").forEach(function (button) {
+          button.addEventListener("click", function () {
+            var open = button.getAttribute("aria-expanded") !== "true";
+            button.setAttribute("aria-expanded", String(open));
+            document.getElementById(button.getAttribute("aria-controls")).hidden = !open;
+          });
+        });
+
+        var track = document.getElementById("news-track");
+        var cards = Array.prototype.slice.call(track.querySelectorAll(".news-card"));
+        var prev = document.getElementById("news-prev");
+        var next = document.getElementById("news-next");
+        var newsStatus = document.getElementById("news-status");
+        function currentIndex() {
+          var left = track.getBoundingClientRect().left;
+          var best = 0;
+          cards.forEach(function (card, i) {
+            if (Math.abs(card.getBoundingClientRect().left - left) < Math.abs(cards[best].getBoundingClientRect().left - left)) best = i;
+          });
+          return best;
+        }
+        function syncNews() {
+          var max = track.scrollWidth - track.clientWidth - 2;
+          prev.disabled = track.scrollLeft <= 2;
+          next.disabled = track.scrollLeft >= max;
+          newsStatus.textContent = "Novedad " + (next.disabled ? cards.length : currentIndex() + 1) + " de " + cards.length;
+        }
+        function go2(step) {
+          var target = cards[Math.max(0, Math.min(cards.length - 1, currentIndex() + step))];
+          track.scrollTo({ left: target.offsetLeft - cards[0].offsetLeft, behavior: motionOk ? "smooth" : "auto" });
+        }
+        prev.addEventListener("click", function () { go2(-1); });
+        next.addEventListener("click", function () { go2(1); });
+        var syncTimer = null;
+        track.addEventListener("scroll", function () { clearTimeout(syncTimer); syncTimer = setTimeout(syncNews, 120); }, { passive: true });
+        window.addEventListener("resize", syncNews);
+        syncNews();
+
+        var news = [
+          ["Encuestas rápidas para decidir en grupo", "Crea una pregunta con hasta cuatro opciones y cierra la votación cuando quieras. Novedad inventada para este demo."],
+          ["Notas de voz con texto de ejemplo", "Cada nota de voz muestra un bloque de texto debajo. En el demo es un texto fijo de muestra."],
+          ["Llamadas de grupo más grandes", "La maqueta de llamadas admite ocho mosaicos. No hay audio ni video reales."],
+          ["Fondos nuevos para tus chats", "Cinco texturas suaves que conservan el contraste del texto en claro y en oscuro."],
+          ["Ajustes de privacidad más claros", "Una pantalla única resume qué ves y qué compartes. Es una propuesta de diseño, no una función."]
+        ];
+        var newsDialog = document.getElementById("news-dialog");
+        track.addEventListener("click", function (event) {
+          var button = event.target.closest("[data-news]");
+          if (!button) return;
+          var item = news[Number(button.dataset.news)];
+          document.getElementById("news-dlg-title").textContent = item[0];
+          document.getElementById("news-dlg-text").textContent = item[1];
+          openDialog(newsDialog, button);
+        });
+
+        var langDialog = document.getElementById("lang-dialog");
+        var langOpen = document.getElementById("lang-open");
+        var region = document.getElementById("region");
+        var langButtons = Array.prototype.slice.call(document.querySelectorAll("#langs button"));
+        langOpen.addEventListener("click", function () {
+          langOpen.setAttribute("aria-expanded", "true");
+          openDialog(langDialog, langOpen);
+        });
+        langDialog.addEventListener("close", function () { langOpen.setAttribute("aria-expanded", "false"); });
+        langOpen.setAttribute("aria-expanded", "false");
+        region.addEventListener("change", function () {
+          langButtons.forEach(function (button) {
+            button.hidden = region.value !== "all" && button.dataset.region.split(" ").indexOf(region.value) === -1;
+          });
+        });
+        langButtons.forEach(function (button) {
+          button.addEventListener("click", function () {
+            langButtons.forEach(function (other) { other.setAttribute("aria-current", String(other === button)); });
+            document.getElementById("lang-current").textContent = button.textContent;
+            document.getElementById("lang-status").textContent = "Demo: el idioma no cambia el contenido.";
+            langDialog.close();
+          });
+        });
+
+        var scrambleText = document.getElementById("scramble-text");
+        var toggle = document.getElementById("scramble-toggle");
+        var phrase = scrambleText.textContent;
+        var glyphs = "#%&{}<>/*^$@!?";
+        var frame = 0;
+        var timer = null;
+        function tick() {
+          var cycle = 66;
+          var revealed = Math.min(phrase.length, Math.floor((frame % cycle) * 0.8));
+          var out = "";
+          for (var i = 0; i < phrase.length; i += 1) {
+            out += i < revealed || phrase[i] === " " ? phrase[i] : glyphs[Math.floor(Math.random() * glyphs.length)];
+          }
+          scrambleText.textContent = out;
+          frame += 1;
+        }
+        function play() { if (!timer) timer = setInterval(tick, 60); }
+        function stop() { clearInterval(timer); timer = null; scrambleText.textContent = phrase; }
+        if (motionOk) {
+          play();
+          toggle.addEventListener("click", function () {
+            var paused = toggle.getAttribute("aria-pressed") !== "true";
+            toggle.setAttribute("aria-pressed", String(paused));
+            toggle.querySelector("span").textContent = paused ? "Reanudar animación" : "Pausar animación";
+            if (paused) stop(); else play();
+          });
+        } else {
+          toggle.hidden = true;
+        }
+
+        if (motionOk) {
+          requestAnimationFrame(function () {
+            document.querySelectorAll(".pop").forEach(function (el) { el.classList.add("in"); });
+          });
+          var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) { entry.target.classList.add("in"); observer.unobserve(entry.target); }
+            });
+          }, { rootMargin: "0px 0px -10% 0px" });
+          document.querySelectorAll(".reveal").forEach(function (el) { observer.observe(el); });
+        }
+      })();
+    </script>
+  </body>
+</html>

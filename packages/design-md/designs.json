@@ -699,7 +699,7 @@
       "description": "Un lienzo crema con tinta verde casi negra, píldoras verde junco, titulares grandes en peso regular, burbujas de conversación que flotan sobre las fotos de producto, una banda nocturna para la privacidad y un carrusel menta de novedades. Un flavor de Aura para apps de conversación, comunidades y herramientas de llamadas.",
       "design": "designs/reedwave/DESIGN.md",
       "theme": "designs/reedwave/theme.css",
-      "result": null,
+      "result": "designs/reedwave/result.html",
       "fonts": {
         "sans": "Hanken Grotesk",
         "display": "Hanken Grotesk",
