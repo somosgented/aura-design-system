@@ -4,7 +4,7 @@ status: shipped
 area: design-md
 routes: [/, /DESIGN.md, /designs/<slug>/, /designs/<slug>/DESIGN.md, /designs/<slug>/theme.css, /result.html]
 components: [DESIGN.md, packages/design-md/DESIGN.md, packages/design-md/index.html, packages/design-md/detail.html, packages/design-md/result.html, packages/design-md/designs/, packages/design-md/scripts/generate-designs.ts, packages/registry/scripts/sync-design-md.ts, .agents/rules/design-md.mdc, .agents/skills/generate-design-md/, apps/www/content/docs/rules/design-md-flavors.mdx]
-pr: https://github.com/somosgented/aura-design-system/pull/207
+pr: https://github.com/somosgented/aura-design-system/pull/210
 updated: 2026-11-09
 ---
 The narrative design spec that agents and people follow for tokens, type, spacing, motion, and product voice. The registry distributes it to consumer repos.
