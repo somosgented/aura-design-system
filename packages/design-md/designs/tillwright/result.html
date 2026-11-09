@@ -1,0 +1,1845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tillwright · Aura flavor</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="/aura/main.css" />
+<link rel="stylesheet" href="theme.css" />
+<script>
+(function(){
+  var p=new URLSearchParams(window.location.search).get("appearance")==="dark"?"dark":"light";
+  var r=document.documentElement;
+  r.classList.add(p);
+  r.style.colorScheme=p;
+  if(window.matchMedia("(prefers-reduced-motion: no-preference)").matches)r.classList.add("motion");
+})();
+</script>
+<style>
+:root{
+  --tw-max:1280px;
+  --tw-side:calc(var(--aura)*2);
+  --tw-head-utility:calc(var(--aura)*2.5);
+  --tw-head-main:calc(var(--aura)*4.5);
+  --tw-ease:cubic-bezier(0.4,0,0.2,1);
+  --aura-font-stack:var(--aura-font-display,"Schibsted Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif);
+}
+
+*{box-sizing:border-box;}
+html{margin:0;padding:0;background:var(--canvas);color:var(--ink);scroll-padding-top:calc(var(--tw-head-utility)+var(--tw-head-main));}
+body{margin:0;padding:0;font-family:var(--aura-font-display,"Schibsted Grotesk",-apple-system,sans-serif);font-size:17px;line-height:1.5;background:var(--canvas);color:var(--ink);overflow-x:hidden;min-width:320px;}
+h1,h2,h3,h4,h5,h6,p,figure,ul,ol,dl{margin:0;}
+ul,ol{padding:0;list-style:none;}
+h1,h2,h3{font-family:var(--aura-font-display,"Schibsted Grotesk",-apple-system,sans-serif);font-weight:400;letter-spacing:-0.01em;text-wrap:balance;}
+a{color:inherit;text-decoration:none;}
+:focus-visible{outline:2px solid var(--accent-9);outline-offset:2px;}
+.on-night :focus-visible{outline-color:var(--night-ink);}
+
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+.skip-link{position:absolute;left:calc(var(--aura)*1);top:calc(var(--aura)*-5);z-index:200;padding:calc(var(--aura)*0.5) calc(var(--aura)*1.5);background:var(--accent-9);color:#ffffff;border-radius:2px;font-weight:500;}
+.skip-link:focus{top:calc(var(--aura)*1);}
+
+.tw-wrap{width:min(100% - var(--tw-side)*2,var(--tw-max));margin-inline:auto;}
+.tw-section{padding-block:calc(var(--aura)*7.5);}
+
+.tw-eyebrow{font-family:var(--aura-font-label,"Spline Sans Mono",-apple-system,sans-serif);font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-11);}
+.on-night .tw-eyebrow{color:var(--night-muted);}
+
+.tw-wordmark{display:inline-flex;align-items:center;gap:calc(var(--aura)*0.75);font-family:var(--aura-font-display,"Schibsted Grotesk",-apple-system,sans-serif);font-weight:500;font-size:1.125rem;letter-spacing:-0.01em;color:var(--ink);text-decoration:none;border-radius:2px;}
+.tw-wordmark-sq{display:inline-flex;align-items:center;justify-content:center;width:calc(var(--aura)*2.2);height:calc(var(--aura)*2.2);border-radius:2px;background:var(--accent-9);color:var(--accent-contrast);font-family:var(--aura-font-display,"Schibsted Grotesk",-apple-system,sans-serif);font-size:0.6rem;font-weight:600;flex-shrink:0;}
+
+.tw .button-fill.tw-btn-ink,
+.tw a.button-fill.tw-btn-ink{
+  background:var(--ink)!important;
+  color:var(--canvas)!important;
+  border-color:var(--ink)!important;
+  border-radius:2px!important;
+  font-size:15px!important;
+  font-weight:500!important;
+  height:auto!important;
+  padding:calc(var(--aura)*1) calc(var(--aura)*1.5)!important;
+  transition:background-color 180ms linear,border-color 180ms linear!important;
+  line-height:1.3!important;
+}
+.tw .button-fill.tw-btn-ink:hover:not(:disabled),
+.tw a.button-fill.tw-btn-ink:hover:not(:disabled){
+  background:var(--deep-action)!important;
+  border-color:var(--deep-action)!important;
+}
+.tw .button-pill.tw-btn-outline,
+.tw a.button-pill.tw-btn-outline{
+  background:transparent!important;
+  color:var(--ink)!important;
+  border:1px solid var(--ink)!important;
+  border-radius:2px!important;
+  font-size:15px!important;
+  font-weight:500!important;
+  height:auto!important;
+  padding:calc(var(--aura)*1) calc(var(--aura)*1.5)!important;
+  transition:background-color 180ms linear!important;
+  line-height:1.3!important;
+}
+.tw .button-pill.tw-btn-outline:hover:not(:disabled),
+.tw a.button-pill.tw-btn-outline:hover:not(:disabled){background:var(--lavender-wash)!important;}
+.tw .on-night .button-pill.tw-btn-outline,
+.tw .on-night a.button-pill.tw-btn-outline{color:var(--night-ink)!important;border-color:var(--night-ink)!important;}
+.on-night .button-pill.tw-btn-outline{color:var(--night-ink)!important;border-color:var(--night-ink)!important;}
+.tw .on-night .button-pill.tw-btn-outline:hover:not(:disabled),
+.tw .on-night a.button-pill.tw-btn-outline:hover:not(:disabled){background:color-mix(in srgb,var(--night-ink) 10%,transparent)!important;}
+
+.tw .button-fill.tw-btn-white,
+.tw a.button-fill.tw-btn-white{
+  background:#ffffff!important;
+  color:var(--night)!important;
+  border-color:#ffffff!important;
+  border-radius:2px!important;
+  font-size:15px!important;
+  font-weight:500!important;
+  height:auto!important;
+  padding:calc(var(--aura)*1) calc(var(--aura)*1.5)!important;
+  transition:background-color 180ms linear!important;
+  line-height:1.3!important;
+}
+.tw .button-fill.tw-btn-white:hover:not(:disabled),
+.tw a.button-fill.tw-btn-white:hover:not(:disabled){background:var(--lavender-wash)!important;border-color:var(--lavender-wash)!important;}
+.dark .tw .button-fill.tw-btn-white,
+.dark .tw a.button-fill.tw-btn-white{background:#ffffff!important;color:var(--night)!important;border-color:#ffffff!important;}
+
+.tw input.inputer:not(.default),
+.tw textarea.inputer:not(.default){
+  background:var(--paper)!important;
+  border:2px solid var(--control-line)!important;
+  border-radius:2px!important;
+  color:var(--ink)!important;
+  font-family:inherit!important;
+  font-size:17px!important;
+  width:100%!important;
+  padding:calc(var(--aura)*0.75) calc(var(--aura)*1)!important;
+  box-sizing:border-box!important;
+  height:auto!important;
+  box-shadow:none!important;
+  outline:none!important;
+}
+.tw input.inputer:not(.default)::placeholder,
+.tw textarea.inputer:not(.default)::placeholder{color:var(--gray-11)!important;}
+.tw input.inputer:not(.default):focus,
+.tw textarea.inputer:not(.default):focus{outline:2px solid var(--accent-9)!important;outline-offset:1px!important;}
+.tw input.inputer:not(.default)[aria-invalid="true"],
+.tw textarea.inputer:not(.default)[aria-invalid="true"]{border-color:var(--accent-9)!important;}
+
+.tw-select-wrap{position:relative;display:block;}
+.tw select.inputer:not(.default){
+  background-color:var(--paper)!important;
+  border:2px solid var(--control-line)!important;
+  border-radius:2px!important;
+  color:var(--ink)!important;
+  font-family:inherit!important;
+  font-size:17px!important;
+  width:100%!important;
+  height:calc(var(--aura)*3.5)!important;
+  padding:0 calc(var(--aura)*3) 0 calc(var(--aura)*1)!important;
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  box-sizing:border-box!important;
+  box-shadow:none!important;
+  outline:none!important;
+  background-image:none!important;
+}
+.tw select.inputer:not(.default):focus{outline:2px solid var(--accent-9)!important;outline-offset:1px!important;}
+.tw-select-wrap::after{
+  content:"";
+  position:absolute;
+  right:calc(var(--aura)*1);
+  top:50%;
+  transform:translateY(-50%);
+  pointer-events:none;
+  width:0;
+  height:0;
+  border-left:5px solid transparent;
+  border-right:5px solid transparent;
+  border-top:6px solid var(--ink);
+}
+.dark .tw-select-wrap::after{border-top-color:var(--ink);}
+
+.tw-chip{display:inline-flex;align-items:center;padding:2px calc(var(--aura)*0.75);border-radius:2px;font-family:var(--aura-font-label,"Spline Sans Mono",-apple-system,sans-serif);font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;background:var(--chip-pending);color:var(--chip-ink);}
+.tw-chip-fulfilled{background:color-mix(in srgb,var(--aqua) 25%,white);color:var(--night);}
+.dark .tw-chip-fulfilled{background:color-mix(in srgb,var(--aqua) 15%,var(--paper));color:var(--aqua);}
+.tw-chip-processing{background:color-mix(in srgb,var(--periwinkle) 25%,var(--canvas));color:var(--deep-action);}
+.dark .tw-chip-processing{background:color-mix(in srgb,var(--periwinkle) 15%,var(--paper));color:var(--periwinkle);}
+
+.tw-panel{border-radius:13px;border:1px solid var(--rule);background:linear-gradient(135deg,var(--lavender-wash),var(--canvas));padding:calc(var(--aura)*2.5);}
+.tw-panel-navy{border-radius:13px;border:1px solid color-mix(in srgb,var(--night-ink) 15%,transparent);background:var(--paper);padding:calc(var(--aura)*2.5);}
+
+.tw-rule-list{display:grid;gap:calc(var(--aura)*1);}
+.tw-rule-item{display:flex;gap:calc(var(--aura)*1);align-items:start;font-size:17px;color:var(--gray-11);overflow-wrap:anywhere;min-width:0;}
+.tw-rule-item b{color:var(--ink);font-weight:500;}
+.on-night .tw-rule-item b{color:var(--night-ink);}
+.on-night .tw-rule-item{color:var(--night-muted);}
+.tw-rule-bar{width:2px;min-width:2px;align-self:stretch;background:var(--deep-action);flex-shrink:0;margin-top:3px;}
+
+.tw-stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--aura)*2);text-align:center;}
+.tw-stat-val{font-size:clamp(32px,5vw,52px);line-height:1;letter-spacing:-0.02em;font-weight:400;font-family:var(--aura-font-display,"Schibsted Grotesk",-apple-system,sans-serif);}
+.tw-stat-label{font-family:var(--aura-font-label,"Spline Sans Mono",-apple-system,sans-serif);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-11);margin-top:calc(var(--aura)*0.5);}
+.on-night .tw-stat-label{color:var(--night-muted);}
+
+.site-head{position:sticky;top:0;z-index:50;background:var(--canvas);}
+.tw-util-bar{background:var(--paper);border-bottom:1px solid var(--rule);height:var(--tw-head-utility);display:flex;align-items:center;}
+.tw-util-inner{display:flex;align-items:center;justify-content:space-between;gap:calc(var(--aura)*1);}
+.tw-util-left,.tw-util-right{display:flex;align-items:center;gap:calc(var(--aura)*1.5);}
+.tw-util-link{font-family:var(--aura-font-label,"Spline Sans Mono",-apple-system,sans-serif);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-11);text-decoration:none;white-space:nowrap;}
+.tw-util-link:hover{color:var(--ink);}
+
+.tw-main-bar{height:var(--tw-head-main);display:flex;align-items:center;border-bottom:1px solid var(--rule);}
+.tw-main-inner{display:flex;align-items:center;gap:calc(var(--aura)*2);height:100%;}
+.tw-nav-links{display:flex;align-items:center;gap:0;margin-inline:auto;height:100%;}
+.tw-nav-trigger{display:inline-flex;align-items:center;gap:4px;padding:0 calc(var(--aura)*1);height:100%;border:0;background:transparent;color:var(--ink);font-family:inherit;font-size:15px;font-weight:400;cursor:pointer;position:relative;white-space:nowrap;}
+.tw-nav-trigger:hover,.tw-nav-trigger[aria-expanded="true"]{color:var(--deep-action);}
+.tw-nav-trigger svg{transition:transform 160ms ease;}
+.tw-nav-trigger[aria-expanded="true"] svg{transform:rotate(180deg);}
+.tw-nav-end{display:flex;align-items:center;gap:calc(var(--aura)*1);flex-shrink:0;}
+
+.tw-mega{position:absolute;left:0;right:0;top:100%;z-index:49;background:var(--canvas);border-bottom:1px solid var(--rule);box-shadow:0 8px 24px color-mix(in srgb,black 10%,transparent);padding:calc(var(--aura)*2.5) 0;}
+.tw-mega[hidden]{display:none;}
+.tw-mega-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:calc(var(--aura)*2);}
+.tw-mega-col h3{font-family:var(--aura-font-label,"Spline Sans Mono",-apple-system,sans-serif);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-11);margin-bottom:calc(var(--aura)*1);font-weight:500;}
+.tw-mega-col ul{display:grid;gap:calc(var(--aura)*0.5);}
+.tw-mega-col a{font-size:15px;color:var(--ink);display:block;padding:calc(var(--aura)*0.5) 0;border-radius:2px;}
+.tw-mega-col a:hover{color:var(--deep-action);}
+
+.tw-burger{display:none;align-items:center;justify-content:center;width:calc(var(--aura)*3);height:calc(var(--aura)*3);padding:0;border:0;background:transparent;color:var(--ink);cursor:pointer;border-radius:2px;}
+.tw-burger svg{width:22px;height:22px;}
+
+.tw-mobile-menu{position:fixed;inset:calc(var(--tw-head-utility)+var(--tw-head-main)) 0 0 0;width:100vw;left:0;right:0;z-index:48;background:var(--canvas);overflow-y:auto;display:flex;flex-direction:column;}
+.tw-mobile-menu[hidden]{display:none;}
+.tw-mobile-menu-inner{padding:calc(var(--aura)*1.5) calc(var(--aura)*2);display:grid;gap:0;}
+.tw-mobile-menu-item{border-bottom:1px solid var(--rule);}
+.tw-mobile-menu-item a,.tw-mobile-menu-trigger{display:flex;align-items:center;justify-content:space-between;width:100%;padding:calc(var(--aura)*1.25) 0;border:0;background:transparent;color:var(--ink);font-family:inherit;font-size:17px;text-align:left;text-decoration:none;cursor:pointer;gap:calc(var(--aura)*1);}
+.tw-mobile-menu-item a:hover,.tw-mobile-menu-trigger:hover{color:var(--deep-action);}
+.tw-mobile-sub{display:grid;gap:calc(var(--aura)*0.5);padding-bottom:calc(var(--aura)*1);}
+.tw-mobile-sub[hidden]{display:none;}
+.tw-mobile-sub a{font-size:15px;color:var(--gray-11);display:block;padding:calc(var(--aura)*0.5) calc(var(--aura)*1);border-radius:2px;}
+.tw-mobile-sub a:hover{color:var(--ink);}
+.tw-mobile-foot{margin-top:auto;padding:calc(var(--aura)*2);display:flex;flex-direction:column;gap:calc(var(--aura)*1);border-top:1px solid var(--rule);}
+
+.tw-hero{background:var(--night);position:relative;overflow:clip;}
+.tw-hero-inner{display:grid;grid-template-columns:minmax(0,1fr);gap:0;padding-block:calc(var(--aura)*7.5);position:relative;z-index:1;}
+.tw-hero-text{text-align:center;display:grid;gap:calc(var(--aura)*1.5);justify-items:center;min-width:0;}
+.tw-hero-h1{font-size:clamp(38px,6vw,72px);line-height:1.02;letter-spacing:-0.01em;color:var(--night-ink);font-weight:400;overflow-wrap:break-word;}
+.tw-hero-h1 .tw-periwinkle{color:var(--periwinkle);}
+.tw-hero-para{font-size:17px;color:var(--night-muted);max-width:520px;overflow-wrap:break-word;}
+.tw-hero-fade{position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(to bottom,transparent,var(--lavender-wash));pointer-events:none;z-index:2;}
+.dark .tw-hero-fade{background:linear-gradient(to bottom,transparent,color-mix(in srgb,var(--night) 90%,var(--lavender-wash)));}
+.tw-hero-dash{margin-top:calc(var(--aura)*4);position:relative;z-index:1;min-width:0;}
+.tw-hero-dash-wrap{background:color-mix(in srgb,var(--night-ink) 6%,var(--night));border:1px solid color-mix(in srgb,var(--night-ink) 15%,transparent);border-radius:13px;overflow:hidden;max-width:860px;margin-inline:auto;position:relative;}
+.tw-hero-dash-header{display:flex;align-items:center;gap:calc(var(--aura)*0.75);padding:calc(var(--aura)*1) calc(var(--aura)*1.5);border-bottom:1px solid color-mix(in srgb,var(--night-ink) 12%,transparent);}
+.tw-dash-dot{width:10px;height:10px;border-radius:50%;background:color-mix(in srgb,var(--night-ink) 20%,transparent);}
+.tw-dash-title{font-family:var(--aura-font-label,"Spline Sans Mono",-apple-system,sans-serif);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--night-muted);margin-left:auto;}
+.tw-dash-table-wrap{overflow-x:auto;padding:calc(var(--aura)*1.5);}
+.tw-dash table{width:100%;border-collapse:collapse;min-width:500px;}
+.tw-dash th{font-family:var(--aura-font-label,"Spline Sans Mono",-apple-system,sans-serif);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--night-muted);padding:calc(var(--aura)*0.5) calc(var(--aura)*1);text-align:left;border-bottom:1px solid color-mix(in srgb,var(--night-ink) 12%,transparent);}
+.tw-dash td{font-size:14px;color:var(--night-ink);padding:calc(var(--aura)*0.75) calc(var(--aura)*1);border-bottom:1px solid color-mix(in srgb,var(--night-ink) 8%,transparent);}
+.tw-dash tr:last-child td{border-bottom:0;}
+.tw-channels-card{position:absolute;right:calc(var(--aura)*1.5);top:50%;transform:translateY(-40%);background:var(--canvas);border-radius:13px;border:1px solid var(--rule);padding:calc(var(--aura)*1.25);width:180px;box-shadow:0 8px 24px color-mix(in srgb,black 25%,transparent);}
+.dark .tw-channels-card{background:var(--paper);border-color:var(--rule);}
+.tw-channels-title{font-family:var(--aura-font-label,"Spline Sans Mono",-apple-system,sans-serif);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-11);margin-bottom:calc(var(--aura)*0.75);}
+.tw-channel-item{display:flex;align-items:center;gap:calc(var(--aura)*0.75);padding:calc(var(--aura)*0.5) calc(var(--aura)*0.5);border-radius:4px;font-size:13px;color:var(--ink);}
+.dark .tw-channel-item{color:var(--night-ink);}
+.tw-channel-item.tw-channel-active{background:linear-gradient(90deg,color-mix(in srgb,var(--aqua) 20%,var(--canvas)),color-mix(in srgb,var(--periwinkle) 20%,var(--canvas)));font-weight:500;}
+.dark .tw-channel-item.tw-channel-active{background:linear-gradient(90deg,color-mix(in srgb,var(--aqua) 15%,var(--paper)),color-mix(in srgb,var(--periwinkle) 15%,var(--paper)));}
+.tw-channel-dot{width:8px;height:8px;border-radius:50%;background:var(--night-muted);flex-shrink:0;}
+.tw-channel-dot-active{background:var(--aqua);}
+
+.tw-solutions{padding-block:calc(var(--aura)*5);}
+.tw-solutions-head{text-align:center;margin-bottom:calc(var(--aura)*3);}
+.tw-solutions-head h2{font-size:clamp(28px,4vw,48px);line-height:1.05;letter-spacing:-0.01em;}
+.tw-solutions-head p{font-size:17px;color:var(--gray-11);margin-top:calc(var(--aura)*1);max-width:560px;margin-inline:auto;}
+.tw-scroller-region{overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:var(--rule) transparent;padding-bottom:calc(var(--aura)*1);}
+.tw-scroller-region::-webkit-scrollbar{height:4px;}
+.tw-scroller-region::-webkit-scrollbar-track{background:transparent;}
+.tw-scroller-region::-webkit-scrollbar-thumb{background:var(--rule);border-radius:2px;}
+.tw-scroller-track{display:flex;gap:calc(var(--aura)*1.5);padding:calc(var(--aura)*0.5) 2px;}
+.tw-store-card{flex:0 0 clamp(200px,30vw,260px);min-width:0;scroll-snap-align:start;border-radius:13px;border:1px solid var(--rule);overflow:hidden;background:var(--paper);}
+.tw-store-card:focus-within{outline:2px solid var(--accent-9);outline-offset:2px;}
+.tw-store-thumb{height:140px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.tw-store-info{padding:calc(var(--aura)*1);}
+.tw-store-info h3{font-size:15px;font-weight:500;overflow-wrap:anywhere;min-width:0;}
+.tw-store-info p{font-size:13px;color:var(--gray-11);margin-top:4px;overflow-wrap:anywhere;}
+.tw-scroller-controls{display:flex;gap:calc(var(--aura)*1);margin-top:calc(var(--aura)*1.5);justify-content:center;}
+.tw-scroll-btn{display:inline-flex;align-items:center;justify-content:center;width:calc(var(--aura)*3);height:calc(var(--aura)*3);border-radius:50%;border:1px solid var(--rule);background:var(--canvas);color:var(--ink);cursor:pointer;padding:0;}
+.dark .tw-scroll-btn{background:var(--paper);}
+.tw-scroll-btn:hover:not(:disabled){background:var(--lavender-wash);}
+.tw-scroll-btn:disabled{opacity:0.4;cursor:default;}
+
+.tw-features{padding-block:calc(var(--aura)*3);}
+.tw-feature-panel{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--aura)*3);align-items:center;margin-bottom:calc(var(--aura)*3);}
+.tw-feature-panel.tw-flip .tw-feature-visual{order:2;}
+.tw-feature-text{display:grid;gap:calc(var(--aura)*1.5);}
+.tw-feature-text h2{font-size:clamp(24px,3.5vw,42px);line-height:1.05;letter-spacing:-0.01em;}
+.tw-feature-btns{display:flex;gap:calc(var(--aura)*1);flex-wrap:wrap;margin-top:calc(var(--aura)*0.5);}
+.tw-feature-visual{border-radius:13px;border:1px solid var(--rule);background:linear-gradient(135deg,var(--lavender-wash),var(--canvas));min-height:320px;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:calc(var(--aura)*2);}
+
+.tw-navy-band{background:var(--night);border-radius:26px 26px 0 0;padding:calc(var(--aura)*8.5) 0 calc(var(--aura)*5);margin-top:calc(var(--aura)*3);}
+.tw-navy-band-head{text-align:center;margin-bottom:calc(var(--aura)*4);}
+.tw-navy-band-head h2{font-size:clamp(26px,4vw,48px);line-height:1.05;letter-spacing:-0.01em;color:var(--night-ink);}
+.tw-navy-band-head p{font-size:17px;color:var(--night-muted);margin-top:calc(var(--aura)*1);max-width:520px;margin-inline:auto;}
+.tw-navy-band-panels{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--aura)*1.5);margin-top:calc(var(--aura)*3);}
+.tw-navy-panel{border-radius:13px;border:1px solid color-mix(in srgb,var(--night-ink) 15%,transparent);background:color-mix(in srgb,var(--night-ink) 5%,var(--night));padding:calc(var(--aura)*2);}
+.tw-navy-panel h3{font-size:20px;font-weight:400;color:var(--night-ink);letter-spacing:-0.01em;}
+.tw-navy-panel p{font-size:15px;color:var(--night-muted);margin-top:calc(var(--aura)*0.75);overflow-wrap:anywhere;}
+.tw-navy-panel-icon{width:calc(var(--aura)*3);height:calc(var(--aura)*3);border-radius:6px;background:color-mix(in srgb,var(--aqua) 20%,var(--night));display:flex;align-items:center;justify-content:center;margin-bottom:calc(var(--aura)*1);color:var(--aqua);}
+
+.tw-stats-section{padding-block:calc(var(--aura)*5);border-top:1px solid var(--rule);}
+.tw-stats-note{font-family:var(--aura-font-label,"Spline Sans Mono",-apple-system,sans-serif);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-11);margin-top:calc(var(--aura)*1.5);text-align:center;}
+
+.tw-launch{padding-block:calc(var(--aura)*7.5);text-align:center;}
+.tw-launch h2{font-size:clamp(28px,4vw,52px);line-height:1.05;letter-spacing:-0.01em;}
+.tw-launch p{font-size:17px;color:var(--gray-11);max-width:540px;margin-inline:auto;margin-top:calc(var(--aura)*1);}
+.tw-launch-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--aura)*2);margin-top:calc(var(--aura)*3);text-align:left;}
+.tw-launch-step{background:var(--paper);border-radius:13px;border:1px solid var(--rule);padding:calc(var(--aura)*2);}
+.tw-launch-step-icon{width:calc(var(--aura)*3);height:calc(var(--aura)*3);border-radius:6px;background:var(--lavender-wash);display:flex;align-items:center;justify-content:center;margin-bottom:calc(var(--aura)*1);color:var(--deep-action);}
+.tw-launch-step h3{font-size:17px;font-weight:500;overflow-wrap:anywhere;}
+.tw-launch-step p{font-size:15px;color:var(--gray-11);margin-top:calc(var(--aura)*0.5);overflow-wrap:anywhere;}
+.tw-launch-btn{margin-top:calc(var(--aura)*3);}
+
+.tw-integrations{padding-block:calc(var(--aura)*5);}
+.tw-integrations-inner{border-radius:13px;border:1px solid var(--rule);background:var(--paper);overflow:hidden;}
+.tw-integrations-top{padding:calc(var(--aura)*3);}
+.tw-integrations-top h2{font-size:clamp(24px,3vw,38px);line-height:1.05;letter-spacing:-0.01em;}
+.tw-integrations-top p{font-size:17px;color:var(--gray-11);margin-top:calc(var(--aura)*1);}
+.tw-integrations-logos{display:flex;flex-wrap:wrap;gap:calc(var(--aura)*1);margin-top:calc(var(--aura)*2);}
+.tw-integration-badge{font-family:var(--aura-font-label,"Spline Sans Mono",-apple-system,sans-serif);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;padding:calc(var(--aura)*0.5) calc(var(--aura)*1);border-radius:2px;border:1px solid var(--rule);color:var(--gray-11);}
+.tw-metric-strip{background:linear-gradient(90deg,var(--aqua),var(--periwinkle));display:grid;grid-template-columns:repeat(3,1fr);}
+.tw-metric-cell{padding:calc(var(--aura)*2);text-align:center;border-right:1px solid color-mix(in srgb,var(--night) 15%,transparent);}
+.tw-metric-cell:last-child{border-right:0;}
+.tw-metric-val{font-size:clamp(28px,4vw,42px);font-weight:400;line-height:1;letter-spacing:-0.02em;color:var(--night);}
+.tw-metric-label{font-family:var(--aura-font-label,"Spline Sans Mono",-apple-system,sans-serif);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:color-mix(in srgb,var(--night) 70%,transparent);margin-top:calc(var(--aura)*0.5);}
+
+.tw-services{padding-block:calc(var(--aura)*5);}
+.tw-services-inner{border-radius:13px;background:var(--night);padding:calc(var(--aura)*3);display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--aura)*3);align-items:center;}
+.tw-services-text h2{font-size:clamp(24px,3vw,38px);line-height:1.05;letter-spacing:-0.01em;color:var(--night-ink);}
+.tw-services-text p{font-size:17px;color:var(--night-muted);margin-top:calc(var(--aura)*1);overflow-wrap:anywhere;}
+.tw-services-text .tw-eyebrow{margin-bottom:calc(var(--aura)*1);}
+.tw-services-timeline{display:grid;gap:calc(var(--aura)*1);}
+.tw-timeline-col-labels{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--aura)*0.5);margin-bottom:calc(var(--aura)*0.5);}
+.tw-timeline-col-label{font-family:var(--aura-font-label,"Spline Sans Mono",-apple-system,sans-serif);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--night-muted);text-align:center;}
+.tw-timeline-row{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--aura)*0.5);}
+.tw-timeline-pill{border-radius:9999px;padding:calc(var(--aura)*0.75) calc(var(--aura)*1);display:flex;align-items:center;gap:calc(var(--aura)*0.5);font-size:12px;color:var(--night);font-weight:500;overflow-wrap:anywhere;min-width:0;}
+.tw-timeline-pill-a{background:linear-gradient(90deg,var(--aqua),color-mix(in srgb,var(--aqua) 60%,var(--periwinkle)));}
+.tw-timeline-pill-b{background:linear-gradient(90deg,var(--periwinkle),color-mix(in srgb,var(--periwinkle) 60%,var(--aqua)));}
+.tw-timeline-pill-c{background:linear-gradient(90deg,color-mix(in srgb,var(--aqua) 40%,var(--periwinkle)),var(--aqua));}
+.tw-timeline-dot{width:18px;height:18px;border-radius:50%;background:var(--night);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;flex-shrink:0;color:#ffffff;}
+.tw-timeline-empty{border-radius:9999px;background:color-mix(in srgb,var(--night-ink) 8%,transparent);min-height:36px;}
+
+.tw-story{padding-block:calc(var(--aura)*5);}
+.tw-story-inner{border-radius:13px;border:1px solid var(--rule);background:var(--paper);padding:calc(var(--aura)*3);display:grid;gap:calc(var(--aura)*2);}
+.tw-story-logos{display:flex;flex-wrap:wrap;gap:calc(var(--aura)*1.5);align-items:center;}
+.tw-story-logo{font-family:var(--aura-font-display,"Schibsted Grotesk",-apple-system,sans-serif);font-size:17px;font-weight:600;letter-spacing:-0.02em;color:var(--gray-11);border:1px solid var(--rule);padding:4px calc(var(--aura)*1);border-radius:2px;}
+.tw-story-content{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--aura)*3);align-items:start;}
+.tw-story-left h2{font-size:clamp(24px,3vw,36px);line-height:1.1;letter-spacing:-0.01em;}
+.tw-story-stats{display:flex;gap:calc(var(--aura)*2);margin-top:calc(var(--aura)*1.5);}
+.tw-story-stat-val{font-size:clamp(28px,4vw,42px);font-weight:400;line-height:1;letter-spacing:-0.02em;color:var(--accent-9);}
+.tw-story-stat-label{font-family:var(--aura-font-label,"Spline Sans Mono",-apple-system,sans-serif);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-11);}
+.tw-story-solutions{margin-top:calc(var(--aura)*1.5);display:grid;gap:4px;}
+.tw-story-solutions li{font-family:var(--aura-font-label,"Spline Sans Mono",-apple-system,sans-serif);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-11);}
+.tw-story-right{display:grid;gap:calc(var(--aura)*1.5);}
+.tw-story-video{border-radius:13px;background:var(--night);aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.tw-story-play{width:calc(var(--aura)*4);height:calc(var(--aura)*4);border-radius:50%;background:var(--accent-9);border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--accent-contrast);flex-shrink:0;}
+.tw-story-play:hover{background:var(--deep-action);}
+.tw-story-preview-note{font-size:13px;color:var(--night-muted);text-align:center;padding:calc(var(--aura)*1);display:none;}
+.tw-story-preview-note.tw-visible{display:block;}
+
+.tw-results{padding-block:calc(var(--aura)*5);position:relative;overflow:clip;}
+.tw-results-glow{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:600px;height:300px;border-radius:50%;background:radial-gradient(ellipse,color-mix(in srgb,var(--aqua) 20%,transparent),transparent 70%);pointer-events:none;}
+.tw-results-inner{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--aura)*3);align-items:start;}
+.tw-results-left h2{font-size:clamp(24px,3.5vw,42px);line-height:1.05;letter-spacing:-0.01em;}
+.tw-results-left p{font-size:17px;color:var(--gray-11);margin-top:calc(var(--aura)*1);overflow-wrap:anywhere;}
+.tw-results-left .tw-results-btn{margin-top:calc(var(--aura)*2);}
+.tw-results-right{display:grid;gap:calc(var(--aura)*1.5);}
+.tw-product-blurb{border-radius:13px;border:1px solid var(--rule);background:var(--paper);padding:calc(var(--aura)*2);}
+.tw-product-blurb h3{font-size:17px;font-weight:500;overflow-wrap:anywhere;}
+.tw-product-blurb p{font-size:15px;color:var(--gray-11);margin-top:calc(var(--aura)*0.5);overflow-wrap:anywhere;}
+.tw-product-blurb a{font-size:14px;color:var(--accent-9);font-weight:500;margin-top:calc(var(--aura)*1);display:inline-flex;align-items:center;gap:4px;}
+.dark .tw-product-blurb a{color:var(--aqua);}
+.tw-product-blurb a:hover{color:var(--deep-action);}
+
+.tw-pricing{padding-block:calc(var(--aura)*7.5);}
+.tw-pricing-head{text-align:center;margin-bottom:calc(var(--aura)*3);}
+.tw-pricing-head h2{font-size:clamp(28px,4vw,48px);line-height:1.05;letter-spacing:-0.01em;}
+.tw-pricing-head p{font-size:17px;color:var(--gray-11);margin-top:calc(var(--aura)*1);}
+.tw-plans{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--aura)*1.5);}
+.tw-plan{border-radius:13px;border:1px solid var(--rule);background:var(--paper);padding:calc(var(--aura)*2.5);display:grid;align-content:start;gap:calc(var(--aura)*1.5);}
+.tw-plan.tw-plan-featured{background:var(--ink);color:var(--canvas);border-color:var(--ink);}
+.dark .tw-plan.tw-plan-featured{background:var(--accent-9);border-color:var(--accent-9);}
+.dark .tw-plan.tw-plan-featured,.dark .tw-plan.tw-plan-featured h3,.dark .tw-plan.tw-plan-featured .tw-plan-price,.dark .tw-plan.tw-plan-featured small,.dark .tw-plan.tw-plan-featured .tw-plan-feature{color:#ffffff!important;}
+.tw-plan h3{font-size:17px;font-weight:500;overflow-wrap:anywhere;}
+.tw-plan.tw-plan-featured h3{color:var(--canvas);}
+.dark .tw-plan.tw-plan-featured h3{color:var(--accent-contrast);}
+.tw-plan-price{font-size:clamp(32px,4vw,48px);font-weight:400;line-height:1;letter-spacing:-0.02em;}
+.tw-plan.tw-plan-featured .tw-plan-price{color:var(--canvas);}
+.dark .tw-plan.tw-plan-featured .tw-plan-price{color:var(--accent-contrast);}
+.tw-plan-price small{font-size:15px;font-weight:400;opacity:0.7;}
+.tw-plan-features{display:grid;gap:calc(var(--aura)*0.75);}
+.tw-plan-feature{display:flex;align-items:start;gap:calc(var(--aura)*0.75);font-size:15px;overflow-wrap:anywhere;min-width:0;}
+.tw-plan-feature-check{color:var(--aqua);flex-shrink:0;margin-top:2px;}
+.tw-plan.tw-plan-featured .tw-plan-feature{color:color-mix(in srgb,var(--canvas) 85%,transparent);}
+.dark .tw-plan.tw-plan-featured .tw-plan-feature{color:color-mix(in srgb,var(--accent-contrast) 85%,transparent);}
+.tw-plan-btn-wrap .button-fill.tw-btn-ink{background:var(--canvas)!important;color:var(--ink)!important;border-color:var(--canvas)!important;width:100%!important;display:flex!important;justify-content:center!important;}
+.dark .tw-plan-btn-wrap .button-fill.tw-btn-ink{background:var(--accent-contrast)!important;color:var(--accent-9)!important;border-color:var(--accent-contrast)!important;}
+.tw-plan-btn-wrap .button-fill.tw-btn-ink:hover:not(:disabled){background:var(--lavender-wash)!important;border-color:var(--lavender-wash)!important;}
+.tw-plan-btn-wrap.tw-plain .button-fill.tw-btn-ink{background:var(--ink)!important;color:var(--canvas)!important;border-color:var(--ink)!important;}
+.tw-plan-btn-wrap.tw-plain .button-fill.tw-btn-ink:hover:not(:disabled){background:var(--deep-action)!important;border-color:var(--deep-action)!important;}
+
+.tw-form-section{padding-block:calc(var(--aura)*5);}
+.tw-form-inner{border-radius:13px;border:1px solid var(--rule);background:var(--paper);padding:calc(var(--aura)*3);display:grid;grid-template-columns:1fr 1.3fr;gap:calc(var(--aura)*4);align-items:start;}
+.tw-form-copy h2{font-size:clamp(24px,3vw,38px);line-height:1.05;letter-spacing:-0.01em;}
+.tw-form-copy p{font-size:17px;color:var(--gray-11);margin-top:calc(var(--aura)*1);}
+.tw-form-fields{display:grid;gap:calc(var(--aura)*1.5);}
+.tw-form-row{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--aura)*1.5);}
+.tw-form-field{display:grid;gap:calc(var(--aura)*0.5);}
+.tw-form-field label{font-size:14px;font-weight:500;color:var(--ink);}
+.dark .tw-form-field label{color:var(--night-ink);}
+.tw-field-msg{font-size:13px;color:var(--accent-9);min-height:1em;}
+.tw-form-status{font-size:15px;font-weight:500;color:var(--accent-9);margin-top:calc(var(--aura)*1);}
+.tw-form-status:empty{display:none;}
+.tw-form-status.tw-success{color:color-mix(in srgb,var(--aqua) 70%,var(--night));}
+.dark .tw-form-status.tw-success{color:var(--aqua);}
+
+.tw-faq{padding-block:calc(var(--aura)*7.5);}
+.tw-faq-head{text-align:center;margin-bottom:calc(var(--aura)*3);}
+.tw-faq-head h2{font-size:clamp(28px,4vw,48px);line-height:1.05;letter-spacing:-0.01em;}
+.tw-faq-list{display:grid;gap:0;border-top:1px solid var(--rule);}
+.tw-faq-item{border-bottom:1px solid var(--rule);}
+.tw-faq-trigger{display:flex;align-items:center;justify-content:space-between;gap:calc(var(--aura)*1);width:100%;padding:calc(var(--aura)*1.5) 0;border:0;background:transparent;color:var(--ink);font-family:inherit;font-size:17px;text-align:left;cursor:pointer;}
+.dark .tw-faq-trigger{color:var(--night-ink);}
+.tw-faq-trigger:hover{color:var(--deep-action);}
+.dark .tw-faq-trigger:hover{color:var(--periwinkle);}
+.tw-faq-trigger svg{flex-shrink:0;transition:transform 180ms ease;}
+.tw-faq-trigger[aria-expanded="true"] svg{transform:rotate(45deg);}
+.tw-faq-panel{padding:0 0 calc(var(--aura)*1.5);font-size:17px;color:var(--gray-11);}
+.tw-faq-panel[hidden]{display:none;}
+
+.tw-resources{padding-block:calc(var(--aura)*7.5);background:var(--night);}
+.tw-resources-head{margin-bottom:calc(var(--aura)*3);display:flex;align-items:end;justify-content:space-between;gap:calc(var(--aura)*2);}
+.tw-resources-head h2{font-size:clamp(24px,3.5vw,42px);line-height:1.05;letter-spacing:-0.01em;color:var(--night-ink);}
+.tw-resources-grid{display:grid;grid-template-columns:1fr 1fr 1fr 280px;gap:calc(var(--aura)*1.5);}
+.tw-resource-card{border-radius:13px;border:1px solid color-mix(in srgb,var(--night-ink) 15%,transparent);background:color-mix(in srgb,var(--night-ink) 5%,var(--night));padding:calc(var(--aura)*2);display:grid;gap:calc(var(--aura)*1);align-content:start;}
+.tw-resource-type{font-family:var(--aura-font-label,"Spline Sans Mono",-apple-system,sans-serif);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--night-muted);}
+.tw-resource-title{font-size:17px;font-weight:400;color:var(--night-ink);overflow-wrap:anywhere;line-height:1.3;}
+.tw-resource-link{font-size:14px;color:var(--aqua);display:inline-flex;align-items:center;gap:4px;font-weight:500;}
+.tw-resource-link:hover{color:var(--periwinkle);}
+.tw-podcast-card{border-radius:13px;background:linear-gradient(135deg,color-mix(in srgb,var(--aqua) 15%,var(--night)),color-mix(in srgb,var(--periwinkle) 15%,var(--night)));border:1px solid color-mix(in srgb,var(--night-ink) 15%,transparent);padding:calc(var(--aura)*2);display:grid;gap:calc(var(--aura)*1);align-content:start;}
+.tw-podcast-cover{width:100%;aspect-ratio:1;border-radius:8px;background:linear-gradient(135deg,var(--aqua),var(--periwinkle));display:flex;align-items:center;justify-content:center;margin-bottom:calc(var(--aura)*0.5);}
+
+.tw-cta{padding-block:calc(var(--aura)*7.5);text-align:center;}
+.tw-cta h2{font-size:clamp(28px,4vw,52px);line-height:1.05;letter-spacing:-0.01em;}
+.tw-cta p{font-size:17px;color:var(--gray-11);margin-top:calc(var(--aura)*1);max-width:480px;margin-inline:auto;}
+.tw-cta-btns{display:flex;gap:calc(var(--aura)*1);flex-wrap:wrap;justify-content:center;margin-top:calc(var(--aura)*2.5);}
+
+.tw-footer{background:var(--night);color:var(--night-ink);padding-block:calc(var(--aura)*5) calc(var(--aura)*3);}
+.tw-footer-top{display:grid;grid-template-columns:repeat(8,1fr);gap:calc(var(--aura)*2);margin-bottom:calc(var(--aura)*4);}
+.tw-footer-col h3{font-family:var(--aura-font-label,"Spline Sans Mono",-apple-system,sans-serif);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--night-ink);margin-bottom:calc(var(--aura)*1);}
+.tw-footer-col ul{display:grid;gap:calc(var(--aura)*0.75);}
+.tw-footer-col a{font-size:14px;color:var(--night-muted);text-decoration:none;overflow-wrap:anywhere;}
+.tw-footer-col a:hover{color:var(--night-ink);}
+.tw-footer-col-btn{display:none;}
+.tw-footer-legal{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:calc(var(--aura)*1.5);border-top:1px solid color-mix(in srgb,var(--night-ink) 15%,transparent);padding-top:calc(var(--aura)*2);font-size:13px;color:var(--night-muted);}
+.tw-footer-legal nav{display:flex;flex-wrap:wrap;gap:calc(var(--aura)*1.5);}
+.tw-footer-legal nav a{color:var(--night-muted);font-size:13px;}
+.tw-footer-legal nav a:hover{color:var(--night-ink);}
+
+.motion .tw-fade-up{opacity:0;transform:translateY(20px);transition:opacity 400ms var(--tw-ease),transform 400ms var(--tw-ease);}
+.motion .tw-fade-up.tw-in{opacity:1;transform:none;}
+.motion .tw-fade-left{opacity:0;transform:translateX(-16px);transition:opacity 350ms var(--tw-ease),transform 350ms var(--tw-ease);}
+.motion .tw-fade-left.tw-in{opacity:1;transform:none;}
+.motion .tw-scroller-region{scroll-behavior:smooth;}
+
+@media(max-width:1023px){
+  .tw-nav-links,.tw-nav-end .tw-btn-outline-desktop{display:none;}
+  .tw-burger{display:flex;}
+  .tw-main-inner{justify-content:space-between;}
+  .tw-nav-end{gap:calc(var(--aura)*0.75);}
+  .tw-mega{display:none;}
+  .tw-feature-panel{grid-template-columns:1fr;}
+  .tw-feature-panel.tw-flip .tw-feature-visual{order:0;}
+  .tw-navy-band-panels{grid-template-columns:1fr;}
+  .tw-services-inner{grid-template-columns:1fr;}
+  .tw-story-content{grid-template-columns:1fr;}
+  .tw-results-inner{grid-template-columns:1fr;}
+  .tw-plans{grid-template-columns:1fr;}
+  .tw-form-inner{grid-template-columns:1fr;}
+  .tw-resources-grid{grid-template-columns:1fr 1fr;}
+  .tw-footer-top{grid-template-columns:repeat(4,1fr);}
+}
+
+@media(max-width:767px){
+  .tw-util-left .tw-util-link:nth-child(n+2){display:none;}
+  .tw-launch-steps{grid-template-columns:1fr;}
+  .tw-stat-row{grid-template-columns:1fr;}
+  .tw-form-row{grid-template-columns:1fr;}
+  .tw-integrations-top{padding:calc(var(--aura)*2);}
+  .tw-metric-strip{grid-template-columns:1fr;}
+  .tw-metric-cell{border-right:0;border-bottom:1px solid color-mix(in srgb,var(--night) 15%,transparent);}
+  .tw-metric-cell:last-child{border-bottom:0;}
+  .tw-resources-grid{grid-template-columns:1fr;}
+  .tw-story-stats{flex-direction:column;gap:calc(var(--aura)*1);}
+  .tw-footer-top{grid-template-columns:1fr;}
+  .tw-footer-col h3{display:none;}
+  .tw-footer-col-btn{display:flex;align-items:center;justify-content:space-between;width:100%;padding:calc(var(--aura)*1) 0;border:0;background:transparent;color:var(--night-ink);font-family:var(--aura-font-label,"Spline Sans Mono",-apple-system,sans-serif);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;border-bottom:1px solid color-mix(in srgb,var(--night-ink) 15%,transparent);cursor:pointer;}
+  .tw-footer-col-btn[aria-expanded="true"] svg{transform:rotate(180deg);}
+  .tw-footer-col ul{padding-bottom:calc(var(--aura)*1);}
+  .tw-footer-col ul[hidden]{display:none;}
+  .tw-channels-card{display:none;}
+  .tw-hero-dash-wrap{margin-inline:calc(var(--aura)*-1);}
+}
+
+@media(max-width:480px){
+  .tw-util-left{display:none;}
+  .tw-util-right{width:100%;justify-content:center;}
+}
+</style>
+</head>
+<body>
+<div class="tw">
+
+<a class="skip-link" href="#tw-main">Skip to main content</a>
+
+<header class="site-head" id="site-head">
+  <div class="tw-util-bar">
+    <div class="tw-wrap tw-util-inner">
+      <div class="tw-util-left">
+        <a class="tw-util-link" href="#">Storefronts</a>
+        <a class="tw-util-link" href="#">Checkout</a>
+        <a class="tw-util-link" href="#">B2B Suite</a>
+      </div>
+      <div class="tw-util-right">
+        <a class="tw-util-link" href="#">Help</a>
+        <a class="tw-util-link" href="#">Developers</a>
+        <a class="tw-util-link" href="#">Log in</a>
+        <a class="tw-util-link" href="#">&#127758; Global</a>
+      </div>
+    </div>
+  </div>
+  <div class="tw-main-bar" style="position:relative;">
+    <div class="tw-wrap tw-main-inner">
+      <a class="tw-wordmark" href="#" aria-label="Tillwright home">
+        <span class="tw-wordmark-sq" aria-hidden="true">TW</span>
+        Tillwright
+      </a>
+      <nav class="tw-nav-links" aria-label="Main navigation" id="tw-main-nav">
+        <div style="position:relative;height:100%;display:flex;align-items:center;" id="mm-wrap-platform">
+          <button class="tw-nav-trigger" type="button" id="mm-trigger-platform" aria-expanded="false" aria-controls="mm-platform">
+            Platform
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div style="position:relative;height:100%;display:flex;align-items:center;" id="mm-wrap-services">
+          <button class="tw-nav-trigger" type="button" id="mm-trigger-services" aria-expanded="false" aria-controls="mm-services">
+            Services
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div style="position:relative;height:100%;display:flex;align-items:center;" id="mm-wrap-resources">
+          <button class="tw-nav-trigger" type="button" id="mm-trigger-resources" aria-expanded="false" aria-controls="mm-resources">
+            Resources
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <a class="tw-nav-trigger" href="#tw-pricing" style="text-decoration:none;border:0;background:transparent;font-size:15px;padding:0 calc(var(--aura)*1);">Pricing</a>
+      </nav>
+      <div class="tw-nav-end">
+        <button class="button button-fill tw-btn-ink tw-btn-outline-desktop" type="button" onclick="document.getElementById('tw-demo-form').scrollIntoView({behavior:'smooth'})">Book a demo</button>
+        <a class="button button-pill tw-btn-outline" href="#tw-pricing">Start free</a>
+        <button class="tw-burger" type="button" id="tw-burger" aria-expanded="false" aria-controls="tw-mobile-menu" aria-label="Open navigation menu">
+          <svg viewBox="0 0 22 22" fill="none" aria-hidden="true" id="tw-burger-icon"><path d="M3 7h16M3 11h16M3 15h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="tw-mega" id="mm-platform" hidden role="region" aria-label="Platform menu">
+      <div class="tw-wrap">
+        <div class="tw-mega-inner">
+          <div class="tw-mega-col">
+            <h3>Storefronts</h3>
+            <ul>
+              <li><a href="#">Visual editor</a></li>
+              <li><a href="#">Theme marketplace</a></li>
+              <li><a href="#">Custom domains</a></li>
+              <li><a href="#">Headless storefront</a></li>
+            </ul>
+          </div>
+          <div class="tw-mega-col">
+            <h3>Checkout &amp; Payments</h3>
+            <ul>
+              <li><a href="#">One-page checkout</a></li>
+              <li><a href="#">Tillwright Payments</a></li>
+              <li><a href="#">Subscription billing</a></li>
+              <li><a href="#">Tax automation</a></li>
+            </ul>
+          </div>
+          <div class="tw-mega-col">
+            <h3>Channels &amp; B2B</h3>
+            <ul>
+              <li><a href="#">Multichannel sync</a></li>
+              <li><a href="#">Wholesale portal</a></li>
+              <li><a href="#">AI shopping agents</a></li>
+              <li><a href="#">International markets</a></li>
+            </ul>
+          </div>
+          <div class="tw-mega-col">
+            <h3>Operations</h3>
+            <ul>
+              <li><a href="#">Order management</a></li>
+              <li><a href="#">Inventory tracking</a></li>
+              <li><a href="#">Analytics &amp; reports</a></li>
+              <li><a href="#">Automation flows</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tw-mega" id="mm-services" hidden role="region" aria-label="Services menu">
+      <div class="tw-wrap">
+        <div class="tw-mega-inner">
+          <div class="tw-mega-col">
+            <h3>Launch</h3>
+            <ul>
+              <li><a href="#">Discovery workshop</a></li>
+              <li><a href="#">Store build</a></li>
+              <li><a href="#">Data migration</a></li>
+            </ul>
+          </div>
+          <div class="tw-mega-col">
+            <h3>Optimize</h3>
+            <ul>
+              <li><a href="#">Conversion audit</a></li>
+              <li><a href="#">Checkout tuning</a></li>
+              <li><a href="#">A/B testing setup</a></li>
+            </ul>
+          </div>
+          <div class="tw-mega-col">
+            <h3>Support</h3>
+            <ul>
+              <li><a href="#">Dedicated success</a></li>
+              <li><a href="#">24/7 technical help</a></li>
+              <li><a href="#">Training sessions</a></li>
+            </ul>
+          </div>
+          <div class="tw-mega-col">
+            <h3>Partners</h3>
+            <ul>
+              <li><a href="#">Agency directory</a></li>
+              <li><a href="#">Become a partner</a></li>
+              <li><a href="#">Certified developers</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tw-mega" id="mm-resources" hidden role="region" aria-label="Resources menu">
+      <div class="tw-wrap">
+        <div class="tw-mega-inner">
+          <div class="tw-mega-col">
+            <h3>Learn</h3>
+            <ul>
+              <li><a href="#">Documentation</a></li>
+              <li><a href="#">Guides &amp; tutorials</a></li>
+              <li><a href="#">Video library</a></li>
+            </ul>
+          </div>
+          <div class="tw-mega-col">
+            <h3>Community</h3>
+            <ul>
+              <li><a href="#">Developer forum</a></li>
+              <li><a href="#">Changelog</a></li>
+              <li><a href="#">Roadmap</a></li>
+            </ul>
+          </div>
+          <div class="tw-mega-col">
+            <h3>Insights</h3>
+            <ul>
+              <li><a href="#">Commerce reports</a></li>
+              <li><a href="#">Case studies</a></li>
+              <li><a href="#">Podcast</a></li>
+            </ul>
+          </div>
+          <div class="tw-mega-col">
+            <h3>Tools</h3>
+            <ul>
+              <li><a href="#">App marketplace</a></li>
+              <li><a href="#">Theme previewer</a></li>
+              <li><a href="#">API explorer</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="tw-mobile-menu" id="tw-mobile-menu" hidden aria-label="Mobile navigation">
+  <div class="tw-mobile-menu-inner">
+    <div class="tw-mobile-menu-item">
+      <button class="tw-mobile-menu-trigger" type="button" aria-expanded="false" aria-controls="tw-mob-platform">
+        Platform
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="tw-mobile-sub" id="tw-mob-platform" hidden>
+        <a href="#">Visual editor</a>
+        <a href="#">Checkout</a>
+        <a href="#">Multichannel sync</a>
+        <a href="#">AI shopping agents</a>
+        <a href="#">B2B portal</a>
+      </div>
+    </div>
+    <div class="tw-mobile-menu-item">
+      <button class="tw-mobile-menu-trigger" type="button" aria-expanded="false" aria-controls="tw-mob-services">
+        Services
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="tw-mobile-sub" id="tw-mob-services" hidden>
+        <a href="#">Discovery</a>
+        <a href="#">Optimize</a>
+        <a href="#">Support</a>
+        <a href="#">Partners</a>
+      </div>
+    </div>
+    <div class="tw-mobile-menu-item">
+      <button class="tw-mobile-menu-trigger" type="button" aria-expanded="false" aria-controls="tw-mob-resources">
+        Resources
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="tw-mobile-sub" id="tw-mob-resources" hidden>
+        <a href="#">Documentation</a>
+        <a href="#">Guides</a>
+        <a href="#">Case studies</a>
+        <a href="#">Podcast</a>
+      </div>
+    </div>
+    <div class="tw-mobile-menu-item">
+      <a href="#tw-pricing">Pricing</a>
+    </div>
+    <div class="tw-mobile-menu-item">
+      <a href="#">Help</a>
+    </div>
+    <div class="tw-mobile-menu-item">
+      <a href="#">Developers</a>
+    </div>
+    <div class="tw-mobile-menu-item">
+      <a href="#">Log in</a>
+    </div>
+    <div class="tw-mobile-menu-item">
+      <a href="#">&#127758; Global</a>
+    </div>
+  </div>
+  <div class="tw-mobile-foot">
+    <button class="button button-fill tw-btn-ink" type="button" onclick="document.getElementById('tw-demo-form').scrollIntoView({behavior:'smooth'});document.getElementById('tw-mobile-menu').hidden=true;document.getElementById('tw-burger').setAttribute('aria-expanded','false');">Book a demo</button>
+    <a class="button button-pill tw-btn-outline" href="#tw-pricing">Start free</a>
+  </div>
+</div>
+
+<main id="tw-main">
+
+<section class="tw-hero on-night" aria-labelledby="tw-hero-title">
+  <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.07;pointer-events:none;" viewBox="0 0 1280 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <pattern id="tw-grid" width="80" height="80" patternUnits="userSpaceOnUse">
+        <path d="M80 0L0 0 0 80" fill="none" stroke="currentColor" stroke-width="0.5"/>
+      </pattern>
+    </defs>
+    <rect width="1280" height="700" fill="url(#tw-grid)"/>
+    <line x1="640" y1="0" x2="0" y2="700" stroke="currentColor" stroke-width="0.4" opacity="0.5"/>
+    <line x1="640" y1="0" x2="1280" y2="700" stroke="currentColor" stroke-width="0.4" opacity="0.5"/>
+    <line x1="640" y1="0" x2="320" y2="700" stroke="currentColor" stroke-width="0.3" opacity="0.4"/>
+    <line x1="640" y1="0" x2="960" y2="700" stroke="currentColor" stroke-width="0.3" opacity="0.4"/>
+  </svg>
+  <div class="tw-wrap tw-hero-inner" style="color:var(--night-ink);">
+    <div class="tw-hero-text">
+      <p class="tw-eyebrow">Commerce platform</p>
+      <h1 class="tw-hero-h1" id="tw-hero-title">
+        Your store. Every channel.<br>
+        <span class="tw-periwinkle">Every customer.</span>
+      </h1>
+      <p class="tw-hero-para">Tillwright gives growing brands a single place to build storefronts, manage checkout, run B2B wholesale and deploy AI shopping agents — without stitching five tools together.</p>
+      <div>
+        <button class="button button-fill tw-btn-white" type="button" onclick="document.getElementById('tw-demo-form').scrollIntoView({behavior:'smooth'})">Book a demo</button>
+      </div>
+    </div>
+    <div class="tw-hero-dash">
+      <div class="tw-hero-dash-wrap tw-dash">
+        <div class="tw-hero-dash-header">
+          <div class="tw-dash-dot"></div>
+          <div class="tw-dash-dot"></div>
+          <div class="tw-dash-dot"></div>
+          <span class="tw-dash-title">Orders · Today</span>
+        </div>
+        <div class="tw-dash-table-wrap" role="region" aria-label="Recent orders" tabindex="0">
+          <table>
+            <caption class="sr-only">Recent orders</caption>
+            <thead>
+              <tr>
+                <th scope="col">Order</th>
+                <th scope="col">Date</th>
+                <th scope="col">Customer</th>
+                <th scope="col">Total</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>#TW-10041</td>
+                <td>14 Jun 2026</td>
+                <td>Renata Voss</td>
+                <td>$184.00</td>
+                <td><span class="tw-chip">Pending</span></td>
+              </tr>
+              <tr>
+                <td>#TW-10040</td>
+                <td>14 Jun 2026</td>
+                <td>Jakub Mroz</td>
+                <td>$320.50</td>
+                <td><span class="tw-chip tw-chip-fulfilled">Fulfilled</span></td>
+              </tr>
+              <tr>
+                <td>#TW-10039</td>
+                <td>13 Jun 2026</td>
+                <td>Amara Diallo</td>
+                <td>$95.00</td>
+                <td><span class="tw-chip tw-chip-processing">Processing</span></td>
+              </tr>
+              <tr>
+                <td>#TW-10038</td>
+                <td>13 Jun 2026</td>
+                <td>Olga Petersen</td>
+                <td>$450.00</td>
+                <td><span class="tw-chip tw-chip-fulfilled">Fulfilled</span></td>
+              </tr>
+              <tr>
+                <td>#TW-10037</td>
+                <td>12 Jun 2026</td>
+                <td>Marcus Leung</td>
+                <td>$67.25</td>
+                <td><span class="tw-chip">Pending</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="tw-channels-card" aria-label="Sales channels" role="region">
+          <div class="tw-channels-title">Channels</div>
+          <ul style="list-style:none;padding:0;margin:0;">
+            <li class="tw-channel-item tw-channel-active">
+              <div class="tw-channel-dot tw-channel-dot-active"></div>
+              Online store
+            </li>
+            <li class="tw-channel-item">
+              <div class="tw-channel-dot"></div>
+              Marketplaces
+            </li>
+            <li class="tw-channel-item">
+              <div class="tw-channel-dot"></div>
+              Social shops
+            </li>
+            <li class="tw-channel-item">
+              <div class="tw-channel-dot"></div>
+              Wholesale B2B
+            </li>
+            <li class="tw-channel-item">
+              <div class="tw-channel-dot"></div>
+              POS retail
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tw-hero-fade" aria-hidden="true"></div>
+</section>
+
+<section class="tw-solutions tw-section" aria-labelledby="tw-solutions-title" style="background:var(--lavender-wash);">
+  <div class="tw-wrap">
+    <div class="tw-solutions-head tw-fade-up">
+      <h2 id="tw-solutions-title">Built for stores that mean business.</h2>
+      <p>From independent boutiques to multi-brand wholesale operations — see how merchants use Tillwright.</p>
+    </div>
+    <div class="tw-scroller-controls" aria-label="Scroll store cards">
+      <button class="tw-scroll-btn" id="tw-scroller-prev" type="button" aria-label="Previous cards" disabled>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M9 3L5 7l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="tw-scroll-btn" id="tw-scroller-next" type="button" aria-label="Next cards">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+    <div class="tw-scroller-region" id="tw-scroller" role="region" aria-label="Store showcase" tabindex="0">
+      <div class="tw-scroller-track">
+        <div class="tw-store-card">
+          <div class="tw-store-thumb" style="background:linear-gradient(135deg,color-mix(in srgb,var(--periwinkle) 30%,var(--canvas)),var(--canvas));">
+            <svg width="80" height="60" viewBox="0 0 80 60" fill="none" aria-hidden="true"><rect x="10" y="10" width="60" height="40" rx="4" fill="none" stroke="var(--deep-action)" stroke-width="1.5"/><rect x="18" y="18" width="20" height="12" rx="2" fill="color-mix(in srgb,var(--periwinkle) 50%,var(--canvas))"/><rect x="42" y="18" width="20" height="4" rx="1" fill="var(--rule)"/><rect x="42" y="25" width="14" height="4" rx="1" fill="var(--rule)"/><rect x="18" y="34" width="44" height="8" rx="2" fill="var(--deep-action)" opacity="0.15"/></svg>
+          </div>
+          <div class="tw-store-info">
+            <h3>Nomad Home Goods</h3>
+            <p>Artisan homewares, 3 markets</p>
+          </div>
+        </div>
+        <div class="tw-store-card">
+          <div class="tw-store-thumb" style="background:linear-gradient(135deg,color-mix(in srgb,var(--aqua) 15%,var(--canvas)),var(--canvas));">
+            <svg width="80" height="60" viewBox="0 0 80 60" fill="none" aria-hidden="true"><circle cx="40" cy="30" r="18" fill="none" stroke="var(--aqua)" stroke-width="1.5"/><path d="M32 30h16M40 22v16" stroke="var(--aqua)" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <div class="tw-store-info">
+            <h3>Orbit Supplements</h3>
+            <p>DTC subscriptions, 180k orders/yr</p>
+          </div>
+        </div>
+        <div class="tw-store-card">
+          <div class="tw-store-thumb" style="background:linear-gradient(135deg,color-mix(in srgb,var(--chip-pending) 60%,var(--canvas)),var(--canvas));">
+            <svg width="80" height="60" viewBox="0 0 80 60" fill="none" aria-hidden="true"><rect x="20" y="12" width="40" height="36" rx="3" fill="none" stroke="var(--chip-ink)" stroke-width="1.5"/><path d="M28 24h24M28 30h18M28 36h12" stroke="var(--chip-ink)" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/></svg>
+          </div>
+          <div class="tw-store-info">
+            <h3>Slate &amp; Folio</h3>
+            <p>Premium stationery, B2B + DTC</p>
+          </div>
+        </div>
+        <div class="tw-store-card">
+          <div class="tw-store-thumb" style="background:linear-gradient(135deg,color-mix(in srgb,var(--rule) 80%,var(--canvas)),var(--canvas));">
+            <svg width="80" height="60" viewBox="0 0 80 60" fill="none" aria-hidden="true"><path d="M20 48V24l20-12 20 12v24" fill="none" stroke="var(--gray-11)" stroke-width="1.5" stroke-linejoin="round"/><rect x="32" y="34" width="16" height="14" rx="1" fill="none" stroke="var(--gray-11)" stroke-width="1.2"/></svg>
+          </div>
+          <div class="tw-store-info">
+            <h3>Ferncroft Outfitters</h3>
+            <p>Outdoor apparel, 12 channels</p>
+          </div>
+        </div>
+        <div class="tw-store-card">
+          <div class="tw-store-thumb" style="background:linear-gradient(135deg,color-mix(in srgb,var(--deep-action) 10%,var(--canvas)),var(--canvas));">
+            <svg width="80" height="60" viewBox="0 0 80 60" fill="none" aria-hidden="true"><path d="M15 45l12-20 10 12 8-14 12 22z" fill="color-mix(in srgb,var(--accent-9) 20%,transparent)" stroke="var(--accent-9)" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="tw-store-info">
+            <h3>Lune Cosmetics</h3>
+            <p>Beauty brand, AI-assisted discovery</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="sr-only" id="tw-scroller-status" aria-live="polite"></p>
+  </div>
+</section>
+
+<section class="tw-features tw-section" aria-label="Platform features">
+  <div class="tw-wrap">
+    <div class="tw-feature-panel tw-fade-left">
+      <div class="tw-feature-text">
+        <span class="tw-eyebrow">Storefront builder</span>
+        <h2>Build your storefront visually, ship it fast.</h2>
+        <ul class="tw-rule-list">
+          <li class="tw-rule-item"><div class="tw-rule-bar" aria-hidden="true"></div><span><b>Drag-and-drop sections</b> that export production-ready CSS the moment you save.</span></li>
+          <li class="tw-rule-item"><div class="tw-rule-bar" aria-hidden="true"></div><span><b>Brand token sync</b> applies your palette across every page in one click.</span></li>
+          <li class="tw-rule-item"><div class="tw-rule-bar" aria-hidden="true"></div><span><b>Live device preview</b> shows exactly how the layout shifts from mobile to widescreen.</span></li>
+          <li class="tw-rule-item"><div class="tw-rule-bar" aria-hidden="true"></div><span><b>Headless export</b> for teams who prefer their own front-end framework.</span></li>
+        </ul>
+        <div class="tw-feature-btns">
+          <button class="button button-fill tw-btn-ink" type="button">See a live demo</button>
+          <a class="button button-pill tw-btn-outline" href="#">Start for free</a>
+        </div>
+      </div>
+      <div class="tw-feature-visual" aria-label="Storefront builder illustration" role="img">
+        <svg width="320" height="220" viewBox="0 0 320 220" fill="none" aria-hidden="true">
+          <rect x="10" y="10" width="300" height="200" rx="8" fill="var(--lavender-wash)" stroke="var(--rule)" stroke-width="1"/>
+          <rect x="20" y="20" width="130" height="80" rx="4" fill="var(--canvas)" stroke="var(--rule)" stroke-width="1"/>
+          <rect x="28" y="28" width="50" height="30" rx="3" fill="color-mix(in srgb,var(--periwinkle) 40%,var(--canvas))"/>
+          <rect x="82" y="28" width="60" height="8" rx="2" fill="var(--rule)"/>
+          <rect x="82" y="40" width="44" height="6" rx="2" fill="var(--rule)"/>
+          <rect x="28" y="66" width="114" height="26" rx="2" fill="var(--deep-action)" opacity="0.12"/>
+          <rect x="160" y="20" width="140" height="38" rx="4" fill="var(--canvas)" stroke="var(--rule)" stroke-width="1"/>
+          <rect x="168" y="28" width="80" height="6" rx="2" fill="var(--rule)"/>
+          <rect x="168" y="38" width="56" height="6" rx="2" fill="var(--rule)"/>
+          <rect x="160" y="62" width="68" height="38" rx="4" fill="var(--canvas)" stroke="var(--rule)" stroke-width="1"/>
+          <rect x="232" y="62" width="68" height="38" rx="4" fill="var(--accent-9)" opacity="0.1" stroke="var(--accent-9)" stroke-width="1"/>
+          <rect x="20" y="110" width="280" height="90" rx="4" fill="var(--canvas)" stroke="var(--rule)" stroke-width="1"/>
+          <rect x="28" y="118" width="60" height="6" rx="2" fill="var(--rule)"/>
+          <rect x="28" y="128" width="200" height="6" rx="2" fill="var(--rule)" opacity="0.6"/>
+          <rect x="28" y="138" width="160" height="6" rx="2" fill="var(--rule)" opacity="0.4"/>
+          <rect x="28" y="152" width="80" height="22" rx="2" fill="var(--deep-action)"/>
+          <rect x="116" y="152" width="80" height="22" rx="2" fill="none" stroke="var(--deep-action)" stroke-width="1.5"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="tw-feature-panel tw-flip tw-fade-left">
+      <div class="tw-feature-text">
+        <span class="tw-eyebrow">Multichannel</span>
+        <h2>Reach shoppers wherever they browse.</h2>
+        <ul class="tw-rule-list">
+          <li class="tw-rule-item"><div class="tw-rule-bar" aria-hidden="true"></div><span><b>One product catalogue</b> synced to your online store, marketplaces, social shops and POS simultaneously.</span></li>
+          <li class="tw-rule-item"><div class="tw-rule-bar" aria-hidden="true"></div><span><b>Inventory intelligence</b> prevents overselling across every active channel in real time.</span></li>
+          <li class="tw-rule-item"><div class="tw-rule-bar" aria-hidden="true"></div><span><b>Channel-level pricing rules</b> so wholesale and retail never clash.</span></li>
+        </ul>
+        <div class="tw-feature-btns">
+          <button class="button button-fill tw-btn-ink" type="button">Explore channels</button>
+        </div>
+      </div>
+      <div class="tw-feature-visual" aria-label="Multichannel dashboard illustration" role="img">
+        <svg width="320" height="220" viewBox="0 0 320 220" fill="none" aria-hidden="true">
+          <circle cx="160" cy="110" r="60" fill="none" stroke="var(--rule)" stroke-width="1" stroke-dasharray="4 4"/>
+          <circle cx="160" cy="110" r="30" fill="color-mix(in srgb,var(--accent-9) 10%,var(--canvas))" stroke="var(--accent-9)" stroke-width="1.5"/>
+          <text x="160" y="114" text-anchor="middle" font-size="10" fill="var(--accent-9)" font-family="inherit">TW</text>
+          <circle cx="160" cy="38" r="18" fill="color-mix(in srgb,var(--periwinkle) 30%,var(--canvas))" stroke="var(--periwinkle)" stroke-width="1.2"/>
+          <text x="160" y="42" text-anchor="middle" font-size="9" fill="var(--deep-action)" font-family="inherit">Store</text>
+          <circle cx="232" cy="68" r="18" fill="color-mix(in srgb,var(--aqua) 20%,var(--canvas))" stroke="var(--aqua)" stroke-width="1.2"/>
+          <text x="232" y="72" text-anchor="middle" font-size="9" fill="var(--night)" font-family="inherit">Social</text>
+          <circle cx="254" cy="148" r="18" fill="color-mix(in srgb,var(--chip-pending) 60%,var(--canvas))" stroke="var(--chip-ink)" stroke-width="1.2"/>
+          <text x="254" y="152" text-anchor="middle" font-size="8" fill="var(--chip-ink)" font-family="inherit">Market</text>
+          <circle cx="88" cy="68" r="18" fill="color-mix(in srgb,var(--periwinkle) 20%,var(--canvas))" stroke="var(--periwinkle)" stroke-width="1.2"/>
+          <text x="88" y="72" text-anchor="middle" font-size="9" fill="var(--deep-action)" font-family="inherit">B2B</text>
+          <circle cx="68" cy="148" r="18" fill="color-mix(in srgb,var(--rule) 80%,var(--canvas))" stroke="var(--rule)" stroke-width="1.2"/>
+          <text x="68" y="152" text-anchor="middle" font-size="9" fill="var(--gray-11)" font-family="inherit">POS</text>
+          <line x1="160" y1="80" x2="160" y2="56" stroke="var(--rule)" stroke-width="1"/>
+          <line x1="180" y1="92" x2="216" y2="80" stroke="var(--rule)" stroke-width="1"/>
+          <line x1="185" y1="122" x2="238" y2="134" stroke="var(--rule)" stroke-width="1"/>
+          <line x1="140" y1="92" x2="104" y2="80" stroke="var(--rule)" stroke-width="1"/>
+          <line x1="135" y1="122" x2="84" y2="134" stroke="var(--rule)" stroke-width="1"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tw-navy-band on-night" aria-labelledby="tw-navy-title">
+  <div class="tw-wrap">
+    <div class="tw-navy-band-head tw-fade-up">
+      <span class="tw-eyebrow" style="display:block;margin-bottom:calc(var(--aura)*1);">The Tillwright platform</span>
+      <h2 id="tw-navy-title">Commerce intelligence, built in.</h2>
+      <p>AI, B2B tools and native payments — not add-ons. Every merchant gets the full platform from day one.</p>
+      <div style="margin-top:calc(var(--aura)*2);">
+        <button class="button button-pill tw-btn-outline" type="button" onclick="document.getElementById('tw-demo-form').scrollIntoView({behavior:'smooth'})">Book a platform walkthrough</button>
+      </div>
+    </div>
+    <div class="tw-navy-band-panels">
+      <div class="tw-navy-panel tw-fade-up">
+        <div class="tw-navy-panel-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M6 9l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>AI shopping agents.</h3>
+        <p>Deploy conversational agents that answer product questions, recommend bundles and complete checkout — without leaving your storefront.</p>
+      </div>
+      <div class="tw-navy-panel tw-fade-up" style="transition-delay:80ms;">
+        <div class="tw-navy-panel-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="4" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M5 7h8M5 10h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        </div>
+        <h3>B2B wholesale portal.</h3>
+        <p>Custom price lists, net-terms checkout, company accounts and volume discounts — all managed from the same dashboard as your retail store.</p>
+      </div>
+      <div class="tw-navy-panel tw-fade-up" style="transition-delay:160ms;">
+        <div class="tw-navy-panel-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="6" width="14" height="9" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M6 6V5a3 3 0 016 0v1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="11" r="1.5" fill="currentColor"/></svg>
+        </div>
+        <h3>Tillwright Payments.</h3>
+        <p>Integrated card processing, buy-now-pay-later, local wallets and automatic tax remittance — one provider, global coverage, no hidden per-transaction fees above plan rate.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tw-stats-section" aria-labelledby="tw-stats-title">
+  <div class="tw-wrap">
+    <p class="tw-eyebrow" style="text-align:center;margin-bottom:calc(var(--aura)*1.5);" id="tw-stats-title">Platform at a glance</p>
+    <div class="tw-stat-row tw-fade-up">
+      <div>
+        <div class="tw-stat-val" style="color:var(--accent-9);">4.2 M</div>
+        <div class="tw-stat-label">Active storefronts</div>
+      </div>
+      <div>
+        <div class="tw-stat-val" style="color:var(--accent-9);">$38 B</div>
+        <div class="tw-stat-label">GMV processed annually</div>
+      </div>
+      <div>
+        <div class="tw-stat-val" style="color:var(--accent-9);">190+</div>
+        <div class="tw-stat-label">Countries supported</div>
+      </div>
+    </div>
+    <p class="tw-stats-note">Sample figures — fictional, illustrative only.</p>
+  </div>
+</section>
+
+<section class="tw-launch tw-section" aria-labelledby="tw-launch-title">
+  <div class="tw-wrap">
+    <div class="tw-fade-up">
+      <h2 id="tw-launch-title">Start selling today.<br>No long-term commitment needed.</h2>
+      <p>Three steps from zero to open — most merchants are live within a single afternoon.</p>
+    </div>
+    <div class="tw-launch-steps">
+      <div class="tw-launch-step tw-fade-up">
+        <div class="tw-launch-step-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="3" y="3" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M6 9h6M9 6v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Create your store.</h3>
+        <p>Pick a template, connect your domain and upload your products. The visual editor handles the rest.</p>
+      </div>
+      <div class="tw-launch-step tw-fade-up" style="transition-delay:80ms;">
+        <div class="tw-launch-step-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9h10M11 6l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Activate your channels.</h3>
+        <p>Turn on the sales channels that matter for your brand — social, marketplace, wholesale — from one toggle panel.</p>
+      </div>
+      <div class="tw-launch-step tw-fade-up" style="transition-delay:160ms;">
+        <div class="tw-launch-step-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v12M5 10l4 5 4-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Start taking orders.</h3>
+        <p>Payments, taxes and fulfilment routing are configured automatically. Watch the first order arrive in real time.</p>
+      </div>
+    </div>
+    <div class="tw-launch-btn">
+      <button class="button button-fill tw-btn-ink" type="button" onclick="document.getElementById('tw-demo-form').scrollIntoView({behavior:'smooth'})">Get started now</button>
+    </div>
+  </div>
+</section>
+
+<section class="tw-integrations tw-section" aria-labelledby="tw-integrations-title">
+  <div class="tw-wrap">
+    <div class="tw-integrations-inner">
+      <div class="tw-integrations-top">
+        <span class="tw-eyebrow">Integrations</span>
+        <h2 id="tw-integrations-title">Connect everything your team already uses.</h2>
+        <p>Native integrations with ERPs, CRMs, logistics providers and marketing platforms — no custom middleware required.</p>
+        <div class="tw-integrations-logos" aria-label="Example integration categories">
+          <span class="tw-integration-badge">ERP connectors</span>
+          <span class="tw-integration-badge">Email &amp; SMS</span>
+          <span class="tw-integration-badge">Logistics &amp; 3PL</span>
+          <span class="tw-integration-badge">Analytics</span>
+          <span class="tw-integration-badge">CRM sync</span>
+          <span class="tw-integration-badge">Finance tools</span>
+          <span class="tw-integration-badge">Review platforms</span>
+          <span class="tw-integration-badge">PIM systems</span>
+        </div>
+      </div>
+      <div class="tw-metric-strip" aria-label="Platform metrics">
+        <div class="tw-metric-cell">
+          <div class="tw-metric-val">1,400+</div>
+          <div class="tw-metric-label">Apps in marketplace</div>
+        </div>
+        <div class="tw-metric-cell">
+          <div class="tw-metric-val">99.98%</div>
+          <div class="tw-metric-label">Uptime SLA</div>
+        </div>
+        <div class="tw-metric-cell">
+          <div class="tw-metric-val">&lt;180ms</div>
+          <div class="tw-metric-label">Avg API response</div>
+        </div>
+      </div>
+    </div>
+    <p class="tw-stats-note">Sample figures — fictional, illustrative only.</p>
+  </div>
+</section>
+
+<section class="tw-services tw-section" aria-labelledby="tw-services-title">
+  <div class="tw-wrap">
+    <div class="tw-services-inner on-night">
+      <div class="tw-services-timeline" aria-label="Services timeline illustration" role="img">
+        <div class="tw-timeline-col-labels" aria-hidden="true">
+          <div class="tw-timeline-col-label">Discovery</div>
+          <div class="tw-timeline-col-label">Optimize</div>
+          <div class="tw-timeline-col-label">Support</div>
+        </div>
+        <div class="tw-timeline-row">
+          <div class="tw-timeline-pill tw-timeline-pill-a">
+            <div class="tw-timeline-dot" aria-hidden="true">R</div>
+            Store audit
+          </div>
+          <div class="tw-timeline-empty"></div>
+          <div class="tw-timeline-empty"></div>
+        </div>
+        <div class="tw-timeline-row">
+          <div class="tw-timeline-empty"></div>
+          <div class="tw-timeline-pill tw-timeline-pill-b">
+            <div class="tw-timeline-dot" aria-hidden="true">M</div>
+            Conversion CRO
+          </div>
+          <div class="tw-timeline-empty"></div>
+        </div>
+        <div class="tw-timeline-row">
+          <div class="tw-timeline-pill tw-timeline-pill-c">
+            <div class="tw-timeline-dot" aria-hidden="true">A</div>
+            Migration
+          </div>
+          <div class="tw-timeline-empty"></div>
+          <div class="tw-timeline-pill tw-timeline-pill-a">
+            <div class="tw-timeline-dot" aria-hidden="true">S</div>
+            Ongoing care
+          </div>
+        </div>
+        <div class="tw-timeline-row">
+          <div class="tw-timeline-empty"></div>
+          <div class="tw-timeline-pill tw-timeline-pill-b">
+            <div class="tw-timeline-dot" aria-hidden="true">T</div>
+            A/B testing
+          </div>
+          <div class="tw-timeline-empty"></div>
+        </div>
+      </div>
+      <div class="tw-services-text">
+        <p class="tw-eyebrow">Expert services</p>
+        <h2 id="tw-services-title">We help you launch, grow and stay fast.</h2>
+        <p>Tillwright's services team works alongside your brand through every stage — from initial discovery and data migration to ongoing conversion optimisation and 24/7 technical support.</p>
+        <div style="margin-top:calc(var(--aura)*2);">
+          <button class="button button-pill tw-btn-outline" type="button">Talk to a specialist</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tw-story tw-section" aria-labelledby="tw-story-title">
+  <div class="tw-wrap">
+    <div class="tw-story-inner">
+      <div class="tw-story-logos" aria-label="Fictional merchant wordmarks">
+        <span class="tw-story-logo">Nomad</span>
+        <span class="tw-story-logo">Orbit</span>
+        <span class="tw-story-logo">Slate &amp; Folio</span>
+        <span class="tw-story-logo">Ferncroft</span>
+        <span class="tw-story-logo">Lune</span>
+      </div>
+      <div class="tw-story-content">
+        <div class="tw-story-left">
+          <span class="tw-eyebrow">Customer story</span>
+          <h2 id="tw-story-title">How Ferncroft Outfitters doubled revenue by unifying twelve sales channels.</h2>
+          <div class="tw-story-stats">
+            <div>
+              <div class="tw-story-stat-val">2×</div>
+              <div class="tw-story-stat-label">Revenue growth (12 months)</div>
+            </div>
+            <div>
+              <div class="tw-story-stat-val">60%</div>
+              <div class="tw-story-stat-label">Reduction in ops overhead</div>
+            </div>
+          </div>
+          <ul class="tw-story-solutions" aria-label="Solutions used">
+            <li>&#8212; Multichannel sync</li>
+            <li>&#8212; Wholesale B2B portal</li>
+            <li>&#8212; Tillwright Payments</li>
+            <li>&#8212; Automated fulfilment routing</li>
+          </ul>
+          <div style="margin-top:calc(var(--aura)*2);">
+            <button class="button button-pill tw-btn-outline" type="button">Read the full story</button>
+          </div>
+        </div>
+        <div class="tw-story-right">
+          <div class="tw-story-video" aria-label="Story video thumbnail" role="img">
+            <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.15;" viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <rect width="400" height="220" fill="var(--night-muted)"/>
+              <circle cx="200" cy="110" r="80" fill="none" stroke="var(--night-ink)" stroke-width="0.5"/>
+              <circle cx="200" cy="110" r="40" fill="none" stroke="var(--night-ink)" stroke-width="0.5"/>
+            </svg>
+            <button class="tw-story-play" type="button" id="tw-play-btn" aria-label="Play story preview">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M7 5l7 4-7 4V5z" fill="currentColor"/></svg>
+            </button>
+          </div>
+          <div class="tw-story-preview-note" id="tw-preview-note" role="status" aria-live="polite">Preview unavailable in demo.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tw-results tw-section" aria-labelledby="tw-results-title">
+  <div class="tw-results-glow" aria-hidden="true"></div>
+  <div class="tw-wrap">
+    <div class="tw-results-inner">
+      <div class="tw-results-left tw-fade-left">
+        <h2 id="tw-results-title">More revenue. Less operational drag.</h2>
+        <p>Merchants who consolidate onto Tillwright report fewer tools to manage, faster time-to-market for new products and a smoother customer experience across every touchpoint.</p>
+        <div class="tw-results-btn">
+          <button class="button button-fill tw-btn-ink" type="button" onclick="document.getElementById('tw-demo-form').scrollIntoView({behavior:'smooth'})">See it in action</button>
+        </div>
+      </div>
+      <div class="tw-results-right">
+        <div class="tw-product-blurb tw-fade-up">
+          <span class="tw-eyebrow">Checkout</span>
+          <h3>One-page checkout that converts.</h3>
+          <p>Pre-filled addresses, smart payment routing and built-in buy-now-pay-later lift checkout completion for all merchant tiers.</p>
+          <a href="#">Learn more &#8594;</a>
+        </div>
+        <div class="tw-product-blurb tw-fade-up" style="transition-delay:80ms;">
+          <span class="tw-eyebrow">AI agents</span>
+          <h3>Shoppers find what they want, faster.</h3>
+          <p>Conversational product discovery agents reduce zero-result searches and increase average basket size without any manual merchandising effort.</p>
+          <a href="#">Learn more &#8594;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tw-pricing tw-section" id="tw-pricing" aria-labelledby="tw-pricing-title">
+  <div class="tw-wrap">
+    <div class="tw-pricing-head">
+      <span class="tw-eyebrow" style="display:block;margin-bottom:calc(var(--aura)*1);">Pricing</span>
+      <h2 id="tw-pricing-title">Plans that grow with your store.</h2>
+      <p>All plans include the full platform. Upgrade or downgrade any time.</p>
+    </div>
+    <div class="tw-plans">
+      <article class="tw-plan">
+        <span class="tw-eyebrow">Starter</span>
+        <h3>For new brands finding their footing.</h3>
+        <div class="tw-plan-price">$39<small>/mo</small></div>
+        <ul class="tw-plan-features">
+          <li class="tw-plan-feature"><svg class="tw-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>1 storefront</li>
+          <li class="tw-plan-feature"><svg class="tw-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Up to 500 products</li>
+          <li class="tw-plan-feature"><svg class="tw-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>2 sales channels</li>
+          <li class="tw-plan-feature"><svg class="tw-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Tillwright Payments included</li>
+        </ul>
+        <div class="tw-plan-btn-wrap tw-plain">
+          <button class="button button-fill tw-btn-ink" type="button" style="width:100%;justify-content:center;">Start free trial</button>
+        </div>
+      </article>
+      <article class="tw-plan tw-plan-featured" aria-label="Recommended plan">
+        <span class="tw-eyebrow" style="color:#ffffff;">Growth · Recommended</span>
+        <h3>For brands scaling across channels.</h3>
+        <div class="tw-plan-price">$149<small>/mo</small></div>
+        <ul class="tw-plan-features">
+          <li class="tw-plan-feature"><svg class="tw-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--aqua)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>5 storefronts</li>
+          <li class="tw-plan-feature"><svg class="tw-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--aqua)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Unlimited products</li>
+          <li class="tw-plan-feature"><svg class="tw-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--aqua)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>All sales channels</li>
+          <li class="tw-plan-feature"><svg class="tw-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--aqua)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>B2B wholesale portal</li>
+          <li class="tw-plan-feature"><svg class="tw-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--aqua)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>AI shopping agents</li>
+        </ul>
+        <div class="tw-plan-btn-wrap">
+          <button class="button button-fill tw-btn-ink" type="button" style="width:100%;justify-content:center;" onclick="document.getElementById('tw-demo-form').scrollIntoView({behavior:'smooth'})">Start free trial</button>
+        </div>
+      </article>
+      <article class="tw-plan">
+        <span class="tw-eyebrow">Enterprise</span>
+        <h3>For high-volume and complex operations.</h3>
+        <div class="tw-plan-price" style="font-size:28px;">Custom</div>
+        <ul class="tw-plan-features">
+          <li class="tw-plan-feature"><svg class="tw-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Unlimited storefronts</li>
+          <li class="tw-plan-feature"><svg class="tw-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Dedicated infrastructure</li>
+          <li class="tw-plan-feature"><svg class="tw-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>SLA-backed uptime</li>
+          <li class="tw-plan-feature"><svg class="tw-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Named success manager</li>
+        </ul>
+        <div class="tw-plan-btn-wrap tw-plain">
+          <button class="button button-fill tw-btn-ink" type="button" style="width:100%;justify-content:center;" onclick="document.getElementById('tw-demo-form').scrollIntoView({behavior:'smooth'})">Talk to sales</button>
+        </div>
+      </article>
+    </div>
+    <p class="tw-stats-note">Prices are fictional and illustrative only. No real service or billing exists.</p>
+  </div>
+</section>
+
+<section class="tw-form-section" id="tw-demo-form" aria-labelledby="tw-form-title">
+  <div class="tw-wrap">
+    <div class="tw-form-inner">
+      <div class="tw-form-copy">
+        <span class="tw-eyebrow" style="display:block;margin-bottom:calc(var(--aura)*1);">Book a demo</span>
+        <h2 id="tw-form-title">See Tillwright in action.</h2>
+        <p>Tell us about your store and we'll show you exactly how the platform fits. This form sends nothing — it's a local demo.</p>
+      </div>
+      <form id="tw-contact-form" novalidate aria-label="Book a demo form">
+        <div class="tw-form-fields">
+          <div class="tw-form-row">
+            <div class="tw-form-field">
+              <label for="tw-name">Full name</label>
+              <input class="inputer" id="tw-name" type="text" autocomplete="off" placeholder="Your name" required aria-describedby="tw-name-msg" aria-invalid="false"/>
+              <div class="tw-field-msg" id="tw-name-msg" role="alert"></div>
+            </div>
+            <div class="tw-form-field">
+              <label for="tw-email">Work email</label>
+              <input class="inputer" id="tw-email" type="email" autocomplete="off" placeholder="you@company.com" required aria-describedby="tw-email-msg" aria-invalid="false"/>
+              <div class="tw-field-msg" id="tw-email-msg" role="alert"></div>
+            </div>
+          </div>
+          <div class="tw-form-field">
+            <label for="tw-size">Company size</label>
+            <div class="tw-select-wrap">
+              <select class="inputer" id="tw-size" name="size">
+                <option value="">Select team size</option>
+                <option>Just me</option>
+                <option>2–10 people</option>
+                <option>11–50 people</option>
+                <option>51–200 people</option>
+                <option>201+ people</option>
+              </select>
+            </div>
+          </div>
+          <div class="tw-form-field">
+            <label for="tw-message">What are you looking to solve?</label>
+            <textarea class="inputer" id="tw-message" rows="4" placeholder="Tell us about your store and goals" required aria-describedby="tw-message-msg" aria-invalid="false" style="height:auto;resize:vertical;"></textarea>
+            <div class="tw-field-msg" id="tw-message-msg" role="alert"></div>
+          </div>
+          <div>
+            <button class="button button-fill tw-btn-ink" type="submit" form="tw-contact-form">Book my demo</button>
+            <div class="tw-form-status" id="tw-form-status" role="status" aria-live="polite"></div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="tw-faq tw-section" aria-labelledby="tw-faq-title">
+  <div class="tw-wrap">
+    <div class="tw-faq-head">
+      <span class="tw-eyebrow" style="display:block;margin-bottom:calc(var(--aura)*1);">FAQ</span>
+      <h2 id="tw-faq-title">Common questions, plain answers.</h2>
+    </div>
+    <div class="tw-faq-list">
+      <div class="tw-faq-item">
+        <button class="tw-faq-trigger" type="button" aria-expanded="true" aria-controls="tw-faq-1" id="tw-faq-q1">
+          What makes Tillwright different from other commerce platforms?
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+        <div class="tw-faq-panel" id="tw-faq-1" role="region" aria-labelledby="tw-faq-q1">
+          Tillwright ships AI shopping agents, B2B wholesale, multichannel sync and native payments as core platform features — not paid add-ons. Every merchant on any plan gets the full toolset from day one.
+        </div>
+      </div>
+      <div class="tw-faq-item">
+        <button class="tw-faq-trigger" type="button" aria-expanded="false" aria-controls="tw-faq-2" id="tw-faq-q2">
+          Can I migrate an existing store to Tillwright?
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+        <div class="tw-faq-panel" id="tw-faq-2" role="region" aria-labelledby="tw-faq-q2" hidden>
+          Yes. The Tillwright migration toolkit imports products, customers and historical orders. Our services team can handle the full migration for larger catalogues, usually completing within two to four weeks.
+        </div>
+      </div>
+      <div class="tw-faq-item">
+        <button class="tw-faq-trigger" type="button" aria-expanded="false" aria-controls="tw-faq-3" id="tw-faq-q3">
+          How does Tillwright Payments pricing work?
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+        <div class="tw-faq-panel" id="tw-faq-3" role="region" aria-labelledby="tw-faq-q3" hidden>
+          Tillwright Payments is included in every plan at the plan's card rate — there are no additional per-transaction platform fees above that rate. Rates scale down as your monthly GMV increases.
+        </div>
+      </div>
+      <div class="tw-faq-item">
+        <button class="tw-faq-trigger" type="button" aria-expanded="false" aria-controls="tw-faq-4" id="tw-faq-q4">
+          Does Tillwright support headless storefronts?
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+        <div class="tw-faq-panel" id="tw-faq-4" role="region" aria-labelledby="tw-faq-q4" hidden>
+          Yes. The Storefront API lets you build with any front-end framework. The hosted visual editor and headless API share the same product, inventory and checkout backend.
+        </div>
+      </div>
+      <div class="tw-faq-item">
+        <button class="tw-faq-trigger" type="button" aria-expanded="false" aria-controls="tw-faq-5" id="tw-faq-q5">
+          Is there a free trial available?
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+        <div class="tw-faq-panel" id="tw-faq-5" role="region" aria-labelledby="tw-faq-q5" hidden>
+          Starter and Growth plans include a 14-day free trial — no payment details required to start. You can explore every feature, add products and test checkout before committing.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tw-resources on-night" aria-labelledby="tw-resources-title">
+  <div class="tw-wrap">
+    <div class="tw-resources-head">
+      <h2 id="tw-resources-title">Resources for commerce builders.</h2>
+      <button class="button button-fill tw-btn-white" type="button">View all resources</button>
+    </div>
+    <div class="tw-resources-grid">
+      <div class="tw-resource-card">
+        <span class="tw-resource-type">Report</span>
+        <div class="tw-resource-title">Tillwright Commerce Pulse: 2026 Merchant Outlook</div>
+        <p style="font-size:14px;color:var(--night-muted);overflow-wrap:anywhere;">Key findings from our annual merchant survey on channel mix, margin and shopper behaviour.</p>
+        <a class="tw-resource-link" href="#">Read the report &#8594;</a>
+      </div>
+      <div class="tw-resource-card">
+        <span class="tw-resource-type">Guide</span>
+        <div class="tw-resource-title">Launching a B2B Wholesale Channel in 30 Days</div>
+        <p style="font-size:14px;color:var(--night-muted);overflow-wrap:anywhere;">Step-by-step playbook for DTC brands adding wholesale without disrupting retail pricing.</p>
+        <a class="tw-resource-link" href="#">Download guide &#8594;</a>
+      </div>
+      <div class="tw-resource-card">
+        <span class="tw-resource-type">White paper</span>
+        <div class="tw-resource-title">Conversational Product Discovery: What Happens to Basket Size</div>
+        <p style="font-size:14px;color:var(--night-muted);overflow-wrap:anywhere;">How conversational product agents affect basket size, return rates and repeat purchase cadence.</p>
+        <a class="tw-resource-link" href="#">Read white paper &#8594;</a>
+      </div>
+      <div class="tw-podcast-card">
+        <div class="tw-podcast-cover" aria-label="Podcast cover art" role="img">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="10" fill="var(--night)" opacity="0.4"/><path d="M17 15v10l9-5-9-5z" fill="var(--night)"/></svg>
+        </div>
+        <span class="tw-resource-type">Podcast</span>
+        <div class="tw-resource-title">Commerce Forward</div>
+        <p style="font-size:13px;color:var(--night-muted);">Conversations with merchants, operators and platform builders about what's actually working in commerce right now.</p>
+        <a class="tw-resource-link" href="#">Listen &#8594;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tw-cta tw-section" aria-labelledby="tw-cta-title">
+  <div class="tw-wrap">
+    <div class="tw-fade-up">
+      <h2 id="tw-cta-title">Ready to build your best-performing store.</h2>
+      <p>Start your free trial today — no credit card, no long-term lock-in, cancel any time.</p>
+      <div class="tw-cta-btns">
+        <button class="button button-fill tw-btn-ink" type="button" onclick="document.getElementById('tw-demo-form').scrollIntoView({behavior:'smooth'})">Book a demo</button>
+        <a class="button button-pill tw-btn-outline" href="#tw-pricing">Start for free</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="tw-footer on-night" aria-label="Site footer">
+  <div class="tw-wrap">
+    <div style="margin-bottom:calc(var(--aura)*3);">
+      <a class="tw-wordmark" href="#" style="color:var(--night-ink);" aria-label="Tillwright home">
+        <span class="tw-wordmark-sq" aria-hidden="true">TW</span>
+        Tillwright
+      </a>
+    </div>
+    <div class="tw-footer-top" id="tw-footer-cols">
+      <div class="tw-footer-col">
+        <button class="tw-footer-col-btn" type="button" aria-expanded="false" aria-controls="tw-fcol-0">
+          Product
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <h3>Product</h3>
+        <ul id="tw-fcol-0">
+          <li><a href="#">Storefronts</a></li>
+          <li><a href="#">Checkout</a></li>
+          <li><a href="#">Payments</a></li>
+          <li><a href="#">B2B portal</a></li>
+          <li><a href="#">AI agents</a></li>
+        </ul>
+      </div>
+      <div class="tw-footer-col">
+        <button class="tw-footer-col-btn" type="button" aria-expanded="false" aria-controls="tw-fcol-1">
+          Partners
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <h3>Partners</h3>
+        <ul id="tw-fcol-1">
+          <li><a href="#">Agency directory</a></li>
+          <li><a href="#">Become a partner</a></li>
+          <li><a href="#">App marketplace</a></li>
+          <li><a href="#">Certified devs</a></li>
+        </ul>
+      </div>
+      <div class="tw-footer-col">
+        <button class="tw-footer-col-btn" type="button" aria-expanded="false" aria-controls="tw-fcol-2">
+          Customers
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <h3>Customers</h3>
+        <ul id="tw-fcol-2">
+          <li><a href="#">Case studies</a></li>
+          <li><a href="#">Testimonials</a></li>
+          <li><a href="#">Community forum</a></li>
+          <li><a href="#">Events</a></li>
+        </ul>
+      </div>
+      <div class="tw-footer-col">
+        <button class="tw-footer-col-btn" type="button" aria-expanded="false" aria-controls="tw-fcol-3">
+          Resources
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <h3>Resources</h3>
+        <ul id="tw-fcol-3">
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">Guides</a></li>
+          <li><a href="#">Changelog</a></li>
+          <li><a href="#">Podcast</a></li>
+        </ul>
+      </div>
+      <div class="tw-footer-col">
+        <button class="tw-footer-col-btn" type="button" aria-expanded="false" aria-controls="tw-fcol-4">
+          Use cases
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <h3>Use cases</h3>
+        <ul id="tw-fcol-4">
+          <li><a href="#">DTC brands</a></li>
+          <li><a href="#">Wholesale</a></li>
+          <li><a href="#">Subscription boxes</a></li>
+          <li><a href="#">Marketplaces</a></li>
+        </ul>
+      </div>
+      <div class="tw-footer-col">
+        <button class="tw-footer-col-btn" type="button" aria-expanded="false" aria-controls="tw-fcol-5">
+          Industries
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <h3>Industries</h3>
+        <ul id="tw-fcol-5">
+          <li><a href="#">Fashion &amp; apparel</a></li>
+          <li><a href="#">Home &amp; garden</a></li>
+          <li><a href="#">Beauty &amp; wellness</a></li>
+          <li><a href="#">Food &amp; beverage</a></li>
+        </ul>
+      </div>
+      <div class="tw-footer-col">
+        <button class="tw-footer-col-btn" type="button" aria-expanded="false" aria-controls="tw-fcol-6">
+          Company
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <h3>Company</h3>
+        <ul id="tw-fcol-6">
+          <li><a href="#">About Tillwright</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Investors</a></li>
+        </ul>
+      </div>
+      <div class="tw-footer-col">
+        <button class="tw-footer-col-btn" type="button" aria-expanded="false" aria-controls="tw-fcol-7">
+          Help
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <h3>Help</h3>
+        <ul id="tw-fcol-7">
+          <li><a href="#">Help centre</a></li>
+          <li><a href="#">Status page</a></li>
+          <li><a href="#">Contact support</a></li>
+          <li><a href="#">Developer docs</a></li>
+        </ul>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:calc(var(--aura)*1.5);align-items:center;margin-bottom:calc(var(--aura)*2);padding-top:calc(var(--aura)*2);border-top:1px solid color-mix(in srgb,var(--night-ink) 15%,transparent);">
+      <span style="font-size:13px;color:var(--night-muted);">Follow Tillwright:</span>
+      <a href="#" style="font-size:13px;color:var(--night-muted);">&#64;tillwright</a>
+      <a href="#" style="font-size:13px;color:var(--night-muted);">LinkedIn</a>
+      <a href="#" style="font-size:13px;color:var(--night-muted);">YouTube</a>
+    </div>
+    <div class="tw-footer-legal">
+      <span>2026 Tillwright, a fictional company. Aura design system gallery.</span>
+      <nav aria-label="Legal links">
+        <a href="#">Privacy policy</a>
+        <a href="#">Terms of service</a>
+        <a href="#">Cookie settings</a>
+        <a href="#">Accessibility</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var motionOk=document.documentElement.classList.contains("motion");
+
+  var megaState={platform:false,services:false,resources:false};
+  var megaIds={platform:"mm-platform",services:"mm-services",resources:"mm-resources"};
+  var triggerIds={platform:"mm-trigger-platform",services:"mm-trigger-services",resources:"mm-trigger-resources"};
+  var hoverTimer={};
+
+  function closeMega(key){
+    megaState[key]=false;
+    var t=document.getElementById(triggerIds[key]);
+    var m=document.getElementById(megaIds[key]);
+    if(t)t.setAttribute("aria-expanded","false");
+    if(m)m.hidden=true;
+  }
+  function openMega(key){
+    Object.keys(megaState).forEach(function(k){if(k!==key)closeMega(k);});
+    megaState[key]=true;
+    var t=document.getElementById(triggerIds[key]);
+    var m=document.getElementById(megaIds[key]);
+    if(t)t.setAttribute("aria-expanded","true");
+    if(m)m.hidden=false;
+  }
+  function toggleMega(key){
+    if(megaState[key])closeMega(key); else openMega(key);
+  }
+
+  Object.keys(triggerIds).forEach(function(key){
+    var trigger=document.getElementById(triggerIds[key]);
+    var menu=document.getElementById(megaIds[key]);
+    if(!trigger||!menu)return;
+    trigger.addEventListener("click",function(){if(!megaState[key])openMega(key);});
+    trigger.addEventListener("keydown",function(e){
+      if(e.key==="ArrowDown"){e.preventDefault();openMega(key);var first=menu.querySelector("a");if(first)first.focus();}
+      if(e.key==="Escape"){closeMega(key);trigger.focus();}
+    });
+    menu.addEventListener("keydown",function(e){
+      var links=Array.prototype.slice.call(menu.querySelectorAll("a"));
+      var idx=links.indexOf(document.activeElement);
+      if(e.key==="ArrowDown"){e.preventDefault();links[(idx+1)%links.length].focus();}
+      if(e.key==="ArrowUp"){e.preventDefault();links[(idx-1+links.length)%links.length].focus();}
+      if(e.key==="Escape"){closeMega(key);trigger.focus();}
+    });
+    if(window.matchMedia("(hover:hover) and (pointer:fine)").matches){
+      var wrap=trigger.parentElement;
+      trigger.addEventListener("mouseenter",function(){clearTimeout(hoverTimer[key]);openMega(key);});
+      menu.addEventListener("mouseenter",function(){clearTimeout(hoverTimer[key]);});
+      var leaveHandler=function(){hoverTimer[key]=setTimeout(function(){closeMega(key);},120);};
+      trigger.addEventListener("mouseleave",leaveHandler);
+      menu.addEventListener("mouseleave",leaveHandler);
+    }
+  });
+  document.addEventListener("click",function(e){
+    Object.keys(triggerIds).forEach(function(key){
+      var trigger=document.getElementById(triggerIds[key]);
+      var menu=document.getElementById(megaIds[key]);
+      if(megaState[key]&&trigger&&menu&&!trigger.contains(e.target)&&!menu.contains(e.target)){closeMega(key);}
+    });
+  });
+  document.addEventListener("focusin",function(e){
+    Object.keys(megaIds).forEach(function(key){
+      var trigger=document.getElementById(triggerIds[key]);
+      var menu=document.getElementById(megaIds[key]);
+      if(megaState[key]&&trigger&&menu&&!trigger.contains(e.target)&&!menu.contains(e.target)){closeMega(key);}
+    });
+  });
+
+  var burger=document.getElementById("tw-burger");
+  var mobileMenu=document.getElementById("tw-mobile-menu");
+  var burgerIcon=document.getElementById("tw-burger-icon");
+  function setMobile(open){
+    burger.setAttribute("aria-expanded",String(open));
+    burger.setAttribute("aria-label",open?"Close navigation menu":"Open navigation menu");
+    mobileMenu.hidden=!open;
+    document.body.style.overflow=open?"hidden":"";
+    if(open){
+      var firstLink=mobileMenu.querySelector("button,a");
+      if(firstLink)firstLink.focus();
+    }
+  }
+  burger.addEventListener("click",function(){setMobile(mobileMenu.hidden);});
+  document.addEventListener("keydown",function(e){
+    if(e.key==="Escape"&&!mobileMenu.hidden){setMobile(false);burger.focus();}
+  });
+  mobileMenu.querySelectorAll("a").forEach(function(a){
+    a.addEventListener("click",function(){setMobile(false);});
+  });
+  window.matchMedia("(min-width:1024px)").addEventListener("change",function(e){if(e.matches)setMobile(false);});
+
+  mobileMenu.querySelectorAll(".tw-mobile-menu-trigger").forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var subId=btn.getAttribute("aria-controls");
+      var sub=document.getElementById(subId);
+      if(!sub)return;
+      var open=sub.hidden;
+      sub.hidden=!open;
+      btn.setAttribute("aria-expanded",String(open));
+    });
+  });
+
+  var scroller=document.getElementById("tw-scroller");
+  var scrollPrev=document.getElementById("tw-scroller-prev");
+  var scrollNext=document.getElementById("tw-scroller-next");
+  var scrollStatus=document.getElementById("tw-scroller-status");
+  var scrollCards=Array.prototype.slice.call(scroller.querySelectorAll(".tw-store-card"));
+  function syncScroller(){
+    var maxScroll=scroller.scrollWidth-scroller.clientWidth-2;
+    scrollPrev.disabled=scroller.scrollLeft<=2;
+    scrollNext.disabled=scroller.scrollLeft>=maxScroll;
+    var nearestIdx=0;
+    var nearestDist=Infinity;
+    scrollCards.forEach(function(card,i){
+      var dist=Math.abs(card.getBoundingClientRect().left-scroller.getBoundingClientRect().left);
+      if(dist<nearestDist){nearestDist=dist;nearestIdx=i;}
+    });
+    scrollStatus.textContent="Card "+(nearestIdx+1)+" of "+scrollCards.length;
+  }
+  function scrollToCard(step){
+    var maxScroll=scroller.scrollWidth-scroller.clientWidth-2;
+    var nearestIdx=0;
+    var nearestDist=Infinity;
+    scrollCards.forEach(function(card,i){
+      var dist=Math.abs(card.getBoundingClientRect().left-scroller.getBoundingClientRect().left);
+      if(dist<nearestDist){nearestDist=dist;nearestIdx=i;}
+    });
+    var targetIdx=Math.max(0,Math.min(scrollCards.length-1,nearestIdx+step));
+    var targetCard=scrollCards[targetIdx];
+    scroller.scrollTo({left:targetCard.offsetLeft,behavior:motionOk?"smooth":"auto"});
+  }
+  scrollPrev.addEventListener("click",function(){scrollToCard(-1);setTimeout(syncScroller,300);});
+  scrollNext.addEventListener("click",function(){scrollToCard(1);setTimeout(syncScroller,300);});
+  var scrollTimer=null;
+  scroller.addEventListener("scroll",function(){clearTimeout(scrollTimer);scrollTimer=setTimeout(syncScroller,120);},{passive:true});
+  window.addEventListener("resize",syncScroller);
+  syncScroller();
+
+  var faqTriggers=document.querySelectorAll(".tw-faq-trigger");
+  faqTriggers.forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var open=btn.getAttribute("aria-expanded")==="true";
+      btn.setAttribute("aria-expanded",String(!open));
+      var panel=document.getElementById(btn.getAttribute("aria-controls"));
+      if(panel)panel.hidden=open;
+    });
+  });
+
+  var playBtn=document.getElementById("tw-play-btn");
+  var previewNote=document.getElementById("tw-preview-note");
+  playBtn.addEventListener("click",function(){
+    previewNote.classList.toggle("tw-visible");
+  });
+
+  var contactForm=document.getElementById("tw-contact-form");
+  var formStatus=document.getElementById("tw-form-status");
+  contactForm.addEventListener("submit",function(e){
+    e.preventDefault();
+    var ok=true;
+    var first=null;
+    function validate(id,msgId,check,msg){
+      var el=document.getElementById(id);
+      var msgEl=document.getElementById(msgId);
+      var bad=check(el);
+      el.setAttribute("aria-invalid",String(bad));
+      if(msgEl)msgEl.textContent=bad?msg:"";
+      if(bad){ok=false;if(!first)first=el;}
+    }
+    validate("tw-name","tw-name-msg",function(el){return!el.value.trim();},"Please enter your name.");
+    validate("tw-email","tw-email-msg",function(el){return!el.value.trim()||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value);},"Please enter a valid work email.");
+    validate("tw-message","tw-message-msg",function(el){return!el.value.trim();},"Please describe what you're looking to solve.");
+    if(!ok){if(first)first.focus();formStatus.textContent="";formStatus.className="tw-form-status";return;}
+    formStatus.textContent="Thank you! Your request has been noted. This is a demo — nothing was sent.";
+    formStatus.className="tw-form-status tw-success";
+    contactForm.reset();
+    document.querySelectorAll("#tw-contact-form [aria-invalid]").forEach(function(el){el.setAttribute("aria-invalid","false");});
+    document.querySelectorAll(".tw-field-msg").forEach(function(el){el.textContent="";});
+  });
+
+  var footerColBtns=document.querySelectorAll(".tw-footer-col-btn");
+  footerColBtns.forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var listId=btn.getAttribute("aria-controls");
+      var list=document.getElementById(listId);
+      if(!list)return;
+      var expanded=btn.getAttribute("aria-expanded")==="true";
+      btn.setAttribute("aria-expanded",String(!expanded));
+      list.hidden=expanded;
+    });
+  });
+  function initFooterCols(){
+    if(window.innerWidth<768){
+      footerColBtns.forEach(function(btn){
+        var listId=btn.getAttribute("aria-controls");
+        var list=document.getElementById(listId);
+        if(list)list.hidden=true;
+        btn.setAttribute("aria-expanded","false");
+      });
+    } else {
+      footerColBtns.forEach(function(btn){
+        var listId=btn.getAttribute("aria-controls");
+        var list=document.getElementById(listId);
+        if(list)list.hidden=false;
+        btn.setAttribute("aria-expanded","true");
+      });
+    }
+  }
+  initFooterCols();
+  window.addEventListener("resize",initFooterCols);
+
+  if(motionOk){
+    var observer=new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add("tw-in");
+          observer.unobserve(entry.target);
+        }
+      });
+    },{rootMargin:"0px 0px -8% 0px"});
+    document.querySelectorAll(".tw-fade-up,.tw-fade-left").forEach(function(el){
+      observer.observe(el);
+    });
+  }
+})();
+</script>
+</body>
+</html>
