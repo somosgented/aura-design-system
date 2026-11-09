@@ -262,7 +262,8 @@ Dark is the primary mode. Light is a daylight adaptation designed for Hushtone, 
 | 72 header | `h-5.5` | 71.5 | Desktop header |
 | 56 header | `h-4.5` | 58.5 | Mobile header |
 | 56 control | `h-4.5` | 58.5 | Hero, section and form controls |
-| 44 control | `h-3.5` | 45.5 | Header and mobile controls |
+| 44 control | `h-3.5` | 45.5 | Header controls from 1000px; mobile form controls |
+| 32–36 control | `h-3` | 39 | Header call to action and Menu below 1000px |
 
 Every block is centered: intro heading and lead at `max-w-58.5`, then a two-column card pair at `max-w-88.5`; four columns for mode cards and stats, five for the press wall. Below 768px every grid is one column except the press wall (three columns) and stats (two columns).
 

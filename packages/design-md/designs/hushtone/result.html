@@ -1280,12 +1280,12 @@
         color: var(--gray-11);
       }
       .news input.field-input {
-        height: calc(var(--aura) * 3.5);
+        height: calc(var(--aura) * 4.5);
         padding: 0 var(--aura);
         background: transparent;
         color: var(--gray-12);
         border: 2px solid var(--field-edge);
-        border-radius: 10px;
+        border-radius: var(--aura-input-radius);
         transition: border-color 200ms ease;
       }
       .news input.field-input:hover {
@@ -1304,7 +1304,7 @@
       }
       .news .ctl-soft {
         width: 100%;
-        height: calc(var(--aura) * 3.5);
+        height: calc(var(--aura) * 4.5);
         margin-top: calc(var(--aura) * 1.5);
         font-size: 1.0625rem;
       }
@@ -1464,6 +1464,10 @@
         }
         .news {
           order: -1;
+        }
+        .news input.field-input,
+        .news .ctl-soft {
+          height: calc(var(--aura) * 3.5);
         }
         .award {
           width: 100%;
