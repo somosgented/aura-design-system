@@ -1,7 +1,7 @@
 ---
 version: "alpha"
 name: "Reedwave"
-description: "Un lienzo crema con tinta verde casi negra, píldoras verde junco, titulares grandes en peso regular, burbujas de conversación que flotan sobre las fotos de producto, una banda nocturna para la privacidad y un carrusel menta de novedades. Un flavor de Aura para apps de conversación, comunidades y herramientas de llamadas."
+description: "Un lienzo crema con tinta verde casi negra, píldoras verde junco, titulares grandes en peso regular, burbujas de conversación que flotan sobre maquetas de producto, una banda nocturna para la privacidad y un carrusel menta de novedades. Un flavor de Aura para apps de conversación, comunidades y herramientas de llamadas."
 extends: "../../DESIGN.md"
 colors:
   primary: "#22c46e"
@@ -284,7 +284,25 @@ Con `reduce` todo aparece en su estado final, el texto queda descifrado y quieto
 
 ## Calidad
 
-Pendiente de medición sobre el showcase.
+Contraste WCAG de los pares de tokens (claro / oscuro):
+
+| Par | Claro | Oscuro |
+| --- | --- | --- |
+| `ink` sobre `canvas` | 15.38 | 15.94 |
+| `gray-11` sobre `canvas` (texto secundario, placeholder) | 6.80 | 8.72 |
+| `gray-11` sobre `paper` (placeholder en tarjeta) | 7.43 | 7.76 |
+| `on-reed` sobre `accent-9` (etiqueta de botón verde) | 7.80 | 9.03 |
+| `accent-11` sobre `paper` (nombre en burbuja) | 5.93 | 8.65 |
+| `night-ink` sobre `night` | 15.62 | 17.72 |
+| `night-muted` sobre `night` | 9.56 | 10.84 |
+| `ink` sobre `mint` | 15.00 | 12.33 |
+| `bubble-ink` sobre `bubble-out` | 14.54 | 8.79 |
+
+Medido en `result.html` a 1280 y 360 px, en claro y oscuro: todo el texto informativo cumple AA (el mínimo es 3.85 en el titular grande del hero sobre la escena a 360 px, y 4.77 en texto normal); el foco es visible en cada parada del tabulador; no hay desbordamiento horizontal; con `prefers-reduced-motion: reduce` no corre ninguna animación y el texto cifrado queda fijo, y con movimiento tiene un botón de pausa.
+
+- `--aura-text-primary-inverse` debe fijarse a `var(--on-reed)`: el generador deja blanco sobre `accent-9` en claro, que no llega a 3:1.
+- El generador emite `--gray-contrast: undefined`; no uses ese token.
+- `reed-line` es un trazo decorativo (subrayados, iconos); no lo uses para texto.
 
 ## Reference
 
