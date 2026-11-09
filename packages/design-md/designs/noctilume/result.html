@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Noctilume · Evening streaming, reimagined</title>
+    <title>Noctilume · Evening stories, your way</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/aura/main.css" />
-    <link rel="stylesheet" href="theme.css" />
+    <link rel="stylesheet" href="./theme.css" />
     <script>
       (function () {
         var a = new URLSearchParams(window.location.search).get("appearance") === "dark" ? "dark" : "light";
@@ -35,20 +35,20 @@
         --pt-dk: #060318;
         --gb-series-h: #2d1b6e;
         --gb-series-m: #140830;
-        --gb-movies-h: #1a3060;
-        --gb-movies-m: #0a1428;
-        --gb-shows-h: #2d1a0a;
-        --gb-shows-m: #160c04;
-        --gb-family-h: #0a2d3d;
-        --gb-family-m: #041620;
+        --gb-films-h: #1a3060;
+        --gb-films-m: #0a1428;
+        --gb-nocturne-h: #2d1a0a;
+        --gb-nocturne-m: #160c04;
+        --gb-wonder-h: #0a2d3d;
+        --gb-wonder-m: #041620;
         --gb-series-lh: #d8d0f5;
         --gb-series-lm: #ede8fc;
-        --gb-movies-lh: #cce0f5;
-        --gb-movies-lm: #e3eefb;
-        --gb-shows-lh: #f5e8d0;
-        --gb-shows-lm: #fbf3e3;
-        --gb-family-lh: #cceef5;
-        --gb-family-lm: #e3f8fb;
+        --gb-films-lh: #cce0f5;
+        --gb-films-lm: #e3eefb;
+        --gb-nocturne-lh: #f5e8d0;
+        --gb-nocturne-lm: #fbf3e3;
+        --gb-wonder-lh: #cceef5;
+        --gb-wonder-lm: #e3f8fb;
         --accent-fill: var(--accent-9);
         --aura-text-primary: var(--canvas-ink);
         --aura-text-primary-inverse: var(--accent-contrast);
@@ -58,8 +58,24 @@
         --aura-input-bg: transparent;
         --aura-input-placeholder-color: var(--gray-11);
         --ease: cubic-bezier(0.4, 0, 0.2, 1);
+        --tile-label-bg: rgba(0,0,0,0.75);
+        --tile-label-ink: #ffffff;
+        --live-band-bg: #0a0618;
+        --live-band-ink: #f0ecff;
+        --live-band-sub: #c4b8e8;
+        --partner-band-from: #0d3d3a;
+        --partner-band-to: #0a0618;
+        --evt-c1: #1a0d35;
+        --evt-c2: #0d2035;
+        --evt-c3: #1a1a08;
+        --evt-c4: #082008;
+        --evt-c5: #200814;
+        --evt-c6: #081420;
+        --evt-c7: #1a1408;
+        --evt-c8: #0a1a20;
       }
-      html { scroll-padding-top: calc(var(--aura) * 5); }
+      html { scroll-padding-top: calc(var(--aura) * 5); box-sizing: border-box; }
+      *, *::before, *::after { box-sizing: border-box; }
       body {
         background: var(--canvas);
         color: var(--canvas-ink);
@@ -68,7 +84,6 @@
         line-height: 1.6;
         margin: 0;
       }
-      *, *::before, *::after { box-sizing: border-box; }
       a { color: var(--accent-11); }
       [hidden] { display: none !important; }
       :focus-visible {
@@ -97,6 +112,7 @@
       .small { font-size: 0.75rem; line-height: 1.4; color: var(--fine-print); }
       .label-caps { font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fine-print); }
 
+      /* ── Buttons ── */
       .btn {
         display: inline-flex; align-items: center; justify-content: center;
         gap: calc(var(--aura)*0.5); border: 1px solid transparent;
@@ -136,15 +152,17 @@
         color: var(--canvas-ink);
         border-color: var(--gray-6);
       }
-      .btn:disabled, .btn[aria-disabled="true"] { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+      .btn:disabled, .btn[aria-disabled="true"] { opacity: 0.4; cursor: not-allowed; }
       .btn-icon {
         width: calc(var(--aura)*3.5); height: calc(var(--aura)*3.5);
         padding: 0; border-radius: 50%;
         background: var(--gray-a3); border: 1px solid var(--gray-6);
         color: var(--canvas-ink); font-size: 1.25rem;
         display: inline-flex; align-items: center; justify-content: center;
+        flex: none;
       }
 
+      /* ── Header ── */
       .header {
         position: fixed; inset: 0 0 auto; z-index: 300;
         height: calc(var(--aura)*5);
@@ -154,16 +172,18 @@
       }
       .header-in {
         height: 100%; display: flex; align-items: center;
-        justify-content: space-between; gap: calc(var(--aura)*1);
+        justify-content: space-between; gap: calc(var(--aura)*0.5);
+        padding-inline: calc(var(--aura)*2);
+        max-width: calc(var(--aura)*98.5); margin-inline: auto;
       }
       .wordmark {
         display: flex; align-items: center; gap: calc(var(--aura)*0.5);
         font-family: var(--aura-font-display); font-weight: 700;
-        font-size: 1.25rem; color: var(--canvas-ink); text-decoration: none;
-        border-radius: 4px;
+        font-size: 1.125rem; color: var(--canvas-ink); text-decoration: none;
+        border-radius: 4px; flex: none; min-width: 0;
       }
       .wordmark-sq {
-        width: calc(var(--aura)*2); height: calc(var(--aura)*2);
+        width: calc(var(--aura)*2.2); height: calc(var(--aura)*2.2);
         border-radius: 6px; background: var(--accent-9);
         display: grid; place-items: center; flex: none;
       }
@@ -173,9 +193,10 @@
         background: radial-gradient(circle at 35% 35%, var(--accent-contrast) 30%, transparent 70%);
         box-shadow: 0 0 6px 2px color-mix(in srgb, var(--accent-9) 60%, transparent);
       }
+      .wordmark-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       .header-actions { display: flex; align-items: center; gap: calc(var(--aura)*0.5); flex: none; }
-      .header-secondary { display: inline-flex; }
 
+      /* ── Hero ── */
       .hero {
         padding-top: calc(var(--aura)*5);
         min-height: calc(var(--aura)*42);
@@ -188,19 +209,15 @@
         flex: none;
         padding: calc(var(--aura)*5) 0 calc(var(--aura)*5) calc(var(--aura)*3.5);
         display: flex; flex-direction: column; justify-content: center; gap: calc(var(--aura)*1.5);
-        max-width: calc(var(--aura)*98.5);
       }
-      .hero-left-inner {
-        max-width: calc(var(--aura)*45);
-      }
+      .hero-left-inner { max-width: calc(var(--aura)*45); }
       .hero-fade {
         position: absolute; inset: 0; z-index: 1;
         background: linear-gradient(90deg, var(--hero-fade-from) 42%, var(--hero-fade-to) 72%);
         pointer-events: none;
       }
       .hero-mosaic {
-        position: absolute; right: 0; top: 0; bottom: 0;
-        left: 0;
+        position: absolute; right: 0; top: 0; bottom: 0; left: 0;
         z-index: 0;
         display: grid;
         grid-template-columns: repeat(6, 1fr);
@@ -215,13 +232,26 @@
         background: linear-gradient(180deg, color-mix(in srgb, var(--canvas) 30%, transparent) 0%, transparent 15%, transparent 85%, var(--canvas) 100%);
         pointer-events: none; z-index: 1;
       }
+      /* Poster tiles — solid chip for label contrast */
       .ptile {
         border-radius: 6px; overflow: hidden; display: flex;
-        align-items: flex-end; padding: calc(var(--aura)*0.5);
-        font-size: 0.6875rem; font-weight: 600; color: rgba(255,255,255,0.85);
-        background: var(--tile-empty);
+        align-items: flex-end; padding: 0;
+        background: var(--tile-empty); position: relative;
       }
-      .ptile span { z-index: 1; position: relative; line-height: 1.2; }
+      .ptile-label {
+        background: var(--tile-label-bg);
+        color: var(--tile-label-ink);
+        font-size: 0.6875rem; font-weight: 600; line-height: 1.2;
+        padding: 4px 6px; width: 100%;
+      }
+      /* Hero overlays below tile labels */
+      .hero .hero-fade { z-index: 1; }
+      .hero .hero-mosaic::after { z-index: 2; }
+      /* Hide labels on cols 1-4 at desktop (covered by left fade) */
+      .hero-mosaic .ptile:nth-child(6n+1) .ptile-label,
+      .hero-mosaic .ptile:nth-child(6n+2) .ptile-label,
+      .hero-mosaic .ptile:nth-child(6n+3) .ptile-label,
+      .hero-mosaic .ptile:nth-child(6n+4) .ptile-label { visibility: hidden; }
       .pt1  { background: linear-gradient(145deg, var(--pt-a), var(--pt-lo)); }
       .pt2  { background: linear-gradient(145deg, var(--pt-b), var(--pt-dk)); }
       .pt3  { background: linear-gradient(145deg, var(--pt-c), var(--pt-lo)); }
@@ -252,8 +282,23 @@
       .hero-offer-label { font-size: 1.0625rem; font-weight: 700; color: var(--canvas-ink); }
       .hero-fine { max-width: 44ch; }
 
+      /* ── Plans ── */
       .plan-section { background: var(--canvas); }
       .plan-heading-block { text-align: center; padding-bottom: calc(var(--aura)*3); }
+      .period-toggle {
+        display: flex; justify-content: center; gap: calc(var(--aura)*0.5);
+        margin-top: calc(var(--aura)*2);
+      }
+      .period-btn {
+        padding: calc(var(--aura)*0.6) calc(var(--aura)*2);
+        font-family: var(--aura-font-stack); font-size: 0.9375rem; font-weight: 600;
+        border-radius: 4px; border: 1px solid var(--gray-6);
+        cursor: pointer; background: var(--gray-a3); color: var(--canvas-ink);
+      }
+      .period-btn[aria-pressed="true"] {
+        background: var(--accent-10, var(--accent-9)); color: #ffffff;
+        border-color: transparent;
+      }
       .tabs {
         display: flex; justify-content: center;
         margin-top: calc(var(--aura)*1.5);
@@ -272,7 +317,7 @@
         box-shadow: 0 2px 12px var(--glow-violet);
       }
       .plan-grid {
-        display: grid; grid-template-columns: repeat(3,1fr);
+        display: grid; grid-template-columns: repeat(3,minmax(0,1fr));
         gap: calc(var(--aura)*1); margin-top: calc(var(--aura)*3);
       }
       .plan-card {
@@ -281,9 +326,7 @@
         display: flex; flex-direction: column; gap: calc(var(--aura)*1);
       }
       .plan-card.featured { border-color: var(--accent-9); }
-      .plan-divider {
-        height: 1px; background: var(--gray-6); margin: calc(var(--aura)*0.5) 0;
-      }
+      .plan-divider { height: 1px; background: var(--gray-6); margin: calc(var(--aura)*0.5) 0; }
       .plan-feat-list {
         list-style: none; margin: 0; padding: 0;
         display: flex; flex-direction: column; gap: calc(var(--aura)*0.5);
@@ -309,14 +352,13 @@
         font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.06em;
         padding: 2px 6px; margin-left: calc(var(--aura)*0.5); vertical-align: middle;
       }
-      .plan-yearly-row { display: flex; align-items: center; justify-content: space-between; gap: var(--aura); }
+      .plan-yearly-row { display: flex; align-items: center; justify-content: space-between; gap: var(--aura); flex-wrap: wrap; }
       .plan-year-price { font-size: 1.125rem; font-weight: 700; color: var(--canvas-ink); }
-      .student-link {
+      .academic-link {
         display: flex; align-items: center; justify-content: center;
-        margin-top: calc(var(--aura)*2);
-        gap: calc(var(--aura)*0.5);
+        margin-top: calc(var(--aura)*2); gap: calc(var(--aura)*0.5);
       }
-      .student-pill {
+      .academic-pill {
         display: inline-flex; align-items: center; gap: calc(var(--aura)*0.5);
         border: 1px solid var(--gray-6); border-radius: 9999px;
         padding: calc(var(--aura)*0.5) calc(var(--aura)*1.5);
@@ -324,6 +366,7 @@
       }
       .plan-fine { text-align: center; margin-top: calc(var(--aura)*2); max-width: 72ch; margin-inline: auto; }
 
+      /* ── Rails ── */
       .rail-section { padding-block: calc(var(--aura)*5); }
       .rail-header { margin-bottom: calc(var(--aura)*1.5); }
       .rail-subline { color: var(--gray-11); font-size: 0.9375rem; margin-top: calc(var(--aura)*0.5); }
@@ -335,19 +378,23 @@
       }
       .rail-scroll::-webkit-scrollbar { height: 4px; }
       .rail-scroll::-webkit-scrollbar-thumb { background: var(--gray-6); border-radius: 2px; }
+      /* Rail tiles — solid chip for contrast */
       .rtile {
         flex: none; scroll-snap-align: start; border-radius: 6px;
         overflow: hidden; display: flex; align-items: flex-end;
-        padding: calc(var(--aura)*0.75); font-size: 0.75rem;
-        font-weight: 600; color: rgba(255,255,255,0.9);
         background: var(--tile-empty); text-decoration: none;
-        outline-offset: 3px; border: 1px solid transparent;
+        outline-offset: 3px; border: 1px solid transparent; position: relative;
       }
       .rtile:focus-visible { border-color: var(--focus-ring); }
       .rtile-poster { width: calc(var(--aura)*9); height: calc(var(--aura)*13); }
       .rtile-wide { width: calc(var(--aura)*18); height: calc(var(--aura)*10); }
-      .rtile span { background: linear-gradient(0deg, rgba(0,0,0,0.65) 0%, transparent 100%); padding: 4px 6px; width: 100%; }
-
+      .rtile-label {
+        background: var(--tile-label-bg);
+        color: var(--tile-label-ink);
+        font-size: 0.75rem; font-weight: 600;
+        padding: 5px 7px; width: 100%; line-height: 1.3;
+        position: relative; z-index: 1;
+      }
       .nt1  { background: linear-gradient(145deg, var(--pt-a), var(--pt-lo)); }
       .nt2  { background: linear-gradient(145deg, var(--pt-b), var(--pt-dk)); }
       .nt3  { background: linear-gradient(145deg, var(--pt-c), var(--pt-lo)); }
@@ -364,13 +411,11 @@
       .nt14 { background: linear-gradient(145deg, var(--pt-n), var(--pt-dk)); }
       .nt15 { background: linear-gradient(145deg, var(--pt-o), var(--pt-lo)); }
 
+      /* ── Genre bands ── */
       .genre-band {
         position: relative; overflow: hidden; isolation: isolate;
         padding: calc(var(--aura)*5) 0 calc(var(--aura)*3);
         min-height: calc(var(--aura)*28);
-      }
-      .genre-band-bg {
-        position: absolute; inset: 0; z-index: -1;
       }
       .genre-band-fade {
         position: absolute; inset: 0; z-index: 0;
@@ -387,48 +432,195 @@
         font-size: clamp(3.5rem,8vw,6rem); line-height: 1.0;
         letter-spacing: -0.03em; color: var(--canvas-ink); margin: 0;
       }
-      .gb-series { background: linear-gradient(135deg, var(--gb-series-h) 0%, var(--gb-series-m) 60%, var(--canvas) 100%); }
-      .gb-movies { background: linear-gradient(135deg, var(--gb-movies-h) 0%, var(--gb-movies-m) 60%, var(--canvas) 100%); }
-      .gb-shows  { background: linear-gradient(135deg, var(--gb-shows-h) 0%, var(--gb-shows-m) 60%, var(--canvas) 100%); }
-      .gb-family { background: linear-gradient(135deg, var(--gb-family-h) 0%, var(--gb-family-m) 60%, var(--canvas) 100%); }
-      .light .gb-series { background: linear-gradient(135deg, var(--gb-series-lh) 0%, var(--gb-series-lm) 60%, var(--canvas) 100%); }
-      .light .gb-movies { background: linear-gradient(135deg, var(--gb-movies-lh) 0%, var(--gb-movies-lm) 60%, var(--canvas) 100%); }
-      .light .gb-shows  { background: linear-gradient(135deg, var(--gb-shows-lh) 0%, var(--gb-shows-lm) 60%, var(--canvas) 100%); }
-      .light .gb-family { background: linear-gradient(135deg, var(--gb-family-lh) 0%, var(--gb-family-lm) 60%, var(--canvas) 100%); }
-
+      .gb-arcs    { background: linear-gradient(135deg, var(--gb-series-h) 0%, var(--gb-series-m) 60%, var(--canvas) 100%); }
+      .gb-films   { background: linear-gradient(135deg, var(--gb-films-h) 0%, var(--gb-films-m) 60%, var(--canvas) 100%); }
+      .gb-nocturne{ background: linear-gradient(135deg, var(--gb-nocturne-h) 0%, var(--gb-nocturne-m) 60%, var(--canvas) 100%); }
+      .gb-wonder  { background: linear-gradient(135deg, var(--gb-wonder-h) 0%, var(--gb-wonder-m) 60%, var(--canvas) 100%); }
+      .light .gb-arcs    { background: linear-gradient(135deg, var(--gb-series-lh) 0%, var(--gb-series-lm) 60%, var(--canvas) 100%); }
+      .light .gb-films   { background: linear-gradient(135deg, var(--gb-films-lh) 0%, var(--gb-films-lm) 60%, var(--canvas) 100%); }
+      .light .gb-nocturne{ background: linear-gradient(135deg, var(--gb-nocturne-lh) 0%, var(--gb-nocturne-lm) 60%, var(--canvas) 100%); }
+      .light .gb-wonder  { background: linear-gradient(135deg, var(--gb-wonder-lh) 0%, var(--gb-wonder-lm) 60%, var(--canvas) 100%); }
       .cg1 { background: linear-gradient(145deg, var(--pt-a), var(--gb-series-m)); }
-      .cg2 { background: linear-gradient(145deg, var(--pt-b), var(--gb-movies-m)); }
+      .cg2 { background: linear-gradient(145deg, var(--pt-b), var(--gb-films-m)); }
       .cg3 { background: linear-gradient(145deg, var(--pt-c), var(--pt-lo)); }
       .cg4 { background: linear-gradient(145deg, var(--pt-d), var(--pt-dk)); }
-      .cg5 { background: linear-gradient(145deg, var(--pt-k), var(--gb-shows-m)); }
-      .cg6 { background: linear-gradient(145deg, var(--pt-g), var(--gb-family-m)); }
+      .cg5 { background: linear-gradient(145deg, var(--pt-k), var(--gb-nocturne-m)); }
+      .cg6 { background: linear-gradient(145deg, var(--pt-g), var(--gb-wonder-m)); }
 
+      /* ── Live-events band ── */
+      .live-band {
+        background: var(--live-band-bg);
+        padding: calc(var(--aura)*6) 0 calc(var(--aura)*5);
+        position: relative; overflow: hidden; isolation: isolate;
+      }
+      .live-band-inner {
+        display: grid; gap: calc(var(--aura)*4);
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+      }
+      .live-band-left { }
+      .live-band-heading {
+        font-family: var(--aura-font-display); font-weight: 700;
+        font-size: clamp(1.75rem,3vw,2.5rem); line-height: 1.15;
+        letter-spacing: -0.015em; color: var(--live-band-ink); margin: 0;
+      }
+      .live-band-para {
+        margin: calc(var(--aura)*1) 0 0; font-size: 1rem; line-height: 1.6;
+        color: var(--live-band-sub);
+      }
+      .live-band-fine {
+        margin-top: calc(var(--aura)*1); font-size: 0.75rem;
+        color: color-mix(in srgb, var(--live-band-sub) 70%, transparent);
+      }
+      /* CSS-only arena art */
+      .live-art {
+        position: relative; height: calc(var(--aura)*20); border-radius: 8px;
+        overflow: hidden;
+        background: radial-gradient(ellipse 60% 40% at 50% 100%, #1a0860 0%, #04020f 70%);
+      }
+      .live-art::before {
+        content: ""; position: absolute; inset: 0;
+        background:
+          conic-gradient(from 260deg at 50% 110%, transparent 0deg, rgba(100,60,220,0.18) 15deg, transparent 30deg),
+          conic-gradient(from 275deg at 50% 110%, transparent 0deg, rgba(80,180,220,0.12) 15deg, transparent 30deg),
+          conic-gradient(from 245deg at 50% 110%, transparent 0deg, rgba(140,80,255,0.15) 20deg, transparent 40deg);
+      }
+      .live-art::after {
+        content: ""; position: absolute; bottom: 0; left: 0; right: 0;
+        height: 40%;
+        background: linear-gradient(0deg, rgba(255,210,80,0.08) 0%, transparent 100%);
+      }
+      .live-art-ring {
+        position: absolute; left: 50%; top: 55%; transform: translate(-50%,-50%);
+        width: 70%; padding-top: 35%;
+        border: 2px solid rgba(140,80,255,0.25);
+        border-radius: 50% 50% 50% 50% / 20% 20% 80% 80%;
+      }
+      /* Event category tiles */
+      .evt-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: calc(var(--aura)*1);
+        margin-top: calc(var(--aura)*4);
+      }
+      .evt-tile {
+        border-radius: 8px;
+        background: var(--card-bg);
+        border: 1px solid var(--gray-6);
+        padding: calc(var(--aura)*1.25) calc(var(--aura)*1);
+        display: flex; flex-direction: column; align-items: center; gap: calc(var(--aura)*0.75);
+        min-height: calc(var(--aura)*5.5);
+      }
+      .evt-mark {
+        width: calc(var(--aura)*3); height: calc(var(--aura)*3);
+        border-radius: 6px; display: grid; place-items: center;
+        font-weight: 700; font-size: 1.1rem; color: #fff;
+        flex: none;
+      }
+      .evt-caption {
+        font-size: 0.8125rem; font-weight: 600;
+        color: var(--canvas-ink); text-align: center; line-height: 1.3;
+      }
+      /* dark surface for evt-tiles inside live-band */
+      .live-band .evt-tile {
+        background: #161028;
+        border-color: rgba(255,255,255,0.1);
+      }
+      .live-band .evt-caption { color: #e8e0ff; }
+
+      /* ── Partner-trio band ── */
+      .partner-band {
+        background: linear-gradient(135deg, var(--partner-band-from) 0%, var(--partner-band-to) 100%);
+        padding: calc(var(--aura)*6) 0;
+        position: relative; overflow: hidden;
+      }
+      .partner-band-inner {
+        display: grid; gap: calc(var(--aura)*4);
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+      }
+      .partner-wordmarks {
+        display: flex; flex-wrap: wrap; gap: calc(var(--aura)*1) calc(var(--aura)*2);
+        margin-bottom: calc(var(--aura)*2);
+      }
+      .partner-mark {
+        font-family: var(--aura-font-display); font-weight: 700;
+        font-size: 1.0625rem; color: #c8f0ee;
+        letter-spacing: -0.01em;
+        padding: calc(var(--aura)*0.4) calc(var(--aura)*1);
+        border: 1px solid rgba(100,220,210,0.25); border-radius: 4px;
+      }
+      .partner-heading {
+        font-family: var(--aura-font-display); font-weight: 700;
+        font-size: clamp(1.5rem,2.5vw,2.1rem); line-height: 1.15;
+        letter-spacing: -0.015em; color: #e8f8f7; margin: 0;
+      }
+      .partner-desc {
+        margin: calc(var(--aura)*1) 0 0; font-size: 1rem; color: #9fd8d4; line-height: 1.6;
+      }
+      .partner-cta-row { margin-top: calc(var(--aura)*2); }
+      .btn-partner {
+        display: inline-flex; align-items: center; gap: calc(var(--aura)*0.5);
+        border: 1px solid rgba(100,220,210,0.4); border-radius: 4px;
+        padding: 0 calc(var(--aura)*1.5); height: calc(var(--aura)*3.5);
+        font-weight: 600; font-size: 0.9375rem;
+        background: rgba(100,220,210,0.1); color: #c8f0ee;
+        cursor: pointer; text-decoration: none;
+      }
+      /* Partner poster grid */
+      .partner-poster-grid {
+        display: grid; grid-template-columns: repeat(3,1fr);
+        grid-template-rows: repeat(2,1fr); gap: calc(var(--aura)*0.75);
+      }
+      .partner-poster {
+        border-radius: 8px; overflow: hidden; aspect-ratio: 2/3;
+        display: flex; align-items: flex-end;
+        box-shadow: 0 0 0 1px var(--accent-9), 0 0 12px 2px rgba(139,92,246,0.25);
+        position: relative;
+      }
+      .partner-poster-label {
+        background: var(--tile-label-bg);
+        color: var(--tile-label-ink);
+        font-size: 0.6875rem; font-weight: 600;
+        padding: 4px 6px; width: 100%; line-height: 1.2;
+        position: relative; z-index: 1;
+      }
+      .pp1 { background: linear-gradient(145deg, var(--pt-a), var(--pt-lo)); }
+      .pp2 { background: linear-gradient(145deg, var(--pt-b), var(--pt-dk)); }
+      .pp3 { background: linear-gradient(145deg, var(--pt-e), var(--pt-lo)); }
+      .pp4 { background: linear-gradient(145deg, var(--pt-h), var(--pt-dk)); }
+      .pp5 { background: linear-gradient(145deg, var(--pt-k), var(--pt-lo)); }
+      .pp6 { background: linear-gradient(145deg, var(--pt-n), var(--pt-dk)); }
+
+      /* ── Genre carousel ── */
       .carousel-section { padding-block: calc(var(--aura)*7); text-align: center; }
       .carousel-eyebrow {
         font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em;
-        text-transform: uppercase; color: var(--fine-print); margin-bottom: calc(var(--aura)*1);
+        text-transform: uppercase; color: var(--fine-print); margin-bottom: calc(var(--aura)*0.5);
       }
-      .carousel-stage { position: relative; overflow: hidden; }
-      .carousel-track-wrap { overflow: hidden; }
+      .carousel-stage { position: relative; }
+      .carousel-row {
+        display: flex; justify-content: center; align-items: center;
+        gap: calc(var(--aura)*1); margin-bottom: calc(var(--aura)*0.5);
+      }
+      .carousel-track-wrap { overflow: hidden; flex: 1; min-width: 0; }
       .carousel-track {
-        display: flex; align-items: center;
-        transition: transform 300ms var(--ease);
+        display: flex; align-items: stretch;
+        will-change: transform;
       }
       .carousel-item {
         flex: none; width: 100%; text-align: center;
-        padding: 0 calc(var(--aura)*3);
+        padding: calc(var(--aura)*0.5) calc(var(--aura)*2);
       }
       .carousel-word {
         font-family: var(--aura-font-display); font-weight: 700;
         font-size: clamp(2.5rem,7vw,5.5rem); line-height: 1; letter-spacing: -0.03em;
         color: var(--canvas-ink);
+        display: block;
       }
-      .carousel-word.prev-word, .carousel-word.next-word {
-        opacity: 0.3; font-size: clamp(1.75rem,4vw,3.5rem);
-      }
-      .carousel-row {
-        display: flex; justify-content: center; align-items: center;
-        gap: calc(var(--aura)*1); margin-top: calc(var(--aura)*1.5);
+      .carousel-status {
+        font-size: 0.9375rem; font-weight: 600; color: var(--gray-11);
+        margin-bottom: calc(var(--aura)*1); line-height: 1.4;
       }
       .carousel-grid {
         display: grid; grid-template-columns: repeat(3,1fr);
@@ -437,12 +629,18 @@
       }
       .carousel-tile {
         border-radius: 8px; overflow: hidden; aspect-ratio: 16/9;
-        background: var(--tile-empty); display: flex; align-items: flex-end;
-        padding: calc(var(--aura)*0.5); font-size: 0.6875rem;
-        font-weight: 600; color: rgba(255,255,255,0.85);
+        display: flex; align-items: flex-end;
+        background: var(--tile-empty); position: relative;
       }
-      .carousel-tile span { background: linear-gradient(0deg, rgba(0,0,0,0.6) 0%, transparent 100%); padding: 3px 5px; width: 100%; }
+      .carousel-tile-label {
+        background: var(--tile-label-bg);
+        color: var(--tile-label-ink);
+        font-size: 0.6875rem; font-weight: 600;
+        padding: 3px 5px; width: 100%; line-height: 1.2;
+        position: relative; z-index: 1;
+      }
 
+      /* ── FAQ ── */
       .faq-section { padding-block: calc(var(--aura)*7); }
       .faq-heading { text-align: center; margin-bottom: calc(var(--aura)*3); }
       .faq-list { max-width: calc(var(--aura)*70); margin-inline: auto; }
@@ -459,13 +657,11 @@
       .faq-trigger:focus-visible { outline-offset: 2px; }
       .faq-icon {
         width: 20px; height: 20px; flex: none; color: var(--gray-11);
-        transition: transform 200ms var(--ease);
       }
       .faq-trigger[aria-expanded="true"] .faq-icon { transform: rotate(180deg); }
       .faq-panel {
         overflow: hidden;
         display: grid; grid-template-rows: 0fr;
-        transition: grid-template-rows 220ms var(--ease);
       }
       .faq-panel[data-open="true"] { grid-template-rows: 1fr; }
       .faq-inner { overflow: hidden; }
@@ -474,6 +670,7 @@
         font-size: 0.9375rem; color: var(--gray-11); line-height: 1.6;
       }
 
+      /* ── Stats ── */
       .stats-grid {
         display: grid; grid-template-columns: repeat(2,1fr);
         gap: calc(var(--aura)*2) calc(var(--aura)*1.5); text-align: center;
@@ -485,15 +682,15 @@
       }
       .stat-lbl { font-size: 0.875rem; color: var(--gray-11); margin-top: calc(var(--aura)*0.5); }
 
-      .features-grid {
-        display: grid; gap: calc(var(--aura)*1); margin-top: calc(var(--aura)*3);
-      }
+      /* ── Features ── */
+      .features-grid { display: grid; gap: calc(var(--aura)*1); margin-top: calc(var(--aura)*3); }
       .feat-card {
         border-radius: 8px; background: var(--card-bg);
         border: 1px solid var(--gray-6); padding: calc(var(--aura)*1.5);
       }
       .feat-icon { font-size: 1.5rem; margin-bottom: calc(var(--aura)*0.75); }
 
+      /* ── Comparison table ── */
       .tbl-wrap {
         overflow-x: auto; border-radius: 8px; border: 1px solid var(--gray-6);
         margin-top: calc(var(--aura)*3);
@@ -504,12 +701,12 @@
       td { color: var(--canvas-ink); }
       .tbl-badge {
         display: inline-flex; align-items: center; gap: 4px;
-        border-radius: 9999px; padding: 2px 10px; font-size: 0.75rem;
-        font-weight: 600;
+        border-radius: 9999px; padding: 2px 10px; font-size: 0.75rem; font-weight: 600;
       }
       .tbl-badge-y { background: color-mix(in srgb, var(--accent-9) 18%, transparent); color: var(--accent-11); }
       .tbl-badge-n { background: var(--gray-a3); color: var(--gray-11); }
 
+      /* ── Contact form ── */
       .form-block {
         background: var(--card-bg); border-radius: 8px; border: 1px solid var(--gray-6);
         padding: calc(var(--aura)*2.5); margin-top: calc(var(--aura)*3);
@@ -521,8 +718,7 @@
         height: calc(var(--aura)*3.5); padding: 0 calc(var(--aura)*1);
         background: transparent; color: var(--canvas-ink);
         border: 1px solid var(--gray-7); border-radius: 6px;
-        font-family: var(--aura-font-stack); font-size: 1rem;
-        width: 100%;
+        font-family: var(--aura-font-stack); font-size: 1rem; width: 100%;
       }
       .field-input::placeholder { color: var(--gray-11); }
       .field-input:focus { outline: none; }
@@ -532,6 +728,8 @@
       .form-msg:empty { display: none; }
       .msg-ok { color: var(--success); }
       .msg-err { color: var(--error); }
+
+      /* ── Language selector ── */
       .select-wrap {
         display: inline-flex; align-items: center; gap: calc(var(--aura)*0.5);
         border: 1px solid var(--gray-6); border-radius: 9999px;
@@ -544,6 +742,7 @@
       }
       .lang-select:focus-visible { outline: var(--aura-outline); }
 
+      /* ── Closing CTA ── */
       .closing-band {
         border-radius: 8px; background: var(--card-bg); border: 1px solid var(--gray-6);
         padding: calc(var(--aura)*5) calc(var(--aura)*2); text-align: center;
@@ -551,6 +750,7 @@
       }
       .closing-ctls { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--aura); margin-top: calc(var(--aura)*2); }
 
+      /* ── Footer ── */
       .foot { padding-block: calc(var(--aura)*4) calc(var(--aura)*2); border-top: 1px solid var(--gray-6); }
       .foot-grid { display: grid; gap: calc(var(--aura)*3); }
       .foot-links { display: grid; grid-template-columns: repeat(2,1fr); gap: calc(var(--aura)*2) calc(var(--aura)*1.5); }
@@ -568,13 +768,13 @@
       .foot-legal a:hover { text-decoration: underline; }
       .foot-legal-links { display: flex; flex-wrap: wrap; gap: calc(var(--aura)*0.5) calc(var(--aura)*1.5); }
 
+      /* ── Misc ── */
       .icon-svg { display: inline-block; width: 1em; height: 1em; vertical-align: middle; fill: currentColor; }
-      .plan-card [aria-pressed="true"] { outline: 2px solid var(--accent-fill); outline-offset: 2px; }
-      .dark { --accent-fill: var(--accent-10); }
-      .addon-panel .small { color: var(--gray-11); }
       .check-icon { color: var(--accent-9); flex: none; margin-top: 2px; }
       .globe-icon { color: var(--gray-11); flex: none; }
+      .dark { --accent-fill: var(--accent-10); }
 
+      /* ── Responsive ── */
       @media (min-width: 700px) {
         .stats-grid { grid-template-columns: repeat(4,1fr); }
         .features-grid { grid-template-columns: repeat(2,1fr); }
@@ -582,7 +782,7 @@
         .foot-grid { grid-template-columns: 1fr auto; }
       }
       @media (max-width: 860px) {
-        .plan-grid { grid-template-columns: 1fr; }
+        .plan-grid { grid-template-columns: minmax(0,1fr); }
         .hero { flex-direction: column; min-height: auto; }
         .hero-left {
           width: 100%;
@@ -601,15 +801,41 @@
         .hero-mosaic::after { display: none; }
         .hero-fade { display: none; }
         .hero-mosaic .ptile { flex: none; width: calc(var(--aura)*9.5); height: 100%; }
-        .carousel-word.prev-word, .carousel-word.next-word { display: none; }
-        .carousel-item { padding: 0 calc(var(--aura)*1); }
+        .hero-mosaic .ptile:nth-child(6n+1) .ptile-label,
+        .hero-mosaic .ptile:nth-child(6n+2) .ptile-label,
+        .hero-mosaic .ptile:nth-child(6n+3) .ptile-label,
+        .hero-mosaic .ptile:nth-child(6n+4) .ptile-label { visibility: visible; }
+        .live-band-inner { grid-template-columns: 1fr; }
+        .partner-band-inner { grid-template-columns: 1fr; }
+        .partner-poster-grid { grid-template-columns: repeat(3,1fr); }
+        .evt-grid { grid-template-columns: repeat(4,1fr); }
       }
+      @media (max-width: 600px) {
+        .evt-grid { grid-template-columns: repeat(2,1fr); }
+        .partner-poster-grid { grid-template-columns: repeat(3,1fr); }
+      }
+      /* Header buttons compact at ≤540px */
       @media (max-width: 540px) {
         .wrap { padding-inline: calc(var(--aura)*1.5); }
         .hero-left { padding-inline: calc(var(--aura)*1.5); }
-        .header-secondary { display: none; }
         .hero-offers { flex-direction: column; gap: var(--aura); }
         .plan-grid { gap: calc(var(--aura)*1.5); }
+        .header-in { padding-inline: calc(var(--aura)*1); }
+        .header .btn { font-size: 0.8125rem; padding: 0 calc(var(--aura)*0.9); height: calc(var(--aura)*3); }
+        .carousel-current-heading { font-size: clamp(1.75rem,8vw,2.5rem); }
+      }
+      /* Compact header at 360px–400px: wordmark text stays visible */
+      @media (max-width: 400px) {
+        .header-in { padding-inline: calc(var(--aura)*0.75); gap: calc(var(--aura)*0.35); }
+        .header .btn { font-size: 0.75rem; padding: 0 calc(var(--aura)*0.7); height: calc(var(--aura)*2.75); }
+      }
+      /* Narrow layout fix <360px: wordmark text hidden, mark only */
+      @media (max-width: 359.98px) {
+        .wrap { padding-inline: calc(var(--aura)*1); }
+        .wordmark-sq { width: calc(var(--aura)*2); height: calc(var(--aura)*2); }
+        .wordmark-text { display: none; }
+        .wordmark { gap: 0; }
+        .evt-grid { grid-template-columns: repeat(2,1fr); }
       }
 
       @media (prefers-reduced-motion: no-preference) {
@@ -627,81 +853,83 @@
     </style>
   </head>
   <body>
-    <a class="skip" href="#main">Skip to content</a>
+    <a class="skip" href="#main">Jump to main content</a>
 
     <header class="header" role="banner">
-      <div class="wrap header-in">
+      <div class="header-in">
         <a class="wordmark" href="#main" aria-label="Noctilume home">
           <span class="wordmark-sq" aria-hidden="true"></span>
-          <span>Noctilume</span>
+          <span class="wordmark-text">Noctilume</span>
         </a>
         <div class="header-actions">
-          <a class="btn btn-ghost" href="#plans">Sign in</a>
-          <a class="btn btn-light header-secondary" href="#plans">Start watching</a>
+          <a class="btn btn-ghost" href="#plans" aria-label="Log in to your account">Log in</a>
+          <a class="btn btn-light" href="#plans" aria-label="Begin watching Noctilume">Begin</a>
         </div>
       </div>
     </header>
 
     <main id="main" tabindex="-1">
 
+      <!-- Hero -->
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-mosaic" aria-hidden="true">
-          <div class="ptile pt1"><span>Void Signal</span></div>
-          <div class="ptile pt2"><span>Pale Throne</span></div>
-          <div class="ptile pt3"><span>Ember Gate</span></div>
-          <div class="ptile pt4"><span>Salt &amp; Green</span></div>
-          <div class="ptile pt5"><span>Hallow Drift</span></div>
-          <div class="ptile pt6"><span>The Pact</span></div>
-          <div class="ptile pt7"><span>Blue Meridian</span></div>
-          <div class="ptile pt8"><span>Lune</span></div>
-          <div class="ptile pt9"><span>Crimson Hours</span></div>
-          <div class="ptile pt10"><span>Quiet Storm</span></div>
-          <div class="ptile pt11"><span>Amber Road</span></div>
-          <div class="ptile pt12"><span>Deep State</span></div>
-          <div class="ptile pt13"><span>Verdant</span></div>
-          <div class="ptile pt14"><span>Nox</span></div>
-          <div class="ptile pt15"><span>Ironhall</span></div>
-          <div class="ptile pt16"><span>Dusk Letters</span></div>
-          <div class="ptile pt17"><span>Copper Falls</span></div>
-          <div class="ptile pt18"><span>Reef Dark</span></div>
-          <div class="ptile pt19"><span>Red Veil</span></div>
-          <div class="ptile pt20"><span>Obsidian</span></div>
-          <div class="ptile pt21"><span>Pale Throne</span></div>
-          <div class="ptile pt22"><span>Hallow Drift</span></div>
-          <div class="ptile pt23"><span>The Pact</span></div>
-          <div class="ptile pt24"><span>Blue Meridian</span></div>
+          <div class="ptile pt1"><div class="ptile-label">Void Signal</div></div>
+          <div class="ptile pt2"><div class="ptile-label">Pale Throne</div></div>
+          <div class="ptile pt3"><div class="ptile-label">Ember Gate</div></div>
+          <div class="ptile pt4"><div class="ptile-label">Salt &amp; Green</div></div>
+          <div class="ptile pt5"><div class="ptile-label">Hallow Drift</div></div>
+          <div class="ptile pt6"><div class="ptile-label">The Pact</div></div>
+          <div class="ptile pt7"><div class="ptile-label">Blue Meridian</div></div>
+          <div class="ptile pt8"><div class="ptile-label">Lune</div></div>
+          <div class="ptile pt9"><div class="ptile-label">Crimson Hours</div></div>
+          <div class="ptile pt10"><div class="ptile-label">Quiet Storm</div></div>
+          <div class="ptile pt11"><div class="ptile-label">Amber Road</div></div>
+          <div class="ptile pt12"><div class="ptile-label">Deep State</div></div>
+          <div class="ptile pt13"><div class="ptile-label">Verdant</div></div>
+          <div class="ptile pt14"><div class="ptile-label">Nox</div></div>
+          <div class="ptile pt15"><div class="ptile-label">Ironhall</div></div>
+          <div class="ptile pt16"><div class="ptile-label">Dusk Letters</div></div>
+          <div class="ptile pt17"><div class="ptile-label">Copper Falls</div></div>
+          <div class="ptile pt18"><div class="ptile-label">Reef Dark</div></div>
+          <div class="ptile pt19"><div class="ptile-label">Red Veil</div></div>
+          <div class="ptile pt20"><div class="ptile-label">Obsidian</div></div>
+          <div class="ptile pt21"><div class="ptile-label">Pale Throne</div></div>
+          <div class="ptile pt22"><div class="ptile-label">Hallow Drift</div></div>
+          <div class="ptile pt23"><div class="ptile-label">The Pact</div></div>
+          <div class="ptile pt24"><div class="ptile-label">Blue Meridian</div></div>
         </div>
         <div class="hero-fade" aria-hidden="true"></div>
         <div class="hero-left">
           <div class="hero-left-inner">
-            <h1 class="h1" id="hero-title">Great stories,<br>every evening.</h1>
-            <p class="lead" style="margin-top:calc(var(--aura)*1);">Choose a Noctilume plan or bundle to start your night right.</p>
+            <h1 class="h1" id="hero-title">Evening stories,<br>beautifully told.</h1>
+            <p class="lead" style="margin-top:calc(var(--aura)*1);">One membership opens the full catalogue — originals, acclaimed films and live moments all in one place.</p>
             <div class="hero-offers" style="margin-top:calc(var(--aura)*1.5);">
               <div class="hero-offer">
-                <div class="hero-offer-label">Noctilume</div>
-                <span class="label-caps">Plans start at <strong style="font-size:1rem;color:var(--canvas-ink);">$8.99</strong>/month</span>
-                <a class="btn btn-ghost" href="#plans" style="width:fit-content;">Get Noctilume</a>
+                <div class="hero-offer-label">Noctilume alone</div>
+                <span class="label-caps">From <strong style="font-size:1rem;color:var(--canvas-ink);">$7.99</strong> a month</span>
+                <a class="btn btn-ghost" href="#plans" style="width:fit-content;">Explore plans</a>
               </div>
               <div class="hero-offer">
-                <div class="hero-offer-label">Noctilume Bundle</div>
-                <span class="label-caps">Plans start at <strong style="font-size:1rem;color:var(--canvas-ink);">$18.99</strong>/month</span>
-                <a class="btn btn-solid" href="#plans" style="width:fit-content;">Get the Bundle</a>
+                <div class="hero-offer-label">Noctilume + partners</div>
+                <span class="label-caps">From <strong style="font-size:1rem;color:var(--canvas-ink);">$16.99</strong> a month</span>
+                <a class="btn btn-solid" href="#partner-band" style="width:fit-content;">View trio bundle</a>
               </div>
             </div>
-            <p class="small hero-fine" style="margin-top:calc(var(--aura)*1);">Example pricing. Fictional demo only. Cancel anytime. Device and content availability may vary.</p>
+            <p class="small hero-fine" style="margin-top:calc(var(--aura)*1);">Example pricing. Fictional demo only. Cancel at any time. Availability may vary by region.</p>
           </div>
         </div>
       </section>
 
-      <section class="block wrap" aria-labelledby="stats-heading" id="stats">
+      <!-- Stats -->
+      <section class="block wrap" aria-labelledby="stats-heading" id="stats" style="padding-top:calc(var(--aura)*10);">
         <h2 class="sr" id="stats-heading">Why Noctilume — example figures</h2>
         <div class="stats-grid">
           <div>
-            <div class="stat-fig">40K+</div>
+            <div class="stat-fig">45K+</div>
             <div class="stat-lbl">fictional titles in the catalogue</div>
           </div>
           <div>
-            <div class="stat-fig">4K</div>
+            <div class="stat-fig">Crisp&nbsp;4K</div>
             <div class="stat-lbl">on select titles, example quality</div>
           </div>
           <div>
@@ -715,8 +943,9 @@
         </div>
       </section>
 
+      <!-- Features -->
       <section class="block wrap" aria-labelledby="features-heading" id="features">
-        <h2 class="h2" id="features-heading">What you get</h2>
+        <h2 class="h2" id="features-heading">What comes with every plan</h2>
         <div class="features-grid" style="margin-top:calc(var(--aura)*2);">
           <div class="feat-card">
             <div class="feat-icon" aria-hidden="true">
@@ -730,89 +959,99 @@
               <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="11" stroke="currentColor" stroke-width="1.6"/><path d="M14 8v7l4 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
             </div>
             <h3 class="h4">New titles every week</h3>
-            <p class="small" style="margin-top:calc(var(--aura)*0.5);color:var(--gray-11);">Original series, films and documentaries drop every Thursday evening. Example feature.</p>
+            <p class="small" style="margin-top:calc(var(--aura)*0.5);color:var(--gray-11);">Original series, films and documentaries arrive every Thursday evening. Example feature.</p>
           </div>
           <div class="feat-card">
             <div class="feat-icon" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M5 14h18M14 5v18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 5v12M9 13l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 21h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
             </div>
-            <h3 class="h4">Download and go</h3>
-            <p class="small" style="margin-top:calc(var(--aura)*0.5);color:var(--gray-11);">Save up to 100 titles for offline watching on select plans. Example feature for this demo.</p>
+            <h3 class="h4">Keep titles offline</h3>
+            <p class="small" style="margin-top:calc(var(--aura)*0.5);color:var(--gray-11);">Hold up to 80 titles on your device for viewing without a connection on higher plans. Example feature.</p>
           </div>
           <div class="feat-card">
             <div class="feat-icon" aria-hidden="true">
               <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M6 20L14 8l8 12H6z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
             </div>
             <h3 class="h4">Spatial audio</h3>
-            <p class="small" style="margin-top:calc(var(--aura)*0.5);color:var(--gray-11);">Immersive sound on select titles on premium plans. Example feature for this demo.</p>
+            <p class="small" style="margin-top:calc(var(--aura)*0.5);color:var(--gray-11);">Immersive sound on select titles on higher plans. Example feature for this demo.</p>
           </div>
         </div>
       </section>
 
+      <!-- Comparison table -->
       <section class="block wrap" aria-labelledby="compare-heading" id="compare">
-        <h2 class="h2" id="compare-heading">Plan comparison</h2>
-        <p class="lead" style="margin-top:calc(var(--aura)*0.75);">All pricing and features are fictional examples.</p>
+        <h2 class="h2" id="compare-heading">At a glance</h2>
+        <p class="lead" style="margin-top:calc(var(--aura)*0.75);">All pricing and features below are fictional examples.</p>
         <div class="tbl-wrap" tabindex="0" role="region" aria-labelledby="compare-caption">
           <table>
-            <caption class="sr" id="compare-caption">Plan comparison table, fiction</caption>
+            <caption class="sr" id="compare-caption">Plan comparison — fictional demo</caption>
             <thead>
               <tr>
                 <th scope="col">Feature</th>
-                <th scope="col">Starter</th>
-                <th scope="col">Standard</th>
-                <th scope="col">Premium</th>
+                <th scope="col">Dusk</th>
+                <th scope="col">Meridian</th>
+                <th scope="col">Zenith</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Monthly price (example)</td>
-                <td>$8.99</td>
-                <td>$14.99</td>
-                <td>$22.99</td>
+                <td>Monthly rate (example)</td>
+                <td>$7.99</td>
+                <td>$13.49</td>
+                <td>$19.49</td>
               </tr>
               <tr>
-                <td>Simultaneous streams</td>
-                <td>2</td>
-                <td>2</td>
-                <td>4</td>
+                <td>Screens at once</td>
+                <td>1</td>
+                <td>3</td>
+                <td>5</td>
               </tr>
               <tr>
-                <td>Video quality</td>
-                <td>HD</td>
-                <td>Full HD</td>
-                <td>4K HDR</td>
+                <td>Picture quality</td>
+                <td>Sharp HD</td>
+                <td>Crisp HD+</td>
+                <td>Ultra 4K HDR</td>
               </tr>
               <tr>
-                <td>Downloads</td>
-                <td><span class="tbl-badge tbl-badge-n">None</span></td>
-                <td><span class="tbl-badge tbl-badge-y">30 titles</span></td>
-                <td><span class="tbl-badge tbl-badge-y">100 titles</span></td>
+                <td>Offline titles</td>
+                <td><span class="tbl-badge tbl-badge-n">Not included</span></td>
+                <td><span class="tbl-badge tbl-badge-y">40 titles</span></td>
+                <td><span class="tbl-badge tbl-badge-y">80 titles</span></td>
               </tr>
               <tr>
                 <td>Spatial audio</td>
-                <td><span class="tbl-badge tbl-badge-n">No</span></td>
-                <td><span class="tbl-badge tbl-badge-n">No</span></td>
-                <td><span class="tbl-badge tbl-badge-y">Yes</span></td>
+                <td><span class="tbl-badge tbl-badge-n">Not included</span></td>
+                <td><span class="tbl-badge tbl-badge-n">Not included</span></td>
+                <td><span class="tbl-badge tbl-badge-y">Included</span></td>
               </tr>
               <tr>
-                <td>Live sports add-on</td>
-                <td><span class="tbl-badge tbl-badge-n">No</span></td>
-                <td><span class="tbl-badge tbl-badge-y">Available</span></td>
-                <td><span class="tbl-badge tbl-badge-y">Available</span></td>
+                <td>Live-events add-on</td>
+                <td><span class="tbl-badge tbl-badge-n">Not available</span></td>
+                <td><span class="tbl-badge tbl-badge-y">Optional</span></td>
+                <td><span class="tbl-badge tbl-badge-y">Optional</span></td>
               </tr>
             </tbody>
           </table>
         </div>
       </section>
 
+      <!-- Plans -->
       <section class="plan-section block" id="plans" aria-labelledby="plans-heading">
         <div class="wrap plan-heading-block">
-          <h2 class="h2" id="plans-heading">Choose your plan</h2>
+          <h2 class="h2" id="plans-heading">Pick your plan</h2>
+
+          <!-- Global billing-period toggle -->
+          <div class="period-toggle" role="group" aria-label="Billing period">
+            <button class="period-btn" type="button" data-period="monthly" aria-pressed="true">Monthly</button>
+            <button class="period-btn" type="button" data-period="yearly" aria-pressed="false">Yearly</button>
+          </div>
+
           <div class="tabs" role="tablist" aria-label="Plan type">
             <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-bundles" id="tab-bundles-btn" data-tab="bundles">Bundles</button>
             <button class="tab-btn" role="tab" aria-selected="true" aria-controls="tab-plans" id="tab-plans-btn" data-tab="plans">Plans</button>
           </div>
 
+          <!-- Bundles panel -->
           <div id="tab-bundles" role="tabpanel" aria-labelledby="tab-bundles-btn" hidden>
             <div class="plan-grid">
               <div class="plan-card">
@@ -822,20 +1061,20 @@
                 <ul class="plan-feat-list">
                   <li><svg class="icon-svg check-icon" viewBox="0 0 15 15"><path d="M11.47 3.72a.75.75 0 0 1 0 1.06L6.75 9.5 4.28 7.03a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0 0-1.06l-.06-.06z" fill="currentColor"/></svg>All Noctilume titles</li>
                   <li><svg class="icon-svg check-icon" viewBox="0 0 15 15"><path d="M11.47 3.72a.75.75 0 0 1 0 1.06L6.75 9.5 4.28 7.03a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0 0-1.06l-.06-.06z" fill="currentColor"/></svg>Dawncast originals</li>
-                  <li><svg class="icon-svg check-icon" viewBox="0 0 15 15"><path d="M11.47 3.72a.75.75 0 0 1 0 1.06L6.75 9.5 4.28 7.03a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0 0-1.06l-.06-.06z" fill="currentColor"/></svg>Stream on 2 devices</li>
+                  <li><svg class="icon-svg check-icon" viewBox="0 0 15 15"><path d="M11.47 3.72a.75.75 0 0 1 0 1.06L6.75 9.5 4.28 7.03a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0 0-1.06l-.06-.06z" fill="currentColor"/></svg>Watch together on 3 screens</li>
                 </ul>
                 <div class="plan-price-block">
-                  <div class="plan-price">$18.99 <span class="plan-price-unit">/month</span></div>
+                  <div class="plan-price" data-price="bundle-dc"><span data-price-val>$16.99</span> <span class="plan-price-unit" data-price-period>/month</span></div>
                   <div class="plan-or"><hr><span>OR</span><hr></div>
                   <div class="plan-yearly-row">
                     <div>
-                      <span class="plan-year-price">$179.99/yr</span>
-                      <span class="save-badge">SAVE $48</span>
+                      <span class="plan-year-price" data-yearly-price="bundle-dc">$161.99/yr</span>
+                      <span class="save-badge">SAVE $42</span>
                     </div>
-                    <button class="btn btn-solid" type="button" aria-pressed="false" data-plan-select="bundle-std-y">Select yearly</button>
+                    <button class="btn btn-solid" type="button" data-plan-select="bundle-dc-y">Confirm yearly</button>
                   </div>
                 </div>
-                <button class="btn btn-outline" type="button" aria-pressed="false" data-plan-select="bundle-std-m">Select monthly</button>
+                <button class="btn btn-outline" type="button" data-plan-select="bundle-dc-m">Confirm monthly</button>
                 <p class="small plan-choice" aria-live="polite"></p>
               </div>
               <div class="plan-card featured">
@@ -844,25 +1083,25 @@
                 <div class="plan-divider"></div>
                 <ul class="plan-feat-list">
                   <li><svg class="icon-svg check-icon" viewBox="0 0 15 15"><path d="M11.47 3.72a.75.75 0 0 1 0 1.06L6.75 9.5 4.28 7.03a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0 0-1.06l-.06-.06z" fill="currentColor"/></svg>All three services</li>
-                  <li><svg class="icon-svg check-icon" viewBox="0 0 15 15"><path d="M11.47 3.72a.75.75 0 0 1 0 1.06L6.75 9.5 4.28 7.03a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0 0-1.06l-.06-.06z" fill="currentColor"/></svg>Stream on 4 devices</li>
-                  <li><svg class="icon-svg check-icon" viewBox="0 0 15 15"><path d="M11.47 3.72a.75.75 0 0 1 0 1.06L6.75 9.5 4.28 7.03a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0 0-1.06l-.06-.06z" fill="currentColor"/></svg>4K on select titles</li>
+                  <li><svg class="icon-svg check-icon" viewBox="0 0 15 15"><path d="M11.47 3.72a.75.75 0 0 1 0 1.06L6.75 9.5 4.28 7.03a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0 0-1.06l-.06-.06z" fill="currentColor"/></svg>Watch together on 5 screens</li>
+                  <li><svg class="icon-svg check-icon" viewBox="0 0 15 15"><path d="M11.47 3.72a.75.75 0 0 1 0 1.06L6.75 9.5 4.28 7.03a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0 0-1.06l-.06-.06z" fill="currentColor"/></svg>Ultra 4K on select titles</li>
                 </ul>
                 <div class="addon-panel">
-                  <div class="label-caps" style="color:var(--genre-kicker);">Live sports add-on available</div>
-                  <div class="small" style="margin-top:4px;color:var(--gray-11);">Add live coverage from select leagues.</div>
+                  <div class="label-caps" style="color:var(--genre-kicker);">Live-events add-on available</div>
+                  <div class="small" style="margin-top:4px;color:var(--gray-11);">Add curated live coverage. Example add-on.</div>
                 </div>
                 <div class="plan-price-block">
-                  <div class="plan-price">$26.99 <span class="plan-price-unit">/month</span></div>
+                  <div class="plan-price" data-price="bundle-trio"><span data-price-val>$24.99</span> <span class="plan-price-unit" data-price-period>/month</span></div>
                   <div class="plan-or"><hr><span>OR</span><hr></div>
                   <div class="plan-yearly-row">
                     <div>
-                      <span class="plan-year-price">$259.99/yr</span>
-                      <span class="save-badge">SAVE $64</span>
+                      <span class="plan-year-price" data-yearly-price="bundle-trio">$239.99/yr</span>
+                      <span class="save-badge">SAVE $60</span>
                     </div>
-                    <button class="btn btn-solid" type="button" aria-pressed="false" data-plan-select="bundle-all-y">Select yearly</button>
+                    <button class="btn btn-solid" type="button" data-plan-select="bundle-trio-y">Confirm yearly</button>
                   </div>
                 </div>
-                <button class="btn btn-outline" type="button" aria-pressed="false" data-plan-select="bundle-all-m">Select monthly</button>
+                <button class="btn btn-outline" type="button" data-plan-select="bundle-trio-m">Confirm monthly</button>
                 <p class="small plan-choice" aria-live="polite"></p>
               </div>
               <div class="plan-card">
@@ -871,108 +1110,121 @@
                 <div class="plan-divider"></div>
                 <ul class="plan-feat-list">
                   <li><svg class="icon-svg check-icon" viewBox="0 0 15 15"><path d="M11.47 3.72a.75.75 0 0 1 0 1.06L6.75 9.5 4.28 7.03a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0 0-1.06l-.06-.06z" fill="currentColor"/></svg>Noctilume + Vela originals</li>
-                  <li><svg class="icon-svg check-icon" viewBox="0 0 15 15"><path d="M11.47 3.72a.75.75 0 0 1 0 1.06L6.75 9.5 4.28 7.03a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0 0-1.06l-.06-.06z" fill="currentColor"/></svg>Stream on 3 devices</li>
+                  <li><svg class="icon-svg check-icon" viewBox="0 0 15 15"><path d="M11.47 3.72a.75.75 0 0 1 0 1.06L6.75 9.5 4.28 7.03a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0 0-1.06l-.06-.06z" fill="currentColor"/></svg>Watch together on 3 screens</li>
                 </ul>
                 <div class="plan-price-block">
-                  <div class="plan-price">$32.99 <span class="plan-price-unit">/month</span></div>
+                  <div class="plan-price" data-price="bundle-nv"><span data-price-val>$20.99</span> <span class="plan-price-unit" data-price-period>/month</span></div>
                   <div class="plan-or"><hr><span>OR</span><hr></div>
                   <div class="plan-yearly-row">
                     <div>
-                      <span class="plan-year-price">$319.99/yr</span>
-                      <span class="save-badge">SAVE $76</span>
+                      <span class="plan-year-price" data-yearly-price="bundle-nv">$199.99/yr</span>
+                      <span class="save-badge">SAVE $52</span>
                     </div>
-                    <button class="btn btn-solid" type="button" aria-pressed="false" data-plan-select="bundle-nv-y">Select yearly</button>
+                    <button class="btn btn-solid" type="button" data-plan-select="bundle-nv-y">Confirm yearly</button>
                   </div>
                 </div>
-                <button class="btn btn-outline" type="button" aria-pressed="false" data-plan-select="bundle-nv-m">Select monthly</button>
+                <button class="btn btn-outline" type="button" data-plan-select="bundle-nv-m">Confirm monthly</button>
                 <p class="small plan-choice" aria-live="polite"></p>
               </div>
             </div>
           </div>
 
+          <!-- Plans panel -->
           <div id="tab-plans" role="tabpanel" aria-labelledby="tab-plans-btn">
             <div class="plan-grid" id="plans-grid">
+              <!-- Dusk -->
               <div class="plan-card">
-                <div class="label-caps">Starter · Example pricing</div>
-                <div class="h4" style="margin-top:calc(var(--aura)*0.5);">Starter with Ads</div>
+                <div class="label-caps">Dusk · Example pricing</div>
+                <div class="h4" style="margin-top:calc(var(--aura)*0.5);">Dusk</div>
                 <div class="plan-divider"></div>
                 <ul class="plan-feat-list">
-                  <li><svg class="icon-svg check-icon" viewBox="0 0 15 15"><path d="M11.47 3.72a.75.75 0 0 1 0 1.06L6.75 9.5 4.28 7.03a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0 0-1.06l-.06-.06z" fill="currentColor"/></svg>Stream on 2 devices</li>
-                  <li><svg class="icon-svg check-icon" viewBox="0 0 15 15"><path d="M11.47 3.72a.75.75 0 0 1 0 1.06L6.75 9.5 4.28 7.03a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0 0-1.06l-.06-.06z" fill="currentColor"/></svg>Full HD video</li>
+                  <li><svg class="icon-svg check-icon" viewBox="0 0 15 15"><path d="M11.47 3.72a.75.75 0 0 1 0 1.06L6.75 9.5 4.28 7.03a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0 0-1.06l-.06-.06z" fill="currentColor"/></svg>Watch on 1 screen at a time</li>
+                  <li><svg class="icon-svg check-icon" viewBox="0 0 15 15"><path d="M11.47 3.72a.75.75 0 0 1 0 1.06L6.75 9.5 4.28 7.03a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0 0-1.06l-.06-.06z" fill="currentColor"/></svg>Sharp HD picture</li>
                 </ul>
                 <div class="plan-price-block">
-                  <div class="label-caps">Plans start at — example pricing</div>
-                  <div class="plan-price" style="margin-top:4px;" id="starter-price">$8.99 <span class="plan-price-unit">/month</span></div>
+                  <div class="label-caps">From — example pricing</div>
+                  <div class="plan-price" style="margin-top:4px;">
+                    <span data-price-val id="dusk-price-val">$7.99</span>
+                    <span class="plan-price-unit" data-price-period id="dusk-price-period"> /month</span>
+                  </div>
                   <div style="margin-top:calc(var(--aura)*0.75);">
-                    <button class="btn btn-outline" type="button" style="width:100%;" data-period-btn="starter" data-period="monthly" aria-pressed="false">Select monthly</button>
+                    <button class="btn btn-outline" type="button" style="width:100%;" data-plan-select="dusk-m">Choose Dusk</button>
                   </div>
                   <div class="plan-or"><hr><span>OR</span><hr></div>
                   <div class="plan-yearly-row">
                     <div>
-                      <span class="plan-year-price" id="starter-year-price">$89.99/yr</span>
-                      <span class="save-badge">SAVE $18</span>
+                      <span class="plan-year-price" id="dusk-year-price">$79.99/yr</span>
+                      <span class="save-badge">SAVE $16</span>
                     </div>
-                    <button class="btn btn-solid" type="button" data-period-btn="starter" data-period="yearly" aria-pressed="false">Select yearly</button>
+                    <button class="btn btn-solid" type="button" data-plan-select="dusk-y">Confirm yearly</button>
                   </div>
                 </div>
                 <p class="small plan-choice" aria-live="polite"></p>
               </div>
+              <!-- Meridian -->
               <div class="plan-card featured">
-                <div class="label-caps">Standard · Most popular</div>
-                <div class="h4" style="margin-top:calc(var(--aura)*0.5);">Standard</div>
+                <div class="label-caps">Meridian · Most popular</div>
+                <div class="h4" style="margin-top:calc(var(--aura)*0.5);">Meridian</div>
                 <div class="plan-divider"></div>
                 <ul class="plan-feat-list">
-                  <li><svg class="icon-svg check-icon" viewBox="0 0 15 15"><path d="M11.47 3.72a.75.75 0 0 1 0 1.06L6.75 9.5 4.28 7.03a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0 0-1.06l-.06-.06z" fill="currentColor"/></svg>Stream on 2 devices</li>
-                  <li><svg class="icon-svg check-icon" viewBox="0 0 15 15"><path d="M11.47 3.72a.75.75 0 0 1 0 1.06L6.75 9.5 4.28 7.03a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0 0-1.06l-.06-.06z" fill="currentColor"/></svg>Full HD video</li>
-                  <li><svg class="icon-svg check-icon" viewBox="0 0 15 15"><path d="M11.47 3.72a.75.75 0 0 1 0 1.06L6.75 9.5 4.28 7.03a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0 0-1.06l-.06-.06z" fill="currentColor"/></svg>30 downloads</li>
+                  <li><svg class="icon-svg check-icon" viewBox="0 0 15 15"><path d="M11.47 3.72a.75.75 0 0 1 0 1.06L6.75 9.5 4.28 7.03a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0 0-1.06l-.06-.06z" fill="currentColor"/></svg>Watch together on 3 screens</li>
+                  <li><svg class="icon-svg check-icon" viewBox="0 0 15 15"><path d="M11.47 3.72a.75.75 0 0 1 0 1.06L6.75 9.5 4.28 7.03a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0 0-1.06l-.06-.06z" fill="currentColor"/></svg>Crisp HD+ picture</li>
+                  <li><svg class="icon-svg check-icon" viewBox="0 0 15 15"><path d="M11.47 3.72a.75.75 0 0 1 0 1.06L6.75 9.5 4.28 7.03a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0 0-1.06l-.06-.06z" fill="currentColor"/></svg>Hold 40 titles offline</li>
                 </ul>
                 <div class="addon-panel">
-                  <div class="label-caps" style="color:var(--genre-kicker);">Live sports add-on available</div>
-                  <div class="small" style="margin-top:4px;color:var(--gray-11);">Select leagues. Example add-on.</div>
+                  <div class="label-caps" style="color:var(--genre-kicker);">Live-events add-on available</div>
+                  <div class="small" style="margin-top:4px;color:var(--gray-11);">Curated live moments. Example add-on.</div>
                 </div>
                 <div class="plan-price-block">
-                  <div class="label-caps">Plans start at — example pricing</div>
-                  <div class="plan-price" style="margin-top:4px;" id="standard-price">$14.99 <span class="plan-price-unit">/month</span></div>
+                  <div class="label-caps">From — example pricing</div>
+                  <div class="plan-price" style="margin-top:4px;">
+                    <span data-price-val id="meridian-price-val">$13.49</span>
+                    <span class="plan-price-unit" data-price-period id="meridian-price-period"> /month</span>
+                  </div>
                   <div style="margin-top:calc(var(--aura)*0.75);">
-                    <button class="btn btn-outline" type="button" style="width:100%;" data-period-btn="standard" data-period="monthly" aria-pressed="false">Select monthly</button>
+                    <button class="btn btn-outline" type="button" style="width:100%;" data-plan-select="meridian-m">Choose Meridian</button>
                   </div>
                   <div class="plan-or"><hr><span>OR</span><hr></div>
                   <div class="plan-yearly-row">
                     <div>
-                      <span class="plan-year-price" id="standard-year-price">$149.99/yr</span>
-                      <span class="save-badge">SAVE $30</span>
+                      <span class="plan-year-price" id="meridian-year-price">$129.99/yr</span>
+                      <span class="save-badge">SAVE $32</span>
                     </div>
-                    <button class="btn btn-solid" type="button" data-period-btn="standard" data-period="yearly" aria-pressed="false">Select yearly</button>
+                    <button class="btn btn-solid" type="button" data-plan-select="meridian-y">Confirm yearly</button>
                   </div>
                 </div>
                 <p class="small plan-choice" aria-live="polite"></p>
               </div>
+              <!-- Zenith -->
               <div class="plan-card">
-                <div class="label-caps">Premium · Example pricing</div>
-                <div class="h4" style="margin-top:calc(var(--aura)*0.5);">Premium</div>
+                <div class="label-caps">Zenith · Example pricing</div>
+                <div class="h4" style="margin-top:calc(var(--aura)*0.5);">Zenith</div>
                 <div class="plan-divider"></div>
                 <ul class="plan-feat-list">
-                  <li><svg class="icon-svg check-icon" viewBox="0 0 15 15"><path d="M11.47 3.72a.75.75 0 0 1 0 1.06L6.75 9.5 4.28 7.03a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0 0-1.06l-.06-.06z" fill="currentColor"/></svg>Stream on 4 devices</li>
-                  <li><svg class="icon-svg check-icon" viewBox="0 0 15 15"><path d="M11.47 3.72a.75.75 0 0 1 0 1.06L6.75 9.5 4.28 7.03a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0 0-1.06l-.06-.06z" fill="currentColor"/></svg>4K HDR + spatial audio</li>
-                  <li><svg class="icon-svg check-icon" viewBox="0 0 15 15"><path d="M11.47 3.72a.75.75 0 0 1 0 1.06L6.75 9.5 4.28 7.03a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0 0-1.06l-.06-.06z" fill="currentColor"/></svg>100 downloads</li>
+                  <li><svg class="icon-svg check-icon" viewBox="0 0 15 15"><path d="M11.47 3.72a.75.75 0 0 1 0 1.06L6.75 9.5 4.28 7.03a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0 0-1.06l-.06-.06z" fill="currentColor"/></svg>Watch together on 5 screens</li>
+                  <li><svg class="icon-svg check-icon" viewBox="0 0 15 15"><path d="M11.47 3.72a.75.75 0 0 1 0 1.06L6.75 9.5 4.28 7.03a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0 0-1.06l-.06-.06z" fill="currentColor"/></svg>Ultra 4K HDR + spatial audio</li>
+                  <li><svg class="icon-svg check-icon" viewBox="0 0 15 15"><path d="M11.47 3.72a.75.75 0 0 1 0 1.06L6.75 9.5 4.28 7.03a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l5.25-5.25a.75.75 0 0 0 0-1.06l-.06-.06z" fill="currentColor"/></svg>Hold 80 titles offline</li>
                 </ul>
                 <div class="addon-panel">
-                  <div class="label-caps" style="color:var(--genre-kicker);">Live sports add-on available</div>
-                  <div class="small" style="margin-top:4px;color:var(--gray-11);">Select leagues. Example add-on.</div>
+                  <div class="label-caps" style="color:var(--genre-kicker);">Live-events add-on available</div>
+                  <div class="small" style="margin-top:4px;color:var(--gray-11);">Curated live moments. Example add-on.</div>
                 </div>
                 <div class="plan-price-block">
-                  <div class="label-caps">Plans start at — example pricing</div>
-                  <div class="plan-price" style="margin-top:4px;" id="premium-price">$22.99 <span class="plan-price-unit">/month</span></div>
+                  <div class="label-caps">From — example pricing</div>
+                  <div class="plan-price" style="margin-top:4px;">
+                    <span data-price-val id="zenith-price-val">$19.49</span>
+                    <span class="plan-price-unit" data-price-period id="zenith-price-period"> /month</span>
+                  </div>
                   <div style="margin-top:calc(var(--aura)*0.75);">
-                    <button class="btn btn-outline" type="button" style="width:100%;" data-period-btn="premium" data-period="monthly" aria-pressed="false">Select monthly</button>
+                    <button class="btn btn-outline" type="button" style="width:100%;" data-plan-select="zenith-m">Choose Zenith</button>
                   </div>
                   <div class="plan-or"><hr><span>OR</span><hr></div>
                   <div class="plan-yearly-row">
                     <div>
-                      <span class="plan-year-price" id="premium-year-price">$219.99/yr</span>
-                      <span class="save-badge">SAVE $56</span>
+                      <span class="plan-year-price" id="zenith-year-price">$187.99/yr</span>
+                      <span class="save-badge">SAVE $46</span>
                     </div>
-                    <button class="btn btn-solid" type="button" data-period-btn="premium" data-period="yearly" aria-pressed="false">Select yearly</button>
+                    <button class="btn btn-solid" type="button" data-plan-select="zenith-y">Confirm yearly</button>
                   </div>
                 </div>
                 <p class="small plan-choice" aria-live="polite"></p>
@@ -980,152 +1232,231 @@
             </div>
           </div>
 
-          <div class="student-link">
-            <a class="student-pill" href="#plans">
+          <div class="academic-link">
+            <a class="academic-pill" href="#plans">
               <svg class="icon-svg" viewBox="0 0 15 15" style="width:16px;height:16px;"><path d="M7.5 1L1 4.5l6.5 3 6.5-3L7.5 1zM1 7l6.5 3 6.5-3M1 10l6.5 3 6.5-3" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Save with our student discount
+              Academic rate available for enrolled students
               <svg class="icon-svg" viewBox="0 0 15 15" style="width:12px;height:12px;"><path d="M6 3l4 4.5L6 12" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
           </div>
-          <p class="small plan-fine">Savings shown are example figures comparing monthly vs. yearly billing. Prices are fictional and for demonstration only. Availability may vary.</p>
+          <p class="small plan-fine">Savings shown compare monthly vs. yearly billing. All pricing is fictional and for demonstration only. No purchase is possible here.</p>
         </div>
       </section>
 
+      <!-- Rail 1: Trending -->
       <section class="rail-section wrap" aria-labelledby="rail1-heading">
         <div class="rail-header">
-          <h2 class="h3" id="rail1-heading">Trending tonight</h2>
+          <h2 class="h3" id="rail1-heading">Lighting up tonight</h2>
           <p class="rail-subline">Top picks across the catalogue this week</p>
         </div>
         <div class="rail-scroll" role="list" aria-label="Trending titles">
-          <a class="rtile rtile-poster nt1" href="#" role="listitem"><span>Void Signal</span></a>
-          <a class="rtile rtile-poster nt2" href="#" role="listitem"><span>Pale Throne</span></a>
-          <a class="rtile rtile-poster nt3" href="#" role="listitem"><span>Ember Gate</span></a>
-          <a class="rtile rtile-poster nt4" href="#" role="listitem"><span>Salt &amp; Green</span></a>
-          <a class="rtile rtile-poster nt5" href="#" role="listitem"><span>Hallow Drift</span></a>
-          <a class="rtile rtile-poster nt6" href="#" role="listitem"><span>The Pact</span></a>
-          <a class="rtile rtile-poster nt7" href="#" role="listitem"><span>Blue Meridian</span></a>
-          <a class="rtile rtile-poster nt8" href="#" role="listitem"><span>Lune</span></a>
+          <a class="rtile rtile-poster nt1" href="#" role="listitem" aria-label="Void Signal"><div class="rtile-label">Void Signal</div></a>
+          <a class="rtile rtile-poster nt2" href="#" role="listitem" aria-label="Pale Throne"><div class="rtile-label">Pale Throne</div></a>
+          <a class="rtile rtile-poster nt3" href="#" role="listitem" aria-label="Ember Gate"><div class="rtile-label">Ember Gate</div></a>
+          <a class="rtile rtile-poster nt4" href="#" role="listitem" aria-label="Salt and Green"><div class="rtile-label">Salt &amp; Green</div></a>
+          <a class="rtile rtile-poster nt5" href="#" role="listitem" aria-label="Hallow Drift"><div class="rtile-label">Hallow Drift</div></a>
+          <a class="rtile rtile-poster nt6" href="#" role="listitem" aria-label="The Pact"><div class="rtile-label">The Pact</div></a>
+          <a class="rtile rtile-poster nt7" href="#" role="listitem" aria-label="Blue Meridian"><div class="rtile-label">Blue Meridian</div></a>
+          <a class="rtile rtile-poster nt8" href="#" role="listitem" aria-label="Lune"><div class="rtile-label">Lune</div></a>
         </div>
       </section>
 
+      <!-- Rail 2: Fresh arrivals -->
       <section class="rail-section wrap" aria-labelledby="rail2-heading">
         <div class="rail-header">
-          <h2 class="h3" id="rail2-heading">Fresh this month</h2>
-          <p class="rail-subline">Fresh arrivals — added this month</p>
+          <h2 class="h3" id="rail2-heading">Fresh arrivals</h2>
+          <p class="rail-subline">Just added to the catalogue this month</p>
         </div>
         <div class="rail-scroll" role="list" aria-label="New titles">
-          <a class="rtile rtile-wide nt9" href="#" role="listitem"><span>Crimson Hours</span></a>
-          <a class="rtile rtile-wide nt10" href="#" role="listitem"><span>Quiet Storm</span></a>
-          <a class="rtile rtile-wide nt11" href="#" role="listitem"><span>Amber Road</span></a>
-          <a class="rtile rtile-wide nt12" href="#" role="listitem"><span>Deep State</span></a>
-          <a class="rtile rtile-wide nt13" href="#" role="listitem"><span>Verdant</span></a>
-          <a class="rtile rtile-wide nt14" href="#" role="listitem"><span>Nox</span></a>
+          <a class="rtile rtile-wide nt9" href="#" role="listitem" aria-label="Crimson Hours"><div class="rtile-label">Crimson Hours</div></a>
+          <a class="rtile rtile-wide nt10" href="#" role="listitem" aria-label="Quiet Storm"><div class="rtile-label">Quiet Storm</div></a>
+          <a class="rtile rtile-wide nt11" href="#" role="listitem" aria-label="Amber Road"><div class="rtile-label">Amber Road</div></a>
+          <a class="rtile rtile-wide nt12" href="#" role="listitem" aria-label="Deep State"><div class="rtile-label">Deep State</div></a>
+          <a class="rtile rtile-wide nt13" href="#" role="listitem" aria-label="Verdant"><div class="rtile-label">Verdant</div></a>
+          <a class="rtile rtile-wide nt14" href="#" role="listitem" aria-label="Nox"><div class="rtile-label">Nox</div></a>
         </div>
       </section>
 
-      <section class="genre-band gb-series" aria-labelledby="gb-series-heading">
-        <div class="genre-band-fade" aria-hidden="true"></div>
-        <div class="genre-band-content wrap">
-          <p class="genre-kicker-label">Acclaimed</p>
-          <h2 class="genre-display" id="gb-series-heading">Series</h2>
-          <div class="rail-scroll" role="list" aria-label="Acclaimed series" style="margin-top:calc(var(--aura)*2);">
-            <a class="rtile rtile-poster nt1" href="#" role="listitem"><span>Void Signal</span></a>
-            <a class="rtile rtile-poster nt5" href="#" role="listitem"><span>Hallow Drift</span></a>
-            <a class="rtile rtile-poster nt9" href="#" role="listitem"><span>Crimson Hours</span></a>
-            <a class="rtile rtile-poster nt13" href="#" role="listitem"><span>Verdant</span></a>
-            <a class="rtile rtile-poster nt2" href="#" role="listitem"><span>Pale Throne</span></a>
-            <a class="rtile rtile-poster nt6" href="#" role="listitem"><span>The Pact</span></a>
+      <!-- Live-events band -->
+      <section class="live-band" aria-labelledby="live-heading" id="live-events">
+        <div class="wrap">
+          <div class="live-band-inner">
+            <div class="live-band-left">
+              <h2 class="live-band-heading" id="live-heading">Every moment,<br>as it happens.</h2>
+              <p class="live-band-para">Noctilume gathers the year's most anticipated live moments — from opening ceremonies to final whistles — so you never miss the ones that matter. Example feature.</p>
+              <p class="live-band-fine">Availability varies. Certain moments require an optional add-on. All descriptions are fictional and for demonstration only.</p>
+            </div>
+            <div class="live-art" aria-hidden="true">
+              <div class="live-art-ring"></div>
+            </div>
+          </div>
+          <!-- Event category tiles -->
+          <div class="evt-grid" aria-label="Event categories">
+            <div class="evt-tile">
+              <div class="evt-mark" style="background:linear-gradient(135deg,#2a1060,#0a0620);">❄</div>
+              <div class="evt-caption">Ice nights</div>
+            </div>
+            <div class="evt-tile">
+              <div class="evt-mark" style="background:linear-gradient(135deg,#0a2860,#040a20);">⬡</div>
+              <div class="evt-caption">Court classics</div>
+            </div>
+            <div class="evt-tile">
+              <div class="evt-mark" style="background:linear-gradient(135deg,#602008,#200a04);">◎</div>
+              <div class="evt-caption">Motor weekends</div>
+            </div>
+            <div class="evt-tile">
+              <div class="evt-mark" style="background:linear-gradient(135deg,#1a4010,#081604);">▲</div>
+              <div class="evt-caption">Clay courts</div>
+            </div>
+            <div class="evt-tile">
+              <div class="evt-mark" style="background:linear-gradient(135deg,#401040,#180608);">◈</div>
+              <div class="evt-caption">Ring cards</div>
+            </div>
+            <div class="evt-tile">
+              <div class="evt-mark" style="background:linear-gradient(135deg,#0a3060,#040e20);">⬟</div>
+              <div class="evt-caption">Cycling stages</div>
+            </div>
+            <div class="evt-tile">
+              <div class="evt-mark" style="background:linear-gradient(135deg,#403010,#160e04);">◉</div>
+              <div class="evt-caption">College gridiron</div>
+            </div>
+            <div class="evt-tile">
+              <div class="evt-mark" style="background:linear-gradient(135deg,#102840,#040e18);">◇</div>
+              <div class="evt-caption">Water speed</div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="genre-band gb-movies" aria-labelledby="gb-movies-heading">
-        <div class="genre-band-fade" aria-hidden="true"></div>
-        <div class="genre-band-content wrap">
-          <p class="genre-kicker-label">Hit</p>
-          <h2 class="genre-display" id="gb-movies-heading">Movies</h2>
-          <div class="rail-scroll" role="list" aria-label="Hit movies" style="margin-top:calc(var(--aura)*2);">
-            <a class="rtile rtile-poster nt3" href="#" role="listitem"><span>Ember Gate</span></a>
-            <a class="rtile rtile-poster nt7" href="#" role="listitem"><span>Blue Meridian</span></a>
-            <a class="rtile rtile-poster nt10" href="#" role="listitem"><span>Quiet Storm</span></a>
-            <a class="rtile rtile-poster nt14" href="#" role="listitem"><span>Nox</span></a>
-            <a class="rtile rtile-poster nt4" href="#" role="listitem"><span>Salt &amp; Green</span></a>
-            <a class="rtile rtile-poster nt8" href="#" role="listitem"><span>Lune</span></a>
-          </div>
-        </div>
-      </section>
-
-      <section class="genre-band gb-shows" aria-labelledby="gb-shows-heading">
-        <div class="genre-band-fade" aria-hidden="true"></div>
-        <div class="genre-band-content wrap">
-          <p class="genre-kicker-label">Favourite</p>
-          <h2 class="genre-display" id="gb-shows-heading">Shows</h2>
-          <div class="rail-scroll" role="list" aria-label="Favourite shows" style="margin-top:calc(var(--aura)*2);">
-            <a class="rtile rtile-poster nt11" href="#" role="listitem"><span>Amber Road</span></a>
-            <a class="rtile rtile-poster nt15" href="#" role="listitem"><span>Ironhall</span></a>
-            <a class="rtile rtile-poster nt6" href="#" role="listitem"><span>The Pact</span></a>
-            <a class="rtile rtile-poster nt2" href="#" role="listitem"><span>Pale Throne</span></a>
-            <a class="rtile rtile-poster nt9" href="#" role="listitem"><span>Crimson Hours</span></a>
-            <a class="rtile rtile-poster nt14" href="#" role="listitem"><span>Nox</span></a>
-          </div>
-        </div>
-      </section>
-
-      <section class="genre-band gb-family" aria-labelledby="gb-family-heading">
-        <div class="genre-band-fade" aria-hidden="true"></div>
-        <div class="genre-band-content wrap">
-          <p class="genre-kicker-label">Quality</p>
-          <h2 class="genre-display" id="gb-family-heading">Family</h2>
-          <div class="rail-scroll" role="list" aria-label="Family titles" style="margin-top:calc(var(--aura)*2);">
-            <a class="rtile rtile-poster nt4" href="#" role="listitem"><span>Salt &amp; Green</span></a>
-            <a class="rtile rtile-poster nt12" href="#" role="listitem"><span>Deep State</span></a>
-            <a class="rtile rtile-poster nt7" href="#" role="listitem"><span>Blue Meridian</span></a>
-            <a class="rtile rtile-poster nt13" href="#" role="listitem"><span>Verdant</span></a>
-            <a class="rtile rtile-poster nt1" href="#" role="listitem"><span>Void Signal</span></a>
-            <a class="rtile rtile-poster nt5" href="#" role="listitem"><span>Hallow Drift</span></a>
-          </div>
-        </div>
-      </section>
-
-      <section class="carousel-section wrap" aria-labelledby="carousel-heading" id="genre-carousel">
-        <p class="carousel-eyebrow">Discover the best in</p>
-        <div
-          class="carousel-stage"
-          role="region"
-          aria-roledescription="carousel"
-          aria-label="Genre carousel"
-          aria-live="polite"
-          aria-atomic="true"
-        >
-          <div class="carousel-row">
-            <button class="btn btn-icon" type="button" id="carousel-prev" aria-label="Previous genre" aria-disabled="true">
-              <svg class="icon-svg" viewBox="0 0 15 15" style="width:1.1em;height:1.1em;"><path d="M9 3L5 7.5 9 12" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <div class="carousel-track-wrap" style="flex:1; overflow:hidden;">
-              <div class="carousel-track" id="carousel-track">
-                <div class="carousel-item" aria-hidden="true"><div class="carousel-word prev-word" id="carousel-prev-label"></div></div>
-                <div class="carousel-item"><div class="carousel-word" id="carousel-current-label" aria-live="polite"></div></div>
-                <div class="carousel-item" aria-hidden="true"><div class="carousel-word next-word" id="carousel-next-label"></div></div>
+      <!-- Partner-trio band -->
+      <section class="partner-band" aria-labelledby="partner-heading" id="partner-band">
+        <div class="wrap">
+          <div class="partner-band-inner">
+            <div>
+              <div class="partner-wordmarks">
+                <span class="partner-mark">Noctilume</span>
+                <span class="partner-mark">Dawncast</span>
+                <span class="partner-mark">Vela</span>
+              </div>
+              <h2 class="partner-heading" id="partner-heading">Three great services,<br>one effortless login.</h2>
+              <p class="partner-desc">Pair Noctilume with Dawncast and Vela under a single account and uncover an even wider world of original stories, curated films and live moments — all at an example combined rate.</p>
+              <div class="partner-cta-row">
+                <a class="btn-partner" href="#plans">Explore the trio bundle</a>
               </div>
             </div>
-            <button class="btn btn-icon" type="button" id="carousel-next" aria-label="Next genre">
-              <svg class="icon-svg" viewBox="0 0 15 15" style="width:1.1em;height:1.1em;"><path d="M6 3l4 4.5L6 12" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-          </div>
-          <div class="carousel-grid" id="carousel-grid" role="list" aria-label="Genre titles">
-            <div class="carousel-tile cg1" role="listitem"><span>Void Signal</span></div>
-            <div class="carousel-tile cg2" role="listitem"><span>Pale Throne</span></div>
-            <div class="carousel-tile cg3" role="listitem"><span>Ember Gate</span></div>
-            <div class="carousel-tile cg4" role="listitem"><span>Salt &amp; Green</span></div>
-            <div class="carousel-tile cg5" role="listitem"><span>Hallow Drift</span></div>
-            <div class="carousel-tile cg6" role="listitem"><span>The Pact</span></div>
+            <div class="partner-poster-grid" aria-hidden="true">
+              <div class="partner-poster pp1"><div class="partner-poster-label">Void Signal</div></div>
+              <div class="partner-poster pp2"><div class="partner-poster-label">Pale Throne</div></div>
+              <div class="partner-poster pp3"><div class="partner-poster-label">Hallow Drift</div></div>
+              <div class="partner-poster pp4"><div class="partner-poster-label">Crimson Hours</div></div>
+              <div class="partner-poster pp5"><div class="partner-poster-label">Copper Falls</div></div>
+              <div class="partner-poster pp6"><div class="partner-poster-label">Reef Dark</div></div>
+            </div>
           </div>
         </div>
       </section>
 
+      <!-- Genre bands -->
+      <section class="genre-band gb-arcs" aria-labelledby="gb-arcs-heading">
+        <div class="genre-band-fade" aria-hidden="true"></div>
+        <div class="genre-band-content wrap">
+          <p class="genre-kicker-label">Essential</p>
+          <h2 class="genre-display" id="gb-arcs-heading">Arcs</h2>
+          <div class="rail-scroll" role="list" aria-label="Essential arcs" style="margin-top:calc(var(--aura)*2);">
+            <a class="rtile rtile-poster nt1" href="#" role="listitem" aria-label="Void Signal"><div class="rtile-label">Void Signal</div></a>
+            <a class="rtile rtile-poster nt5" href="#" role="listitem" aria-label="Hallow Drift"><div class="rtile-label">Hallow Drift</div></a>
+            <a class="rtile rtile-poster nt9" href="#" role="listitem" aria-label="Crimson Hours"><div class="rtile-label">Crimson Hours</div></a>
+            <a class="rtile rtile-poster nt13" href="#" role="listitem" aria-label="Verdant"><div class="rtile-label">Verdant</div></a>
+            <a class="rtile rtile-poster nt2" href="#" role="listitem" aria-label="Pale Throne"><div class="rtile-label">Pale Throne</div></a>
+            <a class="rtile rtile-poster nt6" href="#" role="listitem" aria-label="The Pact"><div class="rtile-label">The Pact</div></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="genre-band gb-films" aria-labelledby="gb-films-heading">
+        <div class="genre-band-fade" aria-hidden="true"></div>
+        <div class="genre-band-content wrap">
+          <p class="genre-kicker-label">Celebrated</p>
+          <h2 class="genre-display" id="gb-films-heading">Films</h2>
+          <div class="rail-scroll" role="list" aria-label="Celebrated films" style="margin-top:calc(var(--aura)*2);">
+            <a class="rtile rtile-poster nt3" href="#" role="listitem" aria-label="Ember Gate"><div class="rtile-label">Ember Gate</div></a>
+            <a class="rtile rtile-poster nt7" href="#" role="listitem" aria-label="Blue Meridian"><div class="rtile-label">Blue Meridian</div></a>
+            <a class="rtile rtile-poster nt10" href="#" role="listitem" aria-label="Quiet Storm"><div class="rtile-label">Quiet Storm</div></a>
+            <a class="rtile rtile-poster nt14" href="#" role="listitem" aria-label="Nox"><div class="rtile-label">Nox</div></a>
+            <a class="rtile rtile-poster nt4" href="#" role="listitem" aria-label="Salt and Green"><div class="rtile-label">Salt &amp; Green</div></a>
+            <a class="rtile rtile-poster nt8" href="#" role="listitem" aria-label="Lune"><div class="rtile-label">Lune</div></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="genre-band gb-nocturne" aria-labelledby="gb-nocturne-heading">
+        <div class="genre-band-fade" aria-hidden="true"></div>
+        <div class="genre-band-content wrap">
+          <p class="genre-kicker-label">Unmissable</p>
+          <h2 class="genre-display" id="gb-nocturne-heading">Nocturne</h2>
+          <div class="rail-scroll" role="list" aria-label="Unmissable nocturne titles" style="margin-top:calc(var(--aura)*2);">
+            <a class="rtile rtile-poster nt11" href="#" role="listitem" aria-label="Amber Road"><div class="rtile-label">Amber Road</div></a>
+            <a class="rtile rtile-poster nt15" href="#" role="listitem" aria-label="Ironhall"><div class="rtile-label">Ironhall</div></a>
+            <a class="rtile rtile-poster nt6" href="#" role="listitem" aria-label="The Pact"><div class="rtile-label">The Pact</div></a>
+            <a class="rtile rtile-poster nt2" href="#" role="listitem" aria-label="Pale Throne"><div class="rtile-label">Pale Throne</div></a>
+            <a class="rtile rtile-poster nt9" href="#" role="listitem" aria-label="Crimson Hours"><div class="rtile-label">Crimson Hours</div></a>
+            <a class="rtile rtile-poster nt14" href="#" role="listitem" aria-label="Nox"><div class="rtile-label">Nox</div></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="genre-band gb-wonder" aria-labelledby="gb-wonder-heading">
+        <div class="genre-band-fade" aria-hidden="true"></div>
+        <div class="genre-band-content wrap">
+          <p class="genre-kicker-label">For every eye</p>
+          <h2 class="genre-display" id="gb-wonder-heading">Wonder</h2>
+          <div class="rail-scroll" role="list" aria-label="Wonder titles" style="margin-top:calc(var(--aura)*2);">
+            <a class="rtile rtile-poster nt4" href="#" role="listitem" aria-label="Salt and Green"><div class="rtile-label">Salt &amp; Green</div></a>
+            <a class="rtile rtile-poster nt12" href="#" role="listitem" aria-label="Deep State"><div class="rtile-label">Deep State</div></a>
+            <a class="rtile rtile-poster nt7" href="#" role="listitem" aria-label="Blue Meridian"><div class="rtile-label">Blue Meridian</div></a>
+            <a class="rtile rtile-poster nt13" href="#" role="listitem" aria-label="Verdant"><div class="rtile-label">Verdant</div></a>
+            <a class="rtile rtile-poster nt1" href="#" role="listitem" aria-label="Void Signal"><div class="rtile-label">Void Signal</div></a>
+            <a class="rtile rtile-poster nt5" href="#" role="listitem" aria-label="Hallow Drift"><div class="rtile-label">Hallow Drift</div></a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Genre carousel -->
+      <section class="carousel-section wrap" aria-labelledby="carousel-section-heading" id="genre-carousel">
+        <h2 class="carousel-eyebrow" id="carousel-section-heading">Mood and genre</h2>
+        <div
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Mood and genre carousel"
+        >
+          <!-- Arrow row with moving big word in centre -->
+          <div class="carousel-row">
+            <button class="btn btn-icon" type="button" id="carousel-prev"
+              aria-label="Previous genre" aria-disabled="true">
+              <svg class="icon-svg" viewBox="0 0 15 15" style="width:1.1em;height:1.1em;" aria-hidden="true"><path d="M9 3L5 7.5 9 12" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="carousel-track-wrap" aria-hidden="true">
+              <div class="carousel-track" id="carousel-track">
+                <!-- items injected by JS -->
+              </div>
+            </div>
+            <button class="btn btn-icon" type="button" id="carousel-next"
+              aria-label="Next genre">
+              <svg class="icon-svg" viewBox="0 0 15 15" style="width:1.1em;height:1.1em;" aria-hidden="true"><path d="M6 3l4 4.5L6 12" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+          <!-- Live status line: current genre name + position -->
+          <p class="carousel-status" id="carousel-current-label" aria-live="polite" aria-atomic="true"></p>
+          <!-- Tile grid synced with current genre -->
+          <div class="carousel-grid" id="carousel-grid" role="list" aria-label="Titles in this genre">
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact form -->
       <section class="block wrap" aria-labelledby="form-heading" id="contact">
         <h2 class="h2" id="form-heading">Stay in the loop</h2>
-        <p class="lead" style="margin-top:calc(var(--aura)*0.75);">Get updates about new titles and features.</p>
+        <p class="lead" style="margin-top:calc(var(--aura)*0.75);">Hear about new arrivals and upcoming features first.</p>
         <div class="form-block">
           <form novalidate data-contact>
             <div class="field-row">
@@ -1133,7 +1464,7 @@
               <input class="field-input" id="contact-name" name="name" type="text" autocomplete="name" placeholder="Your name" />
             </div>
             <div class="field-row">
-              <label class="field-label" for="contact-email">Email</label>
+              <label class="field-label" for="contact-email">Email address</label>
               <input class="field-input" id="contact-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" aria-describedby="contact-msg" />
             </div>
             <div style="margin-top:calc(var(--aura)*1.5);">
@@ -1144,52 +1475,53 @@
         </div>
       </section>
 
+      <!-- FAQ -->
       <section class="faq-section wrap" aria-labelledby="faq-heading" id="faq">
         <div class="faq-heading">
-          <h2 class="h2" id="faq-heading">Got questions?</h2>
+          <h2 class="h2" id="faq-heading">Common questions</h2>
         </div>
         <div class="faq-list">
           <div class="faq-item">
-            <h3 style="margin:0;"><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-p1" id="faq-q1">Can I download titles to watch offline?<svg class="faq-icon icon-svg" viewBox="0 0 15 15" aria-hidden="true"><path d="M3.13523 6.15803C3.3241 5.95657 3.64052 5.94637 3.84197 6.13523L7.5 9.56464L11.158 6.13523C11.3595 5.94637 11.6759 5.95657 11.8648 6.15803C12.0536 6.35949 12.0434 6.67591 11.842 6.86477L7.84197 10.6148C7.64964 10.7951 7.35036 10.7951 7.15803 10.6148L3.15803 6.86477C2.95657 6.67591 2.94637 6.35949 3.13523 6.15803Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg></button></h3>
-            <div class="faq-panel" id="faq-p1" role="region" aria-labelledby="faq-q1"><div class="faq-inner"><p class="faq-answer">Yes — Standard and Premium plan subscribers in this demo can save up to 30 or 100 titles respectively for offline playback. Downloads are tied to the device you saved them on and expire after a fictional 30-day window. Starter with Ads does not include offline downloads.</p></div></div>
+            <h3 style="margin:0;"><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-p1" id="faq-q1">Can I hold titles on my device for later?<svg class="faq-icon icon-svg" viewBox="0 0 15 15" aria-hidden="true"><path d="M3.13523 6.15803C3.3241 5.95657 3.64052 5.94637 3.84197 6.13523L7.5 9.56464L11.158 6.13523C11.3595 5.94637 11.6759 5.95657 11.8648 6.15803C12.0536 6.35949 12.0434 6.67591 11.842 6.86477L7.84197 10.6148C7.64964 10.7951 7.35036 10.7951 7.15803 10.6148L3.15803 6.86477C2.95657 6.67591 2.94637 6.35949 3.13523 6.15803Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg></button></h3>
+            <div class="faq-panel" id="faq-p1" role="region" aria-labelledby="faq-q1"><div class="faq-inner"><p class="faq-answer">Yes — in this demo, Meridian subscribers can keep up to 40 titles on their device, and Zenith subscribers up to 80 titles. Dusk does not include offline saving. Held titles expire after a fictional 30-day window and are linked to the device they were saved on.</p></div></div>
           </div>
           <div class="faq-item">
-            <h3 style="margin:0;"><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-p2" id="faq-q2">Can different people in my household each have their own profile?<svg class="faq-icon icon-svg" viewBox="0 0 15 15" aria-hidden="true"><path d="M3.13523 6.15803C3.3241 5.95657 3.64052 5.94637 3.84197 6.13523L7.5 9.56464L11.158 6.13523C11.3595 5.94637 11.6759 5.95657 11.8648 6.15803C12.0536 6.35949 12.0434 6.67591 11.842 6.86477L7.84197 10.6148C7.64964 10.7951 7.35036 10.7951 7.15803 10.6148L3.15803 6.86477C2.95657 6.67591 2.94637 6.35949 3.13523 6.15803Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg></button></h3>
-            <div class="faq-panel" id="faq-p2" role="region" aria-labelledby="faq-q2"><div class="faq-inner"><p class="faq-answer">Every plan in this demo supports multiple viewer profiles under one account. Each profile keeps its own watch history and recommendations separate. Standard and Premium plans allow up to five profiles; Starter with Ads allows two. All profile data shown here is fictional.</p></div></div>
+            <h3 style="margin:0;"><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-p2" id="faq-q2">Can everyone in my household have their own profile?<svg class="faq-icon icon-svg" viewBox="0 0 15 15" aria-hidden="true"><path d="M3.13523 6.15803C3.3241 5.95657 3.64052 5.94637 3.84197 6.13523L7.5 9.56464L11.158 6.13523C11.3595 5.94637 11.6759 5.95657 11.8648 6.15803C12.0536 6.35949 12.0434 6.67591 11.842 6.86477L7.84197 10.6148C7.64964 10.7951 7.35036 10.7951 7.15803 10.6148L3.15803 6.86477C2.95657 6.67591 2.94637 6.35949 3.13523 6.15803Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg></button></h3>
+            <div class="faq-panel" id="faq-p2" role="region" aria-labelledby="faq-q2"><div class="faq-inner"><p class="faq-answer">Every plan in this demo supports multiple viewer profiles under one account. Each profile keeps its own watch history and recommendations separate. Meridian and Zenith allow up to five profiles; Dusk allows two. All profile data shown here is fictional.</p></div></div>
           </div>
           <div class="faq-item">
             <h3 style="margin:0;"><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-p3" id="faq-q3">What does "example pricing" mean on this page?<svg class="faq-icon icon-svg" viewBox="0 0 15 15" aria-hidden="true"><path d="M3.13523 6.15803C3.3241 5.95657 3.64052 5.94637 3.84197 6.13523L7.5 9.56464L11.158 6.13523C11.3595 5.94637 11.6759 5.95657 11.8648 6.15803C12.0536 6.35949 12.0434 6.67591 11.842 6.86477L7.84197 10.6148C7.64964 10.7951 7.35036 10.7951 7.15803 10.6148L3.15803 6.86477C2.95657 6.67591 2.94637 6.35949 3.13523 6.15803Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg></button></h3>
-            <div class="faq-panel" id="faq-p3" role="region" aria-labelledby="faq-q3"><div class="faq-inner"><p class="faq-answer">Every price on this page — monthly rates, yearly totals and savings badges — is invented for demonstration purposes. Noctilume is a design showcase, not a real service. No purchase is possible and no payment information is ever collected here.</p></div></div>
+            <div class="faq-panel" id="faq-p3" role="region" aria-labelledby="faq-q3"><div class="faq-inner"><p class="faq-answer">Every rate on this page — monthly, yearly and savings badges — is invented for illustration. Noctilume is a design showcase, not a real service. No purchase is possible here and no payment data is ever collected.</p></div></div>
           </div>
           <div class="faq-item">
-            <h3 style="margin:0;"><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-p4" id="faq-q4">Does Noctilume support captions and audio description?<svg class="faq-icon icon-svg" viewBox="0 0 15 15" aria-hidden="true"><path d="M3.13523 6.15803C3.3241 5.95657 3.64052 5.94637 3.84197 6.13523L7.5 9.56464L11.158 6.13523C11.3595 5.94637 11.6759 5.95657 11.8648 6.15803C12.0536 6.35949 12.0434 6.67591 11.842 6.86477L7.84197 10.6148C7.64964 10.7951 7.35036 10.7951 7.15803 10.6148L3.15803 6.86477C2.95657 6.67591 2.94637 6.35949 3.13523 6.15803Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg></button></h3>
-            <div class="faq-panel" id="faq-p4" role="region" aria-labelledby="faq-q4"><div class="faq-inner"><p class="faq-answer">In this fictional demo, all titles include closed captions and subtitles in multiple languages. Audio description tracks for viewers who are blind or have low vision are available on a growing portion of the catalogue. Caption size, colour and background can all be adjusted from the player settings — depicted here as example accessibility features.</p></div></div>
+            <h3 style="margin:0;"><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-p4" id="faq-q4">Are captions and audio description available?<svg class="faq-icon icon-svg" viewBox="0 0 15 15" aria-hidden="true"><path d="M3.13523 6.15803C3.3241 5.95657 3.64052 5.94637 3.84197 6.13523L7.5 9.56464L11.158 6.13523C11.3595 5.94637 11.6759 5.95657 11.8648 6.15803C12.0536 6.35949 12.0434 6.67591 11.842 6.86477L7.84197 10.6148C7.64964 10.7951 7.35036 10.7951 7.15803 10.6148L3.15803 6.86477C2.95657 6.67591 2.94637 6.35949 3.13523 6.15803Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg></button></h3>
+            <div class="faq-panel" id="faq-p4" role="region" aria-labelledby="faq-q4"><div class="faq-inner"><p class="faq-answer">In this fictional demo, all titles carry closed captions and subtitles in multiple languages. Audio description tracks for viewers who are blind or have low vision cover a growing portion of the catalogue. Caption size, colour and background are all adjustable from the player settings — depicted here as example accessibility features.</p></div></div>
           </div>
           <div class="faq-item">
-            <h3 style="margin:0;"><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-p5" id="faq-q5">Can I switch between monthly and yearly billing after I sign up?<svg class="faq-icon icon-svg" viewBox="0 0 15 15" aria-hidden="true"><path d="M3.13523 6.15803C3.3241 5.95657 3.64052 5.94637 3.84197 6.13523L7.5 9.56464L11.158 6.13523C11.3595 5.94637 11.6759 5.95657 11.8648 6.15803C12.0536 6.35949 12.0434 6.67591 11.842 6.86477L7.84197 10.6148C7.64964 10.7951 7.35036 10.7951 7.15803 10.6148L3.15803 6.86477C2.95657 6.67591 2.94637 6.35949 3.13523 6.15803Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg></button></h3>
-            <div class="faq-panel" id="faq-p5" role="region" aria-labelledby="faq-q5"><div class="faq-inner"><p class="faq-answer">Yes — in this demo scenario you can move from monthly to yearly billing at any time and the lower rate would apply from the next billing date. Switching from yearly back to monthly takes effect once the current annual period ends. All billing logic shown here is illustrative only.</p></div></div>
+            <h3 style="margin:0;"><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-p5" id="faq-q5">Can I move between monthly and yearly billing?<svg class="faq-icon icon-svg" viewBox="0 0 15 15" aria-hidden="true"><path d="M3.13523 6.15803C3.3241 5.95657 3.64052 5.94637 3.84197 6.13523L7.5 9.56464L11.158 6.13523C11.3595 5.94637 11.6759 5.95657 11.8648 6.15803C12.0536 6.35949 12.0434 6.67591 11.842 6.86477L7.84197 10.6148C7.64964 10.7951 7.35036 10.7951 7.15803 10.6148L3.15803 6.86477C2.95657 6.67591 2.94637 6.35949 3.13523 6.15803Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg></button></h3>
+            <div class="faq-panel" id="faq-p5" role="region" aria-labelledby="faq-q5"><div class="faq-inner"><p class="faq-answer">In this demo scenario you can move from monthly to yearly billing at any time and the lower rate would apply from your next billing date. Switching from yearly back to monthly takes effect once the current annual period ends. All billing logic shown here is illustrative only.</p></div></div>
           </div>
           <div class="faq-item">
-            <h3 style="margin:0;"><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-p6" id="faq-q6">When do new titles drop each week?<svg class="faq-icon icon-svg" viewBox="0 0 15 15" aria-hidden="true"><path d="M3.13523 6.15803C3.3241 5.95657 3.64052 5.94637 3.84197 6.13523L7.5 9.56464L11.158 6.13523C11.3595 5.94637 11.6759 5.95657 11.8648 6.15803C12.0536 6.35949 12.0434 6.67591 11.842 6.86477L7.84197 10.6148C7.64964 10.7951 7.35036 10.7951 7.15803 10.6148L3.15803 6.86477C2.95657 6.67591 2.94637 6.35949 3.13523 6.15803Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg></button></h3>
+            <h3 style="margin:0;"><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-p6" id="faq-q6">When do new titles become available?<svg class="faq-icon icon-svg" viewBox="0 0 15 15" aria-hidden="true"><path d="M3.13523 6.15803C3.3241 5.95657 3.64052 5.94637 3.84197 6.13523L7.5 9.56464L11.158 6.13523C11.3595 5.94637 11.6759 5.95657 11.8648 6.15803C12.0536 6.35949 12.0434 6.67591 11.842 6.86477L7.84197 10.6148C7.64964 10.7951 7.35036 10.7951 7.15803 10.6148L3.15803 6.86477C2.95657 6.67591 2.94637 6.35949 3.13523 6.15803Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg></button></h3>
             <div class="faq-panel" id="faq-p6" role="region" aria-labelledby="faq-q6"><div class="faq-inner"><p class="faq-answer">New originals and licensed titles in this fictional service arrive every Thursday evening. A smaller mid-week drop of bonus episodes and short-form content lands on Tuesdays. The schedule shown throughout this page is entirely made up for demonstration purposes.</p></div></div>
           </div>
           <div class="faq-item">
-            <h3 style="margin:0;"><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-p7" id="faq-q7">Can I pause my plan instead of cancelling?<svg class="faq-icon icon-svg" viewBox="0 0 15 15" aria-hidden="true"><path d="M3.13523 6.15803C3.3241 5.95657 3.64052 5.94637 3.84197 6.13523L7.5 9.56464L11.158 6.13523C11.3595 5.94637 11.6759 5.95657 11.8648 6.15803C12.0536 6.35949 12.0434 6.67591 11.842 6.86477L7.84197 10.6148C7.64964 10.7951 7.35036 10.7951 7.15803 10.6148L3.15803 6.86477C2.95657 6.67591 2.94637 6.35949 3.13523 6.15803Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg></button></h3>
-            <div class="faq-panel" id="faq-p7" role="region" aria-labelledby="faq-q7"><div class="faq-inner"><p class="faq-answer">In this demo scenario, monthly subscribers can pause their plan for up to three months per year. Billing stops during the pause and your profiles, downloads and watchlist are held until you resume. Yearly subscribers can pause for up to six weeks. Pausing is depicted here as a fictional convenience feature.</p></div></div>
+            <h3 style="margin:0;"><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-p7" id="faq-q7">Can I pause rather than cancel?<svg class="faq-icon icon-svg" viewBox="0 0 15 15" aria-hidden="true"><path d="M3.13523 6.15803C3.3241 5.95657 3.64052 5.94637 3.84197 6.13523L7.5 9.56464L11.158 6.13523C11.3595 5.94637 11.6759 5.95657 11.8648 6.15803C12.0536 6.35949 12.0434 6.67591 11.842 6.86477L7.84197 10.6148C7.64964 10.7951 7.35036 10.7951 7.15803 10.6148L3.15803 6.86477C2.95657 6.67591 2.94637 6.35949 3.13523 6.15803Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg></button></h3>
+            <div class="faq-panel" id="faq-p7" role="region" aria-labelledby="faq-q7"><div class="faq-inner"><p class="faq-answer">In this demo scenario, monthly subscribers can pause their plan for up to three months per year. Billing stops during the pause and your profiles, saved titles and watchlist are held until you resume. Yearly subscribers can pause for up to six weeks. Pausing is depicted here as a fictional convenience feature.</p></div></div>
           </div>
           <div class="faq-item">
-            <h3 style="margin:0;"><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-p8" id="faq-q8">What is included in a Noctilume bundle?<svg class="faq-icon icon-svg" viewBox="0 0 15 15" aria-hidden="true"><path d="M3.13523 6.15803C3.3241 5.95657 3.64052 5.94637 3.84197 6.13523L7.5 9.56464L11.158 6.13523C11.3595 5.94637 11.6759 5.95657 11.8648 6.15803C12.0536 6.35949 12.0434 6.67591 11.842 6.86477L7.84197 10.6148C7.64964 10.7951 7.35036 10.7951 7.15803 10.6148L3.15803 6.86477C2.95657 6.67591 2.94637 6.35949 3.13523 6.15803Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg></button></h3>
-            <div class="faq-panel" id="faq-p8" role="region" aria-labelledby="faq-q8"><div class="faq-inner"><p class="faq-answer">Bundles in this demo pair Noctilume with one or both fictional partner services — Dawncast and Vela — under a single login and a combined example price. The triple bundle adds 4K HDR, up to four simultaneous streams and an optional live-sports add-on. All bundle contents and savings shown are fictional illustrations.</p></div></div>
+            <h3 style="margin:0;"><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-p8" id="faq-q8">What is in a Noctilume bundle?<svg class="faq-icon icon-svg" viewBox="0 0 15 15" aria-hidden="true"><path d="M3.13523 6.15803C3.3241 5.95657 3.64052 5.94637 3.84197 6.13523L7.5 9.56464L11.158 6.13523C11.3595 5.94637 11.6759 5.95657 11.8648 6.15803C12.0536 6.35949 12.0434 6.67591 11.842 6.86477L7.84197 10.6148C7.64964 10.7951 7.35036 10.7951 7.15803 10.6148L3.15803 6.86477C2.95657 6.67591 2.94637 6.35949 3.13523 6.15803Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg></button></h3>
+            <div class="faq-panel" id="faq-p8" role="region" aria-labelledby="faq-q8"><div class="faq-inner"><p class="faq-answer">Bundles in this demo pair Noctilume with one or both fictional partner services — Dawncast and Vela — under a single login and a combined example rate. The trio bundle adds Ultra 4K HDR, up to five simultaneous screens and an optional live-events add-on. All bundle contents and savings shown are fictional illustrations.</p></div></div>
           </div>
         </div>
       </section>
 
       <div class="wrap">
         <div class="closing-band" aria-labelledby="closing-heading">
-          <h2 class="h2" id="closing-heading">Start your evening right.</h2>
-          <p class="lead" style="margin-top:var(--aura);">Thousands of stories, one plan. Cancel any time.</p>
+          <h2 class="h2" id="closing-heading">Your evening begins here.</h2>
+          <p class="lead" style="margin-top:var(--aura);">Thousands of stories, one plan. Halt at any time.</p>
           <div class="closing-ctls">
-            <a class="btn btn-accent" href="#plans" style="height:calc(var(--aura)*4);padding-inline:calc(var(--aura)*2);font-size:1.0625rem;">Get started</a>
+            <a class="btn btn-accent" href="#plans" style="height:calc(var(--aura)*4);padding-inline:calc(var(--aura)*2);font-size:1.0625rem;">Begin watching</a>
             <a class="btn btn-ghost" href="#faq" style="height:calc(var(--aura)*4);padding-inline:calc(var(--aura)*2);font-size:1.0625rem;">Read the FAQ</a>
           </div>
         </div>
@@ -1201,41 +1533,41 @@
       <div class="foot-grid">
         <div class="foot-links">
           <div class="foot-col">
-            <h3>Watch</h3>
+            <h3>Catalogue</h3>
             <ul>
-              <li><a href="#genre-carousel">Series</a></li>
-              <li><a href="#genre-carousel">Movies</a></li>
-              <li><a href="#genre-carousel">Shows</a></li>
-              <li><a href="#genre-carousel">Family</a></li>
-              <li><a href="#genre-carousel">Live sports</a></li>
+              <li><a href="#genre-carousel">Arcs</a></li>
+              <li><a href="#genre-carousel">Films</a></li>
+              <li><a href="#genre-carousel">Nocturne</a></li>
+              <li><a href="#genre-carousel">Wonder</a></li>
+              <li><a href="#live-events">Live moments</a></li>
             </ul>
           </div>
           <div class="foot-col">
-            <h3>Plans</h3>
+            <h3>Membership</h3>
             <ul>
-              <li><a href="#plans">Starter</a></li>
-              <li><a href="#plans">Standard</a></li>
-              <li><a href="#plans">Premium</a></li>
+              <li><a href="#plans">Dusk plan</a></li>
+              <li><a href="#plans">Meridian plan</a></li>
+              <li><a href="#plans">Zenith plan</a></li>
               <li><a href="#plans">Bundles</a></li>
-              <li><a href="#plans">Student discount</a></li>
+              <li><a href="#plans">Academic rate</a></li>
             </ul>
           </div>
           <div class="foot-col">
             <h3>Help</h3>
             <ul>
-              <li><a href="#faq">FAQ</a></li>
+              <li><a href="#faq">Common questions</a></li>
               <li><a href="#faq">Accessibility</a></li>
               <li><a href="#faq">Manage account</a></li>
-              <li><a href="#faq">Contact us</a></li>
+              <li><a href="#contact">Get in touch</a></li>
             </ul>
           </div>
           <div class="foot-col">
-            <h3>Company</h3>
+            <h3>About</h3>
             <ul>
-              <li><a href="#main">About</a></li>
-              <li><a href="#main">Press</a></li>
-              <li><a href="#main">Careers</a></li>
-              <li><a href="#main">Advertising</a></li>
+              <li><a href="#main">Our story</a></li>
+              <li><a href="#main">Newsroom</a></li>
+              <li><a href="#main">Open roles</a></li>
+              <li><a href="#main">Responsible use of data</a></li>
             </ul>
           </div>
         </div>
@@ -1254,181 +1586,221 @@
       </div>
       <div class="foot-legal">
         <div class="foot-legal-links">
-          <span>Noctilume demo showcase. Fictional content, example pricing.</span>
-          <a href="#main">Privacy</a>
-          <a href="#main">Terms</a>
-          <a href="#main">Ad choices</a>
-          <a href="#main">Your privacy choices</a>
-          <a href="#faq">Help</a>
-          <a href="#main">Company</a>
-          <a href="#main">Join the team</a>
+          <span>Noctilume is a fictional design showcase. All content and pricing are invented for demonstration.</span>
+          <a href="#main">Handling of personal data</a>
+          <a href="#main">Terms of service</a>
+          <a href="#main">Cookies and tracking</a>
+          <a href="#main">Accessibility statement</a>
         </div>
       </div>
     </footer>
 
     <script>
-      (function () {
-        var tabs = document.querySelectorAll("[role='tab']");
-        tabs.forEach(function (tab) {
-          tab.addEventListener("click", function () {
-            tabs.forEach(function (t) {
-              t.setAttribute("aria-selected", "false");
-              var panel = document.getElementById(t.getAttribute("aria-controls"));
-              if (panel) panel.hidden = true;
-            });
-            tab.setAttribute("aria-selected", "true");
-            var active = document.getElementById(tab.getAttribute("aria-controls"));
-            if (active) active.hidden = false;
+    (function () {
+      "use strict";
+
+      /* ── Tab switcher ── */
+      var tabs = document.querySelectorAll("[role='tab']");
+      tabs.forEach(function (tab) {
+        tab.addEventListener("click", function () {
+          tabs.forEach(function (t) {
+            t.setAttribute("aria-selected", "false");
+            var panel = document.getElementById(t.getAttribute("aria-controls"));
+            if (panel) panel.hidden = true;
           });
-          tab.addEventListener("keydown", function (e) {
-            var list = Array.from(tabs);
-            var idx = list.indexOf(tab);
-            if (e.key === "ArrowRight") { e.preventDefault(); list[(idx + 1) % list.length].focus(); list[(idx + 1) % list.length].click(); }
-            if (e.key === "ArrowLeft") { e.preventDefault(); list[(idx - 1 + list.length) % list.length].focus(); list[(idx - 1 + list.length) % list.length].click(); }
-          });
+          tab.setAttribute("aria-selected", "true");
+          var active = document.getElementById(tab.getAttribute("aria-controls"));
+          if (active) active.hidden = false;
         });
-
-        var planData = {
-          starter: { monthly: "$8.99", yearly: "$89.99" },
-          standard: { monthly: "$14.99", yearly: "$149.99" },
-          premium: { monthly: "$22.99", yearly: "$219.99" }
-        };
-        document.querySelectorAll("[data-period-btn]").forEach(function (btn) {
-          btn.addEventListener("click", function () {
-            var planId = btn.getAttribute("data-period-btn");
-            var period = btn.getAttribute("data-period");
-            var card = btn.closest(".plan-card");
-            var siblings = document.querySelectorAll("[data-period-btn='" + planId + "']");
-            siblings.forEach(function (s) { s.setAttribute("aria-pressed", "false"); });
-            btn.setAttribute("aria-pressed", "true");
-            var priceEl = document.getElementById(planId + "-price");
-            if (priceEl) {
-              var val = period === "yearly" ? planData[planId].yearly + " <span style='font-size:.875rem;font-weight:400;color:var(--gray-11);'>/year</span>" : planData[planId].monthly + " <span style='font-size:.875rem;font-weight:400;color:var(--gray-11);'>/month</span>";
-              priceEl.innerHTML = val;
-            }
-            if (card) {
-              var choiceEl = card.querySelector(".plan-choice");
-              if (choiceEl) {
-                var price = period === "yearly" ? planData[planId].yearly + "/yr" : planData[planId].monthly + "/month";
-                choiceEl.textContent = "Selected: " + price;
-              }
-            }
-          });
+        tab.addEventListener("keydown", function (e) {
+          var list = Array.from(tabs);
+          var idx = list.indexOf(tab);
+          if (e.key === "ArrowRight") { e.preventDefault(); list[(idx + 1) % list.length].focus(); list[(idx + 1) % list.length].click(); }
+          if (e.key === "ArrowLeft") { e.preventDefault(); list[(idx - 1 + list.length) % list.length].focus(); list[(idx - 1 + list.length) % list.length].click(); }
         });
+      });
 
-        var bundlePrices = {
-          "bundle-std-m": "$18.99/month",
-          "bundle-std-y": "$179.99/yr",
-          "bundle-all-m": "$26.99/month",
-          "bundle-all-y": "$259.99/yr",
-          "bundle-nv-m": "$32.99/month",
-          "bundle-nv-y": "$319.99/yr"
-        };
-        document.querySelectorAll("[data-plan-select]").forEach(function (btn) {
-          btn.addEventListener("click", function () {
-            var card = btn.closest(".plan-card");
-            if (card) {
-              card.querySelectorAll("[data-plan-select]").forEach(function (s) { s.setAttribute("aria-pressed", "false"); });
-              btn.setAttribute("aria-pressed", "true");
-              var choiceEl = card.querySelector(".plan-choice");
-              if (choiceEl) {
-                var key = btn.getAttribute("data-plan-select");
-                choiceEl.textContent = bundlePrices[key] ? "Selected: " + bundlePrices[key] : "Selected";
-              }
-            }
-          });
+      /* ── Global billing-period toggle ── */
+      var planPrices = {
+        monthly: { dusk: "$7.99", meridian: "$13.49", zenith: "$19.49" },
+        yearly:  { dusk: "$79.99", meridian: "$129.99", zenith: "$187.99" }
+      };
+      var currentPeriod = "monthly";
+
+      function applyPeriod(period) {
+        currentPeriod = period;
+        document.querySelectorAll(".period-btn").forEach(function (btn) {
+          btn.setAttribute("aria-pressed", btn.getAttribute("data-period") === period ? "true" : "false");
         });
+        // Update plan price displays
+        ["dusk", "meridian", "zenith"].forEach(function (planId) {
+          var val = document.getElementById(planId + "-price-val");
+          var per = document.getElementById(planId + "-price-period");
+          if (val) val.textContent = planPrices[period][planId];
+          if (per) per.textContent = period === "yearly" ? " /year" : " /month";
+        });
+      }
 
-        var genres = ["Drama", "Comedy", "Documentary", "Thriller", "Fantasy", "Animation", "Crime", "Romance"];
-        var genreTiles = [
-          ["Void Signal","Pale Throne","Ember Gate","Salt & Green","Hallow Drift","The Pact"],
-          ["Blue Meridian","Lune","Crimson Hours","Quiet Storm","Amber Road","Deep State"],
-          ["Verdant","Nox","Ironhall","Dusk Letters","Copper Falls","Reef Dark"],
-          ["Red Veil","Obsidian","Void Signal","Pale Throne","Ember Gate","Salt & Green"],
-          ["Hallow Drift","The Pact","Blue Meridian","Lune","Crimson Hours","Quiet Storm"],
-          ["Amber Road","Deep State","Verdant","Nox","Ironhall","Dusk Letters"],
-          ["Copper Falls","Reef Dark","Red Veil","Obsidian","Void Signal","Pale Throne"],
-          ["Ember Gate","Salt & Green","Hallow Drift","The Pact","Blue Meridian","Lune"]
-        ];
-        var genreColors = ["cg1","cg2","cg3","cg4","cg5","cg6"];
-        var current = 0;
-        var prevLabel = document.getElementById("carousel-prev-label");
-        var curLabel = document.getElementById("carousel-current-label");
-        var nextLabel = document.getElementById("carousel-next-label");
-        var grid = document.getElementById("carousel-grid");
-        var prevBtn = document.getElementById("carousel-prev");
-        var nextBtn = document.getElementById("carousel-next");
+      document.querySelectorAll(".period-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          applyPeriod(btn.getAttribute("data-period"));
+        });
+      });
 
-        function updateCarousel() {
-          var prev = (current - 1 + genres.length) % genres.length;
-          var nxt = (current + 1) % genres.length;
-          if (prevLabel) prevLabel.textContent = genres[prev];
-          if (curLabel) curLabel.textContent = genres[current];
-          if (nextLabel) nextLabel.textContent = genres[nxt];
-          if (grid) {
-            var tiles = grid.querySelectorAll(".carousel-tile");
-            var names = genreTiles[current];
-            tiles.forEach(function (tile, i) {
-              tile.className = "carousel-tile " + genreColors[i % genreColors.length];
-              tile.querySelector("span").textContent = names[i] || "";
-            });
+      /* ── Plan selection feedback ── */
+      document.querySelectorAll("[data-plan-select]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var card = btn.closest(".plan-card");
+          if (card) {
+            var choiceEl = card.querySelector(".plan-choice");
+            if (choiceEl) {
+              choiceEl.textContent = "Selected — example only, no charge.";
+            }
           }
-          if (prevBtn) {
-            var pDisabled = current === 0;
-            prevBtn.setAttribute("aria-disabled", String(pDisabled));
-            prevBtn.style.opacity = pDisabled ? "0.4" : "";
-            prevBtn.disabled = pDisabled;
-          }
-          if (nextBtn) {
-            var nDisabled = current === genres.length - 1;
-            nextBtn.setAttribute("aria-disabled", String(nDisabled));
-            nextBtn.style.opacity = nDisabled ? "0.4" : "";
-            nextBtn.disabled = nDisabled;
-          }
+        });
+      });
+
+      /* ── Genre carousel — real translateX track ── */
+      var genres = ["Drama", "Thriller", "Documentary", "Fantasy", "Animation", "Crime", "Adventure", "Mystery"];
+      var genreTiles = [
+        ["Void Signal","Pale Throne","Ember Gate","Salt & Green","Hallow Drift","The Pact"],
+        ["Blue Meridian","Lune","Crimson Hours","Quiet Storm","Amber Road","Deep State"],
+        ["Verdant","Nox","Ironhall","Dusk Letters","Copper Falls","Reef Dark"],
+        ["Red Veil","Obsidian","Void Signal","Pale Throne","Ember Gate","Salt & Green"],
+        ["Hallow Drift","The Pact","Blue Meridian","Lune","Crimson Hours","Quiet Storm"],
+        ["Amber Road","Deep State","Verdant","Nox","Ironhall","Dusk Letters"],
+        ["Copper Falls","Reef Dark","Red Veil","Obsidian","Void Signal","Pale Throne"],
+        ["Ember Gate","Salt & Green","Hallow Drift","The Pact","Blue Meridian","Lune"]
+      ];
+      var genreColors = ["cg1","cg2","cg3","cg4","cg5","cg6"];
+      var current = 0;
+
+      var track = document.getElementById("carousel-track");
+      var curLabel = document.getElementById("carousel-current-label");
+      var grid = document.getElementById("carousel-grid");
+      var prevBtn = document.getElementById("carousel-prev");
+      var nextBtn = document.getElementById("carousel-next");
+
+      /* Build track items (one per genre, hidden from AT since heading is the label) */
+      if (track) {
+        genres.forEach(function (g) {
+          var item = document.createElement("div");
+          item.className = "carousel-item";
+          item.setAttribute("aria-hidden", "true");
+          var word = document.createElement("span");
+          word.className = "carousel-word";
+          word.textContent = g;
+          item.appendChild(word);
+          track.appendChild(item);
+        });
+      }
+
+      /* Build grid tiles */
+      if (grid) {
+        for (var ti = 0; ti < 6; ti++) {
+          var tile = document.createElement("div");
+          tile.className = "carousel-tile " + genreColors[ti];
+          tile.setAttribute("role", "listitem");
+          var lbl = document.createElement("div");
+          lbl.className = "carousel-tile-label";
+          tile.appendChild(lbl);
+          grid.appendChild(tile);
         }
-        updateCarousel();
-        if (prevBtn) prevBtn.addEventListener("click", function () { if (current > 0) { current--; updateCarousel(); } });
-        if (nextBtn) nextBtn.addEventListener("click", function () { if (current < genres.length - 1) { current++; updateCarousel(); } });
+      }
 
-        document.querySelectorAll(".faq-trigger").forEach(function (btn) {
-          btn.addEventListener("click", function () {
-            var open = btn.getAttribute("aria-expanded") !== "true";
-            btn.setAttribute("aria-expanded", String(open));
-            var panel = document.getElementById(btn.getAttribute("aria-controls"));
-            if (panel) panel.setAttribute("data-open", String(open));
+      function updateCarousel() {
+        /* Move track */
+        if (track) {
+          track.style.transform = "translateX(-" + current * 100 + "%)";
+        }
+        /* Update accessible status line */
+        if (curLabel) {
+          curLabel.textContent = genres[current] + " · " + (current + 1) + " of " + genres.length;
+        }
+        /* Update grid tiles */
+        if (grid) {
+          var tiles = grid.querySelectorAll(".carousel-tile");
+          var names = genreTiles[current] || [];
+          tiles.forEach(function (tile, i) {
+            tile.className = "carousel-tile " + genreColors[i % genreColors.length];
+            var lbl = tile.querySelector(".carousel-tile-label");
+            if (lbl) lbl.textContent = names[i] || "";
           });
-        });
+        }
+        /* Prev button state */
+        if (prevBtn) {
+          var pDis = current === 0;
+          prevBtn.setAttribute("aria-disabled", String(pDis));
+          prevBtn.disabled = pDis;
+        }
+        /* Next button state */
+        if (nextBtn) {
+          var nDis = current === genres.length - 1;
+          nextBtn.setAttribute("aria-disabled", String(nDis));
+          nextBtn.disabled = nDis;
+        }
+      }
 
-        var form = document.querySelector("[data-contact]");
-        var emailIn = document.getElementById("contact-email");
-        var msg = document.getElementById("contact-msg");
-        if (form) {
-          form.addEventListener("submit", function (e) {
-            e.preventDefault();
-            var ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((emailIn.value || "").trim());
-            if (ok) {
+      updateCarousel();
+
+      if (prevBtn) {
+        prevBtn.addEventListener("click", function () {
+          if (current > 0) { current--; updateCarousel(); }
+        });
+        prevBtn.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); prevBtn.click(); }
+        });
+      }
+      if (nextBtn) {
+        nextBtn.addEventListener("click", function () {
+          if (current < genres.length - 1) { current++; updateCarousel(); }
+        });
+        nextBtn.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); nextBtn.click(); }
+        });
+      }
+
+      /* ── FAQ accordion ── */
+      document.querySelectorAll(".faq-trigger").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var open = btn.getAttribute("aria-expanded") !== "true";
+          btn.setAttribute("aria-expanded", String(open));
+          var panel = document.getElementById(btn.getAttribute("aria-controls"));
+          if (panel) panel.setAttribute("data-open", String(open));
+        });
+      });
+
+      /* ── Contact form ── */
+      var form = document.querySelector("[data-contact]");
+      var emailIn = document.getElementById("contact-email");
+      var msg = document.getElementById("contact-msg");
+      if (form) {
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          var ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((emailIn.value || "").trim());
+          if (ok) {
+            emailIn.removeAttribute("aria-invalid");
+            msg.className = "form-msg msg-ok";
+            msg.textContent = "You are on the list. We will be in touch.";
+            emailIn.value = "";
+          } else {
+            emailIn.setAttribute("aria-invalid", "true");
+            msg.className = "form-msg msg-err";
+            msg.textContent = "Please enter a valid email address.";
+            emailIn.focus();
+          }
+        });
+        if (emailIn) {
+          emailIn.addEventListener("input", function () {
+            if (emailIn.getAttribute("aria-invalid") === "true") {
               emailIn.removeAttribute("aria-invalid");
-              msg.className = "form-msg msg-ok";
-              msg.textContent = "You're on the list. We'll be in touch.";
-              emailIn.value = "";
-            } else {
-              emailIn.setAttribute("aria-invalid", "true");
-              msg.className = "form-msg msg-err";
-              msg.textContent = "Please enter a valid email address.";
-              emailIn.focus();
+              msg.textContent = "";
+              msg.className = "form-msg";
             }
           });
-          if (emailIn) {
-            emailIn.addEventListener("input", function () {
-              if (emailIn.getAttribute("aria-invalid") === "true") {
-                emailIn.removeAttribute("aria-invalid");
-                msg.textContent = "";
-                msg.className = "form-msg";
-              }
-            });
-          }
         }
-      })();
+      }
+    })();
     </script>
   </body>
 </html>

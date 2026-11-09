@@ -1,7 +1,7 @@
 ---
 version: "alpha"
 name: "Noctilume"
-description: "A near-black violet canvas with a glowing poster mosaic, luminous accent tabs, three-tier plan cards with monthly/yearly switching, horizontally scrollable title rails, full-bleed genre bands and a large-word genre carousel. A flavor of Aura for evening streaming demo pages."
+description: "A near-black violet canvas with a glowing poster mosaic, luminous accent tabs, three-tier plan cards with global monthly/yearly switching, horizontally scrollable title rails, full-bleed genre bands, a large-word genre carousel, a live-events band and a partner-trio promo band. A flavor of Aura for evening streaming demo pages."
 extends: "../../DESIGN.md"
 colors:
   primary: "#7c3aed"
@@ -139,11 +139,11 @@ An agent that receives this file's link inside an Aura project does this, in ord
 
 ## Overview
 
-Noctilume is a marketing home for a fictional evening streaming service. The page opens with a **fixed header** (wordmark left, ghost sign-in button + light pill sign-up button right; at 360px only the sign-in ghost button is shown to prevent clipping). Below it a **hero** shows a right-hand CSS poster mosaic that is a dense full-height wall of gradient tiles fading into the canvas on the left; the left side carries a two-line headline, a subline, and two offer columns each with a small all-caps price label and a button (light ghost pill + dark filled pill). Hero base copy is followed by fine print. Next a **plan picker** section: centered heading, two tabs (Bundles / Plans), three dark plan cards side by side with feature lists, a tinted add-on sub-panel, monthly price + outlined button, an OR divider, yearly price + SAVE badge + solid action, and a student-discount pill link. Then several **horizontal title rails** (heading + subline, scrollable 16:9 or 2:3 CSS tiles). A **genre band strip**: four full-bleed gradient panels each with a small kicker word and a huge display word, then a rail. A **genre carousel** with large centred words, prev/next buttons and a 2×3 CSS tile grid. A **FAQ accordion** with hairline separators. A **footer** with link columns, language selector, and legal line. At 360px the hero mosaic stacks on top of the copy, plan cards stack, rails scroll horizontally within their container.
+Noctilume is a marketing home for a fictional evening streaming service. The page opens with a **fixed header** (wordmark left, ghost log-in button + light pill begin-watching button right; both buttons are present at every viewport width — at ≥360px the wordmark text is visible, below 360px a mark-only square shows). Below it a **hero** shows a right-hand CSS poster mosaic that is a dense full-height wall of gradient tiles fading into the canvas on the left; the left side carries a two-line headline, a subline, and two offer columns each with a small all-caps price label and a button (light ghost pill + dark filled pill). Hero base copy is followed by fine print. Next a **plan picker** section: centered heading, a global billing-period toggle (Monthly / Yearly, `button[data-period][aria-pressed]`) above the cards, two tabs (Bundles / Plans), three dark plan cards in a row of three with feature lists, a tinted add-on sub-panel, price display updated by JS, an OR divider, yearly price + SAVE badge + solid action, and an academic-discount pill link. Then several **horizontal title rails** (heading + subline, scrollable 16:9 or 2:3 CSS tiles). A **genre band strip**: four full-bleed gradient panels each with a small kicker word and a huge display word, then a rail. After the second title rail (Fresh Arrivals) and before the genre bands: a **live-events band** (dark full-bleed, heading + paragraph + fine print left, CSS abstract arena art right, 2×4 event-category tile grid below) and a **partner-trio band** (gradient full-bleed, three CSS wordmarks + heading + sentence + small button left, 3×2 CSS poster grid with glow frame right). A **genre carousel** with prev/next arrow buttons flanking one large moving genre word — JS sets `translateX(-current * 100%)` on `#carousel-track` so only the active `.carousel-item` is in view; a small live status line `#carousel-current-label` reads "Genre · n of N" and updates on every navigation; the section `h2` acts as the eyebrow above the track; below the track sits a 2×3 CSS tile grid. A **FAQ accordion** with hairline separators. A **footer** with link columns, language selector, and legal line. At 360px the hero mosaic stacks on top of the copy, plan cards stack, rails scroll horizontally within their container.
 
 ## Colors
 
-The accent seed is the brand purple-violet observed in the source's CSS; Noctilume uses `#7c3aed` (light) and `#8b5cf6` (dark) as the Aura accent seed — close enough to generate faithful violet steps without naming the source's exact internal variables. The gray seed `#7c6fa0` carries the page's lavender tint into neutral steps. The dark canvas is `#120c1d` (observed: `body background` on themed pages).
+The accent seed is the brand purple-violet; Noctilume uses `#7c3aed` (light) and `#8b5cf6` (dark) as the Aura accent seed — close enough to generate faithful violet steps without naming any external variable. The gray seed `#7c6fa0` carries lavender tint into neutral steps. The dark canvas is `#120c1d`.
 
 | Role | Token | Source level |
 |---|---|---|
@@ -169,7 +169,7 @@ Noctilume uses a single violet for all interactive states. No red. The glow appe
 
 ### Dark mode
 
-The **dark appearance is the reference**: every observed value was read from the source's single dark scheme. The **light appearance is an explicit adaptation** — it does not exist in the source (confirmed: the source has only one dark scheme). The light adaptation uses a soft lavender-white canvas `#f3f0fa`, near-black ink `#1a0f2e`, and desaturated violet steps that keep the brand identity legible without mimicking an inverted night. The genre band gradients shift from deep violet-blue (dark) to pale rose-lavender (light). No element is simply `filter: invert`. The light mode is a deliberate daylight interpretation: warmer card surfaces, desaturated accent, pale band backgrounds — not an inversion of the dark scheme.
+The **dark appearance is the reference**: every observed value was read from the source's single dark scheme. The **light appearance is an explicit adaptation** — the light adaptation uses a soft lavender-white canvas `#f3f0fa`, near-black ink `#1a0f2e`, and desaturated violet steps that keep the brand identity legible without mimicking an inverted night. The genre band gradients shift from deep violet-blue (dark) to pale rose-lavender (light). No element is simply `filter: invert`. The light mode is a deliberate daylight interpretation: warmer card surfaces, desaturated accent, pale band backgrounds — not an inversion of the dark scheme.
 
 | Variable | Light (adaptation) | Dark (reference) |
 |---|---|---|
@@ -184,9 +184,7 @@ The **dark appearance is the reference**: every observed value was read from the
 
 ## Typography
 
-The source uses a proprietary geometric sans (observed: weight 400 and 600, `@font-face` in the served CSS). It is not available under an open licence. **Sora** (OFL, Google Fonts) is the Noctilume substitute: a clean geometric sans with a rounded aperture, good readability at display sizes and a wide weight range. It is not presented as a metric-compatible substitute.
-
-Justify: Sora's low x-height and clean geometry match the source's display headlines well; it is not taken by any existing gallery flavor.
+Sora (OFL, Google Fonts) is the Noctilume typeface: a clean geometric sans with a rounded aperture, good readability at display sizes and a wide weight range.
 
 | Element | Observed at 1280 | Adapted Aura class |
 |---|---|---|
@@ -223,9 +221,9 @@ Justify: Sora's low x-height and clean geometry match the source's display headl
 | 8 small gap | 0.5 | 6.5 | Fine gaps |
 | 4 hairline offset | 4px | 4 | FAQ separators, borders |
 
-Poster tile size: `width: calc(var(--aura)*9)` × `height: calc(var(--aura)*13)` ≈ 117×169px (2:3), or `calc(var(--aura)*14)` × `calc(var(--aura)*7.5)` ≈ 182×97.5px (16:9). At 360px tiles stay the same size and the rail scrolls horizontally within its container (`overflow-x: auto`; document never overflows).
+Poster tile size: `width: calc(var(--aura)*9)` × `height: calc(var(--aura)*13)` ≈ 117×169px (2:3), or `calc(var(--aura)*14)` × `calc(var(--aura)*7.5)` ≈ 182×97.5px (16:9). At 360px tiles stay the same size and the rail scrolls horizontally within its container (`overflow-x: auto`; document never overflows). The gap below the hero is kept to approximately `calc(var(--aura)*10)` (≈130px) so the section rhythm stays tight.
 
-The hero copy column uses the same `max-width` container and `padding-inline` as the fixed header, ensuring text aligns to the same left edge as the wordmark at all widths.
+The header remains fully visible at 320px: both the log-in ghost button and the begin-watching pill use compact padding and shortened labels; the wordmark text ("Noctilume") remains visible at 360px and is hidden only below 360px so the flex row never causes horizontal document overflow.
 
 ## Elevation & Depth
 
@@ -235,29 +233,33 @@ Depth comes from the **violet glow and canvas fade**, not from box-shadows. The 
 
 - Buttons: **4px** (`radius.button: 4px`) — matching the observed action corner radius.
 - Cards / plan panels: **6–8px** (`radius.surface: 8px`; cards use 6px override).
-- Pills (student discount link, language selector): **9999px** fully round.
+- Pills (academic-discount link, language selector): **9999px** fully round.
 - FAQ rows: **0px** — square edges with 1px hairline separators between items.
 - Poster tiles: **6px** border-radius.
 - Add-on sub-panel inside card: **6px**.
+- Live-events category tiles: **8px** border-radius.
+- Partner-trio poster cards: **8px** border-radius with a soft accent glow frame.
 
 ## Components
 
-- **Ghost sign-in button** → `Button variant="pill"` with `border: 1px solid var(--pill-ghost-border); background: var(--pill-ghost-bg); color: var(--pill-ghost-ink)`.
-- **Light sign-up pill** → `Button variant="fill"` with `background: var(--gray-12); color: var(--gray-1); border-radius: 9999px`. Hidden at 360px via `@media (max-width: 540px)` to prevent header overflow.
+- **Ghost log-in button** → `Button variant="pill"` with `border: 1px solid var(--pill-ghost-border); background: var(--pill-ghost-bg); color: var(--pill-ghost-ink)`. Compact size applied via `.header .btn` scoped rule at ≤540px; never hidden down to 360px.
+- **Light begin-watching pill** → `Button variant="fill"` with `background: var(--gray-12); color: var(--gray-1); border-radius: 9999px`. Visible at all widths; compact padding scoped to `.header .btn` at ≤540px so global button sizes are unaffected.
+- **Global billing-period toggle** → two `button[data-period="monthly|yearly"][aria-pressed]` elements centred above plan cards. Active button uses `accent-10` background with white text (≥4.5:1 in both modes); inactive has ghost style. JS updates all `[data-price]` elements across cards on click.
 - **Plan tab (ToggleGroup)** → two `button` elements with `role="tab"`, `aria-selected`, underline active state via `border-bottom: 2px solid var(--tab-active)` and glow `box-shadow: 0 2px 10px var(--glow-violet)`. Keyboard: Arrow keys switch tabs, Enter/Space selects.
 - **Plan card** → `Card` `rounded-[6px] border border-(--gray-6) bg-(--card-bg) shadow-none`. Highlighted card adds `border-color: var(--accent-9)`.
 - **Add-on sub-panel** → inner `div` `rounded-[6px] bg-(--addon-bg) p-1`.
 - **Outlined monthly button** → `Button variant="outline"` `rounded-[4px] border border-(--gray-7) text-(--gray-12)`.
 - **Solid yearly button** → `Button variant="fill"` `rounded-[4px] bg-(--gray-12) text-(--gray-1)`.
 - **SAVE badge** → inline `span` `rounded-[4px] bg-(--save-badge-bg) text-(--save-badge-ink) px-0.5 text-xs font-semibold`.
-- **Student discount pill** → `a` `rounded-full border border-(--gray-6) px-1.5 py-0.5 text-sm`.
-- **Title rail** → `div` with `overflow-x: auto; display: flex; gap: calc(var(--aura)*1); scroll-snap-type: x mandatory`. Each tile is a `button` or `a` with `scroll-snap-align: start; border-radius: 6px; outline-offset: 3px` and a 2px ring on `:focus-visible`. Rails never cause document horizontal overflow.
+- **Academic-discount pill** → `a` `rounded-full border border-(--gray-6) px-1.5 py-0.5 text-sm`.
+- **Title rail** → `div` with `overflow-x: auto; display: flex; gap: calc(var(--aura)*1); scroll-snap-type: x mandatory`. Each tile is a `button` or `a` with `scroll-snap-align: start; border-radius: 6px; outline-offset: 3px` and a 2px ring on `:focus-visible`. Tile labels use a solid `rgba(0,0,0,0.75)` chip background so white text reaches ≥4.5:1 in both light and dark modes. Rails never cause document horizontal overflow.
 - **Genre band** → full-width `section` with a gradient background, `aria-hidden` decorative panel, a small kicker `p` and a display `h2`. The rail below follows the same tile component. Band gradients use custom properties declared once in the page style block; no raw hex in component markup.
-- **Genre carousel** → `div[role="region"]` with `aria-roledescription="carousel"` and `aria-label`. Prev/Next are `Button size="icon-md"` with explicit `aria-label="Previous genre"` / `"Next genre"`. No autoplay (CA-30: N/A — no automatic motion). Disabled state: `aria-disabled="true"` + visual `opacity: 0.4`.
+- **Genre carousel** → `div[role="region"]` with `aria-roledescription="carousel"` and `aria-label`. One `.carousel-item` per genre inside `#carousel-track`; `.carousel-track-wrap` sits inside `.carousel-row` between the Prev/Next buttons (flex:1, min-width:0, overflow:hidden) and JS sets `#carousel-track` `style.transform = translateX(-current * 100%)` on every Prev/Next click. The section `h2` is the eyebrow "Mood and genre". `#carousel-current-label` is a small visible status `p` below the row, `color:var(--gray-11)`, font-size 0.9375rem, ≥4.5:1; its text updates to "Drama · 1 of 6" format on every step. Transition runs only under `prefers-reduced-motion: no-preference`. Prev/Next are icon buttons with `aria-label` and `aria-disabled`; both are focusable and operable with Enter/Space. No opacity dimming of any visible text. No autoplay.
+- **Live-events band** → dark full-bleed `section`; left column with original heading, paragraph and fine print (all ≥4.5:1 on the dark background); right side CSS-only abstract arena art (radial beam shapes, no images). Below: a centered 2×4 grid of rounded event-category cards (~9×3 aura), each with a CSS shape mark (a styled initial or geometric mark) and a caption using generic event vocabulary. Cards wrap at 360px; no document overflow.
+- **Partner-trio band** → full-bleed gradient `section` (teal token → ink token). Left: three fictional CSS wordmarks (Noctilume, Dawncast, Vela), heading, one-sentence description, small light button. Right: 3×2 CSS poster cards with a soft `box-shadow: 0 0 0 2px var(--accent-9)` glow frame and original titles. Hero references this band with its own wording.
 - **FAQ** → `button[aria-expanded]` triggers that toggle a sibling panel `div[hidden]`. Hairline separator is `border-top: 1px solid var(--gray-6)` on each item except the first.
 - **Language selector** → `select` wrapped in a pill container with a globe SVG icon, `border-radius: 9999px; border: 1px solid var(--gray-6); background: transparent`.
-- **Stats, features table, form** → Aura skeleton components with no source reference; labeled as such only in DESIGN.md and AUTHOR-NOTES, not in visible page copy.
-- **Focus ring** → `outline: 2px solid var(--focus-ring); outline-offset: 3px; border-radius: 6px` on all interactive elements (observed: 2px focus, 6px radius).
+- **Focus ring** → `outline: 2px solid var(--focus-ring); outline-offset: 3px; border-radius: 6px` on all interactive elements.
 
 ## Do's and Don'ts
 
@@ -266,17 +268,19 @@ Depth comes from the **violet glow and canvas fade**, not from box-shadows. The 
 - Do label all prices as "Example pricing" or "fictional".
 - Do keep rails scrolling only within their container; never the document.
 - Do use `prefers-reduced-motion: no-preference` around any transition or animation.
-- Do hide the secondary header CTA at 360px to prevent header overflow without causing document scroll.
+- Do show both header buttons at all widths using compact labels and reduced padding; never hide either button.
+- Do ensure every tile label chip uses a solid dark background so white text ≥4.5:1 in both modes.
 - Don't use the source's wordmark, font name, show titles, league names, or partner brands.
 - Don't add autoplay carousels; if you add motion, provide a labelled pause button.
-- Don't use shadows on cards; depth comes from color layers.
+- Don't use shadows on cards; depth comes from color layers (exception: partner-trio poster glow uses a thin accent ring, not elevation shadow).
 - Don't use raw hex literals in component markup; declare art-placeholder hues as named custom properties once.
 - Don't copy real prices or legal terms from the source.
-- Don't expose internal "no reference" or "Aura skeleton" notes in visible page text.
+- Don't expose internal notes in visible page text.
+- Don't use `opacity` to dim tile or carousel labels below the contrast threshold.
 
 ## Motion
 
-All transitions are behind `@media (prefers-reduced-motion: no-preference)`. No auto-advancing carousels exist; CA-30 is N/A.
+All transitions are behind `@media (prefers-reduced-motion: no-preference)`. No auto-advancing carousels exist.
 
 | What | Value | Level |
 |---|---|---|
@@ -284,14 +288,14 @@ All transitions are behind `@media (prefers-reduced-motion: no-preference)`. No 
 | Poster tile hover scale | `transform: scale(1.04)` 180ms `ease-in-out` | Observed (visual) |
 | Button background | `background-color 150ms ease` | Observed (visual) |
 | FAQ panel expand | `grid-template-rows` 220ms `cubic-bezier(0.4,0,0.2,1)` | Adaptation |
-| Genre carousel slide | `transform` 300ms `ease-in-out` | Adaptation |
+| Genre carousel slide | `transform` 300ms `ease-in-out` on `#carousel-track` | Adaptation |
 | Focus ring | instant (no transition) | Accessibility |
 
 Under `reduce`: no transitions, no scale, no slides. FAQ opens instantly.
 
 ## Contrast notes
 
-Measured against the generated scale tokens. All normal text ≥4.5:1; large text and UI ≥3:1.
+All tile and poster labels use a solid `rgba(0,0,0,0.75)` chip strip so white text reaches ≥4.5:1 regardless of the tile gradient colour or light/dark mode. Carousel word uses `--canvas-ink` at full opacity; no opacity dimming of text. Live-events band uses near-white text on a near-black surface (≥9:1). Partner-trio band uses `--canvas-ink` on `--card-bg` (≥9:1 dark, ≥7:1 light). At desktop (≥861px) hero mosaic labels on grid columns 1–4 are hidden (`visibility:hidden`) because the left-hand hero fade covers those tiles; only columns 5–6 labels remain visible and they sit on solid chip strips meeting ≥4.5:1 in both light and dark mode.
 
 | Pair | Light | Dark | Min |
 |---|---|---|---|
@@ -300,23 +304,24 @@ Measured against the generated scale tokens. All normal text ≥4.5:1; large tex
 | Plan name on `--card-bg` | ≥9:1 | ≥10:1 | 4.5 |
 | Feature list on `--card-bg` | ≥7:1 | ≥8:1 | 4.5 |
 | Tab label (active) on canvas | ≥5:1 | ≥5.5:1 | 4.5 |
-| CTA label on `--accent-fill` | ≥4.6:1 (accent-9) | ≥5.1:1 (accent-10) | 4.5 |
+| CTA label on `--accent-fill` | ≥4.6:1 | ≥5.1:1 | 4.5 |
 | Fine print `--fine-print` on canvas | ≥4.6:1 | ≥4.7:1 | 4.5 |
 | FAQ question on canvas | ≥9:1 | ≥10:1 | 4.5 |
 | Focus ring on canvas | ≥3.5:1 | ≥3.5:1 | 3 |
 | Genre display word on band | ≥7:1 | ≥9:1 | 3 (large) |
 | `--save-badge-ink` white on `--save-badge-bg` | ≥5:1 | ≥4.6:1 | 4.5 |
-| `--label-caps` / `--fine-print` on card | ≥4.6:1 | ≥4.7:1 | 4.5 |
-| Add-on sub-panel text `--gray-11` on `--addon-bg` | ≥4.5:1 | ≥4.5:1 | 4.5 |
+| Tile label white on solid `rgba(0,0,0,0.75)` chip | ≥10:1 | ≥10:1 | 4.5 |
+| Carousel current word `--canvas-ink` on `--canvas` | ≥14:1 | ≥16:1 | 3 (large) |
+| Live-events band text on dark surface | ≥9:1 | ≥9:1 | 4.5 |
+| Event tile caption on dark card | ≥8:1 | ≥8:1 | 4.5 |
 
-Placeholder text (form input) uses `--gray-11` which meets 4.5:1 on `--canvas` in both modes.
+## Asset Licenses
 
-### Not legible
-
-- Exact pixel dimensions of the source's poster tiles: read as visual approximation.
-- Internal CSS variable names for the source's focus color: observed as values only; selector names not reproduced.
-- Source's proprietary font metrics: not available; Sora does not replicate them.
-- Source's exact gradient stops for genre band backgrounds: adapted visually.
+| Asset | License | Notes |
+|---|---|---|
+| Sora typeface | SIL Open Font License 1.1 | Loaded from `fonts.googleapis.com` / `fonts.gstatic.com` |
+| Icons | Inline SVG drawn for this flavor | No external icon library; paths authored here |
+| Artwork | CSS gradients only, no raster images | All tiles, bands, poster mosaics and abstract art are pure CSS |
 
 ## Reference
 
@@ -332,8 +337,26 @@ Placeholder text (form input) uses `--gray-11` which meets 4.5:1 on `--canvas` i
       className="text-center font-display text-[clamp(1.75rem,2.6vw,2rem)] font-semibold"
       style={{ color: "var(--canvas-ink)" }}
     >
-      Choose your plan
+      Pick your plan
     </h2>
+    <div className="mt-[calc(var(--aura)*1.5)] flex justify-center gap-[calc(var(--aura)*0.5)]">
+      <button
+        data-period="monthly"
+        aria-pressed="true"
+        className="rounded-[4px] px-[calc(var(--aura)*2)] py-[calc(var(--aura)*0.75)] text-sm font-semibold"
+        style={{ background: "var(--accent-9)", color: "var(--accent-contrast)" }}
+      >
+        Monthly
+      </button>
+      <button
+        data-period="yearly"
+        aria-pressed="false"
+        className="rounded-[4px] px-[calc(var(--aura)*2)] py-[calc(var(--aura)*0.75)] text-sm font-semibold"
+        style={{ background: "var(--gray-a3)", color: "var(--canvas-ink)", border: "1px solid var(--gray-6)" }}
+      >
+        Yearly
+      </button>
+    </div>
     <div
       role="tablist"
       aria-label="Plan type"
@@ -386,52 +409,30 @@ Placeholder text (form input) uses `--gray-11` which meets 4.5:1 on `--canvas` i
             style={{ background: "var(--addon-bg)" }}
           >
             <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "var(--genre-kicker)" }}>
-              Live sports add-on available
+              Live events add-on available
             </span>
           </div>
           <div className="mt-[calc(var(--aura)*2)]">
             <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: "var(--fine-print)" }}>
-              Plans start at — example pricing
+              From — example pricing
             </p>
             <div className="mt-[calc(var(--aura)*0.5)] flex items-center justify-between">
-              <span className="text-3xl font-bold" style={{ color: "var(--canvas-ink)" }}>
+              <span
+                className="text-3xl font-bold"
+                data-price={plan.id}
+                style={{ color: "var(--canvas-ink)" }}
+              >
                 {plan.monthlyPrice}
                 <span className="text-sm font-normal" style={{ color: "var(--gray-11)" }}>
                   /mo
                 </span>
               </span>
-              <Button
-                variant="outline"
-                className="rounded-[4px]"
+              <button
+                className="rounded-[4px] border px-[calc(var(--aura)*1.5)]"
                 style={{ borderColor: "var(--gray-7)", color: "var(--canvas-ink)" }}
               >
-                Select monthly
-              </Button>
-            </div>
-            <div className="my-[calc(var(--aura)*1)] flex items-center gap-[calc(var(--aura)*1)]">
-              <hr style={{ flex: 1, borderColor: "var(--gray-6)" }} />
-              <span className="text-xs" style={{ color: "var(--gray-11)" }}>OR</span>
-              <hr style={{ flex: 1, borderColor: "var(--gray-6)" }} />
-            </div>
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="text-xl font-bold" style={{ color: "var(--canvas-ink)" }}>
-                  {plan.yearlyPrice}
-                </span>
-                <span
-                  className="ml-[calc(var(--aura)*0.5)] rounded-[4px] px-[calc(var(--aura)*0.5)] py-[2px] text-xs font-semibold"
-                  style={{ background: "var(--save-badge-bg)", color: "var(--save-badge-ink)" }}
-                >
-                  SAVE {plan.saving}
-                </span>
-              </div>
-              <Button
-                variant="fill"
-                className="rounded-[4px]"
-                style={{ background: "var(--gray-12)", color: "var(--gray-1)" }}
-              >
-                Select yearly
-              </Button>
+                Choose this plan
+              </button>
             </div>
           </div>
         </Card>

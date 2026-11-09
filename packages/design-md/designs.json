@@ -619,7 +619,7 @@
     {
       "slug": "noctilume",
       "name": "Noctilume",
-      "description": "A near-black violet canvas with a glowing poster mosaic, luminous accent tabs, three-tier plan cards with monthly/yearly switching, horizontally scrollable title rails, full-bleed genre bands and a large-word genre carousel. A flavor of Aura for evening streaming demo pages.",
+      "description": "A near-black violet canvas with a glowing poster mosaic, luminous accent tabs, three-tier plan cards with global monthly/yearly switching, horizontally scrollable title rails, full-bleed genre bands, a large-word genre carousel, a live-events band and a partner-trio promo band. A flavor of Aura for evening streaming demo pages.",
       "design": "designs/noctilume/DESIGN.md",
       "theme": "designs/noctilume/theme.css",
       "result": "designs/noctilume/result.html",
@@ -850,7 +850,7 @@
     {
       "slug": "reedwave",
       "name": "Reedwave",
-      "description": "Un lienzo crema con tinta verde casi negra, p\u00edldoras verde junco, titulares grandes en peso regular, burbujas de conversaci\u00f3n que flotan sobre maquetas de producto, una banda nocturna para la privacidad y un carrusel menta de novedades. Un flavor de Aura para apps de conversaci\u00f3n, comunidades y herramientas de llamadas.",
+      "description": "Un lienzo crema con tinta verde casi negra, píldoras verde junco, titulares grandes en peso regular, burbujas de conversación que flotan sobre maquetas de producto, una banda nocturna para la privacidad y un carrusel menta de novedades. Un flavor de Aura para apps de conversación, comunidades y herramientas de llamadas.",
       "design": "designs/reedwave/DESIGN.md",
       "theme": "designs/reedwave/theme.css",
       "result": "designs/reedwave/result.html",
@@ -927,7 +927,7 @@
     {
       "slug": "reelnight",
       "name": "Reelnight",
-      "description": "Una pantalla negra de cine con un muro de carteles inclinado, un solo rojo de acci\u00f3n, titulares grotescos en negrita, un arco luminoso que corta el hero, filas numeradas con cifras gigantes y un FAQ de bloques grises. Un flavor de Aura para servicios de streaming, cat\u00e1logos de v\u00eddeo y portadas de suscripci\u00f3n.",
+      "description": "Una pantalla negra de cine con un muro de carteles inclinado, un solo rojo de acción, titulares grotescos en negrita, un arco luminoso que corta el hero, filas numeradas con cifras gigantes y un FAQ de bloques grises. Un flavor de Aura para servicios de streaming, catálogos de vídeo y portadas de suscripción.",
       "design": "designs/reelnight/DESIGN.md",
       "theme": "designs/reelnight/theme.css",
       "result": "designs/reelnight/result.html",
