@@ -207,7 +207,7 @@
         position: relative; z-index: 2;
         width: min(52%, calc(var(--aura)*45));
         flex: none;
-        padding: calc(var(--aura)*5) 0 calc(var(--aura)*5) calc(var(--aura)*3.5);
+        padding: calc(var(--aura)*5) 0 calc(var(--aura)*1.5) calc(var(--aura)*3.5);
         display: flex; flex-direction: column; justify-content: center; gap: calc(var(--aura)*1.5);
       }
       .hero-left-inner { max-width: calc(var(--aura)*45); }
@@ -781,12 +781,14 @@
         .foot-links { grid-template-columns: repeat(4,1fr); }
         .foot-grid { grid-template-columns: 1fr auto; }
       }
+      #stats { padding-top: calc(var(--aura)*4); }
       @media (max-width: 860px) {
+        #stats { padding-top: calc(var(--aura)*1.5); }
         .plan-grid { grid-template-columns: minmax(0,1fr); }
         .hero { flex-direction: column; min-height: auto; }
         .hero-left {
           width: 100%;
-          padding: calc(var(--aura)*2) calc(var(--aura)*1.5) calc(var(--aura)*2);
+          padding: calc(var(--aura)*2) calc(var(--aura)*1.5) calc(var(--aura)*1);
           order: 2;
         }
         .hero-left-inner { max-width: 100%; }
@@ -822,7 +824,6 @@
         .plan-grid { gap: calc(var(--aura)*1.5); }
         .header-in { padding-inline: calc(var(--aura)*1); }
         .header .btn { font-size: 0.8125rem; padding: 0 calc(var(--aura)*0.9); height: calc(var(--aura)*3); }
-        .carousel-current-heading { font-size: clamp(1.75rem,8vw,2.5rem); }
       }
       /* Compact header at 360px–400px: wordmark text stays visible */
       @media (max-width: 400px) {
@@ -863,7 +864,7 @@
         </a>
         <div class="header-actions">
           <a class="btn btn-ghost" href="#plans" aria-label="Log in to your account">Log in</a>
-          <a class="btn btn-light" href="#plans" aria-label="Begin watching Noctilume">Begin</a>
+          <a class="btn btn-light" href="#plans" aria-label="Watch Noctilume tonight">Watch tonight</a>
         </div>
       </div>
     </header>
@@ -921,7 +922,7 @@
       </section>
 
       <!-- Stats -->
-      <section class="block wrap" aria-labelledby="stats-heading" id="stats" style="padding-top:calc(var(--aura)*10);">
+      <section class="block wrap" aria-labelledby="stats-heading" id="stats">
         <h2 class="sr" id="stats-heading">Why Noctilume — example figures</h2>
         <div class="stats-grid">
           <div>
@@ -1441,7 +1442,7 @@
               </div>
             </div>
             <button class="btn btn-icon" type="button" id="carousel-next"
-              aria-label="Next genre">
+              aria-label="Next genre" aria-disabled="false">
               <svg class="icon-svg" viewBox="0 0 15 15" style="width:1.1em;height:1.1em;" aria-hidden="true"><path d="M6 3l4 4.5L6 12" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
           </div>
@@ -1729,15 +1730,11 @@
         }
         /* Prev button state */
         if (prevBtn) {
-          var pDis = current === 0;
-          prevBtn.setAttribute("aria-disabled", String(pDis));
-          prevBtn.disabled = pDis;
+          prevBtn.setAttribute("aria-disabled", current === 0 ? "true" : "false");
         }
         /* Next button state */
         if (nextBtn) {
-          var nDis = current === genres.length - 1;
-          nextBtn.setAttribute("aria-disabled", String(nDis));
-          nextBtn.disabled = nDis;
+          nextBtn.setAttribute("aria-disabled", current === genres.length - 1 ? "true" : "false");
         }
       }
 
@@ -1745,6 +1742,7 @@
 
       if (prevBtn) {
         prevBtn.addEventListener("click", function () {
+          if (prevBtn.getAttribute("aria-disabled") === "true") { return; }
           if (current > 0) { current--; updateCarousel(); }
         });
         prevBtn.addEventListener("keydown", function (e) {
@@ -1753,6 +1751,7 @@
       }
       if (nextBtn) {
         nextBtn.addEventListener("click", function () {
+          if (nextBtn.getAttribute("aria-disabled") === "true") { return; }
           if (current < genres.length - 1) { current++; updateCarousel(); }
         });
         nextBtn.addEventListener("keydown", function (e) {
