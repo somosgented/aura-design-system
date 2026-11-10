@@ -1,0 +1,2138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Halcrest · Aura flavor</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="stylesheet" href="/aura/main.css"/>
+<link rel="stylesheet" href="theme.css"/>
+<script>
+(function(){
+var p=new URLSearchParams(window.location.search).get("appearance");
+var d=p==="dark"||p==="light"?p:(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
+var r=document.documentElement;
+r.classList.add(d);
+r.style.colorScheme=d;
+if(window.matchMedia("(prefers-reduced-motion: no-preference)").matches)r.classList.add("motion");
+})();
+</script>
+<style>
+*{box-sizing:border-box;}
+html{margin:0;padding:0;font-family:var(--aura-font-stack);background:var(--canvas);color:var(--ink);scroll-padding-top:calc(var(--aura)*5);}
+body{margin:0;padding:0;background:var(--canvas);color:var(--ink);font-size:16px;line-height:1.5;min-width:320px;overflow-x:hidden;}
+h1,h2,h3,h4,h5,h6,p,figure,ul,ol,dl{margin:0;}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+.hc-skip{position:absolute;left:13px;top:-60px;z-index:200;padding:8px 20px;border-radius:9999px;background:var(--cobalt);color:var(--on-cobalt);font-weight:600;font-size:14px;border:0;}
+.hc-skip:focus{top:8px;}
+
+.hc{--aura-accents-primary:var(--cobalt);--aura-button-hover:var(--cobalt-deep);--aura-input-bg:var(--paper);--aura-input-placeholder-color:var(--muted);--aura-link:var(--link);--aura-link-hover:var(--accent-a3);--aura-outline:2px solid var(--focus);--aura-text-primary-inverse:var(--on-cobalt);}
+
+.hc :focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.hc-dark-focus :focus-visible{outline-color:var(--focus-night);}
+
+.hc .button,.hc .button-fill,.hc .button-pill{border-radius:9999px;transition:background-color 160ms ease;border-width:2px;}
+.hc .button:hover:not(:disabled),.hc .button-fill:hover:not(:disabled),.hc .button-pill:hover:not(:disabled){transform:none;}
+.hc .button-fill{background:var(--cobalt);border-color:var(--cobalt);color:var(--on-cobalt);}
+.hc .button-fill:hover:not(:disabled){background:var(--cobalt-deep);border-color:var(--cobalt-deep);}
+
+.hc input:not(.default):not([type=checkbox]):not([type=radio]){background:var(--paper);border:1px solid var(--control-line);color:var(--ink);border-radius:12px;height:calc(var(--aura)*3.5);padding:0 13px;font-family:inherit;font-size:max(1rem,17px);width:100%;}
+.hc input:not(.default):focus{outline:2px solid var(--focus);outline-offset:0;background:var(--paper);}
+.hc input:not(.default)::placeholder{color:var(--muted);}
+.hc select:not(.default){background:var(--paper);border:1px solid var(--control-line);color:var(--ink);border-radius:12px;height:calc(var(--aura)*3.5);padding:0 40px 0 13px;font-family:inherit;font-size:max(1rem,17px);width:100%;appearance:none;-webkit-appearance:none;cursor:pointer;}
+.hc select:not(.default):focus{outline:2px solid var(--focus);outline-offset:0;}
+.hc .inputer{margin-bottom:0;padding:0;}
+.hc .hc-select-wrap{position:relative;display:block;}
+.hc .hc-select-wrap::after{content:"";position:absolute;right:14px;top:50%;transform:translateY(-50%);border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid var(--control-line);pointer-events:none;}
+
+.hc input[type=search]:not(.default){background:var(--paper);border:1px solid var(--control-line);color:var(--ink);border-radius:12px;height:calc(var(--aura)*3.5);padding:0 13px;font-family:inherit;font-size:max(1rem,17px);width:100%;}
+.hc input[type=search]:not(.default):focus{outline:2px solid var(--focus);outline-offset:0;}
+
+.hc-wrap{width:min(100% - 80px,1274px);margin-inline:auto;}
+@media(max-width:767px){.hc-wrap{width:min(100% - 32px,1274px);}}
+
+@media(prefers-reduced-motion:reduce){
+.hc *,.hc *::before,.hc *::after{transition:none!important;animation:none!important;scroll-behavior:auto!important;}
+.hc .button:hover,.hc .button-fill:hover,.hc .button-pill:hover{transform:none!important;}
+}
+@media(forced-colors:active){
+.hc .hc-pill-cobalt,.hc .hc-pill-flare,.hc .hc-pill-outline-dark,.hc .hc-pill-outline{border:2px solid ButtonBorder;background:ButtonFace;color:ButtonText;}
+.hc .hc-dash-btn[aria-current=true]{background:Highlight;}
+.hc :focus-visible{outline:2px solid Highlight;}
+}
+
+.hc-pill-cobalt{display:inline-flex;align-items:center;justify-content:center;border-radius:9999px;background:var(--cobalt);color:var(--on-cobalt);border:2px solid var(--cobalt);padding:0 26px;height:45px;font-size:14px;font-weight:600;cursor:pointer;white-space:normal;text-align:center;font-family:inherit;transition:background 160ms ease,border-color 160ms ease;}
+.hc-pill-cobalt:hover:not(:disabled){background:var(--cobalt-deep);border-color:var(--cobalt-deep);}
+.hc-pill-cobalt:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.hc-pill-flare{display:inline-flex;align-items:center;justify-content:center;border-radius:9999px;background:var(--flare);color:var(--on-flare);border:2px solid var(--flare);padding:0 26px;height:45px;font-size:14px;font-weight:600;cursor:pointer;white-space:normal;text-align:center;font-family:inherit;transition:background 160ms ease,border-color 160ms ease;}
+.hc-pill-flare:hover:not(:disabled){background:var(--flare-deep);border-color:var(--flare-deep);}
+.hc-pill-flare:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.hc-pill-outline{display:inline-flex;align-items:center;justify-content:center;border-radius:9999px;background:transparent;color:var(--link);border:2px solid var(--link);padding:0 26px;height:45px;font-size:14px;font-weight:600;cursor:pointer;white-space:normal;text-align:center;font-family:inherit;transition:background 160ms ease;}
+.hc-pill-outline:hover:not(:disabled){background:var(--accent-a3);}
+.hc-pill-outline:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.hc-pill-outline-dark{display:inline-flex;align-items:center;justify-content:center;border-radius:9999px;background:transparent;color:var(--night-ink);border:2px solid var(--night-ink);padding:0 26px;height:45px;font-size:14px;font-weight:600;cursor:pointer;white-space:normal;text-align:center;font-family:inherit;transition:background 160ms ease;}
+.hc-pill-outline-dark:hover:not(:disabled){background:color-mix(in srgb,var(--night-ink) 12%,transparent);}
+.hc-pill-outline-dark:focus-visible{outline:2px solid var(--focus-night);outline-offset:2px;}
+.hc-closing-pill-outline{display:inline-flex;align-items:center;justify-content:center;border-radius:9999px;background:transparent;color:var(--footer-ink);border:2px solid var(--footer-ink);padding:0 26px;height:48px;font-size:15px;font-weight:600;cursor:pointer;white-space:normal;text-align:center;font-family:inherit;text-decoration:none;transition:background 160ms ease;}
+.hc-closing-pill-outline:hover{background:color-mix(in srgb,var(--footer-ink) 12%,transparent);}
+.hc-closing-pill-outline:focus-visible{outline:2px solid var(--focus-night);outline-offset:2px;}
+.hc-pill-sm-cobalt{display:inline-flex;align-items:center;justify-content:center;border-radius:9999px;background:var(--cobalt);color:var(--on-cobalt);border:2px solid var(--cobalt);padding:0 20px;height:36px;font-size:13px;font-weight:600;cursor:pointer;white-space:normal;text-align:center;font-family:inherit;transition:background 160ms ease,border-color 160ms ease;}
+.hc-pill-sm-cobalt:hover:not(:disabled){background:var(--cobalt-deep);border-color:var(--cobalt-deep);}
+.hc-pill-sm-cobalt:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+
+.hc-circ{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:9999px;cursor:pointer;flex-shrink:0;font-family:inherit;border:0;transition:background 160ms ease;}
+.hc-circ:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.hc-circ-light{background:var(--canvas);border:1px solid var(--rule);color:var(--ink);}
+.hc-circ-light:hover:not(:disabled){background:var(--mist);}
+.hc-circ-cobalt{background:var(--cobalt);color:var(--on-cobalt);}
+.hc-circ-cobalt:hover:not(:disabled){background:var(--cobalt-deep);}
+.hc-circ-night{background:color-mix(in srgb,var(--night-ink) 15%,transparent);color:var(--night-ink);border:1px solid color-mix(in srgb,var(--night-ink) 25%,transparent);}
+.hc-circ-night:hover:not(:disabled){background:color-mix(in srgb,var(--night-ink) 25%,transparent);}
+.hc-circ-night:focus-visible{outline-color:var(--focus-night);}
+.hc-circ:disabled{opacity:0.4;cursor:default;}
+
+#hc-pass .hc-circ-night.hc-pass-prev-btn{background:var(--canvas);border:1px solid var(--control-line);color:var(--ink);}
+#hc-pass .hc-circ-night.hc-pass-prev-btn:hover:not(:disabled){background:var(--mist);}
+#hc-pass .hc-circ-night.hc-pass-next-btn{background:var(--cobalt);border-color:var(--cobalt);color:var(--on-cobalt);}
+#hc-pass .hc-circ-night.hc-pass-next-btn:hover:not(:disabled){background:var(--cobalt-deep);border-color:var(--cobalt-deep);}
+#hc-pass .hc-circ-night.hc-pass-prev-btn:focus-visible,#hc-pass .hc-circ-night.hc-pass-next-btn:focus-visible{outline-color:var(--focus);}
+#hc-pass .hc-dash-night .hc-dash-btn{background:var(--dot);}
+#hc-pass .hc-dash-night .hc-dash-btn[aria-current=true]{background:var(--cobalt);}
+#hc-pass .hc-dash-night .hc-dash-btn:focus-visible{outline-color:var(--focus);}
+#hc-pass .hc-tier-card :focus-visible{outline-color:var(--focus-night);}
+
+.hc-dash-row{display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap;}
+.hc-dash-btn{border:0;border-radius:9999px;height:4px;width:16px;background:var(--dot);cursor:pointer;padding:0;transition:width 160ms ease,background 160ms ease;}
+.hc-dash-btn[aria-current=true]{width:24px;background:var(--cobalt);}
+.hc-dash-btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.hc-dash-night .hc-dash-btn{background:var(--dot-night);}
+.hc-dash-night .hc-dash-btn[aria-current=true]{background:var(--night-ink);}
+.hc-dash-night .hc-dash-btn:focus-visible{outline-color:var(--focus-night);}
+
+#hc-strip{background:var(--strip);color:var(--strip-ink);height:32px;display:flex;align-items:center;padding:0 20px;}
+#hc-strip a:focus-visible{outline:2px solid var(--focus-night);outline-offset:2px;}
+.hc-strip-inner{display:flex;align-items:center;justify-content:space-between;width:100%;font-size:12px;}
+.hc-strip-left{color:var(--strip-ink);opacity:0.8;}
+.hc-strip-right{font-size:11px;font-weight:600;letter-spacing:0.05em;color:var(--strip-ink);}
+
+#hc-nav{position:sticky;top:0;z-index:50;background:var(--canvas);border-bottom:1px solid var(--rule);}
+.hc-nav-inner{display:flex;align-items:center;height:65px;gap:0;}
+.hc-wordmark{display:inline-flex;align-items:center;gap:10px;font-family:var(--aura-font-display);font-weight:700;font-size:17px;color:var(--ink);text-decoration:none;flex-shrink:0;letter-spacing:-0.01em;}
+.hc-accent-sq{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;background:var(--cobalt);flex-shrink:0;}
+.hc-nav-items{display:flex;align-items:center;list-style:none;margin:0;padding:0;gap:2px;margin-left:24px;}
+.hc-nav-items>li{position:static;}
+.hc-trig{display:inline-flex;align-items:center;gap:5px;padding:8px 10px;border:0;background:none;color:var(--body);font:inherit;font-size:14px;font-weight:500;cursor:pointer;border-radius:6px;white-space:nowrap;}
+.hc-trig:hover{color:var(--ink);background:var(--mist);}
+.hc-trig[aria-expanded=true]{color:var(--link);}
+.hc-trig svg.hc-chev{transition:transform 180ms ease;flex-shrink:0;}
+.hc-trig[aria-expanded=true] svg.hc-chev{transform:rotate(180deg);}
+.hc-trig:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.hc-nav-end{display:flex;align-items:center;gap:12px;margin-left:auto;}
+.hc-icon-btn{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border:0;background:none;color:var(--body);cursor:pointer;border-radius:6px;flex-shrink:0;}
+.hc-icon-btn:hover{background:var(--mist);color:var(--ink);}
+.hc-icon-btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+
+.hc-drop{position:absolute;left:0;right:0;top:100%;background:var(--canvas);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);box-shadow:0 4px 16px rgba(0,0,0,0.12);z-index:60;}
+.hc-drop[hidden]{display:none;}
+.hc-drop-inner{max-width:1274px;margin:0 auto;padding:24px 40px 20px;}
+.hc-drop-tiles{display:flex;gap:0;justify-content:center;margin-bottom:16px;}
+.hc-drop-tile{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 16px;border-radius:8px;text-decoration:none;color:var(--ink);min-width:0;flex:1 1 0;}
+.hc-drop-tile:hover{background:var(--mist);}
+.hc-drop-tile:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.hc-drop-tile-icon{color:var(--link);flex-shrink:0;}
+.hc-drop-tile-label{font-size:13px;font-weight:500;color:var(--ink);text-align:center;overflow-wrap:break-word;min-width:0;}
+.hc-drop-rule{border:0;border-top:1px solid var(--rule);margin:0 0 14px;}
+.hc-drop-links{display:flex;gap:24px;list-style:none;margin:0;padding:0;}
+.hc-drop-links li{display:flex;align-items:center;gap:6px;}
+.hc-drop-links a{font-size:13px;color:var(--link);text-decoration:none;}
+.hc-drop-links a:hover{text-decoration:underline;}
+.hc-drop-links a:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+
+.hc-scrim{position:fixed;inset:0;z-index:55;background:rgba(0,0,0,0.35);display:none;}
+.hc-scrim.visible{display:block;}
+.hc [hidden]{display:none !important;}
+.hc header#hc-nav.hc-raised{z-index:60;}
+
+#hc-panel-login,#hc-panel-cart,#hc-panel-search{position:fixed;top:0;right:0;bottom:0;width:min(100%,400px);background:var(--canvas);border-left:1px solid var(--rule);box-shadow:-8px 0 32px rgba(0,0,0,0.14);z-index:60;display:flex;flex-direction:column;padding:24px;}
+#hc-panel-login[hidden],#hc-panel-cart[hidden],#hc-panel-search[hidden]{display:none;}
+.hc a.hc-cart-browse{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;margin-top:calc(var(--aura) * 1.5)}
+#hc-panel-search{width:100%;right:0;top:0;bottom:auto;border-left:0;border-bottom:1px solid var(--rule);padding:20px 40px;flex-direction:column;}
+.hc-panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.hc-panel-title{font-size:16px;font-weight:600;color:var(--ink);}
+.hc-panel-close{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;border:1px solid var(--rule);background:none;color:var(--body);cursor:pointer;}
+.hc-panel-close:hover{background:var(--mist);}
+.hc-panel-close:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.hc-panel-body{color:var(--body);font-size:14px;line-height:1.6;}
+.hc-search-row{display:flex;gap:10px;align-items:center;max-width:1274px;margin:0 auto;}
+.hc-search-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;max-width:1274px;margin-left:auto;margin-right:auto;}
+.hc-chip{border:1px solid var(--rule);border-radius:9999px;padding:5px 14px;font-size:13px;color:var(--link);background:none;cursor:pointer;font-family:inherit;}
+.hc-chip:hover{background:var(--accent-a3);}
+.hc-chip:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.hc-search-status{font-size:13px;color:var(--muted);min-height:1.4em;max-width:1274px;margin:8px auto 0;}
+
+#hc-menu-toggle{display:none;align-items:center;justify-content:center;width:36px;height:36px;border:0;background:none;color:var(--ink);cursor:pointer;border-radius:6px;flex-shrink:0;}
+#hc-menu-toggle:hover{background:var(--mist);}
+#hc-menu-toggle:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+
+#hc-menu{position:fixed;inset:0;z-index:70;background:var(--canvas);overflow-y:auto;display:flex;flex-direction:column;}
+#hc-menu[hidden]{display:none;}
+.hc-menu-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--rule);}
+#hc-menu-close{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border:0;background:none;color:var(--ink);cursor:pointer;border-radius:6px;}
+#hc-menu-close:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.hc-menu-rows{flex:1;padding:8px 0;}
+.hc-menu-row{display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 20px;border:0;background:none;color:var(--ink);font:inherit;font-size:16px;font-weight:500;cursor:pointer;text-align:left;border-bottom:1px solid var(--rule);}
+.hc-menu-row:last-child{border-bottom:0;}
+.hc-menu-row:hover{background:var(--mist);}
+.hc-menu-row:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.hc-menu-foot{padding:16px 20px;display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--rule);}
+
+.hc-sub{position:absolute;top:69px;left:0;right:0;bottom:0;background:var(--canvas);overflow-y:auto;display:flex;flex-direction:column;}
+.hc-sub[hidden]{display:none;}
+.hc-sub-head{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--rule);}
+.hc-back{display:inline-flex;align-items:center;gap:6px;border:0;background:none;color:var(--link);font:inherit;font-size:14px;cursor:pointer;padding:6px 0;}
+.hc-back:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.hc-sub-title{font-size:16px;font-weight:600;color:var(--ink);}
+.hc-sub-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;padding:16px 16px 8px;}
+.hc-sub-tile{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 10px;border-radius:8px;text-decoration:none;color:var(--ink);}
+.hc-sub-tile:hover{background:var(--mist);}
+.hc-sub-tile:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.hc-sub-tile-icon{color:var(--link);}
+.hc-sub-tile-label{font-size:13px;font-weight:500;text-align:center;overflow-wrap:break-word;min-width:0;}
+.hc-sub-rule{border:0;border-top:1px solid var(--rule);margin:0 16px 10px;}
+.hc-sub-links{list-style:none;margin:0;padding:0 16px 16px;}
+.hc-sub-links li{padding:8px 0;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:8px;}
+.hc-sub-links li:last-child{border-bottom:0;}
+.hc-sub-links a{font-size:14px;color:var(--link);display:flex;align-items:center;gap:6px;}
+.hc-sub-links a:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+html.hc-lock{overflow:hidden;}
+
+@media(max-width:1023px){
+.hc-nav-items{display:none;}
+.hc-nav-end .hc-pill-sm-cobalt{display:none;}
+.hc-icon-btn.hc-cart-btn{display:none;}
+#hc-menu-toggle{display:inline-flex;}
+}
+
+#hc-hero{position:relative;overflow:hidden;background:var(--night);}
+.hc-hero-slides{position:relative;min-height:470px;}
+.hc-hero-slide{position:absolute;inset:0;display:none;min-height:470px;}
+.hc-hero-slide[aria-hidden=false]{display:block;}
+.hc-hero-art{position:absolute;inset:0;overflow:hidden;}
+.hc-hero-scrim{position:absolute;inset:0;background:linear-gradient(to right,color-mix(in srgb,var(--night) 90%,transparent) 0%,color-mix(in srgb,var(--night) 70%,transparent) 40%,transparent 80%);}
+.hc-hero-text{position:absolute;top:0;bottom:0;left:0;width:min(480px,100%);display:flex;flex-direction:column;justify-content:center;padding:40px;}
+.hc-hero-text h1,.hc-hero-text h2{font-family:var(--aura-font-display);font-weight:300;line-height:1.08;letter-spacing:-0.02em;color:var(--night-ink);font-size:clamp(28px,4vw,44px);overflow-wrap:break-word;hyphens:none;}
+.hc-hero-text p{color:var(--night-muted);font-size:16px;line-height:1.5;margin:16px 0 24px;max-width:380px;}
+.hc-hero-strip{position:relative;z-index:2;background:var(--night);padding:16px 0 24px;border-top:1px solid color-mix(in srgb,var(--night-ink) 15%,transparent);}
+.hc-hero-tabs-inner{max-width:1274px;margin:0 auto;padding:0 40px;display:flex;gap:8px;justify-content:center;overflow-x:auto;scrollbar-width:none;}
+.hc-hero-tabs-inner::-webkit-scrollbar{display:none;}
+.hc-thumb{border:0;background:none;padding:0;cursor:pointer;border-radius:10px;opacity:0.6;flex-shrink:0;}
+.hc-thumb[aria-selected=true]{opacity:1;outline:2px solid var(--night-ink);outline-offset:2px;}
+.hc-thumb:focus-visible{outline:2px solid var(--focus-night);outline-offset:2px;}
+.hc-thumb-art{width:120px;height:68px;border-radius:10px;overflow:hidden;display:block;}
+.hc-thumb-label{font-size:11px;font-weight:500;color:var(--night-muted);text-align:center;margin-top:5px;overflow-wrap:break-word;}
+.hc-thumb[aria-selected=true] .hc-thumb-label{color:var(--night-ink);}
+#hc-hero-pause{position:absolute;bottom:20px;right:20px;z-index:3;width:36px;height:36px;border-radius:9999px;border:2px solid var(--night-ink);background:color-mix(in srgb,var(--night) 70%,transparent);color:var(--night-ink);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+#hc-hero-pause:focus-visible{outline:2px solid var(--focus-night);outline-offset:2px;}
+@media(max-width:767px){
+.hc-hero-text{padding:28px 20px;}
+.hc-hero-text h1,.hc-hero-text h2{font-size:28px;}
+.hc-hero-tabs-inner{padding:0 16px 0 calc(16px);padding-right:60px;justify-content:flex-start;}
+}
+
+#hc-promo{background:linear-gradient(to right,var(--cobalt),var(--cobalt-deep));padding:0 56px 0 40px;display:flex;align-items:center;gap:16px;min-height:72px;position:relative;}
+.hc-promo-text{flex:1;min-width:0;}
+.hc-promo-text strong{color:var(--on-cobalt);font-size:15px;font-weight:700;display:block;}
+.hc-promo-text span{color:var(--on-cobalt);font-size:13px;opacity:0.9;}
+#hc-promo-close{background:transparent;border:1px solid var(--on-cobalt);color:var(--on-cobalt);border-radius:9999px;width:28px;height:28px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;font-family:inherit;position:absolute;top:50%;right:12px;transform:translateY(-50%);}
+#hc-promo-close:focus-visible{outline:2px solid var(--focus-night);outline-offset:2px;}
+#hc-promo :focus-visible{outline-color:var(--focus-night);}
+#hc-promo.hc-promo-hidden{display:none !important;}
+.hc-promo-pill{flex-shrink:0;white-space:normal;}
+html.dark .hc #hc-promo{background:linear-gradient(to right,var(--footer),var(--footer-deep));}
+html.dark .hc .hc-promo-text strong,html.dark .hc .hc-promo-text span{color:var(--footer-ink);}
+html.dark .hc #hc-promo-close{border-color:var(--footer-ink);color:var(--footer-ink);}
+html.dark .hc .hc-promo-pill.hc-pill-outline-dark{color:var(--footer-ink);border-color:var(--footer-ink);}
+@media(max-width:767px){
+#hc-promo{padding:12px 44px 12px 16px;flex-direction:column;align-items:flex-start;}
+#hc-promo-close{top:12px;transform:none;}
+.hc-promo-pill{align-self:flex-start;}
+}
+
+#hc-hardware{background:var(--canvas);padding:97px 0 78px;}
+.hc-hw-feature{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:65px;align-items:center;margin-bottom:65px;}
+.hc-hw-feature-text{display:flex;flex-direction:column;gap:20px;min-width:0;}
+.hc-hw-h{font-family:var(--aura-font-display);font-weight:300;line-height:1.08;letter-spacing:-0.02em;color:var(--ink);font-size:clamp(28px,4.5vw,52px);overflow-wrap:break-word;hyphens:none;}
+.hc-hw-name{font-size:16px;font-weight:500;color:var(--link);}
+.hc-hw-sub{font-size:14px;color:var(--body);line-height:1.6;}
+.hc-hw-pills{display:flex;gap:13px;flex-wrap:wrap;}
+.hc-hw-visual{width:100%;aspect-ratio:4/3;border-radius:12px;overflow:hidden;}
+.hc-hw-carousel{position:relative;}
+.hc-hw-track-wrap{overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px;}
+.hc-hw-track-wrap::-webkit-scrollbar{display:none;}
+ul#hc-hw-track{display:flex;gap:16px;list-style:none;margin:0;padding:0;}
+ul#hc-hw-track > li{flex:0 0 190px;min-width:0;scroll-snap-align:start;}
+.hc-hw-card{background:var(--paper);border:1px solid var(--rule);border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.08);padding:13px;display:flex;flex-direction:column;align-items:center;gap:10px;}
+.hc-hw-card-art{width:100%;height:140px;border-radius:8px;overflow:hidden;}
+.hc-hw-card-label{font-size:13px;font-weight:500;color:var(--ink);text-align:center;overflow-wrap:break-word;min-width:0;}
+.hc-hw-card:first-child .hc-hw-card-label{color:var(--link);}
+.hc-hw-controls{display:flex;align-items:center;gap:13px;margin-top:20px;justify-content:center;flex-wrap:wrap;}
+@media(max-width:767px){
+.hc-hw-feature{grid-template-columns:minmax(0,1fr);}
+ul#hc-hw-track > li{flex:0 0 78%;}
+}
+
+#hc-worlds{background:var(--night);padding:78px 0;}
+.hc-worlds-h{font-family:var(--aura-font-display);font-weight:300;color:var(--night-ink);font-size:clamp(24px,3vw,32px);text-align:center;margin-bottom:28px;letter-spacing:-0.02em;}
+.hc-worlds-tabs{display:flex;gap:4px;justify-content:center;margin-bottom:36px;}
+.hc-worlds-tab{border:0;background:transparent;color:var(--night-muted);border-radius:9999px;padding:8px 24px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:background 160ms ease,color 160ms ease;}
+.hc-worlds-tab[aria-selected=true]{background:var(--night-ink);color:var(--night);}
+.hc-worlds-tab:focus-visible{outline:2px solid var(--focus-night);outline-offset:2px;}
+.hc-worlds-panel{display:none;}
+.hc-worlds-panel[aria-hidden=false]{display:block;}
+.hc-covers{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;}
+.hc-cover{border-radius:8px;overflow:hidden;position:relative;}
+.hc-cover-art{width:100%;aspect-ratio:3/4;display:block;}
+.hc-cover-badge{position:absolute;top:8px;left:8px;background:var(--cobalt);color:var(--on-cobalt);font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;border-radius:4px;padding:2px 7px;}
+.hc-cover-title{font-size:13px;font-weight:500;color:var(--night-ink);padding:8px 4px 0;overflow-wrap:break-word;hyphens:none;}
+@media(max-width:1023px){.hc-covers{grid-template-columns:repeat(4,minmax(0,1fr));}}
+@media(max-width:767px){.hc-covers{grid-template-columns:repeat(2,minmax(0,1fr));}}
+
+#hc-pass{background:var(--mist);padding:97px 0 78px;text-align:center;}
+.hc-pass-emblem{margin:0 auto 24px;width:64px;height:64px;display:block;}
+.hc-pass-h{font-family:var(--aura-font-display);font-weight:300;color:var(--ink);font-size:clamp(24px,3vw,32px);margin-bottom:14px;letter-spacing:-0.02em;}
+.hc-pass-body{color:var(--body);font-size:16px;max-width:600px;margin:0 auto 36px;line-height:1.5;}
+.hc-pass-carousel{position:relative;overflow:hidden;}
+.hc-pass-track-wrap{overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:4px 0 8px;}
+.hc-pass-track-wrap::-webkit-scrollbar{display:none;}
+ul#hc-pass-track{display:flex;gap:16px;list-style:none;margin:0;padding:0 calc(50% - 350px);}
+ul#hc-pass-track > li{flex:0 0 700px;min-width:0;scroll-snap-align:center;}
+.hc-tier-card{background:linear-gradient(135deg,var(--night),var(--indigo));border-radius:12px;padding:36px 40px;text-align:left;display:flex;flex-direction:column;gap:20px;}
+.hc-tier-badge{display:inline-block;border-radius:4px;padding:3px 10px;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--on-tier);}
+.hc-tier-name{font-family:var(--aura-font-display);font-size:24px;font-weight:600;color:var(--night-ink);}
+.hc-tier-price{font-size:13px;color:var(--night-muted);}
+.hc-tier-benefits{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;}
+.hc-tier-benefits li{font-size:14px;color:var(--night-muted);display:flex;align-items:center;gap:8px;overflow-wrap:break-word;min-width:0;}
+.hc-tier-benefits li::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--link-night);flex-shrink:0;}
+.hc-pass-controls{display:flex;align-items:center;gap:13px;margin-top:24px;justify-content:center;flex-wrap:wrap;}
+.hc-pass-cta{margin-top:28px;}
+@media(max-width:767px){
+ul#hc-pass-track{padding:0 20px;}
+ul#hc-pass-track > li{flex:0 0 min(700px,80vw);}
+}
+
+#hc-monthly{background:linear-gradient(to bottom,var(--indigo),var(--indigo-deep));padding:97px 0 78px;}
+.hc-monthly-eyebrow{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--link-night);text-align:center;margin-bottom:14px;}
+.hc-monthly-heading{text-align:center;margin-bottom:12px;}
+.hc-monthly-heading .hc-thin{display:block;font-family:var(--aura-font-display);font-weight:300;font-size:clamp(22px,3vw,36px);color:var(--night-ink);letter-spacing:-0.02em;line-height:1.1;}
+.hc-monthly-heading .hc-bold{display:block;font-family:var(--aura-font-display);font-weight:700;font-size:clamp(22px,3vw,36px);color:var(--night-ink);letter-spacing:-0.01em;text-transform:uppercase;line-height:1.1;}
+.hc-monthly-body{color:var(--night-muted);font-size:16px;text-align:center;max-width:580px;margin:0 auto 32px;line-height:1.5;}
+.hc-monthly-carousel{position:relative;margin-top:36px;}
+.hc-monthly-track-wrap{overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px;}
+.hc-monthly-track-wrap::-webkit-scrollbar{display:none;}
+ul#hc-monthly-track{display:flex;gap:20px;list-style:none;margin:0;padding:0;}
+ul#hc-monthly-track > li{flex:0 0 280px;min-width:0;scroll-snap-align:start;}
+.hc-article-card{background:color-mix(in srgb,var(--night-ink) 8%,transparent);border:1px solid color-mix(in srgb,var(--night-ink) 15%,transparent);border-radius:12px;overflow:hidden;}
+.hc-article-art{height:160px;width:100%;display:block;}
+.hc-article-body{padding:16px;}
+.hc-article-title{font-size:15px;font-weight:600;color:var(--night-ink);line-height:1.4;overflow-wrap:break-word;hyphens:none;margin-bottom:8px;}
+.hc-article-text{font-size:13px;color:var(--night-muted);line-height:1.5;overflow-wrap:break-word;}
+.hc-monthly-controls{display:flex;align-items:center;gap:13px;margin-top:20px;justify-content:center;flex-wrap:wrap;}
+.hc-monthly-dash .hc-dash-btn{background:var(--dot-night);}
+.hc-monthly-dash .hc-dash-btn[aria-current=true]{background:var(--night-ink);}
+.hc-monthly-dash .hc-dash-btn:focus-visible{outline-color:var(--focus-night);}
+@media(max-width:767px){ul#hc-monthly-track > li{flex:0 0 78%;}}
+
+#hc-deals{background:var(--canvas);padding:97px 0 78px;}
+.hc-deals-inner{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:52px;align-items:center;}
+.hc-deals-text{display:flex;flex-direction:column;gap:20px;min-width:0;}
+.hc-deals-h{font-family:var(--aura-font-display);font-weight:300;color:var(--ink);font-size:clamp(24px,3vw,36px);letter-spacing:-0.02em;line-height:1.1;overflow-wrap:break-word;hyphens:none;}
+.hc-deals-sub{font-size:14px;color:var(--body);line-height:1.6;}
+.hc-deals-panel{background:var(--paper);border:1px solid var(--rule);border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,0.09);padding:20px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+.hc-deal-tile{border-radius:12px;overflow:hidden;border:1px solid var(--rule);}
+.hc-deal-art{height:100px;width:100%;display:block;}
+.hc-deal-info{padding:10px 12px;}
+.hc-deal-title{font-size:13px;font-weight:600;color:var(--ink);overflow-wrap:break-word;hyphens:none;}
+.hc-deal-tag{display:inline-block;margin-top:5px;background:var(--flare);color:var(--on-flare);font-size:11px;font-weight:700;border-radius:4px;padding:2px 7px;letter-spacing:0.06em;}
+@media(max-width:767px){
+.hc-deals-inner{grid-template-columns:minmax(0,1fr);}
+.hc-deals-panel{grid-template-columns:minmax(0,1fr);}
+}
+
+#hc-stats{background:var(--mist);padding:78px 0;}
+.hc-stats-h{font-family:var(--aura-font-display);font-weight:300;color:var(--ink);font-size:clamp(22px,2.5vw,28px);text-align:center;margin-bottom:36px;letter-spacing:-0.02em;}
+.hc-stats-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;}
+.hc-stat{padding:24px 20px;border-right:1px solid var(--rule);text-align:center;}
+.hc-stat:last-child{border-right:0;}
+.hc-stat-value{font-family:var(--aura-font-display);font-size:clamp(28px,4vw,48px);font-weight:300;color:var(--ink);line-height:1;letter-spacing:-0.02em;}
+.hc-stat-label{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--body);margin-top:8px;}
+@media(max-width:767px){
+.hc-stats-row{grid-template-columns:repeat(2,minmax(0,1fr));}
+.hc-stat{border-right:0;border-bottom:1px solid var(--rule);}
+.hc-stat:nth-child(2n){border-bottom:1px solid var(--rule);}
+.hc-stat:last-child{border-bottom:0;}
+}
+@media(max-width:400px){.hc-stats-row{grid-template-columns:minmax(0,1fr);}}
+
+#hc-compare{background:var(--canvas);padding:78px 0;}
+.hc-compare-h{font-family:var(--aura-font-display);font-weight:300;color:var(--ink);font-size:clamp(22px,2.5vw,28px);text-align:center;margin-bottom:36px;letter-spacing:-0.02em;}
+.hc-table-wrap{border-radius:12px;border:1px solid var(--rule);overflow:hidden;}
+table.hc-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px;}
+table.hc-table caption{font-size:13px;color:var(--muted);text-align:left;padding:12px 16px;caption-side:top;white-space:normal;word-break:break-word;}
+table.hc-table th{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--body);padding:12px 16px;text-align:left;border-bottom:1px solid var(--rule);background:var(--paper);overflow-wrap:break-word;white-space:normal;}
+table.hc-table th:first-child{width:34%;}
+table.hc-table td{padding:12px 16px;color:var(--ink);border-bottom:1px solid var(--rule);overflow-wrap:break-word;}
+table.hc-table tbody tr:last-child td{border-bottom:0;}
+@media(max-width:767px){
+table.hc-table th,table.hc-table td{padding:8px 6px;font-size:12px;overflow-wrap:normal;word-break:normal;hyphens:none;}
+table.hc-table th{letter-spacing:0.04em;}
+table.hc-table th:first-child{width:30%;}
+}
+
+#hc-playtest{background:var(--mist);padding:78px 0;}
+.hc-playtest-inner{max-width:680px;margin:0 auto;}
+.hc-playtest-h{font-family:var(--aura-font-display);font-weight:300;color:var(--ink);font-size:clamp(22px,2.5vw,28px);margin-bottom:10px;letter-spacing:-0.02em;}
+.hc-playtest-sub{font-size:14px;color:var(--body);margin-bottom:28px;line-height:1.6;}
+.hc-field{display:flex;flex-direction:column;gap:6px;margin-bottom:18px;}
+.hc-label{font-size:14px;font-weight:500;color:var(--ink);}
+.hc-err{font-size:13px;color:var(--flare);min-height:1.2em;display:block;}
+.hc-checkbox-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:20px;position:relative;}
+.hc-checkbox-row input[type=checkbox]{position:absolute;width:20px;height:20px;opacity:0;margin:0;top:0;left:0;cursor:pointer;z-index:1;}
+.hc-check{display:inline-block;width:20px;height:20px;border:2px solid var(--control-line);border-radius:4px;background:var(--canvas);flex-shrink:0;position:relative;margin-top:2px;}
+.hc-check::after{content:"";display:none;position:absolute;left:5px;top:2px;width:6px;height:10px;border:2px solid var(--on-cobalt);border-top:0;border-left:0;transform:rotate(45deg);}
+.hc-checkbox-row input[type=checkbox]:checked + .hc-check{background:var(--cobalt);border-color:var(--cobalt);}
+.hc-checkbox-row input[type=checkbox]:checked + .hc-check::after{display:block;}
+.hc-checkbox-row input[type=checkbox]:focus-visible + .hc-check{outline:2px solid var(--focus);outline-offset:2px;}
+.hc-checkbox-row input[type=checkbox][aria-invalid=true] + .hc-check{border-color:var(--flare);}
+.hc-checkbox-label{font-size:14px;color:var(--body);line-height:1.5;}
+.hc-form-status{font-size:14px;font-weight:500;color:var(--link);min-height:1.4em;margin-top:12px;}
+
+#hc-faq{background:var(--canvas);padding:78px 0;}
+.hc-faq-h{font-family:var(--aura-font-display);font-weight:300;color:var(--ink);font-size:clamp(22px,2.5vw,28px);text-align:center;margin-bottom:36px;letter-spacing:-0.02em;}
+.hc-faq-list{max-width:760px;margin:0 auto;}
+.hc-faq-item{border-top:1px solid var(--rule);}
+.hc-faq-item:last-child{border-bottom:1px solid var(--rule);}
+.hc-faq-trigger{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;padding:18px 0;border:0;background:none;color:var(--ink);font:inherit;font-size:16px;font-weight:500;cursor:pointer;text-align:left;}
+.hc-faq-trigger:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.hc-faq-trigger-text{min-width:0;flex:1;overflow-wrap:break-word;}
+.hc-faq-icon{display:grid;place-items:center;width:24px;height:24px;flex:none;}
+.hc-faq-icon svg{transition:transform 180ms ease;}
+.hc-faq-trigger[aria-expanded=true] .hc-faq-icon svg{transform:rotate(45deg);}
+.hc-faq-panel{padding-bottom:16px;color:var(--body);font-size:15px;line-height:1.6;}
+.hc-faq-panel[hidden]{display:none;}
+
+#hc-journal{background:var(--canvas);padding:78px 0;}
+.hc-journal-h{font-family:var(--aura-font-display);font-weight:300;color:var(--ink);font-size:clamp(22px,2.5vw,28px);text-align:center;margin-bottom:36px;letter-spacing:-0.02em;}
+.hc-journal-carousel{position:relative;}
+.hc-journal-track-wrap{overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px;}
+.hc-journal-track-wrap::-webkit-scrollbar{display:none;}
+ul#hc-journal-track{display:flex;gap:20px;list-style:none;margin:0;padding:0;}
+ul#hc-journal-track > li{flex:0 0 360px;min-width:0;scroll-snap-align:start;}
+.hc-jcard{background:var(--paper);border-radius:12px;border:1px solid var(--rule);box-shadow:0 2px 16px rgba(0,0,0,0.10);overflow:hidden;}
+.hc-jcard-art{height:200px;width:100%;display:block;}
+.hc-jcard-body{padding:18px;}
+.hc-jcard-title{font-size:15px;font-weight:600;color:var(--ink);line-height:1.4;overflow-wrap:break-word;hyphens:none;margin-bottom:8px;}
+.hc-jcard-excerpt{font-size:14px;color:var(--body);line-height:1.5;overflow-wrap:break-word;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.hc-jcard-author{display:flex;align-items:center;gap:10px;margin-top:14px;}
+.hc-avatar{width:40px;height:40px;border-radius:9999px;background:var(--cobalt);color:var(--on-cobalt);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;}
+.hc-author-name{font-size:13px;font-weight:600;color:var(--ink);line-height:1.3;}
+.hc-author-meta{font-size:12px;color:var(--muted);}
+.hc-journal-controls{display:flex;align-items:center;gap:13px;margin-top:24px;justify-content:center;flex-wrap:wrap;}
+@media(max-width:767px){ul#hc-journal-track > li{flex:0 0 78%;}}
+
+#hc-social{background:var(--haze);padding:78px 0;}
+.hc-social-h{font-family:var(--aura-font-display);font-weight:300;color:var(--ink);font-size:clamp(22px,2.5vw,28px);text-align:center;margin-bottom:36px;letter-spacing:-0.02em;}
+.hc-social-tiles{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+.hc-social-tile{display:flex;flex-direction:column;align-items:center;gap:10px;padding:24px 20px;border-radius:12px;background:var(--canvas);border:1px solid var(--rule);text-decoration:none;color:var(--ink);min-width:120px;flex:0 0 auto;}
+.hc-social-tile:hover{background:var(--mist);}
+.hc-social-tile:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.hc-social-tile svg{color:var(--link);}
+.hc-social-tile-label{font-size:13px;font-weight:500;color:var(--ink);text-align:center;}
+
+#hc-closing{background:linear-gradient(135deg,var(--cobalt),var(--cobalt-deep));padding:97px 40px;text-align:center;}
+.hc-closing-h{font-family:var(--aura-font-display);font-weight:300;color:var(--on-cobalt);font-size:clamp(24px,3vw,40px);margin-bottom:14px;letter-spacing:-0.02em;}
+.hc-closing-sub{color:var(--on-cobalt);font-size:16px;opacity:0.85;margin-bottom:28px;max-width:540px;margin-left:auto;margin-right:auto;line-height:1.5;}
+.hc-closing-pills{display:flex;gap:13px;justify-content:center;flex-wrap:wrap;}
+.hc-closing-pill-white{display:inline-flex;align-items:center;justify-content:center;border-radius:9999px;background:var(--on-cobalt);color:var(--cobalt);border:2px solid var(--on-cobalt);padding:0 26px;height:48px;font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;font-family:inherit;}
+.hc-closing-pill-white:hover{opacity:0.9;}
+.hc-closing-pill-white:focus-visible{outline:2px solid var(--focus-night);outline-offset:2px;}
+#hc-closing :focus-visible{outline-color:var(--focus-night);}
+html.dark .hc #hc-closing{background:linear-gradient(135deg,var(--footer),var(--footer-deep));}
+html.dark .hc .hc-closing-h,html.dark .hc .hc-closing-sub{color:var(--footer-ink);}
+html.dark .hc .hc-closing-pill-white{background:var(--footer-ink);color:var(--footer);border-color:var(--footer-ink);}
+.hc-menu-wordmark{font-weight:700;font-size:16px;color:var(--ink);}
+.hc-mobile-login-btn{width:100%;justify-content:center;}
+.hc-tier-badge-wander{background:var(--tier-wander);}
+.hc-tier-badge-venture{background:var(--tier-venture);}
+.hc-tier-badge-summit{background:var(--tier-summit);}
+.hc-compare-link{text-decoration:none;}
+.hc-monthly-read-wrap{text-align:center;}
+.hc-footer-wordmark-mark{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:5px;background:var(--on-cobalt);flex-shrink:0;}
+
+#hc-legal{background:var(--canvas);padding:28px 0;}
+.hc-legal-notes{max-width:1274px;margin:0 auto;padding:0 40px;}
+.hc-legal-notes p{font-size:12px;font-style:italic;color:var(--muted);line-height:1.6;margin:4px 0;}
+@media(max-width:767px){.hc-legal-notes{padding:0 16px;}}
+
+footer#hc-footer :focus-visible{outline-color:var(--focus-night);}
+footer#hc-footer{background:var(--footer);padding:56px 0 0;}
+.hc-footer-wrap{max-width:1274px;margin:0 auto;padding:0 40px;}
+.hc-footer-wordmark{display:inline-flex;align-items:center;gap:10px;font-family:var(--aura-font-display);font-weight:700;font-size:17px;color:var(--footer-ink);text-decoration:none;margin-bottom:28px;outline-color:var(--focus-night);}
+.hc-footer-rule{border:0;border-top:1px solid color-mix(in srgb,var(--footer-ink) 20%,transparent);margin:0 0 36px;}
+.hc-footer-cols{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:24px;margin-bottom:40px;}
+.hc-footer-col-h{font-size:14px;font-weight:700;color:var(--footer-ink);margin-bottom:12px;letter-spacing:0.02em;}
+.hc-footer-col-btn{display:flex;align-items:center;justify-content:space-between;width:100%;border:0;background:none;color:var(--footer-ink);font:inherit;font-size:14px;font-weight:700;cursor:pointer;padding:10px 0;text-align:left;border-top:1px solid var(--footer-muted);}
+.hc-footer-col-btn:focus-visible{outline:2px solid var(--focus-night);outline-offset:2px;}
+.hc-footer-col-btn svg{transition:transform 180ms ease;flex-shrink:0;}
+.hc-footer-col-btn[aria-expanded=true] svg{transform:rotate(180deg);}
+ul.hc-footer-links{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;}
+ul.hc-footer-links li a{font-size:13px;color:var(--footer-muted);text-decoration:none;line-height:1.8;display:block;}
+ul.hc-footer-links li a:hover{color:var(--footer-ink);}
+ul.hc-footer-links li a:focus-visible{outline:2px solid var(--focus-night);outline-offset:2px;}
+.hc-footer-social{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap;}
+.hc-footer-social a{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:1px solid color-mix(in srgb,var(--footer-ink) 30%,transparent);color:var(--footer-muted);}
+.hc-footer-social a:hover{color:var(--footer-ink);border-color:var(--footer-ink);}
+.hc-footer-social a:focus-visible{outline:2px solid var(--focus-night);outline-offset:2px;}
+.hc-footer-bottom{border-top:1px solid color-mix(in srgb,var(--footer-ink) 20%,transparent);padding:24px 0;display:flex;align-items:center;flex-wrap:wrap;gap:12px;}
+.hc-footer-bottom-mark{font-size:13px;font-weight:600;color:var(--footer-ink);}
+.hc-footer-legal-line{font-size:12px;color:var(--footer-muted);margin-left:4px;}
+.hc-footer-region{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.hc-footer-region label{font-size:12px;color:var(--footer-muted);display:flex;align-items:center;gap:6px;}
+.hc-region-wrap{position:relative;display:inline-flex;align-items:center;}
+.hc-region-wrap::after{content:"";position:absolute;right:10px;top:50%;transform:translateY(-50%);border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid var(--footer-muted);pointer-events:none;}
+select#hc-region{background:var(--footer-deep);color:var(--footer-ink);border:1px solid var(--footer-muted);border-radius:6px;padding:5px 32px 5px 10px;font-size:12px;font-family:inherit;appearance:none;-webkit-appearance:none;cursor:pointer;}
+select#hc-region:focus{outline:2px solid var(--focus-night);outline-offset:2px;}
+ul.hc-footer-legal-links{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;overflow:hidden;align-items:center;}
+ul.hc-footer-legal-links li{display:flex;align-items:center;border-left:1px solid var(--footer-muted);margin-left:-1px;padding:0 12px;}
+ul.hc-footer-legal-links li a{font-size:12px;color:var(--footer-muted);}
+ul.hc-footer-legal-links li a:hover{color:var(--footer-ink);}
+ul.hc-footer-legal-links li a:focus-visible{outline:2px solid var(--focus-night);outline-offset:2px;}
+@media(max-width:1023px){.hc-footer-cols{grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media(max-width:767px){
+.hc-footer-wrap{padding:0 16px;}
+.hc-footer-cols{grid-template-columns:minmax(0,1fr);}
+.hc-footer-col-h{display:none;}
+.hc-footer-bottom{flex-direction:column;align-items:flex-start;}
+.hc-footer-region{margin-left:0;}
+}
+
+.hc-section-sep{padding:0 0 78px;}
+</style>
+</head>
+<body class="hc">
+<a class="hc-skip" href="#hc-main">Skip to main content</a>
+
+<div id="hc-strip">
+  <div class="hc-strip-inner">
+    <span class="hc-strip-left">Story worlds and calm hardware</span>
+    <span class="hc-strip-right">Halcrest Studio</span>
+  </div>
+</div>
+
+<header id="hc-nav">
+  <nav class="hc-wrap hc-nav-inner" aria-label="Main navigation">
+    <a href="#hc-home" id="hc-home" class="hc-wordmark" aria-label="Halcrest home">
+      <span class="hc-accent-sq" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="2" y="2" width="12" height="12" rx="3" fill="var(--on-cobalt)" opacity="0.9"/></svg>
+      </span>
+      Halcrest
+    </a>
+
+    <ul class="hc-nav-items" role="list" id="hc-nav-list">
+      <li>
+        <button class="hc-trig" id="hc-trig-worlds" type="button" aria-expanded="false" aria-controls="hc-drop-worlds">
+          Worlds
+          <svg class="hc-chev" width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div id="hc-drop-worlds" class="hc-drop" hidden role="region" aria-label="Worlds menu">
+          <div class="hc-drop-inner">
+            <div class="hc-drop-tiles" id="hc-drop-worlds-tiles">
+              <a class="hc-drop-tile" href="#"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M14 6v16M6 14h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="hc-drop-tile-label">Just Arrived</span></a>
+              <a class="hc-drop-tile" href="#"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 4l2.5 7.5H24l-6.2 4.5 2.4 7.5L14 19l-6.2 4.5 2.4-7.5L4 11.5h7.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span><span class="hc-drop-tile-label">Featured</span></a>
+              <a class="hc-drop-tile" href="#"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="8" width="20" height="14" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M10 8V6M18 8V6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="hc-drop-tile-label">Story Worlds</span></a>
+              <a class="hc-drop-tile" href="#"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M6 20l5-5 4 4 7-9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hc-drop-tile-label">Collections</span></a>
+              <a class="hc-drop-tile" href="#"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="10" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M6 24c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="hc-drop-tile-label">Co-op Worlds</span></a>
+              <a class="hc-drop-tile" href="#"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M4 14h20M14 4v20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="14" cy="14" r="6" stroke="currentColor" stroke-width="1.5"/></svg></span><span class="hc-drop-tile-label">Coming Soon</span></a>
+            </div>
+            <hr class="hc-drop-rule"/>
+            <ul class="hc-drop-links default" id="hc-drop-worlds-links">
+              <li><svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true"><circle cx="4" cy="4" r="3" fill="var(--link)"/></svg><a href="#">Browse all worlds</a></li>
+              <li><svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true"><circle cx="4" cy="4" r="3" fill="var(--link)"/></svg><a href="#">Halcrest Pass worlds</a></li>
+              <li><svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true"><circle cx="4" cy="4" r="3" fill="var(--link)"/></svg><a href="#">Lend a world</a></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li>
+        <button class="hc-trig" id="hc-trig-hardware" type="button" aria-expanded="false" aria-controls="hc-drop-hardware">
+          Hardware
+          <svg class="hc-chev" width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div id="hc-drop-hardware" class="hc-drop" hidden role="region" aria-label="Hardware menu">
+          <div class="hc-drop-inner">
+            <div class="hc-drop-tiles" id="hc-drop-hardware-tiles">
+              <a class="hc-drop-tile" href="#hc-hardware"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="12" width="20" height="10" rx="4" stroke="currentColor" stroke-width="1.5"/><ellipse cx="14" cy="10" rx="7" ry="3" stroke="currentColor" stroke-width="1.5"/></svg></span><span class="hc-drop-tile-label">Hearth</span></a>
+              <a class="hc-drop-tile" href="#hc-hardware"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><ellipse cx="14" cy="14" rx="8" ry="6" stroke="currentColor" stroke-width="1.5"/><circle cx="11" cy="14" r="1.5" fill="currentColor"/><circle cx="17" cy="14" r="1.5" fill="currentColor"/></svg></span><span class="hc-drop-tile-label">Pebble</span></a>
+              <a class="hc-drop-tile" href="#hc-hardware"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="8" stroke="currentColor" stroke-width="1.5"/><circle cx="14" cy="14" r="4" stroke="currentColor" stroke-width="1.5"/></svg></span><span class="hc-drop-tile-label">Halo</span></a>
+              <a class="hc-drop-tile" href="#hc-hardware"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="6" y="10" width="16" height="12" rx="4" stroke="currentColor" stroke-width="1.5"/><path d="M10 10V8M18 10V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="hc-drop-tile-label">Dock</span></a>
+              <a class="hc-drop-tile" href="#hc-hardware"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="8" y="4" width="12" height="20" rx="4" stroke="currentColor" stroke-width="1.5"/><ellipse cx="14" cy="8" rx="3" ry="1.5" fill="currentColor" opacity="0.4"/></svg></span><span class="hc-drop-tile-label">Lantern</span></a>
+              <a class="hc-drop-tile" href="#hc-hardware"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M4 14h20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M4 10h20M4 18h20" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity="0.4"/></svg></span><span class="hc-drop-tile-label">Loop</span></a>
+            </div>
+            <hr class="hc-drop-rule"/>
+            <ul class="hc-drop-links default" id="hc-drop-hardware-links">
+              <li><svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true"><circle cx="4" cy="4" r="3" fill="var(--link)"/></svg><a href="#">All hardware</a></li>
+              <li><svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true"><circle cx="4" cy="4" r="3" fill="var(--link)"/></svg><a href="#">Compare devices</a></li>
+              <li><svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true"><circle cx="4" cy="4" r="3" fill="var(--link)"/></svg><a href="#">Accessories</a></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li>
+        <button class="hc-trig" id="hc-trig-gear" type="button" aria-expanded="false" aria-controls="hc-drop-gear">
+          Gear
+          <svg class="hc-chev" width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div id="hc-drop-gear" class="hc-drop" hidden role="region" aria-label="Gear menu">
+          <div class="hc-drop-inner">
+            <div class="hc-drop-tiles" id="hc-drop-gear-tiles">
+              <a class="hc-drop-tile" href="#"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="6" width="20" height="16" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M9 12h10M9 16h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="hc-drop-tile-label">Satchel</span></a>
+              <a class="hc-drop-tile" href="#"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 4l2 6h6l-5 4 2 6-5-3-5 3 2-6-5-4h6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span><span class="hc-drop-tile-label">Edition Sets</span></a>
+              <a class="hc-drop-tile" href="#"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M5 23l5-12h8l5 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 17h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="hc-drop-tile-label">Carry Cases</span></a>
+              <a class="hc-drop-tile" href="#"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M14 10v4l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="hc-drop-tile-label">Cables</span></a>
+              <a class="hc-drop-tile" href="#"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="8" y="8" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M12 8V6M16 8V6M12 20v2M16 20v2M8 12H6M8 16H6M20 12h2M20 16h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="hc-drop-tile-label">Hubs</span></a>
+              <a class="hc-drop-tile" href="#"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M4 20h20M8 20V12l6-6 6 6v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hc-drop-tile-label">Stands</span></a>
+            </div>
+            <hr class="hc-drop-rule"/>
+            <ul class="hc-drop-links default" id="hc-drop-gear-links">
+              <li><svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true"><circle cx="4" cy="4" r="3" fill="var(--link)"/></svg><a href="#">Shop all gear</a></li>
+              <li><svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true"><circle cx="4" cy="4" r="3" fill="var(--link)"/></svg><a href="#">Gift ideas</a></li>
+              <li><svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true"><circle cx="4" cy="4" r="3" fill="var(--link)"/></svg><a href="#">Halcrest bundles</a></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li>
+        <button class="hc-trig" id="hc-trig-pass" type="button" aria-expanded="false" aria-controls="hc-drop-pass">
+          Pass
+          <svg class="hc-chev" width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div id="hc-drop-pass" class="hc-drop" hidden role="region" aria-label="Pass menu">
+          <div class="hc-drop-inner">
+            <div class="hc-drop-tiles" id="hc-drop-pass-tiles">
+              <a class="hc-drop-tile" href="#hc-pass"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M4 10h20M4 10a2 2 0 012-2h16a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V10z" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="15" r="1.5" fill="currentColor"/></svg></span><span class="hc-drop-tile-label">Wander</span></a>
+              <a class="hc-drop-tile" href="#hc-pass"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M5 12l9-6 9 6v10H5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><rect x="11" y="16" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/></svg></span><span class="hc-drop-tile-label">Venture</span></a>
+              <a class="hc-drop-tile" href="#hc-pass"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 4l1.8 5.5H22l-4.9 3.6 1.9 5.9-4.8-3.5-4.8 3.5 1.9-5.9L6.2 9.5H12.2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span><span class="hc-drop-tile-label">Summit</span></a>
+              <a class="hc-drop-tile" href="#hc-compare"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M6 8h16M6 14h10M6 20h13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="hc-drop-tile-label">Compare tiers</span></a>
+              <a class="hc-drop-tile" href="#hc-playtest"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 4a10 10 0 100 20A10 10 0 0014 4z" stroke="currentColor" stroke-width="1.5"/><path d="M11 10l7 4-7 4V10z" fill="currentColor" opacity="0.6"/></svg></span><span class="hc-drop-tile-label">Playtest</span></a>
+              <a class="hc-drop-tile" href="#"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M4 20l5-9 5 6 3-4 5 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hc-drop-tile-label">Benefits</span></a>
+            </div>
+            <hr class="hc-drop-rule"/>
+            <ul class="hc-drop-links default" id="hc-drop-pass-links">
+              <li><svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true"><circle cx="4" cy="4" r="3" fill="var(--link)"/></svg><a href="#hc-pass">Halcrest Pass overview</a></li>
+              <li><svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true"><circle cx="4" cy="4" r="3" fill="var(--link)"/></svg><a href="#hc-compare">Tier comparison</a></li>
+              <li><svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true"><circle cx="4" cy="4" r="3" fill="var(--link)"/></svg><a href="#">Pass FAQ</a></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li>
+        <button class="hc-trig" id="hc-trig-journal" type="button" aria-expanded="false" aria-controls="hc-drop-journal">
+          Journal
+          <svg class="hc-chev" width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div id="hc-drop-journal" class="hc-drop" hidden role="region" aria-label="Journal menu">
+          <div class="hc-drop-inner">
+            <div class="hc-drop-tiles" id="hc-drop-journal-tiles">
+              <a class="hc-drop-tile" href="#hc-journal"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="5" y="4" width="18" height="20" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M9 10h10M9 14h10M9 18h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="hc-drop-tile-label">Latest issues</span></a>
+              <a class="hc-drop-tile" href="#"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 4a10 10 0 100 20A10 10 0 0014 4z" stroke="currentColor" stroke-width="1.5"/><path d="M10 14h8M14 10v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="hc-drop-tile-label">World notes</span></a>
+              <a class="hc-drop-tile" href="#"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M6 20V8l8-4 8 4v12l-8 4-8-4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span><span class="hc-drop-tile-label">Studio diaries</span></a>
+              <a class="hc-drop-tile" href="#hc-monthly"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="6" width="20" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M4 11h20" stroke="currentColor" stroke-width="1.5"/><path d="M9 4v4M19 4v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="hc-drop-tile-label">Halcrest Monthly</span></a>
+              <a class="hc-drop-tile" href="#"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="10" cy="14" r="4" stroke="currentColor" stroke-width="1.5"/><circle cx="20" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/><circle cx="20" cy="20" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M14 12l4-2M14 16l4 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="hc-drop-tile-label">Community picks</span></a>
+              <a class="hc-drop-tile" href="#"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 5l2 7h7l-5.5 4 2 7L14 19l-5.5 4 2-7L5 12h7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span><span class="hc-drop-tile-label">Editor picks</span></a>
+            </div>
+            <hr class="hc-drop-rule"/>
+            <ul class="hc-drop-links default" id="hc-drop-journal-links">
+              <li><svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true"><circle cx="4" cy="4" r="3" fill="var(--link)"/></svg><a href="#hc-journal">All journal articles</a></li>
+              <li><svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true"><circle cx="4" cy="4" r="3" fill="var(--link)"/></svg><a href="#">Subscribe to Monthly</a></li>
+              <li><svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true"><circle cx="4" cy="4" r="3" fill="var(--link)"/></svg><a href="#">Write for Halcrest</a></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li>
+        <button class="hc-trig" id="hc-trig-shop" type="button" aria-expanded="false" aria-controls="hc-drop-shop">
+          Shop
+          <svg class="hc-chev" width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div id="hc-drop-shop" class="hc-drop" hidden role="region" aria-label="Shop menu">
+          <div class="hc-drop-inner">
+            <div class="hc-drop-tiles" id="hc-drop-shop-tiles">
+              <a class="hc-drop-tile" href="#hc-deals"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M6 6h3l3 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="22" r="1.5" fill="currentColor"/><circle cx="20" cy="22" r="1.5" fill="currentColor"/><path d="M9 10h13l-2 7H11z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span><span class="hc-drop-tile-label">Today's offers</span></a>
+              <a class="hc-drop-tile" href="#"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 4l2.5 7.5H24l-6.2 4.5 2.4 7.5L14 19l-6.2 4.5 2.4-7.5L4 11.5h7.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span><span class="hc-drop-tile-label">Halcrest picks</span></a>
+              <a class="hc-drop-tile" href="#"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="4" width="20" height="20" rx="4" stroke="currentColor" stroke-width="1.5"/><path d="M10 14l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hc-drop-tile-label">New arrivals</span></a>
+              <a class="hc-drop-tile" href="#"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 4a10 10 0 100 20A10 10 0 0014 4zM14 9v5l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="hc-drop-tile-label">Flash sales</span></a>
+              <a class="hc-drop-tile" href="#"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M5 7h18v14a2 2 0 01-2 2H7a2 2 0 01-2-2V7zM4 4h20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="hc-drop-tile-label">Bundles</span></a>
+              <a class="hc-drop-tile" href="#"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M9 12.5A5.5 5.5 0 0114 7a5.5 5.5 0 015.5 5.5c0 5-5.5 9.5-5.5 9.5S9 17.5 9 12.5z" stroke="currentColor" stroke-width="1.5"/></svg></span><span class="hc-drop-tile-label">Wish list</span></a>
+            </div>
+            <hr class="hc-drop-rule"/>
+            <ul class="hc-drop-links default" id="hc-drop-shop-links">
+              <li><svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true"><circle cx="4" cy="4" r="3" fill="var(--link)"/></svg><a href="#">All offers</a></li>
+              <li><svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true"><circle cx="4" cy="4" r="3" fill="var(--link)"/></svg><a href="#">Order history</a></li>
+              <li><svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true"><circle cx="4" cy="4" r="3" fill="var(--link)"/></svg><a href="#">Gift a world</a></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li>
+        <button class="hc-trig" id="hc-trig-help" type="button" aria-expanded="false" aria-controls="hc-drop-help">
+          Help
+          <svg class="hc-chev" width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div id="hc-drop-help" class="hc-drop" hidden role="region" aria-label="Help menu">
+          <div class="hc-drop-inner">
+            <div class="hc-drop-tiles" id="hc-drop-help-tiles">
+              <a class="hc-drop-tile" href="#"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M14 19v-5M14 11v-1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><span class="hc-drop-tile-label">Help centre</span></a>
+              <a class="hc-drop-tile" href="#"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M5 8a3 3 0 013-3h12a3 3 0 013 3v8a3 3 0 01-3 3h-6l-6 4v-4H8a3 3 0 01-3-3V8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span><span class="hc-drop-tile-label">Community forum</span></a>
+              <a class="hc-drop-tile" href="#"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M6 10a4 4 0 014-4h8a4 4 0 014 4v4a4 4 0 01-4 4h-2l-4 4v-4H10a4 4 0 01-4-4v-4z" stroke="currentColor" stroke-width="1.5"/></svg></span><span class="hc-drop-tile-label">Live chat</span></a>
+              <a class="hc-drop-tile" href="#hc-faq"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M11 11a3 3 0 115 2.5c0 1.5-2 1.5-2 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="14" cy="20" r="1" fill="currentColor"/></svg></span><span class="hc-drop-tile-label">FAQ</span></a>
+              <a class="hc-drop-tile" href="#"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M4 20V8a2 2 0 012-2h16a2 2 0 012 2v12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M2 20h24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="hc-drop-tile-label">Accessibility</span></a>
+              <a class="hc-drop-tile" href="#"><span class="hc-drop-tile-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 6v4M14 18v4M6 14h4M18 14h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="14" cy="14" r="4" stroke="currentColor" stroke-width="1.5"/></svg></span><span class="hc-drop-tile-label">Settings guide</span></a>
+            </div>
+            <hr class="hc-drop-rule"/>
+            <ul class="hc-drop-links default" id="hc-drop-help-links">
+              <li><svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true"><circle cx="4" cy="4" r="3" fill="var(--link)"/></svg><a href="#">Report a problem</a></li>
+              <li><svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true"><circle cx="4" cy="4" r="3" fill="var(--link)"/></svg><a href="#">Safety policies</a></li>
+              <li><svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true"><circle cx="4" cy="4" r="3" fill="var(--link)"/></svg><a href="#">Contact us</a></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+    </ul>
+
+    <div class="hc-nav-end">
+      <button class="hc-icon-btn" type="button" id="hc-search-toggle" aria-expanded="false" aria-controls="hc-panel-search" aria-label="Open search">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="7.5" cy="7.5" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M11.5 11.5l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+      <button class="hc-icon-btn hc-cart-btn" type="button" id="hc-cart-toggle" aria-expanded="false" aria-controls="hc-panel-cart" aria-label="View cart">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 3h2l2.5 8h7L16 6H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="15" r="1" fill="currentColor"/><circle cx="14" cy="15" r="1" fill="currentColor"/></svg>
+      </button>
+      <button class="hc-pill-sm-cobalt" type="button" id="hc-login-toggle" aria-expanded="false" aria-controls="hc-panel-login">Log in</button>
+      <button class="hc-icon-btn" type="button" id="hc-menu-toggle" aria-expanded="false" aria-controls="hc-menu" aria-label="Open navigation menu">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<div class="hc-scrim" id="hc-scrim" aria-hidden="true"></div>
+
+<div id="hc-panel-login" hidden role="dialog" aria-modal="true" aria-labelledby="hc-panel-login-title">
+  <div class="hc-panel-head">
+    <span class="hc-panel-title" id="hc-panel-login-title">Log in to Halcrest</span>
+    <button class="hc-panel-close" type="button" aria-label="Close log in panel" id="hc-login-close">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="hc-panel-body">
+    <p>This is a demonstration only. No authentication is performed. In a live build, this panel would connect to Halcrest account services.</p>
+    <br/>
+    <button class="hc-pill-cobalt" type="button" id="hc-login-demo-ok">Continue as guest</button>
+  </div>
+</div>
+
+<div id="hc-panel-cart" hidden role="dialog" aria-modal="true" aria-labelledby="hc-panel-cart-title">
+  <div class="hc-panel-head">
+    <span class="hc-panel-title" id="hc-panel-cart-title">Your cart</span>
+    <button class="hc-panel-close" type="button" aria-label="Close cart panel" id="hc-cart-close">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="hc-panel-body">
+    <p>Your cart is empty. This is a demonstration only — no items can be purchased here.</p>
+    <a href="#hc-worlds" class="hc-pill-cobalt hc-cart-browse" id="hc-cart-browse">Browse story worlds</a>
+  </div>
+</div>
+
+<div id="hc-panel-search" hidden role="search" aria-label="Site search">
+  <div class="hc-search-row">
+    <input type="search" id="hc-search-input" class="hc-search-input" placeholder="Search Halcrest worlds, hardware and more…" autocomplete="off" aria-label="Search Halcrest" aria-controls="hc-search-status"/>
+    <button class="hc-panel-close" type="button" aria-label="Close search" id="hc-search-close">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="hc-search-chips">
+    <button class="hc-chip" type="button">Moss Ledger</button>
+    <button class="hc-chip" type="button">Halcrest Hearth</button>
+    <button class="hc-chip" type="button">Wander Pass</button>
+    <button class="hc-chip" type="button">Ninefold Tide</button>
+  </div>
+  <div class="hc-search-status" id="hc-search-status" role="status" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<div id="hc-menu" hidden role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <div class="hc-menu-head">
+    <span class="hc-menu-wordmark">Halcrest</span>
+    <button type="button" id="hc-menu-close" aria-label="Close navigation menu">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="hc-menu-rows">
+    <button class="hc-menu-row" type="button" data-sub="hc-sub-worlds" aria-controls="hc-sub-worlds" aria-expanded="false">Worlds<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button class="hc-menu-row" type="button" data-sub="hc-sub-hardware" aria-controls="hc-sub-hardware" aria-expanded="false">Hardware<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button class="hc-menu-row" type="button" data-sub="hc-sub-gear" aria-controls="hc-sub-gear" aria-expanded="false">Gear<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button class="hc-menu-row" type="button" data-sub="hc-sub-pass" aria-controls="hc-sub-pass" aria-expanded="false">Pass<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button class="hc-menu-row" type="button" data-sub="hc-sub-journal" aria-controls="hc-sub-journal" aria-expanded="false">Journal<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button class="hc-menu-row" type="button" data-sub="hc-sub-shop" aria-controls="hc-sub-shop" aria-expanded="false">Shop<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button class="hc-menu-row" type="button" data-sub="hc-sub-help" aria-controls="hc-sub-help" aria-expanded="false">Help<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  </div>
+  <div class="hc-menu-foot">
+    <button class="hc-pill-cobalt hc-mobile-login-btn" type="button" id="hc-mobile-login">Log in</button>
+  </div>
+  <div id="hc-sub-worlds" class="hc-sub" hidden></div>
+  <div id="hc-sub-hardware" class="hc-sub" hidden></div>
+  <div id="hc-sub-gear" class="hc-sub" hidden></div>
+  <div id="hc-sub-pass" class="hc-sub" hidden></div>
+  <div id="hc-sub-journal" class="hc-sub" hidden></div>
+  <div id="hc-sub-shop" class="hc-sub" hidden></div>
+  <div id="hc-sub-help" class="hc-sub" hidden></div>
+</div>
+
+<main id="hc-main">
+
+<section id="hc-hero" aria-label="Featured story worlds">
+  <div class="hc-hero-slides" role="region" aria-label="Hero slideshow">
+    <div id="hc-slide-1" class="hc-hero-slide" role="tabpanel" aria-labelledby="hc-tab-1" aria-hidden="false">
+      <div class="hc-hero-art" aria-hidden="true">
+        <svg width="100%" height="100%" viewBox="0 0 1280 470" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <defs><radialGradient id="sg1" cx="70%" cy="60%" r="60%"><stop offset="0%" stop-color="var(--sand)" stop-opacity="0.5"/><stop offset="100%" stop-color="var(--indigo-deep)"/></radialGradient></defs>
+          <rect width="1280" height="470" fill="url(#sg1)"/>
+          <ellipse cx="900" cy="300" rx="300" ry="120" fill="var(--ember)" opacity="0.18"/>
+          <ellipse cx="1000" cy="200" rx="200" ry="80" fill="var(--sand)" opacity="0.12"/>
+          <rect x="600" y="380" width="400" height="6" rx="3" fill="var(--sand)" opacity="0.3"/>
+          <rect x="700" y="370" width="200" height="4" rx="2" fill="var(--ember)" opacity="0.2"/>
+        </svg>
+      </div>
+      <div class="hc-hero-scrim" aria-hidden="true"></div>
+      <div class="hc-hero-text">
+        <h1>Moss Ledger</h1>
+        <p>A slow journey through terraced highlands where every step reveals a new layer of quiet wonder.</p>
+        <button class="hc-pill-outline-dark" type="button">Explore world</button>
+      </div>
+    </div>
+    <div id="hc-slide-2" class="hc-hero-slide" role="tabpanel" aria-labelledby="hc-tab-2" aria-hidden="true">
+      <div class="hc-hero-art" aria-hidden="true">
+        <svg width="100%" height="100%" viewBox="0 0 1280 470" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <defs><radialGradient id="sg2" cx="60%" cy="50%" r="70%"><stop offset="0%" stop-color="var(--tide)" stop-opacity="0.6"/><stop offset="100%" stop-color="var(--indigo-deep)"/></radialGradient></defs>
+          <rect width="1280" height="470" fill="url(#sg2)"/>
+          <circle cx="850" cy="235" r="180" fill="none" stroke="var(--tide)" stroke-width="1" opacity="0.4"/>
+          <circle cx="850" cy="235" r="130" fill="none" stroke="var(--tide)" stroke-width="1.5" opacity="0.5"/>
+          <circle cx="850" cy="235" r="80" fill="none" stroke="var(--tide)" stroke-width="2" opacity="0.6"/>
+          <circle cx="850" cy="235" r="30" fill="var(--tide)" opacity="0.3"/>
+        </svg>
+      </div>
+      <div class="hc-hero-scrim" aria-hidden="true"></div>
+      <div class="hc-hero-text">
+        <h2>Ninefold Tide</h2>
+        <p>Circular shores and concentric mysteries at the edge of a boundless ocean — nine layers deep.</p>
+        <button class="hc-pill-outline-dark" type="button">Explore world</button>
+      </div>
+    </div>
+    <div id="hc-slide-3" class="hc-hero-slide" role="tabpanel" aria-labelledby="hc-tab-3" aria-hidden="true">
+      <div class="hc-hero-art" aria-hidden="true">
+        <svg width="100%" height="100%" viewBox="0 0 1280 470" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <defs><radialGradient id="sg3" cx="65%" cy="55%" r="55%"><stop offset="0%" stop-color="var(--ember)" stop-opacity="0.5"/><stop offset="100%" stop-color="var(--night)"/></radialGradient></defs>
+          <rect width="1280" height="470" fill="url(#sg3)"/>
+          <ellipse cx="850" cy="300" rx="60" ry="90" fill="var(--ember)" opacity="0.25"/>
+          <ellipse cx="850" cy="300" rx="40" ry="60" fill="var(--ember)" opacity="0.4"/>
+          <ellipse cx="850" cy="300" rx="20" ry="30" fill="var(--sand)" opacity="0.6"/>
+        </svg>
+      </div>
+      <div class="hc-hero-scrim" aria-hidden="true"></div>
+      <div class="hc-hero-text">
+        <h2>Emberlane Tactics</h2>
+        <p>Strategic play across glowing ember plains where every move reshapes the terrain beneath you.</p>
+        <button class="hc-pill-outline-dark" type="button">Explore world</button>
+      </div>
+    </div>
+    <div id="hc-slide-4" class="hc-hero-slide" role="tabpanel" aria-labelledby="hc-tab-4" aria-hidden="true">
+      <div class="hc-hero-art" aria-hidden="true">
+        <svg width="100%" height="100%" viewBox="0 0 1280 470" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <defs><radialGradient id="sg4" cx="70%" cy="45%" r="65%"><stop offset="0%" stop-color="var(--moss)" stop-opacity="0.5"/><stop offset="100%" stop-color="var(--indigo-deep)"/></radialGradient></defs>
+          <rect width="1280" height="470" fill="url(#sg4)"/>
+          <line x1="600" y1="100" x2="1200" y2="100" stroke="var(--moss)" stroke-width="1" opacity="0.3"/>
+          <line x1="600" y1="200" x2="1200" y2="200" stroke="var(--moss)" stroke-width="1" opacity="0.3"/>
+          <line x1="600" y1="300" x2="1200" y2="300" stroke="var(--moss)" stroke-width="1" opacity="0.3"/>
+          <line x1="700" y1="80" x2="700" y2="420" stroke="var(--moss)" stroke-width="1" opacity="0.3"/>
+          <line x1="900" y1="80" x2="900" y2="420" stroke="var(--moss)" stroke-width="1" opacity="0.3"/>
+          <line x1="1100" y1="80" x2="1100" y2="420" stroke="var(--moss)" stroke-width="1" opacity="0.3"/>
+          <circle cx="800" cy="200" r="30" fill="var(--moss)" opacity="0.4"/>
+          <circle cx="1000" cy="300" r="20" fill="var(--sand)" opacity="0.4"/>
+        </svg>
+      </div>
+      <div class="hc-hero-scrim" aria-hidden="true"></div>
+      <div class="hc-hero-text">
+        <h2>The Brass Orchard</h2>
+        <p>A geometric grove of tessellated paths where fruit and formula intertwine at every intersection.</p>
+        <button class="hc-pill-outline-dark" type="button">Explore world</button>
+      </div>
+    </div>
+    <div id="hc-slide-5" class="hc-hero-slide" role="tabpanel" aria-labelledby="hc-tab-5" aria-hidden="true">
+      <div class="hc-hero-art" aria-hidden="true">
+        <svg width="100%" height="100%" viewBox="0 0 1280 470" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <defs><radialGradient id="sg5" cx="65%" cy="40%" r="60%"><stop offset="0%" stop-color="var(--plum)" stop-opacity="0.5"/><stop offset="100%" stop-color="var(--indigo-deep)"/></radialGradient></defs>
+          <rect width="1280" height="470" fill="url(#sg5)"/>
+          <path d="M600 400 Q800 100 1000 300 Q1100 400 1200 200" fill="none" stroke="var(--plum)" stroke-width="1.5" opacity="0.5"/>
+          <circle cx="750" cy="220" r="8" fill="var(--plum)" opacity="0.7"/>
+          <circle cx="950" cy="300" r="6" fill="var(--sand)" opacity="0.7"/>
+          <circle cx="1050" cy="180" r="10" fill="var(--plum)" opacity="0.5"/>
+        </svg>
+      </div>
+      <div class="hc-hero-scrim" aria-hidden="true"></div>
+      <div class="hc-hero-text">
+        <h2>Paper Comets</h2>
+        <p>Fold your way through a celestial paper sky — every comet arc hides a story waiting to unfold.</p>
+        <button class="hc-pill-outline-dark" type="button">Explore world</button>
+      </div>
+    </div>
+    <div id="hc-slide-6" class="hc-hero-slide" role="tabpanel" aria-labelledby="hc-tab-6" aria-hidden="true">
+      <div class="hc-hero-art" aria-hidden="true">
+        <svg width="100%" height="100%" viewBox="0 0 1280 470" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="sg6" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="var(--tide)" stop-opacity="0.4"/><stop offset="100%" stop-color="var(--night)"/></linearGradient></defs>
+          <rect width="1280" height="470" fill="url(#sg6)"/>
+          <rect x="750" y="300" width="80" height="50" rx="6" fill="var(--tide)" opacity="0.4"/>
+          <rect x="850" y="280" width="60" height="70" rx="6" fill="var(--tide)" opacity="0.3"/>
+          <rect x="930" y="310" width="90" height="40" rx="6" fill="var(--tide)" opacity="0.5"/>
+          <rect x="800" y="250" width="40" height="50" rx="4" fill="var(--night-muted)" opacity="0.3"/>
+        </svg>
+      </div>
+      <div class="hc-hero-scrim" aria-hidden="true"></div>
+      <div class="hc-hero-text">
+        <h2>Saltglass Run</h2>
+        <p>Navigate crystalline salt flats where stacked stone formations mark the paths of ancient wanderers.</p>
+        <button class="hc-pill-outline-dark" type="button">Explore world</button>
+      </div>
+    </div>
+    <div id="hc-slide-7" class="hc-hero-slide" role="tabpanel" aria-labelledby="hc-tab-7" aria-hidden="true">
+      <div class="hc-hero-art" aria-hidden="true">
+        <svg width="100%" height="100%" viewBox="0 0 1280 470" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="sg7" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="var(--indigo-deep)"/><stop offset="100%" stop-color="var(--plum)" stop-opacity="0.5"/></linearGradient></defs>
+          <rect width="1280" height="470" fill="url(#sg7)"/>
+          <path d="M700 100 Q900 50 1100 150 Q1200 200 1150 350 Q1100 450 900 400 Q700 350 700 100" fill="var(--plum)" opacity="0.2"/>
+          <path d="M750 150 Q950 80 1100 200" fill="none" stroke="var(--link-night)" stroke-width="2" opacity="0.4"/>
+          <circle cx="1000" cy="230" r="40" fill="var(--plum)" opacity="0.3"/>
+        </svg>
+      </div>
+      <div class="hc-hero-scrim" aria-hidden="true"></div>
+      <div class="hc-hero-text">
+        <h2>Lumen Drift</h2>
+        <p>Aurora gradients fill the sky above a drifting tundra where light itself becomes the map and compass.</p>
+        <button class="hc-pill-outline-dark" type="button">Explore world</button>
+      </div>
+    </div>
+  </div>
+  <button id="hc-hero-pause" type="button" aria-label="Pause slideshow" title="Pause or play the hero slideshow">
+    <svg id="hc-pause-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><rect x="2" y="2" width="3.5" height="10" rx="1" fill="currentColor"/><rect x="8.5" y="2" width="3.5" height="10" rx="1" fill="currentColor"/></svg>
+    <svg id="hc-play-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" hidden><path d="M4 2l9 5-9 5V2z" fill="currentColor"/></svg>
+  </button>
+  <div class="hc-hero-strip">
+    <div class="hc-hero-tabs-inner" role="tablist" id="hc-hero-tabs" aria-label="Hero slides">
+      <button class="hc-thumb" role="tab" id="hc-tab-1" aria-selected="true" aria-controls="hc-slide-1" tabindex="0">
+        <span class="hc-thumb-art" aria-hidden="true">
+          <svg width="120" height="68" viewBox="0 0 120 68" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="t1" cx="70%" cy="60%" r="60%"><stop offset="0%" stop-color="var(--sand)" stop-opacity="0.5"/><stop offset="100%" stop-color="var(--indigo-deep)"/></radialGradient></defs><rect width="120" height="68" fill="url(#t1)"/><ellipse cx="80" cy="45" rx="40" ry="18" fill="var(--ember)" opacity="0.3"/></svg>
+        </span>
+        <span class="hc-thumb-label">Moss Ledger</span>
+      </button>
+      <button class="hc-thumb" role="tab" id="hc-tab-2" aria-selected="false" aria-controls="hc-slide-2" tabindex="-1">
+        <span class="hc-thumb-art" aria-hidden="true">
+          <svg width="120" height="68" viewBox="0 0 120 68" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="68" fill="var(--indigo-deep)"/><circle cx="80" cy="34" r="22" fill="none" stroke="var(--tide)" stroke-width="1"/><circle cx="80" cy="34" r="12" fill="none" stroke="var(--tide)" stroke-width="1.5"/><circle cx="80" cy="34" r="4" fill="var(--tide)" opacity="0.4"/></svg>
+        </span>
+        <span class="hc-thumb-label">Ninefold Tide</span>
+      </button>
+      <button class="hc-thumb" role="tab" id="hc-tab-3" aria-selected="false" aria-controls="hc-slide-3" tabindex="-1">
+        <span class="hc-thumb-art" aria-hidden="true">
+          <svg width="120" height="68" viewBox="0 0 120 68" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="68" fill="var(--night)"/><ellipse cx="80" cy="45" rx="12" ry="18" fill="var(--ember)" opacity="0.5"/><ellipse cx="80" cy="45" rx="6" ry="10" fill="var(--sand)" opacity="0.6"/></svg>
+        </span>
+        <span class="hc-thumb-label">Emberlane</span>
+      </button>
+      <button class="hc-thumb" role="tab" id="hc-tab-4" aria-selected="false" aria-controls="hc-slide-4" tabindex="-1">
+        <span class="hc-thumb-art" aria-hidden="true">
+          <svg width="120" height="68" viewBox="0 0 120 68" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="68" fill="var(--indigo-deep)"/><line x1="40" y1="10" x2="110" y2="10" stroke="var(--moss)" stroke-width="0.8" opacity="0.5"/><line x1="40" y1="30" x2="110" y2="30" stroke="var(--moss)" stroke-width="0.8" opacity="0.5"/><line x1="40" y1="50" x2="110" y2="50" stroke="var(--moss)" stroke-width="0.8" opacity="0.5"/><circle cx="75" cy="30" r="6" fill="var(--moss)" opacity="0.5"/></svg>
+        </span>
+        <span class="hc-thumb-label">Brass Orchard</span>
+      </button>
+      <button class="hc-thumb" role="tab" id="hc-tab-5" aria-selected="false" aria-controls="hc-slide-5" tabindex="-1">
+        <span class="hc-thumb-art" aria-hidden="true">
+          <svg width="120" height="68" viewBox="0 0 120 68" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="68" fill="var(--indigo-deep)"/><path d="M40 60 Q70 15 90 40 Q100 55 110 30" fill="none" stroke="var(--plum)" stroke-width="1.5" opacity="0.7"/><circle cx="65" cy="32" r="4" fill="var(--plum)" opacity="0.7"/></svg>
+        </span>
+        <span class="hc-thumb-label">Paper Comets</span>
+      </button>
+      <button class="hc-thumb" role="tab" id="hc-tab-6" aria-selected="false" aria-controls="hc-slide-6" tabindex="-1">
+        <span class="hc-thumb-art" aria-hidden="true">
+          <svg width="120" height="68" viewBox="0 0 120 68" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="68" fill="var(--night)"/><rect x="55" y="38" width="14" height="14" rx="2" fill="var(--tide)" opacity="0.5"/><rect x="72" y="34" width="10" height="18" rx="2" fill="var(--tide)" opacity="0.4"/><rect x="85" y="40" width="16" height="10" rx="2" fill="var(--tide)" opacity="0.6"/></svg>
+        </span>
+        <span class="hc-thumb-label">Saltglass Run</span>
+      </button>
+      <button class="hc-thumb" role="tab" id="hc-tab-7" aria-selected="false" aria-controls="hc-slide-7" tabindex="-1">
+        <span class="hc-thumb-art" aria-hidden="true">
+          <svg width="120" height="68" viewBox="0 0 120 68" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="68" fill="var(--indigo-deep)"/><path d="M50 15 Q80 5 100 30 Q110 45 95 58 Q80 65 60 55 Q40 45 50 15" fill="var(--plum)" opacity="0.3"/><circle cx="80" cy="34" r="10" fill="var(--plum)" opacity="0.3"/></svg>
+        </span>
+        <span class="hc-thumb-label">Lumen Drift</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<section id="hc-promo" role="region" aria-label="Log in promotion">
+  <div class="hc-promo-text">
+    <strong>Halcrest Pass members get early access to every new world.</strong>
+    <span>Explore Wander, Venture or Summit — three tiers, one calm home for all your stories.</span>
+  </div>
+  <button class="hc-pill-outline-dark hc-promo-pill" type="button" id="hc-promo-login">Log in to Halcrest</button>
+  <button type="button" id="hc-promo-close" aria-label="Dismiss" aria-controls="hc-promo" title="Dismiss this banner">&#x2715;</button>
+</section>
+
+<section id="hc-hardware" aria-labelledby="hc-hardware-h" tabindex="-1">
+  <div class="hc-wrap">
+    <div class="hc-hw-feature">
+      <div class="hc-hw-feature-text">
+        <h2 class="hc-hw-h" id="hc-hardware-h">Calm hardware for<br/>every room.</h2>
+        <p class="hc-hw-name">Halcrest Hearth</p>
+        <p class="hc-hw-sub">A low, stone-like slab that keeps your story worlds within reach, sitting quietly on any surface. Sample figures only.</p>
+        <div class="hc-hw-pills">
+          <button class="hc-pill-cobalt" type="button">Explore Hearth</button>
+          <button class="hc-pill-flare" type="button">Order Hearth</button>
+        </div>
+      </div>
+      <div class="hc-hw-visual" aria-hidden="true">
+        <svg viewBox="0 0 480 360" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs><radialGradient id="hh-bg" cx="50%" cy="60%" r="70%"><stop offset="0%" stop-color="var(--mist)"/><stop offset="100%" stop-color="var(--haze)"/></radialGradient><radialGradient id="hh-glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="var(--cobalt)" stop-opacity="0.15"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs>
+          <rect width="480" height="360" fill="url(#hh-bg)"/>
+          <ellipse cx="240" cy="260" rx="160" ry="40" fill="url(#hh-glow)"/>
+          <rect x="90" y="220" width="300" height="60" rx="16" fill="var(--dot)" fill-opacity="0.4"/>
+          <rect x="130" y="205" width="220" height="36" rx="12" fill="var(--body)" fill-opacity="0.2"/>
+          <ellipse cx="240" cy="192" rx="100" ry="28" fill="var(--cobalt)" fill-opacity="0.12"/>
+        </svg>
+      </div>
+    </div>
+    <div class="hc-hw-carousel">
+      <div class="hc-hw-track-wrap" id="hc-hw-region" role="region" aria-label="Hardware carousel">
+        <ul id="hc-hw-track" class="default" aria-label="Hardware items">
+          <li>
+            <div class="hc-hw-card">
+              <div class="hc-hw-card-art" aria-hidden="true"><svg viewBox="0 0 190 140" width="190" height="140" xmlns="http://www.w3.org/2000/svg"><rect width="190" height="140" fill="var(--mist)"/><rect x="35" y="60" width="120" height="36" rx="12" fill="var(--dot)" fill-opacity="0.5"/><rect x="55" y="52" width="80" height="20" rx="8" fill="var(--body)" fill-opacity="0.3"/><ellipse cx="95" cy="46" rx="40" ry="12" fill="var(--cobalt)" fill-opacity="0.15"/></svg></div>
+              <span class="hc-hw-card-label">Halcrest Hearth</span>
+            </div>
+          </li>
+          <li>
+            <div class="hc-hw-card">
+              <div class="hc-hw-card-art" aria-hidden="true"><svg viewBox="0 0 190 140" width="190" height="140" xmlns="http://www.w3.org/2000/svg"><rect width="190" height="140" fill="var(--mist)"/><ellipse cx="95" cy="70" rx="38" ry="30" fill="var(--dot)" fill-opacity="0.4"/><circle cx="80" cy="68" r="5" fill="var(--body)" fill-opacity="0.5"/><circle cx="110" cy="68" r="5" fill="var(--body)" fill-opacity="0.5"/></svg></div>
+              <span class="hc-hw-card-label">Halcrest Pebble</span>
+            </div>
+          </li>
+          <li>
+            <div class="hc-hw-card">
+              <div class="hc-hw-card-art" aria-hidden="true"><svg viewBox="0 0 190 140" width="190" height="140" xmlns="http://www.w3.org/2000/svg"><rect width="190" height="140" fill="var(--mist)"/><circle cx="95" cy="70" rx="38" ry="38" fill="none" stroke="var(--dot)" stroke-width="3"/><circle cx="95" cy="70" r="22" fill="none" stroke="var(--body)" fill-opacity="0.3" stroke-width="2"/></svg></div>
+              <span class="hc-hw-card-label">Halcrest Halo</span>
+            </div>
+          </li>
+          <li>
+            <div class="hc-hw-card">
+              <div class="hc-hw-card-art" aria-hidden="true"><svg viewBox="0 0 190 140" width="190" height="140" xmlns="http://www.w3.org/2000/svg"><rect width="190" height="140" fill="var(--mist)"/><rect x="55" y="50" width="80" height="50" rx="12" fill="var(--dot)" fill-opacity="0.4"/><rect x="70" y="40" width="50" height="14" rx="4" fill="var(--body)" fill-opacity="0.3"/><rect x="80" y="96" width="30" height="8" rx="4" fill="var(--body)" fill-opacity="0.3"/></svg></div>
+              <span class="hc-hw-card-label">Halcrest Dock</span>
+            </div>
+          </li>
+          <li>
+            <div class="hc-hw-card">
+              <div class="hc-hw-card-art" aria-hidden="true"><svg viewBox="0 0 190 140" width="190" height="140" xmlns="http://www.w3.org/2000/svg"><rect width="190" height="140" fill="var(--mist)"/><rect x="70" y="20" width="50" height="90" rx="14" fill="var(--dot)" fill-opacity="0.4"/><ellipse cx="95" cy="40" rx="16" ry="8" fill="var(--cobalt)" fill-opacity="0.2"/></svg></div>
+              <span class="hc-hw-card-label">Halcrest Lantern</span>
+            </div>
+          </li>
+          <li>
+            <div class="hc-hw-card">
+              <div class="hc-hw-card-art" aria-hidden="true"><svg viewBox="0 0 190 140" width="190" height="140" xmlns="http://www.w3.org/2000/svg"><rect width="190" height="140" fill="var(--mist)"/><rect x="20" y="64" width="150" height="12" rx="6" fill="var(--cobalt)" fill-opacity="0.4"/><rect x="20" y="52" width="150" height="6" rx="3" fill="var(--dot)" fill-opacity="0.3"/><rect x="20" y="78" width="150" height="6" rx="3" fill="var(--dot)" fill-opacity="0.3"/></svg></div>
+              <span class="hc-hw-card-label">Halcrest Loop</span>
+            </div>
+          </li>
+          <li>
+            <div class="hc-hw-card">
+              <div class="hc-hw-card-art" aria-hidden="true"><svg viewBox="0 0 190 140" width="190" height="140" xmlns="http://www.w3.org/2000/svg"><rect width="190" height="140" fill="var(--mist)"/><rect x="40" y="45" width="110" height="65" rx="10" fill="var(--dot)" fill-opacity="0.4"/><rect x="50" y="35" width="90" height="14" rx="4" fill="var(--body)" fill-opacity="0.3"/><rect x="55" y="60" width="80" height="8" rx="2" fill="var(--body)" fill-opacity="0.2"/><rect x="55" y="74" width="60" height="8" rx="2" fill="var(--body)" fill-opacity="0.2"/></svg></div>
+              <span class="hc-hw-card-label">Halcrest Satchel</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="hc-hw-controls">
+        <button class="hc-circ hc-circ-light" id="hc-hw-prev" type="button" aria-label="Previous hardware" aria-controls="hc-hw-region" disabled>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="hc-dash-row" id="hc-hw-dashes" role="group" aria-label="Hardware carousel position">
+          <button class="hc-dash-btn" type="button" aria-label="Show card 1" aria-current="true"></button>
+          <button class="hc-dash-btn" type="button" aria-label="Show card 2" aria-current="false"></button>
+          <button class="hc-dash-btn" type="button" aria-label="Show card 3" aria-current="false"></button>
+          <button class="hc-dash-btn" type="button" aria-label="Show card 4" aria-current="false"></button>
+          <button class="hc-dash-btn" type="button" aria-label="Show card 5" aria-current="false"></button>
+          <button class="hc-dash-btn" type="button" aria-label="Show card 6" aria-current="false"></button>
+          <button class="hc-dash-btn" type="button" aria-label="Show card 7" aria-current="false"></button>
+        </div>
+        <button class="hc-circ hc-circ-cobalt" id="hc-hw-next" type="button" aria-label="Next hardware" aria-controls="hc-hw-region">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="hc-worlds" aria-labelledby="hc-worlds-h">
+  <div class="hc-wrap">
+    <h2 class="hc-worlds-h" id="hc-worlds-h">Story Worlds</h2>
+    <div class="hc-worlds-tabs" role="tablist" id="hc-worlds-tabs" aria-label="World collections">
+      <button class="hc-worlds-tab" role="tab" id="hc-wt-1" aria-selected="true" aria-controls="hc-worlds-new" tabindex="0">Just arrived</button>
+      <button class="hc-worlds-tab" role="tab" id="hc-wt-2" aria-selected="false" aria-controls="hc-worlds-soon" tabindex="-1">On the horizon</button>
+    </div>
+    <div id="hc-worlds-new" class="hc-worlds-panel" role="tabpanel" aria-labelledby="hc-wt-1" aria-hidden="false">
+      <div class="hc-covers" id="hc-covers-new"></div>
+    </div>
+    <div id="hc-worlds-soon" class="hc-worlds-panel" role="tabpanel" aria-labelledby="hc-wt-2" aria-hidden="true">
+      <div class="hc-covers" id="hc-covers-soon"></div>
+    </div>
+  </div>
+</section>
+
+<section id="hc-pass" aria-labelledby="hc-pass-h">
+  <div class="hc-wrap">
+    <svg class="hc-pass-emblem" viewBox="0 0 64 64" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="32,4 60,20 60,44 32,60 4,44 4,20" fill="none" stroke="var(--cobalt)" stroke-width="2"/>
+      <polygon points="32,14 50,24 50,42 32,52 14,42 14,24" fill="var(--cobalt)" fill-opacity="0.15" stroke="var(--cobalt)" stroke-width="1"/>
+      <circle cx="32" cy="32" r="8" fill="var(--cobalt)" fill-opacity="0.4"/>
+    </svg>
+    <h2 class="hc-pass-h" id="hc-pass-h">Halcrest Pass</h2>
+    <p class="hc-pass-body">One membership, all the story worlds you can carry. Choose the tier that fits your pace — from gentle wandering to full summit access.</p>
+    <div class="hc-pass-carousel">
+      <div class="hc-pass-track-wrap">
+        <ul id="hc-pass-track" class="default" aria-label="Pass tier cards">
+          <li>
+            <div class="hc-tier-card">
+              <span class="hc-tier-badge hc-tier-badge-wander">Wander</span>
+              <div class="hc-tier-name">Wander</div>
+              <div class="hc-tier-price">From sample $X/month — all figures are illustrative only</div>
+              <ul class="hc-tier-benefits default">
+                <li>Access to 10 curated story worlds each month</li>
+                <li>Standard audio quality on the Halo</li>
+                <li>One active Lantern session at a time</li>
+                <li>Monthly Halcrest Journal digest</li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <div class="hc-tier-card">
+              <span class="hc-tier-badge hc-tier-badge-venture">Venture</span>
+              <div class="hc-tier-name">Venture</div>
+              <div class="hc-tier-price">From sample $Y/month — all figures are illustrative only</div>
+              <ul class="hc-tier-benefits default">
+                <li>Full catalogue access, including new arrivals day one</li>
+                <li>High-fidelity audio on all Halo devices</li>
+                <li>Up to three simultaneous Lantern sessions</li>
+                <li>Early playtest access to worlds in development</li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <div class="hc-tier-card">
+              <span class="hc-tier-badge hc-tier-badge-summit">Summit</span>
+              <div class="hc-tier-name">Summit</div>
+              <div class="hc-tier-price">From sample $Z/month — all figures are illustrative only</div>
+              <ul class="hc-tier-benefits default">
+                <li>Everything in Venture, plus exclusive Summit worlds</li>
+                <li>Priority community forum access and author Q&amp;A</li>
+                <li>Annual Halcrest hardware discount (sample, non-binding)</li>
+                <li>Dedicated story curator recommendations</li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="hc-pass-controls">
+        <button class="hc-circ hc-circ-night hc-pass-prev-btn" id="hc-pass-prev" type="button" aria-label="Previous pass tier" aria-controls="hc-pass-track" disabled>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="hc-dash-row hc-dash-night" id="hc-pass-dashes" role="group" aria-label="Pass tier position">
+          <button class="hc-dash-btn" type="button" aria-label="Show Wander tier" aria-current="true"></button>
+          <button class="hc-dash-btn" type="button" aria-label="Show Venture tier" aria-current="false"></button>
+          <button class="hc-dash-btn" type="button" aria-label="Show Summit tier" aria-current="false"></button>
+        </div>
+        <button class="hc-circ hc-circ-night hc-pass-next-btn" id="hc-pass-next" type="button" aria-label="Next pass tier" aria-controls="hc-pass-track">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="hc-pass-cta">
+      <a href="#hc-compare" class="hc-pill-cobalt hc-compare-link">Compare Pass tiers</a>
+    </div>
+  </div>
+</section>
+
+<section id="hc-monthly" aria-labelledby="hc-monthly-h">
+  <div class="hc-wrap">
+    <p class="hc-monthly-eyebrow">Halcrest Monthly</p>
+    <div class="hc-monthly-heading" id="hc-monthly-h">
+      <span class="hc-thin">The worlds issue —</span>
+      <span class="hc-bold">Autumn edition</span>
+    </div>
+    <p class="hc-monthly-body">Six stories, six worlds, one beautifully calm read. The Halcrest Monthly brings our editors' sharpest writing and our artists' most abstract visions straight to your screen.</p>
+    <div class="hc-monthly-read-wrap">
+      <button class="hc-pill-outline-dark" type="button">Read the issue</button>
+    </div>
+    <div class="hc-monthly-carousel">
+      <div class="hc-monthly-track-wrap">
+        <ul id="hc-monthly-track" class="default" aria-label="Monthly articles"></ul>
+      </div>
+      <div class="hc-monthly-controls">
+        <button class="hc-circ hc-circ-night" id="hc-monthly-prev" type="button" aria-label="Previous article" aria-controls="hc-monthly-track" disabled>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="hc-dash-row hc-monthly-dash" id="hc-monthly-dashes" role="group" aria-label="Article position"></div>
+        <button class="hc-circ hc-circ-night" id="hc-monthly-next" type="button" aria-label="Next article" aria-controls="hc-monthly-track">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="hc-deals" aria-labelledby="hc-deals-h">
+  <div class="hc-wrap">
+    <div class="hc-deals-inner">
+      <div class="hc-deals-text">
+        <h2 class="hc-deals-h" id="hc-deals-h">Worlds and hardware, at their most inviting prices.</h2>
+        <p class="hc-deals-sub">Sample discounts only — all figures are illustrative and do not represent actual prices. Availability may vary.</p>
+        <button class="hc-pill-flare" type="button">See every offer</button>
+      </div>
+      <div class="hc-deals-panel" id="hc-deals-panel"></div>
+    </div>
+  </div>
+</section>
+
+<section id="hc-stats" aria-labelledby="hc-stats-h">
+  <div class="hc-wrap">
+    <h2 class="hc-stats-h" id="hc-stats-h">Halcrest in numbers</h2>
+    <div class="hc-stats-row">
+      <div class="hc-stat">
+        <div class="hc-stat-value">120+</div>
+        <div class="hc-stat-label">Story worlds (sample)</div>
+      </div>
+      <div class="hc-stat">
+        <div class="hc-stat-value">4.8M</div>
+        <div class="hc-stat-label">Pass members (sample)</div>
+      </div>
+      <div class="hc-stat">
+        <div class="hc-stat-value">62</div>
+        <div class="hc-stat-label">Studio team members (sample)</div>
+      </div>
+      <div class="hc-stat">
+        <div class="hc-stat-value">99.9%</div>
+        <div class="hc-stat-label">Uptime target (sample)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="hc-compare" aria-labelledby="hc-compare-h">
+  <div class="hc-wrap">
+    <h2 class="hc-compare-h" id="hc-compare-h">Compare Pass tiers</h2>
+    <div class="hc-table-wrap">
+      <table class="hc-table">
+        <caption>All details are sample figures only and do not represent a binding offer.</caption>
+        <thead>
+          <tr>
+            <th scope="col">Feature</th>
+            <th scope="col">Wander</th>
+            <th scope="col">Venture</th>
+            <th scope="col">Summit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Story worlds per month</td><td>10 picks</td><td>All</td><td>All + extras</td></tr>
+          <tr><td>New arrivals day one</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+          <tr><td>Audio quality</td><td>Basic</td><td>Hi-fi</td><td>Hi-fi</td></tr>
+          <tr><td>Simultaneous Lantern sessions</td><td>1</td><td>3</td><td>3</td></tr>
+          <tr><td>Playtest access</td><td>No</td><td>Early</td><td>Priority</td></tr>
+          <tr><td>Community forum</td><td>Basic</td><td>Basic</td><td>Priority</td></tr>
+          <tr><td>Sample hardware discount</td><td>No</td><td>No</td><td>Yearly sample</td></tr>
+          <tr><td>Story curator</td><td>No</td><td>No</td><td>Personal</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="hc-playtest" aria-labelledby="hc-playtest-h">
+  <div class="hc-wrap">
+    <div class="hc-playtest-inner">
+      <h2 class="hc-playtest-h" id="hc-playtest-h">Join the playtest</h2>
+      <p class="hc-playtest-sub">Get early access to worlds still in development. This form is a demonstration only — no data is submitted or stored.</p>
+      <form id="hc-playtest-form" novalidate>
+        <div class="hc-field">
+          <label class="hc-label" for="hc-pt-name">Your name</label>
+          <input type="text" id="hc-pt-name" name="name" autocomplete="name" aria-describedby="hc-pt-name-err" placeholder="Ines Ruvalcaba"/>
+          <span class="hc-err" id="hc-pt-name-err" role="alert" aria-live="polite"></span>
+        </div>
+        <div class="hc-field">
+          <label class="hc-label" for="hc-pt-email">Email address</label>
+          <input type="email" id="hc-pt-email" name="email" autocomplete="email" aria-describedby="hc-pt-email-err" placeholder="Your email address"/>
+          <span class="hc-err" id="hc-pt-email-err" role="alert" aria-live="polite"></span>
+        </div>
+        <div class="hc-field">
+          <label class="hc-label" for="hc-world">Preferred story world</label>
+          <div class="hc-select-wrap">
+            <select id="hc-world" name="world" autocomplete="off" aria-describedby="hc-pt-world-err">
+              <option value="">Select a world…</option>
+              <option>Moss Ledger</option>
+              <option>Ninefold Tide</option>
+              <option>Quillwater</option>
+              <option>The Brass Orchard</option>
+              <option>Saltglass Run</option>
+              <option>Emberlane Tactics</option>
+              <option>Hollow Meridian</option>
+              <option>Paper Comets</option>
+              <option>Lumen Drift</option>
+              <option>Gale and Gristle</option>
+              <option>Cinder Lattice</option>
+              <option>Wrenhold</option>
+            </select>
+          </div>
+          <span class="hc-err" id="hc-pt-world-err" role="alert" aria-live="polite"></span>
+        </div>
+        <div class="hc-checkbox-row">
+          <input type="checkbox" id="hc-pt-agree" name="agree" aria-describedby="hc-pt-agree-err"/>
+          <span class="hc-check" aria-hidden="true"></span>
+          <label class="hc-checkbox-label" for="hc-pt-agree">I understand this is a demonstration form and no data is collected or transmitted.</label>
+        </div>
+        <span class="hc-err" id="hc-pt-agree-err" role="alert" aria-live="polite"></span>
+        <button class="hc-pill-cobalt" type="submit">Request playtest access</button>
+        <div class="hc-form-status" id="hc-pt-status" role="status" aria-live="polite" aria-atomic="true"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="hc-faq" aria-labelledby="hc-faq-h">
+  <div class="hc-wrap">
+    <h2 class="hc-faq-h" id="hc-faq-h">Frequently asked questions</h2>
+    <div class="hc-faq-list" id="hc-faq-list"></div>
+  </div>
+</section>
+
+<section id="hc-journal" aria-labelledby="hc-journal-h">
+  <div class="hc-wrap">
+    <h2 class="hc-journal-h" id="hc-journal-h">From the Halcrest Journal</h2>
+    <div class="hc-journal-carousel">
+      <div class="hc-journal-track-wrap">
+        <ul id="hc-journal-track" class="default" aria-label="Journal articles"></ul>
+      </div>
+      <div class="hc-journal-controls">
+        <button class="hc-circ hc-circ-light" id="hc-journal-prev" type="button" aria-label="Previous journal article" aria-controls="hc-journal-track" disabled>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="hc-dash-row" id="hc-journal-dashes" role="group" aria-label="Journal article position"></div>
+        <button class="hc-circ hc-circ-cobalt" id="hc-journal-next" type="button" aria-label="Next journal article" aria-controls="hc-journal-track">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="hc-social" aria-labelledby="hc-social-h">
+  <div class="hc-wrap">
+    <h2 class="hc-social-h" id="hc-social-h">Follow Halcrest</h2>
+    <div class="hc-social-tiles">
+      <a href="#" class="hc-social-tile" aria-label="Halcrest video channel">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true"><rect x="3" y="6" width="22" height="16" rx="4" stroke="currentColor" stroke-width="1.5"/><path d="M11 10l7 4-7 4V10z" fill="currentColor" opacity="0.6"/></svg>
+        <span class="hc-social-tile-label">Video channel</span>
+      </a>
+      <a href="#" class="hc-social-tile" aria-label="Halcrest photo diary">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true"><rect x="4" y="6" width="20" height="16" rx="4" stroke="currentColor" stroke-width="1.5"/><circle cx="14" cy="14" r="4" stroke="currentColor" stroke-width="1.5"/><circle cx="20" cy="9" r="1.5" fill="currentColor"/></svg>
+        <span class="hc-social-tile-label">Photo diary</span>
+      </a>
+      <a href="#" class="hc-social-tile" aria-label="Halcrest community forum">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M5 8a3 3 0 013-3h12a3 3 0 013 3v7a3 3 0 01-3 3h-5l-5 4v-4H8a3 3 0 01-3-3V8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        <span class="hc-social-tile-label">Community forum</span>
+      </a>
+      <a href="#" class="hc-social-tile" aria-label="Halcrest newsletter">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true"><rect x="4" y="8" width="20" height="14" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M4 10l10 7 10-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="hc-social-tile-label">Newsletter</span>
+      </a>
+      <a href="#" class="hc-social-tile" aria-label="Halcrest podcast">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true"><rect x="11" y="4" width="6" height="12" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M7 14a7 7 0 0014 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="14" y1="21" x2="14" y2="25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span class="hc-social-tile-label">Podcast</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="hc-closing" aria-labelledby="hc-closing-h">
+  <h2 class="hc-closing-h" id="hc-closing-h">Your stories are waiting.</h2>
+  <p class="hc-closing-sub">Start with Wander, grow into Summit. Every tier opens a world worth exploring at your own pace.</p>
+  <div class="hc-closing-pills">
+    <a href="#hc-pass" class="hc-closing-pill-white">Explore Halcrest Pass</a>
+    <a href="#hc-hardware" class="hc-closing-pill-outline">Discover hardware</a>
+  </div>
+</section>
+
+<section id="hc-legal" aria-label="Legal notes">
+  <div class="hc-legal-notes">
+    <p>All pricing, stat figures, discount tags and feature descriptions on this page are sample figures only and do not constitute an offer, quote or binding commitment.</p>
+    <p>All story world names, hardware names, author names and studio descriptions are entirely fictional and created for demonstration purposes.</p>
+    <p>No personal data entered into any form on this page is submitted, stored or transmitted. This page is a design gallery demonstration only.</p>
+  </div>
+</section>
+
+</main>
+
+<footer id="hc-footer" aria-label="Halcrest footer">
+  <div class="hc-footer-wrap">
+    <a href="#hc-home" class="hc-footer-wordmark" aria-label="Halcrest home">
+      <span class="hc-footer-wordmark-mark" aria-hidden="true">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" fill="var(--footer)"/></svg>
+      </span>
+      Halcrest
+    </a>
+    <hr class="hc-footer-rule"/>
+    <div class="hc-footer-cols" id="hc-footer-cols"></div>
+    <div class="hc-footer-bottom">
+      <span class="hc-footer-bottom-mark">Halcrest</span>
+      <span class="hc-footer-legal-line">2026 Halcrest, a fictional studio.</span>
+      <div class="hc-footer-region">
+        <label for="hc-region">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="5.5" stroke="var(--footer-muted)" stroke-width="1.2"/><path d="M7 1.5C5.5 3.5 4.5 5.5 4.5 7s1 3.5 2.5 5.5M7 1.5C8.5 3.5 9.5 5.5 9.5 7S8.5 10.5 7 12.5M1.5 7h11" stroke="var(--footer-muted)" stroke-width="1"/></svg>
+          Region
+        </label>
+        <div class="hc-region-wrap">
+          <select id="hc-region" aria-label="Select region" autocomplete="off">
+            <option>Worldwide</option>
+            <option>North Reach</option>
+            <option>South Reach</option>
+            <option>East Reach</option>
+            <option>West Reach</option>
+          </select>
+        </div>
+      </div>
+      <ul class="hc-footer-legal-links default">
+        <li><a href="#">Privacy notes</a></li>
+        <li><a href="#">Terms of play</a></li>
+        <li><a href="#">Accessibility</a></li>
+        <li><a href="#">Cookie choices</a></li>
+        <li><a href="#">Site map</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+
+var NAV_SLUGS=['worlds','hardware','gear','pass','journal','shop','help'];
+var NAV_LABELS=['Worlds','Hardware','Gear','Pass','Journal','Shop','Help'];
+
+var worldsNew=[
+  {title:'Moss Ledger',badge:'New',colors:['var(--moss)','var(--indigo-deep)']},
+  {title:'Ninefold Tide',badge:'Story',colors:['var(--tide)','var(--night)']},
+  {title:'Quillwater',badge:'Co-op',colors:['var(--cobalt)','var(--indigo)']},
+  {title:'The Brass Orchard',badge:'Puzzle',colors:['var(--sand)','var(--indigo-deep)']},
+  {title:'Saltglass Run',badge:'New',colors:['var(--muted)','var(--night)']},
+  {title:'Emberlane Tactics',badge:'Story',colors:['var(--ember)','var(--indigo-deep)']},
+  {title:'Hollow Meridian',badge:'Co-op',colors:['var(--plum)','var(--night)']},
+  {title:'Paper Comets',badge:'Puzzle',colors:['var(--plum)','var(--indigo)']},
+  {title:'Lumen Drift',badge:'New',colors:['var(--tide)','var(--indigo-deep)']},
+  {title:'Gale and Gristle',badge:'Story',colors:['var(--moss)','var(--night)']},
+  {title:'Cinder Lattice',badge:'Co-op',colors:['var(--ember)','var(--indigo)']},
+  {title:'Wrenhold',badge:'New',colors:['var(--sand)','var(--night)']}
+];
+var worldsSoon=[
+  {title:'Tallow Moon',badge:'Soon',colors:['var(--plum)','var(--indigo-deep)']},
+  {title:'Ferrous Bloom',badge:'Soon',colors:['var(--moss)','var(--night)']},
+  {title:'Kestrel Static',badge:'Soon',colors:['var(--tide)','var(--indigo)']},
+  {title:'Velvet Causeway',badge:'Soon',colors:['var(--ember)','var(--indigo-deep)']},
+  {title:'Orrery Nine',badge:'Soon',colors:['var(--sand)','var(--night)']},
+  {title:'Driftwood Choir',badge:'Soon',colors:['var(--plum)','var(--indigo)']},
+  {title:'Ashveil',badge:'Soon',colors:['var(--muted)','var(--indigo-deep)']},
+  {title:'Briar Meridian',badge:'Soon',colors:['var(--moss)','var(--night)']},
+  {title:'Glacial Thread',badge:'Soon',colors:['var(--tide)','var(--indigo-deep)']},
+  {title:'Flintwood Rise',badge:'Soon',colors:['var(--ember)','var(--night)']},
+  {title:'Pale Circuit',badge:'Soon',colors:['var(--sand)','var(--indigo)']},
+  {title:'Cobalt Shore',badge:'Soon',colors:['var(--cobalt)','var(--indigo-deep)']}
+];
+
+function makeCoverSVG(c1,c2,i){
+  var ns='http://www.w3.org/2000/svg';
+  var shapes=['<ellipse cx="50%" cy="40%" rx="40%" ry="30%" fill="'+c1+'" opacity="0.5"/>',
+    '<rect x="20%" y="20%" width="60%" height="40%" rx="8%" fill="'+c1+'" opacity="0.4"/>',
+    '<path d="M50 10 L90 70 L10 70 Z" fill="'+c1+'" opacity="0.4"/>',
+    '<circle cx="50%" cy="50%" r="35%" fill="'+c1+'" opacity="0.4"/>'];
+  var shape=shapes[i%shapes.length];
+  return '<svg viewBox="0 0 120 160" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="160" fill="'+c2+'"/>'+shape+'</svg>';
+}
+
+function buildCovers(data,containerId){
+  var el=document.getElementById(containerId);
+  if(!el)return;
+  var html='';
+  data.forEach(function(w,i){
+    html+='<div class="hc-cover">';
+    html+='<div class="hc-cover-art" aria-hidden="true">'+makeCoverSVG(w.colors[0],w.colors[1],i)+'</div>';
+    html+='<div class="hc-cover-badge">'+w.badge+'</div>';
+    html+='<div class="hc-cover-title">'+w.title+'</div>';
+    html+='</div>';
+  });
+  el.innerHTML=html;
+}
+buildCovers(worldsNew,'hc-covers-new');
+buildCovers(worldsSoon,'hc-covers-soon');
+
+var monthlyArticles=[
+  {title:'The quiet geometry of Moss Ledger',text:'How layered terrain became a meditation on patience and careful observation.'},
+  {title:'Sound design in Ninefold Tide',text:'Our audio team on building concentric sound worlds that echo the visual rings.'},
+  {title:'Hearth: a year of calm living rooms',text:'One year after launch, we look at how Hearth changed the way people play.'},
+  {title:'Emberlane Tactics — a strategy game for wanderers',text:'Not every tactics game needs to feel urgent. Emberlane proves slowness is a virtue.'},
+  {title:'Paper Comets and the art of folded narrative',text:'Origami metaphors, comet physics and storytelling that unfolds in your hands.'},
+  {title:'What Summit members discovered first',text:'Six Summit-tier members share the moments that made them stay.'}
+];
+
+(function(){
+  var ul=document.getElementById('hc-monthly-track');
+  var dr=document.getElementById('hc-monthly-dashes');
+  var artColors=[['var(--tide)','var(--indigo-deep)'],['var(--plum)','var(--indigo)'],['var(--ember)','var(--night)'],['var(--moss)','var(--indigo-deep)'],['var(--sand)','var(--night)'],['var(--cobalt)','var(--indigo)']];
+  var html='';var dh='';
+  monthlyArticles.forEach(function(a,i){
+    var c=artColors[i%artColors.length];
+    html+='<li><div class="hc-article-card"><div class="hc-article-art" aria-hidden="true"><svg viewBox="0 0 280 160" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><rect width="280" height="160" fill="'+c[1]+'"/><ellipse cx="140" cy="80" rx="80" ry="50" fill="'+c[0]+'" opacity="0.3"/></svg></div><div class="hc-article-body"><div class="hc-article-title">'+a.title+'</div><div class="hc-article-text">'+a.text+'</div></div></div></li>';
+    dh+='<button class="hc-dash-btn" type="button" aria-label="Show article '+(i+1)+'" aria-current="'+(i===0?'true':'false')+'"></button>';
+  });
+  ul.innerHTML=html;
+  dr.innerHTML=dh;
+})();
+
+var dealData=[
+  {title:'Moss Ledger',tag:'Sample -20%',c1:'var(--moss)',c2:'var(--indigo-deep)'},
+  {title:'Halcrest Pebble',tag:'Sample -15%',c1:'var(--tide)',c2:'var(--night)'},
+  {title:'Emberlane Tactics',tag:'Sample -30%',c1:'var(--ember)',c2:'var(--indigo)'},
+  {title:'Halcrest Halo',tag:'Sample -10%',c1:'var(--plum)',c2:'var(--indigo-deep)'}
+];
+(function(){
+  var el=document.getElementById('hc-deals-panel');
+  if(!el)return;
+  var html='';
+  dealData.forEach(function(d){
+    html+='<div class="hc-deal-tile"><div class="hc-deal-art" aria-hidden="true"><svg viewBox="0 0 280 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><rect width="280" height="100" fill="'+d.c2+'"/><ellipse cx="140" cy="50" rx="70" ry="35" fill="'+d.c1+'" opacity="0.4"/></svg></div><div class="hc-deal-info"><div class="hc-deal-title">'+d.title+'</div><span class="hc-deal-tag">'+d.tag+'</span></div></div>';
+  });
+  el.innerHTML=html;
+})();
+
+var faqData=[
+  {q:'What is Halcrest Pass?',a:'Halcrest Pass is a sample membership that gives access to a curated library of story worlds. All details on this page are illustrative and not binding.'},
+  {q:'How do I use a Halcrest Lantern?',a:'The Lantern is a portable story player depicted as a glowing rounded rectangle. It connects to your Hearth or runs stories independently. All descriptions are fictional.'},
+  {q:'Can I share my Pass with others?',a:'Pass sharing details vary by tier. All tier descriptions on this page are sample figures only and do not constitute a subscription agreement.'},
+  {q:'Are there family options?',a:'Venture and Summit tiers allow multiple simultaneous sessions (sample figures). Full family plan details would appear in a live product, not this demonstration.'},
+  {q:'How do I join the playtest?',a:'Fill in the form in the Join the Playtest section above. This demonstration form does not submit any data. In a live build it would connect to Halcrest account services.'}
+];
+(function(){
+  var container=document.getElementById('hc-faq-list');
+  if(!container)return;
+  var html='';
+  faqData.forEach(function(f,i){
+    var id='hc-faq-p-'+i;
+    var open=(i===0);
+    html+='<div class="hc-faq-item"><button class="hc-faq-trigger" type="button" aria-expanded="'+(open?'true':'false')+'" aria-controls="'+id+'"><span class="hc-faq-trigger-text">'+f.q+'</span><span class="hc-faq-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 8h8M8 4v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span></button><div class="hc-faq-panel" id="'+id+'"'+(open?'':' hidden')+'>'+f.a+'</div></div>';
+  });
+  container.innerHTML=html;
+  container.querySelectorAll('.hc-faq-trigger').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var exp=btn.getAttribute('aria-expanded')==='true';
+      var panel=document.getElementById(btn.getAttribute('aria-controls'));
+      btn.setAttribute('aria-expanded',exp?'false':'true');
+      panel.hidden=exp;
+    });
+  });
+})();
+
+var journalData=[
+  {title:'Moss Ledger and the art of slow play',excerpt:'Three hours into Moss Ledger I realised I had not once felt rushed. This is what calm design actually looks like in practice.',author:'Ines Ruvalcaba',role:'Community lead',date:'4 Oct 2026',initials:'IR',c1:'var(--moss)',c2:'var(--indigo-deep)'},
+  {title:'Sound as terrain in Ninefold Tide',excerpt:'Every concentric ring in Ninefold Tide has its own acoustic signature. Our audio designer explains why.',author:'Amara Okafor',role:'Audio designer',date:'28 Sep 2026',initials:'AO',c1:'var(--tide)',c2:'var(--night)'},
+  {title:'How Hearth changed our living room',excerpt:'We placed the Hearth on a shelf between two river stones and it disappeared. That was the point.',author:'Theo Marchetti',role:'Story editor',date:'20 Sep 2026',initials:'TM',c1:'var(--sand)','c2':'var(--indigo)'},
+  {title:'Paper Comets: narrative that unfolds',excerpt:'Every comet arc is a chapter. When you trace the right path the whole sky reorganises into a sentence.',author:'Lin Halvorsen',role:'Producer',date:'14 Sep 2026',initials:'LH',c1:'var(--plum)',c2:'var(--indigo-deep)'},
+  {title:'Building the Emberlane Tactics engine',excerpt:'The ember plains deform in real time under strategic decisions. Here is how our small team built that.',author:'Ines Ruvalcaba',role:'Community lead',date:'7 Sep 2026',initials:'IR',c1:'var(--ember)',c2:'var(--night)'},
+  {title:'What Wrenhold taught us about endings',excerpt:'Most story worlds avoid endings. Wrenhold sprints toward one and the effect is surprisingly freeing.',author:'Amara Okafor',role:'Audio designer',date:'31 Aug 2026',initials:'AO',c1:'var(--cobalt)',c2:'var(--indigo)'},
+  {title:'The geometry of The Brass Orchard',excerpt:'Grid, diagonal, arc — every path in the Orchard is a different kind of logic. Only one unlocks the fruit.',author:'Theo Marchetti',role:'Story editor',date:'24 Aug 2026',initials:'TM',c1:'var(--moss)',c2:'var(--indigo-deep)'},
+  {title:'Lumen Drift and the colour of navigation',excerpt:'When light is your map, colour-blindness-safe design is not optional. Here is our process.',author:'Lin Halvorsen',role:'Producer',date:'17 Aug 2026',initials:'LH',c1:'var(--plum)',c2:'var(--night)'},
+  {title:'Summit: a year of unexpected conversations',excerpt:'Summit members asked us questions we had not thought to answer. This is what we learned.',author:'Ines Ruvalcaba',role:'Community lead',date:'10 Aug 2026',initials:'IR',c1:'var(--tide)',c2:'var(--indigo)'},
+  {title:'Saltglass Run as a meditation on edges',excerpt:'The flats have no centre. Navigation is entirely peripheral. That paradox is the game.',author:'Amara Okafor',role:'Audio designer',date:'3 Aug 2026',initials:'AO',c1:'var(--sand)',c2:'var(--indigo-deep)'}
+];
+
+(function(){
+  var ul=document.getElementById('hc-journal-track');
+  var dr=document.getElementById('hc-journal-dashes');
+  if(!ul||!dr)return;
+  var html='';var dh='';
+  journalData.forEach(function(j,i){
+    html+='<li><div class="hc-jcard"><div class="hc-jcard-art" aria-hidden="true"><svg viewBox="0 0 360 200" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><rect width="360" height="200" fill="'+j.c2+'"/><ellipse cx="180" cy="100" rx="100" ry="65" fill="'+j.c1+'" opacity="0.35"/></svg></div><div class="hc-jcard-body"><div class="hc-jcard-title">'+j.title+'</div><div class="hc-jcard-excerpt">'+j.excerpt+'</div><div class="hc-jcard-author"><div class="hc-avatar" aria-hidden="true">'+j.initials+'</div><div><div class="hc-author-name">'+j.author+'</div><div class="hc-author-meta">'+j.role+' · '+j.date+'</div></div></div></div></div></li>';
+    dh+='<button class="hc-dash-btn" type="button" aria-label="Show journal article '+(i+1)+'" aria-current="'+(i===0?'true':'false')+'"></button>';
+  });
+  ul.innerHTML=html;
+  dr.innerHTML=dh;
+})();
+
+var footerGroups=[
+  {id:'play',label:'Play',links:['Browse worlds','New arrivals','Co-op worlds','Halcrest Pass worlds','Collections','Lend a world']},
+  {id:'hardware',label:'Hardware',links:['Halcrest Hearth','Halcrest Pebble','Halcrest Halo','Halcrest Dock','Halcrest Lantern','All hardware']},
+  {id:'pass',label:'Pass',links:['Wander tier','Venture tier','Summit tier','Compare tiers','Gift a Pass','Pass FAQ']},
+  {id:'studio',label:'Studio',links:['About Halcrest','Halcrest Journal','Halcrest Monthly','Careers','Press kit','Contact']},
+  {id:'help',label:'Help',links:['Help centre','Community forum','Accessibility','Safety policies','Report a problem','Cookie choices']},
+  {id:'follow',label:'Follow',links:['Video channel','Photo diary','Community forum','Newsletter','Podcast']}
+];
+
+(function(){
+  var container=document.getElementById('hc-footer-cols');
+  if(!container)return;
+  var html='';
+  footerGroups.forEach(function(g){
+    var listId='hc-footer-list-'+g.id;
+    var btnId='hc-footer-btn-'+g.id;
+    var linksHtml='';
+    if(g.id==='follow'){
+      var icons=['<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><rect x="1" y="3" width="12" height="8" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M5 5l4 2-4 2V5z" fill="currentColor"/></svg>','<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><rect x="2" y="3" width="10" height="8" rx="2" stroke="currentColor" stroke-width="1.2"/><circle cx="7" cy="7" r="2" stroke="currentColor" stroke-width="1.2"/></svg>','<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 4a2 2 0 012-2h6a2 2 0 012 2v5a2 2 0 01-2 2H7l-3 2v-2H4a2 2 0 01-2-2V4z" stroke="currentColor" stroke-width="1.2"/></svg>','<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><rect x="1" y="4" width="12" height="7" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M2 5l5 3.5L12 5" stroke="currentColor" stroke-width="1"/></svg>','<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><rect x="5" y="2" width="4" height="6" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M3 7a4 4 0 008 0" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="7" y1="11" x2="7" y2="13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>'];
+      g.links.forEach(function(l,i){linksHtml+='<li><a href="#" class="hc-footer-social-link" aria-label="Halcrest '+l+'">'+icons[i%icons.length]+' '+l+'</a></li>';});
+    } else {
+      g.links.forEach(function(l){linksHtml+='<li><a href="#">'+l+'</a></li>';});
+    }
+    html+='<div class="hc-footer-col">';
+    html+='<div class="hc-footer-col-h" id="hc-footer-h-'+g.id+'">'+g.label+'</div>';
+    html+='<button class="hc-footer-col-btn" type="button" id="'+btnId+'" aria-expanded="false" aria-controls="'+listId+'">'+g.label+'<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>';
+    html+='<ul class="hc-footer-links default" id="'+listId+'">'+linksHtml+'</ul>';
+    html+='</div>';
+  });
+  container.innerHTML=html;
+
+  function applyFooterLayout(){
+    var isMobile=window.matchMedia('(max-width:767px)').matches;
+    footerGroups.forEach(function(g){
+      var btn=document.getElementById('hc-footer-btn-'+g.id);
+      var list=document.getElementById('hc-footer-list-'+g.id);
+      if(!btn||!list)return;
+      if(isMobile){
+        btn.hidden=false;
+        if(btn.getAttribute('aria-expanded')==='true'){list.hidden=false;}
+        else{list.hidden=true;}
+      } else {
+        btn.hidden=true;
+        list.hidden=false;
+        list.removeAttribute('hidden');
+      }
+    });
+  }
+  applyFooterLayout();
+  window.addEventListener('resize',applyFooterLayout);
+
+  container.addEventListener('click',function(e){
+    var btn=e.target.closest('.hc-footer-col-btn');
+    if(!btn)return;
+    var exp=btn.getAttribute('aria-expanded')==='true';
+    var list=document.getElementById(btn.getAttribute('aria-controls'));
+    btn.setAttribute('aria-expanded',exp?'false':'true');
+    if(list)list.hidden=exp;
+  });
+})();
+
+var openDrop=null;
+var openPanel=null;
+
+function closeAll(){
+  if(openDrop){
+    var t=document.getElementById('hc-trig-'+openDrop);
+    var d=document.getElementById('hc-drop-'+openDrop);
+    if(t)t.setAttribute('aria-expanded','false');
+    if(d)d.hidden=true;
+    openDrop=null;
+    document.getElementById('hc-nav').classList.remove('hc-raised');
+  }
+  closePanel();
+  document.getElementById('hc-scrim').classList.remove('visible');
+}
+
+function closePanel(){
+  if(openPanel){
+    var el=document.getElementById('hc-panel-'+openPanel);
+    var toggle=document.getElementById('hc-'+openPanel+'-toggle');
+    if(el)el.hidden=true;
+    if(toggle)toggle.setAttribute('aria-expanded','false');
+    openPanel=null;
+  }
+}
+
+NAV_SLUGS.forEach(function(slug){
+  var trig=document.getElementById('hc-trig-'+slug);
+  var drop=document.getElementById('hc-drop-'+slug);
+  if(!trig||!drop)return;
+  trig.addEventListener('click',function(){
+    var isOpen=trig.getAttribute('aria-expanded')==='true';
+    closeAll();
+    if(!isOpen){
+      trig.setAttribute('aria-expanded','true');
+      drop.hidden=false;
+      openDrop=slug;
+      document.getElementById('hc-scrim').classList.add('visible');
+      document.getElementById('hc-nav').classList.add('hc-raised');
+    }
+  });
+  trig.addEventListener('keydown',function(e){
+    if(e.key==='ArrowDown'){
+      e.preventDefault();
+      trig.setAttribute('aria-expanded','true');
+      drop.hidden=false;
+      openDrop=slug;
+      document.getElementById('hc-scrim').classList.add('visible');
+      document.getElementById('hc-nav').classList.add('hc-raised');
+      var first=drop.querySelector('a,button');
+      if(first)first.focus();
+    }
+  });
+  drop.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){closeAll();trig.focus();}
+  });
+});
+
+document.getElementById('hc-scrim').addEventListener('click',closeAll);
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAll();});
+document.addEventListener('click',function(e){
+  if(!openDrop&&!openPanel)return;
+  var nav=document.getElementById('hc-nav');
+  if(openDrop&&!nav.contains(e.target))closeAll();
+});
+
+function setupPanel(panelId){
+  var toggle=document.getElementById('hc-'+panelId+'-toggle');
+  var panel=document.getElementById('hc-panel-'+panelId);
+  var close=document.getElementById('hc-'+panelId+'-close');
+  if(!toggle||!panel)return;
+  toggle.addEventListener('click',function(){
+    var isOpen=toggle.getAttribute('aria-expanded')==='true';
+    closeAll();
+    if(!isOpen){
+      panel.hidden=false;
+      toggle.setAttribute('aria-expanded','true');
+      openPanel=panelId;
+      document.getElementById('hc-scrim').classList.add('visible');
+      document.getElementById('hc-nav').classList.add('hc-raised');
+      var first=panel.querySelector('button,input,a');
+      if(first)first.focus();
+    }
+  });
+  if(close){
+    close.addEventListener('click',function(){
+      panel.hidden=true;
+      toggle.setAttribute('aria-expanded','false');
+      if(openPanel===panelId)openPanel=null;
+      document.getElementById('hc-scrim').classList.remove('visible');
+      document.getElementById('hc-nav').classList.remove('hc-raised');
+      toggle.focus();
+    });
+  }
+  panel.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){
+      panel.hidden=true;
+      toggle.setAttribute('aria-expanded','false');
+      if(openPanel===panelId)openPanel=null;
+      document.getElementById('hc-scrim').classList.remove('visible');
+      document.getElementById('hc-nav').classList.remove('hc-raised');
+      toggle.focus();
+    }
+  });
+}
+setupPanel('login');
+setupPanel('cart');
+setupPanel('search');
+
+var loginDemoOk=document.getElementById('hc-login-demo-ok');
+if(loginDemoOk){
+  loginDemoOk.addEventListener('click',function(){
+    var panel=document.getElementById('hc-panel-login');
+    var toggle=document.getElementById('hc-login-toggle');
+    if(panel)panel.hidden=true;
+    if(toggle){toggle.setAttribute('aria-expanded','false');toggle.focus();}
+    openPanel=null;
+    document.getElementById('hc-scrim').classList.remove('visible');
+    document.getElementById('hc-nav').classList.remove('hc-raised');
+  });
+}
+var cartBrowse=document.getElementById('hc-cart-browse');
+if(cartBrowse){
+  cartBrowse.addEventListener('click',function(){
+    var panel=document.getElementById('hc-panel-cart');
+    var toggle=document.getElementById('hc-cart-toggle');
+    if(panel){panel.hidden=true;panel.setAttribute('aria-expanded','false');}
+    if(toggle)toggle.setAttribute('aria-expanded','false');
+    openPanel=null;
+    document.getElementById('hc-scrim').classList.remove('visible');
+    document.getElementById('hc-nav').classList.remove('hc-raised');
+  });
+}
+var mobileLogin=document.getElementById('hc-mobile-login');
+if(mobileLogin){mobileLogin.addEventListener('click',function(){closeMenu();});}
+
+var promoLogin=document.getElementById('hc-promo-login');
+if(promoLogin){promoLogin.addEventListener('click',function(){
+  var toggle=document.getElementById('hc-login-toggle');
+  if(toggle)toggle.click();
+});}
+
+var searchInput=document.getElementById('hc-search-input');
+var searchStatus=document.getElementById('hc-search-status');
+if(searchInput&&searchStatus){
+  searchInput.addEventListener('input',function(){
+    if(searchInput.value.length>0)searchStatus.textContent='Showing sample results for "'+searchInput.value+'"';
+    else searchStatus.textContent='';
+  });
+}
+document.querySelectorAll('.hc-chip').forEach(function(chip){
+  chip.addEventListener('click',function(){
+    if(searchInput)searchInput.value=chip.textContent;
+    if(searchStatus)searchStatus.textContent='Showing sample results for "'+chip.textContent+'"';
+  });
+});
+
+var menuToggle=document.getElementById('hc-menu-toggle');
+var menu=document.getElementById('hc-menu');
+var menuClose=document.getElementById('hc-menu-close');
+var currentSub=null;
+var menuTrigger=null;
+
+function buildMobileSubs(){
+  NAV_SLUGS.forEach(function(slug,si){
+    var subEl=document.getElementById('hc-sub-'+slug);
+    if(!subEl)return;
+    var tilesEl=document.getElementById('hc-drop-'+slug+'-tiles');
+    var linksEl=document.getElementById('hc-drop-'+slug+'-links');
+    var tilesCopy=tilesEl?tilesEl.innerHTML:'';
+    var linksCopy=linksEl?linksEl.innerHTML:'';
+    var html='<div class="hc-sub-head"><button class="hc-back" type="button" data-back="hc-sub-'+slug+'"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M9 3L5 7l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Back</button><span class="hc-sub-title">'+NAV_LABELS[si]+'</span></div>';
+    html+='<div class="hc-sub-tiles">'+tilesCopy.replace(/hc-drop-tile/g,'hc-sub-tile').replace(/hc-drop-tile-icon/g,'hc-sub-tile-icon').replace(/hc-drop-tile-label/g,'hc-sub-tile-label')+'</div>';
+    html+='<hr class="hc-sub-rule"/>';
+    html+='<ul class="hc-sub-links default">'+linksCopy+'</ul>';
+    subEl.innerHTML=html;
+  });
+}
+buildMobileSubs();
+
+function openMenu(){
+  menu.hidden=false;
+  document.documentElement.classList.add('hc-lock');
+  menuToggle.setAttribute('aria-expanded','true');
+  menuClose.focus();
+  menuTrigger=menuToggle;
+}
+function closeMenu(){
+  if(currentSub){
+    var sub=document.getElementById(currentSub);
+    if(sub)sub.hidden=true;
+    currentSub=null;
+  }
+  menu.hidden=true;
+  document.documentElement.classList.remove('hc-lock');
+  menuToggle.setAttribute('aria-expanded','false');
+  if(menuTrigger)menuTrigger.focus();
+}
+
+if(menuToggle)menuToggle.addEventListener('click',openMenu);
+if(menuClose)menuClose.addEventListener('click',closeMenu);
+menu.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu();});
+
+menu.querySelectorAll('.hc-menu-row').forEach(function(row){
+  row.addEventListener('click',function(){
+    var subId=row.getAttribute('data-sub');
+    if(!subId)return;
+    var sub=document.getElementById(subId);
+    if(!sub)return;
+    sub.hidden=false;
+    currentSub=subId;
+    row.setAttribute('aria-expanded','true');
+    var back=sub.querySelector('.hc-back');
+    if(back)back.focus();
+  });
+});
+
+menu.addEventListener('click',function(e){
+  var back=e.target.closest('.hc-back');
+  if(!back)return;
+  var subId=back.getAttribute('data-back');
+  var sub=document.getElementById(subId);
+  if(sub)sub.hidden=true;
+  currentSub=null;
+  var label=sub?sub.querySelector('.hc-sub-title'):'';
+  var labelText=label?label.textContent:'';
+  var rows=menu.querySelectorAll('.hc-menu-row');
+  var target=null;
+  rows.forEach(function(r){if(r.textContent.trim().indexOf(labelText)===0){target=r;r.setAttribute('aria-expanded','false');}});
+  if(target)target.focus();
+  else menuClose.focus();
+});
+
+menu.addEventListener('keydown',function(e){
+  if(e.key!=='Tab')return;
+  var focusable=[].slice.call(menu.querySelectorAll('button:not([hidden]),a:not([hidden]),input:not([hidden]),select:not([hidden]),[tabindex]:not([tabindex="-1"]):not([hidden])'));
+  focusable=focusable.filter(function(el){
+    if(el.offsetParent===null&&el!==menuClose)return false;
+    var p=el;while(p){if(p.hidden)return false;p=p.parentElement;}
+    return true;
+  });
+  if(focusable.length===0)return;
+  var first=focusable[0];var last=focusable[focusable.length-1];
+  if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+  else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+});
+
+var promo=document.getElementById('hc-promo');
+var promoClose=document.getElementById('hc-promo-close');
+if(promoClose){
+  promoClose.addEventListener('click',function(){
+    promo.classList.add('hc-promo-hidden');
+    var hwH=document.getElementById('hc-hardware-h');
+    if(hwH){hwH.setAttribute('tabindex','-1');hwH.focus();}
+  });
+}
+
+var heroSlides=7;
+var heroCurrentSlide=0;
+var heroPlaying=document.documentElement.classList.contains('motion');
+var heroTimer=null;
+var heroPauseBtn=document.getElementById('hc-hero-pause');
+var heroPauseIcon=document.getElementById('hc-pause-icon');
+var heroPlayIcon=document.getElementById('hc-play-icon');
+
+function showSlide(idx){
+  for(var i=0;i<heroSlides;i++){
+    var s=document.getElementById('hc-slide-'+(i+1));
+    var t=document.getElementById('hc-tab-'+(i+1));
+    if(!s||!t)continue;
+    var active=(i===idx);
+    s.setAttribute('aria-hidden',active?'false':'true');
+    t.setAttribute('aria-selected',active?'true':'false');
+    t.setAttribute('tabindex',active?'0':'-1');
+    if(active)s.style.display='block';else s.style.display='none';
+  }
+  heroCurrentSlide=idx;
+}
+showSlide(0);
+
+function startAutoplay(){
+  if(!document.documentElement.classList.contains('motion'))return;
+  heroTimer=setInterval(function(){
+    showSlide((heroCurrentSlide+1)%heroSlides);
+  },5000);
+}
+function stopAutoplay(){clearInterval(heroTimer);heroTimer=null;}
+function setPaused(paused){
+  heroPlaying=!paused;
+  if(paused){stopAutoplay();heroPauseIcon.removeAttribute('hidden');heroPauseIcon.hidden=true;heroPlayIcon.hidden=false;heroPauseBtn.setAttribute('aria-label','Play slideshow');}
+  else{startAutoplay();heroPauseIcon.hidden=false;heroPlayIcon.hidden=true;heroPauseBtn.setAttribute('aria-label','Pause slideshow');}
+}
+
+var heroReducedMotion=!document.documentElement.classList.contains('motion');
+if(!heroReducedMotion){
+  startAutoplay();
+  heroPauseIcon.hidden=false;heroPlayIcon.hidden=true;
+  heroPauseBtn.setAttribute('aria-label','Pause slideshow');
+} else {
+  heroPauseIcon.hidden=true;heroPlayIcon.hidden=false;
+  heroPauseBtn.setAttribute('aria-label','Play slideshow');
+  heroPlaying=false;
+}
+
+heroPauseBtn.addEventListener('click',function(){
+  if(heroReducedMotion&&!heroPlaying){
+    heroPlaying=true;
+    heroPauseIcon.hidden=false;heroPlayIcon.hidden=true;
+    heroPauseBtn.setAttribute('aria-label','Pause slideshow');
+    heroTimer=setInterval(function(){
+      var next=(heroCurrentSlide+1)%heroSlides;
+      var allSlides=[];
+      for(var i=0;i<heroSlides;i++){var s=document.getElementById('hc-slide-'+(i+1));if(s)allSlides.push(s);}
+      allSlides.forEach(function(s){s.style.transition='none';});
+      showSlide(next);
+    },5000);
+  } else {
+    setPaused(heroPlaying);
+  }
+});
+
+var heroSection=document.getElementById('hc-hero');
+heroSection.addEventListener('mouseenter',function(){if(heroPlaying)stopAutoplay();});
+heroSection.addEventListener('mouseleave',function(){if(heroPlaying)startAutoplay();});
+heroSection.addEventListener('focusin',function(){if(heroPlaying)stopAutoplay();});
+heroSection.addEventListener('focusout',function(e){if(!heroSection.contains(e.relatedTarget)&&heroPlaying)startAutoplay();});
+
+var heroTablist=document.getElementById('hc-hero-tabs');
+heroTablist.addEventListener('click',function(e){
+  var tab=e.target.closest('[role=tab]');
+  if(!tab)return;
+  var idx=parseInt(tab.id.replace('hc-tab-',''),10)-1;
+  showSlide(idx);
+  if(heroPlaying){stopAutoplay();startAutoplay();}
+});
+heroTablist.addEventListener('keydown',function(e){
+  var tabs=[].slice.call(heroTablist.querySelectorAll('[role=tab]'));
+  var idx=tabs.indexOf(document.activeElement);
+  if(idx<0)return;
+  if(e.key==='ArrowRight'){e.preventDefault();var n=(idx+1)%heroSlides;showSlide(n);tabs[n].focus();}
+  else if(e.key==='ArrowLeft'){e.preventDefault();var p=(idx-1+heroSlides)%heroSlides;showSlide(p);tabs[p].focus();}
+  else if(e.key==='Home'){e.preventDefault();showSlide(0);tabs[0].focus();}
+  else if(e.key==='End'){e.preventDefault();showSlide(heroSlides-1);tabs[heroSlides-1].focus();}
+});
+
+var worldsTablist=document.getElementById('hc-worlds-tabs');
+worldsTablist.addEventListener('click',function(e){
+  var tab=e.target.closest('[role=tab]');
+  if(!tab)return;
+  var tabs=[].slice.call(worldsTablist.querySelectorAll('[role=tab]'));
+  tabs.forEach(function(t){
+    var panel=document.getElementById(t.getAttribute('aria-controls'));
+    var active=(t===tab);
+    t.setAttribute('aria-selected',active?'true':'false');
+    t.setAttribute('tabindex',active?'0':'-1');
+    if(panel){panel.setAttribute('aria-hidden',active?'false':'true');if(active)panel.style.display='block';else panel.style.display='none';}
+  });
+});
+worldsTablist.addEventListener('keydown',function(e){
+  var tabs=[].slice.call(worldsTablist.querySelectorAll('[role=tab]'));
+  var idx=tabs.indexOf(document.activeElement);
+  if(idx<0)return;
+  if(e.key==='ArrowRight'||e.key==='ArrowLeft'){
+    e.preventDefault();
+    var n=e.key==='ArrowRight'?(idx+1)%tabs.length:(idx-1+tabs.length)%tabs.length;
+    tabs[n].click();tabs[n].focus();
+  }
+});
+
+function setupCarousel(opts){
+  var track=document.getElementById(opts.trackId);
+  var prev=document.getElementById(opts.prevId);
+  var next=document.getElementById(opts.nextId);
+  var dashes=opts.dashesId?document.getElementById(opts.dashesId):null;
+  if(!track||!prev||!next)return;
+
+  function getItems(){return[].slice.call(track.querySelectorAll(':scope > li'));}
+  function getItemWidth(){var items=getItems();if(!items.length)return 0;var r=items[0].getBoundingClientRect();return r.width+parseInt(window.getComputedStyle(track).gap||'0',10);}
+  function getWrap(){return track.parentElement;}
+  function getMaxScroll(){var w=getWrap();return w.scrollWidth-w.clientWidth;}
+  function getActiveDashIndex(){
+    var wrap=getWrap();
+    var sc=wrap.scrollLeft;
+    var maxSc=getMaxScroll();
+    var items=getItems();
+    if(!items.length)return 0;
+    if(sc>=maxSc-2)return items.length-1;
+    var best=0;var bestDist=Infinity;
+    items.forEach(function(item,i){
+      var off=item.offsetLeft-track.offsetLeft;
+      var dist=Math.abs(sc-off);
+      if(dist<bestDist){bestDist=dist;best=i;}
+    });
+    return best;
+  }
+  function setActiveDash(idx){
+    if(!dashes)return;
+    var btns=[].slice.call(dashes.querySelectorAll('.hc-dash-btn'));
+    btns.forEach(function(b,i){b.setAttribute('aria-current',i===idx?'true':'false');});
+  }
+  function updateState(){
+    var wrap=getWrap();
+    var sc=wrap.scrollLeft;
+    var maxSc=getMaxScroll();
+    var wasPrevDisabled=prev.disabled;
+    var wasNextDisabled=next.disabled;
+    prev.disabled=(sc<=1);
+    next.disabled=(sc>=maxSc-1);
+    setActiveDash(getActiveDashIndex());
+    if(!wasPrevDisabled&&prev.disabled&&document.activeElement===prev)next.focus();
+    if(!wasNextDisabled&&next.disabled&&document.activeElement===next)prev.focus();
+  }
+
+  prev.addEventListener('click',function(){
+    var w=getItemWidth();
+    var wrap=getWrap();
+    var behavior=document.documentElement.classList.contains('motion')?'smooth':'auto';
+    wrap.scrollBy({left:-w,behavior:behavior});
+    setTimeout(function(){
+      updateState();
+      if(prev.disabled)next.focus();
+    },350);
+  });
+  next.addEventListener('click',function(){
+    var w=getItemWidth();
+    var wrap=getWrap();
+    var behavior=document.documentElement.classList.contains('motion')?'smooth':'auto';
+    wrap.scrollBy({left:w,behavior:behavior});
+    setTimeout(function(){
+      updateState();
+      if(next.disabled)prev.focus();
+    },350);
+  });
+  track.parentElement.addEventListener('scroll',updateState);
+
+  if(dashes){
+    dashes.addEventListener('click',function(e){
+      var btn=e.target.closest('.hc-dash-btn');
+      if(!btn)return;
+      var btns=[].slice.call(dashes.querySelectorAll('.hc-dash-btn'));
+      var idx=btns.indexOf(btn);
+      if(idx<0)return;
+      var items=getItems();
+      var wrap=getWrap();
+      var maxSc=getMaxScroll();
+      var targetLeft=0;
+      if(items[idx]){targetLeft=items[idx].offsetLeft-track.offsetLeft;}
+      targetLeft=Math.min(targetLeft,maxSc);
+      var behavior=document.documentElement.classList.contains('motion')?'smooth':'auto';
+      wrap.scrollTo({left:targetLeft,behavior:behavior});
+      setActiveDash(idx);
+      setTimeout(updateState,350);
+    });
+  }
+  updateState();
+}
+
+setupCarousel({trackId:'hc-hw-track',prevId:'hc-hw-prev',nextId:'hc-hw-next',dashesId:'hc-hw-dashes'});
+setupCarousel({trackId:'hc-pass-track',prevId:'hc-pass-prev',nextId:'hc-pass-next',dashesId:'hc-pass-dashes'});
+setupCarousel({trackId:'hc-monthly-track',prevId:'hc-monthly-prev',nextId:'hc-monthly-next',dashesId:'hc-monthly-dashes'});
+setupCarousel({trackId:'hc-journal-track',prevId:'hc-journal-prev',nextId:'hc-journal-next',dashesId:'hc-journal-dashes'});
+
+var ptForm=document.getElementById('hc-playtest-form');
+if(ptForm){
+  ptForm.addEventListener('submit',function(e){
+    e.preventDefault();
+    var nameEl=document.getElementById('hc-pt-name');
+    var emailEl=document.getElementById('hc-pt-email');
+    var worldEl=document.getElementById('hc-world');
+    var agreeEl=document.getElementById('hc-pt-agree');
+    var nameErr=document.getElementById('hc-pt-name-err');
+    var emailErr=document.getElementById('hc-pt-email-err');
+    var worldErr=document.getElementById('hc-pt-world-err');
+    var agreeErr=document.getElementById('hc-pt-agree-err');
+    var status=document.getElementById('hc-pt-status');
+    var ok=true;
+    nameErr.textContent='';emailErr.textContent='';worldErr.textContent='';agreeErr.textContent='';status.textContent='';
+    nameEl.removeAttribute('aria-invalid');emailEl.removeAttribute('aria-invalid');worldEl.removeAttribute('aria-invalid');agreeEl.removeAttribute('aria-invalid');
+    var firstInvalid=null;
+    if(!nameEl.value.trim()){nameErr.textContent='Please enter your name.';nameEl.setAttribute('aria-invalid','true');ok=false;if(!firstInvalid)firstInvalid=nameEl;}
+    if(!emailEl.value.trim()||emailEl.value.indexOf('@')<1){emailErr.textContent='Please enter a valid email address.';emailEl.setAttribute('aria-invalid','true');ok=false;if(!firstInvalid)firstInvalid=emailEl;}
+    if(!worldEl.value){worldErr.textContent='Please select a story world.';worldEl.setAttribute('aria-invalid','true');ok=false;if(!firstInvalid)firstInvalid=worldEl;}
+    if(!agreeEl.checked){agreeErr.textContent='Please check the box to continue.';agreeEl.setAttribute('aria-invalid','true');ok=false;if(!firstInvalid)firstInvalid=agreeEl;}
+    if(!ok){if(firstInvalid)firstInvalid.focus();return;}
+    status.textContent='Thank you! This is a demonstration — no data has been submitted.';
+    ptForm.reset();
+  });
+}
+
+})();
+</script>
+</body>
+</html>
