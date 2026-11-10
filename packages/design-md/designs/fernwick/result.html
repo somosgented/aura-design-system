@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Fernwick · Aura flavor</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="stylesheet" href="/aura/main.css"/>
+<link rel="stylesheet" href="theme.css"/>
+<script>
+(function(){
+  var p=new URLSearchParams(window.location.search).get("appearance");
+  var d=p==="dark"?"dark":"light";
+  var r=document.documentElement;
+  r.classList.add(d);
+  r.style.colorScheme=d;
+  if(window.matchMedia("(prefers-reduced-motion: no-preference)").matches)r.classList.add("motion");
+})();
+</script>
+<style>
+*{box-sizing:border-box;}
+html{font-family:var(--aura-font-stack);background:var(--canvas);color:var(--ink);scroll-padding-top:calc(var(--aura)*5);}
+body{margin:0;padding:0;background:var(--canvas);color:var(--ink);font-size:16px;line-height:1.5;overflow-x:hidden;min-width:0;}
+h1,h2,h3,h4,h5,h6,p,figure,ul,ol,dl{margin:0;}
+ul,ol{padding:0;list-style:none;}
+h1,h2,h3{font-family:var(--aura-font-display);font-weight:500;text-wrap:balance;letter-spacing:-0.02em;}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;}
+
+:focus-visible{outline:2px solid var(--lagoon);outline-offset:2px;}
+.on-night :focus-visible{outline-color:var(--lagoon-on-night);}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+.skip-link{position:absolute;left:calc(var(--aura)*1);top:calc(var(--aura)*-5);z-index:200;padding:calc(var(--aura)*0.5) calc(var(--aura)*2);border-radius:9999px;background:var(--lagoon);color:var(--on-lagoon);font-weight:500;}
+.skip-link:focus{top:calc(var(--aura)*1);}
+
+.fw{--aura-accents-primary:var(--lagoon);--aura-button-hover:var(--lagoon-deep);--aura-input-bg:var(--mist);--aura-input-placeholder-color:var(--body);--aura-link:var(--lagoon);--aura-link-hover:var(--accent-a3);--aura-outline:2px solid var(--lagoon);--aura-text-primary-inverse:white;}
+
+.fw .button-fill{background-color:var(--lagoon);border-color:var(--lagoon);color:var(--on-lagoon);}
+.fw .button-fill:hover:not(:disabled){background-color:var(--lagoon-deep);border-color:var(--lagoon-deep);}
+.fw .button-pill{border-color:var(--rule);color:var(--ink);background:var(--canvas);}
+.fw .button-pill:hover:not(:disabled){background:var(--mist);}
+.fw .button,.fw .button-fill,.fw .button-pill{border-radius:9999px;height:calc(var(--aura)*3.5);padding:0 calc(var(--aura)*2);font-size:14px;font-weight:500;border-width:1px;}
+.fw .button-icon{width:calc(var(--aura)*3);height:calc(var(--aura)*3);padding:0;border-radius:9999px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+.fw input:not(.default),.fw textarea:not(.default){background:var(--mist);border:1px solid var(--control-line);color:var(--ink);border-radius:9999px;}
+.fw textarea:not(.default){border-radius:13px;}
+.fw input:not(.default):focus,.fw textarea:not(.default):focus{outline:2px solid var(--lagoon);outline-offset:0;background:var(--mist);}
+.fw input:not(.default)::placeholder,.fw textarea:not(.default)::placeholder{color:var(--body);}
+.fw .select-wrap{position:relative;display:block;}
+.fw .select-wrap::after{content:"";position:absolute;right:calc(var(--aura)*1.5);top:50%;transform:translateY(-50%);width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:5px solid var(--ink);pointer-events:none;}
+.fw select.inputer{appearance:none;-webkit-appearance:none;border:1px solid var(--control-line);background:var(--mist);color:var(--ink);border-radius:9999px;height:calc(var(--aura)*4);padding:0 calc(var(--aura)*3) 0 calc(var(--aura)*1.5);font-family:inherit;font-size:max(1rem,17px);width:100%;cursor:pointer;}
+.fw select.inputer:focus{outline:2px solid var(--lagoon);outline-offset:0;}
+.dark .fw select.inputer{border-color:var(--control-line);background:var(--mist);color:var(--ink);}
+.dark .fw .select-wrap::after{border-top-color:var(--ink);}
+
+.wrap{width:min(100% - calc(var(--aura)*4),1280px);margin-inline:auto;}
+.eyebrow{font-family:var(--aura-font-label);font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--lagoon);}
+.section-pad{padding-block:calc(var(--aura)*7.5);}
+
+.fw-site-head{position:sticky;top:0;z-index:50;background:var(--canvas);border-bottom:1px solid var(--rule);}
+.fw-nav{display:flex;align-items:center;height:calc(var(--aura)*5);gap:calc(var(--aura)*2);}
+.fw-wordmark{display:inline-flex;align-items:center;gap:calc(var(--aura)*0.75);font-family:var(--aura-font-display);font-weight:600;font-size:1.25rem;letter-spacing:-0.01em;color:var(--ink);flex-shrink:0;}
+.fw-glyph-mark{display:inline-flex;align-items:center;justify-content:center;width:calc(var(--aura)*2.5);height:calc(var(--aura)*2.5);border-radius:9px;background:var(--lagoon);flex-shrink:0;}
+.fw-nav-links{display:flex;align-items:center;gap:calc(var(--aura)*0.25);margin-left:calc(var(--aura)*1);}
+.fw-nav-trigger,.fw-nav-plain{display:inline-flex;align-items:center;gap:4px;padding:calc(var(--aura)*0.5) calc(var(--aura)*0.75);border:0;background:none;color:var(--body);font:inherit;font-size:14px;cursor:pointer;border-radius:6px;white-space:nowrap;}
+.fw-nav-trigger:hover,.fw-nav-plain:hover{color:var(--ink);background:var(--mist);}
+.fw-nav-trigger[aria-expanded="true"]{color:var(--lagoon);}
+.fw-nav-trigger svg{transition:transform 180ms ease;flex-shrink:0;}
+.fw-nav-trigger[aria-expanded="true"] svg{transform:rotate(180deg);}
+.fw-nav-end{display:flex;align-items:center;gap:calc(var(--aura)*1);margin-left:auto;}
+.fw-nav-end a,.fw-nav-end button{font-size:14px;}
+.fw-sign-in{color:var(--lagoon);font-size:14px;font-weight:500;padding:4px 8px;}
+.fw-icon-btn{display:inline-flex;align-items:center;justify-content:center;width:calc(var(--aura)*2.5);height:calc(var(--aura)*2.5);border:0;background:none;color:var(--body);cursor:pointer;border-radius:6px;}
+.fw-icon-btn:hover{background:var(--mist);color:var(--ink);}
+
+.fw-mega{position:absolute;top:100%;left:0;right:0;background:var(--canvas);border-bottom:1px solid var(--rule);box-shadow:0 8px 24px color-mix(in srgb,black 10%,transparent);z-index:49;overflow:hidden;}
+.fw-mega[hidden]{display:none;}
+.fw-mega-inner{display:flex;width:min(100%,1280px);margin-inline:auto;min-height:calc(var(--aura)*34);}
+.fw-mega-rail{width:calc(var(--aura)*16.5);flex-shrink:0;background:var(--mist);padding:calc(var(--aura)*2) calc(var(--aura)*1.5);display:flex;flex-direction:column;gap:4px;}
+.fw-mega-rail-item{display:flex;align-items:center;gap:calc(var(--aura)*0.75);padding:calc(var(--aura)*0.75) calc(var(--aura)*1);border-radius:13px;font-size:14px;color:var(--body);cursor:pointer;border:0;background:none;text-align:left;width:100%;font-family:inherit;}
+.fw-mega-rail-item:hover{background:var(--accent-a3);color:var(--ink);}
+.fw-mega-rail-item.active{background:var(--accent-a4);color:var(--lagoon);font-weight:500;}
+.fw-mega-rail-dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex-shrink:0;}
+.fw-mega-rail-footer{margin-top:auto;padding-top:calc(var(--aura)*1);}
+.fw-mega-main{flex:1;padding:calc(var(--aura)*2) calc(var(--aura)*2.5);overflow:hidden;}
+.fw-mega-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:calc(var(--aura)*1.5);}
+.fw-mega-title{font-size:14px;font-weight:600;color:var(--ink);}
+.fw-mega-close{display:inline-flex;align-items:center;justify-content:center;width:calc(var(--aura)*2.5);height:calc(var(--aura)*2.5);border:1px solid var(--rule);border-radius:50%;background:none;color:var(--body);cursor:pointer;}
+.fw-mega-close:hover{background:var(--mist);color:var(--ink);}
+.fw-mega-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(var(--aura)*1) calc(var(--aura)*1.5);}
+.fw-mega-item{display:flex;align-items:flex-start;gap:calc(var(--aura)*1);padding:calc(var(--aura)*1);border-radius:13px;cursor:pointer;text-decoration:none;}
+.fw-mega-item:hover{background:var(--mist);}
+.fw-mega-item-icon{width:calc(var(--aura)*3);height:calc(var(--aura)*3);border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.fw-mega-item-title{font-size:14px;font-weight:500;color:var(--ink);margin-bottom:2px;}
+.fw-mega-item-desc{font-size:13px;color:var(--body);line-height:1.4;overflow-wrap:anywhere;}
+.fw-mega-footer{display:flex;align-items:center;justify-content:flex-end;margin-top:calc(var(--aura)*1.5);padding-top:calc(var(--aura)*1);border-top:1px solid var(--rule);}
+.fw-mega-note{font-size:13px;color:var(--body);}
+.fw-mega-note a{color:var(--lagoon);text-decoration:underline;}
+
+.fw-burger{display:none;align-items:center;justify-content:center;width:calc(var(--aura)*3);height:calc(var(--aura)*3);border:0;background:none;color:var(--ink);cursor:pointer;border-radius:6px;flex-shrink:0;}
+.fw-burger:hover{background:var(--mist);}
+
+.fw-mobile-menu{position:fixed;inset:0;z-index:48;background:var(--canvas);overflow-y:auto;display:flex;flex-direction:column;}
+.fw-mobile-menu[hidden]{display:none;}
+.fw-mobile-head{display:flex;align-items:center;justify-content:space-between;padding:calc(var(--aura)*1) calc(var(--aura)*2);border-bottom:1px solid var(--rule);}
+.fw-mobile-items{flex:1;padding:calc(var(--aura)*1) calc(var(--aura)*2);}
+.fw-mobile-item{display:flex;align-items:center;justify-content:space-between;width:100%;padding:calc(var(--aura)*1.25) 0;border:0;background:none;color:var(--ink);font:inherit;font-size:16px;cursor:pointer;border-bottom:1px solid var(--rule);text-align:left;text-decoration:none;}
+.fw-mobile-item:last-child{border-bottom:0;}
+.fw-mobile-foot{padding:calc(var(--aura)*2);display:flex;gap:calc(var(--aura)*1);}
+.fw-mobile-row2{display:none;padding:calc(var(--aura)*0.5) calc(var(--aura)*2);justify-content:flex-end;gap:calc(var(--aura)*0.75);border-top:1px solid var(--rule);}
+
+.fw-hero{text-align:center;padding:calc(var(--aura)*7) calc(var(--aura)*2);}
+.fw-hero-glyph{margin:0 auto calc(var(--aura)*2.5);}
+.fw-hero h1{font-size:clamp(2rem,5vw,3.25rem);line-height:1.1;color:var(--ink);margin-bottom:calc(var(--aura)*1.5);}
+.fw-hero p{font-size:16px;line-height:1.5;color:var(--body);max-width:580px;margin:0 auto calc(var(--aura)*2.5);}
+.fw-hero-pills{display:flex;flex-wrap:wrap;gap:calc(var(--aura)*1);justify-content:center;}
+
+.fw-stories{padding:calc(var(--aura)*4) 0;}
+.fw-stories-head{display:flex;align-items:center;justify-content:space-between;padding:0 calc(var(--aura)*2);margin-bottom:calc(var(--aura)*2);}
+.fw-stories-track-wrap{overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;scroll-padding-inline:calc(var(--aura)*2);}
+.fw-stories-track-wrap::-webkit-scrollbar{display:none;}
+.fw-stories-track{display:flex;gap:calc(var(--aura)*1.5);padding:0 calc(var(--aura)*2) calc(var(--aura)*1);}
+.fw-story-card{flex:0 0 clamp(240px,30vw,310px);min-width:0;border-radius:16px;overflow:hidden;position:relative;scroll-snap-align:start;aspect-ratio:290/190;}
+.fw-story-art{position:absolute;inset:0;}
+.fw-story-scrim{position:absolute;inset:0;background:linear-gradient(to top,color-mix(in srgb,black 80%,transparent) 0%,color-mix(in srgb,black 70%,transparent) 40%,transparent 70%);}
+.fw-story-body{position:absolute;bottom:0;left:0;right:0;padding:calc(var(--aura)*1.5);padding-top:calc(var(--aura)*4);}
+.fw-story-eyebrow{font-family:var(--aura-font-label);font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:white;margin-bottom:4px;}
+.fw-story-title{font-size:15px;font-weight:500;color:white;line-height:1.3;overflow-wrap:anywhere;}
+.fw-story-nav{display:flex;gap:calc(var(--aura)*0.5);padding:calc(var(--aura)*1) calc(var(--aura)*2) 0;}
+
+.fw-tabs-band{background:var(--mist);border-radius:26px;margin:0 calc(var(--aura)*2);padding:calc(var(--aura)*4);}
+.fw-tabs-strip{display:flex;gap:0;border-bottom:1px solid var(--rule);overflow-x:auto;scrollbar-width:none;}
+.fw-tabs-strip::-webkit-scrollbar{display:none;}
+.fw-tab-btn{flex-shrink:0;padding:calc(var(--aura)*1) calc(var(--aura)*1.5);border:0;border-bottom:3px solid transparent;background:none;color:var(--body);font:inherit;font-size:15px;cursor:pointer;white-space:nowrap;margin-bottom:-1px;}
+.fw-tab-btn[aria-selected="true"]{color:var(--lagoon);border-bottom-color:var(--lagoon);font-weight:500;}
+.fw-tab-btn:hover{color:var(--ink);}
+.fw-tab-panels{margin-top:calc(var(--aura)*2);}
+.fw-tab-panel{display:none;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(var(--aura)*1.5);}
+.fw-tab-panel[aria-hidden="false"]{display:grid;}
+.fw-audience-card{background:var(--canvas);border:1px solid var(--rule);border-radius:4px;padding:calc(var(--aura)*1.5);display:flex;align-items:flex-start;gap:calc(var(--aura)*1.5);min-width:0;}
+.fw-audience-card-copy{flex:1;min-width:0;}
+.fw-audience-card-art{width:calc(var(--aura)*7);height:calc(var(--aura)*7);border-radius:9px;flex-shrink:0;}
+.fw-audience-eyebrow{font-family:var(--aura-font-label);font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--lagoon);margin-bottom:calc(var(--aura)*0.75);}
+.fw-audience-title{font-size:14px;font-weight:500;color:var(--ink);line-height:1.4;overflow-wrap:anywhere;}
+
+.fw-platform{margin:calc(var(--aura)*4) calc(var(--aura)*2);background:var(--mist);border-radius:26px;padding:calc(var(--aura)*4);}
+.fw-platform-inner{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:calc(var(--aura)*4);align-items:start;}
+.fw-platform-copy{display:flex;flex-direction:column;gap:calc(var(--aura)*2);}
+.fw-platform-h2{font-size:clamp(1.75rem,3.5vw,2.5rem);line-height:1.1;}
+.fw-platform-links{display:flex;flex-wrap:wrap;gap:calc(var(--aura)*1);}
+.fw-platform-seeall{color:var(--lagoon);font-size:14px;font-weight:500;text-decoration:underline;}
+.fw-accordion{border-top:1px solid var(--rule);}
+.fw-acc-item{border-bottom:1px solid var(--rule);}
+.fw-acc-trigger{display:flex;align-items:center;justify-content:space-between;width:100%;padding:calc(var(--aura)*1.25) 0;border:0;background:none;color:var(--lagoon);font:inherit;font-size:15px;font-weight:500;cursor:pointer;text-align:left;gap:calc(var(--aura)*1);}
+.fw-acc-trigger:hover{color:var(--lagoon-deep);}
+.fw-acc-trigger svg{flex-shrink:0;transition:transform 200ms ease;}
+.fw-acc-trigger[aria-expanded="true"] svg{transform:rotate(180deg);}
+.fw-acc-panel{overflow:hidden;}
+.fw-acc-panel[hidden]{display:none;}
+.fw-acc-panel-inner{padding-bottom:calc(var(--aura)*1.5);}
+.fw-check-row{display:flex;align-items:flex-start;gap:calc(var(--aura)*0.75);font-size:14px;color:var(--body);margin-bottom:calc(var(--aura)*0.5);}
+.fw-check-row a{color:var(--lagoon);text-decoration:underline;}
+
+.fw-night-band{background:var(--night);padding:calc(var(--aura)*7) 0;}
+.fw-night-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:calc(var(--aura)*4);align-items:center;margin-bottom:calc(var(--aura)*4);}
+.fw-night-h2{font-size:clamp(1.75rem,3.5vw,2.5rem);line-height:1.1;color:var(--night-ink);}
+.fw-night-copy{color:var(--night-muted);font-size:16px;line-height:1.5;}
+.fw-night-copy a{color:var(--night-ink);text-decoration:underline;}
+.fw-night-pills{display:flex;flex-wrap:wrap;gap:calc(var(--aura)*1);margin-top:calc(var(--aura)*1.5);}
+.fw-night-btn-white{background:white;border:1px solid color-mix(in srgb,white 40%,transparent);color:var(--night);border-radius:9999px;height:calc(var(--aura)*3.5);padding:0 calc(var(--aura)*2);font:inherit;font-size:14px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;}
+.fw-night-btn-white:hover{background:var(--night-ink);}
+.fw-night-media{display:grid;grid-template-columns:minmax(0,240px) minmax(0,1fr);gap:calc(var(--aura)*2.5);align-items:start;margin-bottom:calc(var(--aura)*4);}
+.fw-night-vtabs{display:flex;flex-direction:column;gap:calc(var(--aura)*0.5);}
+.fw-night-vtab{display:flex;flex-direction:column;gap:4px;padding:calc(var(--aura)*1) calc(var(--aura)*1.25);border-radius:13px;border:0;background:none;color:var(--night-muted);font:inherit;font-size:14px;cursor:pointer;text-align:left;}
+.fw-night-vtab:hover{background:color-mix(in srgb,white 6%,transparent);}
+.fw-night-vtab[aria-selected="true"]{background:color-mix(in srgb,var(--lagoon) 15%,transparent);color:var(--night-ink);border-left:3px solid var(--lagoon-on-night);}
+.fw-night-vtab-eye{font-family:var(--aura-font-label);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:2px;}
+.fw-night-vtab-title{font-size:14px;font-weight:500;overflow-wrap:anywhere;}
+.fw-night-preview{background:color-mix(in srgb,white 6%,transparent);border-radius:16px;overflow:hidden;aspect-ratio:16/10;position:relative;}
+.fw-night-preview-link{display:block;margin-top:calc(var(--aura)*1);font-size:14px;color:var(--lagoon-on-night);text-decoration:underline;}
+.fw-night-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(var(--aura)*1.5);}
+.fw-night-card{background:color-mix(in srgb,white 6%,transparent);border-radius:13px;padding:calc(var(--aura)*1.5);}
+.fw-night-card-icon{width:calc(var(--aura)*3);height:calc(var(--aura)*3);border-radius:9px;margin-bottom:calc(var(--aura)*1);display:flex;align-items:center;justify-content:center;}
+.fw-night-card-text{font-size:14px;color:var(--night-muted);line-height:1.4;margin-bottom:calc(var(--aura)*0.75);overflow-wrap:anywhere;}
+.fw-night-card-link{color:var(--lagoon-on-night);font-size:14px;text-decoration:underline;}
+
+.fw-stats-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:calc(var(--aura)*1.5);}
+.fw-stat{padding:calc(var(--aura)*2);border:1px solid var(--rule);border-radius:16px;background:var(--paper);}
+.fw-stat-value{font-family:var(--aura-font-display);font-size:clamp(2rem,4vw,3rem);font-weight:500;color:var(--ink);line-height:1;}
+.fw-stat-label{font-family:var(--aura-font-label);font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--body);margin-top:calc(var(--aura)*0.5);}
+
+.fw-cust-stories{padding:calc(var(--aura)*7) 0;}
+.fw-cust-head{text-align:center;margin-bottom:calc(var(--aura)*3);}
+.fw-cust-h2{font-size:clamp(1.75rem,3.5vw,2.5rem);line-height:1.1;}
+.fw-cust-track-wrap{overflow-x:auto;scrollbar-width:none;scroll-snap-type:x mandatory;scroll-padding-inline:calc(var(--aura)*2);}
+.fw-cust-track-wrap::-webkit-scrollbar{display:none;}
+.fw-cust-track{display:flex;gap:calc(var(--aura)*1.5);padding:0 calc(var(--aura)*2) calc(var(--aura)*1);}
+.fw-cust-card{flex:0 0 clamp(260px,32vw,360px);min-width:0;border-radius:16px;overflow:hidden;border:1px solid var(--rule);background:var(--paper);scroll-snap-align:start;}
+.fw-cust-card-top{padding:calc(var(--aura)*1.5);}
+.fw-cust-card-name{font-weight:600;font-size:15px;color:var(--ink);margin-bottom:4px;overflow-wrap:anywhere;}
+.fw-cust-card-text{font-size:14px;color:var(--body);line-height:1.4;overflow-wrap:anywhere;}
+.fw-cust-card-link{display:block;color:var(--lagoon);font-size:14px;margin-top:calc(var(--aura)*0.75);text-decoration:underline;}
+.fw-cust-card-art{position:relative;aspect-ratio:16/9;}
+.fw-cust-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:calc(var(--aura)*4);height:calc(var(--aura)*4);border-radius:50%;background:white;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.fw-cust-caption{position:absolute;bottom:0;left:0;right:0;padding:calc(var(--aura)*0.75) calc(var(--aura)*1);background:color-mix(in srgb,black 72%,transparent);color:white;font-size:12px;}
+.fw-cust-controls{display:flex;flex-direction:column;align-items:center;gap:calc(var(--aura)*1.5);padding:calc(var(--aura)*2) calc(var(--aura)*2) 0;}
+.fw-cust-progress{height:4px;background:var(--rule);border-radius:9999px;width:min(400px,80%);overflow:hidden;}
+.fw-cust-progress-fill{height:100%;background:var(--lagoon);border-radius:9999px;transition:width 200ms ease;}
+.fw-cust-nav{display:flex;gap:calc(var(--aura)*0.75);}
+
+.fw-industry{padding:calc(var(--aura)*7) calc(var(--aura)*2);}
+.fw-industry-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:calc(var(--aura)*4);align-items:start;margin-bottom:calc(var(--aura)*4);}
+.fw-industry-h2{font-size:clamp(1.75rem,3.5vw,2.5rem);line-height:1.1;}
+.fw-industry-right{display:flex;flex-direction:column;gap:calc(var(--aura)*1.5);}
+.fw-industry-body{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:calc(var(--aura)*2.5);}
+.fw-industry-tabs{display:flex;flex-direction:column;gap:4px;}
+.fw-industry-tab{display:flex;align-items:center;justify-content:space-between;gap:calc(var(--aura)*0.75);padding:calc(var(--aura)*0.75) calc(var(--aura)*1);border-radius:9px;border:0;background:none;color:var(--body);font:inherit;font-size:14px;cursor:pointer;text-align:left;width:100%;}
+.fw-industry-tab:hover{background:var(--mist);color:var(--ink);}
+.fw-industry-tab[aria-selected="true"]{background:var(--accent-a4);color:var(--lagoon);font-weight:500;}
+.fw-industry-panels .fw-industry-panel{display:none;}
+.fw-industry-panels .fw-industry-panel[aria-hidden="false"]{display:flex;flex-direction:column;gap:calc(var(--aura)*1.5);}
+.fw-industry-art{aspect-ratio:16/9;border-radius:13px;overflow:hidden;margin-bottom:calc(var(--aura)*1.5);}
+.fw-industry-panel-title{font-size:20px;font-weight:500;color:var(--ink);}
+.fw-industry-panel-text{font-size:14px;color:var(--body);line-height:1.5;overflow-wrap:anywhere;}
+
+.fw-pricing{padding:calc(var(--aura)*7) calc(var(--aura)*2);}
+.fw-pricing-head{margin-bottom:calc(var(--aura)*3);}
+.fw-pricing-h2{font-size:clamp(1.75rem,3.5vw,2.5rem);line-height:1.1;margin-bottom:calc(var(--aura)*1);}
+.fw-table-wrap{overflow-x:auto;border-radius:13px;border:1px solid var(--rule);margin-bottom:calc(var(--aura)*4);}
+.fw-table{width:100%;border-collapse:collapse;font-size:14px;}
+.fw-table th{font-family:var(--aura-font-label);font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--body);padding:calc(var(--aura)*1) calc(var(--aura)*1.5);text-align:left;border-bottom:1px solid var(--rule);white-space:nowrap;}
+.fw-table td{padding:calc(var(--aura)*1) calc(var(--aura)*1.5);color:var(--ink);border-bottom:1px solid var(--rule);overflow-wrap:anywhere;}
+.fw-table tbody tr:last-child td{border-bottom:0;}
+.fw-table tbody tr:hover td{background:var(--mist);}
+.fw-plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(var(--aura)*1.5);}
+.fw-plan{border:1px solid var(--rule);border-radius:16px;padding:calc(var(--aura)*2.5);background:var(--paper);display:flex;flex-direction:column;gap:calc(var(--aura)*1.5);}
+.fw-plan.featured{border:2px solid var(--lagoon);}
+.fw-plan-name{font-size:20px;font-weight:500;color:var(--ink);}
+.fw-plan-price{font-family:var(--aura-font-display);font-size:clamp(2rem,4vw,3rem);font-weight:500;color:var(--ink);line-height:1;}
+.fw-plan-price small{font-size:14px;font-weight:400;color:var(--body);}
+.fw-plan-desc{font-size:14px;color:var(--body);line-height:1.4;overflow-wrap:anywhere;}
+.fw-plan-features{display:flex;flex-direction:column;gap:calc(var(--aura)*0.5);}
+.fw-plan-feature{display:flex;align-items:center;gap:calc(var(--aura)*0.75);font-size:14px;color:var(--body);}
+
+.fw-form-section{padding:calc(var(--aura)*7) calc(var(--aura)*2);}
+.fw-form-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:calc(var(--aura)*4);background:var(--paper);border-radius:16px;border:1px solid var(--rule);padding:calc(var(--aura)*4);}
+.fw-form-copy{display:flex;flex-direction:column;gap:calc(var(--aura)*1.5);}
+.fw-form-h2{font-size:clamp(1.5rem,3vw,2.25rem);line-height:1.1;}
+.fw-form-fields{display:flex;flex-direction:column;gap:calc(var(--aura)*1.5);}
+.fw-field{display:flex;flex-direction:column;gap:calc(var(--aura)*0.5);}
+.fw-field label{font-size:14px;font-weight:500;color:var(--ink);}
+.fw-field-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:calc(var(--aura)*1.5);}
+.fw-form-status{font-size:14px;font-weight:500;color:var(--fern);min-height:1.4em;}
+.fw-form-error{color:color-mix(in srgb,var(--amber) 55%,black);}
+.dark .fw-form-error{color:color-mix(in srgb,var(--amber) 90%,black);}@media (prefers-color-scheme:dark){:root:not(.light) .fw-form-error{color:color-mix(in srgb,var(--amber) 90%,black);}}
+
+.fw-faq-section{padding:calc(var(--aura)*7) calc(var(--aura)*2);}
+.fw-faq-h2{font-size:clamp(1.75rem,3.5vw,2.5rem);margin-bottom:calc(var(--aura)*3);}
+.fw-faq-list{display:flex;flex-direction:column;gap:calc(var(--aura)*1);}
+.fw-faq-item{border:1px solid var(--rule);border-radius:13px;overflow:hidden;}
+.fw-faq-trigger{display:flex;align-items:center;justify-content:space-between;gap:calc(var(--aura)*1);width:100%;padding:calc(var(--aura)*1.5) calc(var(--aura)*2);border:0;background:var(--paper);color:var(--ink);font:inherit;font-size:16px;font-weight:500;cursor:pointer;text-align:left;}
+.fw-faq-trigger:hover{background:var(--mist);}
+.fw-faq-trigger svg{flex-shrink:0;transition:transform 200ms ease;}
+.fw-faq-trigger[aria-expanded="true"] svg{transform:rotate(45deg);}
+.fw-faq-panel{padding:0 calc(var(--aura)*2) calc(var(--aura)*1.5);color:var(--body);font-size:15px;line-height:1.5;}
+.fw-faq-panel[hidden]{display:none;}
+
+.fw-logo-band{padding:calc(var(--aura)*5) 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);overflow:hidden;}
+.fw-logo-band-head{display:flex;align-items:center;justify-content:space-between;padding:0 calc(var(--aura)*2);margin-bottom:calc(var(--aura)*2);}
+.fw-logo-band-controls{display:flex;align-items:center;gap:calc(var(--aura)*1);}
+.fw-marquee-outer{overflow:hidden;}
+.fw-marquee-track{display:flex;gap:calc(var(--aura)*4);width:max-content;}
+.fw-marquee-track.paused{animation-play-state:paused;}
+@keyframes fw-marquee{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+.motion .fw-marquee-track.running{animation:fw-marquee 30s linear infinite;}
+.fw-logo-item{display:flex;align-items:center;justify-content:center;height:calc(var(--aura)*4);flex-shrink:0;}
+.fw-logo-text{font-family:var(--aura-font-display);font-size:18px;font-weight:600;color:var(--body);letter-spacing:-0.02em;white-space:nowrap;}
+.fw-pause-btn{display:inline-flex;align-items:center;justify-content:center;width:calc(var(--aura)*3);height:calc(var(--aura)*3);border-radius:50%;border:1px solid var(--rule);background:var(--canvas);color:var(--body);cursor:pointer;flex-shrink:0;}
+.fw-pause-btn:hover{background:var(--mist);color:var(--ink);}
+.button-pill:disabled{opacity:1;border-color:var(--control-line);color:var(--control-line);}
+.fw-pause-btn[aria-pressed="true"] svg.play-icon{display:block;}
+.fw-pause-btn[aria-pressed="true"] svg.pause-icon{display:none;}
+.fw-pause-btn[aria-pressed="false"] svg.play-icon{display:none;}
+.fw-pause-btn[aria-pressed="false"] svg.pause-icon{display:block;}
+
+.fw-cta{margin:0 calc(var(--aura)*2) calc(var(--aura)*7);background:var(--sky-wash);border-radius:26px;padding:calc(var(--aura)*5) calc(var(--aura)*5);display:flex;align-items:center;justify-content:space-between;gap:calc(var(--aura)*4);overflow:hidden;position:relative;min-height:calc(var(--aura)*22);}
+.fw-cta-copy{max-width:560px;flex-shrink:0;position:relative;z-index:1;}
+.fw-cta-h2{font-size:clamp(1.75rem,3.5vw,2.75rem);line-height:1.1;margin-bottom:calc(var(--aura)*1.5);}
+.fw-cta-pills{display:flex;flex-wrap:wrap;gap:calc(var(--aura)*1);}
+.fw-cta-glyph{position:absolute;right:0;top:0;bottom:0;width:clamp(200px,35vw,420px);pointer-events:none;overflow:hidden;}
+
+.fw-footer{background:var(--canvas);border-top:1px solid var(--rule);padding-top:calc(var(--aura)*5);padding-bottom:calc(var(--aura)*9);}
+.fw-footer-cols{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:calc(var(--aura)*2);margin-bottom:calc(var(--aura)*4);}
+.fw-footer-col-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:calc(var(--aura)*1);}
+.fw-footer-col-list{display:flex;flex-direction:column;gap:calc(var(--aura)*0.75);}
+.fw-footer-col-list a{font-size:14px;color:var(--body);}
+.fw-footer-col-list a:hover{color:var(--ink);}
+.fw-footer-acc-trigger{display:none;width:100%;padding:calc(var(--aura)*1) 0;border:0;border-top:1px solid var(--rule);background:none;color:var(--ink);font:inherit;font-size:14px;font-weight:600;cursor:pointer;text-align:left;align-items:center;justify-content:space-between;}
+.fw-footer-acc-trigger svg{flex-shrink:0;transition:transform 200ms ease;}
+.fw-footer-acc-trigger[aria-expanded="true"] svg{transform:rotate(180deg);}
+.fw-footer-acc-panel[hidden]{display:none!important;}
+.fw-footer-legal{display:flex;flex-wrap:wrap;align-items:center;gap:calc(var(--aura)*1) calc(var(--aura)*0.5);padding-top:calc(var(--aura)*2.5);border-top:1px solid var(--rule);font-size:13px;color:var(--body);}
+.fw-footer-legal-links{display:flex;flex-wrap:wrap;gap:4px;align-items:center;}
+.fw-footer-legal-links a{color:var(--body);}
+.fw-footer-legal-links a:hover{color:var(--ink);}
+.fw-footer-sep{color:var(--rule);}
+.fw-footer-leaf-note{display:flex;align-items:center;gap:4px;}
+.fw-footer-newsletter{display:flex;align-items:center;gap:calc(var(--aura)*1);flex-wrap:wrap;}
+.fw-footer-news-status{font-size:13px;color:var(--fern);}
+.fw-footer-lang{display:flex;align-items:center;gap:calc(var(--aura)*0.5);margin-left:auto;}
+
+.fw-assist-chip{position:fixed;bottom:calc(var(--aura)*1.5);right:calc(var(--aura)*1.5);z-index:60;display:inline-flex;align-items:center;gap:calc(var(--aura)*0.75);padding:calc(var(--aura)*0.75) calc(var(--aura)*1.5);border-radius:16px;background:var(--sky-wash);color:var(--chip-ink);border:1px solid color-mix(in srgb,var(--lagoon) 30%,transparent);box-shadow:0 4px 16px color-mix(in srgb,black 12%,transparent);cursor:pointer;font:inherit;font-size:14px;font-weight:500;}
+.fw-assist-chip:hover{background:var(--accent-a4);}
+.fw-assist-dialog-backdrop{position:fixed;inset:0;z-index:70;background:color-mix(in srgb,var(--night) 50%,transparent);display:flex;align-items:flex-end;justify-content:flex-end;padding:calc(var(--aura)*1.5);}
+.fw-assist-dialog-backdrop[hidden]{display:none;}
+.fw-assist-dialog{background:var(--canvas);border-radius:26px;box-shadow:0 20px 60px color-mix(in srgb,black 25%,transparent);width:min(100%,510px);max-height:min(90vh,calc(var(--aura)*45));display:flex;flex-direction:column;overflow:hidden;}
+.fw-assist-head{display:flex;align-items:center;justify-content:space-between;padding:calc(var(--aura)*1.5) calc(var(--aura)*2);border-bottom:1px solid var(--rule);}
+.fw-assist-head-title{font-size:16px;font-weight:600;color:var(--ink);}
+.fw-assist-close{display:inline-flex;align-items:center;justify-content:center;width:calc(var(--aura)*2.5);height:calc(var(--aura)*2.5);border-radius:50%;border:1px solid var(--rule);background:none;color:var(--body);cursor:pointer;}
+.fw-assist-close:hover{background:var(--mist);}
+.fw-assist-body{flex:1;overflow-y:auto;padding:calc(var(--aura)*2);}
+.fw-assist-q{font-size:18px;font-weight:500;color:var(--ink);text-align:center;margin-bottom:calc(var(--aura)*2);}
+.fw-assist-suggestions{display:flex;flex-direction:column;gap:calc(var(--aura)*0.75);margin-bottom:calc(var(--aura)*2);}
+.fw-assist-sug-btn{display:flex;align-items:center;justify-content:space-between;gap:calc(var(--aura)*1);width:100%;padding:calc(var(--aura)*1) calc(var(--aura)*1.5);border-radius:9999px;border:1px solid var(--rule);background:var(--mist);color:var(--ink);font:inherit;font-size:14px;cursor:pointer;text-align:left;}
+.fw-assist-sug-btn:hover{background:var(--accent-a3);}
+.fw-assist-log{display:flex;flex-direction:column;gap:calc(var(--aura)*1);margin-bottom:calc(var(--aura)*1.5);}
+.fw-assist-msg{padding:calc(var(--aura)*1) calc(var(--aura)*1.5);border-radius:13px;font-size:14px;line-height:1.5;overflow-wrap:anywhere;}
+.fw-assist-msg.user{background:var(--lagoon);color:var(--on-lagoon);align-self:flex-end;max-width:80%;}
+.fw-assist-msg.bot{background:var(--mist);color:var(--ink);align-self:flex-start;max-width:90%;}
+.fw-assist-foot{padding:calc(var(--aura)*1.5) calc(var(--aura)*2);border-top:1px solid var(--rule);}
+.fw-assist-input-row{display:flex;align-items:center;gap:calc(var(--aura)*0.75);border:1px solid var(--rule);border-radius:9999px;padding:calc(var(--aura)*0.5) calc(var(--aura)*0.5) calc(var(--aura)*0.5) calc(var(--aura)*1.5);background:var(--canvas);}
+.fw-assist-input{flex:1;border:0;background:none;color:var(--ink);font:inherit;font-size:14px;outline:none;min-width:0;}
+.fw-assist-input::placeholder{color:var(--body);}
+.fw-assist-send{display:inline-flex;align-items:center;justify-content:center;width:calc(var(--aura)*3);height:calc(var(--aura)*3);border-radius:50%;border:0;background:var(--lagoon);color:var(--on-lagoon);cursor:pointer;flex-shrink:0;}
+.fw-assist-send:disabled{background:var(--rule);cursor:not-allowed;}
+.fw-assist-send:not(:disabled):hover{background:var(--lagoon-deep);}
+.fw-assist-footnote{font-size:12px;color:var(--body);margin-top:calc(var(--aura)*0.75);text-align:center;}
+
+.motion .fw-reveal{opacity:0;transform:translateY(16px);transition:opacity 400ms cubic-bezier(0.4,0,0.2,1),transform 400ms cubic-bezier(0.4,0,0.2,1);}
+.motion .fw-reveal.fw-in{opacity:1;transform:none;}
+.motion .fw-assist-dialog-backdrop:not([hidden]) .fw-assist-dialog{animation:fw-dialog-in 220ms ease both;}
+@keyframes fw-dialog-in{from{opacity:0;transform:scale(0.95);}to{opacity:1;transform:none;}}
+
+@media(max-width:1024px){
+  .fw-nav-links{display:none;}
+  .fw-nav-end .fw-docs-link,.fw-nav-end .fw-support-link{display:none;}
+  .fw-burger{display:flex;}
+  .fw-platform-inner{grid-template-columns:minmax(0,1fr);}
+  .fw-night-top{grid-template-columns:minmax(0,1fr);}
+  .fw-night-media{grid-template-columns:minmax(0,1fr);}
+  .fw-night-vtabs{flex-direction:row;overflow-x:auto;}
+  .fw-night-vtab{flex-shrink:0;}
+  .fw-industry-head{grid-template-columns:minmax(0,1fr);}
+  .fw-industry-body{grid-template-columns:minmax(0,1fr);}
+  .fw-industry-tabs{flex-direction:row;overflow-x:auto;flex-wrap:nowrap;}
+  .fw-industry-tab{flex-shrink:0;}
+  .fw-form-wrap{grid-template-columns:minmax(0,1fr);}
+  .fw-footer-cols{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:768px){
+  .fw-nav-end .fw-sign-in{display:none;}
+  .fw-mobile-row2{display:flex;}
+  .fw-stories-head{flex-direction:column;align-items:flex-start;}
+  .fw-tabs-band{margin:0 calc(var(--aura)*1);padding:calc(var(--aura)*2);}
+  .fw-tab-panel{grid-template-columns:minmax(0,1fr);}
+  .fw-platform{margin:calc(var(--aura)*2) calc(var(--aura)*1);}
+  .fw-stats-row{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .fw-plans{grid-template-columns:minmax(0,1fr);}
+  .fw-night-cards{grid-template-columns:minmax(0,1fr);}
+  .fw-cta{margin:0 calc(var(--aura)*1) calc(var(--aura)*7);padding:calc(var(--aura)*3) calc(var(--aura)*3);}
+  .fw-cta-glyph{opacity:0.4;}
+  .fw-footer-cols{grid-template-columns:minmax(0,1fr);}
+  .fw-footer-col-title{display:none;}
+  .fw-footer-acc-trigger{display:flex;}
+  .fw-footer-acc-panel{padding-bottom:calc(var(--aura)*1);}
+  .fw-footer-legal{flex-direction:column;align-items:flex-start;}
+  .fw-footer-lang{margin-left:0;}
+  .fw-mega-inner{flex-direction:column;}
+  .fw-mega-rail{width:100%;}
+  .fw-industry-body{grid-template-columns:minmax(0,1fr);}
+  .fw-field-row{grid-template-columns:minmax(0,1fr);}
+  .fw-assist-chip{bottom:calc(var(--aura)*1.5);right:calc(var(--aura)*1.5);}
+  .fw-assist-chip span.chip-label{display:none;}
+}
+@media(max-width:360px){
+  .fw-hero h1{font-size:1.75rem;}
+  .fw-stats-row{grid-template-columns:minmax(0,1fr);}
+}
+</style>
+</head>
+<body class="fw">
+<a class="skip-link" href="#fw-main">Skip to main content</a>
+
+<header class="fw-site-head" id="fw-site-head">
+  <nav class="wrap fw-nav" aria-label="Main navigation">
+    <button class="fw-burger" type="button" id="fw-burger" aria-expanded="false" aria-controls="fw-mobile-menu" aria-label="Open navigation menu">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <a class="fw-wordmark" href="#fw-main" aria-label="Fernwick home">
+      <span class="fw-glyph-mark" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 18c-4-3-6-7-5-11 1-3 5-4 7-2 2-2 6-1 7 2 1 4-1 8-5 11a2 2 0 01-4 0z" fill="none"/><path d="M6 7c1 3 2 6 5 9" stroke="var(--night-ink)" stroke-width="1.5" stroke-linecap="round"/><ellipse cx="11" cy="5" rx="4" ry="3" fill="var(--fern)" opacity="0.9"/><ellipse cx="7" cy="9" rx="3" ry="2.5" fill="var(--lagoon)" opacity="0.9"/><ellipse cx="15" cy="9" rx="3" ry="2.5" fill="var(--amber)" opacity="0.85"/><path d="M11 7v10" stroke="var(--night-ink)" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </span>
+      Fernwick
+    </a>
+    <ul class="fw-nav-links" role="list">
+      <li><a class="fw-nav-plain" href="#fw-hero">Overview</a></li>
+      <li><button class="fw-nav-trigger" type="button" id="fw-trigger-solutions" aria-expanded="false" aria-controls="fw-mega-solutions">Solutions<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></li>
+      <li><button class="fw-nav-trigger" type="button" id="fw-trigger-products" aria-expanded="false" aria-controls="fw-mega-products">Products<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></li>
+      <li><button class="fw-nav-trigger" type="button" id="fw-trigger-pricing" aria-expanded="false" aria-controls="fw-mega-pricing">Pricing<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></li>
+      <li><button class="fw-nav-trigger" type="button" id="fw-trigger-resources" aria-expanded="false" aria-controls="fw-mega-resources">Resources<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></li>
+    </ul>
+    <div class="fw-nav-end">
+      <button class="fw-icon-btn" type="button" aria-label="Search">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10 10l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+      <a class="fw-nav-plain fw-docs-link" href="#">Docs</a>
+      <a class="fw-nav-plain fw-support-link" href="#">Support</a>
+      <a class="fw-sign-in" href="#">Sign in</a>
+    </div>
+  </nav>
+
+  <div class="fw-mega" id="fw-mega-solutions" hidden role="region" aria-label="Solutions menu">
+    <div class="fw-mega-inner">
+      <div class="fw-mega-rail" role="list">
+        <button class="fw-mega-rail-item active" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Startup &amp; Scale-up</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Enterprise</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Financial Services</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Healthcare</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Media &amp; Entertainment</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Retail &amp; E-commerce</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Gaming</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Education</button>
+        <div class="fw-mega-rail-footer"><button class="button button-pill" type="button" style="font-size:13px;height:calc(var(--aura)*2.5);padding:0 calc(var(--aura)*1.5);">See all solutions</button></div>
+      </div>
+      <div class="fw-mega-main">
+        <div class="fw-mega-head"><span class="fw-mega-title">Featured solutions</span><button class="fw-mega-close" type="button" aria-label="Close Solutions menu"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
+        <div class="fw-mega-grid">
+          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:var(--accent-a3);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="14" height="14" rx="4" fill="var(--lagoon)" opacity="0.7"/></svg></div><div><div class="fw-mega-item-title">Cloud Migrations</div><div class="fw-mega-item-desc">Lift, shift and modernize legacy workloads with guided tooling</div></div></a>
+          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--fern) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2l6 10H3z" fill="var(--fern)" opacity="0.8"/></svg></div><div><div class="fw-mega-item-title">Sustainable Cloud</div><div class="fw-mega-item-desc">Carbon-aware scheduling and energy-efficient regions</div></div></a>
+          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--amber) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" fill="var(--amber)" opacity="0.7"/></svg></div><div><div class="fw-mega-item-title">AI Platforms</div><div class="fw-mega-item-desc">Model training, inference and agent orchestration at scale</div></div></a>
+          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:var(--accent-a3);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="3" y="7" width="12" height="8" rx="2" fill="var(--lagoon)" opacity="0.6"/><path d="M6 7V5a3 3 0 016 0v2" stroke="var(--lagoon)" stroke-width="1.5"/></svg></div><div><div class="fw-mega-item-title">Zero-Trust Security</div><div class="fw-mega-item-desc">Identity, posture management and threat detection built-in</div></div></a>
+          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--fern) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="5" width="14" height="10" rx="2" fill="none" stroke="var(--fern)" stroke-width="1.5"/><path d="M5 5V4a4 4 0 018 0v1" stroke="var(--fern)" stroke-width="1.5"/></svg></div><div><div class="fw-mega-item-title">Dev Acceleration</div><div class="fw-mega-item-desc">CI/CD pipelines, preview envs and artifact registries</div></div></a>
+          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--amber) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 9h14M9 2v14" stroke="var(--amber)" stroke-width="2" stroke-linecap="round"/></svg></div><div><div class="fw-mega-item-title">Global Networking</div><div class="fw-mega-item-desc">Private backbone, CDN and anycast DNS worldwide</div></div></a>
+          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:var(--accent-a3);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="6" cy="9" r="3" fill="var(--lagoon)" opacity="0.7"/><circle cx="12" cy="9" r="3" fill="var(--lagoon)" opacity="0.4"/></svg></div><div><div class="fw-mega-item-title">Data Warehousing</div><div class="fw-mega-item-desc">Petabyte-scale analytics with serverless query execution</div></div></a>
+          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--fern) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 14l5-10 5 10" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="fw-mega-item-title">Cost Governance</div><div class="fw-mega-item-desc">Budget alerts, rightsizing recommendations and FinOps dashboards</div></div></a>
+          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--amber) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="3" y="3" width="12" height="12" rx="3" fill="none" stroke="var(--amber)" stroke-width="1.5"/><path d="M7 9h4" stroke="var(--amber)" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><div class="fw-mega-item-title">Regulated Industries</div><div class="fw-mega-item-desc">Compliance-ready configs for financial and healthcare workloads</div></div></a>
+        </div>
+        <div class="fw-mega-footer"><span class="fw-mega-note">Not seeing what you need? <a href="#">See all solutions</a></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fw-mega" id="fw-mega-products" hidden role="region" aria-label="Products menu">
+    <div class="fw-mega-inner">
+      <div class="fw-mega-rail" role="list">
+        <button class="fw-mega-rail-item active" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Compute</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Storage</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Databases</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>AI &amp; ML</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Networking</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Security</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Developer Tools</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Data Analytics</button>
+        <div class="fw-mega-rail-footer"><button class="button button-pill" type="button" style="font-size:13px;height:calc(var(--aura)*2.5);padding:0 calc(var(--aura)*1.5);">See all products</button></div>
+      </div>
+      <div class="fw-mega-main">
+        <div class="fw-mega-head"><span class="fw-mega-title">Featured products</span><button class="fw-mega-close" type="button" aria-label="Close Products menu"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
+        <div class="fw-mega-grid">
+          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:var(--accent-a3);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="3" y="3" width="12" height="12" rx="3" fill="var(--lagoon)" opacity="0.7"/></svg></div><div><div class="fw-mega-item-title">Fernwick Canopy Compute</div><div class="fw-mega-item-desc">Scalable VMs with custom CPU and memory profiles</div></div></a>
+          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--fern) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2v14M4 7h10M4 11h10" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><div class="fw-mega-item-title">Object Store</div><div class="fw-mega-item-desc">Globally replicated blob storage with lifecycle policies</div></div></a>
+          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--amber) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><ellipse cx="9" cy="6" rx="6" ry="2.5" fill="none" stroke="var(--amber)" stroke-width="1.5"/><path d="M3 6v6c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5V6" stroke="var(--amber)" stroke-width="1.5"/></svg></div><div><div class="fw-mega-item-title">Fernwick SQL</div><div class="fw-mega-item-desc">Fully managed relational database with 99.99% SLA</div></div></a>
+          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:var(--accent-a3);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M5 13c1-3 3-5 6-6" stroke="var(--lagoon)" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="6" r="3" fill="var(--lagoon)" opacity="0.6"/></svg></div><div><div class="fw-mega-item-title">Agent Workbench</div><div class="fw-mega-item-desc">Build, test and deploy AI agents with visual tooling</div></div></a>
+          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--fern) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 9h14M9 4l4 5-4 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="fw-mega-item-title">Private Fabric</div><div class="fw-mega-item-desc">Dedicated interconnect and virtual private cloud routing</div></div></a>
+          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--amber) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2l5 4v6l-5 4-5-4V6z" fill="none" stroke="var(--amber)" stroke-width="1.5"/></svg></div><div><div class="fw-mega-item-title">Shield SIEM</div><div class="fw-mega-item-desc">Real-time threat detection and incident response automation</div></div></a>
+          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:var(--accent-a3);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="4" y="4" width="10" height="10" rx="2" fill="none" stroke="var(--lagoon)" stroke-width="1.5"/><path d="M7 9h4M9 7v4" stroke="var(--lagoon)" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><div class="fw-mega-item-title">Pipeline CI/CD</div><div class="fw-mega-item-desc">Container-native build, test and delivery workflows</div></div></a>
+          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--fern) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 6h12M3 9h12M3 12h8" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><div class="fw-mega-item-title">Stream Analytics</div><div class="fw-mega-item-desc">Sub-second latency processing for event streams at any volume</div></div></a>
+          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--amber) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" fill="none" stroke="var(--amber)" stroke-width="1.5"/><path d="M7 7l4 4M11 7l-4 4" stroke="var(--amber)" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><div class="fw-mega-item-title">Fernwick Functions</div><div class="fw-mega-item-desc">Event-driven serverless with zero cold-start guarantee</div></div></a>
+          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:var(--accent-a3);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M5 5l3 8 2-5 2 5 3-8" stroke="var(--lagoon)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="fw-mega-item-title">Observability Suite</div><div class="fw-mega-item-desc">Logs, metrics and traces unified in a single pane of glass</div></div></a>
+        </div>
+        <div class="fw-mega-footer"><span class="fw-mega-note">Not seeing what you need? <a href="#">Browse all 180+ services</a></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fw-mega" id="fw-mega-pricing" hidden role="region" aria-label="Pricing menu">
+    <div class="fw-mega-inner">
+      <div class="fw-mega-rail" role="list">
+        <button class="fw-mega-rail-item active" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Compute pricing</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Storage pricing</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>AI &amp; ML pricing</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Free tier details</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Committed use</button>
+        <div class="fw-mega-rail-footer"><button class="button button-pill" type="button" style="font-size:13px;height:calc(var(--aura)*2.5);padding:0 calc(var(--aura)*1.5);">Pricing calculator</button></div>
+      </div>
+      <div class="fw-mega-main">
+        <div class="fw-mega-head"><span class="fw-mega-title">Sample pricing overview</span><button class="fw-mega-close" type="button" aria-label="Close Pricing menu"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
+        <div class="fw-mega-grid">
+          <a class="fw-mega-item" href="#fw-pricing"><div class="fw-mega-item-icon" style="background:var(--accent-a3);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v12M6 6h6M5 12h8" stroke="var(--lagoon)" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><div class="fw-mega-item-title">Pay-as-you-go</div><div class="fw-mega-item-desc">No upfront cost; billed per second of resource use</div></div></a>
+          <a class="fw-mega-item" href="#fw-pricing"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--fern) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9l3 3 7-7" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="fw-mega-item-title">Committed Savings</div><div class="fw-mega-item-desc">Up to 70% off (sample) with 1 or 3-year commitments</div></div></a>
+          <a class="fw-mega-item" href="#fw-pricing"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--amber) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="5" fill="none" stroke="var(--amber)" stroke-width="1.5"/><path d="M9 6v3l2 2" stroke="var(--amber)" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><div class="fw-mega-item-title">Free Credits</div><div class="fw-mega-item-desc">Sample $400 in cloud credits for new workspaces (fictional)</div></div></a>
+        </div>
+        <div class="fw-mega-footer"><span class="fw-mega-note">All figures are <strong>sample figures</strong> and do not constitute a quote. <a href="#fw-pricing">See full pricing</a></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fw-mega" id="fw-mega-resources" hidden role="region" aria-label="Resources menu">
+    <div class="fw-mega-inner">
+      <div class="fw-mega-rail" role="list">
+        <button class="fw-mega-rail-item active" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Documentation</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Tutorials</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Community</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Blog</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Events &amp; Webinars</button>
+        <div class="fw-mega-rail-footer"><button class="button button-pill" type="button" style="font-size:13px;height:calc(var(--aura)*2.5);padding:0 calc(var(--aura)*1.5);">Developer hub</button></div>
+      </div>
+      <div class="fw-mega-main">
+        <div class="fw-mega-head"><span class="fw-mega-title">Resources &amp; learning</span><button class="fw-mega-close" type="button" aria-label="Close Resources menu"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
+        <div class="fw-mega-grid">
+          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:var(--accent-a3);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 4h10v10H4z" fill="none" stroke="var(--lagoon)" stroke-width="1.5"/><path d="M7 8h4M7 11h2" stroke="var(--lagoon)" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><div class="fw-mega-item-title">Quick-start Guides</div><div class="fw-mega-item-desc">Spin up your first Fernwick workload in under 10 minutes</div></div></a>
+          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--fern) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" fill="none" stroke="var(--fern)" stroke-width="1.5"/><path d="M9 7v4M9 6v.5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><div class="fw-mega-item-title">Architecture Center</div><div class="fw-mega-item-desc">Reference blueprints and best practices for every workload type</div></div></a>
+          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--amber) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 15V5l6-3 6 3v10" stroke="var(--amber)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="fw-mega-item-title">Fernwick Blog</div><div class="fw-mega-item-desc">Engineering posts, product announcements and customer spotlights</div></div></a>
+          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:var(--accent-a3);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M5 13c0-2 1.5-3.5 4-4" stroke="var(--lagoon)" stroke-width="1.5" stroke-linecap="round"/><circle cx="13" cy="6" r="3" fill="var(--lagoon)" opacity="0.6"/></svg></div><div><div class="fw-mega-item-title">Community Forum</div><div class="fw-mega-item-desc">Ask questions and share knowledge with other Fernwick builders</div></div></a>
+          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--fern) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="4" width="14" height="10" rx="2" fill="none" stroke="var(--fern)" stroke-width="1.5"/><path d="M7 8l2 2 4-4" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="fw-mega-item-title">Certification Paths</div><div class="fw-mega-item-desc">Associate, Professional and Specialty tracks for cloud roles</div></div></a>
+          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--amber) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3l2 4h4l-3 3 1 4-4-2-4 2 1-4-3-3h4z" fill="none" stroke="var(--amber)" stroke-width="1.5" stroke-linejoin="round"/></svg></div><div><div class="fw-mega-item-title">Virtual Events</div><div class="fw-mega-item-desc">Upcoming webinars, demos and partner summits</div></div></a>
+        </div>
+        <div class="fw-mega-footer"><span class="fw-mega-note">Not seeing what you need? <a href="#">See all resources</a></span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="fw-mobile-menu" id="fw-mobile-menu" hidden aria-label="Navigation menu" role="dialog" aria-modal="true">
+  <div class="fw-mobile-head">
+    <a class="fw-wordmark" href="#fw-main" aria-label="Fernwick home">
+      <span class="fw-glyph-mark" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><ellipse cx="11" cy="5" rx="4" ry="3" fill="var(--fern)" opacity="0.9"/><ellipse cx="7" cy="9" rx="3" ry="2.5" fill="var(--lagoon)" opacity="0.9"/><ellipse cx="15" cy="9" rx="3" ry="2.5" fill="var(--amber)" opacity="0.85"/><path d="M11 7v10" stroke="var(--night-ink)" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      Fernwick
+    </a>
+    <button class="fw-icon-btn" type="button" id="fw-mobile-close" aria-label="Close navigation menu"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 3l12 12M15 3L3 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </div>
+  <div class="fw-mobile-items">
+    <a class="fw-mobile-item" href="#fw-hero">Overview</a>
+    <button class="fw-mobile-item" type="button">Solutions <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 7l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button class="fw-mobile-item" type="button">Products <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 7l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <a class="fw-mobile-item" href="#fw-pricing">Pricing</a>
+    <button class="fw-mobile-item" type="button">Resources <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 7l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <a class="fw-mobile-item" href="#">Docs</a>
+    <a class="fw-mobile-item" href="#">Support</a>
+  </div>
+  <div class="fw-mobile-foot">
+    <button class="button button-pill" type="button" style="flex:1;border-color:var(--rule);color:var(--ink);background:var(--canvas);">Contact us</button>
+    <button class="button button-fill" type="button" style="flex:1;background:var(--lagoon);border-color:var(--lagoon);color:var(--on-lagoon);">Start free</button>
+  </div>
+</div>
+
+<main id="fw-main">
+  <section class="fw-hero section-pad fw-reveal" id="fw-hero" aria-labelledby="fw-hero-h1">
+    <div class="fw-hero-glyph" aria-hidden="true">
+      <svg width="72" height="72" viewBox="0 0 72 72" fill="none"><ellipse cx="36" cy="14" rx="14" ry="10" fill="var(--fern)" opacity="0.9"/><ellipse cx="20" cy="30" rx="11" ry="9" fill="var(--lagoon)" opacity="0.9"/><ellipse cx="52" cy="30" rx="11" ry="9" fill="var(--amber)" opacity="0.85"/><ellipse cx="36" cy="50" rx="12" ry="9" fill="var(--lagoon)" opacity="0.6"/><path d="M36 22v32" stroke="var(--night)" stroke-width="2.5" stroke-linecap="round"/></svg>
+    </div>
+    <h1 id="fw-hero-h1" class="h1">Infrastructure built for<br>every scale and speed</h1>
+    <p>Deploy compute, storage, databases and AI agents from one unified console. <strong>Sample $400 in free cloud credits</strong> available for new workspaces (fictional, non-redeemable).</p>
+    <div class="fw-hero-pills">
+      <button class="button button-fill" type="button" style="background:var(--lagoon);border-color:var(--lagoon);color:var(--on-lagoon);border-radius:9999px;height:calc(var(--aura)*3.5);padding:0 calc(var(--aura)*2);">Start for free</button>
+      <button class="button button-pill" type="button" style="border-color:var(--rule);color:var(--ink);background:var(--canvas);border-radius:9999px;height:calc(var(--aura)*3.5);padding:0 calc(var(--aura)*2);" id="fw-talk-sales-hero">Talk to sales</button>
+    </div>
+  </section>
+
+  <section class="fw-reveal" aria-label="Stories carousel" role="region" id="fw-stories" style="padding-block:calc(var(--aura)*4) 0;">
+    <div class="fw-stories-head wrap">
+      <span class="eyebrow">Latest from Fernwick</span>
+    </div>
+    <div class="fw-stories-track-wrap" tabindex="0" aria-label="Story cards, scroll to see more">
+      <div class="fw-stories-track" id="fw-stories-track" role="list">
+        <div class="fw-story-card" role="listitem" aria-label="Story 1 of 6">
+          <div class="fw-story-art" aria-hidden="true"><svg width="100%" height="100%" viewBox="0 0 310 190" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="var(--lagoon-deep)"/><stop offset="100%" stop-color="var(--night)"/></linearGradient><radialGradient id="sg1g" cx="70%" cy="30%" r="50%"><stop offset="0%" stop-color="var(--lagoon)" stop-opacity="0.5"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs><rect width="310" height="190" fill="url(#sg1)"/><ellipse cx="220" cy="60" rx="100" ry="80" fill="url(#sg1g)"/></svg></div>
+          <div class="fw-story-scrim" aria-hidden="true"></div>
+          <div class="fw-story-body"><div class="fw-story-eyebrow">Top Story</div><div class="fw-story-title">How Fernwick cut deployment time by 80% with unified pipelines</div></div>
+        </div>
+        <div class="fw-story-card" role="listitem" aria-label="Story 2 of 6">
+          <div class="fw-story-art" aria-hidden="true"><svg width="100%" height="100%" viewBox="0 0 310 190" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sg2" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="var(--night)"/><stop offset="100%" stop-color="var(--lagoon)"/></linearGradient><radialGradient id="sg2g" cx="30%" cy="70%" r="60%"><stop offset="0%" stop-color="var(--fern)" stop-opacity="0.4"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs><rect width="310" height="190" fill="url(#sg2)"/><ellipse cx="90" cy="130" rx="120" ry="80" fill="url(#sg2g)"/></svg></div>
+          <div class="fw-story-scrim" aria-hidden="true"></div>
+          <div class="fw-story-body"><div class="fw-story-eyebrow">Security</div><div class="fw-story-title">Zero-trust networking across 24 regions: a case study</div></div>
+        </div>
+        <div class="fw-story-card" role="listitem" aria-label="Story 3 of 6">
+          <div class="fw-story-art" aria-hidden="true"><svg width="100%" height="100%" viewBox="0 0 310 190" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sg3" x1="1" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--lagoon)"/><stop offset="100%" stop-color="color-mix(in srgb,var(--night) 70%,var(--fern))"/></linearGradient><radialGradient id="sg3g" cx="50%" cy="50%" r="55%"><stop offset="0%" stop-color="var(--amber)" stop-opacity="0.3"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs><rect width="310" height="190" fill="url(#sg3)"/><ellipse cx="155" cy="95" rx="90" ry="70" fill="url(#sg3g)"/></svg></div>
+          <div class="fw-story-scrim" aria-hidden="true"></div>
+          <div class="fw-story-body"><div class="fw-story-eyebrow">AI News</div><div class="fw-story-title">Agent Workbench reaches general availability in all regions</div></div>
+        </div>
+        <div class="fw-story-card" role="listitem" aria-label="Story 4 of 6">
+          <div class="fw-story-art" aria-hidden="true"><svg width="100%" height="100%" viewBox="0 0 310 190" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sg4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="color-mix(in srgb,var(--fern) 60%,var(--night))"/><stop offset="100%" stop-color="var(--night)"/></linearGradient><radialGradient id="sg4g" cx="80%" cy="20%" r="50%"><stop offset="0%" stop-color="var(--lagoon)" stop-opacity="0.5"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs><rect width="310" height="190" fill="url(#sg4)"/><ellipse cx="250" cy="40" rx="80" ry="60" fill="url(#sg4g)"/></svg></div>
+          <div class="fw-story-scrim" aria-hidden="true"></div>
+          <div class="fw-story-body"><div class="fw-story-eyebrow">Infrastructure</div><div class="fw-story-title">Fernwick Object Store now supports cross-region replication</div></div>
+        </div>
+        <div class="fw-story-card" role="listitem" aria-label="Story 5 of 6">
+          <div class="fw-story-art" aria-hidden="true"><svg width="100%" height="100%" viewBox="0 0 310 190" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sg5" x1="1" y1="1" x2="0" y2="0"><stop offset="0%" stop-color="var(--lagoon-deep)"/><stop offset="100%" stop-color="color-mix(in srgb,var(--amber) 30%,var(--night))"/></linearGradient></defs><rect width="310" height="190" fill="url(#sg5)"/></svg></div>
+          <div class="fw-story-scrim" aria-hidden="true"></div>
+          <div class="fw-story-body"><div class="fw-story-eyebrow">Developer Tools</div><div class="fw-story-title">New SDK integrations for Python, Go and Rust builders</div></div>
+        </div>
+        <div class="fw-story-card" role="listitem" aria-label="Story 6 of 6">
+          <div class="fw-story-art" aria-hidden="true"><svg width="100%" height="100%" viewBox="0 0 310 190" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sg6" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="var(--night)"/><stop offset="100%" stop-color="color-mix(in srgb,var(--lagoon) 60%,transparent)"/></linearGradient><radialGradient id="sg6g" cx="20%" cy="40%" r="60%"><stop offset="0%" stop-color="var(--fern)" stop-opacity="0.35"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs><rect width="310" height="190" fill="url(#sg6)"/><ellipse cx="60" cy="80" rx="100" ry="80" fill="url(#sg6g)"/></svg></div>
+          <div class="fw-story-scrim" aria-hidden="true"></div>
+          <div class="fw-story-body"><div class="fw-story-eyebrow">Sustainability</div><div class="fw-story-title">Fernwick reaches 90% renewable energy across its global fleet</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="fw-story-nav wrap">
+      <button class="button button-pill fw-button-icon" type="button" id="fw-stories-prev" aria-label="Previous story" aria-controls="fw-stories-track" disabled style="border-color:var(--control-line);color:var(--ink);background:var(--canvas);">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="button button-pill fw-button-icon" type="button" id="fw-stories-next" aria-label="Next story" aria-controls="fw-stories-track" style="border-color:var(--control-line);color:var(--ink);background:var(--canvas);">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <span class="sr-only" id="fw-stories-status" role="status" aria-live="polite">Story 1 of 6</span>
+    </div>
+  </section>
+
+  <section class="section-pad fw-reveal" aria-labelledby="fw-audience-title" id="fw-audience" style="padding-inline:calc(var(--aura)*2);">
+    <div class="fw-tabs-band">
+      <span class="sr-only" id="fw-audience-title">Fernwick for every team</span>
+      <div class="fw-tabs-strip" role="tablist" aria-label="Audience tabs">
+        <button class="fw-tab-btn" role="tab" aria-selected="true" aria-controls="fw-tabpanel-dev" id="fw-tab-dev" tabindex="0">Developers</button>
+        <button class="fw-tab-btn" role="tab" aria-selected="false" aria-controls="fw-tabpanel-biz" id="fw-tab-biz" tabindex="-1">Business leaders</button>
+        <button class="fw-tab-btn" role="tab" aria-selected="false" aria-controls="fw-tabpanel-special" id="fw-tab-special" tabindex="-1">Special programs</button>
+      </div>
+      <div class="fw-tab-panels">
+        <div class="fw-tab-panel" id="fw-tabpanel-dev" role="tabpanel" aria-labelledby="fw-tab-dev" aria-hidden="false">
+          <div class="fw-audience-card">
+            <div class="fw-audience-card-copy"><div class="fw-audience-eyebrow">Developer Tools</div><div class="fw-audience-title">Build faster with integrated CI/CD pipelines and one-click preview environments for every pull request</div></div>
+            <div class="fw-audience-card-art" aria-hidden="true"><svg width="91" height="91" viewBox="0 0 91 91" fill="none"><rect width="91" height="91" rx="9" fill="var(--accent-a3)"/><path d="M25 55l16-24 16 24" stroke="var(--lagoon)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="57" cy="40" r="10" fill="none" stroke="var(--fern)" stroke-width="3"/></svg></div>
+          </div>
+          <div class="fw-audience-card">
+            <div class="fw-audience-card-copy"><div class="fw-audience-eyebrow">Product News</div><div class="fw-audience-title">Fernwick Functions now supports sub-10ms cold starts across all compute tiers and runtimes</div></div>
+            <div class="fw-audience-card-art" aria-hidden="true"><svg width="91" height="91" viewBox="0 0 91 91" fill="none"><rect width="91" height="91" rx="9" fill="color-mix(in srgb,var(--fern) 10%,transparent)"/><path d="M20 60L45 25l25 35z" fill="none" stroke="var(--fern)" stroke-width="3" stroke-linejoin="round"/></svg></div>
+          </div>
+          <div class="fw-audience-card">
+            <div class="fw-audience-card-copy"><div class="fw-audience-eyebrow">Events</div><div class="fw-audience-title">Join the upcoming Fernwick Build Summit for live workshops on AI agents and distributed databases</div></div>
+            <div class="fw-audience-card-art" aria-hidden="true"><svg width="91" height="91" viewBox="0 0 91 91" fill="none"><rect width="91" height="91" rx="9" fill="color-mix(in srgb,var(--amber) 10%,transparent)"/><circle cx="45" cy="45" r="22" fill="none" stroke="var(--amber)" stroke-width="3"/><path d="M45 32v13l8 8" stroke="var(--amber)" stroke-width="3" stroke-linecap="round"/></svg></div>
+          </div>
+        </div>
+        <div class="fw-tab-panel" id="fw-tabpanel-biz" role="tabpanel" aria-labelledby="fw-tab-biz" aria-hidden="true">
+          <div class="fw-audience-card">
+            <div class="fw-audience-card-copy"><div class="fw-audience-eyebrow">Executive Insights</div><div class="fw-audience-title">Sample cost governance dashboards help finance teams track cloud spend against budget in real time</div></div>
+            <div class="fw-audience-card-art" aria-hidden="true"><svg width="91" height="91" viewBox="0 0 91 91" fill="none"><rect width="91" height="91" rx="9" fill="var(--accent-a3)"/><path d="M15 70l20-20 15 10 25-35" stroke="var(--lagoon)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+          <div class="fw-audience-card">
+            <div class="fw-audience-card-copy"><div class="fw-audience-eyebrow">Compliance</div><div class="fw-audience-title">Pre-configured policy bundles for regulated industries reduce audit preparation to hours, not weeks</div></div>
+            <div class="fw-audience-card-art" aria-hidden="true"><svg width="91" height="91" viewBox="0 0 91 91" fill="none"><rect width="91" height="91" rx="9" fill="color-mix(in srgb,var(--fern) 10%,transparent)"/><path d="M45 20l20 10v18c0 10-10 18-20 23C35 66 25 58 25 48V30z" fill="none" stroke="var(--fern)" stroke-width="3" stroke-linejoin="round"/></svg></div>
+          </div>
+          <div class="fw-audience-card">
+            <div class="fw-audience-card-copy"><div class="fw-audience-eyebrow">Product News</div><div class="fw-audience-title">Multi-cloud procurement now available through a single Fernwick invoice with consolidated support SLA</div></div>
+            <div class="fw-audience-card-art" aria-hidden="true"><svg width="91" height="91" viewBox="0 0 91 91" fill="none"><rect width="91" height="91" rx="9" fill="color-mix(in srgb,var(--amber) 10%,transparent)"/><rect x="22" y="38" width="47" height="30" rx="5" fill="none" stroke="var(--amber)" stroke-width="3"/><path d="M33 38V30a12 12 0 0124 0v8" stroke="var(--amber)" stroke-width="3" stroke-linecap="round"/></svg></div>
+          </div>
+        </div>
+        <div class="fw-tab-panel" id="fw-tabpanel-special" role="tabpanel" aria-labelledby="fw-tab-special" aria-hidden="true">
+          <div class="fw-audience-card">
+            <div class="fw-audience-card-copy"><div class="fw-audience-eyebrow">Startups</div><div class="fw-audience-title">The Fernwick Launch program provides sample credits and mentorship for early-stage cloud-native companies</div></div>
+            <div class="fw-audience-card-art" aria-hidden="true"><svg width="91" height="91" viewBox="0 0 91 91" fill="none"><rect width="91" height="91" rx="9" fill="var(--accent-a3)"/><path d="M45 20c0 14-10 22-20 28l20 10 20-10c-10-6-20-14-20-28z" fill="none" stroke="var(--lagoon)" stroke-width="3" stroke-linejoin="round"/></svg></div>
+          </div>
+          <div class="fw-audience-card">
+            <div class="fw-audience-card-copy"><div class="fw-audience-eyebrow">Nonprofits</div><div class="fw-audience-title">Qualifying nonprofit organizations receive discounted compute and storage through the Fernwick Impact tier</div></div>
+            <div class="fw-audience-card-art" aria-hidden="true"><svg width="91" height="91" viewBox="0 0 91 91" fill="none"><rect width="91" height="91" rx="9" fill="color-mix(in srgb,var(--fern) 10%,transparent)"/><path d="M45 65C30 55 18 42 18 32a16 16 0 0127-12 16 16 0 0127 12c0 10-12 23-27 33z" fill="var(--fern)" opacity="0.3" stroke="var(--fern)" stroke-width="2"/></svg></div>
+          </div>
+          <div class="fw-audience-card">
+            <div class="fw-audience-card-copy"><div class="fw-audience-eyebrow">Research</div><div class="fw-audience-title">Academic researchers get access to GPU clusters and high-memory instances through the Fernwick Scholar program</div></div>
+            <div class="fw-audience-card-art" aria-hidden="true"><svg width="91" height="91" viewBox="0 0 91 91" fill="none"><rect width="91" height="91" rx="9" fill="color-mix(in srgb,var(--amber) 10%,transparent)"/><circle cx="45" cy="45" r="18" fill="none" stroke="var(--amber)" stroke-width="3"/><circle cx="45" cy="45" r="6" fill="var(--amber)" opacity="0.5"/></svg></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad fw-reveal" id="fw-platform" aria-labelledby="fw-platform-h2" style="padding-inline:calc(var(--aura)*2);">
+    <div class="fw-platform">
+      <div class="fw-platform-inner">
+        <div class="fw-platform-copy">
+          <h2 class="fw-platform-h2" id="fw-platform-h2">Build on a cloud made for <span style="color:var(--lagoon);">every workload</span></h2>
+          <p style="color:var(--body);font-size:16px;line-height:1.5;overflow-wrap:anywhere;">From bare-metal burst to fully managed AI agents, Fernwick gives you 180+ services orchestrated through a single developer console.</p>
+          <div class="fw-platform-links">
+            <button class="button button-fill" type="button" style="background:var(--lagoon);border-color:var(--lagoon);color:var(--on-lagoon);border-radius:9999px;height:calc(var(--aura)*3.5);padding:0 calc(var(--aura)*2);">Explore the platform</button>
+            <a class="fw-platform-seeall" href="#">Browse all 180+ services</a>
+          </div>
+        </div>
+        <div class="fw-accordion" id="fw-platform-acc">
+          <div class="fw-acc-item">
+            <h3><button class="fw-acc-trigger" type="button" aria-expanded="true" aria-controls="fw-acc-p0">AI and machine learning<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
+            <div class="fw-acc-panel" id="fw-acc-p0"><div class="fw-acc-panel-inner">
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Agent Workbench</a> — build and deploy AI agents without MLOps expertise</span></div>
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Model Shelf</a> — access a curated library of open-weight foundation models</span></div>
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Training Clusters</a> — GPU and accelerator resources with spot and reserved pricing</span></div>
+            </div></div>
+          </div>
+          <div class="fw-acc-item">
+            <h3><button class="fw-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-acc-p1">Compute<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
+            <div class="fw-acc-panel" id="fw-acc-p1" hidden><div class="fw-acc-panel-inner">
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Canopy Compute</a> — custom VM shapes from 2 vCPU to 1,920 vCPU</span></div>
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Container Runtime</a> — managed containers with auto-scaling node pools</span></div>
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Fernwick Functions</a> — serverless with sub-10ms cold start (sample)</span></div>
+            </div></div>
+          </div>
+          <div class="fw-acc-item">
+            <h3><button class="fw-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-acc-p2">Storage<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
+            <div class="fw-acc-panel" id="fw-acc-p2" hidden><div class="fw-acc-panel-inner">
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Object Store</a> — 11-nines durability with lifecycle tiering</span></div>
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Block Volumes</a> — NVMe-backed persistent disks with snapshot scheduling</span></div>
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Archive Vault</a> — cold storage from $0.001 per GB per month (sample)</span></div>
+            </div></div>
+          </div>
+          <div class="fw-acc-item">
+            <h3><button class="fw-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-acc-p3">Databases<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
+            <div class="fw-acc-panel" id="fw-acc-p3" hidden><div class="fw-acc-panel-inner">
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Fernwick SQL</a> — managed PostgreSQL with 99.99% SLA (sample)</span></div>
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Document DB</a> — serverless document store with global replication</span></div>
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Vector Index</a> — purpose-built for semantic search and AI embeddings</span></div>
+            </div></div>
+          </div>
+          <div class="fw-acc-item">
+            <h3><button class="fw-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-acc-p4">Data analytics<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
+            <div class="fw-acc-panel" id="fw-acc-p4" hidden><div class="fw-acc-panel-inner">
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Stream Analytics</a> — sub-second latency event processing</span></div>
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Data Warehouse</a> — petabyte-scale with serverless query execution</span></div>
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Notebooks</a> — collaborative data science with pre-installed ML libs</span></div>
+            </div></div>
+          </div>
+          <div class="fw-acc-item">
+            <h3><button class="fw-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-acc-p5">Networking<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
+            <div class="fw-acc-panel" id="fw-acc-p5" hidden><div class="fw-acc-panel-inner">
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Private Fabric</a> — dedicated fiber interconnect to 300+ exchange points</span></div>
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Global CDN</a> — anycast edge with 200ms purge propagation (sample)</span></div>
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Load Balancer</a> — L4 and L7 with TLS termination and WAF integration</span></div>
+            </div></div>
+          </div>
+          <div class="fw-acc-item">
+            <h3><button class="fw-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-acc-p6">Developer tools<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
+            <div class="fw-acc-panel" id="fw-acc-p6" hidden><div class="fw-acc-panel-inner">
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Pipeline CI/CD</a> — container-native build and release workflows</span></div>
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Artifact Registry</a> — private container and package repositories</span></div>
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Cloud Shell</a> — browser-based terminal with pre-authenticated CLI</span></div>
+            </div></div>
+          </div>
+          <div class="fw-acc-item">
+            <h3><button class="fw-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-acc-p7">Security<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
+            <div class="fw-acc-panel" id="fw-acc-p7" hidden><div class="fw-acc-panel-inner">
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Shield SIEM</a> — real-time threat detection with automated remediation</span></div>
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Key Vault</a> — FIPS 140-3 HSM-backed secret and certificate management</span></div>
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Identity Platform</a> — zero-trust IAM with workload identity federation</span></div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fw-night-band on-night fw-reveal" id="fw-ai" aria-labelledby="fw-night-h2">
+    <div class="wrap">
+      <div class="fw-night-top">
+        <div>
+          <h2 class="fw-night-h2" id="fw-night-h2">The AI platform built for<br><span style="color:var(--amber);">production scale</span></h2>
+        </div>
+        <div>
+          <p class="fw-night-copy">Fernwick's AI infrastructure spans training clusters, inference endpoints and agent orchestration — all on the same private backbone. <a href="#">Learn about Agent Workbench</a></p>
+          <div class="fw-night-pills">
+            <button class="fw-night-btn-white" type="button">Start building AI</button>
+            <button class="button button-pill" type="button" style="border-color:color-mix(in srgb,white 30%,transparent);color:var(--night-ink);background:transparent;border-radius:9999px;height:calc(var(--aura)*3.5);padding:0 calc(var(--aura)*2);">View documentation</button>
+          </div>
+        </div>
+      </div>
+      <div class="fw-night-media">
+        <div class="fw-night-vtabs" role="tablist" aria-label="AI features" aria-orientation="vertical">
+          <button class="fw-night-vtab" role="tab" aria-selected="true" aria-controls="fw-night-panel-0" id="fw-ntab-0" tabindex="0"><span class="fw-night-vtab-eye">Training</span><span class="fw-night-vtab-title">Distributed model training across GPU clusters</span></button>
+          <button class="fw-night-vtab" role="tab" aria-selected="false" aria-controls="fw-night-panel-1" id="fw-ntab-1" tabindex="-1"><span class="fw-night-vtab-eye">Inference</span><span class="fw-night-vtab-title">Low-latency inference endpoints at the edge</span></button>
+          <button class="fw-night-vtab" role="tab" aria-selected="false" aria-controls="fw-night-panel-2" id="fw-ntab-2" tabindex="-1"><span class="fw-night-vtab-eye">Agents</span><span class="fw-night-vtab-title">Autonomous agent workflows with tool integration</span></button>
+          <button class="fw-night-vtab" role="tab" aria-selected="false" aria-controls="fw-night-panel-3" id="fw-ntab-3" tabindex="-1"><span class="fw-night-vtab-eye">Governance</span><span class="fw-night-vtab-title">Model versioning, lineage and audit trails</span></button>
+        </div>
+        <div>
+          <div class="fw-night-preview" id="fw-night-panel-0" role="tabpanel" aria-labelledby="fw-ntab-0">
+            <svg width="100%" height="100%" viewBox="0 0 500 280" preserveAspectRatio="xMidYMid slice" aria-label="Training cluster diagram" role="img"><defs><linearGradient id="npg0" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="var(--lagoon)" stop-opacity="0.3"/><stop offset="100%" stop-color="transparent"/></linearGradient></defs><rect width="500" height="280" fill="color-mix(in srgb,var(--lagoon) 10%,transparent)"/><rect x="40" y="60" width="80" height="50" rx="8" fill="none" stroke="var(--lagoon)" stroke-width="1.5"/><text x="80" y="90" font-size="11" fill="var(--night-ink)" text-anchor="middle" font-family="var(--aura-font-label)">Compute Node</text><rect x="160" y="60" width="80" height="50" rx="8" fill="none" stroke="var(--lagoon)" stroke-width="1.5"/><text x="200" y="90" font-size="11" fill="var(--night-ink)" text-anchor="middle" font-family="var(--aura-font-label)">Compute Node</text><rect x="280" y="60" width="80" height="50" rx="8" fill="none" stroke="var(--lagoon)" stroke-width="1.5"/><text x="320" y="90" font-size="11" fill="var(--night-ink)" text-anchor="middle" font-family="var(--aura-font-label)">Compute Node</text><rect x="380" y="60" width="80" height="50" rx="8" fill="none" stroke="var(--lagoon)" stroke-width="1.5"/><text x="420" y="90" font-size="11" fill="var(--night-ink)" text-anchor="middle" font-family="var(--aura-font-label)">Compute Node</text><path fill="none" d="M80 110v50M200 110v30h-120v20M200 110v20M320 110v30h-120v0M420 110v50" stroke="var(--lagoon)" stroke-width="1" stroke-opacity="0.5"/><rect x="140" y="160" width="220" height="50" rx="8" fill="color-mix(in srgb,var(--lagoon) 20%,transparent)" stroke="var(--lagoon)" stroke-width="1.5"/><text x="250" y="190" font-size="12" fill="var(--night-ink)" text-anchor="middle" font-family="var(--aura-font-label)">Gradient Coordinator</text></svg>
+          </div>
+          <div class="fw-night-preview" id="fw-night-panel-1" role="tabpanel" aria-labelledby="fw-ntab-1" hidden style="display:none;">
+            <svg width="100%" height="100%" viewBox="0 0 500 280" preserveAspectRatio="xMidYMid slice" aria-label="Inference endpoint diagram" role="img"><rect width="500" height="280" fill="color-mix(in srgb,var(--fern) 8%,transparent)"/><circle cx="250" cy="140" r="60" fill="none" stroke="var(--fern)" stroke-width="1.5"/><text x="250" y="145" font-size="12" fill="var(--night-ink)" text-anchor="middle" font-family="var(--aura-font-label)">Inference</text><text x="250" y="162" font-size="12" fill="var(--night-ink)" text-anchor="middle" font-family="var(--aura-font-label)">Endpoint</text><circle cx="90" cy="80" r="24" fill="none" stroke="var(--night-muted)" stroke-width="1"/><text x="90" y="85" font-size="10" fill="var(--night-muted)" text-anchor="middle">Edge PoP</text><circle cx="410" cy="80" r="24" fill="none" stroke="var(--night-muted)" stroke-width="1"/><text x="410" y="85" font-size="10" fill="var(--night-muted)" text-anchor="middle">Edge PoP</text><path d="M110 92l120 48M390 92l-120 48" stroke="var(--fern)" stroke-width="1" stroke-opacity="0.5" stroke-dasharray="6 3"/></svg>
+          </div>
+          <div class="fw-night-preview" id="fw-night-panel-2" role="tabpanel" aria-labelledby="fw-ntab-2" hidden style="display:none;">
+            <svg width="100%" height="100%" viewBox="0 0 500 280" preserveAspectRatio="xMidYMid slice" aria-label="Agent workflow diagram" role="img"><rect width="500" height="280" fill="color-mix(in srgb,var(--amber) 6%,transparent)"/><rect x="180" y="30" width="140" height="45" rx="10" fill="none" stroke="var(--amber)" stroke-width="1.5"/><text x="250" y="58" font-size="12" fill="var(--night-ink)" text-anchor="middle" font-family="var(--aura-font-label)">Planner Agent</text><path d="M250 75v30" stroke="var(--amber)" stroke-width="1.5"/><rect x="80" y="105" width="120" height="40" rx="8" fill="none" stroke="var(--night-muted)" stroke-width="1"/><text x="140" y="130" font-size="11" fill="var(--night-muted)" text-anchor="middle">Tool: Search</text><rect x="300" y="105" width="120" height="40" rx="8" fill="none" stroke="var(--night-muted)" stroke-width="1"/><text x="360" y="130" font-size="11" fill="var(--night-muted)" text-anchor="middle">Tool: DB Query</text><path d="M220 105l-50 0M280 105l50 0" stroke="var(--amber)" stroke-width="1" stroke-opacity="0.5"/><rect x="180" y="175" width="140" height="40" rx="8" fill="color-mix(in srgb,var(--amber) 15%,transparent)" stroke="var(--amber)" stroke-width="1.5"/><text x="250" y="200" font-size="11" fill="var(--night-ink)" text-anchor="middle" font-family="var(--aura-font-label)">Response</text><path d="M140 145v20l110 10M360 145v20l-110 10" stroke="var(--amber)" stroke-width="1" stroke-opacity="0.5"/></svg>
+          </div>
+          <div class="fw-night-preview" id="fw-night-panel-3" role="tabpanel" aria-labelledby="fw-ntab-3" hidden style="display:none;">
+            <svg width="100%" height="100%" viewBox="0 0 500 280" preserveAspectRatio="xMidYMid slice" aria-label="Model governance diagram" role="img"><rect width="500" height="280" fill="color-mix(in srgb,var(--lagoon) 6%,transparent)"/><rect x="40" y="40" width="420" height="40" rx="6" fill="color-mix(in srgb,var(--lagoon) 12%,transparent)"/><text x="60" y="65" font-size="11" fill="var(--lagoon)" font-family="var(--aura-font-label)">model-v1.2.0</text><text x="300" y="65" font-size="11" fill="var(--night-muted)">2026-04-01 · approved</text><rect x="40" y="100" width="420" height="40" rx="6" fill="color-mix(in srgb,var(--night-muted) 8%,transparent)"/><text x="60" y="125" font-size="11" fill="var(--night-muted)" font-family="var(--aura-font-label)">model-v1.1.0</text><text x="300" y="125" font-size="11" fill="var(--night-muted)">2026-02-14 · archived</text><rect x="40" y="160" width="420" height="40" rx="6" fill="color-mix(in srgb,var(--night-muted) 8%,transparent)"/><text x="60" y="185" font-size="11" fill="var(--night-muted)" font-family="var(--aura-font-label)">model-v1.0.0</text><text x="300" y="185" font-size="11" fill="var(--night-muted)">2026-01-02 · retired</text></svg>
+          </div>
+          <a class="fw-night-preview-link" href="#">Explore Agent Workbench documentation →</a>
+        </div>
+      </div>
+      <div class="fw-night-cards">
+        <div class="fw-night-card">
+          <div class="fw-night-card-icon" style="background:color-mix(in srgb,var(--lagoon) 20%,transparent);"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 15c1-4 4-7 8-8" stroke="var(--lagoon)" stroke-width="1.5" stroke-linecap="round"/><circle cx="14" cy="6" r="4" fill="none" stroke="var(--lagoon)" stroke-width="1.5"/></svg></div>
+          <p class="fw-night-card-text">Process millions of tokens per second with dedicated inference throughput reservations (sample capacity)</p>
+          <a class="fw-night-card-link" href="#">Learn about inference →</a>
+        </div>
+        <div class="fw-night-card">
+          <div class="fw-night-card-icon" style="background:color-mix(in srgb,var(--amber) 20%,transparent);"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 3v14M5 8l5-5 5 5" stroke="var(--amber)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <p class="fw-night-card-text">Fine-tune open-weight foundation models on your private data with automated evaluation pipelines</p>
+          <a class="fw-night-card-link" href="#">Explore Model Shelf →</a>
+        </div>
+        <div class="fw-night-card">
+          <div class="fw-night-card-icon" style="background:color-mix(in srgb,var(--fern) 20%,transparent);"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="4" y="4" width="12" height="12" rx="4" fill="none" stroke="var(--fern)" stroke-width="1.5"/><path d="M8 10l2 2 4-4" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <p class="fw-night-card-text">Responsible AI controls including content filters, bias auditing and model access policies built-in</p>
+          <a class="fw-night-card-link" href="#">Read about AI governance →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad fw-reveal" id="fw-stats" aria-labelledby="fw-stats-h2">
+    <div class="wrap">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:calc(var(--aura)*1);margin-bottom:calc(var(--aura)*2.5);">
+        <h2 class="h2" id="fw-stats-h2" style="font-size:clamp(1.75rem,3.5vw,2.5rem);">Fernwick in numbers</h2>
+        <span class="eyebrow" style="color:var(--body);">Sample figures · not real claims</span>
+      </div>
+      <div class="fw-stats-row">
+        <div class="fw-stat fw-reveal"><div class="fw-stat-value">36</div><div class="fw-stat-label">Global regions (sample)</div></div>
+        <div class="fw-stat fw-reveal" style="--d:80ms;"><div class="fw-stat-value">99.99%</div><div class="fw-stat-label">Uptime SLA (sample)</div></div>
+        <div class="fw-stat fw-reveal" style="--d:160ms;"><div class="fw-stat-value">180+</div><div class="fw-stat-label">Managed services</div></div>
+        <div class="fw-stat fw-reveal" style="--d:240ms;"><div class="fw-stat-value">0</div><div class="fw-stat-label">Data sent from this page</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fw-cust-stories fw-reveal" id="fw-customer-stories" aria-labelledby="fw-cust-h2" role="region" aria-label="Customer stories carousel">
+    <div class="wrap fw-cust-head">
+      <h2 class="fw-cust-h2" id="fw-cust-h2"><span style="color:var(--fern);">Real teams,</span> real impact</h2>
+      <p style="color:var(--body);font-size:16px;margin-top:calc(var(--aura)*0.75);">Fictional companies showing what's possible on Fernwick</p>
+    </div>
+    <div class="fw-cust-track-wrap" tabindex="0" aria-label="Customer story cards">
+      <div class="fw-cust-track" id="fw-cust-track" role="list">
+        <div class="fw-cust-card" role="listitem" aria-label="Customer 1 of 5">
+          <div class="fw-cust-card-top"><div class="fw-cust-card-name">Meridian Logistics</div><div class="fw-cust-card-text">Reduced global freight routing latency by 60% after migrating to Fernwick's private backbone and Stream Analytics (sample figures)</div><a class="fw-cust-card-link" href="#">Watch video →</a></div>
+          <div class="fw-cust-card-art" aria-hidden="true">
+            <svg width="100%" height="100%" viewBox="0 0 360 200" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="cg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="var(--lagoon)"/><stop offset="100%" stop-color="var(--lagoon-deep)"/></linearGradient></defs><rect width="360" height="200" fill="url(#cg1)"/><circle cx="180" cy="100" r="50" fill="none" stroke="color-mix(in srgb,white 20%,transparent)" stroke-width="40"/></svg>
+            <button class="fw-cust-play" aria-label="Play Meridian Logistics video (demo only)"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6 4l9 5-9 5V4z" fill="var(--lagoon)"/></svg></button>
+            <div class="fw-cust-caption">Meridian Logistics + Fernwick</div>
+          </div>
+        </div>
+        <div class="fw-cust-card" role="listitem" aria-label="Customer 2 of 5">
+          <div class="fw-cust-card-top"><div class="fw-cust-card-name">Velta Health Systems</div><div class="fw-cust-card-text">Deployed HIPAA-ready workloads in under 48 hours using Fernwick's compliance-ready configuration bundles (fictional example)</div><a class="fw-cust-card-link" href="#">Watch video →</a></div>
+          <div class="fw-cust-card-art" aria-hidden="true">
+            <svg width="100%" height="100%" viewBox="0 0 360 200" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="cg2" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="color-mix(in srgb,var(--fern) 80%,var(--night))"/><stop offset="100%" stop-color="var(--fern)"/></linearGradient></defs><rect width="360" height="200" fill="url(#cg2)"/><path d="M60 100l120-60 120 60-120 60z" fill="none" stroke="color-mix(in srgb,white 20%,transparent)" stroke-width="2"/></svg>
+            <button class="fw-cust-play" aria-label="Play Velta Health video (demo only)"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6 4l9 5-9 5V4z" fill="var(--fern)"/></svg></button>
+            <div class="fw-cust-caption">Velta Health + Fernwick</div>
+          </div>
+        </div>
+        <div class="fw-cust-card" role="listitem" aria-label="Customer 3 of 5">
+          <div class="fw-cust-card-top"><div class="fw-cust-card-name">Orbis Media Group</div><div class="fw-cust-card-text">Streams 8K video to 40 million concurrent viewers using Fernwick CDN and adaptive bitrate transcoding (fictional scenario)</div><a class="fw-cust-card-link" href="#">Watch video →</a></div>
+          <div class="fw-cust-card-art" aria-hidden="true">
+            <svg width="100%" height="100%" viewBox="0 0 360 200" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="cg3" x1="1" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="color-mix(in srgb,var(--amber) 60%,var(--night))"/><stop offset="100%" stop-color="var(--lagoon-deep)"/></linearGradient></defs><rect width="360" height="200" fill="url(#cg3)"/><circle cx="180" cy="100" r="70" fill="none" stroke="color-mix(in srgb,white 15%,transparent)" stroke-width="2"/><circle cx="180" cy="100" r="40" fill="none" stroke="color-mix(in srgb,white 25%,transparent)" stroke-width="2"/></svg>
+            <button class="fw-cust-play" aria-label="Play Orbis Media video (demo only)"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6 4l9 5-9 5V4z" fill="white"/></svg></button>
+            <div class="fw-cust-caption">Orbis Media + Fernwick</div>
+          </div>
+        </div>
+        <div class="fw-cust-card" role="listitem" aria-label="Customer 4 of 5">
+          <div class="fw-cust-card-top"><div class="fw-cust-card-name">Steorra Finance</div><div class="fw-cust-card-text">Processes 2 million transactions per second on Fernwick SQL with active-active multi-region failover (fictional figures)</div><a class="fw-cust-card-link" href="#">Watch video →</a></div>
+          <div class="fw-cust-card-art" aria-hidden="true">
+            <svg width="100%" height="100%" viewBox="0 0 360 200" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="cg4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="var(--lagoon-deep)"/><stop offset="100%" stop-color="color-mix(in srgb,var(--lagoon) 60%,var(--night))"/></linearGradient></defs><rect width="360" height="200" fill="url(#cg4)"/><rect x="80" y="60" width="200" height="80" rx="12" fill="none" stroke="color-mix(in srgb,white 20%,transparent)" stroke-width="2"/></svg>
+            <button class="fw-cust-play" aria-label="Play Steorra Finance video (demo only)"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6 4l9 5-9 5V4z" fill="white"/></svg></button>
+            <div class="fw-cust-caption">Steorra Finance + Fernwick</div>
+          </div>
+        </div>
+        <div class="fw-cust-card" role="listitem" aria-label="Customer 5 of 5">
+          <div class="fw-cust-card-top"><div class="fw-cust-card-name">Dawnfield University</div><div class="fw-cust-card-text">Runs 300-node research GPU clusters for climate modeling using Fernwick's Scholar program and spot instances (fictional)</div><a class="fw-cust-card-link" href="#">Watch video →</a></div>
+          <div class="fw-cust-card-art" aria-hidden="true">
+            <svg width="100%" height="100%" viewBox="0 0 360 200" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="cg5" x1="1" y1="1" x2="0" y2="0"><stop offset="0%" stop-color="color-mix(in srgb,var(--fern) 70%,var(--night))"/><stop offset="100%" stop-color="var(--lagoon-deep)"/></linearGradient></defs><rect width="360" height="200" fill="url(#cg5)"/><path d="M60 150L180 50l120 100" fill="none" stroke="color-mix(in srgb,white 20%,transparent)" stroke-width="2"/></svg>
+            <button class="fw-cust-play" aria-label="Play Dawnfield University video (demo only)"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6 4l9 5-9 5V4z" fill="white"/></svg></button>
+            <div class="fw-cust-caption">Dawnfield University + Fernwick</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="fw-cust-controls">
+      <div class="fw-cust-progress" aria-hidden="true"><div class="fw-cust-progress-fill" id="fw-cust-fill" style="width:20%;"></div></div>
+      <div class="fw-cust-nav">
+        <button class="button button-pill fw-button-icon" type="button" id="fw-cust-prev" aria-label="Previous story" aria-controls="fw-cust-track" disabled style="border-color:var(--control-line);color:var(--ink);background:var(--canvas);">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="button button-pill fw-button-icon" type="button" id="fw-cust-next" aria-label="Next story" aria-controls="fw-cust-track" style="border-color:var(--control-line);color:var(--ink);background:var(--canvas);">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <span class="sr-only" id="fw-cust-status" role="status" aria-live="polite">Story 1 of 5</span>
+    </div>
+  </section>
+
+  <section class="fw-industry section-pad fw-reveal" id="fw-industries" aria-labelledby="fw-industry-h2">
+    <div class="fw-industry-head">
+      <h2 class="fw-industry-h2" id="fw-industry-h2">Cloud built for every <span style="color:var(--fern);">industry</span></h2>
+      <div class="fw-industry-right">
+        <p style="color:var(--body);font-size:16px;line-height:1.5;overflow-wrap:anywhere;">Whether you work in <a href="#" style="color:var(--lagoon);text-decoration:underline;">financial services</a> or <a href="#" style="color:var(--lagoon);text-decoration:underline;">healthcare</a>, Fernwick has certified configurations, compliance blueprints and trained support teams ready on day one.</p>
+        <div><button class="button button-fill" type="button" style="background:var(--lagoon);border-color:var(--lagoon);color:var(--on-lagoon);border-radius:9999px;height:calc(var(--aura)*3.5);padding:0 calc(var(--aura)*2);">Request a demo</button></div>
+      </div>
+    </div>
+    <div class="fw-industry-body">
+      <div class="fw-industry-tabs" role="tablist" aria-label="Industry solutions" aria-orientation="vertical">
+        <button class="fw-industry-tab" role="tab" aria-selected="true" aria-controls="fw-ind-panel-0" id="fw-ind-0" tabindex="0">Financial Services</button>
+        <button class="fw-industry-tab" role="tab" aria-selected="false" aria-controls="fw-ind-panel-1" id="fw-ind-1" tabindex="-1">Healthcare</button>
+        <button class="fw-industry-tab" role="tab" aria-selected="false" aria-controls="fw-ind-panel-2" id="fw-ind-2" tabindex="-1">Retail &amp; E-commerce</button>
+        <button class="fw-industry-tab" role="tab" aria-selected="false" aria-controls="fw-ind-panel-3" id="fw-ind-3" tabindex="-1">Media &amp; Entertainment</button>
+        <button class="fw-industry-tab" role="tab" aria-selected="false" aria-controls="fw-ind-panel-4" id="fw-ind-4" tabindex="-1">Manufacturing</button>
+        <button class="fw-industry-tab" role="tab" aria-selected="false" aria-controls="fw-ind-panel-5" id="fw-ind-5" tabindex="-1">Gaming</button>
+        <button class="fw-industry-tab" role="tab" aria-selected="false" aria-controls="fw-ind-panel-6" id="fw-ind-6" tabindex="-1">Education</button>
+        <button class="fw-industry-tab" role="tab" aria-selected="false" aria-controls="fw-ind-panel-7" id="fw-ind-7" tabindex="-1">Logistics &amp; Supply Chain</button>
+        <button class="fw-industry-tab" role="tab" aria-selected="false" aria-controls="fw-ind-panel-8" id="fw-ind-8" tabindex="-1">Energy &amp; Utilities</button>
+        <button class="fw-industry-tab" role="tab" aria-selected="false" aria-controls="fw-ind-panel-9" id="fw-ind-9" tabindex="-1">Public Sector</button>
+        <button class="fw-industry-tab" role="tab" aria-selected="false" aria-controls="fw-ind-panel-10" id="fw-ind-10" tabindex="-1">Telecommunications</button>
+        <button class="fw-industry-tab" role="tab" aria-selected="false" aria-controls="fw-ind-panel-11" id="fw-ind-11" tabindex="-1">Startups</button>
+      </div>
+      <div class="fw-industry-panels" id="fw-industry-panels">
+        <div class="fw-industry-panel" id="fw-ind-panel-0" role="tabpanel" aria-labelledby="fw-ind-0" aria-hidden="false">
+          <div class="fw-industry-art" aria-hidden="true"><svg width="100%" height="100%" viewBox="0 0 600 320" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="ig0" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="var(--lagoon)" stop-opacity="0.15"/><stop offset="100%" stop-color="var(--mist)"/></linearGradient></defs><rect width="600" height="320" fill="url(#ig0)"/><path d="M50 240l100-80 100 40 100-120 100 60 100-80" stroke="var(--lagoon)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="fw-industry-panel-title">Financial Services</div>
+          <div class="fw-industry-panel-text">Pre-configured PCI-DSS and SOC 2 environments, real-time transaction processing, and AI-powered fraud detection pipelines designed for regulated financial workloads.</div>
+        </div>
+        <div class="fw-industry-panel" id="fw-ind-panel-1" role="tabpanel" aria-labelledby="fw-ind-1" aria-hidden="true">
+          <div class="fw-industry-art" aria-hidden="true"><svg width="100%" height="100%" viewBox="0 0 600 320" preserveAspectRatio="xMidYMid slice"><rect width="600" height="320" fill="color-mix(in srgb,var(--fern) 10%,var(--canvas))"/><path d="M300 80c0 100-80 140-80 220M300 80c0 100 80 140 80 220" stroke="var(--fern)" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div>
+          <div class="fw-industry-panel-title">Healthcare</div>
+          <div class="fw-industry-panel-text">HIPAA-ready compute and storage, medical image processing at scale, and clinical decision support pipelines with built-in audit trails for patient data governance.</div>
+        </div>
+        <div class="fw-industry-panel" id="fw-ind-panel-2" role="tabpanel" aria-labelledby="fw-ind-2" aria-hidden="true">
+          <div class="fw-industry-art" aria-hidden="true"><svg width="100%" height="100%" viewBox="0 0 600 320" preserveAspectRatio="xMidYMid slice"><rect width="600" height="320" fill="color-mix(in srgb,var(--amber) 8%,var(--canvas))"/><rect x="80" y="80" width="80" height="80" rx="8" fill="none" stroke="var(--amber)" stroke-width="2"/><rect x="200" y="80" width="80" height="80" rx="8" fill="none" stroke="var(--amber)" stroke-width="2"/><rect x="320" y="80" width="80" height="80" rx="8" fill="none" stroke="var(--amber)" stroke-width="2"/><rect x="440" y="80" width="80" height="80" rx="8" fill="none" stroke="var(--amber)" stroke-width="2"/></svg></div>
+          <div class="fw-industry-panel-title">Retail &amp; E-commerce</div>
+          <div class="fw-industry-panel-text">Elastic compute for peak shopping events, personalization engines, inventory optimization and global order management on a low-latency distributed backbone.</div>
+        </div>
+        <div class="fw-industry-panel" id="fw-ind-panel-3" role="tabpanel" aria-labelledby="fw-ind-3" aria-hidden="true">
+          <div class="fw-industry-art" aria-hidden="true"><svg width="100%" height="100%" viewBox="0 0 600 320" preserveAspectRatio="xMidYMid slice"><rect width="600" height="320" fill="color-mix(in srgb,var(--lagoon) 8%,var(--canvas))"/><circle cx="300" cy="160" r="100" fill="none" stroke="var(--lagoon)" stroke-width="2"/><circle cx="300" cy="160" r="60" fill="none" stroke="var(--lagoon)" stroke-width="1" stroke-opacity="0.5"/></svg></div>
+          <div class="fw-industry-panel-title">Media &amp; Entertainment</div>
+          <div class="fw-industry-panel-text">Global CDN, real-time video transcoding, adaptive bitrate streaming and content recommendation AI serving millions of concurrent viewers across every device.</div>
+        </div>
+        <div class="fw-industry-panel" id="fw-ind-panel-4" role="tabpanel" aria-labelledby="fw-ind-4" aria-hidden="true">
+          <div class="fw-industry-art" aria-hidden="true"><svg width="100%" height="100%" viewBox="0 0 600 320" preserveAspectRatio="xMidYMid slice"><rect width="600" height="320" fill="color-mix(in srgb,var(--fern) 8%,var(--canvas))"/><path d="M100 200h400M200 200V120M300 200V100M400 200V140" stroke="var(--fern)" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <div class="fw-industry-panel-title">Manufacturing</div>
+          <div class="fw-industry-panel-text">Industrial IoT data ingestion, predictive maintenance models and digital twin simulations running on Fernwick edge nodes co-located near factory floors.</div>
+        </div>
+        <div class="fw-industry-panel" id="fw-ind-panel-5" role="tabpanel" aria-labelledby="fw-ind-5" aria-hidden="true">
+          <div class="fw-industry-art" aria-hidden="true"><svg width="100%" height="100%" viewBox="0 0 600 320" preserveAspectRatio="xMidYMid slice"><rect width="600" height="320" fill="color-mix(in srgb,var(--amber) 8%,var(--canvas))"/><path d="M300 100l60 50-20 70h-80l-20-70z" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linejoin="round"/></svg></div>
+          <div class="fw-industry-panel-title">Gaming</div>
+          <div class="fw-industry-panel-text">Low-latency global game servers, matchmaking services, real-time leaderboards and in-game economy backends on elastic compute with sub-50ms routing (sample).</div>
+        </div>
+        <div class="fw-industry-panel" id="fw-ind-panel-6" role="tabpanel" aria-labelledby="fw-ind-6" aria-hidden="true">
+          <div class="fw-industry-art" aria-hidden="true"><svg width="100%" height="100%" viewBox="0 0 600 320" preserveAspectRatio="xMidYMid slice"><rect width="600" height="320" fill="color-mix(in srgb,var(--lagoon) 8%,var(--canvas))"/><path d="M150 220L300 100l150 120" fill="none" stroke="var(--lagoon)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="250" y="160" width="100" height="60" fill="none" stroke="var(--lagoon)" stroke-width="2"/></svg></div>
+          <div class="fw-industry-panel-title">Education</div>
+          <div class="fw-industry-panel-text">Virtual classroom infrastructure, learning management system backends, research computing allocations and affordable credits through the Fernwick Scholar program.</div>
+        </div>
+        <div class="fw-industry-panel" id="fw-ind-panel-7" role="tabpanel" aria-labelledby="fw-ind-7" aria-hidden="true">
+          <div class="fw-industry-art" aria-hidden="true"><svg width="100%" height="100%" viewBox="0 0 600 320" preserveAspectRatio="xMidYMid slice"><rect width="600" height="320" fill="color-mix(in srgb,var(--fern) 8%,var(--canvas))"/><path d="M80 220l80-60 100 30 100-80 100 50 80-30" stroke="var(--fern)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="fw-industry-panel-title">Logistics &amp; Supply Chain</div>
+          <div class="fw-industry-panel-text">Route optimization at the edge, real-time freight visibility, demand forecasting and customs document AI — all on Fernwick's interconnected global network.</div>
+        </div>
+        <div class="fw-industry-panel" id="fw-ind-panel-8" role="tabpanel" aria-labelledby="fw-ind-8" aria-hidden="true">
+          <div class="fw-industry-art" aria-hidden="true"><svg width="100%" height="100%" viewBox="0 0 600 320" preserveAspectRatio="xMidYMid slice"><rect width="600" height="320" fill="color-mix(in srgb,var(--amber) 8%,var(--canvas))"/><circle cx="300" cy="160" r="80" fill="none" stroke="var(--amber)" stroke-width="2"/><path d="M300 80v160M220 160h160" stroke="var(--amber)" stroke-width="1.5" stroke-opacity="0.5" stroke-linecap="round"/></svg></div>
+          <div class="fw-industry-panel-title">Energy &amp; Utilities</div>
+          <div class="fw-industry-panel-text">Grid monitoring at scale, renewable energy forecasting, SCADA data ingestion and carbon-aware scheduling on Fernwick's high-availability infrastructure.</div>
+        </div>
+        <div class="fw-industry-panel" id="fw-ind-panel-9" role="tabpanel" aria-labelledby="fw-ind-9" aria-hidden="true">
+          <div class="fw-industry-art" aria-hidden="true"><svg width="100%" height="100%" viewBox="0 0 600 320" preserveAspectRatio="xMidYMid slice"><rect width="600" height="320" fill="color-mix(in srgb,var(--lagoon) 8%,var(--canvas))"/><rect x="150" y="80" width="300" height="160" rx="12" fill="none" stroke="var(--lagoon)" stroke-width="2"/><path d="M150 140h300" stroke="var(--lagoon)" stroke-width="1" stroke-opacity="0.5"/></svg></div>
+          <div class="fw-industry-panel-title">Public Sector</div>
+          <div class="fw-industry-panel-text">FedRAMP-equivalent configurations, sovereign data residency options and dedicated support for government digital transformation programs across Fernwick regions.</div>
+        </div>
+        <div class="fw-industry-panel" id="fw-ind-panel-10" role="tabpanel" aria-labelledby="fw-ind-10" aria-hidden="true">
+          <div class="fw-industry-art" aria-hidden="true"><svg width="100%" height="100%" viewBox="0 0 600 320" preserveAspectRatio="xMidYMid slice"><rect width="600" height="320" fill="color-mix(in srgb,var(--fern) 8%,var(--canvas))"/><circle cx="150" cy="160" r="40" fill="none" stroke="var(--fern)" stroke-width="2"/><circle cx="300" cy="160" r="40" fill="none" stroke="var(--fern)" stroke-width="2"/><circle cx="450" cy="160" r="40" fill="none" stroke="var(--fern)" stroke-width="2"/><path d="M190 160h70M340 160h70" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <div class="fw-industry-panel-title">Telecommunications</div>
+          <div class="fw-industry-panel-text">Network function virtualization, carrier-grade reliability, 5G core workload hosting and real-time subscriber analytics on Fernwick's private backbone.</div>
+        </div>
+        <div class="fw-industry-panel" id="fw-ind-panel-11" role="tabpanel" aria-labelledby="fw-ind-11" aria-hidden="true">
+          <div class="fw-industry-art" aria-hidden="true"><svg width="100%" height="100%" viewBox="0 0 600 320" preserveAspectRatio="xMidYMid slice"><rect width="600" height="320" fill="color-mix(in srgb,var(--amber) 8%,var(--canvas))"/><path d="M300 100l30 80h80l-65 48 25 80-70-50-70 50 25-80-65-48h80z" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linejoin="round"/></svg></div>
+          <div class="fw-industry-panel-title">Startups</div>
+          <div class="fw-industry-panel-text">The Fernwick Launch program gives early-stage teams sample credits, hands-on architecture reviews and startup-friendly pricing to build fast without infrastructure bottlenecks.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fw-pricing fw-reveal" id="fw-pricing" aria-labelledby="fw-pricing-h2">
+    <div class="wrap">
+      <div class="fw-pricing-head">
+        <h2 class="fw-pricing-h2" id="fw-pricing-h2">Sample pricing</h2>
+        <p style="color:var(--body);font-size:14px;margin-top:calc(var(--aura)*0.5);">All figures below are <strong>sample figures only</strong> and do not constitute a quote, guarantee or commitment. Actual pricing varies by region and configuration.</p>
+      </div>
+      <div class="fw-table-wrap" role="region" aria-labelledby="fw-pricing-h2" tabindex="0">
+        <table class="fw-table">
+          <caption style="padding:calc(var(--aura)*1.5);text-align:left;font-size:13px;color:var(--body);">Regions and sample pricing — fictional data</caption>
+          <thead><tr><th scope="col">Service</th><th scope="col">Unit</th><th scope="col">Sample price</th><th scope="col">Region tier</th></tr></thead>
+          <tbody>
+            <tr><td>Canopy Compute (2 vCPU, 8 GB)</td><td>per hour</td><td>$0.048</td><td>Tier 1 (Americas, Europe)</td></tr>
+            <tr><td>Canopy Compute (8 vCPU, 32 GB)</td><td>per hour</td><td>$0.192</td><td>Tier 1</td></tr>
+            <tr><td>Compute Node (A-series 8×)</td><td>per hour</td><td>$3.20</td><td>Tier 1</td></tr>
+            <tr><td>Object Store</td><td>per GB / month</td><td>$0.020</td><td>All tiers</td></tr>
+            <tr><td>Archive Vault</td><td>per GB / month</td><td>$0.001</td><td>All tiers</td></tr>
+            <tr><td>Fernwick SQL (2 vCPU)</td><td>per hour</td><td>$0.082</td><td>Tier 1</td></tr>
+            <tr><td>Stream Analytics</td><td>per 1M events</td><td>$0.045</td><td>Tier 1 &amp; 2</td></tr>
+            <tr><td>Agent Workbench inference</td><td>per 1M tokens</td><td>$1.50</td><td>Tier 1</td></tr>
+            <tr><td>Private Fabric egress</td><td>per GB</td><td>$0.010</td><td>Peered regions</td></tr>
+            <tr><td>Canopy Compute (2 vCPU, 8 GB)</td><td>per hour</td><td>$0.054</td><td>Tier 2 (Asia-Pacific)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="fw-plans">
+        <article class="fw-plan">
+          <div class="fw-plan-name">Starter</div>
+          <div class="fw-plan-price">$0 <small>/ month (sample)</small></div>
+          <div class="fw-plan-desc">For individuals and small projects exploring the Fernwick platform. Includes sample free-tier limits.</div>
+          <div class="fw-plan-features">
+            <div class="fw-plan-feature"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>2 vCPU compute (sample limit)</div>
+            <div class="fw-plan-feature"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>5 GB object storage</div>
+            <div class="fw-plan-feature"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Community support</div>
+          </div>
+          <button class="button button-pill" type="button" style="border-color:var(--rule);color:var(--ink);background:var(--canvas);border-radius:9999px;height:calc(var(--aura)*3.5);padding:0 calc(var(--aura)*2);">Get started free</button>
+        </article>
+        <article class="fw-plan featured">
+          <div style="font-family:var(--aura-font-label);font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--lagoon);margin-bottom:calc(var(--aura)*0.5);">Recommended</div>
+          <div class="fw-plan-name">Growth</div>
+          <div class="fw-plan-price">$299 <small>/ month (sample)</small></div>
+          <div class="fw-plan-desc">For growing teams that need more compute, support and advanced observability across all Fernwick services.</div>
+          <div class="fw-plan-features">
+            <div class="fw-plan-feature"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Up to 64 vCPU compute (sample)</div>
+            <div class="fw-plan-feature"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>1 TB object storage included</div>
+            <div class="fw-plan-feature"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Business support SLA</div>
+            <div class="fw-plan-feature"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Agent Workbench access</div>
+          </div>
+          <button class="button button-fill" type="button" style="background:var(--lagoon);border-color:var(--lagoon);color:var(--on-lagoon);border-radius:9999px;height:calc(var(--aura)*3.5);padding:0 calc(var(--aura)*2);">Start Growth trial</button>
+        </article>
+        <article class="fw-plan">
+          <div class="fw-plan-name">Enterprise</div>
+          <div class="fw-plan-price" style="font-size:clamp(1.5rem,3vw,2rem);">Custom <small>pricing</small></div>
+          <div class="fw-plan-desc">For large organizations with specific compliance, committed use and dedicated support requirements across multiple regions.</div>
+          <div class="fw-plan-features">
+            <div class="fw-plan-feature"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Unlimited compute (committed use)</div>
+            <div class="fw-plan-feature"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>24/7 dedicated support team</div>
+            <div class="fw-plan-feature"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Custom compliance packages</div>
+          </div>
+          <button class="button button-pill" type="button" style="border-color:var(--rule);color:var(--ink);background:var(--canvas);border-radius:9999px;height:calc(var(--aura)*3.5);padding:0 calc(var(--aura)*2);" id="fw-contact-sales-plan">Talk to sales</button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="fw-form-section fw-reveal" id="fw-form" aria-labelledby="fw-form-h2">
+    <div class="wrap">
+      <div class="fw-form-wrap">
+        <div class="fw-form-copy">
+          <span class="eyebrow">Local demo form</span>
+          <h2 class="fw-form-h2" id="fw-form-h2">Talk to sales</h2>
+          <p style="color:var(--body);font-size:15px;line-height:1.5;overflow-wrap:anywhere;">This form validates locally in your browser. No data is sent, stored or transmitted anywhere. This is a fictional demonstration.</p>
+        </div>
+        <form id="fw-contact-form" novalidate>
+          <div class="fw-form-fields">
+            <div class="fw-field-row">
+              <div class="fw-field">
+                <label for="fw-name">Full name</label>
+                <input id="fw-name" type="text" autocomplete="off" placeholder="Your name" required aria-describedby="fw-name-err"/>
+                <span id="fw-name-err" role="alert" aria-live="assertive" class="fw-form-error" style="font-size:12px;display:none;"></span>
+              </div>
+              <div class="fw-field">
+                <label for="fw-email">Work email</label>
+                <input id="fw-email" type="email" autocomplete="off" placeholder="you@company.com" required aria-describedby="fw-email-err"/>
+                <span id="fw-email-err" role="alert" aria-live="assertive" class="fw-form-error" style="font-size:12px;display:none;"></span>
+              </div>
+            </div>
+            <div class="fw-field">
+              <label for="fw-team-size">Team size</label>
+              <div class="select-wrap fw-select-wrap" style="position:relative;">
+                <select class="inputer" id="fw-team-size" name="team-size" style="appearance:none;-webkit-appearance:none;border:1px solid var(--control-line);background:var(--mist);color:var(--ink);border-radius:9999px;height:calc(var(--aura)*4);padding:0 calc(var(--aura)*3) 0 calc(var(--aura)*1.5);font-family:inherit;font-size:max(1rem,17px);width:100%;cursor:pointer;">
+                  <option>1–10</option>
+                  <option>11–50</option>
+                  <option>51–200</option>
+                  <option>201–1000</option>
+                  <option>1000+</option>
+                </select>
+                <svg style="position:absolute;right:calc(var(--aura)*1.5);top:50%;transform:translateY(-50%);pointer-events:none;" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="var(--ink)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </div>
+            <div class="fw-field">
+              <label for="fw-message">Message</label>
+              <textarea id="fw-message" placeholder="Tell us about your use case" required aria-describedby="fw-message-err" style="border:1px solid var(--control-line);background:var(--mist);color:var(--ink);border-radius:13px;height:calc(var(--aura)*9);padding:calc(var(--aura)*1) calc(var(--aura)*1.5);font-family:inherit;font-size:max(1rem,17px);width:100%;box-sizing:border-box;resize:vertical;"></textarea>
+              <span id="fw-message-err" role="alert" aria-live="assertive" class="fw-form-error" style="font-size:12px;display:none;"></span>
+            </div>
+            <div style="display:flex;align-items:center;gap:calc(var(--aura)*1.5);flex-wrap:wrap;">
+              <button class="button button-fill" type="submit" style="background:var(--lagoon);border-color:var(--lagoon);color:var(--on-lagoon);border-radius:9999px;height:calc(var(--aura)*3.5);padding:0 calc(var(--aura)*2);">Send message</button>
+              <div class="fw-form-status" id="fw-form-status" role="status" aria-live="polite"></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="fw-faq-section fw-reveal" id="fw-faq" aria-labelledby="fw-faq-h2">
+    <div class="wrap">
+      <h2 class="fw-faq-h2" id="fw-faq-h2">Frequently asked questions</h2>
+      <ul class="fw-faq-list">
+        <li class="fw-faq-item">
+          <h3><button class="fw-faq-trigger" type="button" aria-expanded="true" aria-controls="fw-faq-p0" id="fw-faq-q0">What is Fernwick?<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 2v14M2 9h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></h3>
+          <div class="fw-faq-panel" id="fw-faq-p0" role="region" aria-labelledby="fw-faq-q0"><p>Fernwick is a fictional cloud computing platform used as a gallery showcase for the Aura design system. It demonstrates compute, storage, databases, AI agents, networking, security and developer tools — all as a design exercise. No real service exists behind this page.</p></div>
+        </li>
+        <li class="fw-faq-item">
+          <h3><button class="fw-faq-trigger" type="button" aria-expanded="false" aria-controls="fw-faq-p1" id="fw-faq-q1">Are the pricing figures real?<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 2v14M2 9h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></h3>
+          <div class="fw-faq-panel" id="fw-faq-p1" role="region" aria-labelledby="fw-faq-q1" hidden><p>No. Every price, credit amount, SLA percentage and performance figure on this page is explicitly labelled as a sample figure. They are invented for demonstration purposes only and do not constitute a quote, offer or guarantee of any kind.</p></div>
+        </li>
+        <li class="fw-faq-item">
+          <h3><button class="fw-faq-trigger" type="button" aria-expanded="false" aria-controls="fw-faq-p2" id="fw-faq-q2">Does the contact form send any data?<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 2v14M2 9h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></h3>
+          <div class="fw-faq-panel" id="fw-faq-p2" role="region" aria-labelledby="fw-faq-q2" hidden><p>No. The "Talk to sales" form validates your input locally in your browser using JavaScript, then shows a confirmation message. Nothing is transmitted to any server, stored, or shared with any third party. The form has no action URL.</p></div>
+        </li>
+        <li class="fw-faq-item">
+          <h3><button class="fw-faq-trigger" type="button" aria-expanded="false" aria-controls="fw-faq-p3" id="fw-faq-q3">How does the AI assistant work?<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 2v14M2 9h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></h3>
+          <div class="fw-faq-panel" id="fw-faq-p3" role="region" aria-labelledby="fw-faq-q3" hidden><p>The "Ask Fernwick" assistant is a local demo only. When you send a message or click a suggestion, the page responds with a pre-written canned answer stored in the page's JavaScript. No request is made to any AI model, API or external service. Everything stays in your browser tab.</p></div>
+        </li>
+        <li class="fw-faq-item">
+          <h3><button class="fw-faq-trigger" type="button" aria-expanded="false" aria-controls="fw-faq-p4" id="fw-faq-q4">Can I use Fernwick for a real project?<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 2v14M2 9h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></h3>
+          <div class="fw-faq-panel" id="fw-faq-p4" role="region" aria-labelledby="fw-faq-q4" hidden><p>Fernwick is a fictional brand created solely to demonstrate the Aura design system's gallery capability. The theme.css and design tokens are real and can be applied to your own Aura project, but Fernwick itself is not a real cloud provider and offers no real services, accounts or infrastructure.</p></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="fw-logo-band fw-reveal" id="fw-logos" aria-labelledby="fw-logos-h2">
+    <div class="fw-logo-band-head wrap">
+      <h2 class="h3" id="fw-logos-h2" style="font-size:clamp(1.1rem,2vw,1.4rem);font-weight:500;">Trusted by fictional teams everywhere</h2>
+      <div class="fw-logo-band-controls">
+        <button class="button button-fill" type="button" style="background:var(--lagoon);border-color:var(--lagoon);color:var(--on-lagoon);border-radius:9999px;height:calc(var(--aura)*3);padding:0 calc(var(--aura)*1.5);font-size:13px;">See more customers</button>
+        <button class="fw-pause-btn" type="button" id="fw-pause-btn" aria-pressed="false" aria-label="Pause logo animation">
+          <svg class="pause-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><rect x="3" y="2" width="3" height="10" rx="1" fill="currentColor"/><rect x="8" y="2" width="3" height="10" rx="1" fill="currentColor"/></svg>
+          <svg class="play-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M4 2l9 5-9 5V2z" fill="currentColor"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="fw-marquee-outer">
+      <div class="fw-marquee-track running" id="fw-marquee" aria-hidden="true">
+        <div class="fw-logo-item"><span class="fw-logo-text">Meridian</span></div>
+        <div class="fw-logo-item"><span class="fw-logo-text" style="font-style:italic;">Velta</span></div>
+        <div class="fw-logo-item"><span class="fw-logo-text">Orbis<span style="color:var(--lagoon);">·</span>Media</span></div>
+        <div class="fw-logo-item"><span class="fw-logo-text">Steorra</span></div>
+        <div class="fw-logo-item"><span class="fw-logo-text" style="font-weight:400;letter-spacing:0.08em;text-transform:uppercase;font-size:14px;">DAWNFIELD</span></div>
+        <div class="fw-logo-item"><span class="fw-logo-text">Praxis<span style="color:var(--fern);">.</span>IO</span></div>
+        <div class="fw-logo-item"><span class="fw-logo-text" style="font-style:italic;font-weight:400;">Lunarwave</span></div>
+        <div class="fw-logo-item"><span class="fw-logo-text">Caldera<span style="color:var(--amber);">x</span></span></div>
+        <div class="fw-logo-item"><span class="fw-logo-text">Meridian</span></div>
+        <div class="fw-logo-item"><span class="fw-logo-text" style="font-style:italic;">Velta</span></div>
+        <div class="fw-logo-item"><span class="fw-logo-text">Orbis<span style="color:var(--lagoon);">·</span>Media</span></div>
+        <div class="fw-logo-item"><span class="fw-logo-text">Steorra</span></div>
+        <div class="fw-logo-item"><span class="fw-logo-text" style="font-weight:400;letter-spacing:0.08em;text-transform:uppercase;font-size:14px;">DAWNFIELD</span></div>
+        <div class="fw-logo-item"><span class="fw-logo-text">Praxis<span style="color:var(--fern);">.</span>IO</span></div>
+        <div class="fw-logo-item"><span class="fw-logo-text" style="font-style:italic;font-weight:400;">Lunarwave</span></div>
+        <div class="fw-logo-item"><span class="fw-logo-text">Caldera<span style="color:var(--amber);">x</span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="margin-top:calc(var(--aura)*7);" aria-labelledby="fw-cta-h2">
+    <div class="fw-cta fw-reveal">
+      <div class="fw-cta-copy">
+        <h2 class="fw-cta-h2" id="fw-cta-h2"><span style="color:var(--lagoon);">Start building</span> on the cloud made for every scale and speed</h2>
+        <p style="color:var(--body);font-size:16px;line-height:1.5;margin-bottom:calc(var(--aura)*2);overflow-wrap:anywhere;">Sample $400 in free credits for new workspaces. No credit card required for the fictional demo.</p>
+        <div class="fw-cta-pills">
+          <button class="button button-fill" type="button" style="background:var(--lagoon);border-color:var(--lagoon);color:var(--on-lagoon);border-radius:9999px;height:calc(var(--aura)*3.5);padding:0 calc(var(--aura)*2);">Start for free</button>
+          <button class="button button-pill" type="button" style="border-color:color-mix(in srgb,var(--lagoon) 40%,transparent);color:var(--lagoon);background:transparent;border-radius:9999px;height:calc(var(--aura)*3.5);padding:0 calc(var(--aura)*2);">Talk to sales</button>
+        </div>
+      </div>
+      <div class="fw-cta-glyph" aria-hidden="true">
+        <svg width="100%" height="100%" viewBox="0 0 420 300" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <radialGradient id="ctag" cx="40%" cy="40%" r="60%">
+              <stop offset="0%" stop-color="var(--lagoon)" stop-opacity="0.5"/>
+              <stop offset="50%" stop-color="var(--fern)" stop-opacity="0.3"/>
+              <stop offset="100%" stop-color="var(--sky-wash)" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <circle cx="210" cy="150" r="180" fill="url(#ctag)"/>
+          <ellipse cx="210" cy="80" rx="60" ry="45" fill="var(--fern)" opacity="0.5"/>
+          <ellipse cx="140" cy="160" rx="50" ry="40" fill="var(--lagoon)" opacity="0.6"/>
+          <ellipse cx="280" cy="160" rx="50" ry="40" fill="var(--amber)" opacity="0.5"/>
+          <ellipse cx="210" cy="230" rx="55" ry="40" fill="var(--lagoon)" opacity="0.35"/>
+          <line x1="210" y1="100" x2="210" y2="225" stroke="color-mix(in srgb,var(--lagoon-deep) 60%,transparent)" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="fw-footer" id="fw-footer">
+  <div class="wrap">
+    <div class="fw-footer-cols">
+      <div>
+        <button class="fw-footer-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-fcol-0" id="fw-fcol-h0">Why Fernwick <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="fw-footer-col-title" aria-hidden="true">Why Fernwick</div>
+        <div class="fw-footer-acc-panel" id="fw-fcol-0">
+          <ul class="fw-footer-col-list">
+            <li><a href="#">About Fernwick</a></li>
+            <li><a href="#">Sustainability</a></li>
+            <li><a href="#">Trust &amp; compliance</a></li>
+            <li><a href="#">Global infrastructure</a></li>
+            <li><a href="#">Customer stories</a></li>
+            <li><a href="#">Analyst reports (sample)</a></li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <button class="fw-footer-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-fcol-1" id="fw-fcol-h1">Products &amp; pricing <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="fw-footer-col-title" aria-hidden="true">Products &amp; pricing</div>
+        <div class="fw-footer-acc-panel" id="fw-fcol-1">
+          <ul class="fw-footer-col-list">
+            <li><a href="#fw-platform">All products</a></li>
+            <li><a href="#fw-pricing">Sample pricing</a></li>
+            <li><a href="#fw-pricing">Free tier</a></li>
+            <li><a href="#">Pricing calculator</a></li>
+            <li><a href="#">Committed use</a></li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <button class="fw-footer-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-fcol-2" id="fw-fcol-h2">Solutions <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="fw-footer-col-title" aria-hidden="true">Solutions</div>
+        <div class="fw-footer-acc-panel" id="fw-fcol-2">
+          <ul class="fw-footer-col-list">
+            <li><a href="#fw-industries">By industry</a></li>
+            <li><a href="#fw-ai">AI &amp; machine learning</a></li>
+            <li><a href="#fw-platform">Developer tools</a></li>
+            <li><a href="#fw-platform">Security</a></li>
+            <li><a href="#fw-industries">Startups</a></li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <button class="fw-footer-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-fcol-3" id="fw-fcol-h3">Resources <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="fw-footer-col-title" aria-hidden="true">Resources</div>
+        <div class="fw-footer-acc-panel" id="fw-fcol-3">
+          <ul class="fw-footer-col-list">
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">Architecture center</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Community forum</a></li>
+            <li><a href="#">Certifications</a></li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <button class="fw-footer-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-fcol-4" id="fw-fcol-h4">Engage <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="fw-footer-col-title" aria-hidden="true">Engage</div>
+        <div class="fw-footer-acc-panel" id="fw-fcol-4">
+          <ul class="fw-footer-col-list">
+            <li><a href="#fw-form">Contact sales</a></li>
+            <li><a href="#">Events &amp; webinars</a></li>
+            <li><a href="#">Partner program</a></li>
+            <li><a href="#">Newsroom</a></li>
+            <li><a href="#">Careers (fictional)</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="fw-footer-legal">
+      <div class="fw-footer-legal-links">
+        <a href="#">Privacy</a><span class="fw-footer-sep" aria-hidden="true">|</span>
+        <a href="#">Terms</a><span class="fw-footer-sep" aria-hidden="true">|</span>
+        <a href="#">Cookies</a><span class="fw-footer-sep" aria-hidden="true">|</span>
+        <a href="#">Accessibility</a><span class="fw-footer-sep" aria-hidden="true">|</span>
+        <span>2026 Fernwick, a fictional company.</span>
+      </div>
+      <div class="fw-footer-leaf-note">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12C2 5 6 2 12 2c-1 5-4 8-10 10z" fill="var(--fern)" stroke="var(--fern)" stroke-width="0.5"/></svg>
+        <span>Running on sample renewable energy (fictional)</span>
+      </div>
+      <div class="fw-footer-newsletter">
+        <span>Sign up for the newsletter</span>
+        <button class="button button-fill" type="button" id="fw-subscribe-btn" style="background:var(--lagoon);border-color:var(--lagoon);color:var(--on-lagoon);border-radius:9999px;height:calc(var(--aura)*3);padding:0 calc(var(--aura)*1.5);font-size:13px;">Subscribe</button>
+        <span class="fw-footer-news-status" id="fw-subscribe-status" role="status" aria-live="polite"></span>
+      </div>
+      <div class="fw-footer-lang">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="5.5" stroke="var(--body)" stroke-width="1.2"/><path d="M7 1.5C5.5 3 5 5 5 7s.5 4 2 5.5M7 1.5C8.5 3 9 5 9 7s-.5 4-2 5.5M1.5 7h11" stroke="var(--body)" stroke-width="1.2" stroke-linecap="round"/></svg>
+        <div style="position:relative;">
+          <select class="inputer" id="fw-lang-select" aria-label="Select language" style="appearance:none;-webkit-appearance:none;border:1px solid var(--control-line);background:var(--canvas);color:var(--body);border-radius:9999px;height:calc(var(--aura)*3);padding:0 calc(var(--aura)*2.5) 0 calc(var(--aura)*1);font-family:inherit;font-size:13px;cursor:pointer;width:auto;">
+            <option>English</option>
+            <option>Español</option>
+            <option>Français</option>
+            <option>Deutsch</option>
+            <option>日本語</option>
+          </select>
+          <svg style="position:absolute;right:calc(var(--aura)*0.75);top:50%;transform:translateY(-50%);pointer-events:none;" width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 4l3 3 3-3" stroke="var(--body)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button class="fw-assist-chip" type="button" id="fw-assist-chip" aria-haspopup="dialog" aria-label="Ask Fernwick — open assistant">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2l1.5 3.5L13 7l-3.5 1.5L8 12l-1.5-3.5L3 7l3.5-1.5z" fill="var(--lagoon)" stroke="var(--lagoon)" stroke-width="0.5" stroke-linejoin="round"/></svg>
+  <span class="chip-label">Ask Fernwick</span>
+</button>
+
+<div class="fw-assist-dialog-backdrop" id="fw-assist-backdrop" hidden role="presentation">
+  <div class="fw-assist-dialog" id="fw-assist-dialog" role="dialog" aria-modal="true" aria-labelledby="fw-assist-dialog-title" tabindex="-1">
+    <div class="fw-assist-head">
+      <span class="fw-assist-head-title" id="fw-assist-dialog-title">Ask Fernwick</span>
+      <button class="fw-assist-close" type="button" id="fw-assist-close" aria-label="Close assistant"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="fw-assist-body" id="fw-assist-body">
+      <p class="fw-assist-q">Ask anything about Fernwick</p>
+      <div class="fw-assist-suggestions" id="fw-assist-sugs">
+        <button class="fw-assist-sug-btn" type="button" data-answer="Fernwick currently offers sample deployments across 36 fictional regions on 6 continents. All region data is for demonstration only and does not reflect any real infrastructure.">How many regions does Fernwick have?<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 8h8M9 5l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="fw-assist-sug-btn" type="button" data-answer="New Fernwick workspaces receive a sample of $400 in cloud credits (fictional, non-redeemable). These credits can be applied to compute, storage, databases or AI services within the first 90 days (sample terms).">What free credits are available?<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 8h8M9 5l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="fw-assist-sug-btn" type="button" data-answer="Agent Workbench is Fernwick's platform for building, testing and deploying AI agents. You can connect agents to tools like databases, APIs and storage, then orchestrate multi-step workflows with visual tooling. All pricing and performance figures are sample data.">Tell me about Agent Workbench<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 8h8M9 5l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+      <div class="fw-assist-log" id="fw-assist-log" aria-live="polite" aria-label="Conversation log"></div>
+    </div>
+    <div class="fw-assist-foot">
+      <div class="fw-assist-input-row">
+        <input class="fw-assist-input" type="text" id="fw-assist-input" placeholder="Ask a question…" aria-label="Ask a question" autocomplete="off"/>
+        <button class="fw-assist-send" type="button" id="fw-assist-send" aria-label="Send" disabled>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <p class="fw-assist-footnote">Local demo only · no data sent anywhere · all answers are fictional</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var motionOk=document.documentElement.classList.contains("motion");
+
+  var megaIds={solutions:"fw-mega-solutions",products:"fw-mega-products",pricing:"fw-mega-pricing",resources:"fw-mega-resources"};
+  var triggers={solutions:document.getElementById("fw-trigger-solutions"),products:document.getElementById("fw-trigger-products"),pricing:document.getElementById("fw-trigger-pricing"),resources:document.getElementById("fw-trigger-resources")};
+  var currentMega=null;
+  function closeMega(){
+    if(currentMega){
+      var t=triggers[currentMega];
+      var p=document.getElementById(megaIds[currentMega]);
+      t.setAttribute("aria-expanded","false");
+      p.hidden=true;
+      currentMega=null;
+    }
+  }
+  function openMega(key){
+    if(currentMega===key){closeMega();return;}
+    closeMega();
+    triggers[key].setAttribute("aria-expanded","true");
+    document.getElementById(megaIds[key]).hidden=false;
+    currentMega=key;
+  }
+  Object.keys(triggers).forEach(function(key){
+    triggers[key].addEventListener("click",function(){openMega(key);});
+    triggers[key].addEventListener("keydown",function(e){if(e.key==="Escape"&&currentMega===key){closeMega();triggers[key].focus();}});
+  });
+  document.querySelectorAll(".fw-mega-close").forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var key=currentMega;
+      closeMega();
+      if(key&&triggers[key])triggers[key].focus();
+    });
+  });
+  document.addEventListener("keydown",function(e){if(e.key==="Escape"&&currentMega){var k=currentMega;closeMega();if(triggers[k])triggers[k].focus();}});
+  document.addEventListener("click",function(e){
+    if(currentMega){
+      var open=document.getElementById(megaIds[currentMega]);
+      var trig=triggers[currentMega];
+      if(!open.contains(e.target)&&!trig.contains(e.target))closeMega();
+    }
+  });
+  Object.keys(megaIds).forEach(function(key){
+    var panel=document.getElementById(megaIds[key]);
+    if(panel){
+      panel.addEventListener("focusout",function(e){
+        setTimeout(function(){
+          if(!panel.contains(document.activeElement)&&currentMega===key)closeMega();
+        },0);
+      });
+    }
+  });
+
+  var burger=document.getElementById("fw-burger");
+  var mobileMenu=document.getElementById("fw-mobile-menu");
+  var mobileClose=document.getElementById("fw-mobile-close");
+  function openMobile(){
+    mobileMenu.hidden=false;
+    burger.setAttribute("aria-expanded","true");
+    document.body.style.overflow="hidden";
+    mobileClose.focus();
+  }
+  function closeMobile(){
+    mobileMenu.hidden=true;
+    burger.setAttribute("aria-expanded","false");
+    document.body.style.overflow="";
+    burger.focus();
+  }
+  burger.addEventListener("click",openMobile);
+  mobileClose.addEventListener("click",closeMobile);
+  document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!mobileMenu.hidden)closeMobile();});
+  mobileMenu.querySelectorAll("a").forEach(function(a){a.addEventListener("click",closeMobile);});
+  mobileMenu.addEventListener("keydown",function(e){
+    if(e.key!=="Tab")return;
+    var focusable=Array.prototype.slice.call(mobileMenu.querySelectorAll("button,a,[tabindex]")).filter(function(el){return !el.disabled&&el.tabIndex>=0&&!el.closest("[hidden]");});
+    if(!focusable.length)return;
+    var first=focusable[0];var last=focusable[focusable.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+  });
+
+  function setupTabs(tablist){
+    var tabs=Array.prototype.slice.call(tablist.querySelectorAll("[role=tab]"));
+    var orientation=tablist.getAttribute("aria-orientation")||"horizontal";
+    function activate(tab){
+      tabs.forEach(function(t){
+        t.setAttribute("aria-selected","false");
+        t.tabIndex=-1;
+        var panelId=t.getAttribute("aria-controls");
+        var panel=document.getElementById(panelId);
+        if(panel){panel.setAttribute("aria-hidden","true");if(panel.style.display!==undefined)panel.style.display="";}
+      });
+      tab.setAttribute("aria-selected","true");
+      tab.tabIndex=0;
+      var panelId=tab.getAttribute("aria-controls");
+      var panel=document.getElementById(panelId);
+      if(panel){panel.setAttribute("aria-hidden","false");}
+    }
+    tabs.forEach(function(tab){
+      tab.addEventListener("click",function(){activate(tab);});
+      tab.addEventListener("keydown",function(e){
+        var idx=tabs.indexOf(tab);
+        var prev=(orientation==="vertical")?"ArrowUp":"ArrowLeft";
+        var next=(orientation==="vertical")?"ArrowDown":"ArrowRight";
+        if(e.key===next){e.preventDefault();var t=tabs[(idx+1)%tabs.length];activate(t);t.focus();}
+        else if(e.key===prev){e.preventDefault();var t=tabs[(idx-1+tabs.length)%tabs.length];activate(t);t.focus();}
+        else if(e.key==="Home"){e.preventDefault();activate(tabs[0]);tabs[0].focus();}
+        else if(e.key==="End"){e.preventDefault();activate(tabs[tabs.length-1]);tabs[tabs.length-1].focus();}
+      });
+    });
+  }
+  document.querySelectorAll("[role=tablist]").forEach(setupTabs);
+
+  function setupCarousel(trackId,prevId,nextId,statusId,fillId){
+    var track=document.getElementById(trackId);
+    if(!track)return;
+    var wrap=track.parentElement;
+    var prev=document.getElementById(prevId);
+    var next=document.getElementById(nextId);
+    var status=document.getElementById(statusId);
+    var fill=fillId?document.getElementById(fillId):null;
+    var cards=Array.prototype.slice.call(track.querySelectorAll("[role=listitem],[aria-roledescription=diapositiva],.fw-story-card,.fw-cust-card"));
+    if(!cards.length)cards=Array.prototype.slice.call(track.children);
+    function idx(){
+      var left=wrap.getBoundingClientRect().left;
+      var best=0;
+      cards.forEach(function(c,i){if(Math.abs(c.getBoundingClientRect().left-left)<Math.abs(cards[best].getBoundingClientRect().left-left))best=i;});
+      return best;
+    }
+    function sync(){
+      var max=wrap.scrollWidth-wrap.clientWidth-2;
+      var snapOff=Math.round(parseFloat(getComputedStyle(wrap).getPropertyValue('scroll-padding-inline-start'))||0);
+      var atStart=wrap.scrollLeft<=snapOff+2;
+      var atEnd=wrap.scrollLeft>=max;
+      if(prev){
+        var wasDisabled=prev.disabled;
+        prev.disabled=atStart;
+        if(!wasDisabled&&atStart&&document.activeElement===prev&&next)next.focus();
+      }
+      if(next){
+        var wasDisabled=next.disabled;
+        next.disabled=atEnd;
+        if(!wasDisabled&&atEnd&&document.activeElement===next&&prev)prev.focus();
+      }
+      var ci=idx();
+      if(status)status.textContent="Story "+(ci+1)+" of "+cards.length;
+      if(fill)fill.style.width=Math.round(((ci+1)/cards.length)*100)+"%";
+    }
+    function go(step){
+      var ci=idx();
+      var t=cards[Math.max(0,Math.min(cards.length-1,ci+step))];
+      if(t)wrap.scrollTo({left:t.offsetLeft-(cards[0]?cards[0].offsetLeft:0),behavior:motionOk?"smooth":"auto"});
+    }
+    if(prev)prev.addEventListener("click",function(){go(-1);prev.focus();});
+    if(next)next.addEventListener("click",function(){go(1);next.focus();});
+    var timer;
+    wrap.addEventListener("scroll",function(){clearTimeout(timer);timer=setTimeout(sync,120);},{passive:true});
+    window.addEventListener("resize",sync);
+    sync();
+  }
+  setupCarousel("fw-stories-track","fw-stories-prev","fw-stories-next","fw-stories-status",null);
+  setupCarousel("fw-cust-track","fw-cust-prev","fw-cust-next","fw-cust-status","fw-cust-fill");
+
+  var accItems=document.querySelectorAll(".fw-acc-trigger");
+  accItems.forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var open=btn.getAttribute("aria-expanded")==="true";
+      btn.setAttribute("aria-expanded",String(!open));
+      var panel=document.getElementById(btn.getAttribute("aria-controls"));
+      if(panel)panel.hidden=open;
+    });
+  });
+
+  var faqTriggers=document.querySelectorAll(".fw-faq-trigger");
+  faqTriggers.forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var open=btn.getAttribute("aria-expanded")==="true";
+      btn.setAttribute("aria-expanded",String(!open));
+      var panel=document.getElementById(btn.getAttribute("aria-controls"));
+      if(panel)panel.hidden=open;
+    });
+  });
+
+  var footerAcc=document.querySelectorAll(".fw-footer-acc-trigger");
+  footerAcc.forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var open=btn.getAttribute("aria-expanded")==="true";
+      btn.setAttribute("aria-expanded",String(!open));
+      var panel=document.getElementById(btn.getAttribute("aria-controls"));
+      if(panel)panel.hidden=open;
+    });
+  });
+
+  var pauseBtn=document.getElementById("fw-pause-btn");
+  var marquee=document.getElementById("fw-marquee");
+  if(pauseBtn&&marquee){
+    if(!motionOk){marquee.classList.remove("running");}
+    pauseBtn.addEventListener("click",function(){
+      var pressed=pauseBtn.getAttribute("aria-pressed")==="true";
+      pauseBtn.setAttribute("aria-pressed",String(!pressed));
+      if(!pressed){marquee.classList.add("paused");}
+      else{marquee.classList.remove("paused");}
+    });
+  }
+
+  var auraVar=getComputedStyle(document.documentElement).getPropertyValue("--on-lagoon")||"white";
+  var chip=document.getElementById("fw-assist-chip");
+  var backdrop=document.getElementById("fw-assist-backdrop");
+  var dialog=document.getElementById("fw-assist-dialog");
+  var closeBtn=document.getElementById("fw-assist-close");
+  var input=document.getElementById("fw-assist-input");
+  var sendBtn=document.getElementById("fw-assist-send");
+  var log=document.getElementById("fw-assist-log");
+  var sugs=document.getElementById("fw-assist-sugs");
+  var canned={
+    default:"Thanks for your question! Fernwick is a fictional cloud platform demo. All answers here are pre-written and nothing is sent to any server or AI model. Try one of the suggestion buttons for a sample response."
+  };
+  function addMsg(text,type){
+    var div=document.createElement("div");
+    div.className="fw-assist-msg "+type;
+    div.textContent=text;
+    log.appendChild(div);
+    div.scrollIntoView({block:"end",behavior:motionOk?"smooth":"auto"});
+  }
+  function openAssist(){
+    backdrop.hidden=false;
+    document.body.style.overflow="hidden";
+    setTimeout(function(){dialog.focus();},50);
+  }
+  function closeAssist(){
+    backdrop.hidden=true;
+    document.body.style.overflow="";
+    chip.focus();
+  }
+  chip.addEventListener("click",openAssist);
+  closeBtn.addEventListener("click",closeAssist);
+  backdrop.addEventListener("click",function(e){if(e.target===backdrop)closeAssist();});
+  document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!backdrop.hidden)closeAssist();});
+  dialog.addEventListener("keydown",function(e){
+    if(e.key!=="Tab")return;
+    var focusable=Array.prototype.slice.call(dialog.querySelectorAll("button,input,[tabindex]")).filter(function(el){return !el.disabled&&el.tabIndex>=0;});
+    if(!focusable.length)return;
+    var first=focusable[0];var last=focusable[focusable.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+  });
+  sugs.querySelectorAll(".fw-assist-sug-btn").forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var q=btn.textContent.trim().replace(/›.*$/,"").trim();
+      var a=btn.dataset.answer||canned.default;
+      addMsg(q,"user");
+      setTimeout(function(){addMsg(a,"bot");},400);
+    });
+  });
+  input.addEventListener("input",function(){sendBtn.disabled=input.value.trim().length===0;});
+  sendBtn.addEventListener("click",function(){
+    var q=input.value.trim();
+    if(!q)return;
+    addMsg(q,"user");
+    input.value="";
+    sendBtn.disabled=true;
+    setTimeout(function(){addMsg(canned.default,"bot");},400);
+  });
+  input.addEventListener("keydown",function(e){if(e.key==="Enter"&&!sendBtn.disabled)sendBtn.click();});
+
+  var contactForm=document.getElementById("fw-contact-form");
+  if(contactForm){
+    contactForm.addEventListener("submit",function(e){
+      e.preventDefault();
+      var ok=true;var first=null;
+      [["fw-name","Please enter your name."],["fw-email","Please enter a valid work email."],["fw-message","Please enter a message."]].forEach(function(pair){
+        var el=document.getElementById(pair[0]);
+        var val=el.value.trim();
+        var bad=!val||(el.type==="email"&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val));
+        var err=document.getElementById(pair[0]+"-err");
+        if(err){err.textContent=bad?pair[1]:"";err.style.display=bad?"block":"none";}
+        el.setAttribute("aria-invalid",String(bad));
+        if(bad){ok=false;if(!first)first=el;}
+      });
+      var status=document.getElementById("fw-form-status");
+      if(ok){status.textContent="Message validated locally. No data was sent anywhere — this is a fictional demo.";}
+      else{status.textContent="";if(first)first.focus();}
+    });
+  }
+
+  var subscribeBtn=document.getElementById("fw-subscribe-btn");
+  var subscribeStatus=document.getElementById("fw-subscribe-status");
+  if(subscribeBtn){
+    subscribeBtn.addEventListener("click",function(){
+      subscribeStatus.textContent="You're subscribed! (Local demo — no email was collected.)";
+    });
+  }
+
+  document.getElementById("fw-talk-sales-hero")&&document.getElementById("fw-talk-sales-hero").addEventListener("click",function(){document.getElementById("fw-form")&&document.getElementById("fw-form").scrollIntoView({behavior:motionOk?"smooth":"auto"});});
+  document.getElementById("fw-contact-sales-plan")&&document.getElementById("fw-contact-sales-plan").addEventListener("click",function(){document.getElementById("fw-form")&&document.getElementById("fw-form").scrollIntoView({behavior:motionOk?"smooth":"auto"});});
+
+  var footerAccPanels=document.querySelectorAll(".fw-footer-acc-panel");
+  footerAccPanels.forEach(function(p){
+    if(window.innerWidth<768)p.hidden=true;
+  });
+  window.addEventListener("resize",function(){
+    footerAccPanels.forEach(function(p){
+      var trigger=document.getElementById(p.id.replace("fw-fcol-","fw-fcol-h"));
+      if(window.innerWidth>=768){p.hidden=false;if(trigger)trigger.setAttribute("aria-expanded","true");}
+      else if(trigger&&trigger.getAttribute("aria-expanded")==="false"){p.hidden=true;}
+    });
+  });
+
+  if(motionOk){
+    var observer=new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){entry.target.classList.add("fw-in");observer.unobserve(entry.target);}
+      });
+    },{rootMargin:"0px 0px -8% 0px"});
+    document.querySelectorAll(".fw-reveal").forEach(function(el){observer.observe(el);});
+  } else {
+    document.querySelectorAll(".fw-reveal").forEach(function(el){el.style.opacity="1";el.style.transform="none";});
+  }
+})();
+</script>
+</body>
+</html>
