@@ -1,6 +1,83 @@
 {
   "designs": [
     {
+      "slug": "ashgrove",
+      "name": "Ashgrove",
+      "description": "Full-width alternating mist and night mosaics, translucent pill-paired nav and dense small-type footer directory, a calm home-objects flavor of Aura for consumer-products marketing pages.",
+      "design": "designs/ashgrove/DESIGN.md",
+      "theme": "designs/ashgrove/theme.css",
+      "result": "designs/ashgrove/result.html",
+      "fonts": {
+        "sans": "Inter",
+        "display": "Inter",
+        "label": "JetBrains Mono",
+        "href": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      },
+      "hero": "paper",
+      "headingWeight": 600,
+      "radius": {
+        "button": "9999px",
+        "input": "12px",
+        "surface": "18px"
+      },
+      "tokens": {
+        "light": {
+          "accent-contrast": "#fff",
+          "accent-1": "#fcfdff",
+          "gray-1": "#fbfcfe",
+          "accent-2": "#f5f9fe",
+          "gray-2": "#f7f9fd",
+          "accent-3": "#eaf3ff",
+          "gray-3": "#edf1f6",
+          "accent-4": "#dcebfe",
+          "gray-4": "#e4e9ef",
+          "accent-5": "#cce1fc",
+          "gray-5": "#dce2ea",
+          "accent-6": "#b9d4f7",
+          "gray-6": "#d4dbe5",
+          "accent-7": "#a1c3ed",
+          "gray-7": "#c7d0dc",
+          "accent-8": "#7eabe2",
+          "gray-8": "#b1bdce",
+          "accent-9": "#2563a8",
+          "gray-9": "#838f9f",
+          "accent-10": "#135498",
+          "gray-10": "#798494",
+          "accent-11": "#2c69af",
+          "gray-11": "#5c6572",
+          "accent-12": "#1c3757",
+          "gray-12": "#1b2028"
+        },
+        "dark": {
+          "accent-contrast": "#fff",
+          "accent-1": "#000",
+          "gray-1": "#000",
+          "accent-2": "#0b121c",
+          "gray-2": "#111316",
+          "accent-3": "#10243b",
+          "gray-3": "#1c2024",
+          "accent-4": "#0f3155",
+          "gray-4": "#24282f",
+          "accent-5": "#193e67",
+          "gray-5": "#2b3139",
+          "accent-6": "#264d78",
+          "gray-6": "#343a44",
+          "accent-7": "#335e8f",
+          "gray-7": "#404854",
+          "accent-8": "#3f72ac",
+          "gray-8": "#566272",
+          "accent-9": "#5b9de8",
+          "gray-9": "#637081",
+          "accent-10": "#4f91db",
+          "gray-10": "#707d8f",
+          "accent-11": "#83b9f7",
+          "gray-11": "#aab5c5",
+          "accent-12": "#cde3fd",
+          "gray-12": "#eceef2"
+        }
+      }
+    },
+    {
       "slug": "bauhaus",
       "name": "Bauhaus",
       "description": "Muted primaries on warm paper, ink rules that cut the page into cells, six geometric shapes and assertive grotesk type. A catalogue-plate flavor of Aura.",
