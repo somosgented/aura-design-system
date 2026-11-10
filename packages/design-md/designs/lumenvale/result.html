@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Lumenvale · Lakeside Lantern Park</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="stylesheet" href="/aura/main.css"/>
+<link rel="stylesheet" href="theme.css"/>
+<script>
+(function(){
+var a=new URLSearchParams(window.location.search).get("appearance")==="dark"?"dark":"light";
+document.documentElement.classList.add(a);
+document.documentElement.style.colorScheme=a;
+})();
+</script>
+<style>
+:root {
+--lv-navy: #1c468e;
+--lv-green: #008900;
+--lv-green-hover: #006b00;
+--lv-teal: #0e8fa0;
+--lv-grad-from: #187bb7;
+--lv-grad-to: #0e8fa0;
+--lv-hero-base: #061830;
+--lv-hero-overlay: rgba(14,30,54,0.55);
+--lv-card-bg: #ffffff;
+--lv-card-border: #daeaf5;
+--lv-band: #f0f7fc;
+--lv-band-alt: #e3f1fa;
+--lv-mega-panel: #dff0fa;
+--lv-ornament: #b8860b;
+--lv-hours-open: #006da8;
+--lv-hours-closed: #c0392b;
+--lv-drawer-bg: #1c468e;
+--lv-scrim: rgba(28,70,142,0.72);
+--lv-hair: #d0e6f4;
+--lv-shadow-card: 0 2px 12px rgba(28,70,142,0.08);
+--lv-shadow-strip: 0 4px 24px rgba(28,70,142,0.12);
+--lv-fill: #187bb7;
+--lv-on-fill: #ffffff;
+--lv-fill-green: #008900;
+--lv-on-fill-green: #ffffff;
+--lv-art-1-base: #061830;
+--lv-art-2-base: #04140e;
+--lv-art-3-base: #100804;
+--lv-art-4-base: #040a1e;
+--lv-art-5-base: #0a1829;
+--lv-art-6-base: #060e28;
+--lv-art-7-base: #180a04;
+--lv-art-8-base: #100806;
+}
+.dark {
+--lv-navy: #1a3d80;
+--lv-green: #33b233;
+--lv-green-hover: #28962b;
+--lv-teal: #2ab8cc;
+--lv-grad-from: #2a7bbf;
+--lv-grad-to: #1a9db8;
+--lv-hero-base: #030b16;
+--lv-hero-overlay: rgba(5,12,22,0.65);
+--lv-card-bg: #0f2237;
+--lv-card-border: #1e3a56;
+--lv-band: #0a1929;
+--lv-band-alt: #0d2035;
+--lv-mega-panel: #0f2a42;
+--lv-ornament: #d4a84b;
+--lv-hours-open: #2c7ca3;
+--lv-hours-closed: #e05a4a;
+--lv-drawer-bg: #0d2240;
+--lv-scrim: rgba(5,12,22,0.80);
+--lv-hair: #1e3a56;
+--lv-shadow-card: 0 2px 12px rgba(0,0,0,0.3);
+--lv-shadow-strip: 0 4px 24px rgba(0,0,0,0.4);
+--lv-fill: #2c7ca3;
+--lv-on-fill: #ffffff;
+--lv-fill-green: #1a6e1a;
+--lv-on-fill-green: #ffffff;
+--lv-art-1-base: #03090f;
+--lv-art-2-base: #030e08;
+--lv-art-3-base: #090403;
+--lv-art-4-base: #02040e;
+--lv-art-5-base: #060f17;
+--lv-art-6-base: #030614;
+--lv-art-7-base: #0d0502;
+--lv-art-8-base: #090403;
+}
+*,*::before,*::after{box-sizing:border-box;}
+html{font-size:16px;background:var(--gray-1);scroll-behavior:smooth;}
+body{margin:0;background:var(--gray-1);color:var(--gray-12);font-family:var(--aura-font-stack);line-height:1.6;}
+h1,h2,h3,h4,p,ul,ol,figure{margin:0;}
+a{color:inherit;text-decoration:none;}
+img{display:block;max-width:100%;}
+:focus-visible{outline:var(--accent-9) solid 3px;outline-offset:3px;}
+[id]{scroll-margin-top:calc(var(--aura)*5);}
+.skip-link{position:absolute;left:calc(var(--aura)*1);top:calc(var(--aura)*-5);z-index:9999;padding:calc(var(--aura)*0.5) calc(var(--aura)*1.5);border-radius:9999px;background:var(--accent-9);color:var(--gray-1);font-weight:700;font-family:var(--aura-font-stack);}
+.skip-link:focus{top:calc(var(--aura)*1);}
+.wrap{width:min(100% - calc(var(--aura)*9), calc(var(--aura)*98.5));margin-inline:auto;}
+.sec{padding-block:calc(var(--aura)*8);}
+.band-bg{background:var(--lv-band);}
+.navy-bg{background:var(--lv-navy);}
+.muted{color:var(--gray-11);}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;}
+.defs{position:absolute;width:0;height:0;overflow:hidden;}
+.lv-h1-eye{display:block;font-family:var(--aura-font-display);font-size:clamp(0.9rem,2.2vw,1.15rem);font-weight:600;letter-spacing:0.03em;color:rgba(255,255,255,0.92);text-shadow:0 1px 6px rgba(0,0,0,0.7);margin-bottom:calc(var(--aura)*0.5);}
+.lv-h1{font-family:var(--aura-font-display);font-size:clamp(2.2rem,6vw,3.5rem);font-weight:800;line-height:1.1;letter-spacing:-0.02em;color:#fff;text-shadow:0 2px 20px rgba(0,0,0,0.8);text-wrap:balance;}
+.lv-h2{font-family:var(--aura-font-display);font-size:clamp(1.5rem,3vw,2rem);font-weight:700;line-height:1.2;letter-spacing:-0.01em;color:var(--lv-navy);text-align:center;}
+.dark .lv-h2{color:var(--accent-9);}
+.lv-h3{font-family:var(--aura-font-display);font-size:1.5rem;font-weight:700;line-height:1.3;color:var(--lv-navy);}
+.dark .lv-h3{color:var(--accent-9);}
+.lv-lead{font-size:1rem;color:var(--gray-11);line-height:1.6;max-width:calc(var(--aura)*38);}
+.lv-pill{display:inline-flex;align-items:center;justify-content:center;gap:calc(var(--aura)*0.5);padding:calc(var(--aura)*0.75) calc(var(--aura)*2);border-radius:9999px;font-family:var(--aura-font-display);font-weight:700;font-size:0.95rem;cursor:pointer;border:0;text-decoration:none;white-space:nowrap;}
+.lv-pill-primary{background:var(--lv-fill);color:var(--lv-on-fill);}
+.lv-pill-primary:hover{opacity:0.88;}
+.lv-pill-secondary{background:var(--lv-card-bg);color:var(--accent-9);border:2px solid var(--accent-9);}
+.lv-pill-secondary:hover{background:var(--lv-band);}
+.lv-pill-green{background:var(--lv-fill-green);color:var(--lv-on-fill-green);font-size:1rem;padding:calc(var(--aura)*0.75) calc(var(--aura)*2.5);}
+.lv-pill-green:hover{background:var(--lv-green-hover);}
+.lv-pill-hero{background:linear-gradient(135deg,var(--lv-grad-from),var(--lv-grad-to));box-shadow:0 0 0 2px #fff;color:#fff;padding:calc(var(--aura)*1) calc(var(--aura)*3);font-size:1.05rem;}
+.lv-pill-hero:hover{opacity:0.9;}
+.lv-pill-hero svg{width:1.2em;height:1.2em;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.ornament-divider{display:flex;align-items:center;gap:calc(var(--aura)*1.5);margin-bottom:calc(var(--aura)*2);}
+.ornament-divider::before,.ornament-divider::after{content:"";flex:1;height:1px;background:var(--lv-hair);}
+.ornament-divider svg{flex:none;width:28px;height:28px;fill:var(--lv-ornament);}
+
+.lv-header{position:sticky;top:0;z-index:100;background:var(--lv-navy);}
+.lv-util-row{display:flex;align-items:center;justify-content:flex-end;gap:calc(var(--aura)*1.25);padding:calc(var(--aura)*0.35) calc(var(--aura)*4.5);border-bottom:1px solid rgba(255,255,255,0.1);}
+.lv-util-sep{display:inline-block;width:1px;height:14px;border-left:1px solid rgba(255,255,255,0.25);flex-shrink:0;}
+.lv-util-row a,.lv-util-row button{font-family:var(--aura-font-stack);font-size:0.8rem;font-weight:600;color:rgba(255,255,255,0.9);background:transparent;border:0;cursor:pointer;display:inline-flex;align-items:center;gap:calc(var(--aura)*0.35);padding:0;white-space:nowrap;}
+.lv-util-row a:hover,.lv-util-row button:hover{color:#fff;}
+.lv-search-util{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,0.15);border-radius:9999px;padding:0 calc(var(--aura)*0.75);border:1px solid rgba(255,255,255,0.3);height:calc(var(--aura)*1.75);}
+.lv-search-util input{background:transparent;border:0;color:#fff;font-family:var(--aura-font-stack);font-size:0.8125rem;width:calc(var(--aura)*12.5);outline:0;line-height:calc(var(--aura)*1.75);}
+.lv-search-util input::placeholder{color:rgba(255,255,255,0.65);}
+.lv-search-util svg{width:13px;height:13px;stroke:#fff;stroke-width:2;fill:none;flex-shrink:0;}
+.lv-main-row{display:flex;align-items:center;gap:calc(var(--aura)*1.25);padding:0 calc(var(--aura)*4.5);height:calc(var(--aura)*3.5);}
+.lv-wordmark{display:inline-flex;align-items:center;gap:calc(var(--aura)*0.5);font-family:var(--aura-font-display);font-weight:800;font-size:1.1rem;color:#fff;text-decoration:none;flex-shrink:0;}
+.lv-wordmark-sq{width:calc(var(--aura)*2.5);height:calc(var(--aura)*2.5);border-radius:8px;background:linear-gradient(135deg,var(--lv-grad-from),var(--lv-grad-to));display:flex;align-items:center;justify-content:center;}
+.lv-wordmark-sq svg{width:60%;height:60%;fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+.lv-nav-list{display:flex;align-items:center;gap:0;list-style:none;padding:0;margin:0;flex:1;}
+.lv-nav-btn{font-family:var(--aura-font-stack);font-size:0.9rem;font-weight:600;color:rgba(255,255,255,0.9);background:transparent;border:0;cursor:pointer;padding:0 calc(var(--aura)*1.25);height:calc(var(--aura)*3.5);display:inline-flex;align-items:center;gap:calc(var(--aura)*0.35);white-space:nowrap;border-bottom:3px solid transparent;position:relative;text-decoration:none;}
+.lv-nav-btn:hover,.lv-nav-btn[aria-expanded="true"]{color:#fff;border-bottom-color:rgba(255,255,255,0.7);}
+.lv-nav-btn .chev{width:12px;height:12px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.lv-nav-end{display:flex;align-items:center;gap:calc(var(--aura)*1);margin-left:auto;flex-shrink:0;}
+.lv-nav-icon{background:transparent;border:0;cursor:pointer;color:rgba(255,255,255,0.9);display:flex;align-items:center;justify-content:center;width:calc(var(--aura)*2.5);height:calc(var(--aura)*2.5);border-radius:9999px;}
+.lv-nav-icon:hover{background:rgba(255,255,255,0.15);color:#fff;}
+.lv-nav-icon svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.lv-mega{position:absolute;top:100%;left:0;right:0;background:var(--lv-card-bg);border-top:3px solid var(--accent-9);box-shadow:0 8px 32px rgba(28,70,142,0.18);z-index:200;}
+.lv-mega[hidden]{display:none;}
+.lv-mega-inner{display:grid;grid-template-columns:1fr 1fr;max-width:calc(var(--aura)*98.5);margin:0 auto;padding:calc(var(--aura)*2.5) calc(var(--aura)*4.5);}
+.lv-mega-left{padding-right:calc(var(--aura)*3);border-right:1px solid var(--lv-hair);}
+.lv-mega-right{padding-left:calc(var(--aura)*3);background:var(--lv-mega-panel);border-radius:0 0 16px 0;padding:calc(var(--aura)*2);}
+.lv-mega-group{margin-bottom:calc(var(--aura)*1.5);}
+.lv-mega-group-title{font-family:var(--aura-font-display);font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent-9);margin-bottom:calc(var(--aura)*0.5);}
+.lv-mega-group ul{list-style:none;padding:0;display:grid;gap:calc(var(--aura)*0.25);}
+.lv-mega-group ul a{font-size:0.9rem;color:var(--gray-12);padding:calc(var(--aura)*0.25) 0;display:block;}
+.lv-mega-group ul a:hover{color:var(--accent-9);text-decoration:underline;text-underline-offset:3px;}
+.lv-mega-hours-title{font-family:var(--aura-font-display);font-size:0.95rem;font-weight:700;color:var(--lv-navy);margin-bottom:calc(var(--aura)*0.25);}
+.dark .lv-mega-hours-title{color:var(--accent-9);}
+.lv-mega-hours-sub{font-size:0.78rem;color:var(--gray-11);margin-bottom:calc(var(--aura)*1);}
+.lv-hours-list{list-style:none;padding:0;display:grid;gap:calc(var(--aura)*0.75);}
+.lv-hours-item{display:flex;align-items:flex-start;gap:calc(var(--aura)*0.75);}
+.lv-hours-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.lv-hours-dot.open{background:var(--lv-hours-open);}
+.lv-hours-dot.closed{background:var(--lv-hours-closed);}
+.lv-hours-name{font-weight:700;font-size:0.88rem;display:block;}
+.lv-hours-time{font-size:0.78rem;color:var(--gray-11);}
+.lv-hours-closed-label{font-size:0.8rem;color:var(--lv-hours-closed);font-weight:600;}
+.dark .lv-hours-closed-label{color:#ffb3aa;}
+
+.lv-hamburger{display:none;background:transparent;border:0;cursor:pointer;padding:calc(var(--aura)*0.5);color:#fff;}
+.lv-hamburger svg{width:24px;height:24px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;}
+.lv-mobile-tickets{display:none;background:var(--accent-9);color:var(--gray-1);border-radius:9999px;padding:calc(var(--aura)*0.25) calc(var(--aura)*0.75);font-size:0.72rem;font-weight:700;border:0;cursor:pointer;white-space:nowrap;}
+.lv-mobile-search-btn{display:none;background:transparent;border:0;cursor:pointer;color:#fff;padding:calc(var(--aura)*0.25);}
+.lv-mobile-search-btn svg{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;}
+.lv-drawer{position:fixed;inset:0;z-index:500;background:var(--lv-drawer-bg);transform:translateX(-100%);overflow-y:auto;}
+.lv-drawer.open{transform:translateX(0);}
+.lv-drawer-head{display:flex;align-items:center;justify-content:space-between;padding:calc(var(--aura)*1) calc(var(--aura)*1.5);border-bottom:1px solid rgba(255,255,255,0.15);}
+.lv-drawer-close{background:transparent;border:0;cursor:pointer;color:#fff;display:flex;align-items:center;justify-content:center;width:calc(var(--aura)*3);height:calc(var(--aura)*3);border-radius:50%;}
+.lv-drawer-close:hover{background:rgba(255,255,255,0.15);}
+.lv-drawer-close svg{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;}
+.lv-drawer-list{list-style:none;padding:0;margin:0;}
+.lv-drawer-item{border-bottom:1px solid rgba(255,255,255,0.12);}
+.lv-drawer-item a,.lv-drawer-item button{display:flex;align-items:center;gap:calc(var(--aura)*1);padding:calc(var(--aura)*1) calc(var(--aura)*1.5);color:#fff;font-size:1rem;font-weight:600;font-family:var(--aura-font-stack);background:transparent;border:0;cursor:pointer;width:100%;text-align:left;text-decoration:none;}
+.lv-drawer-item a:hover,.lv-drawer-item button:hover{background:rgba(255,255,255,0.08);}
+.lv-drawer-item svg{width:20px;height:20px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+.lv-drawer-chev{margin-left:auto;width:16px;height:16px;stroke:rgba(255,255,255,0.6);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.lv-drawer-locale{display:flex;align-items:center;gap:calc(var(--aura)*1);padding:calc(var(--aura)*1) calc(var(--aura)*1.5);color:rgba(255,255,255,0.8);font-size:0.9rem;font-family:var(--aura-font-stack);}
+
+.lv-hero{position:relative;min-height:72vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:visible;padding:calc(var(--aura)*5) calc(var(--aura)*2) calc(var(--aura)*5);background-color:var(--lv-hero-base);}
+.lv-hero-sky{position:absolute;inset:0;z-index:0;background:linear-gradient(to bottom,#061830 0%,#0a2a50 35%,#0d3060 55%,#0a2a40 70%,#071a2e 100%);}
+.lv-hero-radial{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse at 25% 40%,rgba(14,143,160,0.3) 0%,transparent 50%),radial-gradient(ellipse at 75% 25%,rgba(24,123,183,0.25) 0%,transparent 45%),radial-gradient(ellipse at 50% 70%,rgba(10,60,120,0.4) 0%,transparent 55%);}
+.lv-hero-hills{position:absolute;bottom:28%;left:0;right:0;z-index:2;height:120px;overflow:hidden;}
+.lv-hero-hills svg{width:100%;height:100%;}
+.lv-hero-lake{position:absolute;bottom:0;left:0;right:0;z-index:3;height:28%;background:linear-gradient(to bottom,rgba(10,50,100,0.6) 0%,rgba(6,30,70,0.85) 100%);}
+.lv-hero-lake-sheen{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent 0%,rgba(100,180,255,0.3) 30%,rgba(150,220,255,0.5) 50%,rgba(100,180,255,0.3) 70%,transparent 100%);}
+.lv-hero-reflections{position:absolute;top:4px;left:0;right:0;z-index:4;pointer-events:none;}
+.lv-hero-overlay{position:absolute;inset:0;z-index:5;background:var(--lv-hero-overlay);}
+.lv-particles{position:absolute;inset:0;z-index:6;pointer-events:none;overflow:hidden;}
+.lv-particle{position:absolute;width:4px;height:4px;border-radius:50%;background:#ffe8a0;opacity:0;}
+.lv-hero-content{position:relative;z-index:7;max-width:calc(var(--aura)*55);}
+.lv-hero-actions{display:flex;flex-wrap:wrap;gap:calc(var(--aura)*1.5);justify-content:center;margin-top:calc(var(--aura)*2.5);}
+.lv-pause-btn{position:absolute;top:calc(var(--aura)*1.5);right:calc(var(--aura)*1.5);z-index:8;width:44px;height:44px;border-radius:50%;background:rgba(0,0,0,0.75);border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.lv-pause-btn:focus-visible{outline:3px solid #fff;outline-offset:2px;}
+.lv-pause-btn{color:#fff;}
+.lv-pause-btn svg{width:20px;height:20px;fill:currentColor;}
+.lv-pause-btn .play-icon{display:none;}
+.lv-pause-btn[aria-pressed="true"] .pause-icon{display:none;}
+.lv-pause-btn[aria-pressed="true"] .play-icon{display:block;}
+
+.lv-booking-outer-desktop{display:block;padding:calc(var(--aura)*1.5) calc(var(--aura)*4.5);background:var(--lv-band);}
+.lv-booking-outer-mobile{display:none;padding:calc(var(--aura)*1.5) calc(var(--aura)*1.5);}
+.lv-booking-wrap{background:var(--lv-card-bg);box-shadow:var(--lv-shadow-strip);border-radius:16px;padding:calc(var(--aura)*1.5) calc(var(--aura)*2.5);display:flex;align-items:flex-end;gap:calc(var(--aura)*2);flex-wrap:wrap;max-width:calc(var(--aura)*98.5);margin-inline:auto;}
+.lv-booking-field{display:flex;flex-direction:column;gap:calc(var(--aura)*0.35);}
+.lv-booking-label{font-size:0.75rem;font-weight:600;color:var(--gray-11);}
+.lv-booking-select{height:calc(var(--aura)*3);padding:0 calc(var(--aura)*2.5) 0 calc(var(--aura)*1);border:1px solid var(--lv-hair);border-radius:16px;background:var(--lv-card-bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 15 15'%3E%3Cpath d='M4 6l3.5 3.5L11 6' fill='none' stroke='%234b6781' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right calc(var(--aura)*1) center;color:var(--gray-12);font:inherit;font-size:0.95rem;appearance:none;min-width:calc(var(--aura)*14);}
+.lv-booking-wrap select.lv-booking-select:not(.default){background-color:var(--lv-card-bg);color:var(--gray-12);}
+.lv-booking-select:focus-visible{outline:3px solid var(--accent-9);outline-offset:2px;}
+.lv-stepper{display:flex;align-items:center;gap:calc(var(--aura)*0.75);}
+.lv-stepper-btn{width:32px;height:32px;border-radius:50%;border:2px solid var(--accent-9);background:var(--lv-card-bg);color:var(--accent-9);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;line-height:1;}
+.lv-stepper-btn:hover{background:var(--lv-band);}
+.lv-stepper-btn:focus-visible{outline:3px solid var(--accent-9);outline-offset:2px;}
+.lv-stepper-val{font-size:1.1rem;font-weight:700;min-width:calc(var(--aura)*1.5);text-align:center;color:var(--gray-12);}
+.lv-booking-status{font-size:0.85rem;color:var(--lv-hours-open);font-weight:600;margin-top:calc(var(--aura)*0.5);min-height:1.2em;}
+
+.lv-sheet{background:var(--gray-1);border-radius:48px 48px 0 0;position:relative;z-index:2;margin-top:calc(var(--aura)*-3.5);padding-top:calc(var(--aura)*9);}
+
+.lv-hours-toggle-btn{background:transparent;border:2px solid var(--accent-9);border-radius:9999px;padding:calc(var(--aura)*0.5) calc(var(--aura)*1.5);font:inherit;font-size:0.9rem;font-weight:700;color:var(--accent-9);cursor:pointer;display:inline-flex;align-items:center;gap:calc(var(--aura)*0.5);font-family:var(--aura-font-stack);}
+.lv-hours-toggle-btn:hover{background:var(--lv-band);}
+.lv-hours-toggle-btn .chev{width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.lv-hours-panel{margin-top:calc(var(--aura)*1.5);}
+.lv-hours-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--aura)*1);}
+
+.lv-offer-grid{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--aura)*2.5);}
+.lv-offer-card{background:var(--lv-card-bg);border:1px solid var(--lv-card-border);border-radius:24px;overflow:hidden;box-shadow:var(--lv-shadow-card);}
+.lv-offer-art{height:calc(var(--aura)*14);position:relative;overflow:hidden;background-color:var(--lv-art-1-base);}
+.lv-offer-art-a{background:radial-gradient(ellipse at 30% 50%,#1a6fa0 0%,#0a3060 50%,transparent 100%);}
+.lv-offer-art-b{background-color:var(--lv-art-2-base);}
+.lv-offer-art-b-grad{background:radial-gradient(ellipse at 65% 40%,#1e7055 0%,#0a4035 50%,transparent 100%);}
+.lv-offer-lanterns{position:absolute;inset:0;pointer-events:none;}
+.lv-offer-body{padding:calc(var(--aura)*2);}
+.lv-offer-links{display:flex;gap:calc(var(--aura)*1.5);margin-top:calc(var(--aura)*1.5);flex-wrap:wrap;align-items:center;}
+.lv-offer-links a:first-child{color:var(--accent-9);font-weight:600;font-size:0.9rem;text-decoration:underline;text-underline-offset:3px;}
+.lv-offer-links a:first-child:hover{color:var(--accent-10);}
+
+.lv-exp-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:calc(var(--aura)*1.5);}
+.lv-exp-card{border-radius:24px;overflow:hidden;position:relative;min-height:calc(var(--aura)*16);box-shadow:var(--lv-shadow-card);background-color:var(--lv-art-1-base);}
+.lv-exp-card--hero{grid-column:1/-1;grid-row:auto;min-height:calc(var(--aura)*22);}
+.lv-exp-art{position:absolute;inset:0;}
+.lv-exp-art-1{background:radial-gradient(ellipse at 40% 55%,#1a7a9a 0%,#0a3050 55%,transparent 100%);}
+.lv-exp-art-2{background-color:var(--lv-art-2-base);background:radial-gradient(ellipse at 55% 45%,#2a7a55 0%,#104030 55%,transparent 100%);}
+.lv-exp-art-3{background-color:var(--lv-art-3-base);background:radial-gradient(ellipse at 35% 65%,#8a4a10 0%,#3a2010 55%,transparent 100%);}
+.lv-exp-art-4{background-color:var(--lv-art-4-base);background:radial-gradient(ellipse at 65% 35%,#1a4a9a 0%,#0a2060 55%,transparent 100%);}
+.lv-exp-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,rgba(0,0,0,0.1) 55%,transparent 100%);}
+.lv-exp-label{position:absolute;bottom:0;left:0;right:0;padding:calc(var(--aura)*1.5);color:#fff;font-family:var(--aura-font-display);font-weight:700;}
+.lv-exp-label h3{font-size:1.2rem;margin-bottom:calc(var(--aura)*0.25);color:#fff;}
+.lv-exp-label .lv-exp-sub{font-size:0.8rem;color:rgba(255,255,255,0.88);}
+
+.lv-plan-rows{display:grid;gap:calc(var(--aura)*4);}
+.lv-plan-row{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--aura)*4);align-items:center;}
+.lv-plan-row--right .lv-plan-art{order:-1;}
+.lv-plan-art{border-radius:24px;overflow:hidden;height:calc(var(--aura)*25);position:relative;background-color:var(--lv-art-5-base);}
+.lv-plan-art-1{background:radial-gradient(ellipse at 50% 55%,#1a6090 0%,#0a2a50 50%,transparent 100%);}
+.lv-plan-art-2{background-color:var(--lv-art-2-base);background:radial-gradient(ellipse at 40% 45%,#2a6545 0%,#0a2e1a 50%,transparent 100%);}
+.lv-plan-art-3{background-color:var(--lv-art-7-base);background:radial-gradient(ellipse at 55% 55%,#7a4515 0%,#2a1808 50%,transparent 100%);}
+.lv-plan-art-4{background-color:var(--lv-art-6-base);background:radial-gradient(ellipse at 35% 50%,#1a3080 0%,#0a1840 50%,transparent 100%);}
+.lv-plan-art-shapes{position:absolute;inset:0;}
+
+.lv-season-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:calc(var(--aura)*1.5);}
+.lv-season-card{border-radius:24px;overflow:hidden;position:relative;min-height:calc(var(--aura)*18);box-shadow:var(--lv-shadow-card);background-color:var(--lv-art-6-base);}
+.lv-season-card--large{grid-column:1/-1;grid-row:auto;min-height:calc(var(--aura)*24);}
+.lv-season-art{position:absolute;inset:0;}
+.lv-season-art-winter{background:radial-gradient(ellipse at 50% 35%,#3a6aaa 0%,#1a3a7a 45%,transparent 100%);}
+.lv-season-art-spring{background-color:var(--lv-art-2-base);background:radial-gradient(ellipse at 42% 55%,#2a8a40 0%,#0a4020 45%,transparent 100%);}
+.lv-season-art-summer{background-color:var(--lv-art-7-base);background:radial-gradient(ellipse at 58% 32%,#c0680a 0%,#6a2a08 45%,transparent 100%);}
+.lv-season-art-autumn{background-color:var(--lv-art-8-base);background:radial-gradient(ellipse at 32% 48%,#a05020 0%,#502010 45%,transparent 100%);}
+.lv-season-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.72) 0%,transparent 55%);}
+.lv-season-label{position:absolute;bottom:0;left:0;right:0;padding:calc(var(--aura)*2);color:#fff;font-family:var(--aura-font-display);font-weight:700;font-size:1.3rem;text-shadow:0 1px 8px rgba(0,0,0,0.6);}
+.lv-season-sub{font-size:0.85rem;font-family:var(--aura-font-stack);font-weight:400;margin-top:4px;color:rgba(255,255,255,0.88);}
+
+.lv-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:calc(var(--aura)*2);text-align:center;}
+.lv-stat-val{font-family:var(--aura-font-display);font-size:2rem;font-weight:800;color:var(--accent-9);line-height:1;}
+.lv-stat-lbl{font-size:0.85rem;color:var(--gray-11);margin-top:calc(var(--aura)*0.35);}
+
+.lv-features{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--aura)*2);}
+.lv-feat-card{background:var(--lv-card-bg);border:1px solid var(--lv-card-border);border-radius:24px;padding:calc(var(--aura)*2);box-shadow:var(--lv-shadow-card);}
+.lv-feat-icon{width:calc(var(--aura)*3.5);height:calc(var(--aura)*3.5);border-radius:16px;background:var(--lv-band);display:flex;align-items:center;justify-content:center;margin-bottom:calc(var(--aura)*1.5);}
+.lv-feat-icon svg{width:28px;height:28px;fill:none;stroke:var(--accent-9);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.lv-feat-card h3{font-family:var(--aura-font-display);font-size:1.1rem;font-weight:700;margin-bottom:calc(var(--aura)*0.5);color:var(--lv-navy);}
+.dark .lv-feat-card h3{color:var(--accent-9);}
+.lv-feat-card p{font-size:0.9rem;color:var(--gray-11);line-height:1.6;}
+
+.lv-data-wrap{overflow-x:auto;border-radius:16px;border:1px solid var(--lv-card-border);background:var(--lv-card-bg);}
+table{width:100%;border-collapse:collapse;font-size:0.9rem;}
+thead th{padding:calc(var(--aura)*0.75) calc(var(--aura)*1);font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--gray-11);background:var(--lv-band);border-bottom:1px solid var(--lv-hair);text-align:left;}
+tbody td{padding:calc(var(--aura)*0.75) calc(var(--aura)*1);border-bottom:1px solid var(--lv-hair);color:var(--gray-12);}
+tbody tr:last-child td{border-bottom:0;}
+tbody tr:hover td{background:var(--lv-band);}
+.lv-badge{display:inline-block;padding:3px 10px;border-radius:9999px;font-size:0.78rem;font-weight:700;}
+.lv-badge-open{background:var(--lv-band-alt);color:var(--lv-hours-open);}
+.lv-badge-closed{background:#ffe8e5;color:#9b1c1c;}
+.dark .lv-badge-open{background:rgba(44,124,163,0.35);color:#c1e7fe;}
+.dark .lv-badge-closed{background:rgba(140,40,30,0.5);color:#ffb3aa;}
+
+.lv-form-card{background:var(--lv-card-bg);border:1px solid var(--lv-card-border);border-radius:24px;padding:calc(var(--aura)*2.5);box-shadow:var(--lv-shadow-card);}
+.lv-field{display:grid;gap:calc(var(--aura)*0.35);margin-bottom:calc(var(--aura)*1.25);}
+.lv-field label{font-size:0.875rem;font-weight:600;color:var(--gray-12);}
+.lv-field input,.lv-field select{height:calc(var(--aura)*3);padding:0 calc(var(--aura)*1);border:1px solid var(--lv-hair);border-radius:16px;background:var(--lv-card-bg);color:var(--gray-12);font:inherit;font-size:1rem;}
+.lv-field input::placeholder{color:var(--gray-11);}
+.lv-field input:focus-visible,.lv-field select:focus-visible{outline:3px solid var(--accent-9);outline-offset:2px;border-color:var(--accent-9);}
+.lv-field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 15 15'%3E%3Cpath d='M4 6l3.5 3.5L11 6' fill='none' stroke='%234b6781' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right calc(var(--aura)*1) center;padding-right:calc(var(--aura)*2.5);}
+.lv-err{color:var(--lv-hours-closed);font-size:0.8rem;min-height:1.1em;}
+.lv-err:empty{display:none;}
+.lv-status{padding:calc(var(--aura)*0.75) calc(var(--aura)*1.25);border-radius:12px;background:var(--lv-band-alt);color:var(--gray-12);font-size:0.875rem;margin-top:calc(var(--aura)*1);}
+.lv-status:empty{display:none;}
+
+.lv-pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--aura)*2);}
+.lv-plan{background:var(--lv-card-bg);border:1px solid var(--lv-card-border);border-radius:24px;padding:calc(var(--aura)*2.5);display:flex;flex-direction:column;box-shadow:var(--lv-shadow-card);}
+.lv-plan--pop{border-color:var(--accent-9);border-width:2px;box-shadow:0 0 0 1px var(--accent-9),var(--lv-shadow-card);}
+.lv-plan-name{font-family:var(--aura-font-display);font-size:1.1rem;font-weight:700;color:var(--lv-navy);margin-bottom:calc(var(--aura)*0.5);}
+.dark .lv-plan-name{color:var(--accent-9);}
+.lv-plan-price{font-family:var(--aura-font-display);font-size:2.2rem;font-weight:800;color:var(--gray-12);line-height:1;margin-bottom:calc(var(--aura)*0.25);}
+.lv-plan-per{font-size:0.8rem;color:var(--gray-11);margin-bottom:calc(var(--aura)*1.5);}
+.lv-plan ul{list-style:none;padding:0;display:grid;gap:calc(var(--aura)*0.5);flex:1;margin-bottom:calc(var(--aura)*2);}
+.lv-plan li{display:flex;align-items:center;gap:calc(var(--aura)*0.5);font-size:0.9rem;}
+.lv-plan li svg{width:16px;height:16px;fill:none;stroke:var(--lv-hours-open);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+.lv-plan .lv-pill{width:100%;justify-content:center;}
+.lv-plan--pop .lv-pill-primary{background:var(--lv-fill);color:var(--lv-on-fill);}
+
+.lv-faq{display:grid;gap:0;}
+.lv-acc{border-bottom:1px solid var(--lv-hair);}
+.lv-acc-btn{display:flex;align-items:center;gap:calc(var(--aura)*0.75);width:100%;padding:calc(var(--aura)*1.25) 0;background:transparent;border:0;cursor:pointer;text-align:left;font:inherit;font-size:1rem;font-weight:600;color:var(--gray-12);font-family:var(--aura-font-stack);}
+.lv-acc-btn svg{width:18px;height:18px;fill:none;stroke:var(--accent-9);stroke-width:2;stroke-linecap:round;flex-shrink:0;}
+.lv-acc-btn[aria-expanded="true"] svg{transform:rotate(45deg);}
+.lv-acc-panel{padding:0 0 calc(var(--aura)*1.25) calc(var(--aura)*2.5);font-size:0.95rem;color:var(--gray-11);line-height:1.6;}
+
+.lv-closing{text-align:center;padding:calc(var(--aura)*8) calc(var(--aura)*4.5);background:linear-gradient(135deg,var(--lv-navy) 0%,#0e5a89 100%);}
+.lv-closing .lv-h2{color:#fff;}
+.lv-closing .lv-lead{color:rgba(255,255,255,0.85);margin-inline:auto;margin-top:calc(var(--aura)*1);}
+.lv-closing-actions{display:flex;flex-wrap:wrap;gap:calc(var(--aura)*1.5);justify-content:center;margin-top:calc(var(--aura)*2.5);}
+.lv-closing-secondary{background:transparent;color:#fff;border:2px solid rgba(255,255,255,0.75);padding:calc(var(--aura)*1) calc(var(--aura)*3);font-size:1.05rem;}
+.lv-closing-secondary:hover{background:rgba(255,255,255,0.1);}
+.lv-closing-primary{background:var(--lv-fill-green);color:var(--lv-on-fill-green);padding:calc(var(--aura)*1) calc(var(--aura)*3);font-size:1.05rem;}
+.dark .lv-closing-primary{background:#1a6e1a;color:#ffffff;}
+
+.lv-footer-columns{background:var(--gray-1);padding:calc(var(--aura)*5) calc(var(--aura)*4.5) calc(var(--aura)*3);}
+.lv-footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:calc(var(--aura)*2.5);}
+.lv-footer-col h4{font-family:var(--aura-font-display);font-size:0.95rem;font-weight:700;color:var(--lv-navy);margin-bottom:calc(var(--aura)*1);}
+.dark .lv-footer-col h4{color:var(--accent-9);}
+.lv-footer-col ul{list-style:none;padding:0;display:grid;gap:calc(var(--aura)*0.5);}
+.lv-footer-col ul a{font-size:0.875rem;color:var(--accent-9);}
+.lv-footer-col ul a:hover{text-decoration:underline;text-underline-offset:3px;}
+.lv-footer-social{margin-top:calc(var(--aura)*2);}
+.lv-footer-social p{font-size:0.875rem;font-weight:600;color:var(--gray-12);margin-bottom:calc(var(--aura)*0.75);}
+.lv-footer-social-links{display:flex;gap:calc(var(--aura)*1);}
+.lv-footer-social-links a{width:calc(var(--aura)*2.5);height:calc(var(--aura)*2.5);border-radius:50%;background:var(--lv-band);display:flex;align-items:center;justify-content:center;color:var(--accent-9);}
+.lv-footer-social-links a:hover{background:var(--lv-band-alt);}
+.lv-footer-social-links svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.lv-footer-mobile-help{display:none;text-align:center;padding:calc(var(--aura)*2);font-size:0.9rem;color:var(--gray-11);line-height:1.6;border-top:1px solid var(--lv-hair);}
+.lv-footer-show-more{display:none;width:calc(100% - calc(var(--aura)*4));margin:calc(var(--aura)*1.5) auto;border:2px solid var(--accent-9);border-radius:9999px;padding:calc(var(--aura)*0.75) calc(var(--aura)*2);background:transparent;color:var(--accent-9);font:inherit;font-size:0.95rem;font-weight:700;cursor:pointer;align-items:center;justify-content:center;gap:calc(var(--aura)*0.5);font-family:var(--aura-font-stack);}
+.lv-footer-show-more svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.lv-footer-extra{display:none;padding:0 calc(var(--aura)*2) calc(var(--aura)*1);}
+.lv-footer-extra.open{display:block;}
+.lv-footer-extra ul{list-style:none;padding:0;display:grid;gap:calc(var(--aura)*0.5);text-align:center;}
+.lv-footer-extra ul a{font-size:0.875rem;color:var(--accent-9);}
+.lv-footer-legal-bar{background:var(--lv-navy);padding:calc(var(--aura)*1.25) calc(var(--aura)*4.5);display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:calc(var(--aura)*1.5);}
+.lv-footer-legal-bar a{font-size:0.8rem;color:rgba(255,255,255,0.88);}
+.lv-footer-legal-bar a:hover{color:#fff;text-decoration:underline;text-underline-offset:3px;}
+.lv-footer-legal-sep{display:inline-block;width:1px;height:12px;border-left:1px solid rgba(255,255,255,0.3);}
+
+dialog::backdrop{background:var(--lv-scrim);}
+.lv-dialog{background:var(--lv-card-bg);border:0;border-radius:24px;padding:calc(var(--aura)*3);max-width:calc(var(--aura)*45);width:calc(100% - calc(var(--aura)*4));box-shadow:0 8px 40px rgba(0,0,0,0.2);}
+.lv-dialog-title{font-family:var(--aura-font-display);font-size:1.1rem;font-weight:700;color:var(--lv-navy);margin-bottom:calc(var(--aura)*1.5);text-align:center;}
+.dark .lv-dialog-title{color:var(--accent-9);}
+.lv-dialog-cols{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--aura)*0.5) calc(var(--aura)*2);}
+.lv-dialog-cols a{display:block;padding:calc(var(--aura)*0.35) 0;font-size:0.9rem;color:var(--accent-9);}
+.lv-dialog-cols a:hover{text-decoration:underline;text-underline-offset:3px;}
+.lv-dialog-footer{text-align:center;margin-top:calc(var(--aura)*2);}
+
+@media (prefers-reduced-motion: no-preference){
+.lv-particle{animation:lv-float var(--dur,4s) ease-in-out var(--delay,0s) infinite;}
+@keyframes lv-float{0%,100%{opacity:0;transform:translateY(0);}20%{opacity:0.75;}80%{opacity:0.55;transform:translateY(calc(var(--aura)*-4));}}
+.lv-hero-sky{animation:lv-pan 20s ease-in-out infinite alternate;}
+@keyframes lv-pan{0%{filter:hue-rotate(0deg);}100%{filter:hue-rotate(16deg);}}
+.lv-hero.paused .lv-particle,.lv-hero.paused .lv-hero-sky{animation-play-state:paused;}
+.lv-pill{transition:background-color 150ms ease-out,opacity 150ms ease;}
+.lv-stepper-btn{transition:background-color 150ms ease;}
+.lv-exp-card:hover .lv-exp-art,.lv-season-card:hover .lv-season-art{transform:scale(1.04);}
+.lv-exp-art,.lv-season-art{transition:transform 300ms ease;}
+.lv-drawer{transition:transform 240ms ease;}
+.lv-mega{animation:lv-fade 180ms ease;}
+@keyframes lv-fade{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+.lv-acc-panel{animation:lv-reveal 180ms ease;}
+@keyframes lv-reveal{from{opacity:0;}to{opacity:1;}}
+.lv-nav-btn .chev,.lv-hours-toggle-btn .chev{transition:transform 200ms ease;}
+.lv-acc-btn svg{transition:transform 200ms ease;}
+}
+@media (prefers-reduced-motion: reduce){
+*,*::before,*::after{animation:none !important;transition:none !important;}
+.lv-particle{display:none !important;}
+}
+
+@media (max-width: 1024px){
+.lv-util-row{display:none;}
+.lv-nav-list{display:none;}
+.lv-nav-end{display:none;}
+.lv-hamburger{display:flex;}
+.lv-mobile-tickets{display:inline-block;}
+.lv-mobile-search-btn{display:flex;}
+.lv-booking-outer-desktop{display:none !important;}
+.lv-booking-outer-mobile{display:block;}
+.lv-sheet{padding-top:0;}
+.lv-offer-grid{grid-template-columns:1fr;}
+.lv-exp-grid{grid-template-columns:1fr 1fr 1fr;}
+.lv-exp-card--hero{grid-column:1/-1;grid-row:auto;min-height:calc(var(--aura)*20);}
+.lv-plan-row{grid-template-columns:1fr;}
+.lv-plan-row--right .lv-plan-art{order:0;}
+.lv-season-grid{grid-template-columns:1fr 1fr 1fr;}
+.lv-season-card--large{grid-column:1/-1;grid-row:auto;min-height:calc(var(--aura)*18);}
+.lv-stats{grid-template-columns:repeat(2,1fr);}
+.lv-features{grid-template-columns:1fr 1fr;}
+.lv-pricing{grid-template-columns:1fr;}
+.lv-hours-grid{grid-template-columns:repeat(2,1fr);}
+.lv-footer-grid{grid-template-columns:repeat(2,1fr);}
+.lv-closing{padding:calc(var(--aura)*5) calc(var(--aura)*2);}
+}
+@media (max-width: 400px){
+.lv-main-row{gap:calc(var(--aura)*0.5);padding:0 calc(var(--aura)*0.75);}
+.lv-wordmark{font-size:0.9rem;}
+.lv-wordmark-sq{width:calc(var(--aura)*1.75) !important;height:calc(var(--aura)*1.75) !important;}
+.lv-mobile-tickets{font-size:0.65rem;padding:calc(var(--aura)*0.2) calc(var(--aura)*0.55);}
+}
+@media (max-width: 600px){
+.wrap{width:min(100% - calc(var(--aura)*2.5), calc(var(--aura)*98.5));margin-inline:auto;}
+.lv-main-row{padding:0 calc(var(--aura)*1);}
+.lv-booking-outer-mobile{padding:calc(var(--aura)*1);}
+.lv-booking-wrap{flex-direction:column;align-items:stretch;border-radius:12px;padding:calc(var(--aura)*1.5);}
+.lv-booking-select{min-width:100%;}
+.lv-sheet{border-radius:24px 24px 0 0;margin-top:calc(var(--aura)*-2);padding-top:calc(var(--aura)*7);}
+.lv-exp-grid{grid-template-columns:1fr;}
+.lv-season-grid{grid-template-columns:1fr;}
+.lv-stats{grid-template-columns:1fr 1fr;}
+.lv-features{grid-template-columns:1fr;}
+.lv-pricing{grid-template-columns:1fr;}
+.lv-offer-art{height:calc(var(--aura)*10);}
+.lv-hours-grid{grid-template-columns:1fr;}
+.lv-closing-actions{flex-direction:column;align-items:stretch;}
+.lv-closing-actions .lv-pill{justify-content:center;}
+.lv-footer-grid{display:none;}
+.lv-footer-mobile-help{display:block;}
+.lv-footer-show-more{display:flex;}
+.lv-footer-legal-bar{flex-direction:column;gap:calc(var(--aura)*0.75);}
+.lv-footer-legal-sep{display:none;}
+.lv-dialog-cols{grid-template-columns:1fr;}
+.lv-mega-inner{grid-template-columns:1fr;}
+.lv-mega-left{border-right:0;border-bottom:1px solid var(--lv-hair);padding-right:0;padding-bottom:calc(var(--aura)*1.5);}
+.lv-mega-right{padding-left:0;padding-top:calc(var(--aura)*1.5);}
+}
+</style>
+</head>
+<body>
+<svg class="defs" aria-hidden="true">
+<symbol id="lv-lantern" viewBox="0 0 24 24"><ellipse cx="12" cy="14" rx="6" ry="8" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="12" y1="2" x2="12" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M9 6h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><ellipse cx="12" cy="14" rx="3" ry="4" fill="currentColor" opacity="0.3"/></symbol>
+<symbol id="lv-ticket" viewBox="0 0 24 24"><path d="M2 9a2 2 0 010-4h20a2 2 0 010 4v.5a1.5 1.5 0 000 3V17a2 2 0 01-2 2H4a2 2 0 01-2-2v-4.5a1.5 1.5 0 000-3V9z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+<symbol id="lv-lodge" viewBox="0 0 24 24"><path d="M3 21h18M3 10l9-7 9 7M5 21V10M19 21V10M9 21v-6h6v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="lv-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 3c-3 4-3 14 0 18M12 3c3 4 3 14 0 18M3 12h18" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+<symbol id="lv-search" viewBox="0 0 24 24"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.8"/><line x1="15.5" y1="15.5" x2="21" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="lv-cart" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" stroke-width="1.6"/><path d="M16 10a4 4 0 01-8 0" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+<symbol id="lv-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+<symbol id="lv-menu" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="3" y1="12" x2="21" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="3" y1="18" x2="21" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="lv-close" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="lv-chev-down" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="lv-chev-right" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="lv-pause-icon" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16" rx="1" fill="currentColor"/><rect x="14" y="4" width="4" height="16" rx="1" fill="currentColor"/></symbol>
+<symbol id="lv-play-icon" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21" fill="currentColor"/></symbol>
+<symbol id="lv-plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="lv-tick" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="lv-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><polyline points="12 7 12 12 15 15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+<symbol id="lv-water" viewBox="0 0 24 24"><path d="M12 2C6 8 3 13 3 16a9 9 0 0018 0c0-3-3-8-9-14z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+<symbol id="lv-leaf" viewBox="0 0 24 24"><path d="M5 21C5 12 12 3 21 3c0 9-7 18-16 18z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><line x1="5" y1="21" x2="13" y2="13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+<symbol id="lv-train" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><line x1="4" y1="10" x2="20" y2="10" stroke="currentColor" stroke-width="1.8"/><line x1="8" y1="17" x2="6" y2="21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="16" y1="17" x2="18" y2="21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="8.5" cy="13.5" r="1" fill="currentColor"/><circle cx="15.5" cy="13.5" r="1" fill="currentColor"/></symbol>
+<symbol id="lv-star" viewBox="0 0 24 24"><polygon points="12,2 15.1,8.3 22,9.3 17,14.1 18.2,21 12,17.8 5.8,21 7,14.1 2,9.3 8.9,8.3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+<symbol id="lv-social-a" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></symbol>
+<symbol id="lv-social-b" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53A4.48 4.48 0 0012 8v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="lv-header" id="site-header">
+<div class="lv-util-row">
+<a href="#signin">Sign In</a>
+<span class="lv-util-sep" aria-hidden="true"></span>
+<button type="button" id="locale-trigger" aria-haspopup="dialog" aria-label="Select region and language">
+<svg width="14" height="14" aria-hidden="true"><use href="#lv-globe"/></svg>
+English (Lumenvale)
+</button>
+<span class="lv-util-sep" aria-hidden="true"></span>
+<div class="lv-search-util" role="search">
+<svg aria-hidden="true"><use href="#lv-search"/></svg>
+<input type="search" placeholder="Search…" aria-label="Search Lumenvale"/>
+</div>
+</div>
+<div style="position:relative;">
+<div class="lv-main-row">
+<button class="lv-hamburger" type="button" id="drawer-toggle" aria-expanded="false" aria-controls="lv-drawer" aria-label="Open navigation menu">
+<svg aria-hidden="true"><use href="#lv-menu"/></svg>
+</button>
+<a class="lv-wordmark" href="#top">
+<div class="lv-wordmark-sq" aria-hidden="true">
+<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#lv-lantern"/></svg>
+</div>
+Lumenvale
+</a>
+<button class="lv-mobile-tickets" type="button">Passes</button>
+<button class="lv-mobile-search-btn" type="button" aria-label="Search Lumenvale">
+<svg aria-hidden="true"><use href="#lv-search"/></svg>
+</button>
+<nav aria-label="Primary" style="display:contents;">
+<ul class="lv-nav-list" id="main-nav">
+<li style="position:relative;">
+<button class="lv-nav-btn" type="button" aria-expanded="false" aria-controls="mega-areas" id="mega-trigger">
+Explore Areas
+<svg class="chev" aria-hidden="true" width="12" height="12"><use href="#lv-chev-down"/></svg>
+</button>
+<div class="lv-mega" id="mega-areas" hidden role="region" aria-labelledby="mega-trigger">
+<div class="lv-mega-inner">
+<div class="lv-mega-left">
+<div class="lv-mega-group">
+<div class="lv-mega-group-title">Park Areas</div>
+<ul>
+<li><a href="#lantern-quay">Lantern Quay</a></li>
+<li><a href="#fernhollow">Fernhollow Gardens</a></li>
+<li><a href="#starwake">Starwake Pier</a></li>
+<li><a href="#tidepool">Tidepool Cove</a></li>
+<li><a href="#copperline">Copperline Rails</a></li>
+<li><a href="#meadowlight">Meadowlight Commons</a></li>
+</ul>
+</div>
+<div class="lv-mega-group">
+<div class="lv-mega-group-title">Plan Your Visit</div>
+<ul>
+<li><a href="#passes">Passes &amp; Tickets</a></li>
+<li><a href="#lodging">Lodging</a></li>
+<li><a href="#dining">Dining</a></li>
+<li><a href="#area-hours-table">Area Map &amp; Hours</a></li>
+</ul>
+</div>
+</div>
+<div class="lv-mega-right">
+<div class="lv-mega-hours-title">Today's Hours</div>
+<div class="lv-mega-hours-sub">Example — Sunday, 8 November 2026</div>
+<ul class="lv-hours-list">
+<li class="lv-hours-item"><span class="lv-hours-dot open"></span><div><span class="lv-hours-name">Lantern Quay</span><span class="lv-hours-time">9:00 AM – 10:00 PM</span></div></li>
+<li class="lv-hours-item"><span class="lv-hours-dot open"></span><div><span class="lv-hours-name">Fernhollow Gardens</span><span class="lv-hours-time">9:00 AM – 9:00 PM</span></div></li>
+<li class="lv-hours-item"><span class="lv-hours-dot open"></span><div><span class="lv-hours-name">Starwake Pier</span><span class="lv-hours-time">10:00 AM – 11:00 PM</span></div></li>
+<li class="lv-hours-item"><span class="lv-hours-dot open"></span><div><span class="lv-hours-name">Tidepool Cove</span><span class="lv-hours-time">10:00 AM – 8:00 PM</span></div></li>
+<li class="lv-hours-item"><span class="lv-hours-dot closed"></span><div><span class="lv-hours-name">Copperline Rails</span><span class="lv-hours-closed-label">Temporarily unavailable</span></div></li>
+<li class="lv-hours-item"><span class="lv-hours-dot open"></span><div><span class="lv-hours-name">Meadowlight Commons</span><span class="lv-hours-time">8:00 AM – 11:00 PM</span></div></li>
+</ul>
+</div>
+</div>
+</div>
+</li>
+<li><a class="lv-nav-btn" href="#lodging">Lodging</a></li>
+<li><a class="lv-nav-btn" href="#dining">Dining &amp; Fun</a></li>
+<li><a class="lv-nav-btn" href="#passes">Passes</a></li>
+<li><a class="lv-nav-btn" href="#plan">Plan &amp; Help</a></li>
+</ul>
+</nav>
+<div class="lv-nav-end">
+<button class="lv-nav-icon" aria-label="Cart (0 items)">
+<svg aria-hidden="true"><use href="#lv-cart"/></svg>
+</button>
+<button class="lv-nav-icon" aria-label="Your account">
+<svg aria-hidden="true"><use href="#lv-user"/></svg>
+</button>
+</div>
+</div>
+</div>
+</header>
+
+<div class="lv-drawer" id="lv-drawer" role="dialog" aria-label="Navigation menu" aria-modal="true" hidden>
+<div class="lv-drawer-head">
+<a class="lv-wordmark" href="#top" style="text-decoration:none;">
+<div class="lv-wordmark-sq" aria-hidden="true" style="width:calc(var(--aura)*2);height:calc(var(--aura)*2);">
+<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#lv-lantern"/></svg>
+</div>
+<span style="color:#fff;font-size:1.1rem;">Lumenvale</span>
+</a>
+<button class="lv-drawer-close" type="button" id="drawer-close" aria-label="Close navigation menu">
+<svg aria-hidden="true"><use href="#lv-close"/></svg>
+</button>
+</div>
+<ul class="lv-drawer-list">
+<li class="lv-drawer-item"><button type="button"><svg aria-hidden="true"><use href="#lv-ticket"/></svg>Explore Areas<svg class="lv-drawer-chev" aria-hidden="true"><use href="#lv-chev-right"/></svg></button></li>
+<li class="lv-drawer-item"><button type="button"><svg aria-hidden="true"><use href="#lv-lodge"/></svg>Lodging<svg class="lv-drawer-chev" aria-hidden="true"><use href="#lv-chev-right"/></svg></button></li>
+<li class="lv-drawer-item"><button type="button"><svg aria-hidden="true"><use href="#lv-leaf"/></svg>Dining &amp; Fun<svg class="lv-drawer-chev" aria-hidden="true"><use href="#lv-chev-right"/></svg></button></li>
+<li class="lv-drawer-item"><button type="button"><svg aria-hidden="true"><use href="#lv-ticket"/></svg>Passes<svg class="lv-drawer-chev" aria-hidden="true"><use href="#lv-chev-right"/></svg></button></li>
+<li class="lv-drawer-item"><button type="button"><svg aria-hidden="true"><use href="#lv-clock"/></svg>Plan &amp; Help<svg class="lv-drawer-chev" aria-hidden="true"><use href="#lv-chev-right"/></svg></button></li>
+<li class="lv-drawer-item"><button type="button"><svg aria-hidden="true"><use href="#lv-cart"/></svg>Cart<svg class="lv-drawer-chev" aria-hidden="true"><use href="#lv-chev-right"/></svg></button></li>
+</ul>
+<div class="lv-drawer-locale">
+<svg width="20" height="20" style="stroke:rgba(255,255,255,0.7);stroke-width:1.6;fill:none;flex-shrink:0;" aria-hidden="true"><use href="#lv-globe"/></svg>
+<button type="button" id="drawer-locale-trigger" style="background:transparent;border:0;color:rgba(255,255,255,0.88);font:inherit;font-size:0.9rem;cursor:pointer;padding:0;text-align:left;">English (Lumenvale)</button>
+</div>
+<div style="border-top:1px solid rgba(255,255,255,0.12);margin-top:calc(var(--aura)*0.5);">
+<div class="lv-drawer-item"><a href="#signin"><svg aria-hidden="true"><use href="#lv-user"/></svg>Sign In / Create Account</a></div>
+</div>
+</div>
+
+<main id="main">
+<div class="lv-booking-outer-desktop">
+<form class="lv-booking-wrap" id="booking-form" novalidate aria-label="Check availability — demo only">
+<div class="lv-booking-field">
+<label class="lv-booking-label" for="pass-type">Pass type</label>
+<select class="lv-booking-select" id="pass-type" name="pass-type">
+<option>Day Pass</option>
+<option>Weekend Pass</option>
+<option>Annual Pass</option>
+<option>Twilight Pass</option>
+</select>
+</div>
+<div class="lv-booking-field">
+<div class="lv-booking-label" id="adults-label">Adults (13 +)</div>
+<div class="lv-stepper" role="group" aria-labelledby="adults-label">
+<button class="lv-stepper-btn" type="button" aria-label="Decrease adults" data-stepper="adults" data-dir="-1">−</button>
+<span class="lv-stepper-val" id="adults-val" aria-live="polite" aria-atomic="true">0</span>
+<button class="lv-stepper-btn" type="button" aria-label="Increase adults" data-stepper="adults" data-dir="1">+</button>
+</div>
+</div>
+<div class="lv-booking-field">
+<div class="lv-booking-label" id="children-label">Children (3 – 12)</div>
+<div class="lv-stepper" role="group" aria-labelledby="children-label">
+<button class="lv-stepper-btn" type="button" aria-label="Decrease children" data-stepper="children" data-dir="-1">−</button>
+<span class="lv-stepper-val" id="children-val" aria-live="polite" aria-atomic="true">0</span>
+<button class="lv-stepper-btn" type="button" aria-label="Increase children" data-stepper="children" data-dir="1">+</button>
+</div>
+</div>
+<div>
+<button class="lv-pill lv-pill-green" type="submit">Check Availability</button>
+<div class="lv-booking-status" aria-live="polite" aria-atomic="true" id="booking-status"></div>
+</div>
+</form>
+</div>
+<section id="top" class="lv-hero" aria-labelledby="hero-title">
+<div class="lv-hero-sky"></div>
+<div class="lv-hero-radial"></div>
+<div class="lv-hero-hills" aria-hidden="true">
+<svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 120 Q180 20 360 60 Q540 100 720 40 Q900 0 1080 50 Q1260 90 1440 30 L1440 120 Z" fill="rgba(4,18,36,0.9)"/>
+<path d="M0 120 Q200 70 400 90 Q600 110 800 70 Q1000 40 1200 80 Q1320 100 1440 60 L1440 120 Z" fill="rgba(6,24,48,0.7)"/>
+</svg>
+</div>
+<div class="lv-hero-lake" aria-hidden="true">
+<div class="lv-hero-lake-sheen"></div>
+<div class="lv-hero-reflections">
+<svg width="100%" height="40" viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<ellipse cx="360" cy="20" rx="80" ry="8" fill="rgba(100,180,255,0.08)"/>
+<ellipse cx="720" cy="20" rx="60" ry="6" fill="rgba(100,200,255,0.07)"/>
+<ellipse cx="1080" cy="20" rx="90" ry="8" fill="rgba(100,180,255,0.07)"/>
+</svg>
+</div>
+</div>
+<div class="lv-hero-overlay"></div>
+<div class="lv-particles" aria-hidden="true" id="particles"></div>
+<div class="lv-hero-content">
+<span class="lv-h1-eye">Lakeside lantern park</span>
+<h1 class="lv-h1" id="hero-title">Light up<br/>your world</h1>
+<div class="lv-hero-actions">
+<a class="lv-pill lv-pill-hero" href="#passes">
+<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#lv-ticket"/></svg>
+Explore Passes
+</a>
+<a class="lv-pill lv-pill-hero" href="#lodging">
+<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#lv-lodge"/></svg>
+Find a Lodge
+</a>
+</div>
+</div>
+<button class="lv-pause-btn" type="button" id="hero-pause" aria-pressed="false" aria-label="Pause animation">
+<svg class="pause-icon" aria-hidden="true"><use href="#lv-pause-icon"/></svg>
+<svg class="play-icon" aria-hidden="true"><use href="#lv-play-icon"/></svg>
+</button>
+</section>
+
+<div class="lv-booking-outer-mobile">
+<form class="lv-booking-wrap" id="booking-form-mobile" novalidate aria-label="Check availability — demo only">
+<div class="lv-booking-field">
+<label class="lv-booking-label" for="pass-type-m">Pass type</label>
+<select class="lv-booking-select" id="pass-type-m" name="pass-type">
+<option>Day Pass</option>
+<option>Weekend Pass</option>
+<option>Annual Pass</option>
+<option>Twilight Pass</option>
+</select>
+</div>
+<div class="lv-booking-field">
+<div class="lv-booking-label" id="adults-label-m">Adults (13 +)</div>
+<div class="lv-stepper" role="group" aria-labelledby="adults-label-m">
+<button class="lv-stepper-btn" type="button" aria-label="Decrease adults" data-stepper="adults-m" data-dir="-1">−</button>
+<span class="lv-stepper-val" id="adults-val-m" aria-live="polite" aria-atomic="true">0</span>
+<button class="lv-stepper-btn" type="button" aria-label="Increase adults" data-stepper="adults-m" data-dir="1">+</button>
+</div>
+</div>
+<div class="lv-booking-field">
+<div class="lv-booking-label" id="children-label-m">Children (3 – 12)</div>
+<div class="lv-stepper" role="group" aria-labelledby="children-label-m">
+<button class="lv-stepper-btn" type="button" aria-label="Decrease children" data-stepper="children-m" data-dir="-1">−</button>
+<span class="lv-stepper-val" id="children-val-m" aria-live="polite" aria-atomic="true">0</span>
+<button class="lv-stepper-btn" type="button" aria-label="Increase children" data-stepper="children-m" data-dir="1">+</button>
+</div>
+</div>
+<div>
+<button class="lv-pill lv-pill-green" type="submit" style="width:100%;justify-content:center;">Check Availability</button>
+<div class="lv-booking-status" aria-live="polite" aria-atomic="true" id="booking-status-m"></div>
+</div>
+</form>
+</div>
+
+<div class="lv-sheet">
+
+<section class="sec wrap" id="hours" aria-labelledby="hours-heading">
+<div class="ornament-divider" aria-hidden="true">
+<svg viewBox="0 0 24 24"><path d="M12 3l1.5 3.5L17 8l-3 2.5.8 3.5-3-1.5-3 1.5.8-3.5L7 8l3.5-.5z"/></svg>
+</div>
+<h2 class="lv-h2" id="hours-heading" style="margin-bottom:calc(var(--aura)*1);">Open Tonight Across the Six Areas</h2>
+<p class="muted" style="text-align:center;margin-bottom:calc(var(--aura)*1.5);font-size:0.9rem;">Example — Sunday, 8 November 2026</p>
+<div style="text-align:center;margin-bottom:calc(var(--aura)*1.5);">
+<button class="lv-hours-toggle-btn" type="button" aria-expanded="false" aria-controls="hours-panel" id="hours-toggle">
+<svg class="chev" aria-hidden="true" width="14" height="14"><use href="#lv-chev-down"/></svg>
+<span id="hours-toggle-txt">Show Hours</span>
+</button>
+</div>
+<div id="hours-panel" hidden>
+<div class="lv-hours-grid">
+<div style="display:flex;align-items:flex-start;gap:calc(var(--aura)*0.75);padding:calc(var(--aura)*1);border-radius:16px;background:var(--lv-card-bg);border:1px solid var(--lv-card-border);">
+<span class="lv-hours-dot open" style="margin-top:4px;"></span>
+<div><span class="lv-hours-name">Lantern Quay</span><span class="lv-hours-time">9:00 AM – 10:00 PM</span></div>
+</div>
+<div style="display:flex;align-items:flex-start;gap:calc(var(--aura)*0.75);padding:calc(var(--aura)*1);border-radius:16px;background:var(--lv-card-bg);border:1px solid var(--lv-card-border);">
+<span class="lv-hours-dot open" style="margin-top:4px;"></span>
+<div><span class="lv-hours-name">Fernhollow Gardens</span><span class="lv-hours-time">9:00 AM – 9:00 PM</span></div>
+</div>
+<div style="display:flex;align-items:flex-start;gap:calc(var(--aura)*0.75);padding:calc(var(--aura)*1);border-radius:16px;background:var(--lv-card-bg);border:1px solid var(--lv-card-border);">
+<span class="lv-hours-dot open" style="margin-top:4px;"></span>
+<div><span class="lv-hours-name">Starwake Pier</span><span class="lv-hours-time">10:00 AM – 11:00 PM</span></div>
+</div>
+<div style="display:flex;align-items:flex-start;gap:calc(var(--aura)*0.75);padding:calc(var(--aura)*1);border-radius:16px;background:var(--lv-card-bg);border:1px solid var(--lv-card-border);">
+<span class="lv-hours-dot open" style="margin-top:4px;"></span>
+<div><span class="lv-hours-name">Tidepool Cove</span><span class="lv-hours-time">10:00 AM – 8:00 PM</span></div>
+</div>
+<div style="display:flex;align-items:flex-start;gap:calc(var(--aura)*0.75);padding:calc(var(--aura)*1);border-radius:16px;background:var(--lv-card-bg);border:1px solid var(--lv-card-border);">
+<span class="lv-hours-dot closed" style="margin-top:4px;"></span>
+<div><span class="lv-hours-name">Copperline Rails</span><span class="lv-hours-closed-label">Temporarily unavailable</span></div>
+</div>
+<div style="display:flex;align-items:flex-start;gap:calc(var(--aura)*0.75);padding:calc(var(--aura)*1);border-radius:16px;background:var(--lv-card-bg);border:1px solid var(--lv-card-border);">
+<span class="lv-hours-dot open" style="margin-top:4px;"></span>
+<div><span class="lv-hours-name">Meadowlight Commons</span><span class="lv-hours-time">8:00 AM – 11:00 PM</span></div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="sec band-bg" id="offers" aria-labelledby="offers-heading">
+<div class="wrap">
+<div class="ornament-divider" aria-hidden="true">
+<svg viewBox="0 0 24 24"><path d="M12 3l1.5 3.5L17 8l-3 2.5.8 3.5-3-1.5-3 1.5.8-3.5L7 8l3.5-.5z"/></svg>
+</div>
+<h2 class="lv-h2" id="offers-heading" style="margin-bottom:calc(var(--aura)*3);">Grab a Great Rate</h2>
+<div class="lv-offer-grid">
+<article class="lv-offer-card">
+<div class="lv-offer-art" style="background-color:var(--lv-art-1-base);" aria-hidden="true">
+<div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,#1a6fa0 0%,#0a3060 50%,transparent 100%);"></div>
+<div class="lv-offer-lanterns">
+<svg width="100%" height="100%" viewBox="0 0 400 180" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+<circle cx="80" cy="60" r="8" fill="rgba(255,220,80,0.4)"/>
+<circle cx="80" cy="60" r="22" fill="rgba(255,180,40,0.15)"/>
+<circle cx="200" cy="40" r="10" fill="rgba(255,220,80,0.5)"/>
+<circle cx="200" cy="40" r="28" fill="rgba(255,180,40,0.12)"/>
+<circle cx="320" cy="70" r="7" fill="rgba(255,220,80,0.35)"/>
+<circle cx="320" cy="70" r="20" fill="rgba(255,180,40,0.1)"/>
+<circle cx="140" cy="110" r="5" fill="rgba(255,220,80,0.3)"/>
+<circle cx="260" cy="130" r="6" fill="rgba(255,220,80,0.3)"/>
+<path d="M0 140 Q100 120 200 130 Q300 140 400 125 L400 180 L0 180Z" fill="rgba(10,30,60,0.6)"/>
+</svg>
+</div>
+</div>
+<div class="lv-offer-body">
+<h3 class="lv-h3" style="margin-bottom:calc(var(--aura)*0.75);">Lakeside Lantern Escape</h3>
+<p style="font-size:0.9rem;color:var(--gray-11);line-height:1.6;">Stay three nights, explore all six resort areas, and enjoy a guided lantern-floating evening on Lake Lumenvale. Rates from <strong>$299</strong> per night. <em>Example pricing only.</em></p>
+<div class="lv-offer-links">
+<a href="#offers">View this offer</a>
+<a class="lv-pill lv-pill-secondary" href="#offers" style="padding:calc(var(--aura)*0.5) calc(var(--aura)*1.5);font-size:0.875rem;">Browse offers</a>
+</div>
+</div>
+</article>
+<article class="lv-offer-card">
+<div class="lv-offer-art" style="background-color:var(--lv-art-2-base);" aria-hidden="true">
+<div style="position:absolute;inset:0;background:radial-gradient(ellipse at 65% 42%,#1e7055 0%,#0a4035 50%,transparent 100%);"></div>
+<div class="lv-offer-lanterns">
+<svg width="100%" height="100%" viewBox="0 0 400 180" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+<circle cx="100" cy="80" r="9" fill="rgba(100,255,180,0.35)"/>
+<circle cx="100" cy="80" r="24" fill="rgba(60,200,140,0.12)"/>
+<circle cx="240" cy="50" r="12" fill="rgba(100,255,180,0.4)"/>
+<circle cx="240" cy="50" r="32" fill="rgba(60,200,140,0.1)"/>
+<circle cx="350" cy="90" r="6" fill="rgba(100,255,180,0.3)"/>
+<circle cx="160" cy="140" r="8" fill="rgba(100,255,180,0.25)"/>
+<path d="M0 150 Q120 125 240 140 Q340 150 400 135 L400 180 L0 180Z" fill="rgba(4,20,12,0.65)"/>
+</svg>
+</div>
+</div>
+<div class="lv-offer-body">
+<h3 class="lv-h3" style="margin-bottom:calc(var(--aura)*0.75);">Fernhollow Family Bundle</h3>
+<p style="font-size:0.9rem;color:var(--gray-11);line-height:1.6;">Two adults and two children admitted to Fernhollow Gardens for a full day of trails, waterways, and the seasonal blooms display. From <strong>$89</strong> per family. <em>Example pricing only.</em></p>
+<div class="lv-offer-links">
+<a href="#offers">See bundle details</a>
+<a class="lv-pill lv-pill-secondary" href="#offers" style="padding:calc(var(--aura)*0.5) calc(var(--aura)*1.5);font-size:0.875rem;">All packages</a>
+</div>
+</div>
+</article>
+</div>
+</div>
+</section>
+
+<section class="sec wrap" id="experiences" aria-labelledby="exp-heading">
+<div class="ornament-divider" aria-hidden="true">
+<svg viewBox="0 0 24 24"><path d="M12 3l1.5 3.5L17 8l-3 2.5.8 3.5-3-1.5-3 1.5.8-3.5L7 8l3.5-.5z"/></svg>
+</div>
+<h2 class="lv-h2" id="exp-heading" style="margin-bottom:calc(var(--aura)*3);">Unmissable Lumenvale Experiences</h2>
+<div class="lv-exp-grid">
+<article class="lv-exp-card lv-exp-card--hero">
+<div class="lv-exp-art lv-exp-art-1" aria-hidden="true">
+<svg width="100%" height="100%" viewBox="0 0 500 500" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+<circle cx="250" cy="140" r="55" fill="rgba(255,220,80,0.12)" stroke="rgba(255,200,60,0.35)" stroke-width="1.5"/>
+<circle cx="250" cy="140" r="32" fill="rgba(255,220,80,0.22)"/>
+<line x1="250" y1="85" x2="250" y2="65" stroke="rgba(255,220,80,0.45)" stroke-width="2"/>
+<ellipse cx="250" cy="440" rx="200" ry="22" fill="rgba(0,0,0,0.25)"/>
+<rect x="185" y="220" width="130" height="180" rx="6" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+<circle cx="140" cy="80" r="4" fill="rgba(255,220,80,0.5)"/>
+<circle cx="380" cy="200" r="3" fill="rgba(255,220,80,0.4)"/>
+<circle cx="90" cy="300" r="5" fill="rgba(255,220,80,0.3)"/>
+</svg>
+</div>
+<div class="lv-exp-overlay" aria-hidden="true"></div>
+<div class="lv-exp-label">
+<h3>Starwake Pier Night Market</h3>
+<div class="lv-exp-sub">Every evening from 6 PM — Example</div>
+</div>
+</article>
+<article class="lv-exp-card" style="background-color:var(--lv-art-2-base);">
+<div class="lv-exp-art lv-exp-art-2" aria-hidden="true">
+<svg width="100%" height="100%" viewBox="0 0 240 200" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+<path d="M20 160 Q60 80 120 90 Q180 100 220 160" fill="rgba(0,120,80,0.3)" stroke="rgba(60,200,120,0.4)" stroke-width="1.5"/>
+<circle cx="80" cy="100" r="16" fill="rgba(100,255,160,0.2)"/>
+<circle cx="160" cy="78" r="10" fill="rgba(100,255,160,0.15)"/>
+<path d="M0 160 Q80 130 160 150 Q200 160 240 148 L240 200 L0 200Z" fill="rgba(4,20,12,0.5)"/>
+</svg>
+</div>
+<div class="lv-exp-overlay" aria-hidden="true"></div>
+<div class="lv-exp-label">
+<h3>Fernhollow Trail Walk</h3>
+<div class="lv-exp-sub">Guided woodland trails</div>
+</div>
+</article>
+<article class="lv-exp-card" style="background-color:var(--lv-art-3-base);">
+<div class="lv-exp-art lv-exp-art-3" aria-hidden="true">
+<svg width="100%" height="100%" viewBox="0 0 240 200" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+<rect x="60" y="60" width="120" height="100" rx="4" fill="rgba(180,100,20,0.2)" stroke="rgba(220,150,60,0.4)" stroke-width="1.5"/>
+<circle cx="120" cy="48" r="22" fill="rgba(255,180,40,0.2)"/>
+<line x1="120" y1="26" x2="120" y2="8" stroke="rgba(255,180,40,0.4)" stroke-width="2"/>
+<path d="M0 160 Q80 140 160 155 Q200 162 240 148 L240 200 L0 200Z" fill="rgba(16,8,4,0.5)"/>
+</svg>
+</div>
+<div class="lv-exp-overlay" aria-hidden="true"></div>
+<div class="lv-exp-label">
+<h3>Copperline Artisan Market</h3>
+<div class="lv-exp-sub">Crafts, food and live music</div>
+</div>
+</article>
+<article class="lv-exp-card" style="background-color:var(--lv-art-4-base);">
+<div class="lv-exp-art lv-exp-art-4" aria-hidden="true">
+<svg width="100%" height="100%" viewBox="0 0 240 200" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+<ellipse cx="120" cy="150" rx="90" ry="18" fill="rgba(20,80,180,0.3)"/>
+<path d="M60 150 Q80 80 120 60 Q160 80 180 150" fill="rgba(30,100,200,0.14)" stroke="rgba(80,160,240,0.4)" stroke-width="1.5"/>
+<circle cx="120" cy="78" r="18" fill="rgba(100,180,255,0.2)"/>
+<path d="M0 155 Q80 135 160 150 Q200 158 240 142 L240 200 L0 200Z" fill="rgba(4,10,30,0.5)"/>
+</svg>
+</div>
+<div class="lv-exp-overlay" aria-hidden="true"></div>
+<div class="lv-exp-label">
+<h3>Tidepool Cove Kayaking</h3>
+<div class="lv-exp-sub">Lake tours at sunrise</div>
+</div>
+</article>
+</div>
+</section>
+
+<section class="sec band-bg" id="plan" aria-labelledby="plan-heading">
+<div class="wrap">
+<div class="ornament-divider" aria-hidden="true">
+<svg viewBox="0 0 24 24"><path d="M12 3l1.5 3.5L17 8l-3 2.5.8 3.5-3-1.5-3 1.5.8-3.5L7 8l3.5-.5z"/></svg>
+</div>
+<h2 class="lv-h2" id="plan-heading" style="margin-bottom:calc(var(--aura)*4);">Shape Your Stay</h2>
+<div class="lv-plan-rows">
+<div class="lv-plan-row">
+<div class="lv-plan-copy">
+<h3 class="lv-h3">Build the Perfect Itinerary</h3>
+<p class="lv-lead">Mix resort lodges, area day-passes, and evening experiences into a package that fits your family's pace. No two Lumenvale stays are the same.</p>
+<a class="lv-pill lv-pill-primary" href="#passes" style="margin-top:calc(var(--aura)*1.5);">Browse Passes</a>
+</div>
+<div class="lv-plan-art" style="background-color:var(--lv-art-5-base);" aria-hidden="true">
+<div class="lv-plan-art-shapes">
+<div style="position:absolute;inset:0;background:radial-gradient(ellipse at 55% 50%,#1a6090 0%,#0a2a50 50%,transparent 100%);"></div>
+<svg width="100%" height="100%" viewBox="0 0 500 325" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+<path d="M0 325 Q100 200 250 220 Q400 240 500 180 L500 325Z" fill="rgba(255,255,255,0.07)"/>
+<circle cx="380" cy="80" r="40" fill="rgba(255,220,80,0.1)"/>
+<circle cx="380" cy="80" r="22" fill="rgba(255,220,80,0.18)"/>
+<circle cx="150" cy="140" r="8" fill="rgba(255,220,80,0.28)"/>
+<circle cx="250" cy="60" r="5" fill="rgba(255,220,80,0.22)"/>
+</svg>
+</div>
+</div>
+</div>
+<div class="lv-plan-row lv-plan-row--right">
+<div class="lv-plan-copy">
+<h3 class="lv-h3">Lakeside Dining Experiences</h3>
+<p class="lv-lead">From open-air Meadowlight Commons markets to candlelit dinners on the Lantern Quay waterfront, our dining venues are part of the adventure.</p>
+<a class="lv-pill lv-pill-primary" href="#dining" style="margin-top:calc(var(--aura)*1.5);">Explore Dining</a>
+</div>
+<div class="lv-plan-art" style="background-color:var(--lv-art-2-base);" aria-hidden="true">
+<div class="lv-plan-art-shapes">
+<div style="position:absolute;inset:0;background:radial-gradient(ellipse at 45% 45%,#2a6545 0%,#0a2e1a 50%,transparent 100%);"></div>
+<svg width="100%" height="100%" viewBox="0 0 500 325" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+<path d="M0 200 Q150 100 300 160 Q420 200 500 140 L500 325 L0 325Z" fill="rgba(255,255,255,0.06)"/>
+<circle cx="100" cy="90" r="30" fill="rgba(100,255,160,0.12)"/>
+<circle cx="350" cy="120" r="20" fill="rgba(100,255,160,0.09)"/>
+</svg>
+</div>
+</div>
+</div>
+<div class="lv-plan-row">
+<div class="lv-plan-copy">
+<h3 class="lv-h3">Four Seasons of Events</h3>
+<p class="lv-lead">Winter Lights, the Spring Bloom Festival, Summer Splash weekends, and Autumn Glow evenings — every season brings a new reason to visit Lumenvale.</p>
+<a class="lv-pill lv-pill-primary" href="#seasons" style="margin-top:calc(var(--aura)*1.5);">View Calendar</a>
+</div>
+<div class="lv-plan-art" style="background-color:var(--lv-art-7-base);" aria-hidden="true">
+<div class="lv-plan-art-shapes">
+<div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 42%,#7a4515 0%,#2a1808 50%,transparent 100%);"></div>
+<svg width="100%" height="100%" viewBox="0 0 500 325" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+<circle cx="250" cy="100" r="60" fill="rgba(255,180,40,0.08)"/>
+<circle cx="250" cy="100" r="30" fill="rgba(255,180,40,0.15)"/>
+<path d="M0 280 Q200 220 500 260 L500 325 L0 325Z" fill="rgba(255,255,255,0.05)"/>
+</svg>
+</div>
+</div>
+</div>
+<div class="lv-plan-row lv-plan-row--right">
+<div class="lv-plan-copy">
+<h3 class="lv-h3">Group &amp; Operator Packages</h3>
+<p class="lv-lead">Planning a school visit, corporate retreat or large-group celebration? Our group packages offer dedicated guides, reserved areas and flexible scheduling.</p>
+<a class="lv-pill lv-pill-primary" href="#plan" style="margin-top:calc(var(--aura)*1.5);">Send an Enquiry</a>
+</div>
+<div class="lv-plan-art" style="background-color:var(--lv-art-6-base);" aria-hidden="true">
+<div class="lv-plan-art-shapes">
+<div style="position:absolute;inset:0;background:radial-gradient(ellipse at 38% 50%,#1a3080 0%,#0a1840 50%,transparent 100%);"></div>
+<svg width="100%" height="100%" viewBox="0 0 500 325" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+<ellipse cx="250" cy="300" rx="220" ry="36" fill="rgba(100,160,255,0.1)"/>
+<circle cx="180" cy="100" r="50" fill="rgba(80,140,255,0.09)"/>
+<circle cx="350" cy="80" r="30" fill="rgba(80,140,255,0.07)"/>
+</svg>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="sec wrap" id="seasons" aria-labelledby="seasons-heading">
+<div class="ornament-divider" aria-hidden="true">
+<svg viewBox="0 0 24 24"><path d="M12 3l1.5 3.5L17 8l-3 2.5.8 3.5-3-1.5-3 1.5.8-3.5L7 8l3.5-.5z"/></svg>
+</div>
+<h2 class="lv-h2" id="seasons-heading" style="margin-bottom:calc(var(--aura)*3);">A Park for Every Season</h2>
+<div class="lv-season-grid">
+<article class="lv-season-card lv-season-card--large" style="background-color:var(--lv-art-6-base);">
+<div class="lv-season-art lv-season-art-winter" aria-hidden="true">
+<svg width="100%" height="100%" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+<circle cx="200" cy="150" r="62" fill="rgba(255,255,255,0.07)" stroke="rgba(200,230,255,0.28)" stroke-width="1"/>
+<line x1="200" y1="88" x2="200" y2="212" stroke="rgba(200,230,255,0.38)" stroke-width="1.5"/>
+<line x1="138" y1="150" x2="262" y2="150" stroke="rgba(200,230,255,0.38)" stroke-width="1.5"/>
+<line x1="156" y1="106" x2="244" y2="194" stroke="rgba(200,230,255,0.38)" stroke-width="1.5"/>
+<line x1="244" y1="106" x2="156" y2="194" stroke="rgba(200,230,255,0.38)" stroke-width="1.5"/>
+<circle cx="120" cy="80" r="4" fill="rgba(200,230,255,0.5)"/>
+<circle cx="300" cy="200" r="3" fill="rgba(200,230,255,0.4)"/>
+<circle cx="80" cy="300" r="5" fill="rgba(200,230,255,0.3)"/>
+<circle cx="330" cy="350" r="4" fill="rgba(200,230,255,0.4)"/>
+<circle cx="60" cy="420" r="3" fill="rgba(200,230,255,0.3)"/>
+<circle cx="350" cy="440" r="5" fill="rgba(200,230,255,0.35)"/>
+</svg>
+</div>
+<div class="lv-season-overlay" aria-hidden="true"></div>
+<div class="lv-season-label">Winter Lights<div class="lv-season-sub">November – January</div></div>
+</article>
+<article class="lv-season-card" style="background-color:var(--lv-art-2-base);">
+<div class="lv-season-art lv-season-art-spring" aria-hidden="true">
+<svg width="100%" height="100%" viewBox="0 0 240 240" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+<circle cx="120" cy="100" r="30" fill="rgba(100,255,120,0.18)"/>
+<path d="M120 70 Q130 50 150 60 Q162 80 142 90 Q130 100 120 92Z" fill="rgba(100,255,120,0.28)"/>
+<path d="M120 70 Q110 50 90 60 Q78 80 98 90 Q110 100 120 92Z" fill="rgba(100,255,120,0.22)"/>
+</svg>
+</div>
+<div class="lv-season-overlay" aria-hidden="true"></div>
+<div class="lv-season-label" style="font-size:1rem;">Spring Bloom<div class="lv-season-sub">February – April</div></div>
+</article>
+<article class="lv-season-card" style="background-color:var(--lv-art-7-base);">
+<div class="lv-season-art lv-season-art-summer" aria-hidden="true">
+<svg width="100%" height="100%" viewBox="0 0 240 240" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+<circle cx="120" cy="80" r="40" fill="rgba(255,180,40,0.22)"/>
+<circle cx="120" cy="80" r="24" fill="rgba(255,200,80,0.32)"/>
+<line x1="120" y1="30" x2="120" y2="10" stroke="rgba(255,200,80,0.4)" stroke-width="2"/>
+<line x1="170" y1="80" x2="190" y2="80" stroke="rgba(255,200,80,0.4)" stroke-width="2"/>
+<line x1="70" y1="80" x2="50" y2="80" stroke="rgba(255,200,80,0.4)" stroke-width="2"/>
+<line x1="155" y1="45" x2="168" y2="32" stroke="rgba(255,200,80,0.35)" stroke-width="2"/>
+<line x1="85" y1="45" x2="72" y2="32" stroke="rgba(255,200,80,0.35)" stroke-width="2"/>
+</svg>
+</div>
+<div class="lv-season-overlay" aria-hidden="true"></div>
+<div class="lv-season-label" style="font-size:1rem;">Summer Splash<div class="lv-season-sub">May – August</div></div>
+</article>
+<article class="lv-season-card" style="background-color:var(--lv-art-8-base);">
+<div class="lv-season-art lv-season-art-autumn" aria-hidden="true">
+<svg width="100%" height="100%" viewBox="0 0 240 240" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+<path d="M60 180 Q80 120 120 100 Q160 80 180 60 Q160 100 150 140 Q140 180 120 200 Q90 200 60 180Z" fill="rgba(200,120,30,0.22)" stroke="rgba(220,160,60,0.38)" stroke-width="1"/>
+<circle cx="80" cy="140" r="8" fill="rgba(200,100,20,0.28)"/>
+<circle cx="150" cy="100" r="6" fill="rgba(220,140,40,0.28)"/>
+</svg>
+</div>
+<div class="lv-season-overlay" aria-hidden="true"></div>
+<div class="lv-season-label" style="font-size:1rem;">Autumn Glow<div class="lv-season-sub">September – October</div></div>
+</article>
+</div>
+</section>
+
+<section class="sec wrap" id="stats" aria-labelledby="stats-heading">
+<div class="ornament-divider" aria-hidden="true">
+<svg viewBox="0 0 24 24"><path d="M12 3l1.5 3.5L17 8l-3 2.5.8 3.5-3-1.5-3 1.5.8-3.5L7 8l3.5-.5z"/></svg>
+</div>
+<h2 class="lv-h2" id="stats-heading" style="margin-bottom:calc(var(--aura)*3);">Lumenvale by the Numbers</h2>
+<div class="lv-stats">
+<div><div class="lv-stat-val">6</div><div class="lv-stat-lbl">Distinct resort areas</div></div>
+<div><div class="lv-stat-val">120+</div><div class="lv-stat-lbl">Dining and food venues</div></div>
+<div><div class="lv-stat-val">40</div><div class="lv-stat-lbl">Lakeside lodges</div></div>
+<div><div class="lv-stat-val">365</div><div class="lv-stat-lbl">Days of events per year</div></div>
+</div>
+</section>
+
+<section class="sec band-bg" id="features-section" aria-labelledby="features-heading">
+<div class="wrap">
+<div class="ornament-divider" aria-hidden="true">
+<svg viewBox="0 0 24 24"><path d="M12 3l1.5 3.5L17 8l-3 2.5.8 3.5-3-1.5-3 1.5.8-3.5L7 8l3.5-.5z"/></svg>
+</div>
+<h2 class="lv-h2" id="features-heading" style="margin-bottom:calc(var(--aura)*3);">Everything You Need</h2>
+<div class="lv-features">
+<div class="lv-feat-card">
+<div class="lv-feat-icon"><svg aria-hidden="true"><use href="#lv-water"/></svg></div>
+<h3>Lakeside Adventures</h3>
+<p>Kayaking, paddleboard tours, guided dawn cruises, and sunset boat rides across Lake Lumenvale — activities for every age.</p>
+</div>
+<div class="lv-feat-card">
+<div class="lv-feat-icon"><svg aria-hidden="true"><use href="#lv-leaf"/></svg></div>
+<h3>Nature Trails</h3>
+<p>Over 40 km of waymarked walking and cycling trails through Fernhollow Gardens and beyond, with accessible routes for all.</p>
+</div>
+<div class="lv-feat-card">
+<div class="lv-feat-icon"><svg aria-hidden="true"><use href="#lv-train"/></svg></div>
+<h3>Copperline Express</h3>
+<p>When open, our narrow-gauge heritage railway links all six resort areas in a scenic loop — the most charming way to explore.</p>
+</div>
+<div class="lv-feat-card">
+<div class="lv-feat-icon"><svg aria-hidden="true"><use href="#lv-lantern"/></svg></div>
+<h3>Lantern Festivals</h3>
+<p>Seasonal lantern-floating ceremonies on the lake, with live music, storytelling and a sky full of warm light. Bookings required.</p>
+</div>
+<div class="lv-feat-card">
+<div class="lv-feat-icon"><svg aria-hidden="true"><use href="#lv-lodge"/></svg></div>
+<h3>Resort Lodging</h3>
+<p>Forty lakeside lodges from cosy studio cabins to grand waterfront suites, all within easy reach of every resort area.</p>
+</div>
+<div class="lv-feat-card">
+<div class="lv-feat-icon"><svg aria-hidden="true"><use href="#lv-star"/></svg></div>
+<h3>Meadowlight Events</h3>
+<p>Live performances, artisan markets and community gatherings in Meadowlight Commons — the social heart of the resort.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section class="sec wrap" id="area-hours-table" aria-labelledby="table-heading">
+<div class="ornament-divider" aria-hidden="true">
+<svg viewBox="0 0 24 24"><path d="M12 3l1.5 3.5L17 8l-3 2.5.8 3.5-3-1.5-3 1.5.8-3.5L7 8l3.5-.5z"/></svg>
+</div>
+<h2 class="lv-h2" id="table-heading" style="margin-bottom:calc(var(--aura)*3);">Area Opening Hours</h2>
+<div class="lv-data-wrap">
+<table>
+<caption class="sr-only">Lumenvale resort area opening hours — example data</caption>
+<thead>
+<tr>
+<th scope="col">Area</th>
+<th scope="col">Weekdays</th>
+<th scope="col">Weekends</th>
+<th scope="col">Status</th>
+<th scope="col">Peak Season</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Lantern Quay</strong></td>
+<td>9:00 – 9:00 PM</td>
+<td>9:00 – 10:00 PM</td>
+<td><span class="lv-badge lv-badge-open">Open</span></td>
+<td>Nov – Jan</td>
+</tr>
+<tr>
+<td><strong>Fernhollow Gardens</strong></td>
+<td>8:00 – 8:00 PM</td>
+<td>8:00 – 9:00 PM</td>
+<td><span class="lv-badge lv-badge-open">Open</span></td>
+<td>Feb – Apr</td>
+</tr>
+<tr>
+<td><strong>Starwake Pier</strong></td>
+<td>10:00 – 11:00 PM</td>
+<td>10:00 – 11:00 PM</td>
+<td><span class="lv-badge lv-badge-open">Open</span></td>
+<td>May – Aug</td>
+</tr>
+<tr>
+<td><strong>Tidepool Cove</strong></td>
+<td>10:00 – 7:00 PM</td>
+<td>10:00 – 8:00 PM</td>
+<td><span class="lv-badge lv-badge-open">Open</span></td>
+<td>May – Aug</td>
+</tr>
+<tr>
+<td><strong>Copperline Rails</strong></td>
+<td>—</td>
+<td>—</td>
+<td><span class="lv-badge lv-badge-closed">Refurbishment</span></td>
+<td>Reopening 2027</td>
+</tr>
+<tr>
+<td><strong>Meadowlight Commons</strong></td>
+<td>7:00 – 11:00 PM</td>
+<td>7:00 – 11:00 PM</td>
+<td><span class="lv-badge lv-badge-open">Open</span></td>
+<td>Year-round</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p style="font-size:0.8rem;color:var(--gray-11);margin-top:calc(var(--aura)*1);text-align:center;">Example data only. Hours are subject to change.</p>
+</section>
+
+<section class="sec band-bg" id="visit-form" aria-labelledby="form-heading">
+<div class="wrap" style="max-width:calc(var(--aura)*56);margin-inline:auto;">
+<div class="ornament-divider" aria-hidden="true">
+<svg viewBox="0 0 24 24"><path d="M12 3l1.5 3.5L17 8l-3 2.5.8 3.5-3-1.5-3 1.5.8-3.5L7 8l3.5-.5z"/></svg>
+</div>
+<h2 class="lv-h2" id="form-heading" style="margin-bottom:calc(var(--aura)*0.75);">Get in Touch</h2>
+<p class="muted" style="text-align:center;margin-bottom:calc(var(--aura)*2.5);font-size:0.9rem;">Demo form — no data is submitted or stored.</p>
+<div class="lv-form-card">
+<form id="visit-form" novalidate>
+<div class="lv-field">
+<label for="vf-name">Full name</label>
+<input type="text" id="vf-name" name="name" autocomplete="name" required minlength="2" aria-describedby="vf-name-err" placeholder="Your name"/>
+<div class="lv-err" id="vf-name-err" aria-live="polite"></div>
+</div>
+<div class="lv-field">
+<label for="vf-email">Email address</label>
+<input type="email" id="vf-email" name="email" autocomplete="email" required aria-describedby="vf-email-err" placeholder="you@example.com"/>
+<div class="lv-err" id="vf-email-err" aria-live="polite"></div>
+</div>
+<div class="lv-field">
+<label for="vf-area">Preferred area</label>
+<select id="vf-area" name="area" aria-describedby="vf-area-err">
+<option value="">Select an area</option>
+<option>Lantern Quay</option>
+<option>Fernhollow Gardens</option>
+<option>Starwake Pier</option>
+<option>Tidepool Cove</option>
+<option>Meadowlight Commons</option>
+</select>
+<div class="lv-err" id="vf-area-err" aria-live="polite"></div>
+</div>
+<div class="lv-field">
+<label for="vf-visit">Planned visit date</label>
+<input type="date" id="vf-visit" name="visit-date" aria-describedby="vf-visit-err"/>
+<div class="lv-err" id="vf-visit-err" aria-live="polite"></div>
+</div>
+<button class="lv-pill lv-pill-primary" type="submit" style="width:100%;justify-content:center;margin-top:calc(var(--aura)*0.5);">Send Enquiry</button>
+<div class="lv-status" id="vf-status" role="status" aria-live="polite"></div>
+</form>
+</div>
+</div>
+</section>
+
+<section class="sec wrap" id="passes" aria-labelledby="pricing-heading">
+<div class="ornament-divider" aria-hidden="true">
+<svg viewBox="0 0 24 24"><path d="M12 3l1.5 3.5L17 8l-3 2.5.8 3.5-3-1.5-3 1.5.8-3.5L7 8l3.5-.5z"/></svg>
+</div>
+<h2 class="lv-h2" id="pricing-heading" style="margin-bottom:calc(var(--aura)*0.75);">Resort Passes</h2>
+<p class="muted" style="text-align:center;margin-bottom:calc(var(--aura)*3);font-size:0.9rem;">Example pricing only — not a real purchase.</p>
+<div class="lv-pricing">
+<article class="lv-plan">
+<div class="lv-plan-name">Day Pass</div>
+<div class="lv-plan-price">$49</div>
+<div class="lv-plan-per">per person / day — Example</div>
+<ul>
+<li><svg aria-hidden="true"><use href="#lv-tick"/></svg>Access to any two areas</li>
+<li><svg aria-hidden="true"><use href="#lv-tick"/></svg>Fernhollow trail map included</li>
+<li><svg aria-hidden="true"><use href="#lv-tick"/></svg>Lakeside shuttle access</li>
+</ul>
+<a class="lv-pill lv-pill-secondary" href="#passes">Learn more</a>
+</article>
+<article class="lv-plan lv-plan--pop">
+<div class="lv-plan-name">Resort Pass</div>
+<div class="lv-plan-price">$89</div>
+<div class="lv-plan-per">per person / day — Example</div>
+<ul>
+<li><svg aria-hidden="true"><use href="#lv-tick"/></svg>All six areas (when open)</li>
+<li><svg aria-hidden="true"><use href="#lv-tick"/></svg>Lantern festival entry</li>
+<li><svg aria-hidden="true"><use href="#lv-tick"/></svg>Priority trail booking</li>
+<li><svg aria-hidden="true"><use href="#lv-tick"/></svg>Dining discount</li>
+</ul>
+<a class="lv-pill lv-pill-primary" href="#passes">Choose this pass</a>
+</article>
+<article class="lv-plan">
+<div class="lv-plan-name">Annual Pass</div>
+<div class="lv-plan-price">$349</div>
+<div class="lv-plan-per">per person / year — Example</div>
+<ul>
+<li><svg aria-hidden="true"><use href="#lv-tick"/></svg>Unlimited visits, all areas</li>
+<li><svg aria-hidden="true"><use href="#lv-tick"/></svg>Free event access</li>
+<li><svg aria-hidden="true"><use href="#lv-tick"/></svg>Lodge booking priority</li>
+<li><svg aria-hidden="true"><use href="#lv-tick"/></svg>Exclusive member events</li>
+</ul>
+<a class="lv-pill lv-pill-secondary" href="#passes">Learn more</a>
+</article>
+</div>
+</section>
+
+<section class="sec band-bg" id="faq" aria-labelledby="faq-heading">
+<div class="wrap" style="max-width:calc(var(--aura)*62);margin-inline:auto;">
+<div class="ornament-divider" aria-hidden="true">
+<svg viewBox="0 0 24 24"><path d="M12 3l1.5 3.5L17 8l-3 2.5.8 3.5-3-1.5-3 1.5.8-3.5L7 8l3.5-.5z"/></svg>
+</div>
+<h2 class="lv-h2" id="faq-heading" style="margin-bottom:calc(var(--aura)*3);">Frequently Asked Questions</h2>
+<div class="lv-faq">
+<div class="lv-acc">
+<button class="lv-acc-btn" type="button" aria-expanded="false" aria-controls="faq-a1" id="faq-q1">
+<svg aria-hidden="true" viewBox="0 0 24 24"><use href="#lv-plus"/></svg>
+Is Lumenvale a real resort?
+</button>
+<div class="lv-acc-panel" id="faq-a1" role="region" aria-labelledby="faq-q1" hidden>
+<p>No. Lumenvale is a fictional lakeside family resort created for the Aura design gallery. All content, pricing, hours and venue names are invented for demonstration purposes only.</p>
+</div>
+</div>
+<div class="lv-acc">
+<button class="lv-acc-btn" type="button" aria-expanded="false" aria-controls="faq-a2" id="faq-q2">
+<svg aria-hidden="true" viewBox="0 0 24 24"><use href="#lv-plus"/></svg>
+How do I reach all six areas?
+</button>
+<div class="lv-acc-panel" id="faq-a2" role="region" aria-labelledby="faq-q2" hidden>
+<p>In this fictional resort, the lakeside shuttle connects Lantern Quay, Fernhollow Gardens, Starwake Pier, Tidepool Cove, and Meadowlight Commons. The Copperline Rails narrow-gauge railway will re-link all areas once it reopens after refurbishment in 2027 (Example).</p>
+</div>
+</div>
+<div class="lv-acc">
+<button class="lv-acc-btn" type="button" aria-expanded="false" aria-controls="faq-a3" id="faq-q3">
+<svg aria-hidden="true" viewBox="0 0 24 24"><use href="#lv-plus"/></svg>
+When is the best time to visit?
+</button>
+<div class="lv-acc-panel" id="faq-a3" role="region" aria-labelledby="faq-q3" hidden>
+<p>Lumenvale runs events year-round. The Winter Lights festival (November–January) and the Spring Bloom (February–April) are especially popular. Summer Splash (May–August) is best for water activities at Tidepool Cove.</p>
+</div>
+</div>
+<div class="lv-acc">
+<button class="lv-acc-btn" type="button" aria-expanded="false" aria-controls="faq-a4" id="faq-q4">
+<svg aria-hidden="true" viewBox="0 0 24 24"><use href="#lv-plus"/></svg>
+Can I see this page in dark mode?
+</button>
+<div class="lv-acc-panel" id="faq-a4" role="region" aria-labelledby="faq-q4" hidden>
+<p>Yes — append <code>?appearance=dark</code> to the URL. The Lumenvale dark palette is a creative night-time lake adaptation of the light theme, not an inversion.</p>
+</div>
+</div>
+<div class="lv-acc">
+<button class="lv-acc-btn" type="button" aria-expanded="false" aria-controls="faq-a5" id="faq-q5">
+<svg aria-hidden="true" viewBox="0 0 24 24"><use href="#lv-plus"/></svg>
+Are the booking and enquiry forms real?
+</button>
+<div class="lv-acc-panel" id="faq-a5" role="region" aria-labelledby="faq-q5" hidden>
+<p>No. All forms on this page are demos only. No data is submitted, stored or transmitted anywhere. The booking strip and enquiry form show local feedback messages without any network request.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="lv-closing" id="closing" aria-labelledby="closing-heading">
+<div class="ornament-divider" style="--lv-hair:rgba(255,255,255,0.2);" aria-hidden="true">
+<svg viewBox="0 0 24 24" style="fill:rgba(255,220,80,0.75);"><path d="M12 3l1.5 3.5L17 8l-3 2.5.8 3.5-3-1.5-3 1.5.8-3.5L7 8l3.5-.5z"/></svg>
+</div>
+<h2 class="lv-h2" id="closing-heading">Start Your Lumenvale Adventure</h2>
+<p class="lv-lead" style="color:rgba(255,255,255,0.85);margin-inline:auto;margin-top:calc(var(--aura)*1);">Six areas, four seasons, one unforgettable resort. Your adventure begins here.</p>
+<div class="lv-closing-actions">
+<a class="lv-pill lv-closing-primary" href="#passes">
+<svg width="20" height="20" viewBox="0 0 24 24" style="fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;" aria-hidden="true"><use href="#lv-ticket"/></svg>
+Secure Your Passes
+</a>
+<a class="lv-pill lv-closing-secondary" href="#lodging">Explore Lodging</a>
+</div>
+</section>
+</div>
+</main>
+
+<footer>
+<div class="lv-footer-mobile-help">
+<p>Need help planning your visit? Our friendly team is here to assist you every step of the way. Lumenvale Resort is a fictional destination — this is a demo page.</p>
+</div>
+<button class="lv-footer-show-more" type="button" id="footer-more-toggle" aria-expanded="false" aria-controls="footer-extra">
+<svg aria-hidden="true"><use href="#lv-chev-right"/></svg>
+<span id="footer-more-txt">Expand footer links</span>
+</button>
+<div class="lv-footer-extra" id="footer-extra">
+<ul>
+<li><a href="#passes">Passes</a></li>
+<li><a href="#lodging">Lodging</a></li>
+<li><a href="#dining">Dining</a></li>
+<li><a href="#plan">Plan your visit</a></li>
+<li><a href="#faq">Help &amp; FAQ</a></li>
+<li><a href="#area-hours-table">Area hours</a></li>
+</ul>
+</div>
+<div class="lv-footer-columns">
+<div class="wrap">
+<div class="lv-footer-grid">
+<div class="lv-footer-col">
+<h4>Resort Areas</h4>
+<ul>
+<li><a href="#lantern-quay">Lantern Quay</a></li>
+<li><a href="#fernhollow">Fernhollow Gardens</a></li>
+<li><a href="#starwake">Starwake Pier</a></li>
+<li><a href="#tidepool">Tidepool Cove</a></li>
+<li><a href="#copperline">Copperline Rails</a></li>
+<li><a href="#meadowlight">Meadowlight Commons</a></li>
+</ul>
+</div>
+<div class="lv-footer-col">
+<h4>Stay &amp; Dine</h4>
+<ul>
+<li><a href="#lodging">Lodging</a></li>
+<li><a href="#lodging">Lakeside Suites</a></li>
+<li><a href="#lodging">Forest Cabins</a></li>
+<li><a href="#dining">Dining</a></li>
+<li><a href="#dining">Waterfront Restaurants</a></li>
+<li><a href="#dining">Food Markets</a></li>
+</ul>
+</div>
+<div class="lv-footer-col">
+<h4>Plan &amp; Help</h4>
+<ul>
+<li><a href="#passes">Passes &amp; Tickets</a></li>
+<li><a href="#area-hours-table">Area Hours</a></li>
+<li><a href="#plan">Resort Map</a></li>
+<li><a href="#faq">FAQ</a></li>
+<li><a href="#plan">Accessibility</a></li>
+<li><a href="#plan">Group Bookings</a></li>
+</ul>
+</div>
+<div class="lv-footer-col">
+<h4>Keep in Touch</h4>
+<div class="lv-footer-social">
+<p>Follow Lumenvale</p>
+<div class="lv-footer-social-links">
+<a href="#social" aria-label="Lumenvale on social — demo"><svg aria-hidden="true"><use href="#lv-social-a"/></svg></a>
+<a href="#social" aria-label="Lumenvale on social — demo"><svg aria-hidden="true"><use href="#lv-social-b"/></svg></a>
+</div>
+</div>
+<div style="margin-top:calc(var(--aura)*2);">
+<p style="font-size:0.875rem;font-weight:600;color:var(--gray-12);margin-bottom:calc(var(--aura)*0.5);">Join Lumenvale Members</p>
+<p style="font-size:0.8rem;color:var(--gray-11);margin-bottom:calc(var(--aura)*0.75);">Receive tailored event alerts and member-only previews. Demo only.</p>
+<a class="lv-pill lv-pill-secondary" href="#signin" style="font-size:0.85rem;padding:calc(var(--aura)*0.5) calc(var(--aura)*1.5);">Become a member</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<nav class="lv-footer-legal-bar" aria-label="Legal">
+<a href="#legal">Privacy Policy</a>
+<span class="lv-footer-legal-sep" aria-hidden="true"></span>
+<a href="#legal">Terms of Use</a>
+<span class="lv-footer-legal-sep" aria-hidden="true"></span>
+<a href="#legal">Accessibility</a>
+<span class="lv-footer-legal-sep" aria-hidden="true"></span>
+<a href="#legal">Site Map</a>
+<span class="lv-footer-legal-sep" aria-hidden="true"></span>
+<a href="#legal">Ad Preferences</a>
+</nav>
+</footer>
+
+<dialog id="locale-dialog" class="lv-dialog" aria-labelledby="locale-dialog-title">
+<h2 class="lv-dialog-title" id="locale-dialog-title">Select Your Region</h2>
+<div class="lv-dialog-cols">
+<a href="#" lang="en">English (Lumenvale)</a>
+<a href="#" lang="en">English (North)</a>
+<a href="#" lang="fr">Français (Lumenvale)</a>
+<a href="#" lang="de">Deutsch</a>
+<a href="#" lang="es">Español (Lumenvale)</a>
+<a href="#" lang="pt">Português</a>
+<a href="#" lang="it">Italiano</a>
+<a href="#" lang="nl">Nederlands</a>
+<a href="#" lang="ja">日本語</a>
+<a href="#" lang="ko">한국어</a>
+</div>
+<div class="lv-dialog-footer">
+<button class="lv-pill lv-pill-primary" type="button" id="locale-cancel">Cancel</button>
+</div>
+</dialog>
+
+<script>
+(function(){
+var particleContainer=document.getElementById("particles");
+var colours=["#ffe8a0","#ffd060","#fff0c0","#c0e0ff","#80c8ff"];
+for(var i=0;i<22;i++){
+var p=document.createElement("span");
+p.className="lv-particle";
+p.style.left=Math.random()*100+"%";
+p.style.top=(10+Math.random()*65)+"%";
+p.style.setProperty("--dur",(3+Math.random()*5)+"s");
+p.style.setProperty("--delay",(Math.random()*6)+"s");
+p.style.background=colours[Math.floor(Math.random()*colours.length)];
+var sz=(3+Math.random()*4)+"px";
+p.style.width=sz;
+p.style.height=sz;
+particleContainer.appendChild(p);
+}
+
+var pauseBtn=document.getElementById("hero-pause");
+var heroEl=document.getElementById("top");
+pauseBtn.addEventListener("click",function(){
+var pressed=pauseBtn.getAttribute("aria-pressed")==="true";
+var next=!pressed;
+pauseBtn.setAttribute("aria-pressed",String(next));
+pauseBtn.setAttribute("aria-label",next?"Play animation":"Pause animation");
+heroEl.classList.toggle("paused",next);
+});
+
+var megaTrigger=document.getElementById("mega-trigger");
+var megaPanel=document.getElementById("mega-areas");
+function closeMega(){megaTrigger.setAttribute("aria-expanded","false");megaPanel.hidden=true;}
+function openMega(){megaTrigger.setAttribute("aria-expanded","true");megaPanel.hidden=false;}
+megaTrigger.addEventListener("click",function(){megaTrigger.getAttribute("aria-expanded")==="true"?closeMega():openMega();});
+megaTrigger.addEventListener("keydown",function(e){if(e.key==="Escape"){closeMega();megaTrigger.focus();}});
+megaPanel.addEventListener("keydown",function(e){if(e.key==="Escape"){closeMega();megaTrigger.focus();}});
+document.addEventListener("click",function(e){if(!e.target.closest("#mega-trigger")&&!e.target.closest("#mega-areas"))closeMega();});
+megaPanel.addEventListener("focusout",function(e){if(!megaPanel.contains(e.relatedTarget)&&e.relatedTarget!==megaTrigger)closeMega();});
+
+var drawerToggle=document.getElementById("drawer-toggle");
+var drawer=document.getElementById("lv-drawer");
+var drawerClose=document.getElementById("drawer-close");
+function openDrawer(){drawer.hidden=false;drawer.classList.add("open");drawerToggle.setAttribute("aria-expanded","true");drawerClose.focus();}
+function closeDrawer(){
+drawer.classList.remove("open");
+drawerToggle.setAttribute("aria-expanded","false");
+var finish=function(){drawer.hidden=true;drawer.removeEventListener("transitionend",finish);};
+drawer.addEventListener("transitionend",finish,{once:true});
+drawerToggle.focus();
+}
+drawerToggle.addEventListener("click",openDrawer);
+drawerClose.addEventListener("click",closeDrawer);
+drawer.addEventListener("keydown",function(e){if(e.key==="Escape")closeDrawer();});
+drawer.addEventListener("keydown",function(e){
+if(e.key!=="Tab")return;
+var els=Array.from(drawer.querySelectorAll("a,button,[tabindex]:not([tabindex='-1'])"));
+var first=els[0],last=els[els.length-1];
+if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+});
+
+var hoursToggle=document.getElementById("hours-toggle");
+var hoursTxt=document.getElementById("hours-toggle-txt");
+var hoursPanel=document.getElementById("hours-panel");
+hoursToggle.addEventListener("click",function(){
+var open=hoursToggle.getAttribute("aria-expanded")==="true";
+hoursToggle.setAttribute("aria-expanded",String(!open));
+hoursPanel.hidden=open;
+hoursTxt.textContent=open?"Show Hours":"Hide Hours";
+});
+
+var steppers={
+adults:{val:0,display:document.getElementById("adults-val")},
+children:{val:0,display:document.getElementById("children-val")},
+"adults-m":{val:0,display:document.getElementById("adults-val-m")},
+"children-m":{val:0,display:document.getElementById("children-val-m")}
+};
+document.querySelectorAll("[data-stepper]").forEach(function(btn){
+btn.addEventListener("click",function(){
+var key=btn.dataset.stepper;
+var dir=parseInt(btn.dataset.dir,10);
+if(steppers[key]){
+steppers[key].val=Math.max(0,Math.min(20,steppers[key].val+dir));
+steppers[key].display.textContent=steppers[key].val;
+}
+});
+});
+
+var bookingForm=document.getElementById("booking-form");
+var bookingStatus=document.getElementById("booking-status");
+bookingForm.addEventListener("submit",function(e){
+e.preventDefault();
+bookingStatus.textContent="Showing available dates for your selection — Example only. No booking was made.";
+});
+var bookingFormMobile=document.getElementById("booking-form-mobile");
+var bookingStatusMobile=document.getElementById("booking-status-m");
+bookingFormMobile.addEventListener("submit",function(e){
+e.preventDefault();
+bookingStatusMobile.textContent="Showing available dates for your selection — Example only. No booking was made.";
+});
+
+var visitForm=document.getElementById("visit-form");
+var vfStatus=document.getElementById("vf-status");
+var vfFields={
+"vf-name":{el:document.getElementById("vf-name"),err:document.getElementById("vf-name-err"),msg:"Please enter your full name."},
+"vf-email":{el:document.getElementById("vf-email"),err:document.getElementById("vf-email-err"),msg:"Please enter a valid email address."}
+};
+function checkField(key){
+var f=vfFields[key];
+var valid=f.el.checkValidity()&&f.el.value.trim().length>0;
+f.el.setAttribute("aria-invalid",String(!valid));
+f.err.textContent=valid?"":f.msg;
+return valid;
+}
+visitForm.addEventListener("submit",function(e){
+e.preventDefault();
+var ok=Object.keys(vfFields).map(checkField).every(Boolean);
+if(!ok){
+Object.keys(vfFields).forEach(function(k){if(!vfFields[k].el.checkValidity()){vfFields[k].el.focus();}});
+return;
+}
+vfStatus.textContent="Your enquiry has been noted. This is a demo — nothing was sent.";
+});
+Object.keys(vfFields).forEach(function(k){
+vfFields[k].el.addEventListener("input",function(){
+if(vfFields[k].el.getAttribute("aria-invalid")==="true")checkField(k);
+});
+});
+
+document.querySelectorAll(".lv-acc-btn").forEach(function(btn){
+var panel=document.getElementById(btn.getAttribute("aria-controls"));
+btn.addEventListener("click",function(){
+var open=btn.getAttribute("aria-expanded")==="true";
+btn.setAttribute("aria-expanded",String(!open));
+panel.hidden=open;
+});
+});
+
+var localeTrigger=document.getElementById("locale-trigger");
+var drawerLocaleTrigger=document.getElementById("drawer-locale-trigger");
+var localeDialog=document.getElementById("locale-dialog");
+var localeCancel=document.getElementById("locale-cancel");
+function openLocale(){localeDialog.showModal();localeCancel.focus();}
+function closeLocale(){localeDialog.close();}
+localeTrigger.addEventListener("click",openLocale);
+drawerLocaleTrigger.addEventListener("click",openLocale);
+localeCancel.addEventListener("click",closeLocale);
+localeDialog.addEventListener("keydown",function(e){if(e.key==="Escape"){e.preventDefault();closeLocale();}});
+localeDialog.querySelectorAll("a").forEach(function(a){a.addEventListener("click",function(e){e.preventDefault();closeLocale();});});
+
+var footerMoreToggle=document.getElementById("footer-more-toggle");
+var footerMoreTxt=document.getElementById("footer-more-txt");
+var footerExtra=document.getElementById("footer-extra");
+footerMoreToggle.addEventListener("click",function(){
+var open=footerMoreToggle.getAttribute("aria-expanded")==="true";
+footerMoreToggle.setAttribute("aria-expanded",String(!open));
+footerExtra.classList.toggle("open",!open);
+footerMoreTxt.textContent=open?"Expand footer links":"Collapse footer links";
+});
+})();
+</script>
+</body>
+</html>
