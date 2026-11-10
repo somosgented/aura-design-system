@@ -240,9 +240,9 @@ nav#sb-anchors.stuck{border-radius:13px;box-shadow:0 4px 20px color-mix(in srgb,
 .sb-story-chips{display:flex;flex-wrap:wrap;gap:calc(var(--aura)*0.5);margin-bottom:calc(var(--aura)*1.5);}
 .sb-story-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;background:var(--salt);border-radius:9999px;font-size:12px;font-weight:600;color:var(--chip-ink);}
 .sb-story-art{min-height:280px;position:relative;overflow:hidden;}
-.sb-client-strip-wrap{overflow-x:auto;scrollbar-width:none;}
+.sb-client-strip-wrap{overflow-x:auto;scrollbar-width:none;scroll-padding-inline:calc(var(--aura)*1);}
 .sb-client-strip-wrap::-webkit-scrollbar{display:none;}
-.sb-client-strip{display:flex;justify-content:center;gap:calc(var(--aura)*1);min-width:0;}
+.sb-client-strip{display:flex;justify-content:flex-start;gap:calc(var(--aura)*1);min-width:0;}
 .sb-client-tile{flex:0 0 auto;padding:calc(var(--aura)*1) calc(var(--aura)*1.5);border:1px solid var(--rule);border-radius:8px;border-bottom:4px solid transparent;background:var(--paper);font-size:16px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;}
 .sb-client-tile[aria-selected="true"]{border-bottom-color:var(--brook);color:var(--ink);}
 .sb-client-tile:hover{color:var(--ink);}
@@ -1140,7 +1140,7 @@ nav#sb-anchors{transition:box-shadow 220ms ease,border-radius 220ms ease;}
           </svg>
         </div>
       </div>
-      <div class="sb-client-strip-wrap">
+      <div class="sb-client-strip-wrap" id="sb-client-strip-wrap">
         <div class="sb-client-strip" role="tablist" aria-label="Customer story tabs" id="sb-client-strip">
           <button class="sb-client-tile" role="tab" aria-selected="true" aria-controls="sb-story-card-0" id="sb-ctile-0" tabindex="0">Luminar Works</button>
           <button class="sb-client-tile" role="tab" aria-selected="false" aria-controls="sb-story-card-1" id="sb-ctile-1" tabindex="-1">Coralline Data</button>
@@ -1396,18 +1396,12 @@ nav#sb-anchors{transition:box-shadow 220ms ease,border-radius 220ms ease;}
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 1.5l5 2.5v3.5c0 2.8-2.2 4.8-5 5.5-2.8-.7-5-2.7-5-5.5V4z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
         Privacy settings
       </button>
-      <span class="sb-footer-sep" aria-hidden="true">|</span>
-      <a href="#">Sitemap</a>
-      <span class="sb-footer-sep" aria-hidden="true">|</span>
-      <a href="#contact">Contact</a>
-      <span class="sb-footer-sep" aria-hidden="true">|</span>
-      <a href="#">Privacy</a>
-      <span class="sb-footer-sep" aria-hidden="true">|</span>
-      <a href="#">Terms</a>
-      <span class="sb-footer-sep" aria-hidden="true">|</span>
-      <a href="#">Brand use</a>
-      <span class="sb-footer-sep" aria-hidden="true">|</span>
-      <a href="#">Accessibility</a>
+      <span style="white-space:nowrap;"><span class="sb-footer-sep" aria-hidden="true">|</span><a href="#">Sitemap</a></span>
+      <span style="white-space:nowrap;"><span class="sb-footer-sep" aria-hidden="true">|</span><a href="#contact">Contact</a></span>
+      <span style="white-space:nowrap;"><span class="sb-footer-sep" aria-hidden="true">|</span><a href="#">Privacy</a></span>
+      <span style="white-space:nowrap;"><span class="sb-footer-sep" aria-hidden="true">|</span><a href="#">Terms</a></span>
+      <span style="white-space:nowrap;"><span class="sb-footer-sep" aria-hidden="true">|</span><a href="#">Brand use</a></span>
+      <span style="white-space:nowrap;"><span class="sb-footer-sep" aria-hidden="true">|</span><a href="#">Accessibility</a></span>
       <span class="sb-footer-company">2026 Saltbrook, a fictional company.</span>
     </div>
   </div>
@@ -1724,6 +1718,8 @@ function goStory(idx){
     if(tile){tile.setAttribute("aria-selected",i===idx?"true":"false");tile.tabIndex=i===idx?0:-1;}
   }
   storyIdx=idx;
+  var activeTile=document.getElementById("sb-ctile-"+idx);
+  if(activeTile){activeTile.scrollIntoView({block:"nearest",inline:"nearest",behavior:"auto"});}
   var prev=document.getElementById("sb-story-prev");
   var next=document.getElementById("sb-story-next");
   var status=document.getElementById("sb-story-status");
@@ -1738,6 +1734,7 @@ var clientStrip=document.getElementById("sb-client-strip");
 if(clientStrip){
   var ctiles=Array.prototype.slice.call(clientStrip.querySelectorAll("[role=tab]"));
   ctiles.forEach(function(tile,i){
+    tile.addEventListener("focus",function(){tile.scrollIntoView({block:"nearest",inline:"nearest",behavior:"auto"});});
     tile.addEventListener("click",function(){goStory(i);tile.focus();});
     tile.addEventListener("keydown",function(e){
       if(e.key==="ArrowRight"){e.preventDefault();var t=ctiles[(i+1)%ctiles.length];goStory((i+1)%ctiles.length);t.focus();}
@@ -1748,6 +1745,7 @@ if(clientStrip){
   });
 }
 goStory(0);
+(function(){if(typeof ResizeObserver==="undefined")return;var ro=new ResizeObserver(function(){var t=document.getElementById("sb-ctile-"+storyIdx);if(t)t.scrollIntoView({block:"nearest",inline:"nearest",behavior:"auto"});});var sw=document.getElementById("sb-client-strip-wrap");if(sw)ro.observe(sw);})();
 
 document.querySelectorAll(".sb-faq-trigger").forEach(function(btn){
   btn.addEventListener("click",function(){

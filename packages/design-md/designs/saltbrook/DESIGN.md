@@ -207,12 +207,17 @@ Figtree (SIL OFL) is loaded at weights **400, 500 and 600** for all display, hea
 | Hero `h1` (360) | 28px / 1.1 (clamp(28px,8vw,36px)) | 500 | `.h1 font-display` |
 | Section `h2` (1280) | 30–38px (clamp, 3–3.5vw) | 500 | `.h2 font-display` |
 | Section `h2` (360) | 22–26px | 500 | `.h2 font-display` |
-| Feature `h3` | 20px / 28px | 600 | `.h3` |
-| Card title | 18px / 26px | 600 | `.h4` |
+| Section `h3` (pricing card, next-steps heading) | 22px / 1.1 | 500 | `h3` (inherits `font-weight:500` from `h1,h2,h3,h4` rule) |
+| Next-steps card `h3` (`.sb-ns-card-body h3`) | 20px / 1.1 | 500 | `h3` |
+| Feature / accordion title inner button | 18px / 1.5 | 600 | `.sb-acc-trigger` (weight 600 is on the `<button>`, not the `<h3>`) |
+| Plan name | 20px / 1.5 | 600 | `.sb-plan-name` (not an `h3`) |
+| Service card title | 16px / 1.5 | 600 | `.sb-svc-title` |
+| Card title / resource title | 18px / 1.5 | 600 | `.sb-res-title` |
 | Body prose | 16px / 24px | 400 | `p` |
 | Nav / anchor links | 14px / 20px | 600 | `.small font-semibold` |
 | Eyebrow label | 12px / 18px | 500 | `font-label uppercase tracking-[0.08em]` |
-| Button text | 15px | 600 | inside `Button` |
+| Button text (filled `.button-fill`) | 15px | 600 | inside `Button variant="fill"` |
+| Button text (outline/plain `.button`) | 14px | 600 | inside `Button variant="outline"` or plain |
 | Footnote | 14px / 20px | 400 | `.small` |
 
 ## Layout
@@ -224,11 +229,12 @@ Saltbrook's spacing maps to the 13px grid:
 | 8 | `0.5` | 6.5 | Icon gap, tight internal padding |
 | 12–16 | `1` | 13 | Nav gap, label gap, card inner gap |
 | 24 | `2` | 26 | Card padding-x, pill padding-x |
-| 36 | `2.5` | 32.5 | Event banner height (1280) |
+| 36 | `2.5` | 32.5 | Tight inner padding step (unused standalone) |
 | 40 | `3` | 39 | Pill tab height |
 | 44–48 | `3.5` | 45.5 | Button height |
 | 56 | `4` | 52 | Header height |
-| 64 | `5` | 65 | Hero art band (360), section gap |
+| 64 | `5` | 65 | Section gap |
+| 130 | — | 130 | Hero art band height at <768px (fixed value in CSS, not an Aura step) |
 | 96 | `7.5` | 97.5 | Section vertical padding |
 | 140 | `11` | 143 | Large section gap |
 | 470 | `36` | 468 | Hero height (1280) |
@@ -238,7 +244,7 @@ Saltbrook's spacing maps to the 13px grid:
 
 **Header (360px):** Row 1: 3-column grid (44px | 1fr | 44px) — search icon button in the first cell, wordmark centered in the middle cell, third cell empty; the divider and suite label "Delivery" are hidden. Row 2 under a hairline (`border-top: 1px solid var(--control-line)`): "Delivery" disclosure button at left with chevron. Opening it shows a full-width internally scrollable panel (z-index 70, `role="dialog" aria-modal="true"`) with: a close button (× "Close menu", first focusable, top-right, 44×44px), then rows: Home, Platform / Services / Teams / Company (each expandable), Plans, Learn, Support, Contact sales (plain links), and a footer area with Start building and Sign in. Close button, Escape and the toggle close it; focus returns to the toggle; Tab is trapped inside.
 
-**Event banner:** Full-bleed `--harbor` band, `~36px` tall at 1280 (taller at 360). Centered `--harbor-ink` text "Join Saltbrook Summit, a fictional online event on 3–4 December 2026." with an underlined `--harbor-ink` link "Save a seat". Decorative CSS/SVG curved arcs (using `--glint` and `--dusk` strokes) at both ends. White close × at right; dismisses on click; focus moves to main content start.
+**Event banner:** Full-bleed `--harbor` band, `min-height:36px` at 1280 (taller at 360 due to text wrap). Centered `--harbor-ink` text "Join Saltbrook Summit, a fictional online event on 3–4 December 2026." with an underlined `--harbor-ink` link "Save a seat". Decorative CSS/SVG curved arcs (using `--glint` and `--dusk` strokes) at both ends. White close × at right; dismisses on click; focus moves to main content start.
 
 **Hero:** `~468px` tall at 1280 on `--paper`. Copy column (max-width 420px, z-index 1): `h1` "Saltbrook Delivery" (color `--ink`), 16px paragraph, filled "Start building" button. Art: an absolutely positioned layer covering `top:0; bottom:0; right:0; width:60%` of the hero, no border-radius or border. Its left edge fades into the canvas via `mask-image: linear-gradient(to right, transparent, black 30%)` (plus `-webkit-mask-image`) so there is no visible box edge in light or dark. Art content: in light, bright warm honey/amber glow (`--dawn`) blooming from the right edge, soft white diagonal beam ≤ 35% opacity, thin violet-to-coral arc line; in dark, deep navy with dim amber glow (`--dawn` ≤ 35%), beam ≤ 8% white, arc kept. The hero `overflow:hidden` clips all art. At <768px: the art layer becomes a 130px-tall band in normal flow placed above the copy (order: -1), edge-to-edge with no side margins or border-radius, faded at its bottom into the canvas via `mask-image: linear-gradient(to bottom, black 60%, transparent)`. Button is full-width. Text never overlaps the bright art area.
 
@@ -256,6 +262,10 @@ Saltbrook's spacing maps to the 13px grid:
 
 **Story cards (Team stories section):** 4 story cards, each a split card (`role="tabpanel"` with `aria-labelledby` pointing to its client tile tab, radius 13px, shadow): left a client logo label, 22px quote (`<blockquote>`), attribution, service chips, "Read the story" button; right a CSS-drawn art panel. Below: 4 client tile buttons as a WAI-ARIA `tablist` (selected tile: 4px `--brook` bottom bar; roving tabindex, Left/Right/Home/End). Previous/Next buttons (`aria-disabled="true"` at ends, `role="status" aria-live="polite"` announces "Story N of 4"). No autoplay. Band uses a `--dawn`-to-`--dusk` gradient wash. In dark mode the band gradient deepens to overlay `--harbor` so contrast reaches ≥ 4.5:1: the eyebrow uses `color-mix(in srgb,var(--brook) 70%,var(--ink))` and unselected client tiles use `--body` on a slightly lighter tile fill (`color-mix(in srgb,var(--paper) 80%,var(--canvas))`). Selected tiles use `--ink` text with the 4px `--brook` bottom bar.
 
+The client tile strip (`#sb-client-strip-wrap`) is `overflow-x:auto`, start-aligned (`justify-content:flex-start`), with `scroll-padding-inline` set. On `goStory`, on tile `focus`, and on `ResizeObserver` wrap resize, the active or focused tile is scrolled into view via `scrollIntoView({block:"nearest",inline:"nearest",behavior:"auto"})`. This ensures every tab is reachable at every viewport width without horizontal scroll interaction. Keyboard: Left/Right arrows move between tiles (wrapping); Home/End jump to first/last; the `role="status"` region announces "Story N of 4".
+
+The legal row in the footer groups each "|" separator with the following link in a `<span>` so pipe characters never wrap alone at 360px.
+
 **Resource cards:** 3 cards (radius 13px, 1px `--rule` border, soft shadow) each with a CSS-drawn image area on top (inset 8px, radius 8px), 18px weight 600 title, paragraph, chevron-square "Learn more" link.
 
 **Footer:** `--footer` surface, 6 named column groups (`role="group"` with `aria-labelledby` pointing to an `h2`) titled in this order: **Build and ship, Plan and track, Saltbrook for teams, Learn delivery, Company, Trust and policies**. Links 12–13px at ≥ 4.5:1, column titles 15px weight 600 (visible at ≥768px; visually hidden at <768px for assistive tech). At <768px column headings are kept in the DOM but visually hidden, and accordion triggers (`aria-expanded`, `border-top:1px solid var(--control-line)`) appear instead. Legal row: globe icon + language `NativeSelect` (English, Español, Português; local only), "Privacy settings" button, Sitemap, Contact, Privacy, Terms, Brand use, Accessibility, "2026 Saltbrook, a fictional company."
@@ -267,7 +277,11 @@ Saltbrook's spacing maps to the 13px grid:
 ## Elevation & Depth
 
 - **Flat default:** `--canvas`, `--salt` and `--shoal` bands carry no shadow.
-- **Cards:** `shadow-sm border border-(--rule) bg-(--paper)` radius 13px.
+- **Service cards (`.sb-svc-card`):** `border:1px solid var(--rule) bg-(--paper)` radius 13px. No box-shadow.
+- **Resource cards (`.sb-res-card`):** `border:1px solid var(--rule) bg-(--paper)` radius 13px, plus a two-layer light shadow `0 1px 2px color-mix(in srgb,var(--harbor) 6%,transparent), 0 6px 18px color-mix(in srgb,var(--harbor) 8%,transparent)`.
+- **Story card:** custom shadow `0 4px 24px color-mix(in srgb,var(--harbor) 12%,transparent)`; no border; radius 13px.
+- **Pricing card:** shadow `0 2px 16px color-mix(in srgb,var(--harbor) 8%,transparent)`; border `1px solid var(--rule)`; radius 13px.
+- **Plan card / NS card / FAQ item:** no box-shadow; border `1px solid var(--rule)`; radius 13px; `bg-(--paper)` fill.
 - **Mega panel:** `shadow-lg border-b-2 border-(--rule)` — the only layer floating above the header flow.
 - **Sticky nav (floating state):** `shadow-md rounded-[13px] border border-(--rule)`.
 - **Floating assistant chip:** `shadow-md border border-(--rule)`.
@@ -280,7 +294,7 @@ Saltbrook's spacing maps to the 13px grid:
 - **Buttons and inputs:** 8px radius (`--aura-button-radius`, `--aura-input-radius`).
 - **Surfaces (cards, panels, floating nav):** 13px radius (`--aura-radius`).
 - **Pill tabs:** 9999px radius (fully rounded), height 39px, padding-x 26px.
-- **Chevron-square link glyph:** 24–28px square, 8px radius, `--brook` fill, white chevron icon.
+- **Chevron-square link glyph:** 26px square, 8px radius, `--brook` fill, chevron glyph in `color:var(--on-brook)` (dark navy in dark mode, not always white).
 - **Stat left bar:** 4px wide, full-height of the stat block, `--brook` fill.
 - **Accordion active left bar:** 3px wide, `--brook` fill.
 - **Client tile selected bottom bar:** 4px, `--brook` fill.
@@ -298,8 +312,8 @@ Saltbrook's spacing maps to the 13px grid:
 | Pill tab (inactive) | `Tabs` inactive trigger | `bg-(--tide-tint) text-(--on-tide-tint) rounded-full h-[39px] px-[26px] font-semibold` |
 | Header nav with mega panel | `NavigationMenu` | Full-width panel; 6 columns; each panel has its own top link; column titles 13px weight 600; Integrations column uses generic wording ("Connected apps"); click/Enter/Space only; Escape closes; z-index 70 |
 | At a glance accordion | `Accordion` | Open item: 3px `--brook` left bar; the media panel swaps one `role="img"` mock (with `aria-label`) per item; no live region |
-| Service tile card | `Card` | `rounded-[13px] shadow-sm border border-(--rule) bg-(--paper)` |
-| Resource card | `Card` | `rounded-[13px] shadow-sm border border-(--rule) bg-(--paper)` |
+| Service tile card | `Card` | `rounded-[13px] border border-(--rule) bg-(--paper)` — no box-shadow |
+| Resource card | `Card` | `rounded-[13px] border border-(--rule) bg-(--paper)` with two-layer light shadow (see Elevation) |
 | Split story card | `Card` | `rounded-[13px] shadow-md`; `role="tabpanel"` with `aria-labelledby` to its client tile tab; left content panel and right CSS art panel |
 | Services carousel (<768px) | `Carousel` with `Button size="icon-md"` | Scroll-snap; all cards shown (9/9 or 6/6); prev/next buttons have `aria-controls` on grid, `aria-disabled="true"` at ends (stay focusable), `border:1px solid var(--control-line)`; visually hidden `role="status" aria-live="polite"` announces position |
 | Client tile strip tablist | `Tabs` | WAI-ARIA tablist; selected tile: 4px `--brook` bottom bar; unselected ≥ 3:1 |
@@ -332,7 +346,7 @@ Saltbrook's spacing maps to the 13px grid:
 
 - Don't use `--dawn`, `--dusk` or `--glint` as text, label or border colors anywhere.
 - Don't use `--brook` or `--kelp` as a section background color outside pill tabs.
-- Don't add shadows to cards inside `--salt` or `--shoal` bands beyond `shadow-sm`.
+- Don't add box-shadows to service, plan, NS, or FAQ cards; those surfaces use border-only elevation. Reserve custom harbor-tinted shadows for story and pricing cards only.
 - Don't open more than one mega panel or mobile nav panel at once.
 - Don't autoplay any carousel, animation or transition.
 - Don't send, store or transmit any data from the form, assistant or search controls.
@@ -346,7 +360,7 @@ All flavor transitions and animations run only under `@media (prefers-reduced-mo
 
 | Element | Animation | Timing |
 | --- | --- | --- |
-| Section entrance | Fade + raise `translateY(18px → 0)` | 400ms `cubic-bezier(0.4, 0, 0.2, 1)`, staggered |
+| Section entrance | Fade + raise `translateY(18px → 0)` | 400ms `cubic-bezier(0.4, 0, 0.2, 1)`, simultaneous (no transition-delay or stagger) |
 | Accordion open/close | `opacity` fade-in (open panels only) | 220ms ease |
 | Mega panel open | `opacity 0 → 1` | 180ms ease |
 | Carousel scroll | `scroll-behavior: smooth` | Native |
@@ -366,7 +380,7 @@ With `prefers-reduced-motion: reduce`: all entrances appear instantly in final s
 - All `Dialog` instances trap focus within, respond to Escape, and return focus to the triggering element on close.
 - The assistant `aria-live="polite"` log announces canned responses without disrupting reading flow. The input row (not the input element itself) draws a `2px var(--focus)` ring via `:focus-within`; the input itself has no separate focus border.
 - Native `<select>` elements carry an explicit `border: 1px solid var(--control-line)` and `appearance: auto` via scoped selectors to ensure the chevron and border are visible in both appearances and in forced-colors mode.
-- Forced-colors support: add `@media (forced-colors: active)` rules so `--brook`-filled buttons use `ButtonFace`/`ButtonText`, the active tab underline uses `Highlight`, focus rings use `Highlight`, and stat/accordion bars use `CanvasText` borders rather than background fills.
+- Forced-colors support: `@media (forced-colors: active)` rules in the showcase: `.button-fill` and `.sb-assist-send` use `background:Highlight; color:HighlightText; border:1px solid Highlight`; active pill tabs use `background:Highlight; color:HighlightText; border:2px solid Highlight`; inactive pill tabs use `background:ButtonFace; color:ButtonText; border:1px solid ButtonText`; the active anchor link uses `border-bottom:3px solid Highlight; color:Highlight`; `.sb-stat-bar` uses `background:CanvasText` (a background fill, not a border); `.sb-acc-panel-inner` uses `border-left:3px solid Highlight`; selected client tiles use `border-bottom:4px solid Highlight`; `:focus-visible` uses `outline:2px solid Highlight`.
 - The event banner close button moves focus to the hero `h1` (which carries `tabindex="-1"`) after dismissal; a `:focus:not(:focus-visible)` rule suppresses any visible outline on this programmatic focus.
 - Page scroll is locked (`overflow: hidden` on `<body>`) while the mobile nav panel is open.
 - The search control in the header opens a local search field with a visible note that search is a local demo; no network request is made.
@@ -376,7 +390,7 @@ With `prefers-reduced-motion: reduce`: all entrances appear instantly in final s
 
 ```tsx
 <section className="sb mx-auto max-w-[1280px] px-[26px] py-[97.5px]">
-  <div className="grid gap-[32.5px]">
+  <div className="grid gap-[26px]">
     <span className="font-label uppercase tracking-[0.08em] text-[12px] text-(--brook)">
       Services
     </span>
@@ -409,7 +423,7 @@ With `prefers-reduced-motion: reduce`: all entrances appear instantly in final s
     role="tabpanel"
     className="mt-[32.5px] grid grid-cols-[repeat(3,minmax(0,1fr))] gap-[26px]"
   >
-    <Card className="rounded-[13px] shadow-sm border border-(--rule) bg-(--paper) p-[26px] flex flex-col gap-[13px]">
+    <Card className="rounded-[13px] border border-(--rule) bg-(--paper) p-[26px] flex flex-col gap-[13px]">
       <div className="size-[39px] rounded-[8px] bg-(--salt) flex items-center justify-center">
         <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
           <rect x="3" y="4" width="18" height="3" rx="1.5" fill="var(--brook)" />
@@ -417,7 +431,7 @@ With `prefers-reduced-motion: reduce`: all entrances appear instantly in final s
           <rect x="3" y="16" width="15" height="3" rx="1.5" fill="var(--brook)" fillOpacity="0.4" />
         </svg>
       </div>
-      <h3 className="text-[18px] leading-[26px] font-semibold text-(--ink)">Saltbrook Ledger</h3>
+      <p className="text-[16px] leading-[24px] font-semibold text-(--ink)">Saltbrook Ledger</p>
       <p className="text-[16px] leading-[24px] text-(--body)">
         Track work items, milestones and releases in one shared view across your whole team.
       </p>
