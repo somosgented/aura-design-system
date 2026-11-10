@@ -1,0 +1,1866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Saltbrook · Aura flavor</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="stylesheet" href="/aura/main.css"/>
+<link rel="stylesheet" href="theme.css"/>
+<script>
+(function(){
+  var p=new URLSearchParams(window.location.search).get("appearance");
+  var d=p==="dark"?"dark":p==="light"?"light":(window.matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
+  var r=document.documentElement;
+  r.classList.add(d);
+  r.style.colorScheme=d;
+  if(window.matchMedia("(prefers-reduced-motion: no-preference)").matches)r.classList.add("motion");
+})();
+</script>
+<style>
+*{box-sizing:border-box;}
+html{font-family:var(--aura-font-stack);background:var(--canvas);color:var(--ink);scroll-padding-top:calc(var(--aura)*4);}
+body{margin:0;padding:0;background:var(--canvas);color:var(--ink);font-size:16px;line-height:1.5;overflow-x:hidden;min-width:0;}
+h1,h2,h3,h4,h5,h6,p,figure,ul,ol,dl{margin:0;}
+ul,ol{padding:0;list-style:none;}
+h1,h2,h3,h4{font-family:var(--aura-font-display);font-weight:500;letter-spacing:-0.02em;text-wrap:balance;overflow-wrap:break-word;min-width:0;}
+p{overflow-wrap:break-word;}
+a{color:inherit;text-decoration:none;}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+#sb-hero-h1:focus:not(:focus-visible){outline:none;}
+.skip-link{position:absolute;left:calc(var(--aura)*1);top:calc(var(--aura)*-5);z-index:200;padding:calc(var(--aura)*0.5) calc(var(--aura)*2);border-radius:8px;background:var(--brook);color:var(--on-brook);font-weight:600;}
+.skip-link:focus{top:calc(var(--aura)*1);}
+
+.sb{--aura-accents-primary:var(--brook);--aura-button-hover:var(--brook-deep);--aura-input-bg:var(--salt);--aura-input-placeholder-color:var(--muted);--aura-link:var(--brook);--aura-link-hover:var(--tide-tint);--aura-outline:2px solid var(--focus);--aura-text-primary-inverse:var(--on-brook);}
+.sb button,.sb input,.sb select,.sb textarea{font-family:inherit;}
+.sb .button-fill{background:var(--brook);border-color:var(--brook);color:var(--on-brook);border-radius:8px;height:calc(var(--aura)*3.5);padding:0 calc(var(--aura)*2);font-size:15px;font-weight:600;}
+.sb .button-fill:hover:not(:disabled){background:var(--brook-deep);border-color:var(--brook-deep);}
+.sb .button{border-radius:8px;height:calc(var(--aura)*3.5);padding:0 calc(var(--aura)*2);font-size:14px;font-weight:600;}
+.sb input:not(.default){background:var(--salt);border:1px solid var(--control-line);color:var(--ink);border-radius:8px;height:calc(var(--aura)*4);padding:0 calc(var(--aura)*1.5);}
+.sb input:not(.default):focus{outline:2px solid var(--focus);outline-offset:0;background:var(--salt);}
+.sb input:not(.default)::placeholder{color:var(--muted);}
+.sb textarea:not(.default){background:var(--salt);border:1px solid var(--control-line);color:var(--ink);border-radius:8px;padding:calc(var(--aura)*1) calc(var(--aura)*1.5);font-family:inherit;}
+.sb textarea:not(.default):focus{outline:2px solid var(--focus);outline-offset:0;background:var(--salt);}
+.sb textarea:not(.default)::placeholder{color:var(--muted);}
+.sb select.inputer{appearance:auto;-webkit-appearance:auto;border:1px solid var(--control-line);background:var(--paper);color:var(--ink);border-radius:8px;height:calc(var(--aura)*4);padding:0 calc(var(--aura)*1.5);font-family:inherit;font-size:max(1rem,17px);width:100%;cursor:pointer;}
+.sb select.inputer:focus{outline:2px solid var(--focus);outline-offset:0;}
+.dark .sb select.inputer{border-color:var(--control-line);background:var(--paper);color:var(--ink);}
+
+.wrap{width:min(100% - calc(var(--aura)*4),1280px);margin-inline:auto;}
+.eyebrow{font-family:var(--aura-font-label);font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--brook);}
+.section-pad{padding-block:calc(var(--aura)*7.5);}
+.chevron-sq{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:var(--brook);color:var(--on-brook);flex-shrink:0;}
+.chevron-link{display:inline-flex;align-items:center;gap:calc(var(--aura)*0.75);font-size:14px;font-weight:600;color:var(--brook);}
+
+#sb-header{position:relative;z-index:60;background:var(--paper);border-bottom:1px solid var(--rule);}
+.sb-header-row1{display:flex;align-items:center;height:calc(var(--aura)*4);gap:calc(var(--aura)*1);}
+.sb-wordmark{display:inline-flex;align-items:center;gap:calc(var(--aura)*0.75);font-family:var(--aura-font-display);font-weight:600;font-size:1.1rem;color:var(--ink);flex-shrink:0;text-decoration:none;}
+.sb-accent-sq{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:var(--brook);flex-shrink:0;}
+.sb-divider{width:1px;height:20px;background:var(--rule);flex-shrink:0;}
+.sb-suite-label{font-size:14px;font-weight:600;color:var(--body);flex-shrink:0;white-space:nowrap;}
+.sb-nav-links{display:flex;align-items:center;gap:0;margin-left:calc(var(--aura)*0.5);}
+.sb-nav-trigger,.sb-nav-plain{display:inline-flex;align-items:center;gap:4px;padding:calc(var(--aura)*0.5) calc(var(--aura)*0.75);border:0;background:none;color:var(--body);font:inherit;font-size:14px;font-weight:600;cursor:pointer;border-radius:6px;white-space:nowrap;flex-shrink:0;}
+.sb-nav-trigger:hover,.sb-nav-plain:hover{color:var(--ink);background:var(--salt);}
+.sb-nav-trigger[aria-expanded="true"]{color:var(--brook);}
+.sb-nav-trigger svg{flex-shrink:0;transition:transform 180ms ease;}
+.sb-nav-trigger[aria-expanded="true"] svg{transform:rotate(180deg);}
+.sb-nav-end{display:flex;align-items:center;gap:calc(var(--aura)*0.75);margin-left:auto;flex-shrink:0;}
+.sb-icon-btn{display:inline-flex;align-items:center;justify-content:center;width:calc(var(--aura)*2.5);height:calc(var(--aura)*2.5);border:0;background:none;color:var(--body);cursor:pointer;border-radius:6px;flex-shrink:0;}
+.sb-icon-btn:hover{background:var(--salt);color:var(--ink);}
+.sb-search-row{display:none;align-items:center;gap:calc(var(--aura)*1);padding:calc(var(--aura)*0.75) calc(var(--aura)*2);border-top:1px solid var(--rule);background:var(--paper);}
+.sb-search-row.open{display:flex;}
+.sb-search-note{font-size:12px;color:var(--muted);white-space:nowrap;}
+
+.sb-mega{position:absolute;top:100%;left:12px;right:12px;background:var(--paper);border-bottom:2px solid var(--rule);box-shadow:0 8px 32px color-mix(in srgb,var(--harbor) 15%,transparent);z-index:70;border-radius:0 0 13px 13px;}
+.sb-mega[hidden]{display:none;}
+.sb-mega-inner{padding:calc(var(--aura)*2);}
+.sb-mega-top{margin-bottom:calc(var(--aura)*1.5);padding-bottom:calc(var(--aura)*1);border-bottom:1px solid var(--rule);}
+.sb-mega-top a{font-size:14px;font-weight:600;color:var(--brook);text-decoration:underline;}
+.sb-mega-cols{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:calc(var(--aura)*1.5);}
+.sb-mega-col-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:calc(var(--aura)*0.75);}
+.sb-mega-col ul{display:flex;flex-direction:column;gap:calc(var(--aura)*0.5);}
+.sb-mega-col ul li a{font-size:13px;color:var(--body);display:block;padding:2px 0;}
+.sb-mega-col ul li a:hover{color:var(--brook);}
+
+.sb-mobile-toggle{display:none;width:100%;padding:calc(var(--aura)*0.75) calc(var(--aura)*2);border:0;border-top:1px solid var(--rule);background:none;color:var(--ink);font:inherit;font-size:14px;font-weight:600;cursor:pointer;text-align:left;align-items:center;gap:calc(var(--aura)*0.5);}
+.sb-mobile-toggle svg{transition:transform 180ms ease;flex-shrink:0;margin-left:auto;}
+.sb-mobile-toggle[aria-expanded="true"] svg{transform:rotate(180deg);}
+#sb-mobile-panel{position:absolute;top:100%;left:0;right:0;background:var(--canvas);z-index:70;overflow-y:auto;max-height:calc(100vh - 80px);border-bottom:1px solid var(--rule);}
+#sb-mobile-panel[hidden]{display:none;}
+.sb-mob-row{display:flex;align-items:center;justify-content:space-between;width:100%;padding:calc(var(--aura)*1) calc(var(--aura)*2);border:0;border-bottom:1px solid var(--rule);background:none;color:var(--ink);font:inherit;font-size:15px;cursor:pointer;text-align:left;text-decoration:none;}
+.sb-mob-row:last-child{border-bottom:0;}
+a.sb-mob-row{display:flex;}
+.sb-mob-nested{padding:calc(var(--aura)*0.5) 0 calc(var(--aura)*1) calc(var(--aura)*3);}
+.sb-mob-nested a{display:block;padding:calc(var(--aura)*0.5) calc(var(--aura)*2);font-size:14px;color:var(--body);border-bottom:0;}
+.sb-mob-nested[hidden]{display:none;}
+.sb-mob-foot{display:flex;gap:calc(var(--aura)*1);padding:calc(var(--aura)*1.5) calc(var(--aura)*2);}
+
+#sb-banner{background:var(--harbor);position:relative;overflow:hidden;}
+.sb-banner-inner{display:flex;align-items:center;justify-content:center;gap:calc(var(--aura)*1);padding:calc(var(--aura)*0.75) calc(var(--aura)*5) calc(var(--aura)*0.75) calc(var(--aura)*2);min-height:36px;flex-wrap:wrap;text-align:center;}
+.sb-banner-text{font-size:13px;color:var(--harbor-ink);}
+.sb-banner-link{font-size:13px;color:var(--harbor-ink);text-decoration:underline;font-weight:600;white-space:nowrap;}
+.sb-banner-close{position:absolute;right:calc(var(--aura)*1);top:50%;transform:translateY(-50%);background:none;border:0;color:var(--harbor-ink);cursor:pointer;width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;}
+.sb-banner-close:hover{background:color-mix(in srgb,white 15%,transparent);}
+.sb-banner-arcs{position:absolute;top:0;bottom:0;width:120px;pointer-events:none;}
+.sb-banner-arcs.left{left:0;}
+.sb-banner-arcs.right{right:0;}
+
+#sb-main{min-width:0;}
+
+.sb-hero{background:var(--paper);overflow:hidden;position:relative;}
+.sb-hero-inner{display:grid;grid-template-columns:1fr;min-height:468px;max-width:1280px;margin:0 auto;padding:0 calc(var(--aura)*2);}
+.sb-hero-copy{display:flex;flex-direction:column;justify-content:center;gap:calc(var(--aura)*1.5);padding:calc(var(--aura)*5) 0;z-index:1;min-width:0;max-width:420px;position:relative;}
+@media(max-width:767px){
+  .sb-hero-inner{padding:0;}
+  .sb-hero-copy{padding:calc(var(--aura)*3) calc(var(--aura)*2) calc(var(--aura)*2);}
+}
+.sb-hero-copy h1{font-size:clamp(36px,4vw,44px);line-height:1.1;color:var(--ink);font-weight:500;max-width:16ch;}
+.sb-hero-copy p{font-size:16px;line-height:1.5;color:var(--body);max-width:400px;overflow-wrap:break-word;}
+.sb-hero-art{position:absolute;top:0;bottom:0;right:0;width:60%;pointer-events:none;-webkit-mask-image:linear-gradient(to right,transparent,black 30%);mask-image:linear-gradient(to right,transparent,black 30%);}
+
+nav#sb-anchors{background:var(--paper);border-bottom:1px solid var(--rule);position:sticky;top:0;z-index:40;transition:box-shadow 220ms ease,border-radius 220ms ease;}
+nav#sb-anchors.stuck{border-radius:13px;box-shadow:0 4px 20px color-mix(in srgb,var(--harbor) 12%,transparent);margin:calc(var(--aura)*0.75) calc(var(--aura)*3.5);border:1px solid var(--rule);}
+.sb-anchors-inner{display:flex;align-items:center;height:calc(var(--aura)*3.5);padding:0 calc(var(--aura)*1.5);gap:0;overflow-x:auto;scrollbar-width:none;}
+.sb-anchors-inner::-webkit-scrollbar{display:none;}
+.sb-anchor-link{display:inline-flex;align-items:center;padding:0 calc(var(--aura)*0.75);font-size:14px;font-weight:600;color:var(--body);white-space:nowrap;text-decoration:none;border-bottom:3px solid transparent;height:100%;flex-shrink:0;}
+.sb-anchor-link:hover{color:var(--brook);}
+.sb-anchor-link[aria-current="true"]{color:var(--brook);border-bottom-color:var(--brook);}
+.sb-anchors-btn{margin-left:auto;flex-shrink:0;}
+.sb-anchors-mobile-toggle{display:none;width:100%;padding:calc(var(--aura)*0.75) calc(var(--aura)*1.5);border:0;background:none;font:inherit;font-size:14px;font-weight:600;color:var(--ink);cursor:pointer;align-items:center;justify-content:space-between;gap:calc(var(--aura)*0.5);}
+#sb-anchors-list{display:flex;align-items:center;gap:0;flex:1;overflow-x:auto;}
+@media(min-width:768px){
+  #sb-anchors-list{display:flex!important;}
+}
+
+#overview{background:var(--salt);padding:calc(var(--aura)*7.5) calc(var(--aura)*2);}
+.sb-overview-inner{max-width:1280px;margin:0 auto;}
+.sb-overview-grid{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:calc(var(--aura)*4);align-items:start;margin-top:calc(var(--aura)*3);}
+.sb-acc-item{border-bottom:1px solid var(--rule);}
+.sb-acc-trigger{display:flex;align-items:center;justify-content:space-between;width:100%;padding:calc(var(--aura)*1) 0;border:0;background:none;font:inherit;font-size:18px;font-weight:600;color:var(--ink);cursor:pointer;text-align:left;gap:calc(var(--aura)*1);}
+.sb-acc-trigger:hover{color:var(--brook);}
+.sb-acc-trigger svg{flex-shrink:0;transition:transform 220ms ease;}
+.sb-acc-trigger[aria-expanded="true"] svg{transform:rotate(180deg);}
+.sb-acc-panel{overflow:hidden;}
+.sb-acc-panel[hidden]{display:none;}
+.sb-acc-panel-inner{padding:0 0 calc(var(--aura)*1.5) calc(var(--aura)*1.5);border-left:3px solid var(--brook);}
+.sb-acc-panel-inner p{font-size:15px;color:var(--body);line-height:1.5;}
+.sb-acc-panel-inner a{font-size:14px;font-weight:600;color:var(--brook);text-decoration:underline;display:inline-block;margin-top:calc(var(--aura)*0.75);}
+.sb-acc-open .sb-acc-trigger{color:var(--brook);}
+.sb-media-panel{border-radius:13px;overflow:hidden;background:var(--paper);border:1px solid var(--rule);min-height:360px;}
+.sb-media-swap{width:100%;height:100%;min-height:360px;}
+.sb-media-swap[hidden]{display:none;}
+
+#services{background:var(--paper);padding:calc(var(--aura)*7.5) calc(var(--aura)*2);}
+.sb-services-inner{max-width:1280px;margin:0 auto;}
+.sb-pill-tabs{display:flex;gap:calc(var(--aura)*1);margin-top:calc(var(--aura)*2);}
+.sb-pill-tab{display:inline-flex;align-items:center;justify-content:center;border-radius:9999px;height:39px;padding:0 26px;font-size:15px;font-weight:600;cursor:pointer;border:0;font-family:inherit;}
+.sb-pill-tab[aria-selected="true"]{background:var(--kelp);color:var(--on-kelp);}
+.sb-pill-tab[aria-selected="false"]{background:var(--tide-tint);color:var(--on-tide-tint);}
+.sb-svc-panel{margin-top:calc(var(--aura)*2.5);}
+.sb-svc-panel[hidden]{display:none;}
+.sb-svc-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(var(--aura)*2);}
+.sb-svc-card{background:var(--paper);border:1px solid var(--rule);border-radius:13px;padding:calc(var(--aura)*2);display:flex;flex-direction:column;gap:calc(var(--aura)*0.75);min-width:0;}
+.sb-svc-tile{width:40px;height:40px;border-radius:8px;background:var(--salt);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sb-svc-title{font-size:16px;font-weight:600;color:var(--ink);overflow-wrap:break-word;}
+.sb-svc-desc{font-size:14px;color:var(--body);line-height:1.5;overflow-wrap:break-word;}
+.sb-svc-link{font-size:14px;font-weight:600;color:var(--brook);text-decoration:underline;margin-top:auto;}
+.sb-svc-carousel-wrap{overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;}
+.sb-svc-carousel-wrap::-webkit-scrollbar{display:none;}
+.sb-svc-carousel-track{display:flex;gap:calc(var(--aura)*1.5);padding-bottom:calc(var(--aura)*0.5);}
+.sb-svc-carousel-track .sb-svc-card{flex:0 0 80%;scroll-snap-align:start;min-width:0;}
+.sb-carousel-controls{display:flex;gap:calc(var(--aura)*1);margin-top:calc(var(--aura)*1.5);}
+.sb-carousel-btn{width:40px;height:40px;border-radius:50%;border:1px solid var(--rule);background:var(--paper);color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sb-carousel-btn:disabled{opacity:0.4;cursor:not-allowed;}
+.sb-carousel-btn:not(:disabled):hover{background:var(--salt);}
+.sb-svc-footer{margin-top:calc(var(--aura)*2);}
+
+#security-ai{padding:calc(var(--aura)*7.5) calc(var(--aura)*2);position:relative;overflow:hidden;}
+.sb-secai-inner{max-width:680px;margin:0 auto;position:relative;z-index:1;text-align:center;}
+.sb-secai-halo{background:color-mix(in srgb,var(--paper) 85%,transparent);border-radius:16px;padding:calc(var(--aura)*3);}
+.dark #security-ai .sb-secai-halo{background:color-mix(in srgb,var(--harbor) 70%,transparent);}
+.sb-secai-inner h2{font-size:clamp(26px,3.5vw,38px);color:var(--ink);line-height:1.2;margin-bottom:calc(var(--aura)*1.5);}
+.sb-secai-inner p{font-size:16px;color:var(--body);line-height:1.5;margin-bottom:calc(var(--aura)*2);}
+.dark #security-ai .sb-secai-inner p{color:var(--harbor-muted);}
+
+#recognition{background:var(--paper);padding:calc(var(--aura)*7.5) calc(var(--aura)*2);text-align:center;}
+.sb-rec-inner{max-width:600px;margin:0 auto;}
+.sb-rec-inner h2{font-size:clamp(22px,3vw,32px);color:var(--ink);margin-bottom:calc(var(--aura)*2);}
+.sb-seal{width:104px;height:84px;background:var(--paper);border-radius:8px;box-shadow:0 2px 16px color-mix(in srgb,var(--harbor) 10%,transparent);border:1px solid var(--rule);border-bottom:6px solid var(--brook);display:flex;align-items:center;justify-content:center;margin:0 auto calc(var(--aura)*2);}
+
+#security{background:var(--shoal);padding:calc(var(--aura)*7.5) calc(var(--aura)*2);text-align:center;}
+.sb-security-inner{max-width:1280px;margin:0 auto;}
+.sb-stats-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(var(--aura)*2);margin-top:calc(var(--aura)*3);}
+.sb-stat{display:flex;gap:calc(var(--aura)*1);align-items:flex-start;text-align:left;}
+.sb-stat-bar{width:4px;min-height:80px;background:var(--brook);border-radius:2px;flex-shrink:0;}
+.sb-stat-body{}
+.sb-stat-num{font-size:32px;font-weight:500;color:var(--ink);line-height:1;}
+.sb-stat-desc{font-size:14px;color:var(--body);line-height:1.5;margin-top:calc(var(--aura)*0.5);overflow-wrap:break-word;}
+.sb-stat-link{font-size:14px;font-weight:600;color:var(--brook);text-decoration:underline;display:inline-block;margin-top:calc(var(--aura)*0.5);}
+.sb-security-cta{margin-top:calc(var(--aura)*3);}
+
+#pricing{background:var(--canvas);padding:calc(var(--aura)*7.5) calc(var(--aura)*2);}
+.sb-pricing-inner{max-width:1280px;margin:0 auto;}
+.sb-pricing-card{border-radius:13px;border:1px solid var(--rule);background:var(--paper);box-shadow:0 2px 16px color-mix(in srgb,var(--harbor) 8%,transparent);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);overflow:hidden;margin-bottom:calc(var(--aura)*4);}
+.sb-pricing-card-left{padding:calc(var(--aura)*3);}
+.sb-pricing-card-left .eyebrow{margin-bottom:calc(var(--aura)*1);}
+.sb-pricing-card-left h3{font-size:22px;color:var(--ink);margin-bottom:calc(var(--aura)*1);}
+.sb-pricing-card-left p{font-size:15px;color:var(--body);margin-bottom:calc(var(--aura)*1.5);}
+.sb-pricing-card-art{min-height:220px;background:linear-gradient(135deg,color-mix(in srgb,var(--brook) 12%,var(--paper)),color-mix(in srgb,var(--shoal) 60%,var(--paper)));position:relative;overflow:hidden;}
+.dark .sb-pricing-card-art{background:linear-gradient(135deg,color-mix(in srgb,var(--brook) 20%,var(--harbor)),var(--harbor));}
+.sb-plans-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(var(--aura)*2);margin-bottom:calc(var(--aura)*3);}
+.sb-plan{border:1px solid var(--rule);border-radius:13px;padding:calc(var(--aura)*2.5);background:var(--paper);display:flex;flex-direction:column;gap:calc(var(--aura)*1.5);}
+.sb-plan.featured{border-color:var(--brook);border-width:2px;}
+.sb-plan-name{font-size:20px;font-weight:600;color:var(--ink);}
+.sb-plan-price{font-size:clamp(28px,4vw,38px);font-weight:500;color:var(--ink);line-height:1;}
+.sb-plan-price small{font-size:14px;font-weight:400;color:var(--muted);}
+.sb-plan-desc{font-size:14px;color:var(--body);line-height:1.4;overflow-wrap:break-word;}
+.sb-plan-features{display:flex;flex-direction:column;gap:calc(var(--aura)*0.5);}
+.sb-plan-feat{display:flex;align-items:center;gap:calc(var(--aura)*0.5);font-size:14px;color:var(--body);}
+.sb-table-wrap{overflow-x:auto;border-radius:13px;border:1px solid var(--rule);}
+.sb-table{width:100%;border-collapse:collapse;font-size:14px;}
+.sb-table caption{padding:calc(var(--aura)*1.5);text-align:left;font-size:13px;color:var(--muted);}
+.sb-table th{font-family:var(--aura-font-label);font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);padding:calc(var(--aura)*1) calc(var(--aura)*1.5);text-align:left;border-bottom:1px solid var(--rule);}
+.sb-table td{padding:calc(var(--aura)*1) calc(var(--aura)*1.5);color:var(--ink);border-bottom:1px solid var(--rule);overflow-wrap:break-word;}
+.sb-table tbody tr:last-child td{border-bottom:0;}
+.sb-table tbody tr:hover td{background:var(--salt);}
+
+#customer-stories{padding:calc(var(--aura)*7.5) calc(var(--aura)*2);position:relative;overflow:hidden;}
+.dark #customer-stories{background:linear-gradient(140deg,color-mix(in srgb,var(--dawn) 10%,var(--harbor)) 0%,color-mix(in srgb,var(--dusk) 8%,var(--harbor)) 100%)!important;}
+.dark #customer-stories .eyebrow{color:color-mix(in srgb,var(--brook) 70%,var(--ink));}
+.dark .sb-client-tile{color:var(--body);}
+.dark .sb-client-tile[aria-selected="false"]{background:color-mix(in srgb,var(--paper) 80%,var(--canvas));color:var(--body);}
+.dark .sb-client-tile[aria-selected="true"]{color:var(--ink);}
+.sb-stories-inner{max-width:1280px;margin:0 auto;position:relative;z-index:1;}
+.sb-stories-head{display:flex;align-items:flex-start;justify-content:space-between;gap:calc(var(--aura)*2);margin-bottom:calc(var(--aura)*3);flex-wrap:wrap;}
+.sb-story-card{background:var(--paper);border-radius:13px;box-shadow:0 4px 24px color-mix(in srgb,var(--harbor) 12%,transparent);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);overflow:hidden;margin-bottom:calc(var(--aura)*3);}
+.sb-story-left{padding:calc(var(--aura)*3);}
+.sb-story-logo{font-size:22px;font-weight:700;color:var(--brook);letter-spacing:-0.02em;margin-bottom:calc(var(--aura)*1.5);}
+.sb-story-quote{font-family:var(--aura-font-display);font-size:clamp(18px,2vw,22px);line-height:1.35;font-weight:500;color:var(--ink);line-height:1.35;margin:0 0 calc(var(--aura)*1.5) 0;overflow-wrap:break-word;text-transform:none;}
+.sb-story-attr{font-size:14px;color:var(--muted);margin-bottom:calc(var(--aura)*1.5);}
+.sb-story-services-label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:calc(var(--aura)*0.75);}
+.sb-story-chips{display:flex;flex-wrap:wrap;gap:calc(var(--aura)*0.5);margin-bottom:calc(var(--aura)*1.5);}
+.sb-story-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;background:var(--salt);border-radius:9999px;font-size:12px;font-weight:600;color:var(--chip-ink);}
+.sb-story-art{min-height:280px;position:relative;overflow:hidden;}
+.sb-client-strip-wrap{overflow-x:auto;scrollbar-width:none;}
+.sb-client-strip-wrap::-webkit-scrollbar{display:none;}
+.sb-client-strip{display:flex;justify-content:center;gap:calc(var(--aura)*1);min-width:0;}
+.sb-client-tile{flex:0 0 auto;padding:calc(var(--aura)*1) calc(var(--aura)*1.5);border:1px solid var(--rule);border-radius:8px;border-bottom:4px solid transparent;background:var(--paper);font-size:16px;font-weight:700;color:var(--muted);cursor:pointer;white-space:nowrap;transition:border-color 150ms ease;}
+.sb-client-tile[aria-selected="true"]{border-bottom-color:var(--brook);color:var(--ink);}
+.sb-client-tile:hover{color:var(--ink);}
+.sb-story-nav{display:flex;align-items:center;justify-content:center;gap:calc(var(--aura)*1);margin-top:calc(var(--aura)*1.5);}
+
+#resources{background:var(--salt);padding:calc(var(--aura)*7.5) calc(var(--aura)*2);}
+.sb-resources-inner{max-width:1280px;margin:0 auto;}
+.sb-res-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(var(--aura)*2);margin-top:calc(var(--aura)*3);}
+.sb-res-card{background:var(--paper);border:1px solid var(--rule);border-radius:13px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 2px color-mix(in srgb,var(--harbor) 6%,transparent),0 6px 18px color-mix(in srgb,var(--harbor) 8%,transparent);}
+.sb-res-art{height:160px;padding:8px;}
+.sb-res-art-inner{width:100%;height:100%;border-radius:8px;overflow:hidden;}
+.sb-res-body{padding:calc(var(--aura)*2);flex:1;display:flex;flex-direction:column;gap:calc(var(--aura)*0.75);}
+.sb-res-title{font-size:18px;font-weight:600;color:var(--ink);overflow-wrap:break-word;}
+.sb-res-desc{font-size:14px;color:var(--body);line-height:1.5;overflow-wrap:break-word;flex:1;}
+.sb-res-footer{margin-top:auto;}
+
+#contact{background:var(--paper);padding:calc(var(--aura)*7.5) calc(var(--aura)*2);}
+.sb-contact-inner{max-width:1280px;margin:0 auto;}
+.sb-contact-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:calc(var(--aura)*4);background:var(--salt);border-radius:13px;border:1px solid var(--rule);padding:calc(var(--aura)*4);}
+.sb-contact-copy h2{font-size:clamp(22px,3vw,30px);color:var(--ink);margin-bottom:calc(var(--aura)*1);}
+.sb-contact-copy p{font-size:15px;color:var(--body);line-height:1.5;}
+.sb-form-fields{display:flex;flex-direction:column;gap:calc(var(--aura)*1.5);}
+.sb-field{display:flex;flex-direction:column;gap:calc(var(--aura)*0.5);}
+.sb-field label{font-size:14px;font-weight:600;color:var(--ink);}
+.sb-field-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:calc(var(--aura)*1.5);}
+.sb-field-err{font-size:12px;color:color-mix(in srgb,red 70%,var(--harbor));display:none;}
+.dark .sb-field-err{color:color-mix(in srgb,red 60%,white);}
+.sb-form-status{font-size:14px;font-weight:600;color:var(--brook);min-height:1.4em;}
+.sb-consent{display:flex;align-items:flex-start;gap:calc(var(--aura)*0.75);font-size:13px;color:var(--body);}
+.sb-consent-check{width:18px;height:18px;accent-color:var(--brook);outline:2px solid var(--control-line);outline-offset:0;border-radius:3px;cursor:pointer;}
+.sb-consent-check:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+
+#faq{background:var(--shoal);padding:calc(var(--aura)*7.5) calc(var(--aura)*2);}
+.sb-faq-inner{max-width:860px;margin:0 auto;}
+.sb-faq-list{margin-top:calc(var(--aura)*2.5);display:flex;flex-direction:column;gap:calc(var(--aura)*0.75);}
+.sb-faq-item{border:1px solid var(--rule);border-radius:13px;overflow:hidden;background:var(--paper);}
+.sb-faq-trigger{display:flex;align-items:center;justify-content:space-between;gap:calc(var(--aura)*1);width:100%;padding:calc(var(--aura)*1.5) calc(var(--aura)*2);border:0;background:none;color:var(--ink);font:inherit;font-size:16px;font-weight:600;cursor:pointer;text-align:left;}
+.sb-faq-trigger:hover{background:var(--salt);}
+.sb-faq-trigger svg{flex-shrink:0;transition:transform 220ms ease;}
+.sb-faq-trigger[aria-expanded="true"] svg{transform:rotate(45deg);}
+.sb-faq-panel{padding:0 calc(var(--aura)*2) calc(var(--aura)*1.5);font-size:15px;color:var(--body);line-height:1.5;}
+.sb-faq-panel[hidden]{display:none;}
+
+#next-steps{padding:calc(var(--aura)*7.5) calc(var(--aura)*2);position:relative;overflow:hidden;}
+.sb-nextsteps-inner{max-width:1280px;margin:0 auto;position:relative;z-index:1;}
+.sb-nextsteps-card{background:var(--paper);border-radius:13px;border:1px solid var(--rule);margin-bottom:calc(var(--aura)*3);overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);}
+.sb-nextsteps-card-left{padding:calc(var(--aura)*3);}
+.sb-nextsteps-card-left .eyebrow{margin-bottom:calc(var(--aura)*1);}
+.sb-nextsteps-card-art{min-height:220px;position:relative;overflow:hidden;background:linear-gradient(135deg,color-mix(in srgb,var(--brook) 15%,var(--paper)),color-mix(in srgb,var(--dawn) 20%,var(--shoal)));}
+.dark .sb-nextsteps-card-art{background:linear-gradient(135deg,color-mix(in srgb,var(--brook) 25%,var(--harbor)),var(--harbor));}
+@media(max-width:767px){
+  .sb-nextsteps-card{grid-template-columns:1fr;}
+  .sb-nextsteps-card-art{order:-1;min-height:140px;}
+}
+.sb-nextsteps-card h3{font-size:22px;color:var(--ink);margin-bottom:calc(var(--aura)*0.5);}
+.sb-nextsteps-card p{font-size:15px;color:var(--body);margin-bottom:calc(var(--aura)*1.5);}
+.sb-ns-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:calc(var(--aura)*2);}
+.sb-ns-card{background:var(--paper);border:1px solid var(--rule);border-radius:13px;overflow:hidden;}
+.sb-ns-card-art{height:140px;position:relative;overflow:hidden;}
+.sb-ns-card-body{padding:calc(var(--aura)*2);}
+.sb-ns-card-body .eyebrow{margin-bottom:calc(var(--aura)*0.75);}
+.sb-ns-card-body h3{font-size:20px;color:var(--ink);margin-bottom:calc(var(--aura)*0.5);}
+.sb-ns-card-body p{font-size:14px;color:var(--body);line-height:1.5;margin-bottom:calc(var(--aura)*1);}
+
+#footnotes{background:var(--paper);padding:calc(var(--aura)*3) calc(var(--aura)*2);}
+.sb-fn-inner{max-width:1280px;margin:0 auto;}
+.sb-fn-item{font-size:14px;color:var(--muted);line-height:1.5;margin-bottom:calc(var(--aura)*0.75);}
+.sb-fn-item a{color:var(--brook);text-decoration:underline;}
+
+.sb-explore{background:var(--footer);padding:calc(var(--aura)*4) calc(var(--aura)*2);}
+.sb-explore-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:calc(var(--aura)*2);flex-wrap:wrap;}
+.sb-console-btn{display:inline-flex;align-items:center;gap:calc(var(--aura)*0.75);padding:calc(var(--aura)*0.75) calc(var(--aura)*2);border:1px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);font:inherit;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap;}
+.sb-console-btn:hover{background:var(--salt);}
+.sb-social-links{display:flex;gap:calc(var(--aura)*1);margin-left:auto;}
+.sb-social-btn{width:40px;height:40px;border-radius:50%;border:1px solid var(--rule);background:var(--paper);color:var(--body);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;}
+.sb-social-btn:hover{background:var(--salt);color:var(--ink);}
+
+#sb-footer{background:var(--footer);padding:calc(var(--aura)*5) calc(var(--aura)*2) calc(var(--aura)*9);}
+.sb-footer-inner{max-width:1280px;margin:0 auto;}
+.sb-footer-cols{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:calc(var(--aura)*2);margin-bottom:calc(var(--aura)*4);}
+.sb-footer-col-title{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:calc(var(--aura)*1);}
+.sb-footer-col-list{display:flex;flex-direction:column;gap:calc(var(--aura)*0.5);}
+.sb-footer-col-list a{font-size:13px;color:var(--body);display:block;}
+.sb-footer-col-list a:hover{color:var(--ink);}
+.sb-footer-acc-trigger{display:none;width:100%;padding:calc(var(--aura)*1) 0;border:0;border-top:1px solid var(--rule);background:none;color:var(--ink);font:inherit;font-size:14px;font-weight:600;cursor:pointer;text-align:left;align-items:center;justify-content:space-between;}
+.sb-footer-acc-trigger svg{flex-shrink:0;transition:transform 200ms ease;}
+.sb-footer-acc-trigger[aria-expanded="true"] svg{transform:rotate(180deg);}
+.sb-footer-acc-panel[hidden]{display:none!important;}
+.sb-footer-legal{display:flex;flex-wrap:wrap;align-items:center;gap:calc(var(--aura)*0.75);padding-top:calc(var(--aura)*2);border-top:1px solid var(--rule);font-size:13px;color:var(--body);}
+.sb-footer-legal a{color:var(--body);}
+.sb-footer-legal a:hover{color:var(--ink);}
+.sb-footer-sep{color:var(--rule);margin:0 2px;}
+.sb-footer-lang{display:flex;align-items:center;gap:calc(var(--aura)*0.5);}
+.sb-footer-privacy{display:inline-flex;align-items:center;gap:4px;color:var(--body);cursor:pointer;background:none;border:0;font:inherit;font-size:13px;}
+.sb-footer-privacy:hover{color:var(--ink);}
+.sb-footer-company{margin-left:auto;font-size:13px;color:var(--muted);}
+
+#sb-assist-chip{position:fixed;bottom:calc(var(--aura)*1.5);right:calc(var(--aura)*1.5);z-index:30;display:inline-flex;align-items:center;gap:calc(var(--aura)*0.75);padding:calc(var(--aura)*0.75) calc(var(--aura)*1);border-radius:8px;background:var(--paper);color:var(--chip-ink);border:1px solid var(--rule);box-shadow:0 4px 16px color-mix(in srgb,var(--harbor) 15%,transparent);cursor:pointer;font:inherit;font-size:16px;font-weight:600;}
+#sb-assist-chip:hover{background:var(--salt);}
+.sb-assist-chip-icon{width:28px;height:28px;border-radius:6px;background:var(--brook);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sb-assist-chip-plus{width:28px;height:28px;border-radius:6px;background:var(--brook);border:0;display:inline-flex;align-items:center;justify-content:center;color:var(--on-brook);cursor:pointer;flex-shrink:0;font-size:18px;line-height:1;}
+
+#sb-assist{position:fixed;bottom:calc(var(--aura)*7);right:calc(var(--aura)*1.5);z-index:90;width:min(380px,calc(100vw - calc(var(--aura)*3)));background:var(--paper);border-radius:13px;box-shadow:0 20px 60px color-mix(in srgb,var(--harbor) 25%,transparent);border:1px solid var(--rule);display:flex;flex-direction:column;max-height:min(90vh,520px);}
+#sb-assist[hidden]{display:none;}
+.sb-assist-head{display:flex;align-items:center;justify-content:space-between;padding:calc(var(--aura)*1.25) calc(var(--aura)*1.5);border-bottom:1px solid var(--rule);}
+.sb-assist-title{font-size:16px;font-weight:600;color:var(--ink);}
+.sb-assist-close{width:28px;height:28px;border-radius:6px;border:1px solid var(--rule);background:none;color:var(--body);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;}
+.sb-assist-close:hover{background:var(--salt);color:var(--ink);}
+.sb-assist-body{flex:1;overflow-y:auto;padding:calc(var(--aura)*1.5);}
+.sb-assist-sugs{display:flex;flex-direction:column;gap:calc(var(--aura)*0.75);margin-bottom:calc(var(--aura)*1.5);}
+.sb-assist-sug{display:flex;align-items:center;justify-content:space-between;gap:calc(var(--aura)*1);width:100%;padding:calc(var(--aura)*0.75) calc(var(--aura)*1);border-radius:8px;border:1px solid var(--rule);background:var(--salt);color:var(--ink);font:inherit;font-size:14px;cursor:pointer;text-align:left;}
+.sb-assist-sug:hover{background:var(--shoal);}
+.sb-assist-log{display:flex;flex-direction:column;gap:calc(var(--aura)*0.75);margin-bottom:calc(var(--aura)*0.75);}
+.sb-assist-msg{padding:calc(var(--aura)*0.75) calc(var(--aura)*1);border-radius:8px;font-size:14px;line-height:1.5;overflow-wrap:break-word;}
+.sb-assist-msg.user{background:var(--brook);color:var(--on-brook);align-self:flex-end;max-width:85%;}
+.sb-assist-msg.bot{background:var(--salt);color:var(--ink);align-self:flex-start;max-width:95%;}
+.sb-assist-foot{padding:calc(var(--aura)*1) calc(var(--aura)*1.5);border-top:1px solid var(--rule);}
+.sb-assist-input-row{display:flex;align-items:center;gap:calc(var(--aura)*0.5);border:1px solid var(--control-line);border-radius:8px;padding:4px 4px 4px calc(var(--aura)*1);background:var(--salt);}
+.sb-assist-input{flex:1;border:0;background:none;color:var(--ink);font:inherit;font-size:14px;outline:none;min-width:0;}
+.sb-assist-input::placeholder{color:var(--muted);}
+.sb-assist-send{width:30px;height:30px;border-radius:6px;border:0;background:var(--brook);color:var(--on-brook);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sb-assist-send:disabled{background:var(--rule);cursor:not-allowed;}
+.sb-assist-send:not(:disabled):hover{background:var(--brook-deep);}
+.sb-assist-note{font-size:11px;color:var(--muted);text-align:center;margin-top:calc(var(--aura)*0.5);}
+
+.motion .sb-reveal{opacity:0;transform:translateY(18px);transition:opacity 400ms cubic-bezier(0.4,0,0.2,1),transform 400ms cubic-bezier(0.4,0,0.2,1);}
+.motion .sb-reveal.sb-in{opacity:1;transform:none;}
+.motion #sb-assist:not([hidden]){animation:sb-dialog-in 220ms ease both;}
+@keyframes sb-dialog-in{from{opacity:0;transform:scale(0.96);}to{opacity:1;transform:none;}}
+.motion .sb-mega:not([hidden]){animation:sb-fade-in 180ms ease both;}
+@keyframes sb-fade-in{from{opacity:0;}to{opacity:1;}}
+.motion .sb-media-swap:not([hidden]){animation:sb-fade-in 200ms ease both;}
+.motion .sb-acc-panel:not([hidden]){animation:sb-acc-fade-in 220ms ease both;}
+.motion .sb-faq-panel:not([hidden]){animation:sb-acc-fade-in 220ms ease both;}
+@keyframes sb-acc-fade-in{from{opacity:0;}to{opacity:1;}}
+
+@media(max-width:1024px){
+  .sb-nav-links{display:none;}
+  .sb-nav-end .sb-nav-plain.hide-md{display:none;}
+  .sb-mobile-toggle{display:flex;}
+  .sb-mega-cols{grid-template-columns:repeat(3,minmax(0,1fr));}
+}
+@media(max-width:767px){
+  .sb-nav-end{display:none;}
+  .sb-suite-label{display:none;}
+  .sb-header-row1 .sb-divider{display:none;}
+  .sb-header-row1{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;}
+  .sb-wordmark{justify-self:center;}
+  #sb-search-toggle{justify-self:start;}
+}
+@media(max-width:767px){
+  nav#sb-anchors.stuck{margin:0;border-radius:0;box-shadow:none;border:none;border-bottom:1px solid var(--rule);}
+}
+@media(max-width:479px){
+  .sb-suite-label{display:none;}
+}
+.dark .sb-hero-art-dark{display:block!important;}
+.dark .sb-hero-art svg:not(.sb-hero-art-dark){display:none!important;}
+@media(max-width:767px){
+  .sb-hero-inner{grid-template-columns:1fr;min-height:auto;}
+  .sb-hero-copy{max-width:100%;}
+  .sb-hero-copy h1{font-size:clamp(28px,8vw,36px);}
+  .sb-hero-art{position:relative;top:auto;bottom:auto;right:auto;width:100%;height:130px;order:-1;-webkit-mask-image:linear-gradient(to bottom,black 60%,transparent);mask-image:linear-gradient(to bottom,black 60%,transparent);}
+  #sb-hero-cta{width:100%;}
+  .sb-overview-grid{grid-template-columns:1fr;}
+  .sb-svc-grid{display:none;}
+  .sb-plans-grid{grid-template-columns:1fr;}
+  .sb-pricing-card{grid-template-columns:1fr;}
+  .sb-pricing-card-art{order:-1;min-height:160px;}
+  .sb-stats-row{grid-template-columns:1fr;}
+  .sb-story-card{grid-template-columns:1fr;}
+  .sb-story-art{order:-1;min-height:200px;}
+  .sb-ns-cards{grid-template-columns:1fr;}
+  .sb-res-grid{grid-template-columns:1fr;}
+  .sb-contact-grid{grid-template-columns:1fr;}
+  .sb-footer-cols{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .sb-footer-col-title{display:none;}
+  .sb-footer-acc-trigger{display:flex;}
+  .sb-footer-company{margin-left:0;width:100%;}
+  .sb-anchors-mobile-toggle{display:flex;}
+  #sb-anchors-list{display:none;}
+  nav#sb-anchors.anchors-open #sb-anchors-list{display:flex;flex-direction:column;width:100%;background:var(--paper);border-top:1px solid var(--rule);box-shadow:0 4px 12px color-mix(in srgb,var(--harbor) 10%,transparent);padding:calc(var(--aura)*0.5) 0;}
+  nav#sb-anchors.anchors-open #sb-anchors-list .sb-anchor-link{display:flex;width:100%;padding:calc(var(--aura)*0.75) calc(var(--aura)*1.5);border-bottom:none;height:auto;}
+  nav#sb-anchors.anchors-open #sb-anchors-list .sb-anchors-btn{display:flex;padding:calc(var(--aura)*0.75) calc(var(--aura)*1.5);}
+  .sb-mega-cols{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .sb-stories-head{flex-direction:column;}
+  .sb-field-row{grid-template-columns:1fr;}
+  #sb-assist-chip .sb-chip-label{font-size:14px;}
+  #sb-assist-chip{max-width:160px;padding:calc(var(--aura)*0.5) calc(var(--aura)*0.75);}
+}
+@media(max-width:360px){
+  .sb-hero-copy h1{font-size:28px;}
+  .sb-plans-grid .sb-plan-price{font-size:28px;}
+  .sb-mega-cols{grid-template-columns:1fr;}
+}
+@media(min-width:768px){
+  .sb-svc-carousel-wrap,.sb-svc-carousel-track,.sb-carousel-controls{display:none;}
+}
+@media(max-width:767px){
+  .sb-svc-panel .sb-svc-grid{display:none!important;}
+  .sb-svc-panel .sb-svc-carousel-wrap{display:block!important;}
+  .sb-svc-panel .sb-carousel-controls{display:flex!important;}
+}
+
+@media(forced-colors:active){
+  .sb-pill-tab[aria-selected="true"]{background:Highlight;color:HighlightText;border:2px solid Highlight;}
+  .sb-pill-tab[aria-selected="false"]{background:ButtonFace;color:ButtonText;border:1px solid ButtonText;}
+  .sb-anchor-link[aria-current="true"]{border-bottom:3px solid Highlight;color:Highlight;}
+  .sb-stat-bar{background:CanvasText;}
+  .sb-acc-panel-inner{border-left:3px solid Highlight;}
+  .button-fill,.sb-assist-send{background:Highlight;color:HighlightText;border:1px solid Highlight;}
+  :focus-visible{outline:2px solid Highlight;}
+  .sb-client-tile[aria-selected="true"]{border-bottom:4px solid Highlight;}
+}
+</style>
+</head>
+<body class="sb">
+<a class="skip-link" href="#sb-main">Skip to main content</a>
+
+<header id="sb-header">
+  <div class="wrap sb-header-row1">
+    <button class="sb-icon-btn" type="button" id="sb-search-toggle" aria-label="Search" aria-expanded="false" aria-controls="sb-search-row">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10 10l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <a class="sb-wordmark" href="#top" aria-label="Saltbrook home">
+      <span class="sb-accent-sq" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2l2 4h4l-3 2.5 1 4L8 10l-4 2.5 1-4L2 6h4z" fill="white" opacity="0.9"/></svg>
+      </span>
+      Saltbrook
+    </a>
+    <span class="sb-divider" aria-hidden="true"></span>
+    <span class="sb-suite-label">Delivery</span>
+    <nav class="sb-nav-links" aria-label="Main navigation">
+      <button class="sb-nav-trigger" type="button" id="sb-trigger-explore" aria-expanded="false" aria-controls="sb-mega-explore">Explore<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="sb-nav-trigger" type="button" id="sb-trigger-services" aria-expanded="false" aria-controls="sb-mega-services">Services<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="sb-nav-trigger" type="button" id="sb-trigger-solutions" aria-expanded="false" aria-controls="sb-mega-solutions">Solutions<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="sb-nav-trigger" type="button" id="sb-trigger-more" aria-expanded="false" aria-controls="sb-mega-more">More<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </nav>
+    <div class="sb-nav-end">
+      <a class="sb-nav-plain hide-md" href="#">Learn</a>
+      <a class="sb-nav-plain hide-md" href="#">Support</a>
+      <a class="sb-nav-plain hide-md" href="#contact" style="white-space:nowrap;">Contact sales</a>
+      <button class="button button-fill sb" type="button" style="white-space:nowrap;flex-shrink:0;">Start building</button>
+      <button class="button sb" type="button" style="border:2px solid var(--ink);color:var(--ink);background:transparent;border-radius:8px;white-space:nowrap;flex-shrink:0;">Sign in</button>
+    </div>
+  </div>
+  <div id="sb-search-row" class="sb-search-row" role="search">
+    <label for="sb-search-input" class="sr-only">Search Saltbrook</label>
+    <input id="sb-search-input" type="search" placeholder="Search…" style="max-width:400px;flex:1;" autocomplete="off"/>
+    <span class="sb-search-note">Local demo — no search is performed</span>
+    <button class="sb-icon-btn" type="button" id="sb-search-close" aria-label="Close search">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <button class="sb-mobile-toggle" type="button" id="sb-mobile-toggle" aria-expanded="false" aria-controls="sb-mobile-panel">
+    Delivery
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <div id="sb-mobile-panel" hidden aria-label="Navigation" role="dialog" aria-modal="true">
+    <a class="sb-mob-row" href="#top">Home</a>
+    <button class="sb-mob-row" type="button" aria-expanded="false" aria-controls="sb-mob-explore">Explore<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="sb-mob-nested" id="sb-mob-explore" hidden><a href="#">Saltbrook Ledger</a><a href="#">Saltbrook Relay</a><a href="#">Saltbrook Vault</a><a href="#">Saltbrook Proof</a><a href="#">Saltbrook Crate</a><a href="#">Saltbrook Keel</a></div>
+    <button class="sb-mob-row" type="button" aria-expanded="false" aria-controls="sb-mob-services">Services<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="sb-mob-nested" id="sb-mob-services" hidden><a href="#services">All services</a><a href="#">Add-ons</a><a href="#">Integrations</a></div>
+    <button class="sb-mob-row" type="button" aria-expanded="false" aria-controls="sb-mob-solutions">Solutions<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="sb-mob-nested" id="sb-mob-solutions" hidden><a href="#">By team size</a><a href="#">By industry</a><a href="#">Enterprise</a></div>
+    <a class="sb-mob-row" href="#pricing">Pricing</a>
+    <button class="sb-mob-row" type="button" aria-expanded="false" aria-controls="sb-mob-partners">Partners<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="sb-mob-nested" id="sb-mob-partners" hidden><a href="#">Partner directory</a><a href="#">Become a partner</a></div>
+    <button class="sb-mob-row" type="button" aria-expanded="false" aria-controls="sb-mob-resources">Resources<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="sb-mob-nested" id="sb-mob-resources" hidden><a href="#resources">Blog</a><a href="#">Docs</a><a href="#">Community</a></div>
+    <a class="sb-mob-row" href="#">Learn</a>
+    <a class="sb-mob-row" href="#">Support</a>
+    <a class="sb-mob-row" href="#contact">Contact sales</a>
+    <div class="sb-mob-foot">
+      <button class="button button-fill sb" type="button" style="flex:1;white-space:normal;text-align:center;">Start building</button>
+      <button class="button sb" type="button" style="flex:1;border-color:var(--ink);color:var(--ink);background:transparent;border-radius:8px;">Sign in</button>
+    </div>
+  </div>
+
+  <div class="sb-mega" id="sb-mega-explore" hidden role="region" aria-label="Explore menu">
+    <div class="sb-mega-inner">
+      <div class="sb-mega-top"><a href="#">View all services (sample 120+)</a></div>
+      <div class="sb-mega-cols">
+        <div class="sb-mega-col"><div class="sb-mega-col-title">Planning</div><ul><li><a href="#">Saltbrook Ledger</a></li><li><a href="#">Work items</a></li><li><a href="#">Milestones</a></li><li><a href="#">Roadmaps</a></li><li><a href="#">Backlog views</a></li><li><a href="#">Sprint tracking</a></li><li><a href="#">Retrospectives</a></li></ul></div>
+        <div class="sb-mega-col"><div class="sb-mega-col-title">Build &amp; Release</div><ul><li><a href="#">Saltbrook Relay</a></li><li><a href="#">Workflow runs</a></li><li><a href="#">Build agents</a></li><li><a href="#">Release gates</a></li><li><a href="#">Environment approvals</a></li><li><a href="#">Deployment logs</a></li><li><a href="#">Rollback controls</a></li></ul></div>
+        <div class="sb-mega-col"><div class="sb-mega-col-title">Code Hosting</div><ul><li><a href="#">Saltbrook Vault</a></li><li><a href="#">Pull requests</a></li><li><a href="#">Code review</a></li><li><a href="#">Branch policies</a></li><li><a href="#">Conflict resolution</a></li><li><a href="#">History &amp; blame</a></li><li><a href="#">Repository insights</a></li></ul></div>
+        <div class="sb-mega-col"><div class="sb-mega-col-title">Testing</div><ul><li><a href="#">Saltbrook Proof</a></li><li><a href="#">Test runs</a></li><li><a href="#">Test cases</a></li><li><a href="#">Flakiness reports</a></li><li><a href="#">Coverage tracking</a></li><li><a href="#">Exploratory testing</a></li><li><a href="#">Result history</a></li></ul></div>
+        <div class="sb-mega-col"><div class="sb-mega-col-title">Packages &amp; Feeds</div><ul><li><a href="#">Saltbrook Crate</a></li><li><a href="#">Package feeds</a></li><li><a href="#">Container registry</a></li><li><a href="#">Upstream proxying</a></li><li><a href="#">Feed scoping</a></li><li><a href="#">Version policies</a></li><li><a href="#">Feed permissions</a></li></ul></div>
+        <div class="sb-mega-col"><div class="sb-mega-col-title">Runners &amp; Infra</div><ul><li><a href="#">Saltbrook Keel</a></li><li><a href="#">Hosted runners</a></li><li><a href="#">Self-hosted agents</a></li><li><a href="#">Runner pools</a></li><li><a href="#">Scale sets</a></li><li><a href="#">Runner monitoring</a></li><li><a href="#">Cost controls</a></li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sb-mega" id="sb-mega-services" hidden role="region" aria-label="Services menu">
+    <div class="sb-mega-inner">
+      <div class="sb-mega-top"><a href="#">View all services (sample 120+)</a></div>
+      <div class="sb-mega-cols">
+        <div class="sb-mega-col"><div class="sb-mega-col-title">Core services</div><ul><li><a href="#">Ledger overview</a></li><li><a href="#">Relay overview</a></li><li><a href="#">Vault overview</a></li><li><a href="#">Proof overview</a></li><li><a href="#">Crate overview</a></li><li><a href="#">Keel overview</a></li><li><a href="#">Service health</a></li></ul></div>
+        <div class="sb-mega-col"><div class="sb-mega-col-title">Extensions</div><ul><li><a href="#">Browse add-ons</a></li><li><a href="#">Build extensions</a></li><li><a href="#">Test extensions</a></li><li><a href="#">Deploy extensions</a></li><li><a href="#">Monitor extensions</a></li><li><a href="#">Security extensions</a></li></ul></div>
+        <div class="sb-mega-col"><div class="sb-mega-col-title">Integrations</div><ul><li><a href="#">Webhook manager</a></li><li><a href="#">API tokens</a></li><li><a href="#">OAuth apps</a></li><li><a href="#">Service connections</a></li><li><a href="#">Identity providers</a></li><li><a href="#">Audit streams</a></li></ul></div>
+        <div class="sb-mega-col"><div class="sb-mega-col-title">Security</div><ul><li><a href="#">Secret scanning</a></li><li><a href="#">Dependency alerts</a></li><li><a href="#">Code scanning</a></li><li><a href="#">Permission reports</a></li><li><a href="#">Compliance checks</a></li><li><a href="#">Audit log</a></li></ul></div>
+        <div class="sb-mega-col"><div class="sb-mega-col-title">Analytics</div><ul><li><a href="#">Delivery metrics</a></li><li><a href="#">Throughput dashboards</a></li><li><a href="#">Lead time reports</a></li><li><a href="#">Build duration trends</a></li><li><a href="#">Reliability metrics</a></li><li><a href="#">Custom reports</a></li></ul></div>
+        <div class="sb-mega-col"><div class="sb-mega-col-title">Support</div><ul><li><a href="#">Documentation</a></li><li><a href="#">Community forum</a></li><li><a href="#">Changelog</a></li><li><a href="#">Status page</a></li><li><a href="#">Contact support</a></li><li><a href="#">Service credits</a></li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sb-mega" id="sb-mega-solutions" hidden role="region" aria-label="Solutions menu">
+    <div class="sb-mega-inner">
+      <div class="sb-mega-top"><a href="#">View all services (sample 120+)</a></div>
+      <div class="sb-mega-cols">
+        <div class="sb-mega-col"><div class="sb-mega-col-title">By team size</div><ul><li><a href="#">Individual</a></li><li><a href="#">Small team (2–10)</a></li><li><a href="#">Growing team</a></li><li><a href="#">Enterprise</a></li><li><a href="#">Agency &amp; consultancy</a></li><li><a href="#">Open source</a></li></ul></div>
+        <div class="sb-mega-col"><div class="sb-mega-col-title">By industry</div><ul><li><a href="#">Financial services</a></li><li><a href="#">Healthcare</a></li><li><a href="#">Retail</a></li><li><a href="#">Media</a></li><li><a href="#">Government</a></li><li><a href="#">Education</a></li></ul></div>
+        <div class="sb-mega-col"><div class="sb-mega-col-title">By workflow</div><ul><li><a href="#">Agile delivery</a></li><li><a href="#">Continuous delivery</a></li><li><a href="#">Declarative delivery</a></li><li><a href="#">Large-program planning</a></li><li><a href="#">Regulated delivery</a></li><li><a href="#">Hybrid cloud</a></li></ul></div>
+        <div class="sb-mega-col"><div class="sb-mega-col-title">Partners</div><ul><li><a href="#">Partner directory</a></li><li><a href="#">Become a partner</a></li><li><a href="#">ISV program</a></li><li><a href="#">System integrators</a></li><li><a href="#">Resellers</a></li><li><a href="#">Training providers</a></li></ul></div>
+        <div class="sb-mega-col"><div class="sb-mega-col-title">Customer stories</div><ul><li><a href="#">All stories</a></li><li><a href="#">By industry</a></li><li><a href="#">By service</a></li><li><a href="#">Video stories</a></li><li><a href="#">Case studies</a></li><li><a href="#">ROI reports</a></li></ul></div>
+        <div class="sb-mega-col"><div class="sb-mega-col-title">Learn</div><ul><li><a href="#">Learning paths</a></li><li><a href="#">Certifications</a></li><li><a href="#">Workshops</a></li><li><a href="#">Webinars</a></li><li><a href="#">Practice labs</a></li><li><a href="#">Documentation</a></li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sb-mega" id="sb-mega-more" hidden role="region" aria-label="More menu">
+    <div class="sb-mega-inner">
+      <div class="sb-mega-top"><a href="#">View all services (sample 120+)</a></div>
+      <div class="sb-mega-cols">
+        <div class="sb-mega-col"><div class="sb-mega-col-title">Company</div><ul><li><a href="#">About Saltbrook</a></li><li><a href="#">Leadership</a></li><li><a href="#">Newsroom</a></li><li><a href="#">Careers</a></li><li><a href="#">Investor relations</a></li><li><a href="#">Sustainability</a></li><li><a href="#">Accessibility</a></li></ul></div>
+        <div class="sb-mega-col"><div class="sb-mega-col-title">Legal</div><ul><li><a href="#">Privacy</a></li><li><a href="#">Terms of service</a></li><li><a href="#">Brand use</a></li><li><a href="#">Cookie policy</a></li><li><a href="#">DPA</a></li><li><a href="#">SLAs</a></li></ul></div>
+        <div class="sb-mega-col"><div class="sb-mega-col-title">Community</div><ul><li><a href="#">Forum</a></li><li><a href="#">Events</a></li><li><a href="#">Ambassador program</a></li><li><a href="#">Open source</a></li><li><a href="#">Blog</a></li><li><a href="#">Newsletter</a></li></ul></div>
+        <div class="sb-mega-col"><div class="sb-mega-col-title">Trust &amp; compliance</div><ul><li><a href="#">Security overview</a></li><li><a href="#">Compliance certifications</a></li><li><a href="#">Data residency</a></li><li><a href="#">Uptime history</a></li><li><a href="#">Vulnerability reports</a></li><li><a href="#">Responsible disclosure</a></li></ul></div>
+        <div class="sb-mega-col"><div class="sb-mega-col-title">Pricing resources</div><ul><li><a href="#pricing">Plans overview</a></li><li><a href="#">Usage estimator</a></li><li><a href="#">Compare plans</a></li><li><a href="#">Enterprise agreement</a></li><li><a href="#">Nonprofit discount</a></li><li><a href="#">Education discount</a></li></ul></div>
+        <div class="sb-mega-col"><div class="sb-mega-col-title">Help</div><ul><li><a href="#">Support portal</a></li><li><a href="#">System status</a></li><li><a href="#">Known issues</a></li><li><a href="#">Release notes</a></li><li><a href="#">Service health</a></li><li><a href="#">Contact us</a></li></ul></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div id="sb-banner" role="region" aria-label="Event announcement">
+  <div class="sb-banner-arcs left" aria-hidden="true">
+    <svg width="120" height="40" viewBox="0 0 120 40" fill="none"><path d="M-10 50 Q30 -10 90 20" stroke="var(--glint)" stroke-width="1.5" fill="none" opacity="0.7"/><path d="M-20 40 Q40 0 100 25" stroke="var(--dusk)" stroke-width="1" fill="none" opacity="0.5"/></svg>
+  </div>
+  <div class="sb-banner-inner">
+    <span class="sb-banner-text">Join Saltbrook Summit, a fictional online event on 3–4 December 2026.</span>
+    <a class="sb-banner-link" href="#">Save a seat</a>
+  </div>
+  <div class="sb-banner-arcs right" aria-hidden="true">
+    <svg width="120" height="40" viewBox="0 0 120 40" fill="none"><path d="M130 -10 Q80 30 20 20" stroke="var(--glint)" stroke-width="1.5" fill="none" opacity="0.7"/><path d="M140 0 Q70 40 10 25" stroke="var(--dusk)" stroke-width="1" fill="none" opacity="0.5"/></svg>
+  </div>
+  <button class="sb-banner-close" type="button" id="sb-banner-close" aria-label="Dismiss announcement">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+</div>
+
+<main id="sb-main">
+  <div id="sb-anchors-marker" style="height:1px;"></div>
+
+  <section class="sb-hero" id="top" aria-labelledby="sb-hero-h1">
+    <div class="sb-hero-inner">
+      <div class="sb-hero-copy">
+        <h1 id="sb-hero-h1" class="sb-reveal" tabindex="-1">Saltbrook Delivery</h1>
+        <p class="sb-reveal">Plan, build and release software across your whole team — from the first work item to production in a single connected platform.</p>
+        <div class="sb-reveal" style="width:100%;">
+          <button class="button button-fill sb" type="button" id="sb-hero-cta">Start building</button>
+        </div>
+      </div>
+      <div class="sb-hero-art" aria-hidden="true">
+        <svg width="100%" height="100%" viewBox="0 0 560 468" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;display:block;width:100%;height:100%;">
+          <defs>
+            <radialGradient id="hg-base" cx="100%" cy="50%" r="80%">
+              <stop offset="0%" style="stop-color:var(--dawn);stop-opacity:1"/>
+              <stop offset="35%" style="stop-color:var(--dawn);stop-opacity:0.7"/>
+              <stop offset="70%" style="stop-color:var(--dawn);stop-opacity:0.18"/>
+              <stop offset="100%" style="stop-color:var(--dawn);stop-opacity:0"/>
+            </radialGradient>
+            <radialGradient id="hg-top" cx="90%" cy="10%" r="50%">
+              <stop offset="0%" style="stop-color:var(--dawn);stop-opacity:0.5"/>
+              <stop offset="100%" style="stop-color:var(--dawn);stop-opacity:0"/>
+            </radialGradient>
+            <linearGradient id="hg-beam" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:white;stop-opacity:0.06"/>
+              <stop offset="40%" style="stop-color:white;stop-opacity:0.03"/>
+              <stop offset="100%" style="stop-color:white;stop-opacity:0"/>
+            </linearGradient>
+          </defs>
+          <rect width="560" height="468" style="fill:var(--canvas)"/>
+          <rect width="560" height="468" fill="url(#hg-base)"/>
+          <rect width="560" height="468" fill="url(#hg-top)"/>
+          <polygon points="560,0 560,468 200,468 320,0" fill="url(#hg-beam)"/>
+          <path d="M560 30 Q380 180 460 468" style="stroke:var(--dusk)" stroke-width="1.5" fill="none" opacity="0.4"/>
+          <path d="M545 20 Q370 190 445 468" style="stroke:color-mix(in srgb,var(--dawn) 50%,var(--dusk))" stroke-width="1" fill="none" opacity="0.25"/>
+        </svg>
+        <svg class="sb-hero-art-dark" width="100%" height="100%" viewBox="0 0 560 468" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;display:none;">
+          <defs>
+            <radialGradient id="hgd-base" cx="100%" cy="50%" r="80%">
+              <stop offset="0%" style="stop-color:var(--dawn);stop-opacity:0.35"/>
+              <stop offset="55%" style="stop-color:var(--dawn);stop-opacity:0.05"/>
+              <stop offset="100%" style="stop-color:var(--dawn);stop-opacity:0"/>
+            </radialGradient>
+            <linearGradient id="hgd-beam" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:white;stop-opacity:0.06"/>
+              <stop offset="100%" style="stop-color:white;stop-opacity:0"/>
+            </linearGradient>
+          </defs>
+          <rect width="560" height="468" style="fill:var(--canvas)"/>
+          <rect width="560" height="468" fill="url(#hgd-base)"/>
+          <polygon points="560,0 560,468 200,468 320,0" fill="url(#hgd-beam)"/>
+          <path d="M560 30 Q380 180 460 468" style="stroke:color-mix(in srgb,var(--dawn) 50%,var(--dusk))" stroke-width="1.5" fill="none" opacity="0.4"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <nav id="sb-anchors" aria-label="Section navigation">
+    <button class="sb-anchors-mobile-toggle" type="button" id="sb-anchors-toggle" aria-expanded="false" aria-controls="sb-anchors-list">
+      <span id="sb-anchors-current-label">At a glance</span>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="sb-anchors-inner" id="sb-anchors-list" role="list">
+      <a class="sb-anchor-link" href="#overview" aria-current="true" data-section="overview">At a glance</a>
+      <a class="sb-anchor-link" href="#services" data-section="services">Services</a>
+      <a class="sb-anchor-link" href="#security" data-section="security">Safeguards</a>
+      <a class="sb-anchor-link" href="#pricing" data-section="pricing">Plans</a>
+      <a class="sb-anchor-link" href="#customer-stories" data-section="customer-stories">Team stories</a>
+      <a class="sb-anchor-link" href="#resources" data-section="resources">Learning</a>
+      <a class="sb-anchor-link" href="#next-steps" data-section="next-steps">Get going</a>
+      <div class="sb-anchors-btn">
+        <button class="button button-fill sb" type="button" style="font-size:13px;height:32px;padding:0 calc(var(--aura)*1.5);border-radius:8px;white-space:nowrap;">Start building</button>
+      </div>
+    </div>
+  </nav>
+
+  <section id="overview" aria-labelledby="sb-overview-h2">
+    <div class="sb-overview-inner sb-reveal">
+      <span class="eyebrow">At a glance</span>
+      <h2 id="sb-overview-h2" style="font-size:clamp(26px,3.5vw,38px);color:var(--ink);margin-top:calc(var(--aura)*1);max-width:28ch;">Every stage of delivery, one coherent platform built for modern teams.</h2>
+      <div class="sb-overview-grid">
+        <div>
+          <div id="sb-acc-list">
+            <div class="sb-acc-item sb-acc-open">
+              <h3><button class="sb-acc-trigger" type="button" aria-expanded="true" aria-controls="sb-acc-p0" id="sb-acc-btn-0" data-media="sb-media-0">Work tracking<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
+              <div class="sb-acc-panel" id="sb-acc-p0"><div class="sb-acc-panel-inner"><p>Organize work items, sprints and milestones across every team and project — with live dependency tracking and customizable views.</p><a href="#">Learn more</a></div></div>
+            </div>
+            <div class="sb-acc-item">
+              <h3><button class="sb-acc-trigger" type="button" aria-expanded="false" aria-controls="sb-acc-p1" id="sb-acc-btn-1" data-media="sb-media-1">Build automation<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
+              <div class="sb-acc-panel" id="sb-acc-p1" hidden><div class="sb-acc-panel-inner"><p>Define multi-stage build workflows with conditional gates, parallel jobs and artifact publishing — all in a single config file.</p><a href="#">Learn more</a></div></div>
+            </div>
+            <div class="sb-acc-item">
+              <h3><button class="sb-acc-trigger" type="button" aria-expanded="false" aria-controls="sb-acc-p2" id="sb-acc-btn-2" data-media="sb-media-2">Code hosting<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
+              <div class="sb-acc-panel" id="sb-acc-p2" hidden><div class="sb-acc-panel-inner"><p>Host repositories with branch policies, pull-request reviews and inline code comments that keep your team aligned on every change.</p><a href="#">Learn more</a></div></div>
+            </div>
+            <div class="sb-acc-item">
+              <h3><button class="sb-acc-trigger" type="button" aria-expanded="false" aria-controls="sb-acc-p3" id="sb-acc-btn-3" data-media="sb-media-3">Test management<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
+              <div class="sb-acc-panel" id="sb-acc-p3" hidden><div class="sb-acc-panel-inner"><p>Write test cases, execute test runs and track pass rates across all runs with flakiness detection and historical trend charts.</p><a href="#">Learn more</a></div></div>
+            </div>
+            <div class="sb-acc-item">
+              <h3><button class="sb-acc-trigger" type="button" aria-expanded="false" aria-controls="sb-acc-p4" id="sb-acc-btn-4" data-media="sb-media-4">Package feeds<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
+              <div class="sb-acc-panel" id="sb-acc-p4" hidden><div class="sb-acc-panel-inner"><p>Host feeds for every common package format alongside your code, with upstream proxying and scoped permissions per team.</p><a href="#">Learn more</a></div></div>
+            </div>
+            <div class="sb-acc-item">
+              <h3><button class="sb-acc-trigger" type="button" aria-expanded="false" aria-controls="sb-acc-p5" id="sb-acc-btn-5" data-media="sb-media-5">Hosted runners<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
+              <div class="sb-acc-panel" id="sb-acc-p5" hidden><div class="sb-acc-panel-inner"><p>Scale build capacity automatically with Saltbrook Keel hosted runners — no infrastructure management, just faster runs.</p><a href="#">Learn more</a></div></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="sb-media-panel" aria-live="polite" aria-label="Feature preview">
+            <div class="sb-media-swap" id="sb-media-0">
+              <svg width="100%" height="100%" viewBox="0 0 560 360" aria-label="Work tracking mock" role="img">
+                <defs><linearGradient id="mg0" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="color-mix(in srgb,var(--brook) 8%,var(--paper))"/><stop offset="100%" stop-color="var(--salt)"/></linearGradient></defs>
+                <rect width="560" height="360" fill="url(#mg0)"/>
+                <rect x="20" y="20" width="160" height="320" rx="8" fill="color-mix(in srgb,var(--shoal) 60%,var(--paper))" stroke="var(--rule)" stroke-width="1"/>
+                <text x="40" y="48" font-family="var(--aura-font-label)" font-size="10" fill="var(--brook)" letter-spacing="1">TO DO</text>
+                <rect x="32" y="58" width="136" height="52" rx="6" fill="var(--paper)" stroke="var(--rule)" stroke-width="1"/>
+                <text x="44" y="80" font-size="11" fill="var(--ink)">Implement auth flow</text>
+                <text x="44" y="96" font-size="10" fill="var(--muted)">Ledger #142</text>
+                <rect x="32" y="118" width="136" height="52" rx="6" fill="var(--paper)" stroke="var(--rule)" stroke-width="1"/>
+                <text x="44" y="140" font-size="11" fill="var(--ink)">Update API docs</text>
+                <text x="44" y="156" font-size="10" fill="var(--muted)">Ledger #143</text>
+                <rect x="200" y="20" width="160" height="320" rx="8" fill="color-mix(in srgb,var(--shoal) 60%,var(--paper))" stroke="var(--rule)" stroke-width="1"/>
+                <text x="220" y="48" font-family="var(--aura-font-label)" font-size="10" fill="var(--dawn)" letter-spacing="1">IN PROGRESS</text>
+                <rect x="212" y="58" width="136" height="52" rx="6" fill="var(--paper)" stroke="var(--brook)" stroke-width="1.5"/>
+                <text x="224" y="80" font-size="11" fill="var(--ink)">Relay config review</text>
+                <text x="224" y="96" font-size="10" fill="var(--brook)">Assigned to you</text>
+                <rect x="380" y="20" width="160" height="320" rx="8" fill="color-mix(in srgb,var(--shoal) 60%,var(--paper))" stroke="var(--rule)" stroke-width="1"/>
+                <text x="400" y="48" font-family="var(--aura-font-label)" font-size="10" fill="var(--muted)" letter-spacing="1">DONE</text>
+                <rect x="392" y="58" width="136" height="52" rx="6" fill="color-mix(in srgb,var(--brook) 6%,var(--paper))" stroke="var(--rule)" stroke-width="1"/>
+                <text x="404" y="80" font-size="11" fill="var(--muted)">Proof test suite</text>
+                <text x="404" y="96" font-size="10" fill="var(--muted)">Merged</text>
+              </svg>
+            </div>
+            <div class="sb-media-swap" id="sb-media-1" hidden>
+              <svg width="100%" height="100%" viewBox="0 0 560 360" aria-label="Build automation mock" role="img">
+                <rect width="560" height="360" fill="color-mix(in srgb,var(--harbor) 92%,var(--paper))"/>
+                <rect x="20" y="20" width="520" height="30" rx="6" fill="color-mix(in srgb,var(--brook) 15%,var(--harbor))"/>
+                <text x="36" y="40" font-family="var(--aura-font-label)" font-size="11" fill="var(--glint)">run #1024 · branch: main · 2m 14s</text>
+                <rect x="20" y="66" width="80" height="40" rx="6" fill="var(--brook)"/>
+                <text x="60" y="91" font-size="11" fill="white" text-anchor="middle">Build</text>
+                <line x1="100" y1="86" x2="140" y2="86" stroke="var(--brook)" stroke-width="2"/>
+                <rect x="140" y="66" width="80" height="40" rx="6" fill="var(--brook)"/>
+                <text x="180" y="91" font-size="11" fill="white" text-anchor="middle">Test</text>
+                <line x1="220" y1="86" x2="260" y2="86" stroke="var(--brook)" stroke-width="2"/>
+                <rect x="260" y="66" width="80" height="40" rx="6" fill="color-mix(in srgb,var(--dawn) 60%,var(--harbor))"/>
+                <text x="300" y="91" font-size="11" fill="white" text-anchor="middle">Scan</text>
+                <line x1="340" y1="86" x2="380" y2="86" stroke="var(--muted)" stroke-width="2" stroke-dasharray="4 3"/>
+                <rect x="380" y="66" width="80" height="40" rx="6" fill="color-mix(in srgb,white 8%,var(--harbor))" stroke="var(--muted)" stroke-width="1"/>
+                <text x="420" y="91" font-size="11" fill="var(--harbor-muted)" text-anchor="middle">Deploy</text>
+                <rect x="20" y="130" width="520" height="200" rx="8" fill="color-mix(in srgb,white 5%,var(--harbor))"/>
+                <text x="36" y="155" font-family="var(--aura-font-label)" font-size="10" fill="var(--harbor-muted)">BUILD LOG</text>
+                <text x="36" y="175" font-size="11" fill="var(--glint)">✓ Restored packages (3.2s)</text>
+                <text x="36" y="193" font-size="11" fill="var(--glint)">✓ Compiled 48 files (18.4s)</text>
+                <text x="36" y="211" font-size="11" fill="var(--dawn)">▸ Running test suite (in progress)</text>
+                <text x="36" y="229" font-size="11" fill="var(--harbor-muted)">  Proof: 312 passed, 0 failed so far</text>
+              </svg>
+            </div>
+            <div class="sb-media-swap" id="sb-media-2" hidden>
+              <svg width="100%" height="100%" viewBox="0 0 560 360" aria-label="Code hosting mock" role="img">
+                <rect width="560" height="360" fill="color-mix(in srgb,var(--harbor) 92%,var(--paper))"/>
+                <rect x="20" y="20" width="520" height="24" rx="4" fill="color-mix(in srgb,white 6%,var(--harbor))"/>
+                <rect x="28" y="26" width="8" height="12" rx="1" fill="var(--brook)"/>
+                <text x="44" y="37" font-family="var(--aura-font-label)" font-size="10" fill="var(--harbor-muted)">src / relay / workflow.ts</text>
+                <rect x="20" y="52" width="520" height="288" rx="4" fill="color-mix(in srgb,white 4%,var(--harbor))"/>
+                <text x="36" y="74" font-size="11" fill="var(--harbor-muted)" font-family="var(--aura-font-label)">1</text>
+                <text x="56" y="74" font-size="11" fill="color-mix(in srgb,var(--dusk) 70%,var(--harbor-ink))" font-family="var(--aura-font-label)">export function</text>
+                <text x="168" y="74" font-size="11" fill="var(--glint)" font-family="var(--aura-font-label)"> buildWorkflow</text>
+                <text x="36" y="94" font-size="11" fill="var(--harbor-muted)" font-family="var(--aura-font-label)">2</text>
+                <rect x="52" y="82" width="300" height="14" rx="2" fill="color-mix(in srgb,var(--dawn) 15%,transparent)"/>
+                <text x="56" y="94" font-size="11" fill="var(--dawn)" font-family="var(--aura-font-label)">-  stages: ['build','test']</text>
+                <text x="36" y="114" font-size="11" fill="var(--harbor-muted)" font-family="var(--aura-font-label)">3</text>
+                <rect x="52" y="102" width="340" height="14" rx="2" fill="color-mix(in srgb,var(--brook) 15%,transparent)"/>
+                <text x="56" y="114" font-size="11" fill="var(--glint)" font-family="var(--aura-font-label)">+  stages: ['build','test','deploy']</text>
+              </svg>
+            </div>
+            <div class="sb-media-swap" id="sb-media-3" hidden>
+              <svg width="100%" height="100%" viewBox="0 0 560 360" aria-label="Test management mock" role="img">
+                <defs><linearGradient id="mg3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="color-mix(in srgb,var(--brook) 6%,var(--paper))"/><stop offset="100%" stop-color="var(--salt)"/></linearGradient></defs>
+                <rect width="560" height="360" fill="url(#mg3)"/>
+                <rect x="20" y="20" width="520" height="40" rx="8" fill="var(--paper)" stroke="var(--rule)" stroke-width="1"/>
+                <text x="36" y="45" font-size="13" font-weight="600" fill="var(--ink)">Proof run #88 — 312 tests</text>
+                <rect x="380" y="28" width="60" height="24" rx="6" fill="color-mix(in srgb,green 15%,var(--paper))"/>
+                <text x="410" y="44" font-size="11" fill="green" text-anchor="middle">Passed</text>
+                <rect x="20" y="76" width="520" height="34" rx="4" fill="var(--paper)" stroke="var(--rule)" stroke-width="1"/>
+                <rect x="20" y="76" width="390" height="34" rx="4" fill="color-mix(in srgb,green 15%,var(--paper))"/>
+                <text x="36" y="98" font-size="12" fill="var(--ink)">312 passed</text>
+                <text x="430" y="98" font-size="12" fill="var(--muted)">0 failed</text>
+                <rect x="20" y="122" width="520" height="28" rx="4" fill="var(--salt)"/>
+                <text x="36" y="141" font-size="12" fill="var(--ink)">auth.login.spec — 24 tests — 1.2s</text>
+                <text x="490" y="141" font-size="11" fill="green" text-anchor="end">✓</text>
+                <rect x="20" y="156" width="520" height="28" rx="4" fill="var(--paper)" stroke="var(--rule)" stroke-width="0"/>
+                <text x="36" y="175" font-size="12" fill="var(--ink)">relay.build.spec — 56 tests — 3.4s</text>
+                <text x="490" y="175" font-size="11" fill="green" text-anchor="end">✓</text>
+                <rect x="20" y="190" width="520" height="28" rx="4" fill="var(--salt)"/>
+                <text x="36" y="209" font-size="12" fill="var(--ink)">vault.policy.spec — 18 tests — 0.8s</text>
+                <text x="490" y="209" font-size="11" fill="green" text-anchor="end">✓</text>
+              </svg>
+            </div>
+            <div class="sb-media-swap" id="sb-media-4" hidden>
+              <svg width="100%" height="100%" viewBox="0 0 560 360" aria-label="Package feeds mock" role="img">
+                <defs><linearGradient id="mg4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="color-mix(in srgb,var(--dusk) 8%,var(--paper))"/><stop offset="100%" stop-color="var(--salt)"/></linearGradient></defs>
+                <rect width="560" height="360" fill="url(#mg4)"/>
+                <text x="36" y="40" font-size="14" font-weight="600" fill="var(--ink)">Crate feeds</text>
+                <rect x="20" y="52" width="520" height="44" rx="6" fill="var(--paper)" stroke="var(--rule)" stroke-width="1"/>
+                <rect x="30" y="62" width="44" height="24" rx="4" fill="color-mix(in srgb,var(--brook) 15%,var(--paper))"/>
+                <text x="52" y="79" font-size="10" fill="var(--brook)" text-anchor="middle" font-family="var(--aura-font-label)">ui-kit</text>
+                <text x="86" y="79" font-size="13" fill="var(--ink)">@saltbrook/relay-sdk</text>
+                <text x="400" y="75" font-size="11" fill="var(--muted)">v2.4.1</text>
+                <text x="460" y="75" font-size="11" fill="var(--muted)">1.2 MB</text>
+                <rect x="20" y="104" width="520" height="44" rx="6" fill="var(--salt)" stroke="var(--rule)" stroke-width="1"/>
+                <rect x="30" y="114" width="56" height="24" rx="4" fill="color-mix(in srgb,var(--dusk) 15%,var(--paper))"/>
+                <text x="58" y="131" font-size="10" fill="var(--dusk)" text-anchor="middle" font-family="var(--aura-font-label)">core-utils</text>
+                <text x="98" y="131" font-size="13" fill="var(--ink)">io.saltbrook:ledger-client</text>
+                <text x="400" y="127" font-size="11" fill="var(--muted)">v1.9.0</text>
+                <text x="460" y="127" font-size="11" fill="var(--muted)">340 KB</text>
+                <rect x="20" y="156" width="520" height="44" rx="6" fill="var(--paper)" stroke="var(--rule)" stroke-width="1"/>
+                <rect x="30" y="166" width="60" height="24" rx="4" fill="color-mix(in srgb,var(--dawn) 15%,var(--paper))"/>
+                <text x="60" y="183" font-size="10" fill="var(--dawn)" text-anchor="middle" font-family="var(--aura-font-label)">build-tools</text>
+                <text x="102" y="183" font-size="13" fill="var(--ink)">saltbrook-proof</text>
+                <text x="400" y="179" font-size="11" fill="var(--muted)">v0.8.3</text>
+                <text x="460" y="179" font-size="11" fill="var(--muted)">88 KB</text>
+              </svg>
+            </div>
+            <div class="sb-media-swap" id="sb-media-5" hidden>
+              <svg width="100%" height="100%" viewBox="0 0 560 360" aria-label="Hosted runners mock" role="img">
+                <rect width="560" height="360" fill="color-mix(in srgb,var(--harbor) 90%,var(--paper))"/>
+                <text x="36" y="40" font-size="14" font-weight="600" fill="var(--harbor-ink)">Keel runner pool</text>
+                <rect x="20" y="52" width="520" height="34" rx="6" fill="color-mix(in srgb,white 6%,var(--harbor))"/>
+                <circle cx="44" cy="69" r="8" fill="color-mix(in srgb,green 60%,var(--harbor))"/>
+                <text x="60" y="74" font-size="12" fill="var(--harbor-ink)">keel-std-01 · idle · 4 vCPU · 16 GB</text>
+                <rect x="20" y="94" width="520" height="34" rx="6" fill="color-mix(in srgb,white 6%,var(--harbor))"/>
+                <circle cx="44" cy="111" r="8" fill="var(--brook)"/>
+                <text x="60" y="116" font-size="12" fill="var(--harbor-ink)">keel-std-02 · run #1024 · 2m 14s</text>
+                <rect x="20" y="136" width="520" height="34" rx="6" fill="color-mix(in srgb,white 6%,var(--harbor))"/>
+                <circle cx="44" cy="153" r="8" fill="var(--brook)"/>
+                <text x="60" y="158" font-size="12" fill="var(--harbor-ink)">keel-std-03 · run #1025 · 0m 42s</text>
+                <rect x="20" y="178" width="520" height="34" rx="6" fill="color-mix(in srgb,white 6%,var(--harbor))"/>
+                <circle cx="44" cy="195" r="8" fill="color-mix(in srgb,green 60%,var(--harbor))"/>
+                <text x="60" y="200" font-size="12" fill="var(--harbor-ink)">keel-lrg-01 · idle · 8 vCPU · 32 GB</text>
+                <text x="36" y="250" font-size="13" fill="var(--harbor-muted)">Utilisation (sample) · last 60 min</text>
+                <rect x="36" y="260" width="488" height="20" rx="4" fill="color-mix(in srgb,white 8%,var(--harbor))"/>
+                <rect x="36" y="260" width="280" height="20" rx="4" fill="var(--brook)" opacity="0.7"/>
+                <text x="36" y="302" font-size="11" fill="var(--harbor-muted)">57% capacity used (sample figure)</text>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" aria-labelledby="sb-services-h2">
+    <div class="sb-services-inner sb-reveal">
+      <span class="eyebrow">Services</span>
+      <h2 id="sb-services-h2" style="font-size:clamp(24px,3vw,36px);color:var(--ink);margin-top:calc(var(--aura)*1);">Everything your team needs in one delivery platform.</h2>
+      <div class="sb-pill-tabs" role="tablist" aria-label="Service categories" id="sb-svc-tablist">
+        <button class="sb-pill-tab" role="tab" aria-selected="true" aria-controls="sb-panel-services" id="sb-tab-services" tabindex="0">Services</button>
+        <button class="sb-pill-tab" role="tab" aria-selected="false" aria-controls="sb-panel-extensions" id="sb-tab-extensions" tabindex="-1">Extensions</button>
+      </div>
+      <div class="sb-svc-panel" id="sb-panel-services" role="tabpanel" aria-labelledby="sb-tab-services">
+        <div class="sb-svc-grid" id="sb-svc-grid-s">
+          <div class="sb-svc-card"><div class="sb-svc-tile"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="4" width="16" height="2.5" rx="1.25" fill="var(--brook)"/><rect x="3" y="9" width="11" height="2.5" rx="1.25" fill="var(--brook)" opacity="0.6"/><rect x="3" y="14" width="13" height="2.5" rx="1.25" fill="var(--brook)" opacity="0.4"/></svg></div><div class="sb-svc-title">Saltbrook Ledger</div><p class="sb-svc-desc">Track work items, sprints and milestones with real-time dependency graphs and customizable backlog views for every team.</p><a class="sb-svc-link" href="#">Learn more</a></div>
+          <div class="sb-svc-card"><div class="sb-svc-tile"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="5" cy="11" r="2.5" fill="var(--brook)"/><circle cx="11" cy="11" r="2.5" fill="var(--dusk)"/><circle cx="17" cy="11" r="2.5" fill="color-mix(in srgb,var(--brook) 60%,var(--dusk))"/><path d="M7.5 11h1M13.5 11h1" stroke="var(--rule)" stroke-width="1.5"/></svg></div><div class="sb-svc-title">Saltbrook Relay</div><p class="sb-svc-desc">Build and release multi-stage workflows with parallel jobs, conditional gates and artifact publishing from a single config file.</p><a class="sb-svc-link" href="#">Learn more</a></div>
+          <div class="sb-svc-card"><div class="sb-svc-tile"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M6 8l5-4 5 4v7l-5 3-5-3V8z" fill="none" stroke="var(--brook)" stroke-width="1.5" stroke-linejoin="round"/><path d="M11 4v14" stroke="var(--brook)" stroke-width="1" opacity="0.4"/></svg></div><div class="sb-svc-title">Saltbrook Vault</div><p class="sb-svc-desc">Host repositories with branch protection policies, pull-request reviews and inline threaded code comments that keep reviews fast.</p><a class="sb-svc-link" href="#">Learn more</a></div>
+          <div class="sb-svc-card"><div class="sb-svc-tile"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 15l3.5-3.5L11 15l7-9" stroke="var(--brook)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="15" r="1.5" fill="var(--dawn)"/><circle cx="11" cy="15" r="1.5" fill="var(--brook)"/></svg></div><div class="sb-svc-title">Saltbrook Proof</div><p class="sb-svc-desc">Write test cases, run test suites and track pass rates with flakiness detection, failure clustering and historical trend charts.</p><a class="sb-svc-link" href="#">Learn more</a></div>
+          <div class="sb-svc-card"><div class="sb-svc-tile"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="4" y="6" width="14" height="10" rx="2" fill="none" stroke="var(--brook)" stroke-width="1.5"/><path d="M8 11h6M11 8v6" stroke="var(--dusk)" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="sb-svc-title">Saltbrook Crate</div><p class="sb-svc-desc">Host feeds for every common package format alongside your code with upstream proxying and scoped feed permissions.</p><a class="sb-svc-link" href="#">Learn more</a></div>
+          <div class="sb-svc-card"><div class="sb-svc-tile"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="7" width="16" height="8" rx="2" fill="none" stroke="var(--brook)" stroke-width="1.5"/><circle cx="7" cy="11" r="1.5" fill="var(--brook)"/><circle cx="11" cy="11" r="1.5" fill="color-mix(in srgb,var(--brook) 60%,var(--dusk))"/><circle cx="15" cy="11" r="1.5" fill="color-mix(in srgb,var(--dawn) 80%,var(--brook))"/></svg></div><div class="sb-svc-title">Saltbrook Keel</div><p class="sb-svc-desc">Scale build capacity with hosted runners that spin up on demand — no infrastructure management, billed per sample minute used.</p><a class="sb-svc-link" href="#">Learn more</a></div>
+          <div class="sb-svc-card"><div class="sb-svc-tile"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 3l7 4v8l-7 4-7-4V7z" fill="none" stroke="var(--brook)" stroke-width="1.5" stroke-linejoin="round"/><path d="M11 3v14" stroke="var(--brook)" stroke-width="1" opacity="0.3"/></svg></div><div class="sb-svc-title">Delivery Analytics</div><p class="sb-svc-desc">Measure lead time, throughput and reliability across all your services with pre-built dashboards and exportable custom reports.</p><a class="sb-svc-link" href="#">Learn more</a></div>
+          <div class="sb-svc-card"><div class="sb-svc-tile"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="3" fill="none" stroke="var(--brook)" stroke-width="1.5"/><path d="M5 19c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="var(--brook)" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="sb-svc-title">Identity &amp; Access</div><p class="sb-svc-desc">Manage organization members, teams and service principals with fine-grained permission scopes and single sign-on integration.</p><a class="sb-svc-link" href="#">Learn more</a></div>
+          <div class="sb-svc-card"><div class="sb-svc-tile"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 2l1.5 4.5H17l-3.8 2.8 1.5 4.5L11 11l-3.7 2.8 1.5-4.5L5 6.5h4.5z" fill="none" stroke="var(--dawn)" stroke-width="1.5" stroke-linejoin="round"/></svg></div><div class="sb-svc-title">Deployment Environments</div><p class="sb-svc-desc">Define dev, staging and production environments with approval checks, secret scoping and deployment history per environment.</p><a class="sb-svc-link" href="#">Learn more</a></div>
+        </div>
+        <div class="sb-svc-carousel-wrap" role="region" aria-label="Services carousel" tabindex="0">
+          <div class="sb-svc-carousel-track" id="sb-svc-track-s">
+            <div class="sb-svc-card"><div class="sb-svc-tile"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="4" width="16" height="2.5" rx="1.25" fill="var(--brook)"/><rect x="3" y="9" width="11" height="2.5" rx="1.25" fill="var(--brook)" opacity="0.6"/><rect x="3" y="14" width="13" height="2.5" rx="1.25" fill="var(--brook)" opacity="0.4"/></svg></div><div class="sb-svc-title">Saltbrook Ledger</div><p class="sb-svc-desc">Track work items, sprints and milestones with real-time dependency graphs.</p><a class="sb-svc-link" href="#">Learn more</a></div>
+            <div class="sb-svc-card"><div class="sb-svc-tile"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="5" cy="11" r="2.5" fill="var(--brook)"/><circle cx="11" cy="11" r="2.5" fill="var(--dusk)"/><circle cx="17" cy="11" r="2.5" fill="color-mix(in srgb,var(--brook) 60%,var(--dusk))"/></svg></div><div class="sb-svc-title">Saltbrook Relay</div><p class="sb-svc-desc">Build and release multi-stage workflows with parallel jobs and conditional gates from a config file.</p><a class="sb-svc-link" href="#">Learn more</a></div>
+            <div class="sb-svc-card"><div class="sb-svc-tile"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M6 8l5-4 5 4v7l-5 3-5-3V8z" fill="none" stroke="var(--brook)" stroke-width="1.5" stroke-linejoin="round"/></svg></div><div class="sb-svc-title">Saltbrook Vault</div><p class="sb-svc-desc">Host repositories with branch protection policies and pull-request reviews.</p><a class="sb-svc-link" href="#">Learn more</a></div>
+            <div class="sb-svc-card"><div class="sb-svc-tile"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 15l3.5-3.5L11 15l7-9" stroke="var(--brook)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="sb-svc-title">Saltbrook Proof</div><p class="sb-svc-desc">Write test cases and track pass rates with flakiness detection and trend charts.</p><a class="sb-svc-link" href="#">Learn more</a></div>
+            <div class="sb-svc-card"><div class="sb-svc-tile"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="4" y="6" width="14" height="10" rx="2" fill="none" stroke="var(--brook)" stroke-width="1.5"/></svg></div><div class="sb-svc-title">Saltbrook Crate</div><p class="sb-svc-desc">Host private package feeds alongside your code with scoped feed permissions.</p><a class="sb-svc-link" href="#">Learn more</a></div>
+          </div>
+        </div>
+        <div class="sb-carousel-controls" id="sb-svc-ctrl-s">
+          <button class="sb-carousel-btn" type="button" id="sb-svc-prev-s" aria-label="Previous services" aria-controls="sb-svc-track-s" disabled><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M9 3L5 7l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="sb-carousel-btn" type="button" id="sb-svc-next-s" aria-label="Next services" aria-controls="sb-svc-track-s"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+        <div class="sb-svc-footer"><a class="chevron-link" href="#"><span class="chevron-sq" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>See every service</a></div>
+      </div>
+      <div class="sb-svc-panel" id="sb-panel-extensions" role="tabpanel" aria-labelledby="sb-tab-extensions" hidden>
+        <div class="sb-svc-grid">
+          <div class="sb-svc-card"><div class="sb-svc-tile"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M5 11h12M14 7l4 4-4 4" stroke="var(--brook)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="sb-svc-title">Relay Notifier</div><p class="sb-svc-desc">Send build and release status to your team via webhook to any messaging platform.</p><a class="sb-svc-link" href="#">View add-on</a></div>
+          <div class="sb-svc-card"><div class="sb-svc-tile"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="4" y="4" width="14" height="14" rx="4" fill="none" stroke="var(--dusk)" stroke-width="1.5"/><path d="M8 11h6M11 8v6" stroke="var(--dusk)" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="sb-svc-title">Proof Coverage Gate</div><p class="sb-svc-desc">Block merges when test coverage drops below a configurable threshold per repository.</p><a class="sb-svc-link" href="#">View add-on</a></div>
+          <div class="sb-svc-card"><div class="sb-svc-tile"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="7" fill="none" stroke="var(--brook)" stroke-width="1.5"/><path d="M11 7v4l3 3" stroke="var(--brook)" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="sb-svc-title">Relay Timer Trigger</div><p class="sb-svc-desc">Schedule builds and releases to run at any cron interval without additional infrastructure.</p><a class="sb-svc-link" href="#">View add-on</a></div>
+          <div class="sb-svc-card"><div class="sb-svc-tile"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 8h14M4 13h10" stroke="var(--dawn)" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="sb-svc-title">Vault Reviewer Roulette</div><p class="sb-svc-desc">Automatically assign pull-request reviewers from a team pool, reducing bottlenecks in code review.</p><a class="sb-svc-link" href="#">View add-on</a></div>
+          <div class="sb-svc-card"><div class="sb-svc-tile"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 3v16M4 10l7-7 7 7" stroke="var(--brook)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="sb-svc-title">Crate Prune Policy</div><p class="sb-svc-desc">Automatically clean up old package versions from your feeds based on age or count rules.</p><a class="sb-svc-link" href="#">View add-on</a></div>
+          <div class="sb-svc-card"><div class="sb-svc-tile"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M5 17l3-5 3 3 3-6 3 5" stroke="var(--brook)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="sb-svc-title">Analytics Exporter</div><p class="sb-svc-desc">Export delivery metrics to any BI tool via scheduled CSV or JSON files pushed to your Crate feed.</p><a class="sb-svc-link" href="#">View add-on</a></div>
+        </div>
+        <div class="sb-svc-carousel-wrap" role="region" aria-label="Extensions carousel" tabindex="0">
+          <div class="sb-svc-carousel-track" id="sb-svc-track-e">
+            <div class="sb-svc-card"><div class="sb-svc-tile"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M5 11h12M14 7l4 4-4 4" stroke="var(--brook)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="sb-svc-title">Relay Notifier</div><p class="sb-svc-desc">Send build status to your team via webhook to any messaging platform.</p><a class="sb-svc-link" href="#">View add-on</a></div>
+            <div class="sb-svc-card"><div class="sb-svc-tile"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="4" y="4" width="14" height="14" rx="4" fill="none" stroke="var(--dusk)" stroke-width="1.5"/></svg></div><div class="sb-svc-title">Proof Coverage Gate</div><p class="sb-svc-desc">Block merges when test coverage drops below a threshold.</p><a class="sb-svc-link" href="#">View add-on</a></div>
+            <div class="sb-svc-card"><div class="sb-svc-tile"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="7" fill="none" stroke="var(--brook)" stroke-width="1.5"/></svg></div><div class="sb-svc-title">Relay Timer Trigger</div><p class="sb-svc-desc">Schedule builds and releases at any cron interval.</p><a class="sb-svc-link" href="#">View add-on</a></div>
+          </div>
+        </div>
+        <div class="sb-carousel-controls" id="sb-svc-ctrl-e">
+          <button class="sb-carousel-btn" type="button" id="sb-svc-prev-e" aria-label="Previous extensions" aria-controls="sb-svc-track-e" disabled><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M9 3L5 7l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="sb-carousel-btn" type="button" id="sb-svc-next-e" aria-label="Next extensions" aria-controls="sb-svc-track-e"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+        <div class="sb-svc-footer"><a class="chevron-link" href="#"><span class="chevron-sq" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>See every service</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="security-ai" aria-labelledby="sb-secai-h2" style="background:linear-gradient(120deg,color-mix(in srgb,var(--dawn) 18%,var(--paper)) 0%,color-mix(in srgb,var(--dusk) 10%,var(--paper)) 50%,color-mix(in srgb,var(--brook) 10%,var(--paper)) 100%);">
+    <div class="sb-secai-inner sb-reveal">
+      <div class="sb-secai-halo">
+        <span class="eyebrow" style="display:block;margin-bottom:calc(var(--aura)*1);">Security &amp; AI</span>
+        <h2 id="sb-secai-h2">Keep every release guarded and assisted</h2>
+        <p>Saltbrook weaves security scanning, secret detection and AI-assisted code review directly into your delivery workflow — so every change is safer before it ships.</p>
+        <button class="button button-fill sb" type="button">Learn more</button>
+      </div>
+    </div>
+    <div aria-hidden="true" style="position:absolute;left:0;top:0;width:3px;height:100%;background:linear-gradient(to bottom,color-mix(in srgb,var(--dusk) 30%,transparent),transparent);pointer-events:none;"></div>
+  </section>
+
+  <section id="recognition" aria-labelledby="sb-rec-h2">
+    <div class="sb-rec-inner sb-reveal">
+      <h2 id="sb-rec-h2">Saltbrook Delivery earns a sample Builders' Choice citation <sup><a href="#fn-1" id="ref-1" style="color:var(--brook);font-size:0.6em;vertical-align:super;">1</a></sup></h2>
+      <div class="sb-seal" aria-label="Sample fictional seal" role="img">
+        <svg width="60" height="52" viewBox="0 0 60 52" fill="none"><polygon points="30,4 36,18 52,18 40,28 44,42 30,34 16,42 20,28 8,18 24,18" fill="none" stroke="var(--brook)" stroke-width="2" stroke-linejoin="round"/><circle cx="30" cy="26" r="8" fill="var(--tide-tint)"/><path d="M25 26l3 3 7-6" stroke="var(--brook)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <p style="font-size:16px;color:var(--body);">Recognized for delivery automation and developer experience in the fictional Builders' Choice awards. Sample figures only.</p>
+      <div style="margin-top:calc(var(--aura)*2);">
+        <button class="button button-fill sb" type="button">Learn more</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="security" aria-labelledby="sb-security-h2">
+    <div class="sb-security-inner sb-reveal">
+      <span class="eyebrow">Safeguards</span>
+      <h2 id="sb-security-h2" style="font-size:clamp(24px,3vw,36px);color:var(--ink);margin-top:calc(var(--aura)*1);">Secure delivery from first commit to production</h2>
+      <div class="sb-stats-row">
+        <div class="sb-stat"><div class="sb-stat-bar" aria-hidden="true"></div><div class="sb-stat-body"><div class="sb-stat-num">3,400+</div><p class="sb-stat-desc">Secret scanning patterns included in every repository scan (sample figure).</p><a class="sb-stat-link" href="#">Learn more</a></div></div>
+        <div class="sb-stat"><div class="sb-stat-bar" aria-hidden="true"></div><div class="sb-stat-body"><div class="sb-stat-num">1,200+</div><p class="sb-stat-desc">Dependency vulnerability advisories tracked automatically for your feeds (sample).</p><a class="sb-stat-link" href="#">Learn more</a></div></div>
+        <div class="sb-stat"><div class="sb-stat-bar" aria-hidden="true"></div><div class="sb-stat-body"><div class="sb-stat-num">&gt;90%</div><p class="sb-stat-desc">Of critical findings resolved in under 7 days by teams using Saltbrook automated fixes (sample figure).</p><a class="sb-stat-link" href="#">Learn more</a></div></div>
+      </div>
+      <div class="sb-security-cta"><button class="button button-fill sb" type="button">Read the security overview</button></div>
+    </div>
+  </section>
+
+  <section id="pricing" aria-labelledby="sb-pricing-h2">
+    <div class="sb-pricing-inner sb-reveal">
+      <div class="sb-pricing-card">
+        <div class="sb-pricing-card-left">
+          <span class="eyebrow">Plans</span>
+          <h3>Build on a Saltbrook account</h3>
+          <p>Start free and scale as your team grows. All pricing figures on this page are sample figures and do not constitute a quote.</p>
+          <button class="button button-fill sb" type="button">See sample pricing</button>
+        </div>
+        <div class="sb-pricing-card-art" aria-hidden="true">
+          <svg width="100%" height="100%" viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="220" fill="color-mix(in srgb,var(--brook) 10%,var(--paper))"/>
+            <rect x="40" y="30" width="140" height="90" rx="10" fill="var(--paper)" stroke="var(--rule)" stroke-width="1"/>
+            <rect x="52" y="44" width="80" height="8" rx="4" fill="var(--shoal)"/>
+            <rect x="52" y="58" width="60" height="6" rx="3" fill="var(--shoal)"/>
+            <rect x="52" y="70" width="100" height="6" rx="3" fill="var(--shoal)"/>
+            <rect x="52" y="84" width="40" height="20" rx="6" fill="var(--brook)"/>
+            <rect x="220" y="20" width="140" height="90" rx="10" fill="var(--paper)" stroke="var(--rule)" stroke-width="1"/>
+            <circle cx="260" cy="50" r="14" fill="var(--salt)"/>
+            <rect x="282" y="44" width="60" height="8" rx="4" fill="var(--shoal)"/>
+            <rect x="282" y="58" width="44" height="6" rx="3" fill="var(--shoal)"/>
+            <rect x="40" y="140" width="320" height="52" rx="10" fill="color-mix(in srgb,var(--brook) 6%,var(--paper))" stroke="var(--rule)" stroke-width="1"/>
+            <rect x="56" y="154" width="80" height="8" rx="4" fill="var(--shoal)"/>
+            <rect x="56" y="168" width="120" height="6" rx="3" fill="var(--shoal)"/>
+            <circle cx="332" cy="166" r="12" fill="var(--brook)" opacity="0.3"/>
+          </svg>
+        </div>
+      </div>
+      <div class="sb-plans-grid">
+        <article class="sb-plan">
+          <div class="sb-plan-name">Starter</div>
+          <div class="sb-plan-price">$0 <small>/ month (sample)</small></div>
+          <div class="sb-plan-desc">For individuals and small projects. Includes sample free-tier limits.</div>
+          <div class="sb-plan-features">
+            <div class="sb-plan-feat"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--brook)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>5 users (sample limit)</div>
+            <div class="sb-plan-feat"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--brook)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>2 GB Crate storage</div>
+            <div class="sb-plan-feat"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--brook)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Community support</div>
+          </div>
+          <button class="button sb" type="button" style="border-color:var(--brook);color:var(--brook);background:transparent;border-radius:8px;white-space:normal;text-align:center;">Start free</button>
+        </article>
+        <article class="sb-plan featured">
+          <div class="eyebrow" style="margin-bottom:calc(var(--aura)*0.5);">Recommended</div>
+          <div class="sb-plan-name">Team</div>
+          <div class="sb-plan-price">$6 <small>/ user / month (sample)</small></div>
+          <div class="sb-plan-desc">For growing teams that need collaboration, analytics and priority support.</div>
+          <div class="sb-plan-features">
+            <div class="sb-plan-feat"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--brook)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Unlimited users</div>
+            <div class="sb-plan-feat"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--brook)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>10 GB Crate storage</div>
+            <div class="sb-plan-feat"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--brook)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Advanced analytics</div>
+            <div class="sb-plan-feat"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--brook)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Priority email support</div>
+          </div>
+          <button class="button button-fill sb" type="button" style="white-space:normal;text-align:center;">Start Team trial</button>
+        </article>
+        <article class="sb-plan">
+          <div class="sb-plan-name">Scale</div>
+          <div class="sb-plan-price" style="font-size:clamp(24px,3vw,32px);">Custom <small>pricing</small></div>
+          <div class="sb-plan-desc">For large organizations with compliance, single sign-on and dedicated support requirements.</div>
+          <div class="sb-plan-features">
+            <div class="sb-plan-feat"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--brook)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Unlimited everything</div>
+            <div class="sb-plan-feat"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--brook)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Single sign-on and directory sync</div>
+            <div class="sb-plan-feat"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--brook)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>24/7 dedicated support</div>
+          </div>
+          <button class="button sb" type="button" id="sb-contact-plan" style="border-color:var(--brook);color:var(--brook);background:transparent;border-radius:8px;white-space:normal;text-align:center;">Contact sales</button>
+        </article>
+      </div>
+      <h3 style="font-size:18px;color:var(--ink);margin-bottom:calc(var(--aura)*1.5);">Sample usage rates</h3>
+      <div class="sb-table-wrap" role="region" aria-label="Sample usage rates table" tabindex="0">
+        <table class="sb-table">
+          <caption>Sample usage rates — fictional figures only, not a quote</caption>
+          <thead><tr><th scope="col">Service</th><th scope="col">Unit</th><th scope="col">Included (Team)</th><th scope="col">Sample rate</th></tr></thead>
+          <tbody>
+            <tr><td>Saltbrook Keel (Standard runner)</td><td>per sample minute</td><td>2,000 min/month</td><td>$0.008</td></tr>
+            <tr><td>Saltbrook Keel (Large runner)</td><td>per sample minute</td><td>200 min/month</td><td>$0.08</td></tr>
+            <tr><td>Saltbrook Crate storage</td><td>per GB/month</td><td>10 GB</td><td>$0.25</td></tr>
+            <tr><td>Saltbrook Vault large files</td><td>per GB/month</td><td>1 GB</td><td>$0.07</td></tr>
+            <tr><td>Saltbrook Proof parallel runs</td><td>per additional slot</td><td>2 slots</td><td>$12.00</td></tr>
+            <tr><td>Saltbrook Relay deployments</td><td>per 1,000 runs</td><td>Unlimited</td><td>$0.00</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="customer-stories" aria-labelledby="sb-stories-h2" style="background:linear-gradient(140deg,color-mix(in srgb,var(--dawn) 15%,var(--paper)) 0%,color-mix(in srgb,var(--dusk) 10%,var(--paper)) 100%);">
+    <div class="sb-stories-inner sb-reveal">
+      <div class="sb-stories-head">
+        <div>
+          <span class="eyebrow">Team stories</span>
+          <h2 id="sb-stories-h2" style="font-size:clamp(24px,3vw,36px);color:var(--ink);margin-top:calc(var(--aura)*0.75);">Real teams, meaningful outcomes on Saltbrook Delivery.</h2>
+        </div>
+        <button class="button sb" type="button" style="border-color:var(--brook);color:var(--brook);background:transparent;border-radius:8px;white-space:nowrap;flex-shrink:0;align-self:flex-start;margin-top:calc(var(--aura)*2);">View all stories</button>
+      </div>
+      <div class="sb-story-card" id="sb-story-card-0">
+        <div class="sb-story-left">
+          <div class="sb-story-logo">Luminar&nbsp;Works</div>
+          <blockquote class="sb-story-quote">"Saltbrook Relay cut our average release cycle from two weeks to under a day. The delivery metrics alone justified the switch."</blockquote>
+          <div class="sb-story-attr">Priya Ramaswell, Engineering Lead · Luminar Works (fictional)</div>
+          <div class="sb-story-services-label">Services used</div>
+          <div class="sb-story-chips">
+            <span class="sb-story-chip"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><circle cx="6" cy="6" r="4" fill="none" stroke="var(--brook)" stroke-width="1.5"/></svg>Relay</span>
+            <span class="sb-story-chip"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><rect x="2" y="2" width="8" height="8" rx="2" fill="none" stroke="var(--dusk)" stroke-width="1.5"/></svg>Vault</span>
+            <span class="sb-story-chip"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 8l2.5-2.5L6 8l4-5" stroke="var(--dawn)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Proof</span>
+          </div>
+          <button class="button button-fill sb" type="button">Read the story</button>
+        </div>
+        <div class="sb-story-art">
+          <svg width="100%" height="100%" viewBox="0 0 400 280" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs><radialGradient id="stg0" cx="60%" cy="40%" r="60%"><stop offset="0%" stop-color="color-mix(in srgb,var(--brook) 40%,var(--harbor))"/><stop offset="100%" stop-color="var(--harbor)"/></radialGradient></defs>
+            <rect width="400" height="280" fill="url(#stg0)"/>
+            <rect x="40" y="60" width="200" height="130" rx="10" fill="color-mix(in srgb,white 8%,var(--harbor))"/>
+            <rect x="52" y="74" width="120" height="10" rx="5" fill="var(--brook)" opacity="0.6"/>
+            <rect x="52" y="92" width="80" height="8" rx="4" fill="color-mix(in srgb,white 20%,transparent)"/>
+            <rect x="52" y="108" width="150" height="8" rx="4" fill="color-mix(in srgb,white 15%,transparent)"/>
+            <rect x="52" y="124" width="100" height="8" rx="4" fill="color-mix(in srgb,white 10%,transparent)"/>
+            <rect x="52" y="150" width="60" height="24" rx="6" fill="var(--brook)"/>
+            <rect x="260" y="40" width="110" height="80" rx="8" fill="color-mix(in srgb,white 6%,var(--harbor))" stroke="color-mix(in srgb,white 10%,transparent)" stroke-width="1"/>
+            <path d="M270 95l30-30 20 20 20-30" stroke="var(--glint)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="sb-story-card" id="sb-story-card-1" hidden style="display:none;">
+        <div class="sb-story-left">
+          <div class="sb-story-logo">Coralline&nbsp;Data</div>
+          <blockquote class="sb-story-quote">"Saltbrook Proof's flakiness detection removed noise from our test pipeline and helped our team trust the results again."</blockquote>
+          <div class="sb-story-attr">Marcus Tane, QA Director · Coralline Data (fictional)</div>
+          <div class="sb-story-services-label">Services used</div>
+          <div class="sb-story-chips">
+            <span class="sb-story-chip"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 8l2.5-2.5L6 8l4-5" stroke="var(--dawn)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Proof</span>
+            <span class="sb-story-chip"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><circle cx="6" cy="6" r="4" fill="none" stroke="var(--brook)" stroke-width="1.5"/></svg>Relay</span>
+          </div>
+          <button class="button button-fill sb" type="button">Read the story</button>
+        </div>
+        <div class="sb-story-art">
+          <svg width="100%" height="100%" viewBox="0 0 400 280" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs><radialGradient id="stg1" cx="40%" cy="60%" r="60%"><stop offset="0%" stop-color="color-mix(in srgb,var(--dusk) 40%,var(--harbor))"/><stop offset="100%" stop-color="var(--harbor)"/></radialGradient></defs>
+            <rect width="400" height="280" fill="url(#stg1)"/>
+            <rect x="60" y="50" width="280" height="180" rx="12" fill="color-mix(in srgb,white 6%,var(--harbor))"/>
+            <rect x="80" y="68" width="200" height="10" rx="5" fill="var(--dusk)" opacity="0.6"/>
+            <rect x="80" y="90" width="240" height="20" rx="4" fill="color-mix(in srgb,green 20%,var(--harbor))"/>
+            <text x="90" y="105" font-size="11" fill="var(--harbor-muted)" font-family="var(--aura-font-label)">312 passed · 0 flaky</text>
+          </svg>
+        </div>
+      </div>
+      <div class="sb-story-card" id="sb-story-card-2" hidden style="display:none;">
+        <div class="sb-story-left">
+          <div class="sb-story-logo">Stonegate&nbsp;Labs</div>
+          <blockquote class="sb-story-quote">"Saltbrook Vault's branch policies and required reviewers gave us the governance our compliance team required without slowing engineers down."</blockquote>
+          <div class="sb-story-attr">Amara Osei, VP Engineering · Stonegate Labs (fictional)</div>
+          <div class="sb-story-services-label">Services used</div>
+          <div class="sb-story-chips">
+            <span class="sb-story-chip"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><rect x="2" y="2" width="8" height="8" rx="2" fill="none" stroke="var(--dusk)" stroke-width="1.5"/></svg>Vault</span>
+            <span class="sb-story-chip"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><circle cx="6" cy="6" r="4" fill="none" stroke="var(--brook)" stroke-width="1.5"/></svg>Relay</span>
+          </div>
+          <button class="button button-fill sb" type="button">Read the story</button>
+        </div>
+        <div class="sb-story-art">
+          <svg width="100%" height="100%" viewBox="0 0 400 280" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs><radialGradient id="stg2" cx="70%" cy="30%" r="60%"><stop offset="0%" stop-color="color-mix(in srgb,var(--brook) 30%,var(--harbor))"/><stop offset="100%" stop-color="var(--harbor)"/></radialGradient></defs>
+            <rect width="400" height="280" fill="url(#stg2)"/>
+            <path d="M200 60l80 40v80l-80 40-80-40v-80z" fill="none" stroke="var(--brook)" stroke-width="2" stroke-linejoin="round" opacity="0.4"/>
+            <path d="M200 70l60 30v60l-60 30-60-30v-60z" fill="none" stroke="var(--glint)" stroke-width="1.5" stroke-linejoin="round" opacity="0.5"/>
+          </svg>
+        </div>
+      </div>
+      <div class="sb-story-card" id="sb-story-card-3" hidden style="display:none;">
+        <div class="sb-story-left">
+          <div class="sb-story-logo">Noric&nbsp;Health</div>
+          <blockquote class="sb-story-quote">"Saltbrook Crate's scoped feed permissions solved a long-standing security concern about package access across our regulated environments."</blockquote>
+          <div class="sb-story-attr">Sophie Leclair, Platform Lead · Noric Health (fictional)</div>
+          <div class="sb-story-services-label">Services used</div>
+          <div class="sb-story-chips">
+            <span class="sb-story-chip"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><rect x="2" y="2" width="8" height="8" rx="2" fill="none" stroke="var(--brook)" stroke-width="1.5"/></svg>Crate</span>
+            <span class="sb-story-chip"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><circle cx="6" cy="6" r="4" fill="none" stroke="var(--dawn)" stroke-width="1.5"/></svg>Keel</span>
+          </div>
+          <button class="button button-fill sb" type="button">Read the story</button>
+        </div>
+        <div class="sb-story-art">
+          <svg width="100%" height="100%" viewBox="0 0 400 280" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs><radialGradient id="stg3" cx="50%" cy="50%" r="55%"><stop offset="0%" stop-color="color-mix(in srgb,var(--dawn) 30%,var(--harbor))"/><stop offset="100%" stop-color="var(--harbor)"/></radialGradient></defs>
+            <rect width="400" height="280" fill="url(#stg3)"/>
+            <circle cx="200" cy="140" r="80" fill="none" stroke="var(--dawn)" stroke-width="1.5" opacity="0.4"/>
+            <circle cx="200" cy="140" r="50" fill="none" stroke="var(--dawn)" stroke-width="1" opacity="0.6"/>
+            <circle cx="200" cy="140" r="20" fill="color-mix(in srgb,var(--dawn) 30%,var(--harbor))"/>
+          </svg>
+        </div>
+      </div>
+      <div class="sb-client-strip-wrap" aria-label="Story navigation tiles">
+        <div class="sb-client-strip" role="tablist" aria-label="Customer story tabs" id="sb-client-strip">
+          <button class="sb-client-tile" role="tab" aria-selected="true" aria-controls="sb-story-card-0" id="sb-ctile-0" tabindex="0" style="color:var(--ink);">Luminar Works</button>
+          <button class="sb-client-tile" role="tab" aria-selected="false" aria-controls="sb-story-card-1" id="sb-ctile-1" tabindex="-1">Coralline Data</button>
+          <button class="sb-client-tile" role="tab" aria-selected="false" aria-controls="sb-story-card-2" id="sb-ctile-2" tabindex="-1">Stonegate Labs</button>
+          <button class="sb-client-tile" role="tab" aria-selected="false" aria-controls="sb-story-card-3" id="sb-ctile-3" tabindex="-1">Noric Health</button>
+        </div>
+      </div>
+      <div class="sb-story-nav">
+        <button class="sb-carousel-btn" type="button" id="sb-story-prev" aria-label="Previous story" disabled><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M9 3L5 7l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="sb-carousel-btn" type="button" id="sb-story-next" aria-label="Next story"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="sr-only" id="sb-story-status" role="status" aria-live="polite">Story 1 of 4</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="resources" aria-labelledby="sb-resources-h2">
+    <div class="sb-resources-inner sb-reveal">
+      <span class="eyebrow">Learning</span>
+      <h2 id="sb-resources-h2" style="font-size:clamp(24px,3vw,36px);color:var(--ink);margin-top:calc(var(--aura)*1);">Learn, build and go deeper with Saltbrook.</h2>
+      <div class="sb-res-grid">
+        <div class="sb-res-card">
+          <div class="sb-res-art"><div class="sb-res-art-inner" aria-hidden="true">
+            <svg width="100%" height="100%" viewBox="0 0 400 144" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="rg0" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="color-mix(in srgb,var(--brook) 20%,var(--paper))"/><stop offset="100%" stop-color="color-mix(in srgb,var(--shoal) 80%,var(--paper))"/></linearGradient></defs><rect width="400" height="144" fill="url(#rg0)"/><path d="M60 100l60-50 60 30 60-60 60 40" stroke="var(--brook)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/><circle cx="60" cy="100" r="5" fill="var(--brook)"/><circle cx="120" cy="50" r="5" fill="var(--brook)"/></svg>
+          </div></div>
+          <div class="sb-res-body">
+            <div class="sb-res-title">From zero to first run in 15 minutes</div>
+            <p class="sb-res-desc">A step-by-step guide to creating your first Saltbrook Relay workflow, connecting a Vault repository and running a Proof test suite.</p>
+            <div class="sb-res-footer"><a class="chevron-link" href="#"><span class="chevron-sq" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Learn more</a></div>
+          </div>
+        </div>
+        <div class="sb-res-card">
+          <div class="sb-res-art"><div class="sb-res-art-inner" aria-hidden="true">
+            <svg width="100%" height="100%" viewBox="0 0 400 144" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="rg1" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="color-mix(in srgb,var(--dusk) 15%,var(--paper))"/><stop offset="100%" stop-color="color-mix(in srgb,var(--shoal) 80%,var(--paper))"/></linearGradient></defs><rect width="400" height="144" fill="url(#rg1)"/><rect x="40" y="30" width="80" height="80" rx="8" fill="none" stroke="var(--dusk)" stroke-width="1.5" opacity="0.5"/><rect x="160" y="30" width="80" height="80" rx="8" fill="none" stroke="var(--brook)" stroke-width="1.5" opacity="0.5"/><rect x="280" y="30" width="80" height="80" rx="8" fill="none" stroke="var(--dawn)" stroke-width="1.5" opacity="0.5"/></svg>
+          </div></div>
+          <div class="sb-res-body">
+            <div class="sb-res-title">Saltbrook security hardening guide</div>
+            <p class="sb-res-desc">Enable secret scanning, dependency alerts and code scanning across all your Vault repositories with branch-protection and mandatory reviews.</p>
+            <div class="sb-res-footer"><a class="chevron-link" href="#"><span class="chevron-sq" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Learn more</a></div>
+          </div>
+        </div>
+        <div class="sb-res-card">
+          <div class="sb-res-art"><div class="sb-res-art-inner" aria-hidden="true">
+            <svg width="100%" height="100%" viewBox="0 0 400 144" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="rg2" cx="50%" cy="50%" r="55%"><stop offset="0%" stop-color="color-mix(in srgb,var(--dawn) 20%,var(--paper))"/><stop offset="100%" stop-color="color-mix(in srgb,var(--shoal) 60%,var(--paper))"/></radialGradient></defs><rect width="400" height="144" fill="url(#rg2)"/><circle cx="200" cy="72" r="40" fill="none" stroke="var(--dawn)" stroke-width="1.5" opacity="0.6"/><circle cx="200" cy="72" r="20" fill="color-mix(in srgb,var(--dawn) 20%,var(--paper))"/></svg>
+          </div></div>
+          <div class="sb-res-body">
+            <div class="sb-res-title">Measuring delivery performance with Saltbrook Analytics</div>
+            <p class="sb-res-desc">Learn to build dashboards that surface lead time, deployment frequency and change failure rate across your entire delivery platform.</p>
+            <div class="sb-res-footer"><a class="chevron-link" href="#"><span class="chevron-sq" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Learn more</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" aria-labelledby="sb-contact-h2">
+    <div class="sb-contact-inner sb-reveal">
+      <div class="sb-contact-grid">
+        <div class="sb-contact-copy">
+          <span class="eyebrow" style="display:block;margin-bottom:calc(var(--aura)*1);">Contact sales</span>
+          <h2 id="sb-contact-h2">Talk to our team</h2>
+          <p>This form validates locally in your browser. No data is sent, stored or transmitted anywhere. This is a fictional demonstration.</p>
+        </div>
+        <form id="sb-contact-form" novalidate>
+          <div class="sb-form-fields">
+            <div class="sb-field-row">
+              <div class="sb-field">
+                <label for="sb-name">Full name</label>
+                <input id="sb-name" type="text" autocomplete="off" placeholder="Your name" required aria-describedby="sb-name-err"/>
+                <span id="sb-name-err" role="alert" aria-live="assertive" class="sb-field-err"></span>
+              </div>
+              <div class="sb-field">
+                <label for="sb-email">Work email</label>
+                <input id="sb-email" type="email" autocomplete="off" placeholder="name@work.example" required aria-describedby="sb-email-err"/>
+                <span id="sb-email-err" role="alert" aria-live="assertive" class="sb-field-err"></span>
+              </div>
+            </div>
+            <div class="sb-field">
+              <label for="sb-team-size">Team size</label>
+              <select class="inputer" id="sb-team-size" name="team-size">
+                <option>1–10</option><option>11–50</option><option>51–200</option><option>201–1000</option><option>1000+</option>
+              </select>
+            </div>
+            <div class="sb-field">
+              <label for="sb-message">Message</label>
+              <textarea id="sb-message" placeholder="Tell us about your use case" required aria-describedby="sb-message-err" rows="4" style="resize:vertical;"></textarea>
+              <span id="sb-message-err" role="alert" aria-live="assertive" class="sb-field-err"></span>
+            </div>
+            <div class="sb-consent">
+              <input type="checkbox" id="sb-consent" class="default sb-consent-check" style="margin-top:2px;flex-shrink:0;"/>
+              <label for="sb-consent" class="default" style="font-size:13px;color:var(--body);">I understand this is a fictional demo and no data will be sent.</label>
+            </div>
+            <div style="display:flex;align-items:center;gap:calc(var(--aura)*1.5);flex-wrap:wrap;">
+              <button class="button button-fill sb" type="submit" style="white-space:nowrap;">Send message</button>
+              <div class="sb-form-status" id="sb-form-status" role="status" aria-live="polite"></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" aria-labelledby="sb-faq-h2">
+    <div class="sb-faq-inner sb-reveal">
+      <span class="eyebrow">FAQ</span>
+      <h2 id="sb-faq-h2" style="font-size:clamp(22px,3vw,32px);color:var(--ink);margin-top:calc(var(--aura)*1);">Frequently asked questions</h2>
+      <ul class="sb-faq-list" role="list">
+        <li class="sb-faq-item">
+          <h3><button class="sb-faq-trigger" type="button" aria-expanded="true" aria-controls="sb-faq-p0" id="sb-faq-q0">What is Saltbrook Delivery?<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></h3>
+          <div class="sb-faq-panel" id="sb-faq-p0" role="region" aria-labelledby="sb-faq-q0"><p>Saltbrook Delivery is a fictional software-delivery suite used as a gallery showcase for the Aura design system. It demonstrates planning, build, release, test, package and runner services — all as a design exercise. No real service exists behind this page.</p></div>
+        </li>
+        <li class="sb-faq-item">
+          <h3><button class="sb-faq-trigger" type="button" aria-expanded="false" aria-controls="sb-faq-p1" id="sb-faq-q1">Are the pricing and stat figures real?<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></h3>
+          <div class="sb-faq-panel" id="sb-faq-p1" role="region" aria-labelledby="sb-faq-q1" hidden><p>No. Every price, statistic, usage figure and timing value on this page is explicitly labelled as a sample figure. They are invented for demonstration purposes only and do not constitute a quote, offer or guarantee of any kind.</p></div>
+        </li>
+        <li class="sb-faq-item">
+          <h3><button class="sb-faq-trigger" type="button" aria-expanded="false" aria-controls="sb-faq-p2" id="sb-faq-q2">Does the contact form send any data?<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></h3>
+          <div class="sb-faq-panel" id="sb-faq-p2" role="region" aria-labelledby="sb-faq-q2" hidden><p>No. The contact form validates your input locally in your browser using JavaScript, then shows a local confirmation message. Nothing is transmitted to any server, stored or shared with any third party. The form has no action URL.</p></div>
+        </li>
+        <li class="sb-faq-item">
+          <h3><button class="sb-faq-trigger" type="button" aria-expanded="false" aria-controls="sb-faq-p3" id="sb-faq-q3">How does the Ask Saltbrook assistant work?<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></h3>
+          <div class="sb-faq-panel" id="sb-faq-p3" role="region" aria-labelledby="sb-faq-q3" hidden><p>The assistant is a local demo only. When you send a message or click a suggestion, the page responds with a pre-written canned answer stored in the page's JavaScript. No request is made to any AI model, API or external service.</p></div>
+        </li>
+        <li class="sb-faq-item">
+          <h3><button class="sb-faq-trigger" type="button" aria-expanded="false" aria-controls="sb-faq-p4" id="sb-faq-q4">How can I apply the Saltbrook theme to my own Aura project?<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></h3>
+          <div class="sb-faq-panel" id="sb-faq-p4" role="region" aria-labelledby="sb-faq-q4" hidden><p>Load the sibling theme.css file in your Aura project after main.css. The file sets all custom tokens in :root and in the .dark class. Use the .sb root wrapper class on your body element to apply the flavor's restyled controls, then use Saltbrook tokens in your components. See DESIGN.md for the full token reference.</p></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="next-steps" aria-labelledby="sb-ns-h2" style="background:linear-gradient(130deg,color-mix(in srgb,var(--dawn) 20%,var(--paper)) 0%,color-mix(in srgb,var(--dusk) 12%,var(--paper)) 60%,color-mix(in srgb,var(--brook) 8%,var(--paper)) 100%);">
+    <div class="sb-nextsteps-inner sb-reveal">
+      <div class="sb-nextsteps-card">
+        <div class="sb-nextsteps-card-left">
+          <span class="eyebrow">Get going</span>
+          <h3 id="sb-ns-h2">Pick the Saltbrook plan that fits your team</h3>
+          <p>Start free for 30 sample days<sup><a href="#fn-1" style="color:var(--brook);font-size:0.6em;vertical-align:super;">1</a></sup> — no credit card required for the fictional demo.</p>
+          <button class="button button-fill sb" type="button">Start building</button>
+        </div>
+        <div class="sb-nextsteps-card-art" aria-hidden="true">
+          <svg width="100%" height="100%" viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="220" fill="color-mix(in srgb,var(--brook) 8%,var(--paper))"/>
+            <rect x="30" y="30" width="160" height="100" rx="10" fill="var(--paper)" stroke="var(--rule)" stroke-width="1"/>
+            <rect x="44" y="46" width="90" height="8" rx="4" fill="var(--shoal)"/>
+            <rect x="44" y="60" width="60" height="6" rx="3" fill="var(--shoal)"/>
+            <rect x="44" y="72" width="110" height="6" rx="3" fill="var(--shoal)"/>
+            <rect x="44" y="90" width="48" height="22" rx="6" fill="var(--brook)"/>
+            <rect x="210" y="20" width="160" height="90" rx="10" fill="var(--paper)" stroke="var(--rule)" stroke-width="1"/>
+            <circle cx="250" cy="52" r="16" fill="var(--salt)"/>
+            <rect x="276" y="44" width="68" height="8" rx="4" fill="var(--shoal)"/>
+            <rect x="276" y="58" width="50" height="6" rx="3" fill="var(--shoal)"/>
+            <rect x="30" y="148" width="340" height="52" rx="10" fill="color-mix(in srgb,var(--brook) 6%,var(--paper))" stroke="var(--rule)" stroke-width="1"/>
+            <rect x="46" y="162" width="80" height="8" rx="4" fill="var(--shoal)"/>
+            <rect x="46" y="176" width="120" height="6" rx="3" fill="var(--shoal)"/>
+            <circle cx="350" cy="174" r="14" fill="var(--brook)" opacity="0.25"/>
+          </svg>
+        </div>
+      </div>
+      <div class="sb-ns-cards">
+        <div class="sb-ns-card">
+          <div class="sb-ns-card-art" aria-hidden="true">
+            <svg width="100%" height="100%" viewBox="0 0 400 140" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="nsg0" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="color-mix(in srgb,var(--brook) 20%,var(--paper))"/><stop offset="100%" stop-color="var(--shoal)"/></linearGradient></defs><rect width="400" height="140" fill="url(#nsg0)"/><path d="M40 100l80-50 80 30 80-50 80 30" stroke="var(--brook)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/></svg>
+          </div>
+          <div class="sb-ns-card-body">
+            <span class="eyebrow">Documentation</span>
+            <h3>Saltbrook Delivery docs</h3>
+            <p>Explore guides, API references and architecture blueprints for every service in the Saltbrook suite.<sup><a href="#fn-1" style="color:var(--brook);font-size:0.7em;vertical-align:super;">1</a></sup></p>
+            <a class="chevron-link" href="#"><span class="chevron-sq" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Browse docs</a>
+          </div>
+        </div>
+        <div class="sb-ns-card">
+          <div class="sb-ns-card-art" aria-hidden="true">
+            <svg width="100%" height="100%" viewBox="0 0 400 140" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="nsg1" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="color-mix(in srgb,var(--dusk) 20%,var(--paper))"/><stop offset="100%" stop-color="var(--shoal)"/></linearGradient></defs><rect width="400" height="140" fill="url(#nsg1)"/><circle cx="200" cy="70" r="40" fill="none" stroke="var(--dusk)" stroke-width="1.5" opacity="0.4"/><circle cx="200" cy="70" r="20" fill="color-mix(in srgb,var(--dusk) 15%,var(--paper))"/></svg>
+          </div>
+          <div class="sb-ns-card-body">
+            <span class="eyebrow">Community</span>
+            <h3>Join the Saltbrook community</h3>
+            <p>Ask questions, share workflows and connect with other Saltbrook users in the community forum.<sup><a href="#fn-1" style="color:var(--brook);font-size:0.7em;vertical-align:super;">1</a></sup></p>
+            <a class="chevron-link" href="#"><span class="chevron-sq" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Visit forum</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div aria-hidden="true" style="position:absolute;right:0;top:0;width:200px;height:100%;pointer-events:none;overflow:hidden;"><svg width="200" height="400" viewBox="0 0 200 400" fill="none"><path d="M200 20 Q80 100 160 200 Q80 300 200 380" stroke="color-mix(in srgb,var(--dusk) 25%,transparent)" stroke-width="2" fill="none"/></svg></div>
+  </section>
+
+  <section id="footnotes" aria-label="Footnotes">
+    <div class="sb-fn-inner">
+      <p class="sb-fn-item" id="fn-1"><a href="#ref-1" aria-label="Back to reference 1">[1]</a> All figures, durations, capabilities and award citations on this page are sample figures created for the Saltbrook Aura gallery showcase. They are entirely fictional and do not constitute a real offer, guarantee, or endorsement of any kind.</p>
+      <p class="sb-fn-item">[2] Saltbrook is a fictional brand created solely to demonstrate the Aura design system. No real service, product or company named Saltbrook exists. All copy, data and visuals are original and fictional.</p>
+    </div>
+  </section>
+</main>
+
+<section class="sb-explore" aria-label="Explore Saltbrook">
+  <div class="sb-explore-inner">
+    <button class="sb-console-btn" type="button">
+      <span class="sb-accent-sq" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      Open Saltbrook Console
+    </button>
+    <div class="sb-social-links">
+      <a class="sb-social-btn" href="#" aria-label="RSS feed"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="4" cy="12" r="1.5" fill="currentColor"/><path d="M2 9c2.2 0 4 1.8 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M2 5c3.9 0 7 3.1 7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg></a>
+      <a class="sb-social-btn" href="#" aria-label="Video channel"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="2" y="4" width="12" height="8" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M10 8L7 6v4z" fill="currentColor"/></svg></a>
+      <a class="sb-social-btn" href="#" aria-label="Community chat"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 3h12v8H8l-4 2V11H2V3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></a>
+      <a class="sb-social-btn" href="#" aria-label="Newsletter email"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="2" y="4" width="12" height="8" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M2 5l6 4 6-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<footer id="sb-footer" aria-label="Site footer">
+  <div class="sb-footer-inner">
+    <div class="sb-footer-cols" id="sb-footer-cols">
+      <div>
+        <button class="sb-footer-acc-trigger" type="button" aria-expanded="false" aria-controls="sb-fcol-0">Explore Saltbrook<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="sb-footer-col-title" aria-hidden="true">Explore Saltbrook</div>
+        <div id="sb-fcol-0" class="sb-footer-acc-panel"><ul class="sb-footer-col-list"><li><a href="#">About Saltbrook</a></li><li><a href="#">Newsroom</a></li><li><a href="#">Careers</a></li><li><a href="#">Sustainability</a></li><li><a href="#">Accessibility</a></li><li><a href="#">Trust center</a></li></ul></div>
+      </div>
+      <div>
+        <button class="sb-footer-acc-trigger" type="button" aria-expanded="false" aria-controls="sb-fcol-1">Services and pricing<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="sb-footer-col-title" aria-hidden="true">Services and pricing</div>
+        <div id="sb-fcol-1" class="sb-footer-acc-panel"><ul class="sb-footer-col-list"><li><a href="#services">All services</a></li><li><a href="#pricing">Plans</a></li><li><a href="#pricing">Usage rates</a></li><li><a href="#">Keel runners</a></li><li><a href="#">Crate feeds</a></li><li><a href="#">Add-ons</a></li></ul></div>
+      </div>
+      <div>
+        <button class="sb-footer-acc-trigger" type="button" aria-expanded="false" aria-controls="sb-fcol-2">Solutions and support<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="sb-footer-col-title" aria-hidden="true">Solutions and support</div>
+        <div id="sb-fcol-2" class="sb-footer-acc-panel"><ul class="sb-footer-col-list"><li><a href="#">Enterprise</a></li><li><a href="#">Startups</a></li><li><a href="#">Education</a></li><li><a href="#">Documentation</a></li><li><a href="#">System status</a></li><li><a href="#">Contact support</a></li></ul></div>
+      </div>
+      <div>
+        <button class="sb-footer-acc-trigger" type="button" aria-expanded="false" aria-controls="sb-fcol-3">Partners<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="sb-footer-col-title" aria-hidden="true">Partners</div>
+        <div id="sb-fcol-3" class="sb-footer-acc-panel"><ul class="sb-footer-col-list"><li><a href="#">Partner directory</a></li><li><a href="#">Become a partner</a></li><li><a href="#">ISV program</a></li><li><a href="#">Resellers</a></li><li><a href="#">Training partners</a></li><li><a href="#">System integrators</a></li></ul></div>
+      </div>
+      <div>
+        <button class="sb-footer-acc-trigger" type="button" aria-expanded="false" aria-controls="sb-fcol-4">Resources<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="sb-footer-col-title" aria-hidden="true">Resources</div>
+        <div id="sb-fcol-4" class="sb-footer-acc-panel"><ul class="sb-footer-col-list"><li><a href="#resources">Blog</a></li><li><a href="#">Community forum</a></li><li><a href="#">Events</a></li><li><a href="#">Certifications</a></li><li><a href="#">Changelog</a></li><li><a href="#">Webinars</a></li></ul></div>
+      </div>
+      <div>
+        <button class="sb-footer-acc-trigger" type="button" aria-expanded="false" aria-controls="sb-fcol-5">Cloud basics<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="sb-footer-col-title" aria-hidden="true">Cloud basics</div>
+        <div id="sb-fcol-5" class="sb-footer-acc-panel"><ul class="sb-footer-col-list"><li><a href="#">What is CI/CD?</a></li><li><a href="#">What is a package feed?</a></li><li><a href="#">Branching strategies</a></li><li><a href="#">Test automation basics</a></li><li><a href="#">Release management</a></li><li><a href="#">Declarative delivery explained</a></li></ul></div>
+      </div>
+    </div>
+    <div class="sb-footer-legal">
+      <div class="sb-footer-lang">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.2"/><path d="M7 1.5C5.5 3 5 5 5 7s.5 4 2 5.5M7 1.5C8.5 3 9 5 9 7s-.5 4-2 5.5M1.5 7h11" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        <label for="sb-lang-select" class="sr-only">Select language</label>
+        <select class="inputer" id="sb-lang-select" aria-label="Select language" style="height:calc(var(--aura)*2.5);font-size:13px;padding:0 calc(var(--aura)*1);width:auto;background:var(--footer);min-width:80px;">
+          <option>English</option><option>Español</option><option>Português</option>
+        </select>
+      </div>
+      <button class="sb-footer-privacy" type="button">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 1.5l5 2.5v3.5c0 2.8-2.2 4.8-5 5.5-2.8-.7-5-2.7-5-5.5V4z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+        Privacy settings
+      </button>
+      <span class="sb-footer-sep" aria-hidden="true">|</span>
+      <a href="#">Sitemap</a>
+      <span class="sb-footer-sep" aria-hidden="true">|</span>
+      <a href="#contact">Contact</a>
+      <span class="sb-footer-sep" aria-hidden="true">|</span>
+      <a href="#">Privacy</a>
+      <span class="sb-footer-sep" aria-hidden="true">|</span>
+      <a href="#">Terms</a>
+      <span class="sb-footer-sep" aria-hidden="true">|</span>
+      <a href="#">Brand use</a>
+      <span class="sb-footer-sep" aria-hidden="true">|</span>
+      <a href="#">Accessibility</a>
+      <span class="sb-footer-company">2026 Saltbrook, a fictional company.</span>
+    </div>
+  </div>
+</footer>
+
+<button type="button" id="sb-assist-chip" aria-haspopup="dialog" aria-label="Ask Saltbrook — open assistant">
+  <span class="sb-assist-chip-icon" aria-hidden="true">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 4h10v6H9l-3 2V10H3V4z" fill="white" opacity="0.9"/></svg>
+  </span>
+  <span class="sb-chip-label" data-full="Ask Saltbrook" data-short="Ask">Ask Saltbrook</span>
+  <span class="sb-assist-chip-plus" aria-hidden="true">+</span>
+</button>
+
+<div id="sb-assist" hidden role="dialog" aria-modal="true" aria-labelledby="sb-assist-title" tabindex="-1">
+  <div class="sb-assist-head">
+    <span class="sb-assist-title" id="sb-assist-title">Ask Saltbrook</span>
+    <button class="sb-assist-close" type="button" id="sb-assist-close" aria-label="Close assistant">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 2l8 8M10 2L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="sb-assist-body" id="sb-assist-body">
+    <div class="sb-assist-sugs" id="sb-assist-sugs">
+      <button class="sb-assist-sug" type="button" data-answer="Saltbrook Delivery includes six core services: Ledger for work tracking, Relay for build and release automation, Vault for code hosting, Proof for test management, Crate for package feeds, and Keel for hosted runners. All are fictional for this Aura design showcase.">What services does Saltbrook include?<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M8 5l2 2-2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="sb-assist-sug" type="button" data-answer="The Team plan starts at $6 per user per month (sample figure). The Starter plan is free with sample limits. Scale pricing is custom. All pricing on this page is fictional and labelled as sample figures — not a real quote.">How much does Saltbrook cost?<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M8 5l2 2-2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="sb-assist-sug" type="button" data-answer="Saltbrook Keel is the hosted runner service. It provides Standard and Large runners that scale on demand. The Team plan includes a sample of 2,000 Standard runner minutes and 200 Large runner minutes per month. Additional minutes are billed at sample rates shown in the pricing table.">Tell me about Saltbrook Keel runners<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M8 5l2 2-2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </div>
+    <div class="sb-assist-log" id="sb-assist-log" aria-live="polite" aria-label="Conversation log"></div>
+  </div>
+  <div class="sb-assist-foot">
+    <div class="sb-assist-input-row">
+      <input class="sb-assist-input" type="text" id="sb-assist-input" placeholder="Ask a question…" aria-label="Ask a question" autocomplete="off"/>
+      <button class="sb-assist-send" type="button" id="sb-assist-send" aria-label="Send" disabled>
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+    <p class="sb-assist-note">Local demo only · no data sent anywhere · all answers are fictional</p>
+  </div>
+</div>
+
+<script>
+(function(){
+var motionOk=document.documentElement.classList.contains("motion");
+
+var megaTriggers={explore:"sb-trigger-explore",services:"sb-trigger-services",solutions:"sb-trigger-solutions",more:"sb-trigger-more"};
+var megaPanels={explore:"sb-mega-explore",services:"sb-mega-services",solutions:"sb-mega-solutions",more:"sb-mega-more"};
+var openMegaKey=null;
+function closeMega(){
+  if(!openMegaKey)return;
+  var t=document.getElementById(megaTriggers[openMegaKey]);
+  var p=document.getElementById(megaPanels[openMegaKey]);
+  if(t)t.setAttribute("aria-expanded","false");
+  if(p)p.hidden=true;
+  openMegaKey=null;
+}
+function openMega(key){
+  if(openMegaKey===key){closeMega();return;}
+  closeMega();
+  var t=document.getElementById(megaTriggers[key]);
+  var p=document.getElementById(megaPanels[key]);
+  if(t)t.setAttribute("aria-expanded","true");
+  if(p)p.hidden=false;
+  openMegaKey=key;
+}
+Object.keys(megaTriggers).forEach(function(key){
+  var el=document.getElementById(megaTriggers[key]);
+  if(!el)return;
+  el.addEventListener("click",function(){openMega(key);});
+  el.addEventListener("keydown",function(e){if(e.key==="Escape"&&openMegaKey===key){closeMega();el.focus();}});
+});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&openMegaKey){var k=openMegaKey;closeMega();var t=document.getElementById(megaTriggers[k]);if(t)t.focus();}});
+document.addEventListener("click",function(e){
+  if(!openMegaKey)return;
+  var p=document.getElementById(megaPanels[openMegaKey]);
+  var t=document.getElementById(megaTriggers[openMegaKey]);
+  if(p&&!p.contains(e.target)&&t&&!t.contains(e.target))closeMega();
+});
+
+var mobileToggle=document.getElementById("sb-mobile-toggle");
+var mobilePanel=document.getElementById("sb-mobile-panel");
+function openMobilePanel(){
+  mobilePanel.hidden=false;
+  mobileToggle.setAttribute("aria-expanded","true");
+  document.body.style.overflow="hidden";
+  var first=mobilePanel.querySelector("a,button");
+  if(first)first.focus();
+}
+function closeMobilePanel(){
+  mobilePanel.hidden=true;
+  mobileToggle.setAttribute("aria-expanded","false");
+  document.body.style.overflow="";
+  mobileToggle.focus();
+}
+mobileToggle.addEventListener("click",function(){
+  if(mobilePanel.hidden)openMobilePanel();else closeMobilePanel();
+});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!mobilePanel.hidden)closeMobilePanel();});
+mobilePanel.addEventListener("keydown",function(e){
+  if(e.key!=="Tab")return;
+  var focusable=Array.prototype.slice.call(mobilePanel.querySelectorAll("a,button,[tabindex]")).filter(function(el){return !el.disabled&&el.tabIndex>=0&&!el.closest("[hidden]");});
+  if(!focusable.length)return;
+  var first=focusable[0],last=focusable[focusable.length-1];
+  if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+  else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+});
+mobilePanel.querySelectorAll("button[aria-controls]").forEach(function(btn){
+  btn.addEventListener("click",function(){
+    var panelId=btn.getAttribute("aria-controls");
+    var panel=document.getElementById(panelId);
+    if(!panel)return;
+    var expanded=btn.getAttribute("aria-expanded")==="true";
+    btn.setAttribute("aria-expanded",String(!expanded));
+    panel.hidden=expanded;
+  });
+});
+
+var searchToggle=document.getElementById("sb-search-toggle");
+var searchRow=document.getElementById("sb-search-row");
+var searchClose=document.getElementById("sb-search-close");
+var searchInput=document.getElementById("sb-search-input");
+function openSearch(){
+  searchRow.classList.add("open");
+  searchToggle.setAttribute("aria-expanded","true");
+  if(searchInput)searchInput.focus();
+}
+function closeSearch(){
+  searchRow.classList.remove("open");
+  searchToggle.setAttribute("aria-expanded","false");
+  searchToggle.focus();
+}
+searchToggle.addEventListener("click",function(){
+  if(searchRow.classList.contains("open"))closeSearch();else openSearch();
+});
+if(searchClose)searchClose.addEventListener("click",closeSearch);
+
+var banner=document.getElementById("sb-banner");
+var bannerClose=document.getElementById("sb-banner-close");
+if(bannerClose){
+  bannerClose.addEventListener("click",function(){
+    banner.hidden=true;
+    var h1=document.getElementById("sb-hero-h1");
+    if(h1)h1.focus();
+  });
+}
+
+var anchorsMarker=document.getElementById("sb-anchors-marker");
+var anchorsNav=document.getElementById("sb-anchors");
+if(anchorsMarker&&anchorsNav){
+  var stickyObs=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(!entry.isIntersecting)anchorsNav.classList.add("stuck");
+      else anchorsNav.classList.remove("stuck");
+    });
+  },{threshold:0});
+  stickyObs.observe(anchorsMarker);
+}
+var anchorsToggle=document.getElementById("sb-anchors-toggle");
+var anchorsList=document.getElementById("sb-anchors-list");
+if(anchorsToggle&&anchorsList){
+  anchorsToggle.addEventListener("click",function(){
+    var open=anchorsToggle.getAttribute("aria-expanded")==="true";
+    anchorsToggle.setAttribute("aria-expanded",String(!open));
+    anchorsNav.classList.toggle("anchors-open",!open);
+  });
+  document.addEventListener("keydown",function(e){
+    if(e.key==="Escape"&&anchorsToggle.getAttribute("aria-expanded")==="true"){
+      anchorsToggle.setAttribute("aria-expanded","false");
+      anchorsNav.classList.remove("anchors-open");
+      anchorsToggle.focus();
+    }
+  });
+}
+var anchorLinks=document.querySelectorAll(".sb-anchor-link[data-section]");
+var currentLabel=document.getElementById("sb-anchors-current-label");
+var sectionIds=["overview","services","security","pricing","customer-stories","resources","next-steps"];
+var sectionEls=sectionIds.map(function(id){return document.getElementById(id);}).filter(Boolean);
+var spyRaf=null;
+function runScrollSpy(){
+  var anchorsNavEl=document.getElementById("sb-anchors");
+  var navBottom=anchorsNavEl?anchorsNavEl.getBoundingClientRect().bottom+24:76;
+  var active=null;
+  for(var i=0;i<sectionEls.length;i++){
+    var rect=sectionEls[i].getBoundingClientRect();
+    if(rect.top<=navBottom)active=sectionEls[i];
+  }
+  if(!active&&sectionEls.length)active=sectionEls[0];
+  var activeId=active?active.id:"";
+  anchorLinks.forEach(function(a){
+    var isActive=a.getAttribute("data-section")===activeId;
+    a.setAttribute("aria-current",isActive?"true":"false");
+    if(isActive&&currentLabel)currentLabel.textContent=a.textContent.trim();
+  });
+}
+function scheduleScrollSpy(){
+  if(spyRaf)return;
+  spyRaf=requestAnimationFrame(function(){spyRaf=null;runScrollSpy();});
+}
+window.addEventListener("scroll",scheduleScrollSpy,{passive:true});
+window.addEventListener("resize",scheduleScrollSpy,{passive:true});
+scheduleScrollSpy();
+
+function setupOverviewAcc(){
+  var btns=document.querySelectorAll("#sb-acc-list .sb-acc-trigger");
+  btns.forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var isOpen=btn.getAttribute("aria-expanded")==="true";
+      btns.forEach(function(b){
+        b.setAttribute("aria-expanded","false");
+        var p=document.getElementById(b.getAttribute("aria-controls"));
+        if(p)p.hidden=true;
+        b.closest(".sb-acc-item").classList.remove("sb-acc-open");
+      });
+      if(!isOpen){
+        btn.setAttribute("aria-expanded","true");
+        var panel=document.getElementById(btn.getAttribute("aria-controls"));
+        if(panel)panel.hidden=false;
+        btn.closest(".sb-acc-item").classList.add("sb-acc-open");
+        var mediaId=btn.getAttribute("data-media");
+        document.querySelectorAll(".sb-media-swap").forEach(function(m){
+          m.hidden=m.id!==mediaId;
+        });
+      }
+    });
+  });
+}
+setupOverviewAcc();
+
+function setupPillTabs(tablistEl){
+  var tabs=Array.prototype.slice.call(tablistEl.querySelectorAll("[role=tab]"));
+  function activate(tab){
+    tabs.forEach(function(t){
+      t.setAttribute("aria-selected","false");
+      t.tabIndex=-1;
+    });
+    tab.setAttribute("aria-selected","true");
+    tab.tabIndex=0;
+    var panelId=tab.getAttribute("aria-controls");
+    document.querySelectorAll(".sb-svc-panel").forEach(function(p){
+      p.hidden=p.id!==panelId;
+    });
+  }
+  tabs.forEach(function(tab){
+    tab.addEventListener("click",function(){activate(tab);});
+    tab.addEventListener("keydown",function(e){
+      var idx=tabs.indexOf(tab);
+      if(e.key==="ArrowRight"){e.preventDefault();var t=tabs[(idx+1)%tabs.length];activate(t);t.focus();}
+      else if(e.key==="ArrowLeft"){e.preventDefault();var t=tabs[(idx-1+tabs.length)%tabs.length];activate(t);t.focus();}
+      else if(e.key==="Home"){e.preventDefault();activate(tabs[0]);tabs[0].focus();}
+      else if(e.key==="End"){e.preventDefault();activate(tabs[tabs.length-1]);tabs[tabs.length-1].focus();}
+    });
+  });
+}
+var svcTablist=document.getElementById("sb-svc-tablist");
+if(svcTablist)setupPillTabs(svcTablist);
+
+function setupSimpleCarousel(trackId,prevId,nextId){
+  var track=document.getElementById(trackId);
+  if(!track)return;
+  var wrap=track.parentElement;
+  var prev=document.getElementById(prevId);
+  var next=document.getElementById(nextId);
+  var cards=Array.prototype.slice.call(track.children);
+  function sync(){
+    var atStart=wrap.scrollLeft<=4;
+    var atEnd=wrap.scrollLeft>=wrap.scrollWidth-wrap.clientWidth-4;
+    if(prev){
+      var wasDis=prev.disabled;prev.disabled=atStart;
+      if(!wasDis&&atStart&&document.activeElement===prev&&next&&!next.disabled)next.focus();
+    }
+    if(next){
+      var wasDis=next.disabled;next.disabled=atEnd;
+      if(!wasDis&&atEnd&&document.activeElement===next&&prev&&!prev.disabled)prev.focus();
+    }
+  }
+  function getIdx(){
+    var best=0;
+    cards.forEach(function(c,i){if(Math.abs(c.getBoundingClientRect().left-wrap.getBoundingClientRect().left)<Math.abs(cards[best].getBoundingClientRect().left-wrap.getBoundingClientRect().left))best=i;});
+    return best;
+  }
+  function go(dir){
+    var ci=getIdx();var t=cards[Math.max(0,Math.min(cards.length-1,ci+dir))];
+    if(t)wrap.scrollTo({left:t.offsetLeft,behavior:motionOk?"smooth":"auto"});
+  }
+  if(prev)prev.addEventListener("click",function(){go(-1);});
+  if(next)next.addEventListener("click",function(){go(1);});
+  var timer;
+  wrap.addEventListener("scroll",function(){clearTimeout(timer);timer=setTimeout(sync,100);},{passive:true});
+  sync();
+}
+setupSimpleCarousel("sb-svc-track-s","sb-svc-prev-s","sb-svc-next-s");
+setupSimpleCarousel("sb-svc-track-e","sb-svc-prev-e","sb-svc-next-e");
+
+var storyCount=4;
+var storyIdx=0;
+function goStory(idx){
+  idx=Math.max(0,Math.min(storyCount-1,idx));
+  for(var i=0;i<storyCount;i++){
+    var card=document.getElementById("sb-story-card-"+i);
+    if(card){card.hidden=i!==idx;card.style.display=i!==idx?"none":"";}
+    var tile=document.getElementById("sb-ctile-"+i);
+    if(tile){tile.setAttribute("aria-selected",i===idx?"true":"false");tile.tabIndex=i===idx?0:-1;}
+  }
+  storyIdx=idx;
+  var prev=document.getElementById("sb-story-prev");
+  var next=document.getElementById("sb-story-next");
+  var status=document.getElementById("sb-story-status");
+  if(prev){var wasDis=prev.disabled;prev.disabled=idx===0;if(!wasDis&&idx===0&&document.activeElement===prev&&next&&!next.disabled)next.focus();}
+  if(next){var wasDis=next.disabled;next.disabled=idx===storyCount-1;if(!wasDis&&idx===storyCount-1&&document.activeElement===next&&prev&&!prev.disabled)prev.focus();}
+  if(status)status.textContent="Story "+(idx+1)+" of "+storyCount;
+}
+document.getElementById("sb-story-prev").addEventListener("click",function(){goStory(storyIdx-1);});
+document.getElementById("sb-story-next").addEventListener("click",function(){goStory(storyIdx+1);});
+var clientStrip=document.getElementById("sb-client-strip");
+if(clientStrip){
+  var ctiles=Array.prototype.slice.call(clientStrip.querySelectorAll("[role=tab]"));
+  ctiles.forEach(function(tile,i){
+    tile.addEventListener("click",function(){goStory(i);tile.focus();});
+    tile.addEventListener("keydown",function(e){
+      if(e.key==="ArrowRight"){e.preventDefault();var t=ctiles[(i+1)%ctiles.length];goStory((i+1)%ctiles.length);t.focus();}
+      else if(e.key==="ArrowLeft"){e.preventDefault();var t=ctiles[(i-1+ctiles.length)%ctiles.length];goStory((i-1+ctiles.length)%ctiles.length);t.focus();}
+      else if(e.key==="Home"){e.preventDefault();goStory(0);ctiles[0].focus();}
+      else if(e.key==="End"){e.preventDefault();goStory(ctiles.length-1);ctiles[ctiles.length-1].focus();}
+    });
+  });
+}
+goStory(0);
+
+document.querySelectorAll(".sb-faq-trigger").forEach(function(btn){
+  btn.addEventListener("click",function(){
+    var open=btn.getAttribute("aria-expanded")==="true";
+    btn.setAttribute("aria-expanded",String(!open));
+    var panel=document.getElementById(btn.getAttribute("aria-controls"));
+    if(panel)panel.hidden=open;
+  });
+});
+
+var footerAccPanels=document.querySelectorAll(".sb-footer-acc-panel");
+footerAccPanels.forEach(function(p){
+  if(window.innerWidth<768)p.hidden=true;
+});
+document.querySelectorAll(".sb-footer-acc-trigger").forEach(function(btn){
+  btn.addEventListener("click",function(){
+    var open=btn.getAttribute("aria-expanded")==="true";
+    btn.setAttribute("aria-expanded",String(!open));
+    var panel=document.getElementById(btn.getAttribute("aria-controls"));
+    if(panel)panel.hidden=open;
+  });
+});
+window.addEventListener("resize",function(){
+  document.querySelectorAll(".sb-footer-acc-trigger").forEach(function(btn){
+    var panelId=btn.getAttribute("aria-controls");
+    var panel=document.getElementById(panelId);
+    if(!panel)return;
+    if(window.innerWidth>=768){panel.hidden=false;btn.setAttribute("aria-expanded","true");}
+    else if(btn.getAttribute("aria-expanded")==="false"){panel.hidden=true;}
+  });
+});
+
+var chipLabel=document.querySelector(".sb-chip-label");
+function updateChipLabel(){
+  if(!chipLabel)return;
+  if(window.innerWidth<768){chipLabel.textContent=chipLabel.dataset.short||"Ask";}
+  else{chipLabel.textContent=chipLabel.dataset.full||"Ask Saltbrook";}
+}
+window.addEventListener("resize",updateChipLabel,{passive:true});
+updateChipLabel();
+var chip=document.getElementById("sb-assist-chip");
+var assist=document.getElementById("sb-assist");
+var assistClose=document.getElementById("sb-assist-close");
+var assistInput=document.getElementById("sb-assist-input");
+var assistSend=document.getElementById("sb-assist-send");
+var assistLog=document.getElementById("sb-assist-log");
+var assistSugs=document.getElementById("sb-assist-sugs");
+var canned="Thanks for asking! This is a local Saltbrook demo. All answers are pre-written and nothing is sent to any server or AI model. Try a suggestion button for a sample response.";
+function addMsg(text,type){
+  var div=document.createElement("div");
+  div.className="sb-assist-msg "+type;
+  div.textContent=text;
+  assistLog.appendChild(div);
+  div.scrollIntoView({block:"end",behavior:motionOk?"smooth":"auto"});
+}
+function openAssist(){
+  assist.hidden=false;
+  setTimeout(function(){assist.focus();},50);
+}
+function closeAssist(){
+  assist.hidden=true;
+  chip.focus();
+}
+chip.addEventListener("click",function(){
+  if(assist.hidden)openAssist();else closeAssist();
+});
+if(assistClose)assistClose.addEventListener("click",closeAssist);
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!assist.hidden){closeAssist();}});
+assist.addEventListener("keydown",function(e){
+  if(e.key!=="Tab")return;
+  var focusable=Array.prototype.slice.call(assist.querySelectorAll("button,input,[tabindex]")).filter(function(el){return !el.disabled&&el.tabIndex>=0;});
+  if(!focusable.length)return;
+  var first=focusable[0],last=focusable[focusable.length-1];
+  if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+  else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+});
+if(assistSugs){
+  assistSugs.querySelectorAll(".sb-assist-sug").forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var q=btn.textContent.replace(/[›»→].*/,"").trim();
+      var a=btn.dataset.answer||canned;
+      addMsg(q,"user");
+      setTimeout(function(){addMsg(a,"bot");},350);
+    });
+  });
+}
+if(assistInput){
+  assistInput.addEventListener("input",function(){assistSend.disabled=assistInput.value.trim().length===0;});
+}
+if(assistSend){
+  assistSend.addEventListener("click",function(){
+    var q=assistInput.value.trim();if(!q)return;
+    addMsg(q,"user");assistInput.value="";assistSend.disabled=true;
+    setTimeout(function(){addMsg(canned,"bot");},350);
+  });
+}
+if(assistInput){assistInput.addEventListener("keydown",function(e){if(e.key==="Enter"&&!assistSend.disabled)assistSend.click();});}
+
+var contactForm=document.getElementById("sb-contact-form");
+if(contactForm){
+  contactForm.addEventListener("submit",function(e){
+    e.preventDefault();
+    var ok=true,firstErr=null;
+    [["sb-name","Please enter your name."],["sb-email","Please enter a valid work email."],["sb-message","Please enter a message."]].forEach(function(pair){
+      var el=document.getElementById(pair[0]);
+      var val=el.value.trim();
+      var bad=!val||(el.type==="email"&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val));
+      var err=document.getElementById(pair[0]+"-err");
+      if(err){err.textContent=bad?pair[1]:"";err.style.display=bad?"block":"none";}
+      el.setAttribute("aria-invalid",String(bad));
+      if(bad){ok=false;if(!firstErr)firstErr=el;}
+    });
+    var status=document.getElementById("sb-form-status");
+    if(ok){if(status)status.textContent="Message validated locally. No data was sent — this is a fictional demo.";}
+    else{if(status)status.textContent="";if(firstErr)firstErr.focus();}
+  });
+}
+
+var contactPlanBtn=document.getElementById("sb-contact-plan");
+if(contactPlanBtn){contactPlanBtn.addEventListener("click",function(){var c=document.getElementById("contact");if(c)c.scrollIntoView({behavior:motionOk?"smooth":"auto"});});}
+
+if(motionOk){
+  var revealObs=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){entry.target.classList.add("sb-in");revealObs.unobserve(entry.target);}
+    });
+  },{rootMargin:"0px 0px -8% 0px"});
+  document.querySelectorAll(".sb-reveal").forEach(function(el){revealObs.observe(el);});
+}
+
+})();
+</script>
+</body>
+</html>
