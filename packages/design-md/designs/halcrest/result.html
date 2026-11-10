@@ -212,19 +212,15 @@ html.hc-lock{overflow:hidden;}
 
 @media(max-width:1023px){
 .hc-nav-items{display:none;}
-.hc-nav-end .hc-pill-sm-cobalt{display:none;}
-.hc-icon-btn.hc-cart-btn{display:none;}
-#hc-menu-toggle{display:inline-flex;}
+#hc-menu-toggle{display:inline-flex;margin-right:8px;}
 }
 @media(max-width:767px){
 #hc-strip{display:none;}
-.hc-nav-inner{height:60px;position:relative;}
-.hc-wordmark{position:absolute;left:50%;transform:translateX(-50%);font-size:0;gap:0;}
-.hc-nav-end{flex:1;display:flex;align-items:center;gap:4px;}
-#hc-menu-toggle{order:-2;}
-#hc-search-toggle{order:-1;margin-right:auto;}
-#hc-login-toggle{display:inline-flex;height:32px;padding:0 14px;font-size:12px;order:1;}
-.hc-icon-btn.hc-cart-btn{display:inline-flex;order:2;}
+.hc-nav-inner{height:60px;gap:4px;}
+#hc-menu-toggle{margin-right:0;}
+.hc-wordmark{margin:0 auto;font-size:0;gap:0;}
+.hc-nav-end{margin-left:0;gap:4px;}
+#hc-login-toggle{height:32px;padding:0 14px;font-size:12px;}
 }
 
 #hc-hero{position:relative;overflow:hidden;background:var(--night);}
@@ -237,7 +233,9 @@ html.hc-lock{overflow:hidden;}
 .hc-hero-text h1,.hc-hero-text h2{font-family:var(--aura-font-display);font-weight:300;line-height:1.08;letter-spacing:-0.02em;color:var(--night-ink);font-size:clamp(28px,4vw,44px);overflow-wrap:break-word;hyphens:none;}
 .hc-hero-text p{color:var(--night-muted);font-size:16px;line-height:1.5;margin:16px 0 24px;max-width:380px;}
 .hc-hero-strip{position:relative;z-index:2;background:var(--night);padding:10px 0 18px;border-top:1px solid color-mix(in srgb,var(--night-ink) 15%,transparent);}
-.hc-hero-tabs-inner{max-width:1274px;margin:0 auto;padding:6px 40px;display:flex;gap:8px;justify-content:center;overflow-x:auto;scrollbar-width:none;scroll-padding-inline:16px;}
+.hc-hero-tabs-inner{max-width:1274px;margin:0 auto;padding:6px 40px;display:flex;gap:8px;justify-content:flex-start;overflow-x:auto;scrollbar-width:none;scroll-padding-inline:16px;}
+.hc-hero-tabs-inner > .hc-thumb:first-child{margin-left:auto;}
+.hc-hero-tabs-inner > .hc-thumb:last-child{margin-right:auto;}
 .hc-hero-tabs-inner::-webkit-scrollbar{display:none;}
 .hc-thumb{border:0;background:none;padding:0;cursor:pointer;border-radius:10px;flex-shrink:0;}
 .hc-thumb[aria-selected=true]{outline:2px solid var(--night-ink);outline-offset:2px;}
@@ -492,7 +490,6 @@ ul#hc-journal-track > li{flex:0 0 360px;min-width:0;scroll-snap-align:start;}
 html.dark .hc #hc-closing{background:linear-gradient(135deg,var(--footer),var(--footer-deep));}
 html.dark .hc .hc-closing-h,html.dark .hc .hc-closing-sub{color:var(--footer-ink);}
 html.dark .hc .hc-closing-pill-white{background:var(--footer-ink);color:var(--footer);border-color:var(--footer-ink);}
-.hc-menu-wordmark{font-weight:700;font-size:16px;color:var(--ink);}
 .hc-mobile-login-btn{width:100%;justify-content:center;}
 .hc-tier-badge-wander{background:var(--tier-wander);}
 .hc-tier-badge-venture{background:var(--tier-venture);}
@@ -563,6 +560,9 @@ ul.hc-footer-legal-links li a:focus-visible{outline:2px solid var(--focus-night)
 
 <header id="hc-nav">
   <nav class="hc-wrap hc-nav-inner" aria-label="Main navigation">
+    <button class="hc-icon-btn" type="button" id="hc-menu-toggle" aria-expanded="false" aria-controls="hc-menu" aria-label="Open navigation menu">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
     <a href="#hc-home" id="hc-home" class="hc-wordmark" aria-label="Halcrest home">
       <span class="hc-accent-sq" aria-hidden="true">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="2" y="2" width="12" height="12" rx="3" fill="var(--on-cobalt)" opacity="0.9"/></svg>
@@ -749,9 +749,6 @@ ul.hc-footer-legal-links li a:focus-visible{outline:2px solid var(--focus-night)
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 3h2l2.5 8h7L16 6H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="15" r="1" fill="currentColor"/><circle cx="14" cy="15" r="1" fill="currentColor"/></svg>
       </button>
       <button class="hc-pill-sm-cobalt" type="button" id="hc-login-toggle" aria-expanded="false" aria-controls="hc-panel-login">Log in</button>
-      <button class="hc-icon-btn" type="button" id="hc-menu-toggle" aria-expanded="false" aria-controls="hc-menu" aria-label="Open navigation menu">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-      </button>
     </div>
   </nav>
 </header>
@@ -832,6 +829,7 @@ ul.hc-footer-legal-links li a:focus-visible{outline:2px solid var(--focus-night)
 <main id="hc-main">
 
 <section id="hc-hero" aria-label="Featured story worlds">
+  <h1 class="sr-only">Halcrest: story worlds and calm hardware</h1>
   <div class="hc-hero-slides" role="region" aria-label="Hero slideshow">
   <button id="hc-hero-pause" type="button" aria-label="Pause slideshow" title="Pause or play the hero slideshow">
     <svg id="hc-pause-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><rect x="2" y="2" width="3.5" height="10" rx="1" fill="currentColor"/><rect x="8.5" y="2" width="3.5" height="10" rx="1" fill="currentColor"/></svg>
@@ -850,7 +848,7 @@ ul.hc-footer-legal-links li a:focus-visible{outline:2px solid var(--focus-night)
       </div>
       <div class="hc-hero-scrim" aria-hidden="true"></div>
       <div class="hc-hero-text">
-        <h1>Moss Ledger</h1>
+        <h2>Moss Ledger</h2>
         <p>A slow journey through terraced highlands where every step reveals a new layer of quiet wonder.</p>
         <button class="hc-pill-outline-dark" type="button">Explore world</button>
       </div>
@@ -1305,7 +1303,7 @@ ul.hc-footer-legal-links li a:focus-visible{outline:2px solid var(--focus-night)
       <form id="hc-playtest-form" novalidate>
         <div class="hc-field">
           <label class="hc-label" for="hc-pt-name">Your name</label>
-          <input type="text" id="hc-pt-name" name="name" autocomplete="name" aria-describedby="hc-pt-name-err" placeholder="Ines Ruvalcaba"/>
+          <input type="text" id="hc-pt-name" name="name" autocomplete="name" aria-describedby="hc-pt-name-err"/>
           <span class="hc-err" id="hc-pt-name-err" aria-live="polite"></span>
         </div>
         <div class="hc-field">
@@ -1823,12 +1821,13 @@ if(cartBrowse){
   });
 }
 var mobileLogin=document.getElementById('hc-mobile-login');
-if(mobileLogin){mobileLogin.addEventListener('click',function(){closeMenu();});}
+if(mobileLogin){mobileLogin.addEventListener('click',function(){closeMenu();var t=document.getElementById('hc-login-toggle');if(t)t.click();});}
 
 var promoLogin=document.getElementById('hc-promo-login');
 if(promoLogin){promoLogin.addEventListener('click',function(){
   var toggle=document.getElementById('hc-login-toggle');
   if(toggle)toggle.click();
+  panelReturn=promoLogin;
 });}
 
 var searchInput=document.getElementById('hc-search-input');
