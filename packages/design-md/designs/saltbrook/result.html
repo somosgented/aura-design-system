@@ -243,6 +243,7 @@ nav#sb-anchors.stuck{border-radius:13px;box-shadow:0 4px 20px color-mix(in srgb,
 .sb-client-strip-wrap{overflow-x:auto;scrollbar-width:none;scroll-padding-inline:calc(var(--aura)*1);}
 .sb-client-strip-wrap::-webkit-scrollbar{display:none;}
 .sb-client-strip{display:flex;justify-content:flex-start;gap:calc(var(--aura)*1);min-width:0;}
+@media(min-width:710px){.sb-client-strip{justify-content:center;}}
 .sb-client-tile{flex:0 0 auto;padding:calc(var(--aura)*1) calc(var(--aura)*1.5);border:1px solid var(--rule);border-radius:8px;border-bottom:4px solid transparent;background:var(--paper);font-size:16px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;}
 .sb-client-tile[aria-selected="true"]{border-bottom-color:var(--brook);color:var(--ink);}
 .sb-client-tile:hover{color:var(--ink);}
@@ -1392,16 +1393,8 @@ nav#sb-anchors{transition:box-shadow 220ms ease,border-radius 220ms ease;}
           <option>English</option><option>Español</option><option>Português</option>
         </select>
       </div>
-      <button class="sb-footer-privacy" type="button">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 1.5l5 2.5v3.5c0 2.8-2.2 4.8-5 5.5-2.8-.7-5-2.7-5-5.5V4z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
-        Privacy settings
-      </button>
-      <span style="white-space:nowrap;"><span class="sb-footer-sep" aria-hidden="true">|</span><a href="#">Sitemap</a></span>
-      <span style="white-space:nowrap;"><span class="sb-footer-sep" aria-hidden="true">|</span><a href="#contact">Contact</a></span>
-      <span style="white-space:nowrap;"><span class="sb-footer-sep" aria-hidden="true">|</span><a href="#">Privacy</a></span>
-      <span style="white-space:nowrap;"><span class="sb-footer-sep" aria-hidden="true">|</span><a href="#">Terms</a></span>
-      <span style="white-space:nowrap;"><span class="sb-footer-sep" aria-hidden="true">|</span><a href="#">Brand use</a></span>
-      <span style="white-space:nowrap;"><span class="sb-footer-sep" aria-hidden="true">|</span><a href="#">Accessibility</a></span>
+      <span style="white-space:nowrap;"><button class="sb-footer-privacy" type="button"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 1.5l5 2.5v3.5c0 2.8-2.2 4.8-5 5.5-2.8-.7-5-2.7-5-5.5V4z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+        Privacy settings</button><span class="sb-footer-sep" aria-hidden="true">|</span></span><span style="white-space:nowrap;"><a href="#">Sitemap</a><span class="sb-footer-sep" aria-hidden="true">|</span></span><span style="white-space:nowrap;"><a href="#contact">Contact</a><span class="sb-footer-sep" aria-hidden="true">|</span></span><span style="white-space:nowrap;"><a href="#">Privacy</a><span class="sb-footer-sep" aria-hidden="true">|</span></span><span style="white-space:nowrap;"><a href="#">Terms</a><span class="sb-footer-sep" aria-hidden="true">|</span></span><span style="white-space:nowrap;"><a href="#">Brand use</a><span class="sb-footer-sep" aria-hidden="true">|</span></span><a href="#">Accessibility</a>
       <span class="sb-footer-company">2026 Saltbrook, a fictional company.</span>
     </div>
   </div>
@@ -1709,7 +1702,21 @@ setupGridCarousel("sb-svc-grid-e","sb-svc-prev-e","sb-svc-next-e","sb-svc-status
 
 var storyCount=4;
 var storyIdx=0;
-function goStory(idx){
+function scrollTileIntoWrap(tile,wrap){
+  if(!tile||!wrap)return;
+  var wrapRect=wrap.getBoundingClientRect();
+  var tileRect=tile.getBoundingClientRect();
+  var padStyle=getComputedStyle(wrap);
+  var pad=parseFloat(padStyle.scrollPaddingInlineStart)||parseFloat(padStyle.scrollPaddingInline)||0;
+  var currentLeft=wrap.scrollLeft;
+  var tileLeft=tileRect.left-wrapRect.left+currentLeft;
+  var tileRight=tileLeft+tileRect.width;
+  var viewLeft=currentLeft+pad;
+  var viewRight=currentLeft+wrap.clientWidth-pad;
+  if(tileLeft<viewLeft){wrap.scrollLeft=tileLeft-pad;}
+  else if(tileRight>viewRight){wrap.scrollLeft=tileRight+pad-wrap.clientWidth;}
+}
+function goStory(idx,scroll){
   idx=Math.max(0,Math.min(storyCount-1,idx));
   for(var i=0;i<storyCount;i++){
     var card=document.getElementById("sb-story-card-"+i);
@@ -1719,33 +1726,33 @@ function goStory(idx){
   }
   storyIdx=idx;
   var activeTile=document.getElementById("sb-ctile-"+idx);
-  if(activeTile){activeTile.scrollIntoView({block:"nearest",inline:"nearest",behavior:"auto"});}
+  if(scroll&&activeTile){var sw=document.getElementById("sb-client-strip-wrap");scrollTileIntoWrap(activeTile,sw);}
   var prev=document.getElementById("sb-story-prev");
   var next=document.getElementById("sb-story-next");
   var status=document.getElementById("sb-story-status");
   function setStoryDis(btn,val){if(btn)btn.setAttribute("aria-disabled",val?"true":"false");}
-  if(prev){var wasPDis=prev.getAttribute("aria-disabled")==="true";setStoryDis(prev,idx===0);if(!wasPDis&&idx===0&&document.activeElement===prev&&next&&next.getAttribute("aria-disabled")!=="true")next.focus();}
-  if(next){var wasNDis=next.getAttribute("aria-disabled")==="true";setStoryDis(next,idx===storyCount-1);if(!wasNDis&&idx===storyCount-1&&document.activeElement===next&&prev&&prev.getAttribute("aria-disabled")!=="true")prev.focus();}
+  if(prev){var wasPDis=prev.getAttribute("aria-disabled")==="true";setStoryDis(prev,idx===0);if(!wasPDis&&idx===0&&document.activeElement===prev&&next&&next.getAttribute("aria-disabled")!=="true")next.focus({preventScroll:true});}
+  if(next){var wasNDis=next.getAttribute("aria-disabled")==="true";setStoryDis(next,idx===storyCount-1);if(!wasNDis&&idx===storyCount-1&&document.activeElement===next&&prev&&prev.getAttribute("aria-disabled")!=="true")prev.focus({preventScroll:true});}
   if(status)status.textContent="Story "+(idx+1)+" of "+storyCount;
 }
-document.getElementById("sb-story-prev").addEventListener("click",function(){if(document.getElementById("sb-story-prev").getAttribute("aria-disabled")==="true")return;goStory(storyIdx-1);});
-document.getElementById("sb-story-next").addEventListener("click",function(){if(document.getElementById("sb-story-next").getAttribute("aria-disabled")==="true")return;goStory(storyIdx+1);});
+document.getElementById("sb-story-prev").addEventListener("click",function(){if(document.getElementById("sb-story-prev").getAttribute("aria-disabled")==="true")return;goStory(storyIdx-1,true);});
+document.getElementById("sb-story-next").addEventListener("click",function(){if(document.getElementById("sb-story-next").getAttribute("aria-disabled")==="true")return;goStory(storyIdx+1,true);});
 var clientStrip=document.getElementById("sb-client-strip");
 if(clientStrip){
   var ctiles=Array.prototype.slice.call(clientStrip.querySelectorAll("[role=tab]"));
+  var sbWrap=document.getElementById("sb-client-strip-wrap");
   ctiles.forEach(function(tile,i){
-    tile.addEventListener("focus",function(){tile.scrollIntoView({block:"nearest",inline:"nearest",behavior:"auto"});});
-    tile.addEventListener("click",function(){goStory(i);tile.focus();});
+    tile.addEventListener("click",function(){goStory(i,true);tile.focus({preventScroll:true});scrollTileIntoWrap(tile,sbWrap);});
     tile.addEventListener("keydown",function(e){
-      if(e.key==="ArrowRight"){e.preventDefault();var t=ctiles[(i+1)%ctiles.length];goStory((i+1)%ctiles.length);t.focus();}
-      else if(e.key==="ArrowLeft"){e.preventDefault();var t=ctiles[(i-1+ctiles.length)%ctiles.length];goStory((i-1+ctiles.length)%ctiles.length);t.focus();}
-      else if(e.key==="Home"){e.preventDefault();goStory(0);ctiles[0].focus();}
-      else if(e.key==="End"){e.preventDefault();goStory(ctiles.length-1);ctiles[ctiles.length-1].focus();}
+      if(e.key==="ArrowRight"){e.preventDefault();var ni=(i+1)%ctiles.length;var t=ctiles[ni];goStory(ni,true);t.focus({preventScroll:true});scrollTileIntoWrap(t,sbWrap);}
+      else if(e.key==="ArrowLeft"){e.preventDefault();var ni=(i-1+ctiles.length)%ctiles.length;var t=ctiles[ni];goStory(ni,true);t.focus({preventScroll:true});scrollTileIntoWrap(t,sbWrap);}
+      else if(e.key==="Home"){e.preventDefault();goStory(0,true);ctiles[0].focus({preventScroll:true});scrollTileIntoWrap(ctiles[0],sbWrap);}
+      else if(e.key==="End"){e.preventDefault();var li=ctiles.length-1;goStory(li,true);ctiles[li].focus({preventScroll:true});scrollTileIntoWrap(ctiles[li],sbWrap);}
     });
   });
 }
-goStory(0);
-(function(){if(typeof ResizeObserver==="undefined")return;var ro=new ResizeObserver(function(){var t=document.getElementById("sb-ctile-"+storyIdx);if(t)t.scrollIntoView({block:"nearest",inline:"nearest",behavior:"auto"});});var sw=document.getElementById("sb-client-strip-wrap");if(sw)ro.observe(sw);})();
+goStory(0,false);
+(function(){if(typeof ResizeObserver==="undefined")return;var initialized=false;var ro=new ResizeObserver(function(){if(!initialized){initialized=true;return;}var t=document.getElementById("sb-ctile-"+storyIdx);var sw=document.getElementById("sb-client-strip-wrap");scrollTileIntoWrap(t,sw);});var sw=document.getElementById("sb-client-strip-wrap");if(sw)ro.observe(sw);})();
 
 document.querySelectorAll(".sb-faq-trigger").forEach(function(btn){
   btn.addEventListener("click",function(){

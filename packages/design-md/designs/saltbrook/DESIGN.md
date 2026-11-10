@@ -229,7 +229,7 @@ Saltbrook's spacing maps to the 13px grid:
 | 8 | `0.5` | 6.5 | Icon gap, tight internal padding |
 | 12–16 | `1` | 13 | Nav gap, label gap, card inner gap |
 | 24 | `2` | 26 | Card padding-x, pill padding-x |
-| 36 | `2.5` | 32.5 | Tight inner padding step (unused standalone) |
+| 36 | `2.5` | 32.5 | Icon-button size (`.sb-icon-btn` width/height), `.sb-svc-panel` margin-top, `.sb-plan` padding, `.sb-faq-list` margin-top, `#sb-lang-select` height |
 | 40 | `3` | 39 | Pill tab height |
 | 44–48 | `3.5` | 45.5 | Button height |
 | 56 | `4` | 52 | Header height |
@@ -262,9 +262,9 @@ Saltbrook's spacing maps to the 13px grid:
 
 **Story cards (Team stories section):** 4 story cards, each a split card (`role="tabpanel"` with `aria-labelledby` pointing to its client tile tab, radius 13px, shadow): left a client logo label, 22px quote (`<blockquote>`), attribution, service chips, "Read the story" button; right a CSS-drawn art panel. Below: 4 client tile buttons as a WAI-ARIA `tablist` (selected tile: 4px `--brook` bottom bar; roving tabindex, Left/Right/Home/End). Previous/Next buttons (`aria-disabled="true"` at ends, `role="status" aria-live="polite"` announces "Story N of 4"). No autoplay. Band uses a `--dawn`-to-`--dusk` gradient wash. In dark mode the band gradient deepens to overlay `--harbor` so contrast reaches ≥ 4.5:1: the eyebrow uses `color-mix(in srgb,var(--brook) 70%,var(--ink))` and unselected client tiles use `--body` on a slightly lighter tile fill (`color-mix(in srgb,var(--paper) 80%,var(--canvas))`). Selected tiles use `--ink` text with the 4px `--brook` bottom bar.
 
-The client tile strip (`#sb-client-strip-wrap`) is `overflow-x:auto`, start-aligned (`justify-content:flex-start`), with `scroll-padding-inline` set. On `goStory`, on tile `focus`, and on `ResizeObserver` wrap resize, the active or focused tile is scrolled into view via `scrollIntoView({block:"nearest",inline:"nearest",behavior:"auto"})`. This ensures every tab is reachable at every viewport width without horizontal scroll interaction. Keyboard: Left/Right arrows move between tiles (wrapping); Home/End jump to first/last; the `role="status"` region announces "Story N of 4".
+The client tile strip (`#sb-client-strip-wrap`) is `overflow-x:auto` with the scrollbar hidden, and `scroll-padding-inline` set. Below 710px the strip is start-aligned (`justify-content:flex-start`); from 710px (`@media(min-width:710px)`) it is centered because all four tabs fit without overflow. A helper `scrollTileIntoWrap` moves the wrap via `wrap.scrollLeft`, computed from the active tile's box relative to the wrap, honoring scroll-padding. It does not call any native scroll-into-view API and never changes `window.scrollY`. The initial `goStory(0)` on load runs with scroll disabled, so the wrap and window positions are not moved; the first tab is visible at `scrollLeft=0`. User-driven story changes (click, Prev/Next, Arrow/Home/End) adjust only `wrap.scrollLeft` so the active tile is visible. `focus({preventScroll:true})` is used so native focus scrolling cannot move the window. A ResizeObserver on the wrap skips its first callback, then may adjust only `wrap.scrollLeft` if the active tile is not fully visible. Keyboard: Left/Right arrows move between tiles (wrapping); Home/End jump to first/last; the `role="status"` region announces "Story N of 4".
 
-The legal row in the footer groups each "|" separator with the following link in a `<span>` so pipe characters never wrap alone at 360px.
+The legal row in the footer groups each "|" separator with the preceding item (the link or button that comes before it) in a `<span style="white-space:nowrap">`, so a wrapped line at 360px begins with link or button text rather than a bare pipe, and pipes never wrap alone.
 
 **Resource cards:** 3 cards (radius 13px, 1px `--rule` border, soft shadow) each with a CSS-drawn image area on top (inset 8px, radius 8px), 18px weight 600 title, paragraph, chevron-square "Learn more" link.
 
