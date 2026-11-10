@@ -201,12 +201,12 @@ Fernwick's spacing maps to the 13px grid:
 | 96 | `7.5` | 97.5 | Section vertical padding |
 | 140 | `11` | 143 | Large section gap |
 | 215 | `16.5` | 214.5 | Mega-menu category rail width |
-| 450–550 | `34.5–42` | 448.5–546 | Mega-menu panel height |
+| 443–539 | `34–41.5` | 442–539.5 | Mega-menu panel height |
 | 1280 | `98.5` | 1280.5 | Max content width |
 
-**Header (1280px):** White bar `h-[65px]`, hairline `border-b border-(--rule)`. Left: wordmark then 5 text nav triggers at 14px. Right: search icon, Docs, Support, "Sign in" in `--lagoon`. Each trigger opens a **full-width mega panel** (`NavigationMenu`) positioned against the header element, not the `<li>`. The panel is 1280px wide, `~500px` tall, white, with a hairline bottom border. Inside: a left category rail (`~215px`, `--mist` background, 10–12 items, active item in a rounded `--lagoon`-tinted highlight, "See all products" outline pill at the bottom) and a main area (panel title, close ×, 3-column grid of product items each with an SVG glyph icon, 16px title and 2-line `--body` description). One panel open at a time; clicking the same trigger closes it; click/Enter only — never hover.
+**Header (1280px):** White bar `h-[65px]`, hairline `border-b border-(--rule)`. Left: wordmark, a "Platform" plain link, then 4 text nav triggers ("Use cases", "Services", "Plans", "Learn") at 14px. Right: search icon, "Guides", "Help", "Log in" in `--lagoon`. Each trigger opens a **full-width mega panel** (`NavigationMenu`) positioned against the header element. The panel is 1280px wide, white, with a hairline bottom border. Inside: a left category rail (`~215px`, `--mist` background, 5–8 items with `data-group` attributes, active item in a rounded `--lagoon`-tinted highlight, secondary action pill at the bottom) and a main area (dynamic panel title, close ×, 3-item grid updated when a rail item is activated). Rail items act as buttons (`aria-pressed`); clicking one updates the title and grid content via JS. One panel open at a time; clicking the same trigger closes it; click/Enter only — never hover.
 
-**Header (360px):** Row 1: hamburger, wordmark, search icon, "Sign in". Row 2: right-aligned "Contact us" outline pill + "Start free" filled lagoon pill. The hamburger opens a full-width left panel (internally scrollable, close × + wordmark, 5 section rows with right-arrow, then Docs and Support). Closes on Escape; focus returns to the trigger.
+**Header (360px):** Hamburger, wordmark, search icon visible. The hamburger toggles a full-screen dialog (`z-index:62`, above the sticky header and assistant chip). The dialog header shows the wordmark and a × close button; below are nav rows — links for leaf pages, expandable buttons with `aria-expanded`+`aria-controls` for sections that reveal sub-link lists in-place ("Use cases", "Services", "Learning hub"). Footer of panel shows "Log in" outline pill and "Begin free" filled lagoon pill. Closes on Escape; focus returns to the burger. The footer row of the mobile panel shows "Log in" and "Begin free" pills.
 
 **Hero:** Centered on white. 64px multicolor SVG glyph above a 2-line `h1`, a centered `--body` paragraph with one bold sentence about sample free credits, then two pills: "Start for free" (lagoon fill) and "Talk to sales" (outline).
 
@@ -216,7 +216,7 @@ Fernwick's spacing maps to the 13px grid:
 
 **Sky-wash panel:** Inset, `border-radius: 26px`, `background: --sky-wash`. Final CTA with a 3-line heading (first two words in `--lagoon`), two pills, and a large SVG brand glyph bleeding off the right edge.
 
-**Other patterns:** Stories carousel (wide media cards, pill-grouped prev/next below-left); customer stories carousel (3 visible cards, progress track, prev/next pill group); vertical industry tabs (12 industries, active in a `--lagoon`-tinted rounded highlight); logo band (SVG wordmarks, pausable animation, filled pill + circular pause button); footer (5 columns, hairline top, legal row with language select).
+**Other patterns:** Stories carousel (wide media cards, pill-grouped prev/next below-left; disabled button shows `opacity:0.45`, dashed border, `cursor:not-allowed`); customer stories carousel (3 visible cards, progress bar, prev/next pill group); vertical industry tabs (12 industries, active in a `--lagoon`-tinted rounded highlight); logo band (SVG wordmarks, pausable animation visible only with motion enabled, filled pill + circular pause button hidden without motion); footer (5 columns — "The Fernwick story", "Services & plans", "Use cases", "Learning hub", "Connect" — hairline top, legal row with language select). The AI features product name is used throughout.
 
 ## Elevation & Depth
 
@@ -242,24 +242,24 @@ Fernwick's spacing maps to the 13px grid:
 | --- | --- | --- |
 | Filled "Start for free" button | `Button variant="fill"` | `bg-(--lagoon) text-white hover:bg-(--lagoon-deep) rounded-full` |
 | Outline "Talk to sales" button | `Button variant="pill"` | `border border-(--rule) text-(--ink) bg-(--canvas) rounded-full` |
-| Nav with mega panel | `NavigationMenu` | Full-width panel; category rail left; 3-col product grid right; click/Enter only |
-| Audience tabs (underline) | `Tabs` underline variant | WAI-ARIA tabs; roving tabindex; Left/Right arrows; Home/End |
+| Nav with mega panel | `NavigationMenu` | Full-width panel; category rail left (8 items for Services, 8 for Use cases, 5 for Plans, 5 for Learn); 3-col product grid right updated when rail item is clicked; click/Enter only |
+| Audience tabs (underline) | `Tabs` underline variant | Three tabs: "Builders", "Decision makers", "Access programs"; WAI-ARIA tabs; roving tabindex; Left/Right arrows; Home/End |
 | Industry tabs (vertical) | `Tabs` vertical variant | Up/Down arrows; active item in lagoon-tinted rounded highlight |
-| Platform accordion | `Accordion` | 8 categories with chevrons; open item shows green-check inline links |
+| Platform accordion | `Accordion` | 8 categories (Network & Delivery, Managed Databases, Intelligent Automation, Security & Identity, Data & Storage, Build Tooling, Stream & Analytics, Core Compute) with chevrons; open item shows green-check inline links |
 | Mobile footer columns | `Accordion` | Collapses at < 768px; first item closed by default |
 | Stories carousel | `Carousel` with `Button size="icon-md"` pill-grouped prev/next | Slide; prev/next disable at ends; keyboard reachable |
 | Customer stories carousel | `Carousel` with progress track + `Button size="icon-md"` prev/next | 3 visible cards; progress bar beneath |
 | Floating assistant chip | `Button` fixed chip + `Dialog`/`Popover` | Chip: `bg-(--sky-wash) text-(--chip-ink) rounded-[16px] shadow-md`; dialog: `rounded-[26px] shadow-xl` |
 | Assistant suggestion chips | `Button variant="pill"` full-width | `bg-(--mist) text-(--ink) rounded-full justify-between` with `ArrowRightIcon` |
-| Assistant input | `Input` + circular send `Button` | `rounded-full border border-(--rule)`; send disabled until text |
+| Assistant input | `Input` + circular send `Button` | Input row: `border: 1px solid var(--rule); border-radius: 9999px; background: var(--canvas)` wrapping a borderless inner input and a circular send button; send disabled until text |
 | Stats row | `Stat`, `StatValue`, `StatLabel` | Sample figures; `--body` labels in `font-label uppercase` |
 | Regions/latency table | `Table` | `text-sm` cells; `border-b border-(--rule)`; `font-label` headers |
 | Talk to sales form | `Input`, `NativeSelect`, `Textarea` | Local; `preventDefault`; `aria-live` confirmation |
 | Pricing plans | `Card` × 3 | Recommended plan: `border-2 border-(--lagoon)`; others: `border border-(--rule)` |
 | FAQ | `Accordion` | 5 items; `--body` answers; first item open |
 | Eyebrow badges | `Badge` | `font-label uppercase tracking-[0.1em] text-xs` |
-| Logo band | `Marquee` | SVG wordmarks; `--rule` tint; circular pause `Button size="icon-sm"` |
-| Language select (footer) | `NativeSelect` | Explicit `border border-(--rule)` and visible chevron in dark via `.fw select.inputer { border: 1px solid var(--rule); appearance: auto; color: var(--night-ink); background: var(--night); }` |
+| Logo band | `Marquee` | SVG wordmarks; `--rule` tint; circular pause `Button size="icon-sm"`; hidden when `.motion` class absent |
+| Language select (footer) | `NativeSelect` | `border: 1px solid var(--control-line); background: var(--canvas); color: var(--body); appearance: none` with an inline SVG chevron in `--body` color overlaid via absolute positioning; consistent in light and dark |
 
 ## Do's and Don'ts
 
@@ -287,9 +287,9 @@ All motion sits behind `@media (prefers-reduced-motion: no-preference)`. Use onl
 | --- | --- | --- |
 | Section entrance | Fade + raise `translateY(16px → 0)` | 400ms `cubic-bezier(0.4, 0, 0.2, 1)`, staggered |
 | Carousel slide | `scroll-behavior: smooth` | Native |
-| Button fill hover | `background-color` to `--lagoon-deep` | 200ms ease |
-| Mega panel open | Fade in `opacity 0 → 1` | 180ms ease |
-| Logo band scroll | `transform: translateX` loop | 30s linear; paused by `animation-play-state: paused` on the circular pause button (`aria-pressed`) |
+| Button fill hover | `background-color` to `--lagoon-deep` (hover rule uses `!important` to override inline styles on fill buttons) | 200ms ease |
+| Mega panel open | Shown/hidden via `hidden` attribute (no fade transition currently) | — |
+| Logo band scroll | `transform: translateX` loop | 30s linear; the `.motion` class enables the animation via `.motion .fw-marquee-track { animation: fw-marquee 30s linear infinite }`. Adding `.paused` to the track sets `animation-play-state: paused` and wins because the base rule has no `.paused` class. The pause button is hidden when `.motion` is absent. |
 | Assistant chip open | `scale(0.95 → 1) opacity(0 → 1)` | 220ms ease |
 
 With `prefers-reduced-motion: reduce`: all entrances appear instantly, the logo band stops, carousels jump without slide, and the assistant dialog appears without scale.
