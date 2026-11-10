@@ -36,7 +36,7 @@ img{max-width:100%;}
 .fw{--aura-accents-primary:var(--lagoon);--aura-button-hover:var(--lagoon-deep);--aura-input-bg:var(--mist);--aura-input-placeholder-color:var(--body);--aura-link:var(--lagoon);--aura-link-hover:var(--accent-a3);--aura-outline:2px solid var(--lagoon);--aura-text-primary-inverse:white;}
 
 .fw .button-fill{background-color:var(--lagoon);border-color:var(--lagoon);color:var(--on-lagoon);}
-.fw .button-fill:hover:not(:disabled){background-color:var(--lagoon-deep);border-color:var(--lagoon-deep);}
+.fw .button-fill:hover:not(:disabled){background-color:var(--lagoon-deep)!important;border-color:var(--lagoon-deep)!important;}
 .fw .button-pill{border-color:var(--rule);color:var(--ink);background:var(--canvas);}
 .fw .button-pill:hover:not(:disabled){background:var(--mist);}
 .fw .button,.fw .button-fill,.fw .button-pill{border-radius:9999px;height:calc(var(--aura)*3.5);padding:0 calc(var(--aura)*2);font-size:14px;font-weight:500;border-width:1px;}
@@ -79,6 +79,7 @@ img{max-width:100%;}
 .fw-mega-rail-item{display:flex;align-items:center;gap:calc(var(--aura)*0.75);padding:calc(var(--aura)*0.75) calc(var(--aura)*1);border-radius:13px;font-size:14px;color:var(--body);cursor:pointer;border:0;background:none;text-align:left;width:100%;font-family:inherit;}
 .fw-mega-rail-item:hover{background:var(--accent-a3);color:var(--ink);}
 .fw-mega-rail-item.active{background:var(--accent-a4);color:var(--lagoon);font-weight:500;}
+.light .fw-mega-rail-item.active{color:var(--lagoon-deep);}
 .fw-mega-rail-dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex-shrink:0;}
 .fw-mega-rail-footer{margin-top:auto;padding-top:calc(var(--aura)*1);}
 .fw-mega-main{flex:1;padding:calc(var(--aura)*2) calc(var(--aura)*2.5);overflow:hidden;}
@@ -99,14 +100,17 @@ img{max-width:100%;}
 .fw-burger{display:none;align-items:center;justify-content:center;width:calc(var(--aura)*3);height:calc(var(--aura)*3);border:0;background:none;color:var(--ink);cursor:pointer;border-radius:6px;flex-shrink:0;}
 .fw-burger:hover{background:var(--mist);}
 
-.fw-mobile-menu{position:fixed;inset:0;z-index:48;background:var(--canvas);overflow-y:auto;display:flex;flex-direction:column;}
+.fw-mobile-menu{position:fixed;inset:0;z-index:62;background:var(--canvas);overflow-y:auto;display:flex;flex-direction:column;}
 .fw-mobile-menu[hidden]{display:none;}
 .fw-mobile-head{display:flex;align-items:center;justify-content:space-between;padding:calc(var(--aura)*1) calc(var(--aura)*2);border-bottom:1px solid var(--rule);}
 .fw-mobile-items{flex:1;padding:calc(var(--aura)*1) calc(var(--aura)*2);}
 .fw-mobile-item{display:flex;align-items:center;justify-content:space-between;width:100%;padding:calc(var(--aura)*1.25) 0;border:0;background:none;color:var(--ink);font:inherit;font-size:16px;cursor:pointer;border-bottom:1px solid var(--rule);text-align:left;text-decoration:none;}
 .fw-mobile-item:last-child{border-bottom:0;}
 .fw-mobile-foot{padding:calc(var(--aura)*2);display:flex;gap:calc(var(--aura)*1);}
-.fw-mobile-row2{display:none;padding:calc(var(--aura)*0.5) calc(var(--aura)*2);justify-content:flex-end;gap:calc(var(--aura)*0.75);border-top:1px solid var(--rule);}
+.fw-mobile-sub{display:none;flex-direction:column;padding:calc(var(--aura)*0.5) 0 calc(var(--aura)*1) calc(var(--aura)*1.5);border-bottom:1px solid var(--rule);}
+.fw-mobile-sub.open{display:flex;}
+.fw-mobile-sub a{font-size:15px;color:var(--body);padding:calc(var(--aura)*0.5) 0;text-decoration:none;}
+.fw-mobile-sub a:hover{color:var(--ink);}
 
 .fw-hero{text-align:center;padding:calc(var(--aura)*7) calc(var(--aura)*2);}
 .fw-hero-glyph{margin:0 auto calc(var(--aura)*2.5);}
@@ -140,7 +144,12 @@ img{max-width:100%;}
 .fw-audience-card-copy{flex:1;min-width:0;}
 .fw-audience-card-art{width:calc(var(--aura)*7);height:calc(var(--aura)*7);border-radius:9px;flex-shrink:0;}
 .fw-audience-eyebrow{font-family:var(--aura-font-label);font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--lagoon);margin-bottom:calc(var(--aura)*0.75);}
-.fw-audience-title{font-size:14px;font-weight:500;color:var(--ink);line-height:1.4;overflow-wrap:anywhere;}
+.fw-audience-title{font-size:14px;font-weight:500;color:var(--ink);line-height:1.4;overflow-wrap:break-word;word-break:normal;hyphens:none;}
+@media(max-width:400px){
+  .fw-audience-card{flex-direction:column;}
+  .fw-audience-card-art{width:100%;height:calc(var(--aura)*7);flex-shrink:0;}
+  .fw-audience-title{font-size:13px;}
+}
 
 .fw-platform{margin:calc(var(--aura)*4) calc(var(--aura)*2);background:var(--mist);border-radius:26px;padding:calc(var(--aura)*4);}
 .fw-platform-inner{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:calc(var(--aura)*4);align-items:start;}
@@ -200,7 +209,10 @@ img{max-width:100%;}
 .fw-cust-card-text{font-size:14px;color:var(--body);line-height:1.4;overflow-wrap:anywhere;}
 .fw-cust-card-link{display:block;color:var(--lagoon);font-size:14px;margin-top:calc(var(--aura)*0.75);text-decoration:underline;}
 .fw-cust-card-art{position:relative;aspect-ratio:16/9;}
-.fw-cust-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:calc(var(--aura)*4);height:calc(var(--aura)*4);border-radius:50%;background:white;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.fw-cust-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:calc(var(--aura)*4);height:calc(var(--aura)*4);border-radius:50%;background:var(--ink);border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.light .fw-cust-play{background:#1c1f23;}
+.dark .fw-cust-play{background:#e8f0eb;color:#1c1f23;}
+.dark .fw-cust-play svg path{fill:#1c1f23;}
 .fw-cust-caption{position:absolute;bottom:0;left:0;right:0;padding:calc(var(--aura)*0.75) calc(var(--aura)*1);background:color-mix(in srgb,black 72%,transparent);color:white;font-size:12px;}
 .fw-cust-controls{display:flex;flex-direction:column;align-items:center;gap:calc(var(--aura)*1.5);padding:calc(var(--aura)*2) calc(var(--aura)*2) 0;}
 .fw-cust-progress{height:4px;background:var(--rule);border-radius:9999px;width:min(400px,80%);overflow:hidden;}
@@ -228,7 +240,8 @@ img{max-width:100%;}
 .fw-table-wrap{overflow-x:auto;border-radius:13px;border:1px solid var(--rule);margin-bottom:calc(var(--aura)*4);}
 .fw-table{width:100%;border-collapse:collapse;font-size:14px;}
 .fw-table th{font-family:var(--aura-font-label);font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--body);padding:calc(var(--aura)*1) calc(var(--aura)*1.5);text-align:left;border-bottom:1px solid var(--rule);white-space:nowrap;}
-.fw-table td{padding:calc(var(--aura)*1) calc(var(--aura)*1.5);color:var(--ink);border-bottom:1px solid var(--rule);overflow-wrap:anywhere;}
+.fw-table td{padding:calc(var(--aura)*1) calc(var(--aura)*1.5);color:var(--ink);border-bottom:1px solid var(--rule);overflow-wrap:break-word;word-break:normal;}
+.fw-table{min-width:600px;}
 .fw-table tbody tr:last-child td{border-bottom:0;}
 .fw-table tbody tr:hover td{background:var(--mist);}
 .fw-plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(var(--aura)*1.5);}
@@ -269,21 +282,23 @@ img{max-width:100%;}
 .fw-logo-band-controls{display:flex;align-items:center;gap:calc(var(--aura)*1);}
 .fw-marquee-outer{overflow:hidden;}
 .fw-marquee-track{display:flex;gap:calc(var(--aura)*4);width:max-content;}
-.fw-marquee-track.paused{animation-play-state:paused;}
 @keyframes fw-marquee{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-.motion .fw-marquee-track.running{animation:fw-marquee 30s linear infinite;}
+.motion .fw-marquee-track{animation:fw-marquee 30s linear infinite;}
+.motion .fw-marquee-track.paused{animation-play-state:paused;}
 .fw-logo-item{display:flex;align-items:center;justify-content:center;height:calc(var(--aura)*4);flex-shrink:0;}
 .fw-logo-text{font-family:var(--aura-font-display);font-size:18px;font-weight:600;color:var(--body);letter-spacing:-0.02em;white-space:nowrap;}
 .fw-pause-btn{display:inline-flex;align-items:center;justify-content:center;width:calc(var(--aura)*3);height:calc(var(--aura)*3);border-radius:50%;border:1px solid var(--rule);background:var(--canvas);color:var(--body);cursor:pointer;flex-shrink:0;}
 .fw-pause-btn:hover{background:var(--mist);color:var(--ink);}
-.button-pill:disabled{opacity:1;border-color:var(--control-line);color:var(--control-line);}
+.button-pill:disabled{opacity:0.45;cursor:not-allowed;border-style:dashed;}
 .fw-pause-btn[aria-pressed="true"] svg.play-icon{display:block;}
 .fw-pause-btn[aria-pressed="true"] svg.pause-icon{display:none;}
 .fw-pause-btn[aria-pressed="false"] svg.play-icon{display:none;}
 .fw-pause-btn[aria-pressed="false"] svg.pause-icon{display:block;}
+.no-motion-pause{display:none;}
+html:not(.motion) .fw-pause-btn{display:none;}
 
 .fw-cta{margin:0 calc(var(--aura)*2) calc(var(--aura)*7);background:var(--sky-wash);border-radius:26px;padding:calc(var(--aura)*5) calc(var(--aura)*5);display:flex;align-items:center;justify-content:space-between;gap:calc(var(--aura)*4);overflow:hidden;position:relative;min-height:calc(var(--aura)*22);}
-.fw-cta-copy{max-width:560px;flex-shrink:0;position:relative;z-index:1;}
+.fw-cta-copy{max-width:560px;flex:1 1 auto;min-width:0;position:relative;z-index:1;}
 .fw-cta-h2{font-size:clamp(1.75rem,3.5vw,2.75rem);line-height:1.1;margin-bottom:calc(var(--aura)*1.5);}
 .fw-cta-pills{display:flex;flex-wrap:wrap;gap:calc(var(--aura)*1);}
 .fw-cta-glyph{position:absolute;right:0;top:0;bottom:0;width:clamp(200px,35vw,420px);pointer-events:none;overflow:hidden;}
@@ -309,7 +324,8 @@ img{max-width:100%;}
 .fw-footer-lang{display:flex;align-items:center;gap:calc(var(--aura)*0.5);margin-left:auto;}
 
 .fw-assist-chip{position:fixed;bottom:calc(var(--aura)*1.5);right:calc(var(--aura)*1.5);z-index:60;display:inline-flex;align-items:center;gap:calc(var(--aura)*0.75);padding:calc(var(--aura)*0.75) calc(var(--aura)*1.5);border-radius:16px;background:var(--sky-wash);color:var(--chip-ink);border:1px solid color-mix(in srgb,var(--lagoon) 30%,transparent);box-shadow:0 4px 16px color-mix(in srgb,black 12%,transparent);cursor:pointer;font:inherit;font-size:14px;font-weight:500;}
-.fw-assist-chip:hover{background:var(--accent-a4);}
+.fw-assist-chip:hover{background:var(--lagoon);color:var(--on-lagoon);}
+.fw-assist-chip:hover svg path{fill:var(--on-lagoon);stroke:var(--on-lagoon);}
 .fw-assist-dialog-backdrop{position:fixed;inset:0;z-index:70;background:color-mix(in srgb,var(--night) 50%,transparent);display:flex;align-items:flex-end;justify-content:flex-end;padding:calc(var(--aura)*1.5);}
 .fw-assist-dialog-backdrop[hidden]{display:none;}
 .fw-assist-dialog{background:var(--canvas);border-radius:26px;box-shadow:0 20px 60px color-mix(in srgb,black 25%,transparent);width:min(100%,510px);max-height:min(90vh,calc(var(--aura)*45));display:flex;flex-direction:column;overflow:hidden;}
@@ -358,7 +374,6 @@ img{max-width:100%;}
 }
 @media(max-width:768px){
   .fw-nav-end .fw-sign-in{display:none;}
-  .fw-mobile-row2{display:flex;}
   .fw-stories-head{flex-direction:column;align-items:flex-start;}
   .fw-tabs-band{margin:0 calc(var(--aura)*1);padding:calc(var(--aura)*2);}
   .fw-tab-panel{grid-template-columns:minmax(0,1fr);}
@@ -366,8 +381,9 @@ img{max-width:100%;}
   .fw-stats-row{grid-template-columns:repeat(2,minmax(0,1fr));}
   .fw-plans{grid-template-columns:minmax(0,1fr);}
   .fw-night-cards{grid-template-columns:minmax(0,1fr);}
-  .fw-cta{margin:0 calc(var(--aura)*1) calc(var(--aura)*7);padding:calc(var(--aura)*3) calc(var(--aura)*3);}
-  .fw-cta-glyph{opacity:0.4;}
+  .fw-cta{margin:0 calc(var(--aura)*1) calc(var(--aura)*7);padding:calc(var(--aura)*3) calc(var(--aura)*3);flex-direction:column;align-items:flex-start;}
+  .fw-cta-copy{max-width:100%;}
+  .fw-cta-glyph{opacity:0.4;position:static;width:100%;max-height:160px;}
   .fw-footer-cols{grid-template-columns:minmax(0,1fr);}
   .fw-footer-col-title{display:none;}
   .fw-footer-acc-trigger{display:flex;}
@@ -402,73 +418,67 @@ img{max-width:100%;}
       Fernwick
     </a>
     <ul class="fw-nav-links" role="list">
-      <li><a class="fw-nav-plain" href="#fw-hero">Overview</a></li>
-      <li><button class="fw-nav-trigger" type="button" id="fw-trigger-solutions" aria-expanded="false" aria-controls="fw-mega-solutions">Solutions<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></li>
-      <li><button class="fw-nav-trigger" type="button" id="fw-trigger-products" aria-expanded="false" aria-controls="fw-mega-products">Products<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></li>
-      <li><button class="fw-nav-trigger" type="button" id="fw-trigger-pricing" aria-expanded="false" aria-controls="fw-mega-pricing">Pricing<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></li>
-      <li><button class="fw-nav-trigger" type="button" id="fw-trigger-resources" aria-expanded="false" aria-controls="fw-mega-resources">Resources<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></li>
+      <li><a class="fw-nav-plain" href="#fw-hero">Platform</a></li>
+      <li><button class="fw-nav-trigger" type="button" id="fw-trigger-solutions" aria-expanded="false" aria-controls="fw-mega-solutions">Use cases<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></li>
+      <li><button class="fw-nav-trigger" type="button" id="fw-trigger-products" aria-expanded="false" aria-controls="fw-mega-products">Services<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></li>
+      <li><button class="fw-nav-trigger" type="button" id="fw-trigger-pricing" aria-expanded="false" aria-controls="fw-mega-pricing">Plans<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></li>
+      <li><button class="fw-nav-trigger" type="button" id="fw-trigger-resources" aria-expanded="false" aria-controls="fw-mega-resources">Learn<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></li>
     </ul>
     <div class="fw-nav-end">
       <button class="fw-icon-btn" type="button" aria-label="Search">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10 10l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
       </button>
-      <a class="fw-nav-plain fw-docs-link" href="#">Docs</a>
-      <a class="fw-nav-plain fw-support-link" href="#">Support</a>
-      <a class="fw-sign-in" href="#">Sign in</a>
+      <a class="fw-nav-plain fw-docs-link" href="#">Guides</a>
+      <a class="fw-nav-plain fw-support-link" href="#">Help</a>
+      <a class="fw-sign-in" href="#">Log in</a>
     </div>
   </nav>
 
   <div class="fw-mega" id="fw-mega-solutions" hidden role="region" aria-label="Solutions menu">
     <div class="fw-mega-inner">
-      <div class="fw-mega-rail" role="list">
-        <button class="fw-mega-rail-item active" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Startup &amp; Scale-up</button>
-        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Enterprise</button>
-        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Financial Services</button>
-        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Healthcare</button>
-        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Media &amp; Entertainment</button>
-        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Retail &amp; E-commerce</button>
-        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Gaming</button>
-        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Education</button>
+      <div class="fw-mega-rail" id="fw-rail-solutions" role="list">
+        <button class="fw-mega-rail-item active" type="button" role="listitem" aria-pressed="true" data-group="sg0"><span class="fw-mega-rail-dot"></span>Startup &amp; Scale-up</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem" aria-pressed="false" data-group="sg1"><span class="fw-mega-rail-dot"></span>Enterprise</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem" aria-pressed="false" data-group="sg2"><span class="fw-mega-rail-dot"></span>Financial Services</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem" aria-pressed="false" data-group="sg3"><span class="fw-mega-rail-dot"></span>Healthcare</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem" aria-pressed="false" data-group="sg4"><span class="fw-mega-rail-dot"></span>Media &amp; Entertainment</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem" aria-pressed="false" data-group="sg5"><span class="fw-mega-rail-dot"></span>Retail &amp; E-commerce</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem" aria-pressed="false" data-group="sg6"><span class="fw-mega-rail-dot"></span>Gaming</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem" aria-pressed="false" data-group="sg7"><span class="fw-mega-rail-dot"></span>Education</button>
         <div class="fw-mega-rail-footer"><button class="button button-pill" type="button" style="font-size:13px;height:calc(var(--aura)*2.5);padding:0 calc(var(--aura)*1.5);">See all solutions</button></div>
       </div>
       <div class="fw-mega-main">
-        <div class="fw-mega-head"><span class="fw-mega-title">Featured solutions</span><button class="fw-mega-close" type="button" aria-label="Close Solutions menu"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
-        <div class="fw-mega-grid">
+        <div class="fw-mega-head"><span class="fw-mega-title" id="fw-sol-panel-title">Startup &amp; Scale-up</span><button class="fw-mega-close" type="button" aria-label="Close Solutions menu"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
+        <div class="fw-mega-grid" id="fw-sol-panel-grid">
           <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:var(--accent-a3);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="14" height="14" rx="4" fill="var(--lagoon)" opacity="0.7"/></svg></div><div><div class="fw-mega-item-title">Cloud Migrations</div><div class="fw-mega-item-desc">Lift, shift and modernize legacy workloads with guided tooling</div></div></a>
           <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--fern) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2l6 10H3z" fill="var(--fern)" opacity="0.8"/></svg></div><div><div class="fw-mega-item-title">Sustainable Cloud</div><div class="fw-mega-item-desc">Carbon-aware scheduling and energy-efficient regions</div></div></a>
           <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--amber) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" fill="var(--amber)" opacity="0.7"/></svg></div><div><div class="fw-mega-item-title">AI Platforms</div><div class="fw-mega-item-desc">Model training, inference and agent orchestration at scale</div></div></a>
-          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:var(--accent-a3);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="3" y="7" width="12" height="8" rx="2" fill="var(--lagoon)" opacity="0.6"/><path d="M6 7V5a3 3 0 016 0v2" stroke="var(--lagoon)" stroke-width="1.5"/></svg></div><div><div class="fw-mega-item-title">Zero-Trust Security</div><div class="fw-mega-item-desc">Identity, posture management and threat detection built-in</div></div></a>
-          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--fern) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="5" width="14" height="10" rx="2" fill="none" stroke="var(--fern)" stroke-width="1.5"/><path d="M5 5V4a4 4 0 018 0v1" stroke="var(--fern)" stroke-width="1.5"/></svg></div><div><div class="fw-mega-item-title">Dev Acceleration</div><div class="fw-mega-item-desc">CI/CD pipelines, preview envs and artifact registries</div></div></a>
-          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--amber) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 9h14M9 2v14" stroke="var(--amber)" stroke-width="2" stroke-linecap="round"/></svg></div><div><div class="fw-mega-item-title">Global Networking</div><div class="fw-mega-item-desc">Private backbone, CDN and anycast DNS worldwide</div></div></a>
-          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:var(--accent-a3);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="6" cy="9" r="3" fill="var(--lagoon)" opacity="0.7"/><circle cx="12" cy="9" r="3" fill="var(--lagoon)" opacity="0.4"/></svg></div><div><div class="fw-mega-item-title">Data Warehousing</div><div class="fw-mega-item-desc">Petabyte-scale analytics with serverless query execution</div></div></a>
-          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--fern) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 14l5-10 5 10" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="fw-mega-item-title">Cost Governance</div><div class="fw-mega-item-desc">Budget alerts, rightsizing recommendations and FinOps dashboards</div></div></a>
-          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--amber) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="3" y="3" width="12" height="12" rx="3" fill="none" stroke="var(--amber)" stroke-width="1.5"/><path d="M7 9h4" stroke="var(--amber)" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><div class="fw-mega-item-title">Regulated Industries</div><div class="fw-mega-item-desc">Compliance-ready configs for financial and healthcare workloads</div></div></a>
         </div>
-        <div class="fw-mega-footer"><span class="fw-mega-note">Not seeing what you need? <a href="#">See all solutions</a></span></div>
+        <div class="fw-mega-footer"><span class="fw-mega-note">Need something else? <a href="#">Browse all use cases</a></span></div>
       </div>
     </div>
   </div>
 
   <div class="fw-mega" id="fw-mega-products" hidden role="region" aria-label="Products menu">
     <div class="fw-mega-inner">
-      <div class="fw-mega-rail" role="list">
-        <button class="fw-mega-rail-item active" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Compute</button>
-        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Storage</button>
-        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Databases</button>
-        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>AI &amp; ML</button>
-        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Networking</button>
-        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Security</button>
-        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Developer Tools</button>
-        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Data Analytics</button>
-        <div class="fw-mega-rail-footer"><button class="button button-pill" type="button" style="font-size:13px;height:calc(var(--aura)*2.5);padding:0 calc(var(--aura)*1.5);">See all products</button></div>
+      <div class="fw-mega-rail" id="fw-rail-products" role="list">
+        <button class="fw-mega-rail-item active" type="button" role="listitem" aria-pressed="true" data-group="pg0"><span class="fw-mega-rail-dot"></span>Compute</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem" aria-pressed="false" data-group="pg1"><span class="fw-mega-rail-dot"></span>Storage</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem" aria-pressed="false" data-group="pg2"><span class="fw-mega-rail-dot"></span>Databases</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem" aria-pressed="false" data-group="pg3"><span class="fw-mega-rail-dot"></span>AI &amp; ML</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem" aria-pressed="false" data-group="pg4"><span class="fw-mega-rail-dot"></span>Networking</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem" aria-pressed="false" data-group="pg5"><span class="fw-mega-rail-dot"></span>Security</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem" aria-pressed="false" data-group="pg6"><span class="fw-mega-rail-dot"></span>Build Tools</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem" aria-pressed="false" data-group="pg7"><span class="fw-mega-rail-dot"></span>Data Analytics</button>
+        <div class="fw-mega-rail-footer"><button class="button button-pill" type="button" style="font-size:13px;height:calc(var(--aura)*2.5);padding:0 calc(var(--aura)*1.5);">View all services</button></div>
       </div>
-      <div class="fw-mega-main">
-        <div class="fw-mega-head"><span class="fw-mega-title">Featured products</span><button class="fw-mega-close" type="button" aria-label="Close Products menu"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
+      <div class="fw-mega-main" id="fw-mega-products-main">
+        <div class="fw-mega-head"><span class="fw-mega-title" id="fw-prod-panel-title">Compute</span><button class="fw-mega-close" type="button" aria-label="Close Services menu"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
         <div class="fw-mega-grid">
           <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:var(--accent-a3);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="3" y="3" width="12" height="12" rx="3" fill="var(--lagoon)" opacity="0.7"/></svg></div><div><div class="fw-mega-item-title">Fernwick Canopy Compute</div><div class="fw-mega-item-desc">Scalable VMs with custom CPU and memory profiles</div></div></a>
           <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--fern) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2v14M4 7h10M4 11h10" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><div class="fw-mega-item-title">Object Store</div><div class="fw-mega-item-desc">Globally replicated blob storage with lifecycle policies</div></div></a>
           <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--amber) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><ellipse cx="9" cy="6" rx="6" ry="2.5" fill="none" stroke="var(--amber)" stroke-width="1.5"/><path d="M3 6v6c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5V6" stroke="var(--amber)" stroke-width="1.5"/></svg></div><div><div class="fw-mega-item-title">Fernwick SQL</div><div class="fw-mega-item-desc">Fully managed relational database with 99.99% SLA</div></div></a>
-          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:var(--accent-a3);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M5 13c1-3 3-5 6-6" stroke="var(--lagoon)" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="6" r="3" fill="var(--lagoon)" opacity="0.6"/></svg></div><div><div class="fw-mega-item-title">Agent Workbench</div><div class="fw-mega-item-desc">Build, test and deploy AI agents with visual tooling</div></div></a>
+          <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:var(--accent-a3);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M5 13c1-3 3-5 6-6" stroke="var(--lagoon)" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="6" r="3" fill="var(--lagoon)" opacity="0.6"/></svg></div><div><div class="fw-mega-item-title">Lumavar Nexis</div><div class="fw-mega-item-desc">Build, test and deploy AI agents with visual tooling</div></div></a>
           <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--fern) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 9h14M9 4l4 5-4 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="fw-mega-item-title">Private Fabric</div><div class="fw-mega-item-desc">Dedicated interconnect and virtual private cloud routing</div></div></a>
           <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--amber) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2l5 4v6l-5 4-5-4V6z" fill="none" stroke="var(--amber)" stroke-width="1.5"/></svg></div><div><div class="fw-mega-item-title">Shield SIEM</div><div class="fw-mega-item-desc">Real-time threat detection and incident response automation</div></div></a>
           <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:var(--accent-a3);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="4" y="4" width="10" height="10" rx="2" fill="none" stroke="var(--lagoon)" stroke-width="1.5"/><path d="M7 9h4M9 7v4" stroke="var(--lagoon)" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><div class="fw-mega-item-title">Pipeline CI/CD</div><div class="fw-mega-item-desc">Container-native build, test and delivery workflows</div></div></a>
@@ -476,23 +486,23 @@ img{max-width:100%;}
           <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--amber) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" fill="none" stroke="var(--amber)" stroke-width="1.5"/><path d="M7 7l4 4M11 7l-4 4" stroke="var(--amber)" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><div class="fw-mega-item-title">Fernwick Functions</div><div class="fw-mega-item-desc">Event-driven serverless with zero cold-start guarantee</div></div></a>
           <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:var(--accent-a3);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M5 5l3 8 2-5 2 5 3-8" stroke="var(--lagoon)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="fw-mega-item-title">Observability Suite</div><div class="fw-mega-item-desc">Logs, metrics and traces unified in a single pane of glass</div></div></a>
         </div>
-        <div class="fw-mega-footer"><span class="fw-mega-note">Not seeing what you need? <a href="#">Browse all 180+ services</a></span></div>
+        <div class="fw-mega-footer"><span class="fw-mega-note">Need something else? <a href="#">Browse all 180+ services</a></span></div>
       </div>
     </div>
   </div>
 
   <div class="fw-mega" id="fw-mega-pricing" hidden role="region" aria-label="Pricing menu">
     <div class="fw-mega-inner">
-      <div class="fw-mega-rail" role="list">
-        <button class="fw-mega-rail-item active" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Compute pricing</button>
-        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Storage pricing</button>
-        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>AI &amp; ML pricing</button>
-        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Free tier details</button>
-        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Committed use</button>
-        <div class="fw-mega-rail-footer"><button class="button button-pill" type="button" style="font-size:13px;height:calc(var(--aura)*2.5);padding:0 calc(var(--aura)*1.5);">Pricing calculator</button></div>
+      <div class="fw-mega-rail" id="fw-rail-pricing" role="list">
+        <button class="fw-mega-rail-item active" type="button" role="listitem" aria-pressed="true" data-group="prg0"><span class="fw-mega-rail-dot"></span>Compute rates</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem" aria-pressed="false" data-group="prg1"><span class="fw-mega-rail-dot"></span>Storage rates</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem" aria-pressed="false" data-group="prg2"><span class="fw-mega-rail-dot"></span>AI &amp; ML rates</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem" aria-pressed="false" data-group="prg3"><span class="fw-mega-rail-dot"></span>Free tier overview</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem" aria-pressed="false" data-group="prg4"><span class="fw-mega-rail-dot"></span>Volume commitments</button>
+        <div class="fw-mega-rail-footer"><button class="button button-pill" type="button" style="font-size:13px;height:calc(var(--aura)*2.5);padding:0 calc(var(--aura)*1.5);">Usage estimator</button></div>
       </div>
-      <div class="fw-mega-main">
-        <div class="fw-mega-head"><span class="fw-mega-title">Sample pricing overview</span><button class="fw-mega-close" type="button" aria-label="Close Pricing menu"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
+      <div class="fw-mega-main" id="fw-mega-pricing-main">
+        <div class="fw-mega-head"><span class="fw-mega-title" id="fw-pric-panel-title">Sample pricing overview</span><button class="fw-mega-close" type="button" aria-label="Close Plans menu"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
         <div class="fw-mega-grid">
           <a class="fw-mega-item" href="#fw-pricing"><div class="fw-mega-item-icon" style="background:var(--accent-a3);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v12M6 6h6M5 12h8" stroke="var(--lagoon)" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><div class="fw-mega-item-title">Pay-as-you-go</div><div class="fw-mega-item-desc">No upfront cost; billed per second of resource use</div></div></a>
           <a class="fw-mega-item" href="#fw-pricing"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--fern) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9l3 3 7-7" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="fw-mega-item-title">Committed Savings</div><div class="fw-mega-item-desc">Up to 70% off (sample) with 1 or 3-year commitments</div></div></a>
@@ -505,16 +515,16 @@ img{max-width:100%;}
 
   <div class="fw-mega" id="fw-mega-resources" hidden role="region" aria-label="Resources menu">
     <div class="fw-mega-inner">
-      <div class="fw-mega-rail" role="list">
-        <button class="fw-mega-rail-item active" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Documentation</button>
-        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Tutorials</button>
-        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Community</button>
-        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Blog</button>
-        <button class="fw-mega-rail-item" type="button" role="listitem"><span class="fw-mega-rail-dot"></span>Events &amp; Webinars</button>
-        <div class="fw-mega-rail-footer"><button class="button button-pill" type="button" style="font-size:13px;height:calc(var(--aura)*2.5);padding:0 calc(var(--aura)*1.5);">Developer hub</button></div>
+      <div class="fw-mega-rail" id="fw-rail-resources" role="list">
+        <button class="fw-mega-rail-item active" type="button" role="listitem" aria-pressed="true" data-group="rg0"><span class="fw-mega-rail-dot"></span>Guides &amp; docs</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem" aria-pressed="false" data-group="rg1"><span class="fw-mega-rail-dot"></span>Tutorials</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem" aria-pressed="false" data-group="rg2"><span class="fw-mega-rail-dot"></span>Community</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem" aria-pressed="false" data-group="rg3"><span class="fw-mega-rail-dot"></span>Engineering blog</button>
+        <button class="fw-mega-rail-item" type="button" role="listitem" aria-pressed="false" data-group="rg4"><span class="fw-mega-rail-dot"></span>Events &amp; Summits</button>
+        <div class="fw-mega-rail-footer"><button class="button button-pill" type="button" style="font-size:13px;height:calc(var(--aura)*2.5);padding:0 calc(var(--aura)*1.5);">Fernwick learning hub</button></div>
       </div>
-      <div class="fw-mega-main">
-        <div class="fw-mega-head"><span class="fw-mega-title">Resources &amp; learning</span><button class="fw-mega-close" type="button" aria-label="Close Resources menu"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
+      <div class="fw-mega-main" id="fw-mega-resources-main">
+        <div class="fw-mega-head"><span class="fw-mega-title" id="fw-res-panel-title">Guides &amp; learning</span><button class="fw-mega-close" type="button" aria-label="Close Learn menu"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
         <div class="fw-mega-grid">
           <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:var(--accent-a3);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 4h10v10H4z" fill="none" stroke="var(--lagoon)" stroke-width="1.5"/><path d="M7 8h4M7 11h2" stroke="var(--lagoon)" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><div class="fw-mega-item-title">Quick-start Guides</div><div class="fw-mega-item-desc">Spin up your first Fernwick workload in under 10 minutes</div></div></a>
           <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--fern) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" fill="none" stroke="var(--fern)" stroke-width="1.5"/><path d="M9 7v4M9 6v.5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><div class="fw-mega-item-title">Architecture Center</div><div class="fw-mega-item-desc">Reference blueprints and best practices for every workload type</div></div></a>
@@ -523,7 +533,7 @@ img{max-width:100%;}
           <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--fern) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="4" width="14" height="10" rx="2" fill="none" stroke="var(--fern)" stroke-width="1.5"/><path d="M7 8l2 2 4-4" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="fw-mega-item-title">Certification Paths</div><div class="fw-mega-item-desc">Associate, Professional and Specialty tracks for cloud roles</div></div></a>
           <a class="fw-mega-item" href="#"><div class="fw-mega-item-icon" style="background:color-mix(in srgb,var(--amber) 15%,transparent);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3l2 4h4l-3 3 1 4-4-2-4 2 1-4-3-3h4z" fill="none" stroke="var(--amber)" stroke-width="1.5" stroke-linejoin="round"/></svg></div><div><div class="fw-mega-item-title">Virtual Events</div><div class="fw-mega-item-desc">Upcoming webinars, demos and partner summits</div></div></a>
         </div>
-        <div class="fw-mega-footer"><span class="fw-mega-note">Not seeing what you need? <a href="#">See all resources</a></span></div>
+        <div class="fw-mega-footer"><span class="fw-mega-note">Need something else? <a href="#">View full learning hub</a></span></div>
       </div>
     </div>
   </div>
@@ -538,17 +548,34 @@ img{max-width:100%;}
     <button class="fw-icon-btn" type="button" id="fw-mobile-close" aria-label="Close navigation menu"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 3l12 12M15 3L3 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   </div>
   <div class="fw-mobile-items">
-    <a class="fw-mobile-item" href="#fw-hero">Overview</a>
-    <button class="fw-mobile-item" type="button">Solutions <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 7l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-    <button class="fw-mobile-item" type="button">Products <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 7l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-    <a class="fw-mobile-item" href="#fw-pricing">Pricing</a>
-    <button class="fw-mobile-item" type="button">Resources <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 7l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-    <a class="fw-mobile-item" href="#">Docs</a>
-    <a class="fw-mobile-item" href="#">Support</a>
+    <a class="fw-mobile-item" href="#fw-hero">Platform overview</a>
+    <button class="fw-mobile-item" type="button" aria-expanded="false" aria-controls="fw-msub-solutions" id="fw-mitem-solutions">Use cases <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 7l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="fw-mobile-sub" id="fw-msub-solutions" role="list">
+      <a href="#" role="listitem">Cloud Migrations</a>
+      <a href="#" role="listitem">AI Platforms</a>
+      <a href="#" role="listitem">Zero-Trust Security</a>
+      <a href="#" role="listitem">Dev Acceleration</a>
+    </div>
+    <button class="fw-mobile-item" type="button" aria-expanded="false" aria-controls="fw-msub-products" id="fw-mitem-products">Services <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 7l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="fw-mobile-sub" id="fw-msub-products" role="list">
+      <a href="#" role="listitem">Canopy Compute</a>
+      <a href="#" role="listitem">Object Store</a>
+      <a href="#" role="listitem">Fernwick SQL</a>
+      <a href="#" role="listitem">Lumavar Nexis</a>
+    </div>
+    <a class="fw-mobile-item" href="#fw-pricing">Plans &amp; pricing</a>
+    <button class="fw-mobile-item" type="button" aria-expanded="false" aria-controls="fw-msub-resources" id="fw-mitem-resources">Learning hub <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 7l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="fw-mobile-sub" id="fw-msub-resources" role="list">
+      <a href="#" role="listitem">Quick-start Guides</a>
+      <a href="#" role="listitem">Architecture Center</a>
+      <a href="#" role="listitem">Community Forum</a>
+    </div>
+    <a class="fw-mobile-item" href="#">Guides</a>
+    <a class="fw-mobile-item" href="#">Help</a>
   </div>
   <div class="fw-mobile-foot">
-    <button class="button button-pill" type="button" style="flex:1;border-color:var(--rule);color:var(--ink);background:var(--canvas);">Contact us</button>
-    <button class="button button-fill" type="button" style="flex:1;background:var(--lagoon);border-color:var(--lagoon);color:var(--on-lagoon);">Start free</button>
+    <button class="button button-pill" type="button" style="flex:1;border-color:var(--rule);color:var(--ink);background:var(--canvas);">Log in</button>
+    <button class="button button-fill" type="button" style="flex:1;background:var(--lagoon);border-color:var(--lagoon);color:var(--on-lagoon);">Begin free</button>
   </div>
 </div>
 
@@ -574,7 +601,7 @@ img{max-width:100%;}
         <div class="fw-story-card" role="listitem" aria-label="Story 1 of 6">
           <div class="fw-story-art" aria-hidden="true"><svg width="100%" height="100%" viewBox="0 0 310 190" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="var(--lagoon-deep)"/><stop offset="100%" stop-color="var(--night)"/></linearGradient><radialGradient id="sg1g" cx="70%" cy="30%" r="50%"><stop offset="0%" stop-color="var(--lagoon)" stop-opacity="0.5"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs><rect width="310" height="190" fill="url(#sg1)"/><ellipse cx="220" cy="60" rx="100" ry="80" fill="url(#sg1g)"/></svg></div>
           <div class="fw-story-scrim" aria-hidden="true"></div>
-          <div class="fw-story-body"><div class="fw-story-eyebrow">Top Story</div><div class="fw-story-title">How Fernwick cut deployment time by 80% with unified pipelines</div></div>
+          <div class="fw-story-body"><div class="fw-story-eyebrow">Featured</div><div class="fw-story-title">How Fernwick cut deployment time by 80% with unified pipelines</div></div>
         </div>
         <div class="fw-story-card" role="listitem" aria-label="Story 2 of 6">
           <div class="fw-story-art" aria-hidden="true"><svg width="100%" height="100%" viewBox="0 0 310 190" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sg2" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="var(--night)"/><stop offset="100%" stop-color="var(--lagoon)"/></linearGradient><radialGradient id="sg2g" cx="30%" cy="70%" r="60%"><stop offset="0%" stop-color="var(--fern)" stop-opacity="0.4"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs><rect width="310" height="190" fill="url(#sg2)"/><ellipse cx="90" cy="130" rx="120" ry="80" fill="url(#sg2g)"/></svg></div>
@@ -584,7 +611,7 @@ img{max-width:100%;}
         <div class="fw-story-card" role="listitem" aria-label="Story 3 of 6">
           <div class="fw-story-art" aria-hidden="true"><svg width="100%" height="100%" viewBox="0 0 310 190" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sg3" x1="1" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--lagoon)"/><stop offset="100%" stop-color="color-mix(in srgb,var(--night) 70%,var(--fern))"/></linearGradient><radialGradient id="sg3g" cx="50%" cy="50%" r="55%"><stop offset="0%" stop-color="var(--amber)" stop-opacity="0.3"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs><rect width="310" height="190" fill="url(#sg3)"/><ellipse cx="155" cy="95" rx="90" ry="70" fill="url(#sg3g)"/></svg></div>
           <div class="fw-story-scrim" aria-hidden="true"></div>
-          <div class="fw-story-body"><div class="fw-story-eyebrow">AI News</div><div class="fw-story-title">Agent Workbench reaches general availability in all regions</div></div>
+          <div class="fw-story-body"><div class="fw-story-eyebrow">AI News</div><div class="fw-story-title">Lumavar Nexis reaches general availability in all regions</div></div>
         </div>
         <div class="fw-story-card" role="listitem" aria-label="Story 4 of 6">
           <div class="fw-story-art" aria-hidden="true"><svg width="100%" height="100%" viewBox="0 0 310 190" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sg4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="color-mix(in srgb,var(--fern) 60%,var(--night))"/><stop offset="100%" stop-color="var(--night)"/></linearGradient><radialGradient id="sg4g" cx="80%" cy="20%" r="50%"><stop offset="0%" stop-color="var(--lagoon)" stop-opacity="0.5"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs><rect width="310" height="190" fill="url(#sg4)"/><ellipse cx="250" cy="40" rx="80" ry="60" fill="url(#sg4g)"/></svg></div>
@@ -604,10 +631,10 @@ img{max-width:100%;}
       </div>
     </div>
     <div class="fw-story-nav wrap">
-      <button class="button button-pill fw-button-icon" type="button" id="fw-stories-prev" aria-label="Previous story" aria-controls="fw-stories-track" disabled style="border-color:var(--control-line);color:var(--ink);background:var(--canvas);">
+      <button class="button button-pill fw-button-icon" type="button" id="fw-stories-prev" aria-label="Previous story" aria-controls="fw-stories-track" disabled style="background:var(--canvas);">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
-      <button class="button button-pill fw-button-icon" type="button" id="fw-stories-next" aria-label="Next story" aria-controls="fw-stories-track" style="border-color:var(--control-line);color:var(--ink);background:var(--canvas);">
+      <button class="button button-pill fw-button-icon" type="button" id="fw-stories-next" aria-label="Next story" aria-controls="fw-stories-track" style="background:var(--canvas);">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <span class="sr-only" id="fw-stories-status" role="status" aria-live="polite">Story 1 of 6</span>
@@ -618,9 +645,9 @@ img{max-width:100%;}
     <div class="fw-tabs-band">
       <span class="sr-only" id="fw-audience-title">Fernwick for every team</span>
       <div class="fw-tabs-strip" role="tablist" aria-label="Audience tabs">
-        <button class="fw-tab-btn" role="tab" aria-selected="true" aria-controls="fw-tabpanel-dev" id="fw-tab-dev" tabindex="0">Developers</button>
-        <button class="fw-tab-btn" role="tab" aria-selected="false" aria-controls="fw-tabpanel-biz" id="fw-tab-biz" tabindex="-1">Business leaders</button>
-        <button class="fw-tab-btn" role="tab" aria-selected="false" aria-controls="fw-tabpanel-special" id="fw-tab-special" tabindex="-1">Special programs</button>
+        <button class="fw-tab-btn" role="tab" aria-selected="true" aria-controls="fw-tabpanel-dev" id="fw-tab-dev" tabindex="0">Builders</button>
+        <button class="fw-tab-btn" role="tab" aria-selected="false" aria-controls="fw-tabpanel-biz" id="fw-tab-biz" tabindex="-1">Decision makers</button>
+        <button class="fw-tab-btn" role="tab" aria-selected="false" aria-controls="fw-tabpanel-special" id="fw-tab-special" tabindex="-1">Access programs</button>
       </div>
       <div class="fw-tab-panels">
         <div class="fw-tab-panel" id="fw-tabpanel-dev" role="tabpanel" aria-labelledby="fw-tab-dev" aria-hidden="false">
@@ -682,31 +709,15 @@ img{max-width:100%;}
         </div>
         <div class="fw-accordion" id="fw-platform-acc">
           <div class="fw-acc-item">
-            <h3><button class="fw-acc-trigger" type="button" aria-expanded="true" aria-controls="fw-acc-p0">AI and machine learning<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
-            <div class="fw-acc-panel" id="fw-acc-p0"><div class="fw-acc-panel-inner">
-              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Agent Workbench</a> — build and deploy AI agents without MLOps expertise</span></div>
-              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Model Shelf</a> — access a curated library of open-weight foundation models</span></div>
-              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Training Clusters</a> — GPU and accelerator resources with spot and reserved pricing</span></div>
+            <h3><button class="fw-acc-trigger" type="button" aria-expanded="true" aria-controls="fw-acc-p5">Network &amp; Delivery<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
+            <div class="fw-acc-panel" id="fw-acc-p5"><div class="fw-acc-panel-inner">
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Private Fabric</a> — dedicated fiber interconnect to 300+ exchange points</span></div>
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Global CDN</a> — anycast edge with 200ms purge propagation (sample)</span></div>
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Load Balancer</a> — L4 and L7 with TLS termination and WAF integration</span></div>
             </div></div>
           </div>
           <div class="fw-acc-item">
-            <h3><button class="fw-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-acc-p1">Compute<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
-            <div class="fw-acc-panel" id="fw-acc-p1" hidden><div class="fw-acc-panel-inner">
-              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Canopy Compute</a> — custom VM shapes from 2 vCPU to 1,920 vCPU</span></div>
-              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Container Runtime</a> — managed containers with auto-scaling node pools</span></div>
-              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Fernwick Functions</a> — serverless with sub-10ms cold start (sample)</span></div>
-            </div></div>
-          </div>
-          <div class="fw-acc-item">
-            <h3><button class="fw-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-acc-p2">Storage<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
-            <div class="fw-acc-panel" id="fw-acc-p2" hidden><div class="fw-acc-panel-inner">
-              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Object Store</a> — 11-nines durability with lifecycle tiering</span></div>
-              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Block Volumes</a> — NVMe-backed persistent disks with snapshot scheduling</span></div>
-              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Archive Vault</a> — cold storage from $0.001 per GB per month (sample)</span></div>
-            </div></div>
-          </div>
-          <div class="fw-acc-item">
-            <h3><button class="fw-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-acc-p3">Databases<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
+            <h3><button class="fw-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-acc-p3">Managed Databases<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
             <div class="fw-acc-panel" id="fw-acc-p3" hidden><div class="fw-acc-panel-inner">
               <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Fernwick SQL</a> — managed PostgreSQL with 99.99% SLA (sample)</span></div>
               <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Document DB</a> — serverless document store with global replication</span></div>
@@ -714,7 +725,39 @@ img{max-width:100%;}
             </div></div>
           </div>
           <div class="fw-acc-item">
-            <h3><button class="fw-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-acc-p4">Data analytics<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
+            <h3><button class="fw-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-acc-p0">Intelligent Automation<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
+            <div class="fw-acc-panel" id="fw-acc-p0" hidden><div class="fw-acc-panel-inner">
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Lumavar Nexis</a> — build and deploy AI agents without MLOps expertise</span></div>
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Model Shelf</a> — access a curated library of open-weight foundation models</span></div>
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Training Clusters</a> — GPU and accelerator resources with spot and reserved pricing</span></div>
+            </div></div>
+          </div>
+          <div class="fw-acc-item">
+            <h3><button class="fw-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-acc-p7">Security &amp; Identity<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
+            <div class="fw-acc-panel" id="fw-acc-p7" hidden><div class="fw-acc-panel-inner">
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Shield SIEM</a> — real-time threat detection with automated remediation</span></div>
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Key Vault</a> — FIPS 140-3 HSM-backed secret and certificate management</span></div>
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Identity Platform</a> — zero-trust IAM with workload identity federation</span></div>
+            </div></div>
+          </div>
+          <div class="fw-acc-item">
+            <h3><button class="fw-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-acc-p2">Data &amp; Storage<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
+            <div class="fw-acc-panel" id="fw-acc-p2" hidden><div class="fw-acc-panel-inner">
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Object Store</a> — 11-nines durability with lifecycle tiering</span></div>
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Block Volumes</a> — NVMe-backed persistent disks with snapshot scheduling</span></div>
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Archive Vault</a> — cold storage from $0.001 per GB per month (sample)</span></div>
+            </div></div>
+          </div>
+          <div class="fw-acc-item">
+            <h3><button class="fw-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-acc-p6">Build Tooling<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
+            <div class="fw-acc-panel" id="fw-acc-p6" hidden><div class="fw-acc-panel-inner">
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Pipeline CI/CD</a> — container-native build and release workflows</span></div>
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Depot Registry</a> — private container and package repositories</span></div>
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Fernwick Terminal</a> — browser-based terminal with pre-authenticated CLI</span></div>
+            </div></div>
+          </div>
+          <div class="fw-acc-item">
+            <h3><button class="fw-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-acc-p4">Stream &amp; Analytics<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
             <div class="fw-acc-panel" id="fw-acc-p4" hidden><div class="fw-acc-panel-inner">
               <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Stream Analytics</a> — sub-second latency event processing</span></div>
               <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Data Warehouse</a> — petabyte-scale with serverless query execution</span></div>
@@ -722,27 +765,11 @@ img{max-width:100%;}
             </div></div>
           </div>
           <div class="fw-acc-item">
-            <h3><button class="fw-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-acc-p5">Networking<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
-            <div class="fw-acc-panel" id="fw-acc-p5" hidden><div class="fw-acc-panel-inner">
-              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Private Fabric</a> — dedicated fiber interconnect to 300+ exchange points</span></div>
-              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Global CDN</a> — anycast edge with 200ms purge propagation (sample)</span></div>
-              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Load Balancer</a> — L4 and L7 with TLS termination and WAF integration</span></div>
-            </div></div>
-          </div>
-          <div class="fw-acc-item">
-            <h3><button class="fw-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-acc-p6">Developer tools<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
-            <div class="fw-acc-panel" id="fw-acc-p6" hidden><div class="fw-acc-panel-inner">
-              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Pipeline CI/CD</a> — container-native build and release workflows</span></div>
-              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Artifact Registry</a> — private container and package repositories</span></div>
-              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Cloud Shell</a> — browser-based terminal with pre-authenticated CLI</span></div>
-            </div></div>
-          </div>
-          <div class="fw-acc-item">
-            <h3><button class="fw-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-acc-p7">Security<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
-            <div class="fw-acc-panel" id="fw-acc-p7" hidden><div class="fw-acc-panel-inner">
-              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Shield SIEM</a> — real-time threat detection with automated remediation</span></div>
-              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Key Vault</a> — FIPS 140-3 HSM-backed secret and certificate management</span></div>
-              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Identity Platform</a> — zero-trust IAM with workload identity federation</span></div>
+            <h3><button class="fw-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-acc-p1">Core Compute<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></h3>
+            <div class="fw-acc-panel" id="fw-acc-p1" hidden><div class="fw-acc-panel-inner">
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Canopy Compute</a> — custom VM shapes from 2 vCPU to 1,920 vCPU</span></div>
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Container Runtime</a> — managed containers with auto-scaling node pools</span></div>
+              <div class="fw-check-row"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><a href="#">Fernwick Functions</a> — serverless with sub-10ms cold start (sample)</span></div>
             </div></div>
           </div>
         </div>
@@ -757,7 +784,7 @@ img{max-width:100%;}
           <h2 class="fw-night-h2" id="fw-night-h2">The AI platform built for<br><span style="color:var(--amber);">production scale</span></h2>
         </div>
         <div>
-          <p class="fw-night-copy">Fernwick's AI infrastructure spans training clusters, inference endpoints and agent orchestration — all on the same private backbone. <a href="#">Learn about Agent Workbench</a></p>
+          <p class="fw-night-copy">Fernwick's AI infrastructure spans training clusters, inference endpoints and agent orchestration — all on the same private backbone. <a href="#">Learn about Lumavar Nexis</a></p>
           <div class="fw-night-pills">
             <button class="fw-night-btn-white" type="button">Start building AI</button>
             <button class="button button-pill" type="button" style="border-color:color-mix(in srgb,white 30%,transparent);color:var(--night-ink);background:transparent;border-radius:9999px;height:calc(var(--aura)*3.5);padding:0 calc(var(--aura)*2);">View documentation</button>
@@ -775,16 +802,16 @@ img{max-width:100%;}
           <div class="fw-night-preview" id="fw-night-panel-0" role="tabpanel" aria-labelledby="fw-ntab-0">
             <svg width="100%" height="100%" viewBox="0 0 500 280" preserveAspectRatio="xMidYMid slice" aria-label="Training cluster diagram" role="img"><defs><linearGradient id="npg0" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="var(--lagoon)" stop-opacity="0.3"/><stop offset="100%" stop-color="transparent"/></linearGradient></defs><rect width="500" height="280" fill="color-mix(in srgb,var(--lagoon) 10%,transparent)"/><rect x="40" y="60" width="80" height="50" rx="8" fill="none" stroke="var(--lagoon)" stroke-width="1.5"/><text x="80" y="90" font-size="11" fill="var(--night-ink)" text-anchor="middle" font-family="var(--aura-font-label)">Compute Node</text><rect x="160" y="60" width="80" height="50" rx="8" fill="none" stroke="var(--lagoon)" stroke-width="1.5"/><text x="200" y="90" font-size="11" fill="var(--night-ink)" text-anchor="middle" font-family="var(--aura-font-label)">Compute Node</text><rect x="280" y="60" width="80" height="50" rx="8" fill="none" stroke="var(--lagoon)" stroke-width="1.5"/><text x="320" y="90" font-size="11" fill="var(--night-ink)" text-anchor="middle" font-family="var(--aura-font-label)">Compute Node</text><rect x="380" y="60" width="80" height="50" rx="8" fill="none" stroke="var(--lagoon)" stroke-width="1.5"/><text x="420" y="90" font-size="11" fill="var(--night-ink)" text-anchor="middle" font-family="var(--aura-font-label)">Compute Node</text><path fill="none" d="M80 110v50M200 110v30h-120v20M200 110v20M320 110v30h-120v0M420 110v50" stroke="var(--lagoon)" stroke-width="1" stroke-opacity="0.5"/><rect x="140" y="160" width="220" height="50" rx="8" fill="color-mix(in srgb,var(--lagoon) 20%,transparent)" stroke="var(--lagoon)" stroke-width="1.5"/><text x="250" y="190" font-size="12" fill="var(--night-ink)" text-anchor="middle" font-family="var(--aura-font-label)">Gradient Coordinator</text></svg>
           </div>
-          <div class="fw-night-preview" id="fw-night-panel-1" role="tabpanel" aria-labelledby="fw-ntab-1" hidden style="display:none;">
+          <div class="fw-night-preview" id="fw-night-panel-1" role="tabpanel" aria-labelledby="fw-ntab-1" hidden>
             <svg width="100%" height="100%" viewBox="0 0 500 280" preserveAspectRatio="xMidYMid slice" aria-label="Inference endpoint diagram" role="img"><rect width="500" height="280" fill="color-mix(in srgb,var(--fern) 8%,transparent)"/><circle cx="250" cy="140" r="60" fill="none" stroke="var(--fern)" stroke-width="1.5"/><text x="250" y="145" font-size="12" fill="var(--night-ink)" text-anchor="middle" font-family="var(--aura-font-label)">Inference</text><text x="250" y="162" font-size="12" fill="var(--night-ink)" text-anchor="middle" font-family="var(--aura-font-label)">Endpoint</text><circle cx="90" cy="80" r="24" fill="none" stroke="var(--night-muted)" stroke-width="1"/><text x="90" y="85" font-size="10" fill="var(--night-muted)" text-anchor="middle">Edge PoP</text><circle cx="410" cy="80" r="24" fill="none" stroke="var(--night-muted)" stroke-width="1"/><text x="410" y="85" font-size="10" fill="var(--night-muted)" text-anchor="middle">Edge PoP</text><path d="M110 92l120 48M390 92l-120 48" stroke="var(--fern)" stroke-width="1" stroke-opacity="0.5" stroke-dasharray="6 3"/></svg>
           </div>
-          <div class="fw-night-preview" id="fw-night-panel-2" role="tabpanel" aria-labelledby="fw-ntab-2" hidden style="display:none;">
+          <div class="fw-night-preview" id="fw-night-panel-2" role="tabpanel" aria-labelledby="fw-ntab-2" hidden>
             <svg width="100%" height="100%" viewBox="0 0 500 280" preserveAspectRatio="xMidYMid slice" aria-label="Agent workflow diagram" role="img"><rect width="500" height="280" fill="color-mix(in srgb,var(--amber) 6%,transparent)"/><rect x="180" y="30" width="140" height="45" rx="10" fill="none" stroke="var(--amber)" stroke-width="1.5"/><text x="250" y="58" font-size="12" fill="var(--night-ink)" text-anchor="middle" font-family="var(--aura-font-label)">Planner Agent</text><path d="M250 75v30" stroke="var(--amber)" stroke-width="1.5"/><rect x="80" y="105" width="120" height="40" rx="8" fill="none" stroke="var(--night-muted)" stroke-width="1"/><text x="140" y="130" font-size="11" fill="var(--night-muted)" text-anchor="middle">Tool: Search</text><rect x="300" y="105" width="120" height="40" rx="8" fill="none" stroke="var(--night-muted)" stroke-width="1"/><text x="360" y="130" font-size="11" fill="var(--night-muted)" text-anchor="middle">Tool: DB Query</text><path d="M220 105l-50 0M280 105l50 0" stroke="var(--amber)" stroke-width="1" stroke-opacity="0.5"/><rect x="180" y="175" width="140" height="40" rx="8" fill="color-mix(in srgb,var(--amber) 15%,transparent)" stroke="var(--amber)" stroke-width="1.5"/><text x="250" y="200" font-size="11" fill="var(--night-ink)" text-anchor="middle" font-family="var(--aura-font-label)">Response</text><path d="M140 145v20l110 10M360 145v20l-110 10" stroke="var(--amber)" stroke-width="1" stroke-opacity="0.5"/></svg>
           </div>
-          <div class="fw-night-preview" id="fw-night-panel-3" role="tabpanel" aria-labelledby="fw-ntab-3" hidden style="display:none;">
-            <svg width="100%" height="100%" viewBox="0 0 500 280" preserveAspectRatio="xMidYMid slice" aria-label="Model governance diagram" role="img"><rect width="500" height="280" fill="color-mix(in srgb,var(--lagoon) 6%,transparent)"/><rect x="40" y="40" width="420" height="40" rx="6" fill="color-mix(in srgb,var(--lagoon) 12%,transparent)"/><text x="60" y="65" font-size="11" fill="var(--lagoon)" font-family="var(--aura-font-label)">model-v1.2.0</text><text x="300" y="65" font-size="11" fill="var(--night-muted)">2026-04-01 · approved</text><rect x="40" y="100" width="420" height="40" rx="6" fill="color-mix(in srgb,var(--night-muted) 8%,transparent)"/><text x="60" y="125" font-size="11" fill="var(--night-muted)" font-family="var(--aura-font-label)">model-v1.1.0</text><text x="300" y="125" font-size="11" fill="var(--night-muted)">2026-02-14 · archived</text><rect x="40" y="160" width="420" height="40" rx="6" fill="color-mix(in srgb,var(--night-muted) 8%,transparent)"/><text x="60" y="185" font-size="11" fill="var(--night-muted)" font-family="var(--aura-font-label)">model-v1.0.0</text><text x="300" y="185" font-size="11" fill="var(--night-muted)">2026-01-02 · retired</text></svg>
+          <div class="fw-night-preview" id="fw-night-panel-3" role="tabpanel" aria-labelledby="fw-ntab-3" hidden>
+            <svg width="100%" height="100%" viewBox="0 0 500 280" preserveAspectRatio="xMidYMid slice" aria-label="Model governance diagram" role="img"><rect width="500" height="280" fill="color-mix(in srgb,var(--lagoon) 6%,transparent)"/><rect x="40" y="40" width="420" height="40" rx="6" fill="color-mix(in srgb,var(--lagoon) 12%,transparent)"/><text x="60" y="65" font-size="13" fill="var(--lagoon-on-night)" font-weight="600" font-family="var(--aura-font-label)">model-v1.2.0</text><text x="300" y="65" font-size="11" fill="var(--night-muted)">2026-04-01 · approved</text><rect x="40" y="100" width="420" height="40" rx="6" fill="color-mix(in srgb,var(--night-muted) 8%,transparent)"/><text x="60" y="125" font-size="11" fill="var(--night-muted)" font-family="var(--aura-font-label)">model-v1.1.0</text><text x="300" y="125" font-size="11" fill="var(--night-muted)">2026-02-14 · archived</text><rect x="40" y="160" width="420" height="40" rx="6" fill="color-mix(in srgb,var(--night-muted) 8%,transparent)"/><text x="60" y="185" font-size="11" fill="var(--night-muted)" font-family="var(--aura-font-label)">model-v1.0.0</text><text x="300" y="185" font-size="11" fill="var(--night-muted)">2026-01-02 · retired</text></svg>
           </div>
-          <a class="fw-night-preview-link" href="#">Explore Agent Workbench documentation →</a>
+          <a class="fw-night-preview-link" href="#">Explore Lumavar Nexis documentation →</a>
         </div>
       </div>
       <div class="fw-night-cards">
@@ -833,7 +860,7 @@ img{max-width:100%;}
           <div class="fw-cust-card-top"><div class="fw-cust-card-name">Meridian Logistics</div><div class="fw-cust-card-text">Reduced global freight routing latency by 60% after migrating to Fernwick's private backbone and Stream Analytics (sample figures)</div><a class="fw-cust-card-link" href="#">Watch video →</a></div>
           <div class="fw-cust-card-art" aria-hidden="true">
             <svg width="100%" height="100%" viewBox="0 0 360 200" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="cg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="var(--lagoon)"/><stop offset="100%" stop-color="var(--lagoon-deep)"/></linearGradient></defs><rect width="360" height="200" fill="url(#cg1)"/><circle cx="180" cy="100" r="50" fill="none" stroke="color-mix(in srgb,white 20%,transparent)" stroke-width="40"/></svg>
-            <button class="fw-cust-play" aria-label="Play Meridian Logistics video (demo only)"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6 4l9 5-9 5V4z" fill="var(--lagoon)"/></svg></button>
+            <button class="fw-cust-play" aria-label="Play Meridian Logistics video (demo only)"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6 4l9 5-9 5V4z" fill="white"/></svg></button>
             <div class="fw-cust-caption">Meridian Logistics + Fernwick</div>
           </div>
         </div>
@@ -841,7 +868,7 @@ img{max-width:100%;}
           <div class="fw-cust-card-top"><div class="fw-cust-card-name">Velta Health Systems</div><div class="fw-cust-card-text">Deployed HIPAA-ready workloads in under 48 hours using Fernwick's compliance-ready configuration bundles (fictional example)</div><a class="fw-cust-card-link" href="#">Watch video →</a></div>
           <div class="fw-cust-card-art" aria-hidden="true">
             <svg width="100%" height="100%" viewBox="0 0 360 200" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="cg2" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="color-mix(in srgb,var(--fern) 80%,var(--night))"/><stop offset="100%" stop-color="var(--fern)"/></linearGradient></defs><rect width="360" height="200" fill="url(#cg2)"/><path d="M60 100l120-60 120 60-120 60z" fill="none" stroke="color-mix(in srgb,white 20%,transparent)" stroke-width="2"/></svg>
-            <button class="fw-cust-play" aria-label="Play Velta Health video (demo only)"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6 4l9 5-9 5V4z" fill="var(--fern)"/></svg></button>
+            <button class="fw-cust-play" aria-label="Play Velta Health video (demo only)"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6 4l9 5-9 5V4z" fill="white"/></svg></button>
             <div class="fw-cust-caption">Velta Health + Fernwick</div>
           </div>
         </div>
@@ -874,10 +901,10 @@ img{max-width:100%;}
     <div class="fw-cust-controls">
       <div class="fw-cust-progress" aria-hidden="true"><div class="fw-cust-progress-fill" id="fw-cust-fill" style="width:20%;"></div></div>
       <div class="fw-cust-nav">
-        <button class="button button-pill fw-button-icon" type="button" id="fw-cust-prev" aria-label="Previous story" aria-controls="fw-cust-track" disabled style="border-color:var(--control-line);color:var(--ink);background:var(--canvas);">
+        <button class="button button-pill fw-button-icon" type="button" id="fw-cust-prev" aria-label="Previous story" aria-controls="fw-cust-track" disabled style="background:var(--canvas);">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <button class="button button-pill fw-button-icon" type="button" id="fw-cust-next" aria-label="Next story" aria-controls="fw-cust-track" style="border-color:var(--control-line);color:var(--ink);background:var(--canvas);">
+        <button class="button button-pill fw-button-icon" type="button" id="fw-cust-next" aria-label="Next story" aria-controls="fw-cust-track" style="background:var(--canvas);">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
@@ -991,7 +1018,7 @@ img{max-width:100%;}
             <tr><td>Archive Vault</td><td>per GB / month</td><td>$0.001</td><td>All tiers</td></tr>
             <tr><td>Fernwick SQL (2 vCPU)</td><td>per hour</td><td>$0.082</td><td>Tier 1</td></tr>
             <tr><td>Stream Analytics</td><td>per 1M events</td><td>$0.045</td><td>Tier 1 &amp; 2</td></tr>
-            <tr><td>Agent Workbench inference</td><td>per 1M tokens</td><td>$1.50</td><td>Tier 1</td></tr>
+            <tr><td>Lumavar Nexis inference</td><td>per 1M tokens</td><td>$1.50</td><td>Tier 1</td></tr>
             <tr><td>Private Fabric egress</td><td>per GB</td><td>$0.010</td><td>Peered regions</td></tr>
             <tr><td>Canopy Compute (2 vCPU, 8 GB)</td><td>per hour</td><td>$0.054</td><td>Tier 2 (Asia-Pacific)</td></tr>
           </tbody>
@@ -1018,7 +1045,7 @@ img{max-width:100%;}
             <div class="fw-plan-feature"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Up to 64 vCPU compute (sample)</div>
             <div class="fw-plan-feature"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>1 TB object storage included</div>
             <div class="fw-plan-feature"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Business support SLA</div>
-            <div class="fw-plan-feature"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Agent Workbench access</div>
+            <div class="fw-plan-feature"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--fern)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Lumavar Nexis access</div>
           </div>
           <button class="button button-fill" type="button" style="background:var(--lagoon);border-color:var(--lagoon);color:var(--on-lagoon);border-radius:9999px;height:calc(var(--aura)*3.5);padding:0 calc(var(--aura)*2);">Start Growth trial</button>
         </article>
@@ -1151,11 +1178,11 @@ img{max-width:100%;}
   <section style="margin-top:calc(var(--aura)*7);" aria-labelledby="fw-cta-h2">
     <div class="fw-cta fw-reveal">
       <div class="fw-cta-copy">
-        <h2 class="fw-cta-h2" id="fw-cta-h2"><span style="color:var(--lagoon);">Start building</span> on the cloud made for every scale and speed</h2>
-        <p style="color:var(--body);font-size:16px;line-height:1.5;margin-bottom:calc(var(--aura)*2);overflow-wrap:anywhere;">Sample $400 in free credits for new workspaces. No credit card required for the fictional demo.</p>
+        <h2 class="fw-cta-h2" id="fw-cta-h2"><span style="color:var(--lagoon);">Launch your build</span> on a cloud made for every scale and speed</h2>
+        <p style="color:var(--body);font-size:16px;line-height:1.5;margin-bottom:calc(var(--aura)*2);overflow-wrap:break-word;word-break:normal;">A sample workspace credit of $400 — fictional and non-redeemable — is waiting for new signups.</p>
         <div class="fw-cta-pills">
-          <button class="button button-fill" type="button" style="background:var(--lagoon);border-color:var(--lagoon);color:var(--on-lagoon);border-radius:9999px;height:calc(var(--aura)*3.5);padding:0 calc(var(--aura)*2);">Start for free</button>
-          <button class="button button-pill" type="button" style="border-color:color-mix(in srgb,var(--lagoon) 40%,transparent);color:var(--lagoon);background:transparent;border-radius:9999px;height:calc(var(--aura)*3.5);padding:0 calc(var(--aura)*2);">Talk to sales</button>
+          <button class="button button-fill" type="button" style="background:var(--lagoon);border-color:var(--lagoon);color:var(--on-lagoon);border-radius:9999px;height:calc(var(--aura)*3.5);padding:0 calc(var(--aura)*2);">Begin for free</button>
+          <button class="button button-pill" type="button" style="border-color:color-mix(in srgb,var(--lagoon) 40%,transparent);color:var(--lagoon);background:transparent;border-radius:9999px;height:calc(var(--aura)*3.5);padding:0 calc(var(--aura)*2);">Speak with our team</button>
         </div>
       </div>
       <div class="fw-cta-glyph" aria-hidden="true">
@@ -1183,66 +1210,66 @@ img{max-width:100%;}
   <div class="wrap">
     <div class="fw-footer-cols">
       <div>
-        <button class="fw-footer-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-fcol-0" id="fw-fcol-h0">Why Fernwick <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <div class="fw-footer-col-title" aria-hidden="true">Why Fernwick</div>
+        <button class="fw-footer-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-fcol-0" id="fw-fcol-h0">The Fernwick story <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="fw-footer-col-title" aria-hidden="true">The Fernwick story</div>
         <div class="fw-footer-acc-panel" id="fw-fcol-0">
           <ul class="fw-footer-col-list">
-            <li><a href="#">About Fernwick</a></li>
+            <li><a href="#">About us</a></li>
             <li><a href="#">Sustainability</a></li>
             <li><a href="#">Trust &amp; compliance</a></li>
-            <li><a href="#">Global infrastructure</a></li>
-            <li><a href="#">Customer stories</a></li>
-            <li><a href="#">Analyst reports (sample)</a></li>
+            <li><a href="#">Network coverage</a></li>
+            <li><a href="#">Customer spotlights</a></li>
+            <li><a href="#">Industry recognition (sample)</a></li>
           </ul>
         </div>
       </div>
       <div>
-        <button class="fw-footer-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-fcol-1" id="fw-fcol-h1">Products &amp; pricing <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <div class="fw-footer-col-title" aria-hidden="true">Products &amp; pricing</div>
+        <button class="fw-footer-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-fcol-1" id="fw-fcol-h1">Services &amp; plans <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="fw-footer-col-title" aria-hidden="true">Services &amp; plans</div>
         <div class="fw-footer-acc-panel" id="fw-fcol-1">
           <ul class="fw-footer-col-list">
-            <li><a href="#fw-platform">All products</a></li>
+            <li><a href="#fw-platform">All services</a></li>
             <li><a href="#fw-pricing">Sample pricing</a></li>
             <li><a href="#fw-pricing">Free tier</a></li>
-            <li><a href="#">Pricing calculator</a></li>
-            <li><a href="#">Committed use</a></li>
+            <li><a href="#">Usage estimator</a></li>
+            <li><a href="#">Volume commitments</a></li>
           </ul>
         </div>
       </div>
       <div>
-        <button class="fw-footer-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-fcol-2" id="fw-fcol-h2">Solutions <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <div class="fw-footer-col-title" aria-hidden="true">Solutions</div>
+        <button class="fw-footer-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-fcol-2" id="fw-fcol-h2">Use cases <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="fw-footer-col-title" aria-hidden="true">Use cases</div>
         <div class="fw-footer-acc-panel" id="fw-fcol-2">
           <ul class="fw-footer-col-list">
-            <li><a href="#fw-industries">By industry</a></li>
-            <li><a href="#fw-ai">AI &amp; machine learning</a></li>
-            <li><a href="#fw-platform">Developer tools</a></li>
-            <li><a href="#fw-platform">Security</a></li>
-            <li><a href="#fw-industries">Startups</a></li>
+            <li><a href="#fw-industries">By vertical</a></li>
+            <li><a href="#fw-ai">AI &amp; automation</a></li>
+            <li><a href="#fw-platform">Build tooling</a></li>
+            <li><a href="#fw-platform">Infrastructure security</a></li>
+            <li><a href="#fw-industries">Early-stage companies</a></li>
           </ul>
         </div>
       </div>
       <div>
-        <button class="fw-footer-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-fcol-3" id="fw-fcol-h3">Resources <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <div class="fw-footer-col-title" aria-hidden="true">Resources</div>
+        <button class="fw-footer-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-fcol-3" id="fw-fcol-h3">Learning hub <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="fw-footer-col-title" aria-hidden="true">Learning hub</div>
         <div class="fw-footer-acc-panel" id="fw-fcol-3">
           <ul class="fw-footer-col-list">
             <li><a href="#">Documentation</a></li>
             <li><a href="#">Architecture center</a></li>
-            <li><a href="#">Blog</a></li>
+            <li><a href="#">Engineering blog</a></li>
             <li><a href="#">Community forum</a></li>
-            <li><a href="#">Certifications</a></li>
+            <li><a href="#">Skill tracks</a></li>
           </ul>
         </div>
       </div>
       <div>
-        <button class="fw-footer-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-fcol-4" id="fw-fcol-h4">Engage <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <div class="fw-footer-col-title" aria-hidden="true">Engage</div>
+        <button class="fw-footer-acc-trigger" type="button" aria-expanded="false" aria-controls="fw-fcol-4" id="fw-fcol-h4">Connect <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="fw-footer-col-title" aria-hidden="true">Connect</div>
         <div class="fw-footer-acc-panel" id="fw-fcol-4">
           <ul class="fw-footer-col-list">
-            <li><a href="#fw-form">Contact sales</a></li>
+            <li><a href="#fw-form">Talk to our team</a></li>
             <li><a href="#">Events &amp; webinars</a></li>
-            <li><a href="#">Partner program</a></li>
+            <li><a href="#">Partner network</a></li>
             <li><a href="#">Newsroom</a></li>
             <li><a href="#">Careers (fictional)</a></li>
           </ul>
@@ -1299,7 +1326,7 @@ img{max-width:100%;}
       <div class="fw-assist-suggestions" id="fw-assist-sugs">
         <button class="fw-assist-sug-btn" type="button" data-answer="Fernwick currently offers sample deployments across 36 fictional regions on 6 continents. All region data is for demonstration only and does not reflect any real infrastructure.">How many regions does Fernwick have?<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 8h8M9 5l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <button class="fw-assist-sug-btn" type="button" data-answer="New Fernwick workspaces receive a sample of $400 in cloud credits (fictional, non-redeemable). These credits can be applied to compute, storage, databases or AI services within the first 90 days (sample terms).">What free credits are available?<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 8h8M9 5l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <button class="fw-assist-sug-btn" type="button" data-answer="Agent Workbench is Fernwick's platform for building, testing and deploying AI agents. You can connect agents to tools like databases, APIs and storage, then orchestrate multi-step workflows with visual tooling. All pricing and performance figures are sample data.">Tell me about Agent Workbench<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 8h8M9 5l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="fw-assist-sug-btn" type="button" data-answer="Lumavar Nexis is Fernwick's platform for building, testing and deploying AI agents. You can connect agents to tools like databases, APIs and storage, then orchestrate multi-step workflows with visual tooling. All pricing and performance figures are sample data.">Tell me about Lumavar Nexis<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 8h8M9 5l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </div>
       <div class="fw-assist-log" id="fw-assist-log" aria-live="polite" aria-label="Conversation log"></div>
     </div>
@@ -1383,8 +1410,19 @@ img{max-width:100%;}
     document.body.style.overflow="";
     burger.focus();
   }
-  burger.addEventListener("click",openMobile);
+  burger.addEventListener("click",function(){
+    if(!mobileMenu.hidden){closeMobile();}else{openMobile();}
+  });
   mobileClose.addEventListener("click",closeMobile);
+  document.querySelectorAll(".fw-mobile-item[aria-expanded]").forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var expanded=btn.getAttribute("aria-expanded")==="true";
+      btn.setAttribute("aria-expanded",String(!expanded));
+      var subId=btn.getAttribute("aria-controls");
+      var sub=document.getElementById(subId);
+      if(sub){sub.classList.toggle("open",!expanded);}
+    });
+  });
   document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!mobileMenu.hidden)closeMobile();});
   mobileMenu.querySelectorAll("a").forEach(function(a){a.addEventListener("click",closeMobile);});
   mobileMenu.addEventListener("keydown",function(e){
@@ -1405,13 +1443,13 @@ img{max-width:100%;}
         t.tabIndex=-1;
         var panelId=t.getAttribute("aria-controls");
         var panel=document.getElementById(panelId);
-        if(panel){panel.setAttribute("aria-hidden","true");if(panel.style.display!==undefined)panel.style.display="";}
+        if(panel){panel.setAttribute("aria-hidden","true");panel.hidden=true;}
       });
       tab.setAttribute("aria-selected","true");
       tab.tabIndex=0;
       var panelId=tab.getAttribute("aria-controls");
       var panel=document.getElementById(panelId);
-      if(panel){panel.setAttribute("aria-hidden","false");}
+      if(panel){panel.setAttribute("aria-hidden","false");panel.hidden=false;}
     }
     tabs.forEach(function(tab){
       tab.addEventListener("click",function(){activate(tab);});
@@ -1511,11 +1549,16 @@ img{max-width:100%;}
   var pauseBtn=document.getElementById("fw-pause-btn");
   var marquee=document.getElementById("fw-marquee");
   if(pauseBtn&&marquee){
-    if(!motionOk){marquee.classList.remove("running");}
+    if(!motionOk){
+      marquee.classList.remove("running");
+      pauseBtn.setAttribute("aria-pressed","true");
+    }
     pauseBtn.addEventListener("click",function(){
       var pressed=pauseBtn.getAttribute("aria-pressed")==="true";
-      pauseBtn.setAttribute("aria-pressed",String(!pressed));
-      if(!pressed){marquee.classList.add("paused");}
+      var nowPaused=!pressed;
+      pauseBtn.setAttribute("aria-pressed",String(nowPaused));
+      pauseBtn.setAttribute("aria-label",nowPaused?"Resume logo animation":"Pause logo animation");
+      if(nowPaused){marquee.classList.add("paused");}
       else{marquee.classList.remove("paused");}
     });
   }
@@ -1610,6 +1653,88 @@ img{max-width:100%;}
 
   document.getElementById("fw-talk-sales-hero")&&document.getElementById("fw-talk-sales-hero").addEventListener("click",function(){document.getElementById("fw-form")&&document.getElementById("fw-form").scrollIntoView({behavior:motionOk?"smooth":"auto"});});
   document.getElementById("fw-contact-sales-plan")&&document.getElementById("fw-contact-sales-plan").addEventListener("click",function(){document.getElementById("fw-form")&&document.getElementById("fw-form").scrollIntoView({behavior:motionOk?"smooth":"auto"});});
+
+  var megaRailData={
+    "fw-rail-solutions":{
+      titleEl:"fw-sol-panel-title",gridEl:"fw-sol-panel-grid",
+      groups:{
+        sg0:{title:"Startup & Growth",items:[{t:"Cloud Migrations",d:"Lift, shift and modernize legacy workloads with guided tooling"},{t:"Sustainable Cloud",d:"Carbon-aware scheduling and energy-efficient regions"},{t:"AI Platforms",d:"Model training, inference and agent orchestration at scale"}]},
+        sg1:{title:"Enterprise",items:[{t:"Zero-Trust Security",d:"Identity, posture management and threat detection built-in"},{t:"Global Networking",d:"Private backbone, CDN and anycast DNS worldwide"},{t:"Cost Governance",d:"Budget alerts, rightsizing recommendations and FinOps dashboards"}]},
+        sg2:{title:"Financial Services",items:[{t:"Regulated Workloads",d:"PCI-DSS and SOC 2 environments out of the box"},{t:"Real-Time Payments",d:"Sub-millisecond transaction processing on Fernwick SQL"},{t:"Fraud Intelligence",d:"AI-powered anomaly detection on streaming event data"}]},
+        sg3:{title:"Healthcare",items:[{t:"HIPAA-Ready Compute",d:"Compliant VM and container environments with audit trails"},{t:"Medical Imaging",d:"GPU-accelerated diagnostic imaging at scale"},{t:"Clinical AI",d:"Federated learning without exposing patient records"}]},
+        sg4:{title:"Media & Streaming",items:[{t:"Adaptive Streaming",d:"Real-time transcoding with global CDN delivery"},{t:"Content AI",d:"Personalized recommendations powered by inference endpoints"},{t:"Live Events",d:"Elastic burst capacity for millions of concurrent viewers"}]},
+        sg5:{title:"Commerce & Retail",items:[{t:"Peak Scaling",d:"Auto-scale compute for seasonal traffic spikes"},{t:"Personalization Engine",d:"Recommendation models trained on first-party data"},{t:"Inventory AI",d:"Demand forecasting across global distribution networks"}]},
+        sg6:{title:"Gaming",items:[{t:"Game Servers",d:"Sub-50ms latency global dedicated server fleet (sample)"},{t:"Matchmaking Service",d:"Skill-based matching at millions of events per second"},{t:"In-Game Economy",d:"Transactional backend for virtual goods and leaderboards"}]},
+        sg7:{title:"Education",items:[{t:"Virtual Classrooms",d:"Scalable video and collaboration infrastructure"},{t:"Research Clusters",d:"GPU allocation for academic computing via Scholar program"},{t:"LMS Backends",d:"Managed databases and storage for learning platforms"}]}
+      }
+    },
+    "fw-rail-products":{
+      titleEl:"fw-prod-panel-title",gridEl:null,
+      groups:{
+        pg0:{title:"Compute",items:[{t:"Canopy Compute",d:"Scalable VMs with custom CPU and memory profiles"},{t:"Container Runtime",d:"Managed containers with auto-scaling node pools"},{t:"Fernwick Functions",d:"Event-driven serverless with zero cold-start guarantee"}]},
+        pg1:{title:"Storage",items:[{t:"Object Store",d:"Globally replicated blob storage with lifecycle policies"},{t:"Block Volumes",d:"NVMe-backed persistent disks with snapshot scheduling"},{t:"Archive Vault",d:"Cold storage from $0.001 per GB per month (sample)"}]},
+        pg2:{title:"Databases",items:[{t:"Fernwick SQL",d:"Fully managed relational database with 99.99% SLA"},{t:"Document DB",d:"Serverless document store with global replication"},{t:"Vector Index",d:"Purpose-built for semantic search and AI embeddings"}]},
+        pg3:{title:"AI & ML",items:[{t:"Lumavar Nexis",d:"Build, test and deploy AI agents with visual tooling"},{t:"Model Shelf",d:"Curated library of open-weight foundation models"},{t:"Training Clusters",d:"GPU resources with spot and reserved pricing"}]},
+        pg4:{title:"Networking",items:[{t:"Private Fabric",d:"Dedicated interconnect and virtual private cloud routing"},{t:"Global CDN",d:"Anycast edge with 200ms purge propagation (sample)"},{t:"Load Balancer",d:"L4 and L7 with TLS termination and WAF integration"}]},
+        pg5:{title:"Security",items:[{t:"Shield SIEM",d:"Real-time threat detection and incident response automation"},{t:"Key Vault",d:"FIPS 140-3 HSM-backed secret and certificate management"},{t:"Identity Platform",d:"Zero-trust IAM with workload identity federation"}]},
+        pg6:{title:"Build Tools",items:[{t:"Pipeline CI/CD",d:"Container-native build, test and delivery workflows"},{t:"Depot Registry",d:"Private container and package repositories"},{t:"Fernwick Terminal",d:"Browser-based terminal with pre-authenticated CLI"}]},
+        pg7:{title:"Data Analytics",items:[{t:"Stream Analytics",d:"Sub-second latency processing for event streams"},{t:"Data Warehouse",d:"Petabyte-scale with serverless query execution"},{t:"Notebooks",d:"Collaborative data science with pre-installed ML libs"}]}
+      }
+    },
+    "fw-rail-pricing":{
+      titleEl:"fw-pric-panel-title",gridEl:null,
+      groups:{
+        prg0:{title:"Compute rates",items:[{t:"Pay-as-you-go",d:"No upfront cost; billed per second of resource use"},{t:"Spot Instances",d:"Up to 80% off on interruptible workloads (sample)"},{t:"Committed Savings",d:"Up to 70% off with 1 or 3-year commitments (sample)"}]},
+        prg1:{title:"Storage rates",items:[{t:"Object Store",d:"From $0.020 per GB per month (sample, Tier 1)"},{t:"Archive Vault",d:"From $0.001 per GB per month (sample)"},{t:"Block Volumes",d:"From $0.040 per GB per month (sample)"}]},
+        prg2:{title:"AI & ML rates",items:[{t:"Inference endpoints",d:"From $1.50 per 1M tokens (sample)"},{t:"Training Clusters",d:"From $3.20 per GPU hour (sample)"},{t:"Lumavar Nexis",d:"Included in Growth and Enterprise plans"}]},
+        prg3:{title:"Free tier overview",items:[{t:"Free Credits",d:"Sample $400 in cloud credits for new workspaces (fictional)"},{t:"Always-free tier",d:"Limited compute and storage with no expiry (sample)"},{t:"Trial period",d:"90-day full-feature trial for new organizations (sample)"}]},
+        prg4:{title:"Volume commitments",items:[{t:"1-year commit",d:"Up to 40% off pay-as-you-go rates (sample)"},{t:"3-year commit",d:"Up to 70% off pay-as-you-go rates (sample)"},{t:"Custom agreements",d:"Tailored terms for Enterprise workloads"}]}
+      }
+    },
+    "fw-rail-resources":{
+      titleEl:"fw-res-panel-title",gridEl:null,
+      groups:{
+        rg0:{title:"Guides & docs",items:[{t:"Quick-start Guides",d:"Spin up your first Fernwick workload in under 10 minutes"},{t:"API Reference",d:"Full REST and gRPC references for every Fernwick service"},{t:"Architecture Center",d:"Reference blueprints for every workload type"}]},
+        rg1:{title:"Tutorials",items:[{t:"Hands-on Labs",d:"Step-by-step labs with sandbox environments (fictional)"},{t:"Video Walkthroughs",d:"Recorded sessions from Fernwick Build Summit"},{t:"Code Samples",d:"Open-source templates for common patterns"}]},
+        rg2:{title:"Community",items:[{t:"Community Forum",d:"Ask questions and share knowledge with other builders"},{t:"Discord Server",d:"Real-time chat with the Fernwick community (fictional)"},{t:"Office Hours",d:"Weekly live Q&A with Fernwick engineers (fictional)"}]},
+        rg3:{title:"Engineering blog",items:[{t:"Fernwick Blog",d:"Engineering posts, product announcements and spotlights"},{t:"Release Notes",d:"Changelog for every Fernwick service and SDK"},{t:"Research Papers",d:"Technical deep-dives from the Fernwick infrastructure team"}]},
+        rg4:{title:"Events & Summits",items:[{t:"Virtual Events",d:"Upcoming webinars, demos and partner summits"},{t:"Fernwick Build Summit",d:"Annual developer conference (fictional)"},{t:"Skill tracks",d:"Associate, Professional and Specialty certification paths"}]}
+      }
+    }
+  };
+
+  function setupMegaRail(railId,data){
+    var rail=document.getElementById(railId);
+    if(!rail)return;
+    var items=Array.prototype.slice.call(rail.querySelectorAll(".fw-mega-rail-item[data-group]"));
+    var titleEl=data.titleEl?document.getElementById(data.titleEl):null;
+    var gridEl=data.gridEl?document.getElementById(data.gridEl):null;
+    function activateGroup(btn,groupKey){
+      items.forEach(function(b){b.classList.remove("active");b.setAttribute("aria-pressed","false");});
+      btn.classList.add("active");
+      btn.setAttribute("aria-pressed","true");
+      var group=data.groups[groupKey];
+      if(!group)return;
+      if(titleEl)titleEl.textContent=group.title;
+      var gridTarget=gridEl||(btn.closest(".fw-mega").querySelector(".fw-mega-grid"));
+      if(gridTarget&&group.items){
+        gridTarget.innerHTML="";
+        group.items.forEach(function(item){
+          var a=document.createElement("a");
+          a.className="fw-mega-item";a.href="#";
+          a.innerHTML='<div class="fw-mega-item-icon" style="background:var(--accent-a3);"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="3" y="3" width="12" height="12" rx="3" fill="var(--lagoon)" opacity="0.6"/></svg></div><div><div class="fw-mega-item-title">'+item.t+'</div><div class="fw-mega-item-desc">'+item.d+'</div></div>';
+          gridTarget.appendChild(a);
+        });
+      }
+    }
+    items.forEach(function(btn){
+      btn.addEventListener("click",function(){activateGroup(btn,btn.dataset.group);});
+      btn.addEventListener("keydown",function(e){
+        if(e.key==="Enter"||e.key===" "){e.preventDefault();activateGroup(btn,btn.dataset.group);}
+      });
+    });
+  }
+  Object.keys(megaRailData).forEach(function(railId){setupMegaRail(railId,megaRailData[railId]);});
 
   var footerAccPanels=document.querySelectorAll(".fw-footer-acc-panel");
   footerAccPanels.forEach(function(p){
