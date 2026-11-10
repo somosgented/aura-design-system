@@ -27,14 +27,38 @@
 }
 
 *{box-sizing:border-box;}
-html{margin:0;padding:0;background:var(--canvas);color:var(--ink);scroll-padding-top:calc(var(--tw-head-utility)+var(--tw-head-main));}
+html{margin:0;padding:0;background:var(--canvas);color:var(--ink);scroll-padding-top:calc(var(--tw-head-utility) + var(--tw-head-main));}
 body{margin:0;padding:0;font-family:var(--aura-font-display,"Schibsted Grotesk",-apple-system,sans-serif);font-size:17px;line-height:1.5;background:var(--canvas);color:var(--ink);overflow-x:hidden;min-width:320px;}
 h1,h2,h3,h4,h5,h6,p,figure,ul,ol,dl{margin:0;}
 ul,ol{padding:0;list-style:none;}
 h1,h2,h3{font-family:var(--aura-font-display,"Schibsted Grotesk",-apple-system,sans-serif);font-weight:400;letter-spacing:-0.01em;text-wrap:balance;}
 a{color:inherit;text-decoration:none;}
 :focus-visible{outline:2px solid var(--accent-9);outline-offset:2px;}
+.dark :focus-visible{outline-color:var(--periwinkle);}
 .on-night :focus-visible{outline-color:var(--night-ink);}
+.dark .on-night :focus-visible{outline-color:#ffffff;}
+.tw-story-play:focus-visible{outline-color:#ffffff;}
+.dark .tw-plan-featured .button:focus-visible,
+.dark .tw-plan-featured .button-fill:focus-visible,
+.dark .tw-plan-featured .button-pill:focus-visible{outline-color:#ffffff;}
+.tw .button:focus-visible,
+.tw .button-fill:focus-visible,
+.tw .button-pill:focus-visible{outline:2px solid var(--accent-9);outline-offset:2px;}
+.dark .tw .button:focus-visible,
+.dark .tw .button-fill:focus-visible,
+.dark .tw .button-pill:focus-visible{outline-color:var(--periwinkle);}
+.tw .on-night .button:focus-visible,
+.tw .on-night .button-fill:focus-visible,
+.tw .on-night .button-pill:focus-visible{outline-color:var(--night-ink);}
+.dark .tw .on-night .button:focus-visible,
+.dark .tw .on-night .button-fill:focus-visible,
+.dark .tw .on-night .button-pill:focus-visible{outline-color:#ffffff;}
+.tw .tw-plan-featured .button:focus-visible,
+.tw .tw-plan-featured .button-fill:focus-visible,
+.tw .tw-plan-featured .button-pill:focus-visible{outline-color:var(--night-ink);}
+.dark .tw .tw-plan-featured .button:focus-visible,
+.dark .tw .tw-plan-featured .button-fill:focus-visible,
+.dark .tw .tw-plan-featured .button-pill:focus-visible{outline-color:#ffffff;}
 
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
 .skip-link{position:absolute;left:calc(var(--aura)*1);top:calc(var(--aura)*-5);z-index:200;padding:calc(var(--aura)*0.5) calc(var(--aura)*1.5);background:var(--accent-9);color:#ffffff;border-radius:2px;font-weight:500;}
@@ -66,6 +90,12 @@ a{color:inherit;text-decoration:none;}
 .tw a.button-fill.tw-btn-ink:hover:not(:disabled){
   background:var(--deep-action)!important;
   border-color:var(--deep-action)!important;
+}
+.dark .tw .button-fill.tw-btn-ink:hover:not(:disabled),
+.dark .tw a.button-fill.tw-btn-ink:hover:not(:disabled){
+  background:var(--periwinkle)!important;
+  border-color:var(--periwinkle)!important;
+  color:var(--night)!important;
 }
 .tw .button-pill.tw-btn-outline,
 .tw a.button-pill.tw-btn-outline{
@@ -101,10 +131,12 @@ a{color:inherit;text-decoration:none;}
   transition:background-color 180ms linear!important;
   line-height:1.3!important;
 }
-.tw .button-fill.tw-btn-white:hover:not(:disabled),
-.tw a.button-fill.tw-btn-white:hover:not(:disabled){background:var(--lavender-wash)!important;border-color:var(--lavender-wash)!important;}
+.light .tw .button-fill.tw-btn-white:hover:not(:disabled),
+.light .tw a.button-fill.tw-btn-white:hover:not(:disabled){background:var(--lavender-wash)!important;border-color:var(--lavender-wash)!important;color:var(--night)!important;}
 .dark .tw .button-fill.tw-btn-white,
 .dark .tw a.button-fill.tw-btn-white{background:#ffffff!important;color:var(--night)!important;border-color:#ffffff!important;}
+.dark .tw .button-fill.tw-btn-white:hover:not(:disabled),
+.dark .tw a.button-fill.tw-btn-white:hover:not(:disabled){background:color-mix(in srgb,#ffffff 85%,var(--periwinkle))!important;border-color:color-mix(in srgb,#ffffff 85%,var(--periwinkle))!important;color:var(--night)!important;}
 
 .tw input.inputer:not(.default),
 .tw textarea.inputer:not(.default){
@@ -195,6 +227,7 @@ a{color:inherit;text-decoration:none;}
 .tw-nav-links{display:flex;align-items:center;gap:0;margin-inline:auto;height:100%;}
 .tw-nav-trigger{display:inline-flex;align-items:center;gap:4px;padding:0 calc(var(--aura)*1);height:100%;border:0;background:transparent;color:var(--ink);font-family:inherit;font-size:15px;font-weight:400;cursor:pointer;position:relative;white-space:nowrap;}
 .tw-nav-trigger:hover,.tw-nav-trigger[aria-expanded="true"]{color:var(--deep-action);}
+.dark .tw-nav-trigger:hover,.dark .tw-nav-trigger[aria-expanded="true"]{color:var(--periwinkle);}
 .tw-nav-trigger svg{transition:transform 160ms ease;}
 .tw-nav-trigger[aria-expanded="true"] svg{transform:rotate(180deg);}
 .tw-nav-end{display:flex;align-items:center;gap:calc(var(--aura)*1);flex-shrink:0;}
@@ -206,20 +239,23 @@ a{color:inherit;text-decoration:none;}
 .tw-mega-col ul{display:grid;gap:calc(var(--aura)*0.5);}
 .tw-mega-col a{font-size:15px;color:var(--ink);display:block;padding:calc(var(--aura)*0.5) 0;border-radius:2px;}
 .tw-mega-col a:hover{color:var(--deep-action);}
+.dark .tw-mega-col a:hover{color:var(--periwinkle);}
 
 .tw-burger{display:none;align-items:center;justify-content:center;width:calc(var(--aura)*3);height:calc(var(--aura)*3);padding:0;border:0;background:transparent;color:var(--ink);cursor:pointer;border-radius:2px;}
 .tw-burger svg{width:22px;height:22px;}
 
-.tw-mobile-menu{position:fixed;inset:calc(var(--tw-head-utility)+var(--tw-head-main)) 0 0 0;width:100vw;left:0;right:0;z-index:48;background:var(--canvas);overflow-y:auto;display:flex;flex-direction:column;}
+.tw-mobile-menu{position:fixed;inset:calc(var(--tw-head-utility) + var(--tw-head-main)) 0 0 0;width:100vw;left:0;right:0;z-index:48;background:var(--canvas);overflow-y:auto;display:flex;flex-direction:column;}
 .tw-mobile-menu[hidden]{display:none;}
 .tw-mobile-menu-inner{padding:calc(var(--aura)*1.5) calc(var(--aura)*2);display:grid;gap:0;}
 .tw-mobile-menu-item{border-bottom:1px solid var(--rule);}
 .tw-mobile-menu-item a,.tw-mobile-menu-trigger{display:flex;align-items:center;justify-content:space-between;width:100%;padding:calc(var(--aura)*1.25) 0;border:0;background:transparent;color:var(--ink);font-family:inherit;font-size:17px;text-align:left;text-decoration:none;cursor:pointer;gap:calc(var(--aura)*1);}
 .tw-mobile-menu-item a:hover,.tw-mobile-menu-trigger:hover{color:var(--deep-action);}
+.dark .tw-mobile-menu-item a:hover,.dark .tw-mobile-menu-trigger:hover{color:var(--periwinkle);}
 .tw-mobile-sub{display:grid;gap:calc(var(--aura)*0.5);padding-bottom:calc(var(--aura)*1);}
 .tw-mobile-sub[hidden]{display:none;}
 .tw-mobile-sub a{font-size:15px;color:var(--gray-11);display:block;padding:calc(var(--aura)*0.5) calc(var(--aura)*1);border-radius:2px;}
 .tw-mobile-sub a:hover{color:var(--ink);}
+.dark .tw-mobile-sub a:hover{color:var(--periwinkle);}
 .tw-mobile-foot{margin-top:auto;padding:calc(var(--aura)*2);display:flex;flex-direction:column;gap:calc(var(--aura)*1);border-top:1px solid var(--rule);}
 
 .tw-hero{background:var(--night);position:relative;overflow:clip;}
@@ -261,6 +297,7 @@ a{color:inherit;text-decoration:none;}
 .tw-scroller-track{display:flex;gap:calc(var(--aura)*1.5);padding:calc(var(--aura)*0.5) 2px;}
 .tw-store-card{flex:0 0 clamp(200px,30vw,260px);min-width:0;scroll-snap-align:start;border-radius:13px;border:1px solid var(--rule);overflow:hidden;background:var(--paper);}
 .tw-store-card:focus-within{outline:2px solid var(--accent-9);outline-offset:2px;}
+.dark .tw-store-card:focus-within{outline-color:var(--periwinkle);}
 .tw-store-thumb{height:140px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
 .tw-store-info{padding:calc(var(--aura)*1);}
 .tw-store-info h3{font-size:15px;font-weight:500;overflow-wrap:anywhere;min-width:0;}
@@ -269,7 +306,8 @@ a{color:inherit;text-decoration:none;}
 .tw-scroll-btn{display:inline-flex;align-items:center;justify-content:center;width:calc(var(--aura)*3);height:calc(var(--aura)*3);border-radius:50%;border:1px solid var(--rule);background:var(--canvas);color:var(--ink);cursor:pointer;padding:0;}
 .dark .tw-scroll-btn{background:var(--paper);}
 .tw-scroll-btn:hover:not(:disabled){background:var(--lavender-wash);}
-.tw-scroll-btn:disabled{opacity:0.4;cursor:default;}
+.tw-scroll-btn:disabled{color:var(--control-line);border:1px dashed var(--control-line);cursor:default;}
+.dark .tw-scroll-btn:disabled{color:var(--control-line);border:1px dashed var(--control-line);}
 
 .tw-features{padding-block:calc(var(--aura)*3);}
 .tw-feature-panel{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--aura)*3);align-items:center;margin-bottom:calc(var(--aura)*3);}
@@ -324,7 +362,14 @@ a{color:inherit;text-decoration:none;}
 .tw-timeline-col-labels{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--aura)*0.5);margin-bottom:calc(var(--aura)*0.5);}
 .tw-timeline-col-label{font-family:var(--aura-font-label,"Spline Sans Mono",-apple-system,sans-serif);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--night-muted);text-align:center;}
 .tw-timeline-row{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--aura)*0.5);}
-.tw-timeline-pill{border-radius:9999px;padding:calc(var(--aura)*0.75) calc(var(--aura)*1);display:flex;align-items:center;gap:calc(var(--aura)*0.5);font-size:12px;color:var(--night);font-weight:500;overflow-wrap:anywhere;min-width:0;}
+@media(max-width:767px){
+  .tw-services-inner{grid-template-columns:1fr;}
+  .tw-timeline-col-labels{display:none;}
+  .tw-timeline-row{grid-template-columns:1fr;}
+  .tw-timeline-pill{position:relative;padding-left:calc(var(--aura)*1.5);}
+  .tw-timeline-empty{display:none;}
+}
+.tw-timeline-pill{border-radius:9999px;padding:calc(var(--aura)*0.75) calc(var(--aura)*1);display:flex;align-items:center;gap:calc(var(--aura)*0.5);font-size:12px;color:var(--night);font-weight:500;word-break:normal;overflow-wrap:break-word;min-width:0;}
 .tw-timeline-pill-a{background:linear-gradient(90deg,var(--aqua),color-mix(in srgb,var(--aqua) 60%,var(--periwinkle)));}
 .tw-timeline-pill-b{background:linear-gradient(90deg,var(--periwinkle),color-mix(in srgb,var(--periwinkle) 60%,var(--aqua)));}
 .tw-timeline-pill-c{background:linear-gradient(90deg,color-mix(in srgb,var(--aqua) 40%,var(--periwinkle)),var(--aqua));}
@@ -344,9 +389,11 @@ a{color:inherit;text-decoration:none;}
 .tw-story-solutions li{font-family:var(--aura-font-label,"Spline Sans Mono",-apple-system,sans-serif);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-11);}
 .tw-story-right{display:grid;gap:calc(var(--aura)*1.5);}
 .tw-story-video{border-radius:13px;background:var(--night);aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
-.tw-story-play{width:calc(var(--aura)*4);height:calc(var(--aura)*4);border-radius:50%;background:var(--accent-9);border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--accent-contrast);flex-shrink:0;}
+.tw-story-play{width:calc(var(--aura)*4);height:calc(var(--aura)*4);border-radius:50%;background:var(--accent-9);border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--accent-contrast);flex-shrink:0;outline-offset:2px;}
 .tw-story-play:hover{background:var(--deep-action);}
-.tw-story-preview-note{font-size:13px;color:var(--night-muted);text-align:center;padding:calc(var(--aura)*1);display:none;}
+.tw-story-play:focus-visible{outline:2px solid #ffffff;}
+.tw-story-preview-note{font-size:13px;color:var(--gray-11);text-align:center;padding:calc(var(--aura)*1);display:none;}
+.dark .tw-story-preview-note{color:var(--night-ink);}
 .tw-story-preview-note.tw-visible{display:block;}
 
 .tw-results{padding-block:calc(var(--aura)*5);position:relative;overflow:clip;}
@@ -362,6 +409,7 @@ a{color:inherit;text-decoration:none;}
 .tw-product-blurb a{font-size:14px;color:var(--accent-9);font-weight:500;margin-top:calc(var(--aura)*1);display:inline-flex;align-items:center;gap:4px;}
 .dark .tw-product-blurb a{color:var(--aqua);}
 .tw-product-blurb a:hover{color:var(--deep-action);}
+.dark .tw-product-blurb a:hover{color:var(--periwinkle);}
 
 .tw-pricing{padding-block:calc(var(--aura)*7.5);}
 .tw-pricing-head{text-align:center;margin-bottom:calc(var(--aura)*3);}
@@ -387,8 +435,10 @@ a{color:inherit;text-decoration:none;}
 .tw-plan-btn-wrap .button-fill.tw-btn-ink{background:var(--canvas)!important;color:var(--ink)!important;border-color:var(--canvas)!important;width:100%!important;display:flex!important;justify-content:center!important;}
 .dark .tw-plan-btn-wrap .button-fill.tw-btn-ink{background:var(--accent-contrast)!important;color:var(--accent-9)!important;border-color:var(--accent-contrast)!important;}
 .tw-plan-btn-wrap .button-fill.tw-btn-ink:hover:not(:disabled){background:var(--lavender-wash)!important;border-color:var(--lavender-wash)!important;}
+.dark .tw-plan-btn-wrap .button-fill.tw-btn-ink:hover:not(:disabled){background:var(--periwinkle)!important;border-color:var(--periwinkle)!important;color:var(--night)!important;}
 .tw-plan-btn-wrap.tw-plain .button-fill.tw-btn-ink{background:var(--ink)!important;color:var(--canvas)!important;border-color:var(--ink)!important;}
 .tw-plan-btn-wrap.tw-plain .button-fill.tw-btn-ink:hover:not(:disabled){background:var(--deep-action)!important;border-color:var(--deep-action)!important;}
+.dark .tw-plan-btn-wrap.tw-plain .button-fill.tw-btn-ink:hover:not(:disabled){background:var(--periwinkle)!important;border-color:var(--periwinkle)!important;color:var(--night)!important;}
 
 .tw-form-section{padding-block:calc(var(--aura)*5);}
 .tw-form-inner{border-radius:13px;border:1px solid var(--rule);background:var(--paper);padding:calc(var(--aura)*3);display:grid;grid-template-columns:1fr 1.3fr;gap:calc(var(--aura)*4);align-items:start;}
@@ -399,10 +449,11 @@ a{color:inherit;text-decoration:none;}
 .tw-form-field{display:grid;gap:calc(var(--aura)*0.5);}
 .tw-form-field label{font-size:14px;font-weight:500;color:var(--ink);}
 .dark .tw-form-field label{color:var(--night-ink);}
-.tw-field-msg{font-size:13px;color:var(--accent-9);min-height:1em;}
-.tw-form-status{font-size:15px;font-weight:500;color:var(--accent-9);margin-top:calc(var(--aura)*1);}
+.tw-field-msg{font-size:13px;color:var(--deep-action);min-height:1em;}
+.dark .tw-field-msg{color:var(--periwinkle);}
+.tw-form-status{font-size:15px;font-weight:500;color:var(--deep-action);margin-top:calc(var(--aura)*1);}
 .tw-form-status:empty{display:none;}
-.tw-form-status.tw-success{color:color-mix(in srgb,var(--aqua) 70%,var(--night));}
+.tw-form-status.tw-success{color:color-mix(in srgb,var(--aqua) 30%,var(--night));}
 .dark .tw-form-status.tw-success{color:var(--aqua);}
 
 .tw-faq{padding-block:calc(var(--aura)*7.5);}
@@ -425,6 +476,9 @@ a{color:inherit;text-decoration:none;}
 .tw-resources-grid{display:grid;grid-template-columns:1fr 1fr 1fr 280px;gap:calc(var(--aura)*1.5);}
 .tw-resource-card{border-radius:13px;border:1px solid color-mix(in srgb,var(--night-ink) 15%,transparent);background:color-mix(in srgb,var(--night-ink) 5%,var(--night));padding:calc(var(--aura)*2);display:grid;gap:calc(var(--aura)*1);align-content:start;}
 .tw-resource-type{font-family:var(--aura-font-label,"Spline Sans Mono",-apple-system,sans-serif);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--night-muted);}
+.tw-podcast-card .tw-resource-type{color:color-mix(in srgb,var(--night-ink) 72%,var(--night-muted));}
+.light .tw-podcast-card .tw-resource-type{color:color-mix(in srgb,var(--night-ink) 72%,var(--night-muted));}
+.dark .tw-podcast-card .tw-resource-type{color:color-mix(in srgb,var(--night-ink) 72%,var(--night-muted));}
 .tw-resource-title{font-size:17px;font-weight:400;color:var(--night-ink);overflow-wrap:anywhere;line-height:1.3;}
 .tw-resource-link{font-size:14px;color:var(--aqua);display:inline-flex;align-items:center;gap:4px;font-weight:500;}
 .tw-resource-link:hover{color:var(--periwinkle);}
@@ -463,7 +517,6 @@ a{color:inherit;text-decoration:none;}
   .tw-feature-panel{grid-template-columns:1fr;}
   .tw-feature-panel.tw-flip .tw-feature-visual{order:0;}
   .tw-navy-band-panels{grid-template-columns:1fr;}
-  .tw-services-inner{grid-template-columns:1fr;}
   .tw-story-content{grid-template-columns:1fr;}
   .tw-results-inner{grid-template-columns:1fr;}
   .tw-plans{grid-template-columns:1fr;}
@@ -491,11 +544,17 @@ a{color:inherit;text-decoration:none;}
   .tw-footer-col ul[hidden]{display:none;}
   .tw-channels-card{display:none;}
   .tw-hero-dash-wrap{margin-inline:calc(var(--aura)*-1);}
+  .tw-services-inner{grid-template-columns:1fr;}
+  .tw-timeline-col-labels{display:none;}
+  .tw-timeline-row{grid-template-columns:1fr;}
+  .tw-timeline-empty{display:none;}
 }
 
 @media(max-width:480px){
   .tw-util-left{display:none;}
-  .tw-util-right{width:100%;justify-content:center;}
+  .tw-util-right{width:100%;justify-content:center;gap:calc(var(--aura)*0.75);}
+  .tw-util-link{letter-spacing:0.03em;}
+  .tw-util-link[data-hide-small]{display:none;}
 }
 </style>
 </head>
@@ -512,10 +571,10 @@ a{color:inherit;text-decoration:none;}
         <a class="tw-util-link" href="#">Checkout</a>
         <a class="tw-util-link" href="#">B2B Suite</a>
       </div>
-      <div class="tw-util-right">
-        <a class="tw-util-link" href="#">Help</a>
-        <a class="tw-util-link" href="#">Developers</a>
-        <a class="tw-util-link" href="#">Log in</a>
+      <div class="tw-util-right" role="list">
+        <a class="tw-util-link" href="#">Support centre</a>
+        <a class="tw-util-link" href="#" data-hide-small>Build on Tillwright</a>
+        <a class="tw-util-link" href="#">Sign in</a>
         <a class="tw-util-link" href="#">&#127758; Global</a>
       </div>
     </div>
@@ -529,23 +588,23 @@ a{color:inherit;text-decoration:none;}
       <nav class="tw-nav-links" aria-label="Main navigation" id="tw-main-nav">
         <div style="position:relative;height:100%;display:flex;align-items:center;" id="mm-wrap-platform">
           <button class="tw-nav-trigger" type="button" id="mm-trigger-platform" aria-expanded="false" aria-controls="mm-platform">
-            Platform
+            Solutions
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
         </div>
         <div style="position:relative;height:100%;display:flex;align-items:center;" id="mm-wrap-services">
           <button class="tw-nav-trigger" type="button" id="mm-trigger-services" aria-expanded="false" aria-controls="mm-services">
-            Services
+            Services &amp; Support
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
         </div>
         <div style="position:relative;height:100%;display:flex;align-items:center;" id="mm-wrap-resources">
           <button class="tw-nav-trigger" type="button" id="mm-trigger-resources" aria-expanded="false" aria-controls="mm-resources">
-            Resources
+            Learning hub
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
         </div>
-        <a class="tw-nav-trigger" href="#tw-pricing" style="text-decoration:none;border:0;background:transparent;font-size:15px;padding:0 calc(var(--aura)*1);">Pricing</a>
+        <a class="tw-nav-trigger" href="#tw-pricing" style="text-decoration:none;border:0;background:transparent;font-size:15px;padding:0 calc(var(--aura)*1);">Plans</a>
       </nav>
       <div class="tw-nav-end">
         <button class="button button-fill tw-btn-ink tw-btn-outline-desktop" type="button" onclick="document.getElementById('tw-demo-form').scrollIntoView({behavior:'smooth'})">Book a demo</button>
@@ -555,7 +614,7 @@ a{color:inherit;text-decoration:none;}
         </button>
       </div>
     </div>
-    <div class="tw-mega" id="mm-platform" hidden role="region" aria-label="Platform menu">
+    <div class="tw-mega" id="mm-platform" hidden role="region" aria-label="Solutions menu">
       <div class="tw-wrap">
         <div class="tw-mega-inner">
           <div class="tw-mega-col">
@@ -597,11 +656,11 @@ a{color:inherit;text-decoration:none;}
         </div>
       </div>
     </div>
-    <div class="tw-mega" id="mm-services" hidden role="region" aria-label="Services menu">
+    <div class="tw-mega" id="mm-services" hidden role="region" aria-label="Services &amp; Support menu">
       <div class="tw-wrap">
         <div class="tw-mega-inner">
           <div class="tw-mega-col">
-            <h3>Launch</h3>
+            <h3>Research</h3>
             <ul>
               <li><a href="#">Discovery workshop</a></li>
               <li><a href="#">Store build</a></li>
@@ -609,7 +668,7 @@ a{color:inherit;text-decoration:none;}
             </ul>
           </div>
           <div class="tw-mega-col">
-            <h3>Optimize</h3>
+            <h3>Improve</h3>
             <ul>
               <li><a href="#">Conversion audit</a></li>
               <li><a href="#">Checkout tuning</a></li>
@@ -617,7 +676,7 @@ a{color:inherit;text-decoration:none;}
             </ul>
           </div>
           <div class="tw-mega-col">
-            <h3>Support</h3>
+            <h3>Sustain</h3>
             <ul>
               <li><a href="#">Dedicated success</a></li>
               <li><a href="#">24/7 technical help</a></li>
@@ -625,9 +684,9 @@ a{color:inherit;text-decoration:none;}
             </ul>
           </div>
           <div class="tw-mega-col">
-            <h3>Partners</h3>
+            <h3>Integrations</h3>
             <ul>
-              <li><a href="#">Agency directory</a></li>
+              <li><a href="#">Certified consultants</a></li>
               <li><a href="#">Become a partner</a></li>
               <li><a href="#">Certified developers</a></li>
             </ul>
@@ -635,7 +694,7 @@ a{color:inherit;text-decoration:none;}
         </div>
       </div>
     </div>
-    <div class="tw-mega" id="mm-resources" hidden role="region" aria-label="Resources menu">
+    <div class="tw-mega" id="mm-resources" hidden role="region" aria-label="Learning hub menu">
       <div class="tw-wrap">
         <div class="tw-mega-inner">
           <div class="tw-mega-col">
@@ -659,13 +718,13 @@ a{color:inherit;text-decoration:none;}
             <ul>
               <li><a href="#">Commerce reports</a></li>
               <li><a href="#">Case studies</a></li>
-              <li><a href="#">Podcast</a></li>
+              <li><a href="#">Audio series</a></li>
             </ul>
           </div>
           <div class="tw-mega-col">
             <h3>Tools</h3>
             <ul>
-              <li><a href="#">App marketplace</a></li>
+              <li><a href="#">Extension library</a></li>
               <li><a href="#">Theme previewer</a></li>
               <li><a href="#">API explorer</a></li>
             </ul>
@@ -680,7 +739,7 @@ a{color:inherit;text-decoration:none;}
   <div class="tw-mobile-menu-inner">
     <div class="tw-mobile-menu-item">
       <button class="tw-mobile-menu-trigger" type="button" aria-expanded="false" aria-controls="tw-mob-platform">
-        Platform
+        Solutions
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <div class="tw-mobile-sub" id="tw-mob-platform" hidden>
@@ -693,39 +752,39 @@ a{color:inherit;text-decoration:none;}
     </div>
     <div class="tw-mobile-menu-item">
       <button class="tw-mobile-menu-trigger" type="button" aria-expanded="false" aria-controls="tw-mob-services">
-        Services
+        Services &amp; Support
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <div class="tw-mobile-sub" id="tw-mob-services" hidden>
-        <a href="#">Discovery</a>
-        <a href="#">Optimize</a>
-        <a href="#">Support</a>
-        <a href="#">Partners</a>
+        <a href="#">Research</a>
+        <a href="#">Improve</a>
+        <a href="#">Sustain</a>
+        <a href="#">Integrations</a>
       </div>
     </div>
     <div class="tw-mobile-menu-item">
       <button class="tw-mobile-menu-trigger" type="button" aria-expanded="false" aria-controls="tw-mob-resources">
-        Resources
+        Learning hub
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <div class="tw-mobile-sub" id="tw-mob-resources" hidden>
         <a href="#">Documentation</a>
         <a href="#">Guides</a>
         <a href="#">Case studies</a>
-        <a href="#">Podcast</a>
+        <a href="#">Audio series</a>
       </div>
     </div>
     <div class="tw-mobile-menu-item">
-      <a href="#tw-pricing">Pricing</a>
+      <a href="#tw-pricing">Plans</a>
     </div>
     <div class="tw-mobile-menu-item">
-      <a href="#">Help</a>
+      <a href="#">Support centre</a>
     </div>
     <div class="tw-mobile-menu-item">
-      <a href="#">Developers</a>
+      <a href="#">Build on Tillwright</a>
     </div>
     <div class="tw-mobile-menu-item">
-      <a href="#">Log in</a>
+      <a href="#">Sign in</a>
     </div>
     <div class="tw-mobile-menu-item">
       <a href="#">&#127758; Global</a>
@@ -823,7 +882,7 @@ a{color:inherit;text-decoration:none;}
             </tbody>
           </table>
         </div>
-        <div class="tw-channels-card" aria-label="Sales channels" role="region">
+        <div class="tw-channels-card" aria-label="Distribution channels" role="region">
           <div class="tw-channels-title">Channels</div>
           <ul style="list-style:none;padding:0;margin:0;">
             <li class="tw-channel-item tw-channel-active">
@@ -1076,7 +1135,7 @@ a{color:inherit;text-decoration:none;}
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9h10M11 6l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <h3>Activate your channels.</h3>
-        <p>Turn on the sales channels that matter for your brand — social, marketplace, wholesale — from one toggle panel.</p>
+        <p>Turn on the distribution channels that matter for your brand — social, marketplace, wholesale — from one toggle panel.</p>
       </div>
       <div class="tw-launch-step tw-fade-up" style="transition-delay:160ms;">
         <div class="tw-launch-step-icon" aria-hidden="true">
@@ -1134,9 +1193,9 @@ a{color:inherit;text-decoration:none;}
     <div class="tw-services-inner on-night">
       <div class="tw-services-timeline" aria-label="Services timeline illustration" role="img">
         <div class="tw-timeline-col-labels" aria-hidden="true">
-          <div class="tw-timeline-col-label">Discovery</div>
-          <div class="tw-timeline-col-label">Optimize</div>
-          <div class="tw-timeline-col-label">Support</div>
+          <div class="tw-timeline-col-label">Research</div>
+          <div class="tw-timeline-col-label">Improve</div>
+          <div class="tw-timeline-col-label">Sustain</div>
         </div>
         <div class="tw-timeline-row">
           <div class="tw-timeline-pill tw-timeline-pill-a">
@@ -1199,7 +1258,7 @@ a{color:inherit;text-decoration:none;}
       <div class="tw-story-content">
         <div class="tw-story-left">
           <span class="tw-eyebrow">Customer story</span>
-          <h2 id="tw-story-title">How Ferncroft Outfitters doubled revenue by unifying twelve sales channels.</h2>
+          <h2 id="tw-story-title">How Ferncroft Outfitters doubled revenue by unifying twelve distribution channels.</h2>
           <div class="tw-story-stats">
             <div>
               <div class="tw-story-stat-val">2×</div>
@@ -1221,13 +1280,13 @@ a{color:inherit;text-decoration:none;}
           </div>
         </div>
         <div class="tw-story-right">
-          <div class="tw-story-video" aria-label="Story video thumbnail" role="img">
-            <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.15;" viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <div class="tw-story-video">
+            <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.15;pointer-events:none;z-index:0;" viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
               <rect width="400" height="220" fill="var(--night-muted)"/>
               <circle cx="200" cy="110" r="80" fill="none" stroke="var(--night-ink)" stroke-width="0.5"/>
               <circle cx="200" cy="110" r="40" fill="none" stroke="var(--night-ink)" stroke-width="0.5"/>
             </svg>
-            <button class="tw-story-play" type="button" id="tw-play-btn" aria-label="Play story preview">
+            <button class="tw-story-play" type="button" id="tw-play-btn" aria-label="Play story preview" style="position:relative;z-index:1;">
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M7 5l7 4-7 4V5z" fill="currentColor"/></svg>
             </button>
           </div>
@@ -1270,7 +1329,7 @@ a{color:inherit;text-decoration:none;}
 <section class="tw-pricing tw-section" id="tw-pricing" aria-labelledby="tw-pricing-title">
   <div class="tw-wrap">
     <div class="tw-pricing-head">
-      <span class="tw-eyebrow" style="display:block;margin-bottom:calc(var(--aura)*1);">Pricing</span>
+      <span class="tw-eyebrow" style="display:block;margin-bottom:calc(var(--aura)*1);">Plans</span>
       <h2 id="tw-pricing-title">Plans that grow with your store.</h2>
       <p>All plans include the full platform. Upgrade or downgrade any time.</p>
     </div>
@@ -1282,7 +1341,7 @@ a{color:inherit;text-decoration:none;}
         <ul class="tw-plan-features">
           <li class="tw-plan-feature"><svg class="tw-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>1 storefront</li>
           <li class="tw-plan-feature"><svg class="tw-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Up to 500 products</li>
-          <li class="tw-plan-feature"><svg class="tw-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>2 sales channels</li>
+          <li class="tw-plan-feature"><svg class="tw-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>2 distribution channels</li>
           <li class="tw-plan-feature"><svg class="tw-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Tillwright Payments included</li>
         </ul>
         <div class="tw-plan-btn-wrap tw-plain">
@@ -1296,7 +1355,7 @@ a{color:inherit;text-decoration:none;}
         <ul class="tw-plan-features">
           <li class="tw-plan-feature"><svg class="tw-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--aqua)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>5 storefronts</li>
           <li class="tw-plan-feature"><svg class="tw-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--aqua)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Unlimited products</li>
-          <li class="tw-plan-feature"><svg class="tw-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--aqua)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>All sales channels</li>
+          <li class="tw-plan-feature"><svg class="tw-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--aqua)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>All distribution channels</li>
           <li class="tw-plan-feature"><svg class="tw-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--aqua)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>B2B wholesale portal</li>
           <li class="tw-plan-feature"><svg class="tw-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="var(--aqua)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>AI shopping agents</li>
         </ul>
@@ -1449,18 +1508,18 @@ a{color:inherit;text-decoration:none;}
         <a class="tw-resource-link" href="#">Download guide &#8594;</a>
       </div>
       <div class="tw-resource-card">
-        <span class="tw-resource-type">White paper</span>
+        <span class="tw-resource-type">Research</span>
         <div class="tw-resource-title">Conversational Product Discovery: What Happens to Basket Size</div>
         <p style="font-size:14px;color:var(--night-muted);overflow-wrap:anywhere;">How conversational product agents affect basket size, return rates and repeat purchase cadence.</p>
-        <a class="tw-resource-link" href="#">Read white paper &#8594;</a>
+        <a class="tw-resource-link" href="#">Read research &#8594;</a>
       </div>
       <div class="tw-podcast-card">
-        <div class="tw-podcast-cover" aria-label="Podcast cover art" role="img">
+        <div class="tw-podcast-cover" aria-label="Audio series cover art" role="img">
           <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="10" fill="var(--night)" opacity="0.4"/><path d="M17 15v10l9-5-9-5z" fill="var(--night)"/></svg>
         </div>
-        <span class="tw-resource-type">Podcast</span>
+        <span class="tw-resource-type">Audio series</span>
         <div class="tw-resource-title">Commerce Forward</div>
-        <p style="font-size:13px;color:var(--night-muted);">Conversations with merchants, operators and platform builders about what's actually working in commerce right now.</p>
+        <p style="font-size:13px;color:color-mix(in srgb,var(--night-ink) 72%,var(--night-muted));">Conversations with merchants, operators and platform builders about what's actually working in commerce right now.</p>
         <a class="tw-resource-link" href="#">Listen &#8594;</a>
       </div>
     </div>
@@ -1493,10 +1552,10 @@ a{color:inherit;text-decoration:none;}
     <div class="tw-footer-top" id="tw-footer-cols">
       <div class="tw-footer-col">
         <button class="tw-footer-col-btn" type="button" aria-expanded="false" aria-controls="tw-fcol-0">
-          Product
+          Solutions
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <h3>Product</h3>
+        <h3>Solutions</h3>
         <ul id="tw-fcol-0">
           <li><a href="#">Storefronts</a></li>
           <li><a href="#">Checkout</a></li>
@@ -1507,88 +1566,88 @@ a{color:inherit;text-decoration:none;}
       </div>
       <div class="tw-footer-col">
         <button class="tw-footer-col-btn" type="button" aria-expanded="false" aria-controls="tw-fcol-1">
-          Partners
+          Channels
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <h3>Partners</h3>
+        <h3>Channels</h3>
         <ul id="tw-fcol-1">
-          <li><a href="#">Agency directory</a></li>
-          <li><a href="#">Become a partner</a></li>
-          <li><a href="#">App marketplace</a></li>
-          <li><a href="#">Certified devs</a></li>
+          <li><a href="#">Online store</a></li>
+          <li><a href="#">Social shops</a></li>
+          <li><a href="#">Marketplaces</a></li>
+          <li><a href="#">POS retail</a></li>
         </ul>
       </div>
       <div class="tw-footer-col">
         <button class="tw-footer-col-btn" type="button" aria-expanded="false" aria-controls="tw-fcol-2">
-          Customers
+          Merchants
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <h3>Customers</h3>
+        <h3>Merchants</h3>
         <ul id="tw-fcol-2">
-          <li><a href="#">Case studies</a></li>
-          <li><a href="#">Testimonials</a></li>
-          <li><a href="#">Community forum</a></li>
+          <li><a href="#">Success stories</a></li>
+          <li><a href="#">Merchant community</a></li>
           <li><a href="#">Events</a></li>
+          <li><a href="#">Referral programme</a></li>
         </ul>
       </div>
       <div class="tw-footer-col">
         <button class="tw-footer-col-btn" type="button" aria-expanded="false" aria-controls="tw-fcol-3">
-          Resources
+          Learning hub
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <h3>Resources</h3>
+        <h3>Learning hub</h3>
         <ul id="tw-fcol-3">
           <li><a href="#">Documentation</a></li>
           <li><a href="#">Guides</a></li>
           <li><a href="#">Changelog</a></li>
-          <li><a href="#">Podcast</a></li>
+          <li><a href="#">Commerce podcast</a></li>
         </ul>
       </div>
       <div class="tw-footer-col">
         <button class="tw-footer-col-btn" type="button" aria-expanded="false" aria-controls="tw-fcol-4">
-          Use cases
+          Verticals
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <h3>Use cases</h3>
+        <h3>Verticals</h3>
         <ul id="tw-fcol-4">
           <li><a href="#">DTC brands</a></li>
           <li><a href="#">Wholesale</a></li>
           <li><a href="#">Subscription boxes</a></li>
-          <li><a href="#">Marketplaces</a></li>
+          <li><a href="#">Marketplace sellers</a></li>
         </ul>
       </div>
       <div class="tw-footer-col">
         <button class="tw-footer-col-btn" type="button" aria-expanded="false" aria-controls="tw-fcol-5">
-          Industries
+          About
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <h3>Industries</h3>
+        <h3>About</h3>
         <ul id="tw-fcol-5">
-          <li><a href="#">Fashion &amp; apparel</a></li>
-          <li><a href="#">Home &amp; garden</a></li>
-          <li><a href="#">Beauty &amp; wellness</a></li>
-          <li><a href="#">Food &amp; beverage</a></li>
-        </ul>
-      </div>
-      <div class="tw-footer-col">
-        <button class="tw-footer-col-btn" type="button" aria-expanded="false" aria-controls="tw-fcol-6">
-          Company
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <h3>Company</h3>
-        <ul id="tw-fcol-6">
-          <li><a href="#">About Tillwright</a></li>
+          <li><a href="#">Our story</a></li>
           <li><a href="#">Careers</a></li>
           <li><a href="#">Press</a></li>
           <li><a href="#">Investors</a></li>
         </ul>
       </div>
       <div class="tw-footer-col">
-        <button class="tw-footer-col-btn" type="button" aria-expanded="false" aria-controls="tw-fcol-7">
-          Help
+        <button class="tw-footer-col-btn" type="button" aria-expanded="false" aria-controls="tw-fcol-6">
+          Ecosystem
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <h3>Help</h3>
+        <h3>Ecosystem</h3>
+        <ul id="tw-fcol-6">
+          <li><a href="#">Extension library</a></li>
+          <li><a href="#">Certified consultants</a></li>
+          <li><a href="#">Become a partner</a></li>
+          <li><a href="#">Certified developers</a></li>
+        </ul>
+      </div>
+      <div class="tw-footer-col">
+        <button class="tw-footer-col-btn" type="button" aria-expanded="false" aria-controls="tw-fcol-7">
+          Support centre
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <h3>Support centre</h3>
         <ul id="tw-fcol-7">
           <li><a href="#">Help centre</a></li>
           <li><a href="#">Status page</a></li>

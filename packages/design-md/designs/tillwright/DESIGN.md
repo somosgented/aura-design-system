@@ -134,7 +134,7 @@ Seeds generate the full Aura 12-step scales in `theme.css`. Map flavor roles to 
 | Pending chip fill | `--chip-pending` | custom | Orders table status badge |
 | Pending chip text | `--chip-ink` | custom | Orders table status badge text |
 
-- Ink buttons use `bg-(--ink) text-(--canvas)`, turning `bg-(--deep-action)` on hover. Blue lives in hover and focus only.
+- Ink buttons use `bg-(--ink) text-(--canvas)`, turning `bg-(--deep-action)` on hover in light mode. Blue lives in hover and focus only.
 - Text on accent fill uses `accent-contrast`. Never `gray-11` on a dark surface.
 - Contrast rule: `--ink` on `--canvas` ≥ 15:1 light, `--night-ink` on `--night` ≥ 15:1 dark. All normal text ≥ 4.5:1; large text, control borders and icons ≥ 3:1 in both appearances.
 
@@ -152,9 +152,18 @@ Tillwright's dark mode is an adaptation of its own light palette: the canvas bec
 | `--chip-pending` | amber fill | dark amber fill |
 | `--chip-ink` | dark amber text | gold text |
 | Accent seed | electric blue | lighter electric blue |
-| Native select border | `gray-7` | explicit `--rule` + visible chevron |
+| Native select border | `--control-line` | explicit `--control-line` + visible chevron |
 
 Inside the navy band use `--night-ink` and `--night-muted`; never raw white or black.
+
+**Interaction states**
+
+- Light: ink buttons hover to `--deep-action` (canvas text); nav triggers, mega links and blurb links hover to `--deep-action`; the white CTA hovers to `--lavender-wash` with `--night` text.
+- Dark: nav trigger hover and open (`aria-expanded`) state, mega/mobile menu links and blurb links hover to `--periwinkle`; ink and plan buttons hover to a `--periwinkle` fill with `--night` text; the white CTA hovers to a white/periwinkle mix with `--night` text.
+- Focus ring: 2px solid, accent-9 in light, `--periwinkle` in dark; on night surfaces (hero, navy band, resources, story play button) `--night-ink` in light and white in dark; on the featured plan card `--night-ink` (light) / white (dark). Every ring is at least 3:1 against its surroundings.
+- Form: field errors use `--deep-action` (light) / `--periwinkle` (dark); the success message uses an aqua/night mix in light and `--aqua` in dark; all at least 4.5:1.
+- Disabled rail buttons: `--control-line` icon with a dashed `--control-line` border, no opacity.
+- Services timeline: below 768 px the three columns stack into one, the empty slots are hidden and labels never break inside a word.
 
 ## Typography
 
@@ -188,11 +197,11 @@ Tillwright's spacing maps onto the 13px grid:
 
 **Two-tier header:** a thin utility bar (small `font-label` links, `gray-2` background) above a white main bar with wordmark, four `NavigationMenu` triggers and two CTA buttons. The mega-menu panel is positioned against the header element, spans `max-w-98.5`, and is never anchored to the trigger `<li>`.
 
-**Mega-menu:** full content-width panel below the main bar, divided into four to five columns of links. On mobile (< 768px) the menu is a full-width panel that opens over the page, is internally scrollable, and closes with Escape or a close button. `aria-expanded` is kept in sync on the trigger.
+**Mega-menu:** full content-width panel below the main bar, divided into four to five columns of links. On mobile (≤ 1023px) a burger button replaces the desktop nav; tapping it opens a full-width, full-remaining-height fixed panel that is internally scrollable and covers the page below the header, closing with Escape (focus returns to the burger) or by selecting a link. `aria-expanded` is kept in sync on the burger and mobile sub-triggers.
 
 **Feature panels:** `13px` radius, `lavender-wash`-to-white gradient, hairline `--rule` border, visual on one side and text on the other, alternating. Inside the navy band, panels use `--paper` (dark navy) with the same radius.
 
-**Navy band:** deep `--night` background, `26px` top radius, centered headline, outline-on-navy button, then interior feature panels. The band never touches the page edge at any breakpoint.
+**Navy band:** deep `--night` background, `26px` top radius, centered headline, outline-on-navy button, then interior feature panels. The band is full-bleed horizontally (edge-to-edge) and sits flush with the viewport sides at all breakpoints; only the top corners are rounded.
 
 **Hero:** dark stage (`--night` with a faint perspective grid drawn in SVG), centered headline with the second line in `--periwinkle`, centered paragraph, one white ink button. Below: a product-dashboard mockup (orders table with dates, customer names and `Badge` status chips) with a floating Channels dropdown card. The hero bottom edge has a `lavender-wash` gradient fade. The hero bounding box never intersects the next section.
 
@@ -228,9 +237,9 @@ Map each flavor element to Aura registry components:
 | Orders data table | `Table` | `text-sm` cells, `font-label uppercase` headers, `border-b border-(--rule)` rows |
 | Status chips (Pending, etc.) | `Badge` | `rounded-[2px] bg-(--chip-pending) text-(--chip-ink) font-label uppercase text-[11px]` |
 | Solutions scroller | `Marquee` / scroll list | Horizontal scroll on mobile, `overflow-x-auto snap-x`; items have `min-width: 0 overflow-wrap: break-word` |
-| Book-a-demo form | `Input`, `NativeSelect` | Local only; `preventDefault`, shows inline confirmation; `NativeSelect` has explicit `border border-(--rule)` and visible chevron in dark |
+| Book-a-demo form | `Input`, `NativeSelect` | Local only; `preventDefault`, shows inline confirmation; `NativeSelect` has explicit `border border-(--control-line)` and visible chevron in dark |
 | Pricing plans | `Card` | Three plans; recommended one `bg-(--ink) text-(--canvas)`; `rounded-[13px]` |
-| FAQ accordion | `Accordion` | `border-t border-(--rule)`, `font-label` triggers, first item open |
+| FAQ accordion | `Accordion` | `border-t border-(--rule)`, sans-serif triggers (matches body font), first item open |
 | Metric strip | `Stat` in `flex` | Cyan-to-periwinkle gradient band; fictional sample figures; no third-party citation |
 | Footer column groups (mobile) | `Accordion` | Collapses to accordions below 768px |
 | Mono eyebrows | `span` | `font-label text-[11px] uppercase tracking-[0.1em] text-gray-11` |
@@ -241,7 +250,7 @@ Map each flavor element to Aura registry components:
 - Do end marketing headlines with a full stop.
 - Do apply `font-label uppercase tracking-[0.1em]` to all section eyebrows and table headers.
 - Do keep feature panels on the `lavender-wash`-to-white gradient with a hairline `--rule` border.
-- Do give `NativeSelect` an explicit visible `border border-(--rule)` and a CSS chevron in dark mode.
+- Do give `NativeSelect` an explicit visible `border border-(--control-line)` and a CSS chevron in dark mode.
 - Do position the mega-menu panel against the header, spanning full content width.
 - Do write fictional sample figures; never cite a real study, analyst firm or third-party report.
 
@@ -259,11 +268,11 @@ All motion sits behind `@media (prefers-reduced-motion: no-preference)`. With `p
 
 | Element | Animation | Timing |
 | --- | --- | --- |
-| Section content entrance | `fade-up`: `opacity 0→1`, `translateY 20px→0` | 400ms `cubic-bezier(0.4, 0, 0.2, 1)`, staggered 80ms per child |
+| Section content entrance | `fade-up`: `opacity 0→1`, `translateY 20px→0` | 400ms `cubic-bezier(0.4, 0, 0.2, 1)` |
 | Feature panel entrance | `fade-left`: `opacity 0→1`, `translateX -16px→0` | 350ms `cubic-bezier(0.4, 0, 0.2, 1)` |
 | Ink button fill | `background-color` transition | 180ms linear |
-| Mega-menu panel | `opacity` + `translateY 4px→0` | 160ms ease |
-| Nav hover underline | `width 0→100%` | 200ms ease |
+
+Fade-up and fade-left use `IntersectionObserver` with the `.motion` class (applied only under `prefers-reduced-motion: no-preference`); elements start hidden and transition to visible on entry. A small number of elements use a `transition-delay` for sequential appearance. Hover transitions on buttons and links are always active regardless of motion preference.
 
 Fade-up and fade-left use `IntersectionObserver`; elements start hidden (`opacity: 0`) and transition to visible on entry.
 
