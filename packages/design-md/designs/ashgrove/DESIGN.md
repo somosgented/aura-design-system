@@ -169,7 +169,7 @@ Seeds generate the full Aura 12-step scales in `theme.css`. Custom tokens extend
 | Muted | `--muted` | `gray-9`–`gray-10` | Footnotes, metadata |
 | Action fill | `--grove` | `accent-9` | Filled pill buttons |
 | Action hover | `--grove-deep` | `accent-10` | Hover state of grove pills |
-| On grove | `--on-grove` | `accent-contrast` | Text on grove-filled buttons; meets 4.5:1 on grove |
+| On grove | `--on-grove` | `accent-contrast` (overridden in dark) | Text on grove-filled buttons; meets 4.5:1 on grove in both appearances. In dark, the generated `--accent-contrast` (#fff) is only 2.83:1 on the dark grove fill; `--on-grove` is explicitly set to #000 (7.43:1) inside `.ag` in dark. |
 | Text link / outline pill light | `--link` | custom | Links and outline pills on canvas, paper and mist |
 | Text link / outline pill night | `--link-night` | custom | Links and outline pills on night surfaces |
 | Control border light | `--control-line` | custom | Input/select borders on light surfaces; meets 3:1 on paper, canvas, mist |
@@ -188,7 +188,7 @@ Seeds generate the full Aura 12-step scales in `theme.css`. Custom tokens extend
 **Contrast rules:**
 - `--ink` on `--canvas`, `--paper` and `--mist` meets WCAG AA (4.5:1) in both appearances.
 - `--night-ink` on `--night` meets WCAG AA. `--night-muted` on `--night` meets WCAG AA.
-- `--on-grove` on `--grove` meets 4.5:1 in both appearances.
+- `--on-grove` on `--grove` meets 4.5:1 in both appearances. In dark, `--on-grove` is #000 (overriding the generated `--accent-contrast`) to achieve 7.43:1 on the lighter dark grove fill.
 - `--link` on `--canvas`, `--paper` and `--mist` meets 4.5:1.
 - `--link-night` on `--night` meets 4.5:1 in both appearances.
 - `--nav-ink` over `--nav-glass` atop any mist or night content meets 4.5:1.
@@ -201,14 +201,18 @@ Seeds generate the full Aura 12-step scales in `theme.css`. Custom tokens extend
 
 ### Dark mode
 
-Ashgrove's dark appearance is a declared adaptation — it is not derived from any observed external dark theme. In dark mode the body background becomes black (`--canvas: #000000`); `--paper` becomes a very dark near-black graphite. The `--mist` band, which is pale cool-gray in light, becomes a dark graphite surface so light mosaics read as a distinct dark layer rather than disappearing into the body. The `--night` mosaic stays near-black (slightly deeper than the dark canvas). Link blues lighten: `--link` and `--grove` shift to lighter blues that meet 4.5:1 on the dark canvas, paper and mist. `--on-grove` switches to near-black so it meets 4.5:1 on the lighter dark-mode grove fill. A single `.dark` block on `<html>` switches all semantic tokens; individual sections need no extra dark overrides.
+Ashgrove's dark appearance is a declared adaptation — it is not derived from any external dark theme. In dark mode the body background becomes black (`--canvas: #000000`); `--paper` becomes a very dark near-black graphite (`--footer` #0d0f14). The `--mist` band (#1a1d24), which is pale cool-gray in light, becomes a dark graphite surface so light mosaics read as a distinct dark layer rather than disappearing into the body. The `--night` mosaic (#0a0c10) is slightly lighter than the black canvas (approximately 1.07:1 contrast); dark night tiles therefore rely on the 12px canvas gaps and their content rather than a tone step for separation. Link blues lighten: `--link` and `--grove` shift to lighter blues that meet 4.5:1 on the dark canvas, paper and mist. `--on-grove` switches to near-black so it meets 4.5:1 on the lighter dark-mode grove fill.
+
+The Aura generated theme emits `--accent-contrast: #fff` on the dark accent (#5b9de8), which yields only 2.83:1 against that fill. The showcase therefore sets `--accent-contrast` to `--on-grove` (#000, 7.43:1) inside `.ag` in dark. Any filled button or badge using the dark accent fill must use `--on-grove` (#000) as its text color — not `--accent-contrast` from the generated scale.
+
+A single `.dark` block on `<html>` switches all semantic tokens; individual sections need no extra dark overrides.
 
 | Variable | Light | Dark |
 | --- | --- | --- |
 | `--canvas` | white | black |
 | `--paper` | white | very dark graphite |
 | `--mist` | pale cool-gray | dark graphite |
-| `--night` | near-black | deeper near-black |
+| `--night` | near-black | slightly lighter near-black (#0a0c10, about 1.07:1 against the black canvas) |
 | `--grove` | mid blue | lighter blue |
 | `--on-grove` | white | near-black |
 | `--link` | mid blue | lighter blue |
@@ -220,13 +224,22 @@ Inter (SIL OFL) is used at weights 400, 500, 600 and 700 for all prose and headi
 
 | Element | Size / Leading | Weight | Aura class |
 | --- | --- | --- | --- |
-| Hero tile `h2` (1280) | 56px / 60px | 600 | `.h1 font-display` |
-| Hero tile `h2` (360) | 32px / 36px | 600 | `.h1 font-display` |
+| Hero `h1` (1280) | 56px / 60px | 600 | `.h1 font-display` |
+| Hero `h1` (360) | 28px / 30px at 360px and below (32px from 361px to 480px; clamp(32px,4.5vw,56px) above) | 600 | `.h1 font-display` |
 | Hero sub-line (≤ 480px) | 17px | 400 | `.h5` |
-| Promo tile `h3` (1280) | 40px / 44px | 600 | `.h2 font-display` |
-| Promo tile `h3` (360) | 28px / 32px | 600 | `.h2 font-display` |
+| Promo tile `h3` (1280) | clamp(28px,3vw,40px) = 38.4px | 600 | `.h2 font-display` |
+| Promo tile `h3` (360) | 24px | 600 | `.h2 font-display` |
 | Promo sub-line (≤ 480px) | 15px | 400 | `p` |
-| Section `h2` | 40px / 44px | 600 | `.h2 font-display` |
+| Product mosaic `h2` (1280) | clamp(28px,4vw,52px) = 51.2px | 600 | `.h2 font-display` |
+| Product mosaic `h2` (360) | 24px (28px up to 480px) | 600 | `.h2 font-display` |
+| Section `h2` (Sessions, numbers, plans) (1280) | 40px / 44px | 600 | `.h2 font-display` |
+| Section `h2` (360) | 28px | 600 | `.h2 font-display` |
+| Comparison / FAQ heading (1280) | 36px | 600 | `.h2 font-display` |
+| Comparison / FAQ heading (360) | 24px–28px | 600 | `.h2 font-display` |
+| Booking form heading (1280) | 32px | 600 | `.h3 font-display` |
+| Booking form heading (360) | 22px | 600 | `.h3 font-display` |
+| Closing tile `h2` (1280) | 48px | 600 | `.h1 font-display` |
+| Closing tile `h2` (360) | 28px | 600 | `.h1 font-display` |
 | Sub-line | 21px / 28px | 400 | `.h5` |
 | Body prose | 17px / 25px | 400 | `p` |
 | Nav category | 12px / 18px | 600 | `.small font-display` |
@@ -234,7 +247,8 @@ Inter (SIL OFL) is used at weights 400, 500, 600 and 700 for all prose and headi
 | Flyout small link | 12px / 18px | 400 | `.small` |
 | Footnote number marker | 12px | 400 | `font-label` |
 | Footnote body text | 12px / 19px | 400 | `font-sans` (`inherit`), `--muted` |
-| Stats figure | 48px / 52px | 600 | `.h1 font-display` |
+| Stats figure (1280) | 48px / 52px | 600 | `.h1 font-display` |
+| Stats figure (360) | 36px | 600 | `.h1 font-display` |
 
 ## Layout
 
@@ -245,25 +259,25 @@ Ashgrove's spacing maps to the 13px grid:
 | 11–12 | `0.5`–`1` | 6.5–13 | Pill padding-y, icon gap |
 | 21 | `1.5` | 19.5 | Pill padding-x |
 | 24 | `2` | 26 | Card inner padding |
-| 44 | `3.5` | 45.5 | Nav height, pill height |
-| 56 | `4` | 52 | Locale bar height |
+| 44 | `3.5` | 45.5 | Pill height (the nav bar itself is 44px, 48px below 768px) |
+| 56 | `4` | 52 | Locale select height (the bar is 65px at 768px and up: select plus 6.5px padding top and bottom) |
 | 80 | `6` | 78 | Promo tile inner padding |
 | 96 | `7.5` | 97.5 | Section vertical padding |
 | 140 | `11` | 143 | Large section gap |
 | 520 | `40` | 520 | Product mosaic tile min-height at 1280px |
 | 1300 | `100` | 1300 | Max content width |
 
-**S-00 Locale bar:** A dark strip above the nav (`background: --night`; class `ag-locale`). At ≥768px: a single flex row — text (`flex:1; min-width:0`), select (`width:auto; min-width:180px; flex-shrink:0`), Continue pill, close × — all vertically centered in the ~52px bar, text 12px. At <768px: text on its own full-width line, then a second row with the select (`flex:1`) + Continue + close ×. The `NativeSelect` has `border: 1px solid var(--control-line-night)`, `color: var(--night-ink)` and a visible system chevron, meeting 3:1 on the night strip. Both Continue and close dismiss the bar; focus moves to the nav wordmark. `--night-ink` text meets 4.5:1 on night. The element is a `div` with `role="region"` and `aria-label="Region selector"` (not `role="alert"`).
+**S-00 Locale bar:** A dark strip above the nav (`background: --night`; class `ag-locale`). At ≥768px: a single flex row, 65px tall — text left (`flex:1; min-width:0`), native select (52px tall, `margin:0`), Continue pill and close × right — all vertically centered, text 12px. At <768px the bar stacks: text on its own full-width line, then a full-width select (14px text, value "United States (sample)" fully visible), then Continue and close × on a third row; total height approximately 141px at 360px. The `NativeSelect` has `border: 1px solid var(--control-line-night)`, `color: var(--night-ink)` and `background: color-mix(in srgb, var(--night) 80%, transparent)` with a visible system chevron, meeting 3:1 on the night strip. Both Continue and close dismiss the bar; focus moves to the nav wordmark. `--night-ink` text meets 4.5:1 on night. The element is a `div` with `role="region"` and `aria-label="Region selector"` (not `role="alert"`).
 
-**S-01 Global nav (1280px):** A sticky 44px `<header>` with `z-index: 60`, `isolation: isolate`, `background: var(--nav-glass)` and `backdrop-filter: blur(20px)`. Content max 1000px centered inside a `<nav aria-label="Main navigation">`. Left: an accent square wordmark + "Ashgrove" at 12px weight 600. Center: 9 category buttons — Gifts, Lamps, Sound, Kitchen, Textiles, Clocks, Outdoor, Studio, Help — at 12px `--nav-ink`. Right: search icon button and bag icon button (badge "0"). Clicking a category (click/Enter/Space only; no hover) opens a flyout panel — a plain `div` with `position: absolute; top: 100%; left: 0; right: 0` inside the header, `background: --night`, full-width, content max 1000px centered in 3 columns in a `.ag-flyout-inner` div. Each flyout has three column headings. For product categories (Lamps, Sound, Kitchen, Textiles, Clocks, Outdoor, Studio): col 1 "In the [category] range", col 2 "Bring one home", col 3 "Care and guides". For Gifts: col 1 "In the gifts range", col 2 "Bring one home", col 3 "Wrapping and delivery". For Help: col 1 "How we can help", col 2 "Add a Care plan", col 3 "Find us". The bag panel is similarly a full-width night panel under the nav with its content in `.ag-flyout-inner`, max 1000px centered. Only one panel open at a time; same trigger toggles it closed; Escape closes and returns focus; click outside closes; ArrowDown from a trigger opens the panel (if not already open) and moves focus to the first link inside it; a dimming blurred scrim (`position: fixed; z-index: 55`) covers page content below while a panel is open — the header at z-index 60 sits above the scrim so triggers remain interactive. `aria-expanded` and `aria-controls` on each trigger. Flyout panels are plain `div` elements — no `role`, no `aria-label`; the trigger's `aria-controls` and `aria-expanded` are sufficient.
+**S-01 Global nav (1280px):** A sticky 44px `<header>` with `z-index: 60`, `background: var(--nav-glass)` and `backdrop-filter: blur(20px)`. The sticky positioning and z-index create the stacking context; no `isolation` property is set. Content max 1000px centered inside a `<nav aria-label="Main navigation">`. Left: an accent square wordmark + "Ashgrove" at 14px weight 600. Center: 11 category buttons — Gifts, Lamps, Sound, Kitchen, Textiles, Clocks, Outdoor, Seating, Warmth, Studio, Help — at 12px weight 600 `--nav-ink`. Right: search icon button and bag icon button (badge "0"). Clicking a category (click/Enter/Space only; no hover) opens a flyout panel — a plain `div` with `position: absolute; top: 100%; left: 0; right: 0` inside the header, `background: --night`, full-width, content max 1000px centered in 3 columns in a `.ag-flyout-inner` div. Each flyout has three column headings. For product categories (Lamps, Sound, Kitchen, Textiles, Clocks, Outdoor, Seating, Warmth, Studio): col 1 "The range" (big 24px links), col 2 "Ways to get it", col 3 "Make it last". For Gifts: col 1 "The range", col 2 "Ways to get it", col 3 "Make it last". For Help: col 1 "Start here", col 2 "Mending plans", col 3 "Visit and talk". The bag panel is similarly a full-width night panel under the nav with its content in `.ag-flyout-inner`, max 1000px centered. Only one panel open at a time; same trigger toggles it closed; Escape closes and returns focus to the trigger; click outside closes; Tab on an open category button moves focus into its panel; Tab past the last panel link closes the panel and moves focus to the next category (or to search after the last); Shift+Tab on the first panel link closes the panel and returns focus to the button; ArrowDown from a trigger also enters the panel; search and bag panels follow the same Tab pattern; a dimming blurred scrim (`position: fixed; z-index: 55`) covers page content below while a panel is open — the header at z-index 60 sits above the scrim so triggers remain interactive. `aria-expanded` and `aria-controls` on each trigger. Flyout panels are plain `div` elements — no `role`, no `aria-label`; the trigger's `aria-controls` and `aria-expanded` are sufficient.
 
-**S-01 Global nav (360px):** 48px bar: wordmark left; search, bag and two-line menu button right. Menu opens a full-screen panel (`z-index: 70`, `background: --night`, internally scrollable) with a close × top-right and 9 category rows at 28px weight 600 `--night-ink` in order: Gifts, Lamps, Sound, Kitchen, Textiles, Clocks, Outdoor, Studio, Help. Each row is a button that slides to a sub-view listing that category's links with a "Back" button. The sub-view title for Help reads "Help". Escape closes and returns focus to the menu button; page scroll is locked while open.
+**S-01 Global nav (360px):** 48px bar: wordmark left; search, bag and two-line menu button right. Menu opens a full-screen night dialog (`role="dialog"`, `aria-modal="true"`, `z-index: 70`, `background: --night`, internally scrollable) with a close × top-right and 11 category rows at 28px (`button` elements with `aria-expanded` and `aria-controls`) in order: Gifts, Lamps, Sound, Kitchen, Textiles, Clocks, Outdoor, Seating, Warmth, Studio, Help. Each row is a button that slides to a sub-view listing every link of the matching desktop flyout, grouped under the same three column titles as 12px `--night-muted` `h3` headings (built from the flyout at load, so desktop and mobile always match); each sub-view has a Back button and a title. Focus is trapped in the dialog; in a sub-view the Tab cycle covers close ×, Back, and all links in that sub-view. Escape closes and returns focus to the menu button; page scroll is locked while open.
 
-**S-02 Campaign hero:** Full-width mosaic of CSS/SVG tiles on a 4-column × 2-row grid at 1280px (each row 260px, no empty cells). The text tile spans columns 1–2, rows 1–2 on `--moss`. The remaining 4 cells hold: lamp glow tile (col 3, row 1), concentric circles tile (col 4, row 1), checker tile (col 3, row 2), woven stripes tile (col 4, row 2). At ≤900px: 2-column grid with rows `320px 200px 200px`; text tile spans both columns in row 1 (`grid-column:1/3; grid-row:1/2`); the 4 decorative tiles fill a 2×2 grid in rows 2–3, with no empty cells. At ≤480px: 2-column grid with rows `360px 160px 160px`; text tile spans both columns in row 1 (`grid-column:1/3; grid-row:1/2`); the 4 decorative tiles fill a 2×2 grid in rows 2–3, no empty cells. The mosaic container has no `role` or `aria-label`. Each decorative tile div carries `aria-hidden="true"`. The text tile contains a single filled pill "See the collection". Drift animations are declared only under `.motion` and scoped to `#ag-hero` via `.ag-hero-paused` (e.g. `.motion .ag-drift-x { animation: … }; .ag-hero-paused .ag-drift-x { animation-play-state: paused }`); pressing the pause button toggles the class `ag-hero-paused` on `#ag-hero` only — `html.motion` is never touched by the hero pause button, so gallery autoplay, flyout and FAQ animations are unaffected. With `prefers-reduced-motion: reduce` the `.motion` class is absent, no animation runs and the button starts labelled "Play animation". Pressing Play under reduced motion shows an `aria-live="polite"` note: "Animation is off because reduced motion is on." `aria-label` on the pause button toggles between "Pause animation" and "Play animation"; `aria-pressed` is not used.
+**S-02 Campaign hero:** Full-width mosaic of CSS/SVG tiles on a 4-column × 2-row grid at 1280px (each row 260px, no empty cells). The text tile spans columns 1–2, rows 1–2 on `--moss` and contains the page's single `h1`: "Calm things, made to last." at 56px/1.07 weight 600 at 1280px (32px from 361px to 480px, 28px at 360px and below), white text. The remaining 4 cells hold: lamp glow tile (col 3, row 1), concentric circles tile (col 4, row 1), checker tile (col 3, row 2), woven stripes tile (col 4, row 2). At ≤900px: 2-column grid with rows `320px 200px 200px`; text tile spans both columns in row 1 (`grid-column:1/3; grid-row:1/2`); the 4 decorative tiles fill a 2×2 grid in rows 2–3, with no empty cells. At ≤480px: 2-column grid with rows `360px 160px 160px`; text tile spans both columns in row 1 (`grid-column:1/3; grid-row:1/2`); the 4 decorative tiles fill a 2×2 grid in rows 2–3, no empty cells. The mosaic container has no `role` or `aria-label`. Each decorative tile div carries `aria-hidden="true"`. The text tile contains a single filled pill "See the collection". Drift animations are declared only under `.motion` and scoped to `#ag-hero` via `.ag-hero-paused` (e.g. `.motion .ag-drift-x { animation: … }; .ag-hero-paused .ag-drift-x { animation-play-state: paused }`); pressing the pause button toggles the class `ag-hero-paused` on `#ag-hero` only — `html.motion` is never touched by the hero pause button, so gallery autoplay, flyout and FAQ animations are unaffected. With `prefers-reduced-motion: reduce` the `.motion` class is absent, no animation runs and the button starts labelled "Play animation". Pressing Play under reduced motion shows an `aria-live="polite"` note: "Animation is off because reduced motion is on." `aria-label` on the pause button toggles between "Pause animation" and "Play animation"; `aria-pressed` is not used.
 
-**S-03 Product mosaics:** Two full-width tiles (min-height 520px at 1280px, light on `--mist` then dark on `--night`) with a 12px gap between them (the page background shows through). Each is centered: `h2` + sub-line + pill pair with object-specific labels (e.g. "Meet the Lantern" + "Reserve one" on mist; "Hear the Orbit" + "Reserve one" on night) + a large CSS/SVG product visual below the text (Ashgrove Lantern glowing lamp on mist; Ashgrove Orbit fabric-dot sphere on night). Text on the night tile uses `--night-ink` and `--link-night` for the outline pill.
+**S-03 Product mosaics:** Two full-width tiles (min-height 520px at 1280px, light on `--mist` then dark on `--night`) with a 12px gap between them (the page background shows through). Each is centered: `h2` at `clamp(28px, 4vw, 52px)` (computed 51.2px at 1280px, 28px up to 480px, 24px at 360px) + sub-line + pill pair with object-specific labels (e.g. "Meet the Lantern" + "Reserve one" on mist; "Hear the Orbit" + "Reserve one" on night) + a large CSS/SVG product visual below the text (Ashgrove Lantern glowing lamp on mist; Ashgrove Orbit fabric-dot sphere on night). Text on the night tile uses `--night-ink` and `--link-night` for the outline pill.
 
-**S-04 Promo grid:** 2 × 3 tile grid (12px gaps, `minmax(0, 1fr)` columns), mixed dark and light tiles in order: dark, light, light, dark, dark, light. Each tile: `h3` (40px at 1280, 28px at 360), 2-line sub, pill pair with object-specific labels (some tiles one pill only), a CSS/SVG visual below. Two tiles carry `<sup>` footnote links (superscript, `font-label`, linking to `#note-1` and `#note-2`). Below 768px the grid becomes 1 column.
+**S-04 Promo grid:** 2 × 3 tile grid (12px gaps, `minmax(0, 1fr)` columns), mixed dark and light tiles in order: dark, light, light, dark, dark, light. Each tile: `h3` at `clamp(28px, 3vw, 40px)` (computed 38.4px at 1280px, 24px at 360px), 2-line sub, pill pair with object-specific labels (some tiles one pill only), a CSS/SVG visual below. Two tiles carry `<sup>` footnote links (superscript, `font-label`, linking to `#note-1` and `#note-2`). Below 768px the grid becomes 1 column.
 
 **S-05 Sessions gallery:** A band on `--mist`. Centered `h2` (40px). Horizontal gallery of 9 large 16:9 media cards (~80% of 1000px wide at 1280, `border-radius: 0`). Current card centered; neighbours peek. Each card has a bottom-left white filled pill "Join session" and a short caption line behind a dark text scrim meeting 4.5:1. Below cards: a WAI-ARIA `tablist` of 9 dot tabs (roving tabindex, Left/Right/Home/End; active dot is a 24px capsule `--grove`; inactive dots use `--dot` meeting 3:1 on mist) and an autoplay pause button at right. The autoplay pause button's initial `aria-label` is "Play gallery"; it switches to "Pause gallery" only when motion is allowed and autoplay starts. Autoplay advances every 5 s only when `prefers-reduced-motion: no-preference` and not paused by user. It pauses on `pointerenter` anywhere inside `#ag-sessions` and on `focusin` inside `#ag-sessions`; it resumes on `pointerleave` and on `focusout` when focus leaves `#ag-sessions`, unless the user pressed the pause button. With reduced motion there is no autoplay and the button stays as "Play gallery". Tab 2 (index 1, the Kitchen session) is initially selected; its panel has no `inert` attribute. All other panels carry the `inert` attribute (no `aria-hidden`); `inert` is added and removed in sync with tab selection. Below the gallery: 3 smaller cards (Workshops, Recipes, Repair days) each with a grove pill.
 
@@ -271,9 +285,9 @@ Ashgrove's spacing maps to the 13px grid:
 
 **Comparison table:** "Compare Lantern models" — real `<table>` with `<caption>`, 4 sample models (Lantern One, Lantern Arc, Lantern Glow, Lantern Grand) × 6 rows (light output, warmth range, battery, weight, materials, sample price), inside `overflow-x: auto` with `role="region"`, `aria-label` and `tabindex="0"`.
 
-**Care plans:** 3 plan cards (Basic sample free, Plus, Complete) with monthly sample prices, checklists and pill CTAs. The recommended card has a 2px `--grove` border. The "Recommended" badge is 12px, weight 600, `--grove` color meeting 4.5:1 on the card background.
+**Mending plans:** 3 plan cards (Mending Basic sample free, Mending Plus, Mending Complete) with monthly sample prices, checklists and pill CTAs. The recommended card has a 2px `--grove` border and a "Recommended" badge (12px, weight 600, `--grove` color meeting 4.5:1 on the card background). Plan check icons and the form success state also use `--grove`.
 
-**Sessions booking form:** Name, email, session `NativeSelect`, date input, notes `Textarea`, consent checkbox. Submit prevents default; inline errors linked via `aria-describedby`; `aria-live` confirmation. Sends nothing.
+**Sessions booking form:** Name (`autocomplete="name"`), email (`autocomplete="email"`), session `NativeSelect`, date input, notes `Textarea`, consent checkbox. Submit prevents default; field errors are linked with `aria-describedby` and `aria-invalid` and are not live regions; a single polite status line (`aria-live="polite"`) announces "N fields need attention." on failed submit (focus moves to the first invalid field) and the local confirmation message on success. Only two polite live regions exist on the page (motion note, form status). Sends nothing.
 
 **FAQ:** `Accordion` of 5 sample questions and answers. Multiple items may be open simultaneously (independent toggles; no single-open constraint).
 
@@ -281,11 +295,11 @@ Ashgrove's spacing maps to the 13px grid:
 
 **S-06 Numbered notes:** `<ol>` of 3 notes (`id="note-1"` … `id="note-3"`) at 12px `--muted` on `--footer` background, in the sans font (`var(--aura-font-sans)` or `inherit`), each with a back-link to its superscript. Two short unnumbered paragraphs follow in the same style. All text meets 4.5:1 on `--footer`. The monospace label font is not used for note body text.
 
-**S-07 Footer directory:** `--footer` background, inside a `<nav aria-label="Site directory">`. 5 columns at 1280px holding 11 groups: column 1 — Objects, Gift ideas; column 2 — Sessions, Recipes and guides; column 3 — Ashgrove Care, Orders and delivery; column 4 — For studios, For makers, For schools; column 5 — About Ashgrove, Values. Each group has 3–6 fictional links. Column titles at 12px weight 600 `--ink`; links at 12px `--footer-ink`, 8px line gaps. `box-sizing: border-box` and `width: 100%` on the container prevents overflow at 768px. Below 768px every group collapses into an accordion button row (`aria-expanded`, chevron icon, hairline `--rule` separators), all collapsed by default.
+**S-07 Footer directory:** `--footer` background, inside a `<nav aria-label="Site directory">`. 5 columns at ≥768px holding 11 groups: The workshop, Access and inclusion | Objects by room, Gift finder | Learn and make, The journal | Mending plans, Orders | Groups and trade, Write to us, Visit a workshop. Each group has 3–6 fictional links. Column titles at 12px weight 600 `--ink`; links at 12px `--footer-ink`, 8px line gaps. `box-sizing: border-box` and `width: 100%` on the container prevents overflow at 768px. Below 768px every group collapses into an accordion button row (`aria-expanded`, `aria-controls`, chevron icon that rotates 180° when open, hairline `--rule` separators), all collapsed by default; open panels have 13px bottom padding; there are no gaps between stacked columns.
 
-**S-08 Final bar:** "Prefer to see things in person? Visit an Ashgrove space or one of our partner makers (sample)." — a hairline `--rule`, then "2026 Ashgrove, a fictional company." + legal links (Privacy, Terms, Sending something back (sample), Legal, Directory) separated by thin `--rule` bars + region label "United States (sample)" at the right. The orders and delivery directory section uses "Where is my order?" instead of "Track your order" and "Sending something back (sample)" instead of "Returns (sample)". "Studio locations" appears in the Sessions group and "Ashgrove vouchers (sample)" appears in the Gift ideas group. Stacks at 360px.
+**S-08 Final bar:** Two rows. Row 1: "Region: United States (sample)" left and "Ashgrove is a fictional maker used to demo this design system." right. Row 2: "2026 Ashgrove (fictional)." left, then a legal nav list of 4 links — Shipping and returns, Your data, Terms of sale (sample), Site index — separated by 1px × 12px rule bars drawn in CSS; when links wrap, a bar never starts a row (row-start bars are clipped). Rows stack at <768px.
 
-**Z-index scale:** scrim 55 < header/nav with flyout panels 60 < mobile menu 70. The header carries `isolation: isolate` and `z-index: 60`; flyout panels sit inside the header at `position: absolute; top: 100%; z-index: 1` so they always open below the nav bar and are clipped within the header stacking context, sitting above the scrim. The scrim at `position: fixed; z-index: 55` sits below the header stack so nav triggers remain clickable while a panel is open. The mobile menu at `position: fixed; z-index: 70` sits above everything.
+**Z-index scale:** scrim 55 < header/nav with flyout panels 60 < mobile menu 70. The header has `z-index: 60`; sticky positioning and z-index together create the stacking context (no `isolation` property). Flyout panels sit inside the header at `position: absolute; top: 100%; z-index: 1` so they always open below the nav bar, sitting above the scrim. The scrim at `position: fixed; z-index: 55` sits below the header stack so nav triggers remain clickable while a panel is open. The mobile menu at `position: fixed; z-index: 70` sits above everything.
 
 ## Elevation & Depth
 
@@ -312,12 +326,12 @@ Ashgrove's spacing maps to the 13px grid:
 
 | Flavor element | Aura component | Notes |
 | --- | --- | --- |
-| Filled grove pill ("Learn more") | `Button variant="fill"` | `bg-(--grove) text-(--on-grove) hover:bg-(--grove-deep) rounded-full px-[19.5px] h-[45.5px]` |
-| Outline pill light ("Order") | `Button variant="pill"` | `border border-(--link) text-(--link) bg-transparent rounded-full` |
-| Outline pill night | `Button variant="pill"` | `border border-(--link-night) text-(--link-night) bg-transparent rounded-full` |
+| Filled grove pill ("Learn more") | `Button variant="fill"` | `bg-(--grove) text-(--on-grove) hover:bg-(--grove-deep) rounded-full px-[19.5px] h-[45.5px] font-semibold text-[17px]`; `background-color` and `border-color` transition 180ms only when motion is allowed; no inline colors |
+| Outline pill light ("Order") | `Button variant="pill"` | `border border-(--link) text-(--link) bg-transparent rounded-full`; hover adds 8% link tint on light surfaces; 180ms transition when motion is allowed; no inline colors |
+| Outline pill night | `Button variant="pill"` | `border border-(--link-night) text-(--link-night) bg-transparent rounded-full`; hover adds 12% link-night tint on night surfaces; 180ms transition when motion is allowed; no inline colors |
 | Global nav | `NavigationMenu` | Full-width flyout; `left:0; right:0`; click/Enter only; `aria-expanded`/`aria-controls` |
-| Locale bar select | `NativeSelect class="inputer"` | `.ag select.inputer { border: 1px solid var(--control-line-night); appearance: auto; color: var(--night-ink); background: color-mix(in srgb, white 8%, transparent); }` |
-| Search input in flyout | `Input` | 24px, borderless with a 2px bottom border (`border-bottom: 2px solid var(--night-muted)`); no radius box; `placeholder` "Search Ashgrove — local demo" |
+| Locale bar select | `NativeSelect class="inputer"` | `.ag select.inputer { border: 1px solid var(--control-line-night); appearance: auto; color: var(--night-ink); background: color-mix(in srgb, var(--night) 80%, transparent); height: 52px; margin: 0; }` |
+| Search input in flyout | `Input` | 24px, borderless with a 2px bottom border (`border-bottom: 2px solid var(--night-muted)`); transparent background; no border-radius; on focus the underline turns `--link-night` and thickens to 3px (the underline is the focus indicator); forced-colors adds a Highlight outline; `placeholder` "Search Ashgrove — local demo" |
 | Mosaic tile (product hero) | `Card` | `rounded-none shadow-none overflow-hidden`; CSS/SVG product art inside |
 | Promo tile | `Card` | `rounded-none shadow-none overflow-hidden`; `h3` + sub + pills + art |
 | Gallery card | `Card` | `rounded-none shadow-none`; 16:9; bottom-left pill + scrim caption |
@@ -328,15 +342,15 @@ Ashgrove's spacing maps to the 13px grid:
 | FAQ | `Accordion` | 5 items; `--body` answers; first item open |
 | Footer groups (< 768px) | `Accordion` | All collapsed by default; `aria-expanded`; chevron icon; `border-b border-(--rule)` |
 | Comparison table | `Table` inside `overflow-x: auto` | `role="region"` wrapper; `aria-label`; `tabindex="0"`; `text-sm` cells |
-| Care plans form | `Input`, `NativeSelect`, `Textarea` | `border-radius: 12px`; `border: 1px solid var(--control-line)`; `aria-describedby` errors; `aria-live` confirm |
-| NativeSelect on night | `NativeSelect class="inputer"` | `.ag select.inputer.night { border: 1px solid var(--control-line-night); color: var(--night-ink); background: var(--night); }` |
+| Sessions booking form | `Input`, `NativeSelect`, `Textarea` | `border-radius: 12px`; `border: 1px solid var(--control-line)`; `aria-describedby` and `aria-invalid` on field errors (not live regions); single polite status line for submit feedback |
+| NativeSelect on night | `NativeSelect class="inputer"` | `.ag select.inputer.night { border: 1px solid var(--control-line-night); color: var(--night-ink); background: color-mix(in srgb, var(--night) 80%, transparent); }` |
 | Stat figures | `Stat`, `StatValue`, `StatLabel` | `font-display font-semibold text-[48px]`; labels `--body`; sample figures |
 | Locale bar region | `div role="region"` | `aria-label="Region selector"`; close × moves focus to nav wordmark; not `role="alert"` |
 | Footnote superscript | inline `<sup><a>` | `font-label text-[12px] text-(--link)` on light; `text-(--link-night)` on night |
 
 ## Do's and Don'ts
 
-- Do use `--grove` only for filled pill buttons and the active gallery dot capsule.
+- Do use `--grove` for: filled pill buttons, the locale Continue pill, the wordmark square, the bag count badge, the active gallery dot capsule, the skip link, the Recommended plan border and badge, plan check icons and the form success state.
 - Do use `--link` for text links and outline pills on light surfaces only; `--link-night` on night surfaces.
 - Do keep `--ember`, `--moss`, `--clay`, `--honey` and `--dusk` inside CSS/SVG artwork only — never as text or control color.
 - Do use white text on `--moss` and `--clay` hero tiles only after verifying 4.5:1.
@@ -345,6 +359,7 @@ Ashgrove's spacing maps to the 13px grid:
 - Do keep `min-width: 0` on every grid and flex child to prevent overflow at 360px.
 - Do label all prices, counts and durations as sample figures.
 
+- Don't use `--grove` for text links or outline pills; use `--link` on light surfaces and `--link-night` on night surfaces instead.
 - Don't open flyout panels on hover — click or Enter/Space only.
 - Don't animate anything under `prefers-reduced-motion: reduce`; show all content in its final visible state.
 - Don't use `--ember`, `--honey` or `--dusk` for any text, border or control color.
@@ -362,12 +377,12 @@ All motion sits behind `@media (prefers-reduced-motion: no-preference)`. Use onl
 | Flyout panel open | Slide down `translateY(-8px → 0)` + `opacity 0 → 1` | 220ms `ease` |
 | Scrim appear | `opacity 0 → 1` | 200ms `ease` |
 | Hero tile drift | `translateX` / `translateY` subtle loop | 8–12s `linear` infinite; paused by pause button |
-| Mosaic text fade-up | `translateY(16px → 0) opacity 0 → 1` | 400ms `cubic-bezier(0.4, 0, 0.2, 1)` on scroll entry |
 | Gallery slide | `scroll-behavior: smooth` or `transform` | 300ms `ease` |
-| Button hover fill | `background-color` to `--grove-deep` | 180ms `ease` |
+| Pill color transition | `background-color`, `border-color` | 180ms `ease` only with motion allowed; with reduced motion pills, inputs and labels have no transition and no hover scale |
+| Footer chevron rotation | `transform` rotate 180° | 200ms `ease` |
 | Autoplay advance | Gallery slide every 5 s | Only when `prefers-reduced-motion: no-preference` and not paused |
 
-With `prefers-reduced-motion: reduce`: tile drift does not run (button starts in "Play animation" state); gallery autoplay is off (button starts as "Play gallery"); all entrances appear instantly at their final state; flyout and scrim appear without transition.
+With `prefers-reduced-motion: reduce`: tile drift does not run (button starts in "Play animation" state); gallery autoplay is off (button starts as "Play gallery"); all entrances appear instantly at their final state; flyout, scrim, pill color transitions and footer chevron rotation appear without transition.
 
 ## Accessibility notes
 
@@ -375,12 +390,12 @@ With `prefers-reduced-motion: reduce`: tile drift does not run (button starts in
 - Focus rings use `outline: 2px solid var(--focus)` with `outline-offset: 2px` on light; `outline: 2px solid var(--focus-night)` on night. Inside `#ag-hero` (the campaign mosaic), all `:focus-visible` elements use `outline: 2px solid white; outline-offset: 2px; box-shadow: 0 0 0 4px var(--night)` — a white ring with a dark halo — to achieve ≥3:1 contrast against every tile color including moss, clay, honey and dusk.
 - `@media (forced-colors: active)`: pill borders use `ButtonBorder`; active gallery dot uses `Highlight`; focus outlines use `Highlight`; SVG icons use `currentColor`.
 - The gallery tablist follows the WAI-ARIA tabs pattern: roving tabindex, Left/Right/Home/End keyboard navigation, `aria-selected` on the active tab, `aria-controls` pointing to the matching tabpanel.
-- The flyout navigation uses `aria-expanded` and `aria-controls` on each trigger. Flyout panels are plain `div` elements — no `role`, no `aria-label` on the panel div itself. Escape closes the open panel and returns focus to the trigger. ArrowDown from a nav trigger opens the panel if closed, then moves focus to the first link inside the panel. The mobile full-screen menu (`role="dialog"`, `aria-modal="true"`) locks page scroll, traps Tab/Shift+Tab within the currently visible view (main list or sub-view), and returns focus to the menu button on close.
+- The flyout navigation uses `aria-expanded` and `aria-controls` on each trigger. Flyout panels are plain `div` elements — no `role`, no `aria-label` on the panel div itself. Escape closes the open panel and returns focus to the trigger. ArrowDown from a nav trigger opens the panel if closed, then moves focus to the first link inside the panel. Tab on an open category button moves focus into its panel; Tab past the last panel link closes the panel and moves focus to the next category button (or to search after the last category); Shift+Tab on the first panel link closes the panel and returns focus to the category button. Search and bag panels follow the same Tab pattern. The mobile full-screen menu (`role="dialog"`, `aria-modal="true"`) locks page scroll, traps Tab/Shift+Tab within the currently visible view (main list or sub-view), and returns focus to the menu button on close.
 - The campaign hero pause button switches `aria-label` between "Pause animation" and "Play animation" but does not use `aria-pressed`.
 - The comparison table sits inside a scroll region with `role="region"`, `aria-label="Compare Lantern models"` and `tabindex="0"` so keyboard users can reach the scrollable area.
-- Locale bar select: the native `<select>` on the dark strip has `border: 1px solid var(--control-line-night)`, `background: color-mix(in srgb, white 8%, transparent)` and a visible system chevron, ensuring 3:1 on the night background in both appearances.
+- Locale bar select: the native `<select>` on the dark strip has `border: 1px solid var(--control-line-night)`, `background: color-mix(in srgb, var(--night) 80%, transparent)`, `color: var(--night-ink)` and a visible system chevron, ensuring 3:1 on the night background in both appearances. At <768px the select is full-width with 14px text and shows "United States (sample)" fully visible.
 - Focus rings on night surfaces (locale bar, nav, flyouts, mobile menu, closing tile, gallery dark scrim pills) use `outline: 2px solid var(--focus-night)` via context rules (`#ag-nav :focus-visible`, `#ag-locale :focus-visible`, `.ag-flyout :focus-visible`, `#ag-menu :focus-visible`, `.on-night :focus-visible`). On light surfaces `outline: 2px solid var(--focus)` applies globally. Inside `#ag-hero` the white-ring-plus-night-halo rule overrides both.
-- The consent checkbox has `accent-color: var(--grove)` and `border: 1px solid var(--control-line)` for visibility in both appearances.
+- The consent checkbox has `accent-color: var(--grove)` and uses the native browser-drawn border (`appearance: auto`); no custom `border` is applied to the checkbox element.
 - All drift animations are declared only under `.motion` (e.g. `.motion .ag-drift-x { animation: … }`). Gallery slide transition, dot transition, FAQ chevron transition and accordion chevron transition are similarly scoped to `.motion`. No animation or transition runs under `prefers-reduced-motion: reduce`.
 - Gallery autoplay fires every 5000 ms only when `prefers-reduced-motion: no-preference` and not user-paused. Autoplay is suspended on `pointerenter` or `focusin` inside `#ag-sessions` and resumes on `pointerleave` / `focusout` (when focus leaves the section), unless the pause button was pressed.
 - The FAQ accordion allows multiple items open simultaneously; there is no single-open constraint.

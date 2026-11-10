@@ -41,7 +41,10 @@ a:hover{text-decoration:underline;}
 .ag .button-fill{background:var(--grove);border-color:var(--grove);color:var(--on-grove);}
 .ag .button-fill:hover:not(:disabled){background:var(--grove-deep);border-color:var(--grove-deep);}
 .ag .button-pill{border-color:var(--link);color:var(--link);background:transparent;border-width:1px;}
-.ag .button-pill:hover:not(:disabled){background:var(--accent-a3);}
+.ag .button-pill:hover:not(:disabled){background:color-mix(in srgb,var(--link) 8%,transparent);}
+.on-night .ag .button-pill:hover:not(:disabled){background:color-mix(in srgb,var(--link-night) 12%,transparent);}
+.motion .ag .button-fill,.motion .ag .button-pill{transition:background-color 180ms ease,border-color 180ms ease;}
+.dark .ag,[data-theme="dark"] .ag{--accent-contrast:var(--on-grove);}
 .ag .button,.ag .button-fill,.ag .button-pill{border-radius:9999px;height:calc(var(--aura)*3.5);padding:0 calc(var(--aura)*1.5);font-size:17px;font-weight:600;}
 .ag .btn-sm{font-size:14px;height:calc(var(--aura)*2.7);padding:0 calc(var(--aura)*1.5);}
 .ag .btn-night-pill{border-radius:9999px;height:calc(var(--aura)*3.5);padding:0 calc(var(--aura)*1.5);font-size:17px;font-weight:600;border:1px solid var(--link-night);color:var(--link-night);background:transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;}
@@ -61,17 +64,18 @@ a:hover{text-decoration:underline;}
 .ag-wrap{width:min(100% - calc(var(--aura)*2),1000px);margin-inline:auto;}
 
 .ag-locale{background:var(--night);color:var(--night-ink);padding:0 calc(var(--aura)*2);}
-.ag-locale-inner{display:flex;align-items:center;gap:calc(var(--aura)*1);flex-wrap:wrap;min-height:52px;width:min(100%,1000px);margin-inline:auto;}
+.ag-locale-inner{display:flex;align-items:center;gap:calc(var(--aura)*1);flex-wrap:wrap;min-height:52px;width:min(100%,1000px);margin-inline:auto;padding-top:6.5px;padding-bottom:6.5px;}
 .ag-locale-text{font-size:12px;color:var(--night-ink);flex:1 1 auto;min-width:0;}
 .ag-locale-controls{display:flex;align-items:center;gap:calc(var(--aura)*1);flex-shrink:0;flex-wrap:nowrap;}
 .ag-locale-select-wrap{position:relative;display:flex;align-items:center;flex-shrink:0;}
-.ag-locale-select-wrap select.inputer{width:auto;min-width:180px;background:color-mix(in srgb,white 8%,transparent);border:1px solid var(--control-line-night);color:var(--night-ink);}
+.ag-locale-select-wrap select.inputer{width:auto;min-width:180px;background:color-mix(in srgb,white 8%,transparent);border:1px solid var(--control-line-night);color:var(--night-ink);margin:0;}
+.ag-locale-select-wrap{margin:0;}
 @media(max-width:767px){
 .ag-locale-inner{flex-wrap:wrap;}
 .ag-locale-text{flex:1 1 100%;}
-.ag-locale-controls{flex:1 1 auto;width:100%;}
-.ag-locale-select-wrap{flex:1 1 auto;}
-.ag-locale-select-wrap select.inputer{width:100%;min-width:0;}
+.ag-locale-controls{flex:1 1 auto;width:100%;flex-wrap:wrap;}
+.ag-locale-select-wrap{flex:1 1 100%;}
+.ag-locale-select-wrap select.inputer{width:100%;min-width:0;font-size:14px;padding-right:calc(var(--aura)*2.5);}
 }
 .ag-locale-continue{border-radius:9999px;background:var(--grove);border:none;color:var(--on-grove);font:600 12px/1 var(--aura-font-display);padding:7px 16px;cursor:pointer;white-space:nowrap;flex-shrink:0;}
 .ag-locale-continue:focus-visible{outline:2px solid var(--focus-night);outline-offset:2px;}
@@ -87,7 +91,7 @@ a:hover{text-decoration:underline;}
 .ag-wordmark:focus-visible{outline:2px solid var(--focus-night);outline-offset:2px;}
 .ag-wordmark-sq{width:18px;height:18px;border-radius:4px;background:var(--grove);flex-shrink:0;display:block;}
 .ag-cat-list{display:flex;align-items:center;gap:0;flex:1;min-width:0;}
-.ag-cat-btn{background:none;border:none;color:var(--nav-ink);font:600 12px/1 var(--aura-font-display);padding:0 10px;height:44px;cursor:pointer;white-space:nowrap;flex-shrink:0;letter-spacing:0;}
+.ag-cat-btn{background:none;border:none;color:var(--nav-ink);font:600 12px/1 var(--aura-font-display);padding:0 8px;height:44px;cursor:pointer;white-space:nowrap;flex-shrink:0;letter-spacing:0;}
 .ag-cat-btn:hover{color:white;}
 .ag-cat-btn:focus-visible{outline:2px solid var(--focus-night);outline-offset:-4px;}
 .ag-nav-end{display:flex;align-items:center;gap:calc(var(--aura)*0.5);margin-left:auto;flex-shrink:0;}
@@ -114,9 +118,11 @@ a:hover{text-decoration:underline;}
 .ag-fly-small-link:focus-visible{outline:2px solid var(--focus-night);outline-offset:2px;}
 
 #ag-fly-search .ag-flyout-inner{display:block;padding:calc(var(--aura)*2);}
-.ag-search-input{width:100%;background:none;border:none;border-bottom:2px solid var(--night-muted);color:var(--night-ink);font:400 24px/1.3 var(--aura-font-display);padding:calc(var(--aura)*0.5) 0;outline:none;}
+.ag-search-input{width:100%;background:transparent;border:0;border-bottom:2px solid var(--night-muted);border-radius:0;box-shadow:none;height:auto;color:var(--night-ink);font:400 24px/1.3 var(--aura-font-display);padding:calc(var(--aura)*0.5) 0;outline:none;}
 .ag-search-input::placeholder{color:var(--night-muted);}
-.ag-search-input:focus{border-bottom-color:var(--link-night);}
+.ag-search-input:focus{outline:none;border-bottom-color:var(--link-night);box-shadow:0 1px 0 0 var(--link-night);}
+.ag-search-input:focus-visible{outline:none;border-bottom-color:var(--link-night);box-shadow:0 1px 0 0 var(--link-night);}
+#ag-fly-search .ag-search-input{font-size:24px;line-height:1.3;}
 .ag-search-ql{margin-top:calc(var(--aura)*1.5);}
 .ag-search-ql-title{font-size:12px;color:var(--night-muted);font-weight:600;margin-bottom:calc(var(--aura)*0.5);}
 .ag-search-ql-link{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--link-night);padding:6px 0;text-decoration:none;}
@@ -133,16 +139,6 @@ a:hover{text-decoration:underline;}
 .motion #ag-scrim.visible{animation:ag-scrim-in 200ms ease both;}
 @keyframes ag-scrim-in{from{opacity:0;}to{opacity:1;}}
 
-<<<END>>>
-
-Now fix the flyout z-index approach — the nav needs `position:relative` or `sticky` with a stacking context above the scrim, and flyouts live inside it:
-
-<<<EDIT FILE>>>
-result.html
-<<<OLD>>>
-#ag-nav{position:sticky;top:0;z-index:60;background:var(--nav-glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);}
-<<<NEW>>>
-#ag-nav{position:sticky;top:0;z-index:60;background:var(--nav-glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);isolation:isolate;}
 
 #ag-menu{position:fixed;inset:0;z-index:70;background:var(--night);color:var(--night-ink);overflow-y:auto;display:none;flex-direction:column;}
 #ag-menu.open{display:flex;}
@@ -164,6 +160,8 @@ result.html
 .ag-menu-sub-link{display:block;color:var(--link-night);font-size:16px;padding:10px 0;border-bottom:1px solid color-mix(in srgb,white 6%,transparent);text-decoration:none;}
 .ag-menu-sub-link:hover{color:white;}
 .ag-menu-sub-link:focus-visible{outline:2px solid var(--focus-night);outline-offset:2px;}
+.ag-menu-sub-group{font:600 12px/1.4 var(--aura-font-display);color:var(--night-muted);margin:calc(var(--aura)*1.5) 0 calc(var(--aura)*0.25);letter-spacing:0;}
+.ag-menu-sub-group:first-child{margin-top:calc(var(--aura)*0.5);}
 
 #ag-main{min-width:0;}
 
@@ -172,7 +170,7 @@ result.html
 .ag-hero-tile{overflow:hidden;position:relative;}
 .ag-hero-text-tile{background:var(--moss);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:calc(var(--aura)*2);grid-column:1/3;grid-row:1/3;}
 #ag-hero :focus-visible{outline:2px solid white;outline-offset:2px;box-shadow:0 0 0 4px var(--night);}
-.ag-hero-h2{font-size:clamp(32px,4.5vw,56px);line-height:1.07;color:white;font-weight:600;letter-spacing:-0.022em;margin-bottom:calc(var(--aura)*0.75);}
+.ag-hero-h1{font-size:clamp(32px,4.5vw,56px);line-height:1.07;color:white;font-weight:600;letter-spacing:-0.022em;margin-bottom:calc(var(--aura)*0.75);}
 .ag-hero-sub{font-size:21px;line-height:1.33;color:white;font-weight:400;margin-bottom:calc(var(--aura)*1.5);opacity:0.92;}
 .ag-hero-pause{position:absolute;top:calc(var(--aura)*0.75);right:calc(var(--aura)*0.75);width:36px;height:36px;border-radius:9999px;background:color-mix(in srgb,black 60%,transparent);border:none;color:white;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;}
 .ag-hero-pause:focus-visible{outline:2px solid white;outline-offset:2px;box-shadow:0 0 0 4px var(--night);}
@@ -257,7 +255,7 @@ sup a{font-family:var(--aura-font-label);font-size:12px;color:var(--link);}
 .ag-compare-head{font-size:clamp(24px,3vw,36px);font-weight:600;color:var(--ink);margin-bottom:calc(var(--aura)*2);text-align:center;}
 .ag-table-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--rule);}
 .ag-table{width:100%;border-collapse:collapse;font-size:14px;min-width:600px;}
-.ag-table caption{padding:calc(var(--aura)*1) calc(var(--aura)*1.5);text-align:left;font-size:12px;color:var(--muted);font-family:var(--aura-font-label);}
+.ag-table caption{padding:calc(var(--aura)*1) calc(var(--aura)*1.5);text-align:left;font-size:12px;color:var(--muted);}
 .ag-table th{font-weight:600;color:var(--ink);padding:calc(var(--aura)*1) calc(var(--aura)*1.5);text-align:left;border-bottom:1px solid var(--rule);white-space:nowrap;background:var(--mist);}
 .ag-table td{padding:calc(var(--aura)*0.75) calc(var(--aura)*1.5);color:var(--body);border-bottom:1px solid var(--rule);overflow-wrap:break-word;}
 .ag-table tbody tr:last-child td{border-bottom:none;}
@@ -284,11 +282,11 @@ sup a{font-family:var(--aura-font-label);font-size:12px;color:var(--link);}
 .ag-field{display:flex;flex-direction:column;gap:6px;}
 .ag-field label{font-size:14px;font-weight:600;color:var(--ink);}
 .ag-field input,.ag-field textarea,.ag-field select{font-family:inherit;font-size:max(1rem,17px);color:var(--ink);}
-.ag-field-err{font-size:12px;color:color-mix(in srgb,var(--ember) 80%,black);display:none;font-family:var(--aura-font-label);}
+.ag-field-err{font-size:12px;color:color-mix(in srgb,var(--ember) 80%,black);display:none;}
 .dark .ag-field-err{color:var(--ember);}
 .ag-field-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:calc(var(--aura)*1);}
 .ag-consent-row{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--body);}
-.ag-consent-row input[type=checkbox]{width:18px;height:18px;flex-shrink:0;accent-color:var(--grove);margin-top:2px;border:1px solid var(--control-line);outline-offset:2px;}
+.ag-consent-row input[type=checkbox]{width:18px;height:18px;flex-shrink:0;accent-color:var(--grove);margin-top:2px;outline-offset:2px;}
 .ag-consent-row input[type=checkbox]:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
 .ag-form-status{font-size:14px;font-weight:600;min-height:1.4em;color:var(--grove);}
 
@@ -324,21 +322,29 @@ sup a{font-family:var(--aura-font-label);font-size:12px;color:var(--link);}
 .ag-dir-group-btn:focus-visible{outline:2px solid var(--focus);outline-offset:-2px;}
 .ag-dir-group-btn svg{flex-shrink:0;}
 .motion .ag-dir-group-btn svg{transition:transform 200ms ease;}
-.ag-dir-group-btn[aria-expanded="true"] svg{transform:rotate(45deg);}
+.ag-dir-group-btn[aria-expanded="true"] svg{transform:rotate(180deg);}
 .ag-dir-links{display:flex;flex-direction:column;gap:8px;}
 .ag-dir-links a{font-size:12px;color:var(--footer-ink);text-decoration:none;line-height:1.4;}
 .ag-dir-links a:hover{text-decoration:underline;}
 .ag-dir-links a:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
 .ag-dir-panel[hidden]{display:none;}
+.ag-dir-panel:not([hidden]){padding-bottom:calc(var(--aura)*1);border-bottom:1px solid var(--rule);}
 
 .ag-finalbar{border-top:1px solid var(--rule);padding:calc(var(--aura)*1.5) calc(var(--aura)*2);}
 .ag-finalbar-inner{max-width:1000px;margin:0 auto;}
-.ag-finalbar-top{font-size:12px;color:var(--muted);margin-bottom:calc(var(--aura)*0.75);}
-.ag-finalbar-bottom{display:flex;flex-wrap:wrap;align-items:center;gap:4px calc(var(--aura)*0.5);font-size:12px;color:var(--muted);}
-.ag-finalbar-bottom a{color:var(--muted);text-decoration:none;}
-.ag-finalbar-bottom a:hover{text-decoration:underline;}
-.ag-finalbar-sep{color:var(--rule);user-select:none;}
-.ag-finalbar-region{margin-left:auto;font-size:12px;color:var(--muted);}
+.ag-finalbar-row1{display:flex;justify-content:space-between;align-items:center;gap:calc(var(--aura)*1);flex-wrap:wrap;font-size:12px;color:var(--muted);margin-bottom:calc(var(--aura)*0.75);}
+.ag-finalbar-row2{display:flex;align-items:center;gap:calc(var(--aura)*1);flex-wrap:wrap;font-size:12px;color:var(--muted);}
+.ag-finalbar-copy{flex-shrink:0;}
+.ag-finalbar nav{overflow:hidden;}
+.ag-finalbar nav .ag-finalbar-links{display:flex;flex-wrap:wrap;align-items:center;list-style:none;padding:0;margin:0 0 0 calc(var(--aura)*-1);row-gap:4px;}
+.ag-finalbar-links li{display:flex;align-items:center;padding-left:calc(var(--aura)*1);position:relative;}
+.ag-finalbar-links li::before{content:"";position:absolute;left:calc(var(--aura)*0.5);top:50%;width:1px;height:12px;transform:translateY(-50%);background:var(--rule);}
+.ag-finalbar-links a{color:var(--muted);text-decoration:none;white-space:nowrap;}
+.ag-finalbar-links a:hover{text-decoration:underline;}
+@media(max-width:767px){
+.ag-finalbar-row1{flex-direction:column;align-items:flex-start;}
+.ag-finalbar-row2{flex-direction:column;align-items:flex-start;}
+}
 
 @media(max-width:900px){
 .ag-cat-list{display:none;}
@@ -355,7 +361,7 @@ sup a{font-family:var(--aura-font-label);font-size:12px;color:var(--link);}
 .ag-sub-cards{grid-template-columns:minmax(0,1fr);}
 .ag-care-plans{grid-template-columns:minmax(0,1fr);}
 .ag-field-row{grid-template-columns:minmax(0,1fr);}
-.ag-dir-cols{grid-template-columns:minmax(0,1fr);}
+.ag-dir-cols{grid-template-columns:minmax(0,1fr);gap:0;}
 .ag-dir-group-title{display:none;}
 .ag-dir-group-btn{display:flex;}
 .ag-dir-links{padding-bottom:calc(var(--aura)*1);}
@@ -366,7 +372,7 @@ sup a{font-family:var(--aura-font-label);font-size:12px;color:var(--link);}
 @media(max-width:480px){
 .ag-hero-mosaic{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:360px 160px 160px;}
 .ag-hero-text-tile{grid-column:1/3;grid-row:1/2;}
-.ag-hero-h2{font-size:32px;}
+.ag-hero-h1{font-size:32px;}
 .ag-promo-tile h3{font-size:28px;}
 .ag-stats-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
 .ag-gallery-card{flex:0 0 86%;}
@@ -376,13 +382,16 @@ sup a{font-family:var(--aura-font-label);font-size:12px;color:var(--link);}
 .ag-product-tile-sub{font-size:17px;}
 }
 @media(max-width:360px){
-.ag-hero-h2{font-size:28px;}
+.ag-hero-h1{font-size:28px;}
 .ag-promo-tile h3{font-size:24px;}
 .ag-product-tile h2{font-size:24px;}
 .ag-stat-val{font-size:36px;}
 }
 
+@media (prefers-reduced-motion: reduce){.ag .button,.ag .button-fill,.ag .button-pill,.ag .btn-night-pill,.ag input,.ag select,.ag textarea,.ag label{transition:none;}.ag .button:hover,.ag .button-fill:hover,.ag .button-pill:hover,.ag .btn-night-pill:hover{transform:none;}}
+
 @media(forced-colors:active){
+.ag-search-input:focus-visible{outline:2px solid Highlight;outline-offset:4px;}
 .ag-gallery-dot[aria-selected="true"]{background:Highlight;forced-color-adjust:none;}
 .ag-gallery-dot{border:1px solid ButtonBorder;}
 .ag-plan.featured{border:2px solid Highlight;}
@@ -431,6 +440,8 @@ Ashgrove
 <li><button class="ag-cat-btn" id="ag-cat-textiles" type="button" aria-expanded="false" aria-controls="ag-fly-textiles">Textiles</button></li>
 <li><button class="ag-cat-btn" id="ag-cat-clocks" type="button" aria-expanded="false" aria-controls="ag-fly-clocks">Clocks</button></li>
 <li><button class="ag-cat-btn" id="ag-cat-outdoor" type="button" aria-expanded="false" aria-controls="ag-fly-outdoor">Outdoor</button></li>
+<li><button class="ag-cat-btn" id="ag-cat-seating" type="button" aria-expanded="false" aria-controls="ag-fly-seating">Seating</button></li>
+<li><button class="ag-cat-btn" id="ag-cat-warmth" type="button" aria-expanded="false" aria-controls="ag-fly-warmth">Warmth</button></li>
 <li><button class="ag-cat-btn" id="ag-cat-studio" type="button" aria-expanded="false" aria-controls="ag-fly-studio">Studio</button></li>
 <li><button class="ag-cat-btn" id="ag-cat-support" type="button" aria-expanded="false" aria-controls="ag-fly-support">Help</button></li>
 </ul>
@@ -449,7 +460,7 @@ Ashgrove
 <div id="ag-fly-lamps" class="ag-flyout on-night">
 <div class="ag-flyout-inner">
 <div>
-<div class="ag-fly-col-title">In the lamps range</div>
+<div class="ag-fly-col-title">The range</div>
 <a class="ag-fly-big-link" href="#">Ashgrove Lantern</a>
 <a class="ag-fly-big-link" href="#">Arc Reading Lamp</a>
 <a class="ag-fly-big-link" href="#">Bedside Glow</a>
@@ -457,7 +468,7 @@ Ashgrove
 <a class="ag-fly-big-link" href="#">Ember Floor Lamp</a>
 </div>
 <div>
-<div class="ag-fly-col-title">Bring one home</div>
+<div class="ag-fly-col-title">Ways to get it</div>
 <a class="ag-fly-small-link" href="#">Order Lantern</a>
 <a class="ag-fly-small-link" href="#">Order Arc Lamp</a>
 <a class="ag-fly-small-link" href="#">Order Bedside Glow</a>
@@ -465,8 +476,8 @@ Ashgrove
 <a class="ag-fly-small-link" href="#">View all lamps</a>
 </div>
 <div>
-<div class="ag-fly-col-title">Care and guides</div>
-<a class="ag-fly-small-link" href="#">Ashgrove Care for Lamps</a>
+<div class="ag-fly-col-title">Make it last</div>
+<a class="ag-fly-small-link" href="#">Mending plan for lamps</a>
 <a class="ag-fly-small-link" href="#">Lamp accessories</a>
 <a class="ag-fly-small-link" href="#">Sessions: Lighting basics</a>
 <a class="ag-fly-small-link" href="#">Lantern setup guide</a>
@@ -478,7 +489,7 @@ Ashgrove
 <div id="ag-fly-sound" class="ag-flyout on-night">
 <div class="ag-flyout-inner">
 <div>
-<div class="ag-fly-col-title">In the sound range</div>
+<div class="ag-fly-col-title">The range</div>
 <a class="ag-fly-big-link" href="#">Ashgrove Orbit</a>
 <a class="ag-fly-big-link" href="#">Shelf Speaker</a>
 <a class="ag-fly-big-link" href="#">Garden Chime</a>
@@ -486,7 +497,7 @@ Ashgrove
 <a class="ag-fly-big-link" href="#">Soft Room Speaker</a>
 </div>
 <div>
-<div class="ag-fly-col-title">Bring one home</div>
+<div class="ag-fly-col-title">Ways to get it</div>
 <a class="ag-fly-small-link" href="#">Order Orbit</a>
 <a class="ag-fly-small-link" href="#">Order Shelf Speaker</a>
 <a class="ag-fly-small-link" href="#">Order Garden Chime</a>
@@ -494,9 +505,9 @@ Ashgrove
 <a class="ag-fly-small-link" href="#">Bundles</a>
 </div>
 <div>
-<div class="ag-fly-col-title">Care and guides</div>
+<div class="ag-fly-col-title">Make it last</div>
 <a class="ag-fly-small-link" href="#">Sessions: Sound at home</a>
-<a class="ag-fly-small-link" href="#">Ashgrove Care for Sound</a>
+<a class="ag-fly-small-link" href="#">Mending plan for sound</a>
 <a class="ag-fly-small-link" href="#">Orbit setup guide</a>
 <a class="ag-fly-small-link" href="#">Compare speakers</a>
 </div>
@@ -506,7 +517,7 @@ Ashgrove
 <div id="ag-fly-kitchen" class="ag-flyout on-night">
 <div class="ag-flyout-inner">
 <div>
-<div class="ag-fly-col-title">In the kitchen range</div>
+<div class="ag-fly-col-title">The range</div>
 <a class="ag-fly-big-link" href="#">Ashgrove Kiln</a>
 <a class="ag-fly-big-link" href="#">Copper Pour Kettle</a>
 <a class="ag-fly-big-link" href="#">Clay Mortar Set</a>
@@ -514,17 +525,17 @@ Ashgrove
 <a class="ag-fly-big-link" href="#">Ash Tray</a>
 </div>
 <div>
-<div class="ag-fly-col-title">Bring one home</div>
+<div class="ag-fly-col-title">Ways to get it</div>
 <a class="ag-fly-small-link" href="#">Order Kiln</a>
 <a class="ag-fly-small-link" href="#">Order Copper Kettle</a>
 <a class="ag-fly-small-link" href="#">View all kitchen</a>
 <a class="ag-fly-small-link" href="#">Gift sets</a>
 </div>
 <div>
-<div class="ag-fly-col-title">Care and guides</div>
+<div class="ag-fly-col-title">Make it last</div>
 <a class="ag-fly-small-link" href="#">Sessions: Ceramics intro</a>
 <a class="ag-fly-small-link" href="#">Kiln care guide</a>
-<a class="ag-fly-small-link" href="#">Ashgrove Care for Kitchen</a>
+<a class="ag-fly-small-link" href="#">Mending plan for kitchen</a>
 </div>
 </div>
 </div>
@@ -532,7 +543,7 @@ Ashgrove
 <div id="ag-fly-textiles" class="ag-flyout on-night">
 <div class="ag-flyout-inner">
 <div>
-<div class="ag-fly-col-title">In the textiles range</div>
+<div class="ag-fly-col-title">The range</div>
 <a class="ag-fly-big-link" href="#">Ashgrove Loom</a>
 <a class="ag-fly-big-link" href="#">Woven Floor Rug</a>
 <a class="ag-fly-big-link" href="#">Linen Cushion Cover</a>
@@ -540,17 +551,17 @@ Ashgrove
 <a class="ag-fly-big-link" href="#">Cotton Table Runner</a>
 </div>
 <div>
-<div class="ag-fly-col-title">Bring one home</div>
+<div class="ag-fly-col-title">Ways to get it</div>
 <a class="ag-fly-small-link" href="#">Order Loom throw</a>
 <a class="ag-fly-small-link" href="#">Order floor rug</a>
 <a class="ag-fly-small-link" href="#">View all textiles</a>
 <a class="ag-fly-small-link" href="#">Colour bundles</a>
 </div>
 <div>
-<div class="ag-fly-col-title">Care and guides</div>
+<div class="ag-fly-col-title">Make it last</div>
 <a class="ag-fly-small-link" href="#">Sessions: Weaving basics</a>
 <a class="ag-fly-small-link" href="#">Loom wash guide</a>
-<a class="ag-fly-small-link" href="#">Ashgrove Care</a>
+<a class="ag-fly-small-link" href="#">Mending plan for textiles</a>
 </div>
 </div>
 </div>
@@ -558,7 +569,7 @@ Ashgrove
 <div id="ag-fly-clocks" class="ag-flyout on-night">
 <div class="ag-flyout-inner">
 <div>
-<div class="ag-fly-col-title">In the clocks range</div>
+<div class="ag-fly-col-title">The range</div>
 <a class="ag-fly-big-link" href="#">Ashgrove Dial</a>
 <a class="ag-fly-big-link" href="#">Mantel Clock</a>
 <a class="ag-fly-big-link" href="#">Minimal Desk Timer</a>
@@ -566,16 +577,16 @@ Ashgrove
 <a class="ag-fly-big-link" href="#">Chime Wall Clock</a>
 </div>
 <div>
-<div class="ag-fly-col-title">Bring one home</div>
+<div class="ag-fly-col-title">Ways to get it</div>
 <a class="ag-fly-small-link" href="#">Order Dial</a>
 <a class="ag-fly-small-link" href="#">Order Mantel Clock</a>
 <a class="ag-fly-small-link" href="#">View all clocks</a>
 </div>
 <div>
-<div class="ag-fly-col-title">Care and guides</div>
+<div class="ag-fly-col-title">Make it last</div>
 <a class="ag-fly-small-link" href="#">Sessions: Timekeeping workshop</a>
 <a class="ag-fly-small-link" href="#">Dial setup guide</a>
-<a class="ag-fly-small-link" href="#">Ashgrove Care</a>
+<a class="ag-fly-small-link" href="#">Mending plan for clocks</a>
 </div>
 </div>
 </div>
@@ -583,7 +594,7 @@ Ashgrove
 <div id="ag-fly-outdoor" class="ag-flyout on-night">
 <div class="ag-flyout-inner">
 <div>
-<div class="ag-fly-col-title">In the outdoor range</div>
+<div class="ag-fly-col-title">The range</div>
 <a class="ag-fly-big-link" href="#">Ashgrove Drift</a>
 <a class="ag-fly-big-link" href="#">Garden Lantern</a>
 <a class="ag-fly-big-link" href="#">Woven Bench</a>
@@ -591,16 +602,68 @@ Ashgrove
 <a class="ag-fly-big-link" href="#">Outdoor Throw</a>
 </div>
 <div>
-<div class="ag-fly-col-title">Bring one home</div>
+<div class="ag-fly-col-title">Ways to get it</div>
 <a class="ag-fly-small-link" href="#">Order Drift chair</a>
 <a class="ag-fly-small-link" href="#">Order Garden Lantern</a>
 <a class="ag-fly-small-link" href="#">View all outdoor</a>
 </div>
 <div>
-<div class="ag-fly-col-title">Care and guides</div>
+<div class="ag-fly-col-title">Make it last</div>
 <a class="ag-fly-small-link" href="#">Sessions: Garden living</a>
 <a class="ag-fly-small-link" href="#">Drift care guide</a>
-<a class="ag-fly-small-link" href="#">Ashgrove Care</a>
+<a class="ag-fly-small-link" href="#">Mending plan for outdoor</a>
+</div>
+</div>
+</div>
+
+<div id="ag-fly-seating" class="ag-flyout on-night">
+<div class="ag-flyout-inner">
+<div>
+<div class="ag-fly-col-title">The range</div>
+<a class="ag-fly-big-link" href="#">Ashgrove Drift garden chair</a>
+<a class="ag-fly-big-link" href="#">Low Reading Chair</a>
+<a class="ag-fly-big-link" href="#">Oak Stool</a>
+<a class="ag-fly-big-link" href="#">Floor Cushion</a>
+<a class="ag-fly-big-link" href="#">Bench for two</a>
+</div>
+<div>
+<div class="ag-fly-col-title">Ways to get it</div>
+<a class="ag-fly-small-link" href="#">Order Drift</a>
+<a class="ag-fly-small-link" href="#">Order Reading Chair</a>
+<a class="ag-fly-small-link" href="#">View all seating</a>
+<a class="ag-fly-small-link" href="#">Fabric swatches (sample)</a>
+</div>
+<div>
+<div class="ag-fly-col-title">Make it last</div>
+<a class="ag-fly-small-link" href="#">Mending plan for seating</a>
+<a class="ag-fly-small-link" href="#">Oil and wax guide</a>
+<a class="ag-fly-small-link" href="#">Sessions: Chair caning</a>
+</div>
+</div>
+</div>
+
+<div id="ag-fly-warmth" class="ag-flyout on-night">
+<div class="ag-flyout-inner">
+<div>
+<div class="ag-fly-col-title">The range</div>
+<a class="ag-fly-big-link" href="#">Ashgrove Ember heater</a>
+<a class="ag-fly-big-link" href="#">Hearth Stone</a>
+<a class="ag-fly-big-link" href="#">Wool Hot-water Bottle</a>
+<a class="ag-fly-big-link" href="#">Window Draught Snake</a>
+<a class="ag-fly-big-link" href="#">Heated Throw</a>
+</div>
+<div>
+<div class="ag-fly-col-title">Ways to get it</div>
+<a class="ag-fly-small-link" href="#">Order Ember</a>
+<a class="ag-fly-small-link" href="#">Order Hearth Stone</a>
+<a class="ag-fly-small-link" href="#">View all warmth</a>
+<a class="ag-fly-small-link" href="#">Winter bundles (sample)</a>
+</div>
+<div>
+<div class="ag-fly-col-title">Make it last</div>
+<a class="ag-fly-small-link" href="#">Mending plan for warmth</a>
+<a class="ag-fly-small-link" href="#">Ember safety guide</a>
+<a class="ag-fly-small-link" href="#">Sessions: A warm room</a>
 </div>
 </div>
 </div>
@@ -608,7 +671,7 @@ Ashgrove
 <div id="ag-fly-studio" class="ag-flyout on-night">
 <div class="ag-flyout-inner">
 <div>
-<div class="ag-fly-col-title">In the studio range</div>
+<div class="ag-fly-col-title">The range</div>
 <a class="ag-fly-big-link" href="#">Studio Pendant</a>
 <a class="ag-fly-big-link" href="#">Craft Desk Mat</a>
 <a class="ag-fly-big-link" href="#">Ceramic Pen Cup</a>
@@ -616,15 +679,15 @@ Ashgrove
 <a class="ag-fly-big-link" href="#">Studio Speaker</a>
 </div>
 <div>
-<div class="ag-fly-col-title">Bring one home</div>
+<div class="ag-fly-col-title">Ways to get it</div>
 <a class="ag-fly-small-link" href="#">Order Studio Pendant</a>
 <a class="ag-fly-small-link" href="#">View all studio</a>
 <a class="ag-fly-small-link" href="#">Bundles</a>
 </div>
 <div>
-<div class="ag-fly-col-title">Care and guides</div>
+<div class="ag-fly-col-title">Make it last</div>
 <a class="ag-fly-small-link" href="#">Sessions: Home studio setup</a>
-<a class="ag-fly-small-link" href="#">Ashgrove Care</a>
+<a class="ag-fly-small-link" href="#">Mending plan for studio</a>
 </div>
 </div>
 </div>
@@ -632,7 +695,7 @@ Ashgrove
 <div id="ag-fly-gifts" class="ag-flyout on-night">
 <div class="ag-flyout-inner">
 <div>
-<div class="ag-fly-col-title">In the gifts range</div>
+<div class="ag-fly-col-title">The range</div>
 <a class="ag-fly-big-link" href="#">Gift Sets</a>
 <a class="ag-fly-big-link" href="#">Personalised Engraving</a>
 <a class="ag-fly-big-link" href="#">Ashgrove vouchers (sample)</a>
@@ -640,14 +703,14 @@ Ashgrove
 <a class="ag-fly-big-link" href="#">Wrapping Service</a>
 </div>
 <div>
-<div class="ag-fly-col-title">Bring one home</div>
+<div class="ag-fly-col-title">Ways to get it</div>
 <a class="ag-fly-small-link" href="#">Under 50 (sample)</a>
 <a class="ag-fly-small-link" href="#">Under 100 (sample)</a>
 <a class="ag-fly-small-link" href="#">View all gift sets</a>
 </div>
 <div>
-<div class="ag-fly-col-title">Wrapping and delivery</div>
-<a class="ag-fly-small-link" href="#">Ashgrove Care gifting</a>
+<div class="ag-fly-col-title">Make it last</div>
+<a class="ag-fly-small-link" href="#">Gift wrap and notes</a>
 <a class="ag-fly-small-link" href="#">Delivery information</a>
 </div>
 </div>
@@ -656,22 +719,22 @@ Ashgrove
 <div id="ag-fly-support" class="ag-flyout on-night">
 <div class="ag-flyout-inner">
 <div>
-<div class="ag-fly-col-title">How we can help</div>
-<a class="ag-fly-big-link" href="#">Ashgrove Care plans</a>
+<div class="ag-fly-col-title">Start here</div>
+<a class="ag-fly-big-link" href="#">Mending plans</a>
 <a class="ag-fly-big-link" href="#">Repair service</a>
 <a class="ag-fly-big-link" href="#">Sessions workshops</a>
 <a class="ag-fly-big-link" href="#">Setup guides</a>
 <a class="ag-fly-big-link" href="#">Frequently asked questions</a>
 </div>
 <div>
-<div class="ag-fly-col-title">Add a Care plan</div>
-<a class="ag-fly-small-link" href="#">Order Care Basic</a>
-<a class="ag-fly-small-link" href="#">Order Care Plus</a>
-<a class="ag-fly-small-link" href="#">Order Care Complete</a>
-<a class="ag-fly-small-link" href="#">Replacement parts</a>
+<div class="ag-fly-col-title">Mending plans</div>
+<a class="ag-fly-small-link" href="#">Order Mending Basic</a>
+<a class="ag-fly-small-link" href="#">Order Mending Plus</a>
+<a class="ag-fly-small-link" href="#">Order Mending Complete</a>
+<a class="ag-fly-small-link" href="#">Spare parts</a>
 </div>
 <div>
-<div class="ag-fly-col-title">Find us</div>
+<div class="ag-fly-col-title">Visit and talk</div>
 <a class="ag-fly-small-link" href="#">Studio locations</a>
 <a class="ag-fly-small-link" href="#">Contact Ashgrove</a>
 <a class="ag-fly-small-link" href="#">Accessibility</a>
@@ -681,7 +744,7 @@ Ashgrove
 
 <div id="ag-fly-search" class="ag-flyout on-night">
 <div class="ag-flyout-inner">
-<input class="ag-search-input" type="search" placeholder="Search Ashgrove — local demo" aria-label="Search Ashgrove" id="ag-search-input" autocomplete="off"/>
+<input class="ag-search-input default" type="search" placeholder="Search Ashgrove — local demo" aria-label="Search Ashgrove" id="ag-search-input" autocomplete="off"/>
 <div class="ag-search-ql">
 <div class="ag-search-ql-title">Quick links</div>
 <a class="ag-search-ql-link" href="#ag-hero">
@@ -698,7 +761,7 @@ Free Sessions workshops
 </a>
 <a class="ag-search-ql-link" href="#ag-care">
 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-Ashgrove Care plans
+Mending plans
 </a>
 <a class="ag-search-ql-link" href="#ag-faq">
 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -733,36 +796,40 @@ Ashgrove
 </div>
 <div class="ag-menu-cats" style="position:relative;">
 <ul>
-<li><button class="ag-menu-cat-btn" type="button" data-sub="ag-sub-gifts" aria-expanded="false">Gifts <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></li>
-<li><button class="ag-menu-cat-btn" type="button" data-sub="ag-sub-lamps" aria-expanded="false">Lamps <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></li>
-<li><button class="ag-menu-cat-btn" type="button" data-sub="ag-sub-sound" aria-expanded="false">Sound <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></li>
-<li><button class="ag-menu-cat-btn" type="button" data-sub="ag-sub-kitchen" aria-expanded="false">Kitchen <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></li>
-<li><button class="ag-menu-cat-btn" type="button" data-sub="ag-sub-textiles" aria-expanded="false">Textiles <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></li>
-<li><button class="ag-menu-cat-btn" type="button" data-sub="ag-sub-clocks" aria-expanded="false">Clocks <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></li>
-<li><button class="ag-menu-cat-btn" type="button" data-sub="ag-sub-outdoor" aria-expanded="false">Outdoor <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></li>
-<li><button class="ag-menu-cat-btn" type="button" data-sub="ag-sub-studio" aria-expanded="false">Studio <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></li>
-<li><button class="ag-menu-cat-btn" type="button" data-sub="ag-sub-support" aria-expanded="false">Help <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></li>
+<li><button class="ag-menu-cat-btn" type="button" data-sub="ag-sub-gifts" aria-expanded="false" aria-controls="ag-sub-gifts">Gifts <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></li>
+<li><button class="ag-menu-cat-btn" type="button" data-sub="ag-sub-lamps" aria-expanded="false" aria-controls="ag-sub-lamps">Lamps <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></li>
+<li><button class="ag-menu-cat-btn" type="button" data-sub="ag-sub-sound" aria-expanded="false" aria-controls="ag-sub-sound">Sound <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></li>
+<li><button class="ag-menu-cat-btn" type="button" data-sub="ag-sub-kitchen" aria-expanded="false" aria-controls="ag-sub-kitchen">Kitchen <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></li>
+<li><button class="ag-menu-cat-btn" type="button" data-sub="ag-sub-textiles" aria-expanded="false" aria-controls="ag-sub-textiles">Textiles <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></li>
+<li><button class="ag-menu-cat-btn" type="button" data-sub="ag-sub-clocks" aria-expanded="false" aria-controls="ag-sub-clocks">Clocks <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></li>
+<li><button class="ag-menu-cat-btn" type="button" data-sub="ag-sub-outdoor" aria-expanded="false" aria-controls="ag-sub-outdoor">Outdoor <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></li>
+<li><button class="ag-menu-cat-btn" type="button" data-sub="ag-sub-seating" aria-expanded="false" aria-controls="ag-sub-seating">Seating <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></li>
+<li><button class="ag-menu-cat-btn" type="button" data-sub="ag-sub-warmth" aria-expanded="false" aria-controls="ag-sub-warmth">Warmth <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></li>
+<li><button class="ag-menu-cat-btn" type="button" data-sub="ag-sub-studio" aria-expanded="false" aria-controls="ag-sub-studio">Studio <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></li>
+<li><button class="ag-menu-cat-btn" type="button" data-sub="ag-sub-support" aria-expanded="false" aria-controls="ag-sub-support">Help <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></li>
 </ul>
-<div class="ag-menu-subview" id="ag-sub-lamps"><div class="ag-menu-sub-head"><button class="ag-menu-back" type="button" id="ag-sub-lamps-back"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Back</button><span class="ag-menu-sub-title">Lamps</span></div><div class="ag-menu-sub-links"><a class="ag-menu-sub-link" href="#">Ashgrove Lantern</a><a class="ag-menu-sub-link" href="#">Arc Reading Lamp</a><a class="ag-menu-sub-link" href="#">Bedside Glow</a><a class="ag-menu-sub-link" href="#">Studio Pendant</a><a class="ag-menu-sub-link" href="#">View all lamps</a></div></div>
-<div class="ag-menu-subview" id="ag-sub-sound"><div class="ag-menu-sub-head"><button class="ag-menu-back" type="button" id="ag-sub-sound-back"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Back</button><span class="ag-menu-sub-title">Sound</span></div><div class="ag-menu-sub-links"><a class="ag-menu-sub-link" href="#">Ashgrove Orbit</a><a class="ag-menu-sub-link" href="#">Shelf Speaker</a><a class="ag-menu-sub-link" href="#">Garden Chime</a><a class="ag-menu-sub-link" href="#">View all sound</a></div></div>
-<div class="ag-menu-subview" id="ag-sub-kitchen"><div class="ag-menu-sub-head"><button class="ag-menu-back" type="button" id="ag-sub-kitchen-back"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Back</button><span class="ag-menu-sub-title">Kitchen</span></div><div class="ag-menu-sub-links"><a class="ag-menu-sub-link" href="#">Ashgrove Kiln</a><a class="ag-menu-sub-link" href="#">Copper Pour Kettle</a><a class="ag-menu-sub-link" href="#">View all kitchen</a></div></div>
-<div class="ag-menu-subview" id="ag-sub-textiles"><div class="ag-menu-sub-head"><button class="ag-menu-back" type="button" id="ag-sub-textiles-back"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Back</button><span class="ag-menu-sub-title">Textiles</span></div><div class="ag-menu-sub-links"><a class="ag-menu-sub-link" href="#">Ashgrove Loom</a><a class="ag-menu-sub-link" href="#">Woven Floor Rug</a><a class="ag-menu-sub-link" href="#">View all textiles</a></div></div>
-<div class="ag-menu-subview" id="ag-sub-clocks"><div class="ag-menu-sub-head"><button class="ag-menu-back" type="button" id="ag-sub-clocks-back"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Back</button><span class="ag-menu-sub-title">Clocks</span></div><div class="ag-menu-sub-links"><a class="ag-menu-sub-link" href="#">Ashgrove Dial</a><a class="ag-menu-sub-link" href="#">Mantel Clock</a><a class="ag-menu-sub-link" href="#">View all clocks</a></div></div>
-<div class="ag-menu-subview" id="ag-sub-outdoor"><div class="ag-menu-sub-head"><button class="ag-menu-back" type="button" id="ag-sub-outdoor-back"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Back</button><span class="ag-menu-sub-title">Outdoor</span></div><div class="ag-menu-sub-links"><a class="ag-menu-sub-link" href="#">Ashgrove Drift</a><a class="ag-menu-sub-link" href="#">Garden Lantern</a><a class="ag-menu-sub-link" href="#">View all outdoor</a></div></div>
-<div class="ag-menu-subview" id="ag-sub-studio"><div class="ag-menu-sub-head"><button class="ag-menu-back" type="button" id="ag-sub-studio-back"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Back</button><span class="ag-menu-sub-title">Studio</span></div><div class="ag-menu-sub-links"><a class="ag-menu-sub-link" href="#">Studio Pendant</a><a class="ag-menu-sub-link" href="#">Craft Desk Mat</a><a class="ag-menu-sub-link" href="#">View all studio</a></div></div>
-<div class="ag-menu-subview" id="ag-sub-gifts"><div class="ag-menu-sub-head"><button class="ag-menu-back" type="button" id="ag-sub-gifts-back"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Back</button><span class="ag-menu-sub-title">Gifts</span></div><div class="ag-menu-sub-links"><a class="ag-menu-sub-link" href="#">Gift Sets</a><a class="ag-menu-sub-link" href="#">Ashgrove vouchers (sample)</a><a class="ag-menu-sub-link" href="#">View all gifts</a></div></div>
-<div class="ag-menu-subview" id="ag-sub-support"><div class="ag-menu-sub-head"><button class="ag-menu-back" type="button" id="ag-sub-support-back"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Back</button><span class="ag-menu-sub-title">Help</span></div><div class="ag-menu-sub-links"><a class="ag-menu-sub-link" href="#ag-care">Ashgrove Care</a><a class="ag-menu-sub-link" href="#ag-faq">FAQ</a><a class="ag-menu-sub-link" href="#ag-sessions">Sessions</a></div></div>
+<div class="ag-menu-subview" id="ag-sub-lamps"><div class="ag-menu-sub-head"><button class="ag-menu-back" type="button" id="ag-sub-lamps-back"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Back</button><span class="ag-menu-sub-title">Lamps</span></div><div class="ag-menu-sub-links"></div></div>
+<div class="ag-menu-subview" id="ag-sub-sound"><div class="ag-menu-sub-head"><button class="ag-menu-back" type="button" id="ag-sub-sound-back"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Back</button><span class="ag-menu-sub-title">Sound</span></div><div class="ag-menu-sub-links"></div></div>
+<div class="ag-menu-subview" id="ag-sub-kitchen"><div class="ag-menu-sub-head"><button class="ag-menu-back" type="button" id="ag-sub-kitchen-back"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Back</button><span class="ag-menu-sub-title">Kitchen</span></div><div class="ag-menu-sub-links"></div></div>
+<div class="ag-menu-subview" id="ag-sub-textiles"><div class="ag-menu-sub-head"><button class="ag-menu-back" type="button" id="ag-sub-textiles-back"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Back</button><span class="ag-menu-sub-title">Textiles</span></div><div class="ag-menu-sub-links"></div></div>
+<div class="ag-menu-subview" id="ag-sub-clocks"><div class="ag-menu-sub-head"><button class="ag-menu-back" type="button" id="ag-sub-clocks-back"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Back</button><span class="ag-menu-sub-title">Clocks</span></div><div class="ag-menu-sub-links"></div></div>
+<div class="ag-menu-subview" id="ag-sub-outdoor"><div class="ag-menu-sub-head"><button class="ag-menu-back" type="button" id="ag-sub-outdoor-back"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Back</button><span class="ag-menu-sub-title">Outdoor</span></div><div class="ag-menu-sub-links"></div></div>
+<div class="ag-menu-subview" id="ag-sub-seating"><div class="ag-menu-sub-head"><button class="ag-menu-back" type="button" id="ag-sub-seating-back"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Back</button><span class="ag-menu-sub-title">Seating</span></div><div class="ag-menu-sub-links"></div></div>
+<div class="ag-menu-subview" id="ag-sub-warmth"><div class="ag-menu-sub-head"><button class="ag-menu-back" type="button" id="ag-sub-warmth-back"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Back</button><span class="ag-menu-sub-title">Warmth</span></div><div class="ag-menu-sub-links"></div></div>
+<div class="ag-menu-subview" id="ag-sub-studio"><div class="ag-menu-sub-head"><button class="ag-menu-back" type="button" id="ag-sub-studio-back"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Back</button><span class="ag-menu-sub-title">Studio</span></div><div class="ag-menu-sub-links"></div></div>
+<div class="ag-menu-subview" id="ag-sub-gifts"><div class="ag-menu-sub-head"><button class="ag-menu-back" type="button" id="ag-sub-gifts-back"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Back</button><span class="ag-menu-sub-title">Gifts</span></div><div class="ag-menu-sub-links"></div></div>
+<div class="ag-menu-subview" id="ag-sub-support"><div class="ag-menu-sub-head"><button class="ag-menu-back" type="button" id="ag-sub-support-back"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Back</button><span class="ag-menu-sub-title">Help</span></div><div class="ag-menu-sub-links"></div></div>
 </div>
 </div>
 
 <main id="ag-main">
 
-<section id="ag-hero" aria-labelledby="ag-hero-h2">
+<section id="ag-hero" aria-labelledby="ag-hero-h1">
 <div class="ag-hero-mosaic">
 <div class="ag-hero-text-tile">
-<h2 class="ag-hero-h2" id="ag-hero-h2">Calm things,<br>made to last.</h2>
+<h1 class="ag-hero-h1" id="ag-hero-h1">Calm things,<br>made to last.</h1>
 <p class="ag-hero-sub">Objects for quieter living. Each one shaped by hand, built to endure.</p>
-<button class="button button-fill ag" type="button" style="border-radius:9999px;background:var(--grove);border-color:var(--grove);color:var(--on-grove);">See the collection</button>
+<button class="button button-fill ag" type="button">See the collection</button>
 </div>
 <div class="ag-hero-tile ag-tile-lamp" aria-hidden="true">
 <svg class="ag-tile-anim ag-drift-y" width="100" height="160" viewBox="0 0 100 160" aria-hidden="true">
@@ -800,8 +867,8 @@ Ashgrove
 <h2>Ashgrove Lantern</h2>
 <p class="ag-product-tile-sub">Warm light, wherever you settle. Cord-free up to 18 hours (sample).</p>
 <div class="ag-pill-row">
-<button class="button button-fill ag" type="button" style="border-radius:9999px;background:var(--grove);border-color:var(--grove);color:var(--on-grove);">Meet the Lantern</button>
-<button class="button ag" type="button" style="border-radius:9999px;border:1px solid var(--link);color:var(--link);background:transparent;">Reserve one</button>
+<button class="button button-fill ag" type="button">Meet the Lantern</button>
+<button class="button ag button-pill" type="button">Reserve one</button>
 </div>
 <div class="ag-product-art" aria-hidden="true">
 <svg width="100%" viewBox="0 0 520 320" aria-hidden="true">
@@ -827,7 +894,7 @@ Ashgrove
 <h2>Ashgrove Orbit</h2>
 <p class="ag-product-tile-sub">Sound that fills the room. Omnidirectional, 360-degree warmth (sample).</p>
 <div class="ag-pill-row">
-<button class="button button-fill ag" type="button" style="border-radius:9999px;background:var(--grove);border-color:var(--grove);color:var(--on-grove);">Hear the Orbit</button>
+<button class="button button-fill ag" type="button">Hear the Orbit</button>
 <button class="btn-night-pill ag" type="button">Reserve one</button>
 </div>
 <div class="ag-product-art" aria-hidden="true">
@@ -862,7 +929,7 @@ Ashgrove
 <h3>Ashgrove Kiln</h3>
 <p class="ag-promo-sub">Hand-thrown ceramic kettle. Ready in four minutes (sample). Holds 1.2 L.</p>
 <div class="ag-pill-row">
-<button class="button button-fill ag" type="button" style="border-radius:9999px;background:var(--grove);border-color:var(--grove);color:var(--on-grove);">Discover the Kiln</button>
+<button class="button button-fill ag" type="button">Discover the Kiln</button>
 <button class="btn-night-pill ag" type="button">Reserve one</button>
 </div>
 <div class="ag-promo-art" aria-hidden="true">
@@ -880,8 +947,8 @@ Ashgrove
 <h3>Ashgrove Loom</h3>
 <p class="ag-promo-sub">Woven merino throw. Single-width, two-ply. Each one slightly different.<sup><a href="#note-1" id="sup-1">1</a></sup></p>
 <div class="ag-pill-row">
-<button class="button button-fill ag" type="button" style="border-radius:9999px;background:var(--grove);border-color:var(--grove);color:var(--on-grove);">See the Loom</button>
-<button class="button ag" type="button" style="border-radius:9999px;border:1px solid var(--link);color:var(--link);background:transparent;">Reserve one</button>
+<button class="button button-fill ag" type="button">See the Loom</button>
+<button class="button ag button-pill" type="button">Reserve one</button>
 </div>
 <div class="ag-promo-art" aria-hidden="true">
 <svg width="100%" viewBox="0 0 360 280" aria-hidden="true">
@@ -908,8 +975,8 @@ Ashgrove
 <h3>Ashgrove Dial</h3>
 <p class="ag-promo-sub">Wall clock with a hand-inked face. Silent sweep, lacquered oak ring.<sup><a href="#note-2" id="sup-2">2</a></sup></p>
 <div class="ag-pill-row">
-<button class="button button-fill ag" type="button" style="border-radius:9999px;background:var(--grove);border-color:var(--grove);color:var(--on-grove);">Meet the Dial</button>
-<button class="button ag" type="button" style="border-radius:9999px;border:1px solid var(--link);color:var(--link);background:transparent;">Reserve one</button>
+<button class="button button-fill ag" type="button">Meet the Dial</button>
+<button class="button ag button-pill" type="button">Reserve one</button>
 </div>
 <div class="ag-promo-art" aria-hidden="true">
 <svg width="100%" viewBox="0 0 360 280" aria-hidden="true">
@@ -929,7 +996,7 @@ Ashgrove
 <h3>Ashgrove Drift</h3>
 <p class="ag-promo-sub">Garden chair woven from reclaimed rattan. Folds flat for winter storage.</p>
 <div class="ag-pill-row">
-<button class="button button-fill ag" type="button" style="border-radius:9999px;background:var(--grove);border-color:var(--grove);color:var(--on-grove);">Explore the Drift</button>
+<button class="button button-fill ag" type="button">Explore the Drift</button>
 <button class="btn-night-pill ag" type="button">Reserve one</button>
 </div>
 <div class="ag-promo-art" aria-hidden="true">
@@ -948,7 +1015,7 @@ Ashgrove
 <h3>Ashgrove Ember</h3>
 <p class="ag-promo-sub">Compact ceramic heater. 1200 W (sample). Quiet convection, no fan noise.</p>
 <div class="ag-pill-row">
-<button class="button button-fill ag" type="button" style="border-radius:9999px;background:var(--grove);border-color:var(--grove);color:var(--on-grove);">Meet the Ember</button>
+<button class="button button-fill ag" type="button">Meet the Ember</button>
 </div>
 <div class="ag-promo-art" aria-hidden="true">
 <svg width="100%" viewBox="0 0 360 280" aria-hidden="true">
@@ -964,11 +1031,11 @@ Ashgrove
 </div>
 </div>
 <div class="ag-promo-tile ag-promo-light">
-<h3>Ashgrove Care</h3>
-<p class="ag-promo-sub">Repair, restore, return. Free repair sessions with any Care plan.</p>
+<h3>Mending plans</h3>
+<p class="ag-promo-sub">Repair, restore, return. Free repair sessions with any mending plan.</p>
 <div class="ag-pill-row">
-<button class="button button-fill ag" type="button" style="border-radius:9999px;background:var(--grove);border-color:var(--grove);color:var(--on-grove);">About Ashgrove Care</button>
-<button class="button ag" type="button" style="border-radius:9999px;border:1px solid var(--link);color:var(--link);background:transparent;">View plans</button>
+<button class="button button-fill ag" type="button">About mending plans</button>
+<button class="button ag button-pill" type="button">View plans</button>
 </div>
 <div class="ag-promo-art" aria-hidden="true">
 <svg width="100%" viewBox="0 0 360 280" aria-hidden="true">
@@ -995,63 +1062,63 @@ Ashgrove
 <div class="ag-gallery-card-scrim"></div>
 <div class="ag-gallery-card-body">
 <p class="ag-gallery-card-caption">Lamps · Lighting your home with intention</p>
-<button class="button button-fill ag btn-sm" type="button" style="border-radius:9999px;background:white;color:var(--night);border-color:white;">Join session</button>
+<button class="button button-fill ag btn-sm" type="button" style="background:white;color:var(--night);border-color:white;">Join session</button>
 </div>
 </div>
 <div class="ag-gallery-card" id="ag-panel-1" role="tabpanel" aria-labelledby="ag-tab-1" style="background:linear-gradient(135deg,var(--clay),var(--ember));">
 <div class="ag-gallery-card-scrim"></div>
 <div class="ag-gallery-card-body">
 <p class="ag-gallery-card-caption">Kitchen · Ceramics for everyday use</p>
-<button class="button button-fill ag btn-sm" type="button" style="border-radius:9999px;background:white;color:var(--night);border-color:white;">Join session</button>
+<button class="button button-fill ag btn-sm" type="button" style="background:white;color:var(--night);border-color:white;">Join session</button>
 </div>
 </div>
 <div class="ag-gallery-card" id="ag-panel-2" role="tabpanel" aria-labelledby="ag-tab-2" inert style="background:linear-gradient(135deg,var(--dusk),var(--night));">
 <div class="ag-gallery-card-scrim"></div>
 <div class="ag-gallery-card-body">
 <p class="ag-gallery-card-caption">Textiles · Introduction to natural weaving</p>
-<button class="button button-fill ag btn-sm" type="button" style="border-radius:9999px;background:white;color:var(--night);border-color:white;">Join session</button>
+<button class="button button-fill ag btn-sm" type="button" style="background:white;color:var(--night);border-color:white;">Join session</button>
 </div>
 </div>
 <div class="ag-gallery-card" id="ag-panel-3" role="tabpanel" aria-labelledby="ag-tab-3" inert style="background:linear-gradient(135deg,var(--honey),var(--ember));">
 <div class="ag-gallery-card-scrim"></div>
 <div class="ag-gallery-card-body">
 <p class="ag-gallery-card-caption">Clocks · Mechanism and meaning</p>
-<button class="button button-fill ag btn-sm" type="button" style="border-radius:9999px;background:white;color:var(--night);border-color:white;">Join session</button>
+<button class="button button-fill ag btn-sm" type="button" style="background:white;color:var(--night);border-color:white;">Join session</button>
 </div>
 </div>
 <div class="ag-gallery-card" id="ag-panel-4" role="tabpanel" aria-labelledby="ag-tab-4" inert style="background:linear-gradient(135deg,var(--moss),var(--dusk));">
 <div class="ag-gallery-card-scrim"></div>
 <div class="ag-gallery-card-body">
 <p class="ag-gallery-card-caption">Outdoor · Living spaces beyond the wall</p>
-<button class="button button-fill ag btn-sm" type="button" style="border-radius:9999px;background:white;color:var(--night);border-color:white;">Join session</button>
+<button class="button button-fill ag btn-sm" type="button" style="background:white;color:var(--night);border-color:white;">Join session</button>
 </div>
 </div>
 <div class="ag-gallery-card" id="ag-panel-5" role="tabpanel" aria-labelledby="ag-tab-5" inert style="background:linear-gradient(135deg,var(--clay),var(--night));">
 <div class="ag-gallery-card-scrim"></div>
 <div class="ag-gallery-card-body">
 <p class="ag-gallery-card-caption">Sound · Placing your Orbit for best effect</p>
-<button class="button button-fill ag btn-sm" type="button" style="border-radius:9999px;background:white;color:var(--night);border-color:white;">Join session</button>
+<button class="button button-fill ag btn-sm" type="button" style="background:white;color:var(--night);border-color:white;">Join session</button>
 </div>
 </div>
 <div class="ag-gallery-card" id="ag-panel-6" role="tabpanel" aria-labelledby="ag-tab-6" inert style="background:linear-gradient(135deg,var(--ember),var(--clay));">
 <div class="ag-gallery-card-scrim"></div>
 <div class="ag-gallery-card-body">
 <p class="ag-gallery-card-caption">Studio · Setting up a calm work corner</p>
-<button class="button button-fill ag btn-sm" type="button" style="border-radius:9999px;background:white;color:var(--night);border-color:white;">Join session</button>
+<button class="button button-fill ag btn-sm" type="button" style="background:white;color:var(--night);border-color:white;">Join session</button>
 </div>
 </div>
 <div class="ag-gallery-card" id="ag-panel-7" role="tabpanel" aria-labelledby="ag-tab-7" inert style="background:linear-gradient(135deg,var(--dusk),var(--moss));">
 <div class="ag-gallery-card-scrim"></div>
 <div class="ag-gallery-card-body">
 <p class="ag-gallery-card-caption">Repair · Object care and restoration</p>
-<button class="button button-fill ag btn-sm" type="button" style="border-radius:9999px;background:white;color:var(--night);border-color:white;">Join session</button>
+<button class="button button-fill ag btn-sm" type="button" style="background:white;color:var(--night);border-color:white;">Join session</button>
 </div>
 </div>
 <div class="ag-gallery-card" id="ag-panel-8" role="tabpanel" aria-labelledby="ag-tab-8" inert style="background:linear-gradient(135deg,var(--moss),var(--clay));">
 <div class="ag-gallery-card-scrim"></div>
 <div class="ag-gallery-card-body">
 <p class="ag-gallery-card-caption">Gifting · Choosing objects that endure</p>
-<button class="button button-fill ag btn-sm" type="button" style="border-radius:9999px;background:white;color:var(--night);border-color:white;">Join session</button>
+<button class="button button-fill ag btn-sm" type="button" style="background:white;color:var(--night);border-color:white;">Join session</button>
 </div>
 </div>
 </div>
@@ -1079,7 +1146,7 @@ Ashgrove
 <div class="ag-sub-card-body">
 <div class="ag-sub-card-title">Workshops</div>
 <p class="ag-sub-card-desc">Hands-on making sessions in every Ashgrove studio location (sample).</p>
-<button class="button button-fill ag btn-sm" type="button" style="border-radius:9999px;background:var(--grove);border-color:var(--grove);color:var(--on-grove);">Find a workshop</button>
+<button class="button button-fill ag btn-sm" type="button">Find a workshop</button>
 </div>
 </div>
 <div class="ag-sub-card">
@@ -1087,7 +1154,7 @@ Ashgrove
 <div class="ag-sub-card-body">
 <div class="ag-sub-card-title">Recipes</div>
 <p class="ag-sub-card-desc">Seasonal recipes designed for the Ashgrove Kiln and your table.</p>
-<button class="button button-fill ag btn-sm" type="button" style="border-radius:9999px;background:var(--grove);border-color:var(--grove);color:var(--on-grove);">View recipes</button>
+<button class="button button-fill ag btn-sm" type="button">View recipes</button>
 </div>
 </div>
 <div class="ag-sub-card">
@@ -1095,7 +1162,7 @@ Ashgrove
 <div class="ag-sub-card-body">
 <div class="ag-sub-card-title">Repair days</div>
 <p class="ag-sub-card-desc">Bring in any Ashgrove object for a free repair or restoration assessment.</p>
-<button class="button button-fill ag btn-sm" type="button" style="border-radius:9999px;background:var(--grove);border-color:var(--grove);color:var(--on-grove);">Book a repair day</button>
+<button class="button button-fill ag btn-sm" type="button">Book a repair day</button>
 </div>
 </div>
 </div>
@@ -1107,7 +1174,7 @@ Ashgrove
 <div class="ag-stats-grid">
 <div class="ag-stat"><div class="ag-stat-val">12</div><div class="ag-stat-label">Studio locations (sample)</div></div>
 <div class="ag-stat"><div class="ag-stat-val">40k+</div><div class="ag-stat-label">Objects placed in homes (sample)</div></div>
-<div class="ag-stat"><div class="ag-stat-val">98%</div><div class="ag-stat-label">Care plan satisfaction (sample)</div></div>
+<div class="ag-stat"><div class="ag-stat-val">98%</div><div class="ag-stat-label">Mending plan satisfaction (sample)</div></div>
 <div class="ag-stat"><div class="ag-stat-val">0</div><div class="ag-stat-label">Data sent from this page</div></div>
 </div>
 </section>
@@ -1140,12 +1207,12 @@ Ashgrove
 
 <section id="ag-care" aria-labelledby="ag-care-h2">
 <div class="ag-care-head">
-<h2 id="ag-care-h2">Ashgrove Care</h2>
+<h2 id="ag-care-h2">Mending plans</h2>
 <p style="font-size:17px;color:var(--body);margin-top:calc(var(--aura)*0.5);">Keep your objects in the best possible condition.</p>
 </div>
 <div class="ag-care-plans">
 <article class="ag-plan">
-<div class="ag-plan-name">Basic</div>
+<div class="ag-plan-name">Mending Basic (sample free)</div>
 <div class="ag-plan-price">Free <small>/ sample</small></div>
 <p style="font-size:14px;color:var(--body);">One free repair assessment per year. Local studio only.</p>
 <div class="ag-plan-features">
@@ -1153,11 +1220,11 @@ Ashgrove
 <div class="ag-plan-feature"><svg class="ag-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Sessions access</div>
 <div class="ag-plan-feature"><svg class="ag-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Care guides</div>
 </div>
-<button class="button ag" type="button" style="border-radius:9999px;border:1px solid var(--link);color:var(--link);background:transparent;margin-top:auto;">Get started</button>
+<button class="button ag button-pill" type="button" style="margin-top:auto;">Get started</button>
 </article>
 <article class="ag-plan featured">
 <div style="font-family:var(--aura-font-label);font-size:12px;font-weight:600;color:var(--grove);margin-bottom:4px;">Recommended</div>
-<div class="ag-plan-name">Plus</div>
+<div class="ag-plan-name">Mending Plus</div>
 <div class="ag-plan-price">9 <small>/ month (sample)</small></div>
 <p style="font-size:14px;color:var(--body);">Unlimited repair sessions, priority booking and 10% off all parts (sample).</p>
 <div class="ag-plan-features">
@@ -1166,10 +1233,10 @@ Ashgrove
 <div class="ag-plan-feature"><svg class="ag-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>10% off parts (sample)</div>
 <div class="ag-plan-feature"><svg class="ag-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Free return shipping</div>
 </div>
-<button class="button button-fill ag" type="button" style="border-radius:9999px;background:var(--grove);border-color:var(--grove);color:var(--on-grove);margin-top:auto;">Order Plus</button>
+<button class="button button-fill ag" type="button" style="margin-top:auto;">Order Mending Plus</button>
 </article>
 <article class="ag-plan">
-<div class="ag-plan-name">Complete</div>
+<div class="ag-plan-name">Mending Complete</div>
 <div class="ag-plan-price">19 <small>/ month (sample)</small></div>
 <p style="font-size:14px;color:var(--body);">Covers all objects, any studio. Includes annual deep-clean and re-oil service.</p>
 <div class="ag-plan-features">
@@ -1178,7 +1245,7 @@ Ashgrove
 <div class="ag-plan-feature"><svg class="ag-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>All studios covered</div>
 <div class="ag-plan-feature"><svg class="ag-plan-feature-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Dedicated care advisor</div>
 </div>
-<button class="button ag" type="button" style="border-radius:9999px;border:1px solid var(--link);color:var(--link);background:transparent;margin-top:auto;">Order Complete</button>
+<button class="button ag button-pill" type="button" style="margin-top:auto;">Order Mending Complete</button>
 </article>
 </div>
 </section>
@@ -1194,13 +1261,13 @@ Ashgrove
 <div class="ag-field-row">
 <div class="ag-field">
 <label for="ag-f-name">Full name</label>
-<input id="ag-f-name" type="text" autocomplete="off" placeholder="Your name" required aria-describedby="ag-f-name-err" class="inputer" style="background:var(--canvas);border:1px solid var(--control-line);border-radius:12px;color:var(--ink);width:100%;height:calc(var(--aura)*4);padding:0 calc(var(--aura)*1.5);font-family:inherit;font-size:max(1rem,17px);box-sizing:border-box;"/>
-<span id="ag-f-name-err" class="ag-field-err" aria-live="assertive"></span>
+<input id="ag-f-name" type="text" autocomplete="name" placeholder="Your name" required aria-describedby="ag-f-name-err" class="inputer" style="background:var(--canvas);border:1px solid var(--control-line);border-radius:12px;color:var(--ink);width:100%;height:calc(var(--aura)*4);padding:0 calc(var(--aura)*1.5);font-family:inherit;font-size:max(1rem,17px);box-sizing:border-box;"/>
+<span id="ag-f-name-err" class="ag-field-err"></span>
 </div>
 <div class="ag-field">
 <label for="ag-f-email">Email</label>
-<input id="ag-f-email" type="email" autocomplete="off" placeholder="you@example.com" required aria-describedby="ag-f-email-err" class="inputer" style="background:var(--canvas);border:1px solid var(--control-line);border-radius:12px;color:var(--ink);width:100%;height:calc(var(--aura)*4);padding:0 calc(var(--aura)*1.5);font-family:inherit;font-size:max(1rem,17px);box-sizing:border-box;"/>
-<span id="ag-f-email-err" class="ag-field-err" aria-live="assertive"></span>
+<input id="ag-f-email" type="email" autocomplete="email" placeholder="you@example.com" required aria-describedby="ag-f-email-err" class="inputer" style="background:var(--canvas);border:1px solid var(--control-line);border-radius:12px;color:var(--ink);width:100%;height:calc(var(--aura)*4);padding:0 calc(var(--aura)*1.5);font-family:inherit;font-size:max(1rem,17px);box-sizing:border-box;"/>
+<span id="ag-f-email-err" class="ag-field-err"></span>
 </div>
 </div>
 <div class="ag-field">
@@ -1217,12 +1284,12 @@ Ashgrove
 <option>Object care and restoration</option>
 <option>Choosing objects that endure</option>
 </select>
-<span id="ag-f-session-err" class="ag-field-err" aria-live="assertive"></span>
+<span id="ag-f-session-err" class="ag-field-err"></span>
 </div>
 <div class="ag-field">
 <label for="ag-f-date">Preferred date</label>
 <input id="ag-f-date" type="date" required aria-describedby="ag-f-date-err" class="inputer" style="background:var(--canvas);border:1px solid var(--control-line);border-radius:12px;color:var(--ink);width:100%;height:calc(var(--aura)*4);padding:0 calc(var(--aura)*1.5);font-family:inherit;font-size:max(1rem,17px);box-sizing:border-box;"/>
-<span id="ag-f-date-err" class="ag-field-err" aria-live="assertive"></span>
+<span id="ag-f-date-err" class="ag-field-err"></span>
 </div>
 <div class="ag-field">
 <label for="ag-f-notes">Notes (optional)</label>
@@ -1232,9 +1299,9 @@ Ashgrove
 <input type="checkbox" id="ag-f-consent" required aria-describedby="ag-f-consent-err"/>
 <label for="ag-f-consent" style="cursor:pointer;">I understand this is a local demo and no data is submitted anywhere.</label>
 </div>
-<span id="ag-f-consent-err" class="ag-field-err" aria-live="assertive"></span>
+<span id="ag-f-consent-err" class="ag-field-err"></span>
 <div style="display:flex;align-items:center;gap:calc(var(--aura)*1);flex-wrap:wrap;">
-<button class="button button-fill ag" type="submit" style="border-radius:9999px;background:var(--grove);border-color:var(--grove);color:var(--on-grove);">Reserve seat</button>
+<button class="button button-fill ag" type="submit">Reserve seat</button>
 <div class="ag-form-status" id="ag-form-status" role="status" aria-live="polite"></div>
 </div>
 </div>
@@ -1259,8 +1326,8 @@ Ashgrove
 <div class="ag-faq-panel" id="ag-faq-p2" hidden><p>No. The booking form validates your input locally in the browser using JavaScript, then shows a confirmation message. Nothing is transmitted to any server, stored or shared with any third party. The form has no action URL.</p></div>
 </li>
 <li class="ag-faq-item">
-<h3><button class="ag-faq-trigger" type="button" aria-expanded="false" aria-controls="ag-faq-p3" id="ag-faq-q3">What is Ashgrove Care?<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></h3>
-<div class="ag-faq-panel" id="ag-faq-p3" hidden><p>Ashgrove Care is a fictional repair and maintenance plan for Ashgrove objects. It covers repair sessions, parts discounts and periodic deep-clean services, with three sample tiers: Basic (free), Plus (sample monthly fee) and Complete (sample monthly fee). All pricing is fictional.</p></div>
+<h3><button class="ag-faq-trigger" type="button" aria-expanded="false" aria-controls="ag-faq-p3" id="ag-faq-q3">What are the mending plans?<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></h3>
+<div class="ag-faq-panel" id="ag-faq-p3" hidden><p>Mending plans are fictional repair and maintenance plans for Ashgrove objects. They cover repair sessions, parts discounts and periodic deep-clean services, with three sample tiers: Mending Basic (free), Mending Plus (sample monthly fee) and Mending Complete (sample monthly fee). All pricing is fictional.</p></div>
 </li>
 <li class="ag-faq-item">
 <h3><button class="ag-faq-trigger" type="button" aria-expanded="false" aria-controls="ag-faq-p4" id="ag-faq-q4">Can I apply the Ashgrove theme to my own project?<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></h3>
@@ -1274,7 +1341,7 @@ Ashgrove
 <h2 class="ag-closing-h2" id="ag-closing-h2">Find the Ashgrove object<br>that fits your home.</h2>
 <p class="ag-closing-sub">Calm things, made to last. Explore the full collection.</p>
 <div class="ag-pill-row" style="justify-content:center;">
-<button class="button button-fill ag" type="button" style="border-radius:9999px;background:var(--grove);border-color:var(--grove);color:var(--on-grove);">Browse the collection</button>
+<button class="button button-fill ag" type="button">Browse the collection</button>
 <button class="btn-night-pill ag" type="button">Learn about Sessions</button>
 </div>
 </section>
@@ -1295,126 +1362,123 @@ Ashgrove
 <nav id="ag-dir" aria-label="Site directory">
 <div class="ag-dir-cols">
 <div>
-<div class="ag-dir-group-title">Objects</div>
-<button class="ag-dir-group-btn" type="button" aria-expanded="false" aria-controls="ag-dir-p0">Objects <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+<div class="ag-dir-group-title">The workshop</div>
+<button class="ag-dir-group-btn" type="button" aria-expanded="false" aria-controls="ag-dir-p0">The workshop <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
 <div id="ag-dir-p0" class="ag-dir-panel" hidden>
 <ul class="ag-dir-links">
-<li><a href="#">Ashgrove Lantern</a></li>
-<li><a href="#">Ashgrove Orbit</a></li>
-<li><a href="#">Ashgrove Kiln</a></li>
-<li><a href="#">Ashgrove Loom</a></li>
-<li><a href="#">View all objects</a></li>
+<li><a href="#">Our story</a></li>
+<li><a href="#">How objects are made</a></li>
+<li><a href="#">Materials we use</a></li>
+<li><a href="#">Press notes</a></li>
+<li><a href="#">Work with us</a></li>
 </ul>
 </div>
-<div class="ag-dir-group-title" style="margin-top:calc(var(--aura)*1.5);">Gift ideas</div>
-<button class="ag-dir-group-btn" type="button" aria-expanded="false" aria-controls="ag-dir-p1">Gift ideas <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+<div class="ag-dir-group-title" style="margin-top:calc(var(--aura)*1.5);">Access and inclusion</div>
+<button class="ag-dir-group-btn" type="button" aria-expanded="false" aria-controls="ag-dir-p1">Access and inclusion <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
 <div id="ag-dir-p1" class="ag-dir-panel" hidden>
 <ul class="ag-dir-links">
-<li><a href="#">Gift sets</a></li>
-<li><a href="#">Personalised engraving</a></li>
-<li><a href="#">Ashgrove vouchers (sample)</a></li>
-<li><a href="#">Under 50 (sample)</a></li>
-<li><a href="#">Seasonal collections</a></li>
+<li><a href="#">Accessible shopping</a></li>
+<li><a href="#">Large-print guides</a></li>
+<li><a href="#">Assisted visits (sample)</a></li>
+<li><a href="#">Feedback on access</a></li>
 </ul>
 </div>
 </div>
 <div>
-<div class="ag-dir-group-title">Sessions</div>
-<button class="ag-dir-group-btn" type="button" aria-expanded="false" aria-controls="ag-dir-p2">Sessions <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+<div class="ag-dir-group-title">Objects by room</div>
+<button class="ag-dir-group-btn" type="button" aria-expanded="false" aria-controls="ag-dir-p2">Objects by room <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
 <div id="ag-dir-p2" class="ag-dir-panel" hidden>
 <ul class="ag-dir-links">
-<li><a href="#ag-sessions">What are Sessions?</a></li>
-<li><a href="#ag-sessions">Workshops</a></li>
-<li><a href="#ag-sessions">Repair days</a></li>
-<li><a href="#ag-book">Book a seat</a></li>
-<li><a href="#">Studio locations</a></li>
+<li><a href="#">Living room</a></li>
+<li><a href="#">Bedroom</a></li>
+<li><a href="#">Kitchen and table</a></li>
+<li><a href="#">Garden and porch</a></li>
+<li><a href="#">Desk and studio</a></li>
+<li><a href="#">Shop all objects</a></li>
 </ul>
 </div>
-<div class="ag-dir-group-title" style="margin-top:calc(var(--aura)*1.5);">Recipes and guides</div>
-<button class="ag-dir-group-btn" type="button" aria-expanded="false" aria-controls="ag-dir-p3">Recipes and guides <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+<div class="ag-dir-group-title" style="margin-top:calc(var(--aura)*1.5);">Gift finder</div>
+<button class="ag-dir-group-btn" type="button" aria-expanded="false" aria-controls="ag-dir-p3">Gift finder <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
 <div id="ag-dir-p3" class="ag-dir-panel" hidden>
 <ul class="ag-dir-links">
-<li><a href="#">Seasonal recipes</a></li>
-<li><a href="#">Kiln cooking guide</a></li>
-<li><a href="#">Loom wash guide</a></li>
-<li><a href="#">Lamp setup guide</a></li>
-<li><a href="#">Object care tips</a></li>
+<li><a href="#">Under 50 (sample)</a></li>
+<li><a href="#">Housewarming</a></li>
+<li><a href="#">Gift wrap and notes</a></li>
+<li><a href="#">Gift cards (sample)</a></li>
 </ul>
 </div>
 </div>
 <div>
-<div class="ag-dir-group-title">Ashgrove Care</div>
-<button class="ag-dir-group-btn" type="button" aria-expanded="false" aria-controls="ag-dir-p4">Ashgrove Care <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+<div class="ag-dir-group-title">Learn and make</div>
+<button class="ag-dir-group-btn" type="button" aria-expanded="false" aria-controls="ag-dir-p4">Learn and make <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
 <div id="ag-dir-p4" class="ag-dir-panel" hidden>
 <ul class="ag-dir-links">
-<li><a href="#ag-care">Care plans</a></li>
-<li><a href="#ag-care">Basic plan</a></li>
-<li><a href="#ag-care">Plus plan</a></li>
-<li><a href="#ag-care">Complete plan</a></li>
-<li><a href="#">Repair service</a></li>
+<li><a href="#ag-sessions">Free Sessions</a></li>
+<li><a href="#">Recipes</a></li>
+<li><a href="#">Lighting guides</a></li>
+<li><a href="#">Weaving notes</a></li>
+<li><a href="#">Care videos</a></li>
 </ul>
 </div>
-<div class="ag-dir-group-title" style="margin-top:calc(var(--aura)*1.5);">Orders and delivery</div>
-<button class="ag-dir-group-btn" type="button" aria-expanded="false" aria-controls="ag-dir-p5">Orders and delivery <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+<div class="ag-dir-group-title" style="margin-top:calc(var(--aura)*1.5);">The journal</div>
+<button class="ag-dir-group-btn" type="button" aria-expanded="false" aria-controls="ag-dir-p5">The journal <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
 <div id="ag-dir-p5" class="ag-dir-panel" hidden>
 <ul class="ag-dir-links">
-<li><a href="#">Where is my order?</a></li>
-<li><a href="#">Delivery information</a></li>
-<li><a href="#">Sending something back (sample)</a></li>
-<li><a href="#">Replacement parts</a></li>
+<li><a href="#">New arrivals</a></li>
+<li><a href="#">Maker profiles</a></li>
+<li><a href="#">Seasonal notes</a></li>
 </ul>
 </div>
 </div>
 <div>
-<div class="ag-dir-group-title">For studios</div>
-<button class="ag-dir-group-btn" type="button" aria-expanded="false" aria-controls="ag-dir-p6">For studios <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+<div class="ag-dir-group-title">Mending plans</div>
+<button class="ag-dir-group-btn" type="button" aria-expanded="false" aria-controls="ag-dir-p6">Mending plans <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
 <div id="ag-dir-p6" class="ag-dir-panel" hidden>
 <ul class="ag-dir-links">
-<li><a href="#">Studio collections</a></li>
-<li><a href="#">Bulk orders (sample)</a></li>
-<li><a href="#">Studio Care plan</a></li>
+<li><a href="#ag-care">How mending works</a></li>
+<li><a href="#ag-care">Plans and prices (sample)</a></li>
+<li><a href="#ag-book">Book a repair</a></li>
+<li><a href="#">Spare parts</a></li>
 </ul>
 </div>
-<div class="ag-dir-group-title" style="margin-top:calc(var(--aura)*1.5);">For makers</div>
-<button class="ag-dir-group-btn" type="button" aria-expanded="false" aria-controls="ag-dir-p7">For makers <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+<div class="ag-dir-group-title" style="margin-top:calc(var(--aura)*1.5);">Orders</div>
+<button class="ag-dir-group-btn" type="button" aria-expanded="false" aria-controls="ag-dir-p7">Orders <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
 <div id="ag-dir-p7" class="ag-dir-panel" hidden>
 <ul class="ag-dir-links">
-<li><a href="#">Maker programme</a></li>
-<li><a href="#">Materials sourcing</a></li>
-<li><a href="#">Sessions for makers</a></li>
-<li><a href="#">Apply (sample)</a></li>
-</ul>
-</div>
-<div class="ag-dir-group-title" style="margin-top:calc(var(--aura)*1.5);">For schools</div>
-<button class="ag-dir-group-btn" type="button" aria-expanded="false" aria-controls="ag-dir-p8">For schools <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
-<div id="ag-dir-p8" class="ag-dir-panel" hidden>
-<ul class="ag-dir-links">
-<li><a href="#">Education programme</a></li>
-<li><a href="#">School discounts (sample)</a></li>
-<li><a href="#">Sessions for schools</a></li>
+<li><a href="#">Track an order</a></li>
+<li><a href="#">Delivery options</a></li>
+<li><a href="#">Returns within 30 days (sample)</a></li>
+<li><a href="#">Payment methods</a></li>
 </ul>
 </div>
 </div>
 <div>
-<div class="ag-dir-group-title">About Ashgrove</div>
-<button class="ag-dir-group-btn" type="button" aria-expanded="false" aria-controls="ag-dir-p9">About Ashgrove <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
-<div id="ag-dir-p9" class="ag-dir-panel" hidden>
+<div class="ag-dir-group-title">Groups and trade</div>
+<button class="ag-dir-group-btn" type="button" aria-expanded="false" aria-controls="ag-dir-p8">Groups and trade <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+<div id="ag-dir-p8" class="ag-dir-panel" hidden>
 <ul class="ag-dir-links">
-<li><a href="#">Our story</a></li>
-<li><a href="#">Materials and sourcing</a></li>
-<li><a href="#">Careers (fictional)</a></li>
-<li><a href="#">Newsroom</a></li>
-<li><a href="#">Contact</a></li>
+<li><a href="#">Workshops for groups</a></li>
+<li><a href="#">Trade accounts</a></li>
+<li><a href="#">Bulk gifting</a></li>
 </ul>
 </div>
-<div class="ag-dir-group-title" style="margin-top:calc(var(--aura)*1.5);">Values</div>
-<button class="ag-dir-group-btn" type="button" aria-expanded="false" aria-controls="ag-dir-p10">Values <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+<div class="ag-dir-group-title" style="margin-top:calc(var(--aura)*1.5);">Write to us</div>
+<button class="ag-dir-group-btn" type="button" aria-expanded="false" aria-controls="ag-dir-p9">Write to us <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+<div id="ag-dir-p9" class="ag-dir-panel" hidden>
+<ul class="ag-dir-links">
+<li><a href="#">Message a maker</a></li>
+<li><a href="#">Press enquiries</a></li>
+<li><a href="#">Order help by email</a></li>
+</ul>
+</div>
+<div class="ag-dir-group-title" style="margin-top:calc(var(--aura)*1.5);">Visit a workshop</div>
+<button class="ag-dir-group-btn" type="button" aria-expanded="false" aria-controls="ag-dir-p10">Visit a workshop <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
 <div id="ag-dir-p10" class="ag-dir-panel" hidden>
 <ul class="ag-dir-links">
-<li><a href="#">Sustainability (sample)</a></li>
-<li><a href="#">Repair philosophy</a></li>
-<li><a href="#">Community</a></li>
-<li><a href="#">Accessibility</a></li>
+<li><a href="#">Find a workshop</a></li>
+<li><a href="#">Opening hours (sample)</a></li>
+<li><a href="#">Events calendar (sample)</a></li>
+<li><a href="#">Directions and parking</a></li>
 </ul>
 </div>
 </div>
@@ -1423,22 +1487,20 @@ Ashgrove
 
 <div class="ag-finalbar">
 <div class="ag-finalbar-inner">
-<p class="ag-finalbar-top">Prefer to see things in person? Visit an Ashgrove space or one of our partner makers (sample).</p>
-<div class="ag-finalbar-bottom">
-<span>2026 Ashgrove, a fictional company.</span>
-<nav aria-label="Legal links" style="display:contents;">
-<span class="ag-finalbar-sep" aria-hidden="true">|</span>
-<a href="#">Privacy</a>
-<span class="ag-finalbar-sep" aria-hidden="true">|</span>
-<a href="#">Terms</a>
-<span class="ag-finalbar-sep" aria-hidden="true">|</span>
-<a href="#">Sending something back (sample)</a>
-<span class="ag-finalbar-sep" aria-hidden="true">|</span>
-<a href="#">Legal</a>
-<span class="ag-finalbar-sep" aria-hidden="true">|</span>
-<a href="#">Directory</a>
+<div class="ag-finalbar-row1">
+<span>Region: United States (sample)</span>
+<span>Ashgrove is a fictional maker used to demo this design system.</span>
+</div>
+<div class="ag-finalbar-row2">
+<span class="ag-finalbar-copy">2026 Ashgrove (fictional).</span>
+<nav aria-label="Legal links">
+<ul class="ag-finalbar-links">
+<li><a href="#">Shipping and returns</a></li>
+<li><a href="#">Your data</a></li>
+<li><a href="#">Terms of sale (sample)</a></li>
+<li><a href="#">Site index</a></li>
+</ul>
 </nav>
-<span class="ag-finalbar-region">United States (sample)</span>
 </div>
 </div>
 </div>
@@ -1458,7 +1520,7 @@ if(localBar){localBar.style.display="none";if(wordmark)wordmark.focus();}
 if(localeClose)localeClose.addEventListener("click",dismissLocale);
 if(localeContinue)localeContinue.addEventListener("click",dismissLocale);
 
-var catIds=["lamps","sound","kitchen","textiles","clocks","outdoor","studio","gifts","support"];
+var catIds=["lamps","sound","kitchen","textiles","clocks","outdoor","seating","warmth","studio","gifts","support"];
 var currentFly=null;
 var scrim=document.getElementById("ag-scrim");
 
@@ -1501,20 +1563,89 @@ if(e.key==="ArrowDown"){
 e.preventDefault();
 if(currentFly!==key)openFly(key,btn);
 var p=document.getElementById("ag-fly-"+key);
-if(p){var first=p.querySelector("a,button");if(first)first.focus();}
+if(p){var fi=p.querySelector("a,button");if(fi)fi.focus();}
+}
+if(e.key==="Tab"&&!e.shiftKey){
+var p=document.getElementById("ag-fly-"+key);
+if(p&&p.classList.contains("open")){
+e.preventDefault();
+var fi=p.querySelector("a,button");
+if(fi)fi.focus();
+}
 }
 });
+var flyEl=document.getElementById("ag-fly-"+key);
+if(flyEl){
+flyEl.addEventListener("keydown",function(e){
+if(e.key==="Escape"){closeFly();btn.focus();return;}
+if(e.key!=="Tab")return;
+var focusable=Array.prototype.slice.call(flyEl.querySelectorAll("a,button")).filter(function(el){return el.offsetParent!==null;});
+if(!focusable.length)return;
+var last=focusable[focusable.length-1];
+var fi=focusable[0];
+if(!e.shiftKey&&document.activeElement===last){
+e.preventDefault();
+closeFly();
+var allCats=Array.prototype.slice.call(document.querySelectorAll(".ag-cat-btn"));
+var idx=allCats.indexOf(btn);
+var next=allCats[idx+1]||document.getElementById("ag-search-toggle");
+if(next)next.focus();
+}else if(e.shiftKey&&document.activeElement===fi){
+e.preventDefault();
+closeFly();
+btn.focus();
+}
+});
+}
 });
 
 var searchToggle=document.getElementById("ag-search-toggle");
 var bagToggle=document.getElementById("ag-bag-toggle");
 if(searchToggle){
 searchToggle.addEventListener("click",function(){openFly("search",searchToggle);setTimeout(function(){var inp=document.getElementById("ag-search-input");if(inp)inp.focus();},50);});
-searchToggle.addEventListener("keydown",function(e){if(e.key==="Escape"&&currentFly==="search"){closeFly();searchToggle.focus();}});
+searchToggle.addEventListener("keydown",function(e){
+if(e.key==="Escape"&&currentFly==="search"){closeFly();searchToggle.focus();}
+if(e.key==="Tab"&&!e.shiftKey){
+var p=document.getElementById("ag-fly-search");
+if(p&&p.classList.contains("open")){e.preventDefault();var fi=p.querySelector("a,button,input");if(fi)fi.focus();}
+}
+});
+var searchFly=document.getElementById("ag-fly-search");
+if(searchFly){
+searchFly.addEventListener("keydown",function(e){
+if(e.key==="Escape"){closeFly();searchToggle.focus();return;}
+if(e.key!=="Tab")return;
+var focusable=Array.prototype.slice.call(searchFly.querySelectorAll("a,button,input")).filter(function(el){return el.offsetParent!==null;});
+if(!focusable.length)return;
+var last=focusable[focusable.length-1];
+var fi=focusable[0];
+if(!e.shiftKey&&document.activeElement===last){e.preventDefault();closeFly();var nb=document.getElementById("ag-bag-toggle");if(nb)nb.focus();}
+else if(e.shiftKey&&document.activeElement===fi){e.preventDefault();closeFly();searchToggle.focus();}
+});
+}
 }
 if(bagToggle){
 bagToggle.addEventListener("click",function(){openFly("bag",bagToggle);});
-bagToggle.addEventListener("keydown",function(e){if(e.key==="Escape"&&currentFly==="bag"){closeFly();bagToggle.focus();}});
+bagToggle.addEventListener("keydown",function(e){
+if(e.key==="Escape"&&currentFly==="bag"){closeFly();bagToggle.focus();}
+if(e.key==="Tab"&&!e.shiftKey){
+var p=document.getElementById("ag-fly-bag");
+if(p&&p.classList.contains("open")){e.preventDefault();var fi=p.querySelector("a,button");if(fi)fi.focus();}
+}
+});
+var bagFly=document.getElementById("ag-fly-bag");
+if(bagFly){
+bagFly.addEventListener("keydown",function(e){
+if(e.key==="Escape"){closeFly();bagToggle.focus();return;}
+if(e.key!=="Tab")return;
+var focusable=Array.prototype.slice.call(bagFly.querySelectorAll("a,button")).filter(function(el){return el.offsetParent!==null;});
+if(!focusable.length)return;
+var last=focusable[focusable.length-1];
+var fi=focusable[0];
+if(!e.shiftKey&&document.activeElement===last){var nm=document.getElementById("ag-menu-toggle");if(nm&&nm.offsetParent!==null){e.preventDefault();closeFly();nm.focus();}else{closeFly();}}
+else if(e.shiftKey&&document.activeElement===fi){e.preventDefault();closeFly();bagToggle.focus();}
+});
+}
 }
 if(scrim)scrim.addEventListener("click",function(){
 var k=currentFly;closeFly();
@@ -1558,17 +1689,56 @@ if(menu){
 menu.addEventListener("keydown",function(e){
 if(e.key!=="Tab")return;
 var openSub=menu.querySelector(".ag-menu-subview.open");
-var container=openSub||menu;
-var focusable=Array.prototype.slice.call(container.querySelectorAll("button,a,[tabindex]")).filter(function(el){
+if(openSub){
+var closeBtn=document.getElementById("ag-menu-close");
+var subFocusable=Array.prototype.slice.call(openSub.querySelectorAll("button,a,[tabindex]")).filter(function(el){
 return !el.disabled&&el.tabIndex>=0&&!el.closest("[hidden]")&&el.offsetParent!==null;
+});
+var focusable=closeBtn?[closeBtn].concat(subFocusable):subFocusable;
+if(!focusable.length)return;
+var first=focusable[0];var last=focusable[focusable.length-1];
+if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+} else {
+var focusable=Array.prototype.slice.call(menu.querySelectorAll("button,a,[tabindex]")).filter(function(el){
+return !el.disabled&&el.tabIndex>=0&&!el.closest("[hidden]")&&el.offsetParent!==null&&!el.closest(".ag-menu-subview");
 });
 if(!focusable.length)return;
 var first=focusable[0];var last=focusable[focusable.length-1];
 if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
 else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+}
 });
 }
 
+var subIds=["ag-sub-lamps","ag-sub-sound","ag-sub-kitchen","ag-sub-textiles","ag-sub-clocks","ag-sub-outdoor","ag-sub-seating","ag-sub-warmth","ag-sub-studio","ag-sub-gifts","ag-sub-support"];
+subIds.forEach(function(subId){
+var subEl=document.getElementById(subId);
+if(!subEl)return;
+var flyId=subId.replace("ag-sub-","ag-fly-");
+var flyEl=document.getElementById(flyId);
+if(!flyEl)return;
+var linksContainer=subEl.querySelector(".ag-menu-sub-links");
+if(!linksContainer)return;
+var cols=flyEl.querySelectorAll(".ag-flyout-inner > div");
+cols.forEach(function(col){
+var titleEl=col.querySelector(".ag-fly-col-title");
+if(titleEl){
+var h3=document.createElement("h3");
+h3.className="ag-menu-sub-group";
+h3.textContent=titleEl.textContent;
+linksContainer.appendChild(h3);
+}
+var anchors=col.querySelectorAll("a");
+anchors.forEach(function(a){
+var link=document.createElement("a");
+link.className="ag-menu-sub-link";
+link.href=a.getAttribute("href");
+link.textContent=a.textContent;
+linksContainer.appendChild(link);
+});
+});
+});
 var catBtns=menu?menu.querySelectorAll(".ag-menu-cat-btn"):[];
 catBtns.forEach(function(btn){
 btn.addEventListener("click",function(){
@@ -1783,7 +1953,11 @@ if(consentEl&&!consentEl.checked){consentErr.textContent="Please confirm to cont
 else if(consentEl){consentErr.textContent="";consentErr.style.display="none";}
 var status=document.getElementById("ag-form-status");
 if(ok){if(status)status.textContent="Seat reserved! (Local demo — no data was submitted.)";}
-else{if(status)status.textContent="";if(first)first.focus();}
+else{
+var badCount=bookForm.querySelectorAll("[aria-invalid='true']").length;
+if(status)status.textContent=badCount+" field"+(badCount===1?" needs":" need")+" attention.";
+if(first)first.focus();
+}
 });
 }
 
