@@ -13,7 +13,7 @@ export const CaretRightIcon = React.forwardRef<SVGSVGElement, IconProps>(
         {...props}
         ref={forwardedRef}
       >
-        <path d="M 9.7 6.3 L 15.6 11.25 C 16.1 11.67 16.1 12.33 15.6 12.75 L 9.7 17.7 C 9.2 18.12 8.6 17.86 8.6 17.2 L 8.6 6.8 C 8.6 6.14 9.2 5.88 9.7 6.3 Z" fill={color} />
+        <path d="M 15.7438 11.65 Q 16.35 12 15.7438 12.35 L 10.4312 15.4172 Q 9.825 15.7672 9.825 15.0672 L 9.825 8.9328 Q 9.825 8.2328 10.4312 8.5828 Z" fill={color} />
       </svg>
     );
   },
