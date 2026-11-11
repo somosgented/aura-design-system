@@ -1,0 +1,30 @@
+{
+  "icons": {
+    "arrow-down": "icons/arrow-down.svg",
+    "arrow-left": "icons/arrow-left.svg",
+    "arrow-right": "icons/arrow-right.svg",
+    "arrow-up": "icons/arrow-up.svg",
+    "bell": "icons/bell.svg",
+    "chevron-down": "icons/chevron-down.svg",
+    "chevron-left": "icons/chevron-left.svg",
+    "chevron-right": "icons/chevron-right.svg",
+    "chevron-up": "icons/chevron-up.svg",
+    "copy": "icons/copy.svg",
+    "cross": "icons/cross.svg",
+    "cube": "icons/cube.svg",
+    "envelope": "icons/envelope.svg",
+    "eye-none": "icons/eye-none.svg",
+    "eye-open": "icons/eye-open.svg",
+    "hamburger-menu": "icons/hamburger-menu.svg",
+    "heart-filled": "icons/heart-filled.svg",
+    "heart": "icons/heart.svg",
+    "key": "icons/key.svg",
+    "link": "icons/link.svg",
+    "magnifying-glass": "icons/magnifying-glass.svg",
+    "pencil": "icons/pencil.svg",
+    "person": "icons/person.svg",
+    "pin": "icons/pin.svg",
+    "store": "icons/store.svg",
+    "trash": "icons/trash.svg"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "name": "@aura-design/react-icons",
+  "version": "0.0.0",
+  "license": "MIT",
+  "description": "Aura Design System React icon set",
+  "type": "module",
+  "source": "./src/index.tsx",
+  "main": "./src/index.tsx",
+  "module": "./src/index.tsx",
+  "types": "./src/index.tsx",
+  "exports": {
+    ".": "./src/index.tsx",
+    "./catalog": "./src/catalog.tsx",
+    "./icons/*.svg": "./icons/*.svg",
+    "./*": "./src/*.tsx"
+  },
+  "files": [
+    "dist",
+    "src",
+    "icons",
+    "manifest.json"
+  ],
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public",
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "import": {
+          "types": "./dist/index.d.ts",
+          "default": "./dist/index.js"
+        }
+      },
+      "./catalog": {
+        "import": {
+          "types": "./dist/catalog.d.ts",
+          "default": "./dist/catalog.js"
+        }
+      },
+      "./icons/*.svg": "./icons/*.svg",
+      "./*": {
+        "import": {
+          "types": "./dist/*.d.ts",
+          "default": "./dist/*.js"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "generate-src": "tsx scripts/generate-src.ts",
+    "build": "pnpm generate-src && rimraf dist && tsc",
+    "dev": "tsc --watch"
+  },
+  "peerDependencies": {
+    "react": "^16.x || ^17.x || ^18.x || ^19.x"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "^19.0.0",
+    "react": "^19.2.1",
+    "rimraf": "^6.0.1",
+    "tsx": "^4.19.1",
+    "typescript": "^5.4.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/somosgented/aura-design-system.git",
+    "directory": "packages/icons"
+  },
+  "bugs": {
+    "url": "https://github.com/somosgented/aura-design-system/issues"
+  },
+  "homepage": "https://auradesignsystem.com/icons"
+}

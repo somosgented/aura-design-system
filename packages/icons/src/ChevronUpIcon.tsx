@@ -1,0 +1,22 @@
+import * as React from "react";
+import type { IconProps } from "./types";
+
+export const ChevronUpIcon = React.forwardRef<SVGSVGElement, IconProps>(
+  function ChevronUpIcon({ color = "currentColor", ...props }, forwardedRef) {
+    return (
+      <svg
+        width="15"
+        height="15"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        {...props}
+        ref={forwardedRef}
+      >
+        <path d="M 11.9522 5.5483 L 23.8972 17.5743 C 24.0362 17.7833 24.0332 18.0513 23.8962 18.2363 C 23.7292 18.4613 23.3882 18.5253 23.1212 18.3553 C 19.3982 14.6073 15.6752 10.8593 11.9522 7.1113 L 0.9372 18.2003 C 0.7252 18.4053 0.4042 18.4213 0.1992 18.2603 C -0.0398 18.0723 -0.0778 17.6753 0.1602 17.4183 C 4.0912 13.4623 8.0212 9.5053 11.9522 5.5483" fill={color} />
+      </svg>
+    );
+  },
+);
+
+export default ChevronUpIcon;

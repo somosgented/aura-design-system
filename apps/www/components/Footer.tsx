@@ -10,6 +10,7 @@ const columns = [
       { href: "/docs", label: "Get started" },
       { href: "/docs/cli", label: "CLI" },
       { href: "/docs/components", label: "Components" },
+      { href: "/icons", label: "Icons" },
       { href: "/docs/forms", label: "Forms" },
     ],
   },

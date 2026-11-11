@@ -11,6 +11,7 @@ const withMDX = createMDX({
 const config: NextConfig = {
   reactStrictMode: true,
   output: "standalone",
+  transpilePackages: ["@aura-design/react-icons"],
   images: {
     remotePatterns: [
       {

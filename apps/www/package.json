@@ -10,6 +10,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@aura-design/react-icons": "workspace:*",
     "@base-ui/react": "^1.0.0",
     "@diceui/mention": "^1.0.0",
     "@diceui/pptx": "0.2.0",
