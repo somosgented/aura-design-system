@@ -216,10 +216,10 @@ html.hc-lock{overflow:hidden;}
 }
 @media(max-width:767px){
 #hc-strip{display:none;}
-.hc-nav-inner{height:60px;gap:4px;}
-#hc-menu-toggle{margin-right:0;}
-.hc-wordmark{margin:0 auto;font-size:0;gap:0;}
-.hc-nav-end{margin-left:0;gap:4px;}
+.hc-nav-inner{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:60px;gap:0;}
+#hc-menu-toggle{margin-right:0;justify-self:start;}
+.hc-wordmark{font-size:0;gap:0;justify-self:center;}
+.hc-nav-end{margin-left:0;gap:4px;justify-self:end;}
 #hc-login-toggle{height:32px;padding:0 14px;font-size:12px;}
 }
 
