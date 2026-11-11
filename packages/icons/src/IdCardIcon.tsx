@@ -1,0 +1,27 @@
+import * as React from "react";
+import type { IconProps } from "./types";
+
+export const IdCardIcon = React.forwardRef<SVGSVGElement, IconProps>(
+  function IdCardIcon({ color = "currentColor", ...props }, forwardedRef) {
+    return (
+      <svg
+        width="15"
+        height="15"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        {...props}
+        ref={forwardedRef}
+      >
+        <path d="M 3.5 4.5 L 20.5 4.5 C 21.605 4.5 22.5 5.395 22.5 6.5 L 22.5 17.5 C 22.5 18.605 21.605 19.5 20.5 19.5 L 3.5 19.5 C 2.395 19.5 1.5 18.605 1.5 17.5 L 1.5 6.5 C 1.5 5.395 2.395 4.5 3.5 4.5 Z M 3.5 5.25 C 2.81 5.25 2.25 5.81 2.25 6.5 L 2.25 17.5 C 2.25 18.19 2.81 18.75 3.5 18.75 L 20.5 18.75 C 21.19 18.75 21.75 18.19 21.75 17.5 L 21.75 6.5 C 21.75 5.81 21.19 5.25 20.5 5.25 Z" fill={color} />
+        <path d="M 5.25 9.75 A 2.25 2.25 0 1 0 9.75 9.75 A 2.25 2.25 0 1 0 5.25 9.75 Z M 6 9.75 A 1.5 1.5 0 1 1 9 9.75 A 1.5 1.5 0 1 1 6 9.75 Z" fill={color} />
+        <path d="M 4 16.5 L 4 15.5 C 4 14.12 5.12 13 6.5 13 L 8.5 13 C 9.88 13 11 14.12 11 15.5 L 11 16.5 Z M 4.75 15.75 L 10.25 15.75 L 10.25 15.5 C 10.25 14.53 9.47 13.75 8.5 13.75 L 6.5 13.75 C 5.53 13.75 4.75 14.53 4.75 15.5 Z" fill={color} />
+        <path d="M 13.375 9.375 L 19.125 9.375 A 0.375 0.375 0 0 1 19.125 10.125 L 13.375 10.125 A 0.375 0.375 0 0 1 13.375 9.375 Z" fill={color} />
+        <path d="M 13.375 11.625 L 19.125 11.625 A 0.375 0.375 0 0 1 19.125 12.375 L 13.375 12.375 A 0.375 0.375 0 0 1 13.375 11.625 Z" fill={color} />
+        <path d="M 13.375 13.875 L 16.625 13.875 A 0.375 0.375 0 0 1 16.625 14.625 L 13.375 14.625 A 0.375 0.375 0 0 1 13.375 13.875 Z" fill={color} />
+      </svg>
+    );
+  },
+);
+
+export default IdCardIcon;

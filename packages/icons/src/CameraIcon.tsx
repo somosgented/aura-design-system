@@ -1,0 +1,23 @@
+import * as React from "react";
+import type { IconProps } from "./types";
+
+export const CameraIcon = React.forwardRef<SVGSVGElement, IconProps>(
+  function CameraIcon({ color = "currentColor", ...props }, forwardedRef) {
+    return (
+      <svg
+        width="15"
+        height="15"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        {...props}
+        ref={forwardedRef}
+      >
+        <path d="M 4 6 L 7.3 6 L 8.7 3.9 C 8.9 3.6 9.2 3.5 9.5 3.5 L 14.5 3.5 C 14.8 3.5 15.1 3.6 15.3 3.9 L 16.7 6 L 20 6 C 21.38 6 22.5 7.12 22.5 8.5 L 22.5 18 C 22.5 19.38 21.38 20.5 20 20.5 L 4 20.5 C 2.62 20.5 1.5 19.38 1.5 18 L 1.5 8.5 C 1.5 7.12 2.62 6 4 6 Z M 4 6.8 C 3.06 6.8 2.3 7.56 2.3 8.5 L 2.3 18 C 2.3 18.94 3.06 19.7 4 19.7 L 20 19.7 C 20.94 19.7 21.7 18.94 21.7 18 L 21.7 8.5 C 21.7 7.56 20.94 6.8 20 6.8 L 16.27 6.8 L 14.63 4.34 C 14.6 4.3 14.55 4.3 14.5 4.3 L 9.5 4.3 C 9.45 4.3 9.4 4.3 9.37 4.34 L 7.73 6.8 Z" fill={color} />
+        <path d="M 12 8.4 C 14.54 8.4 16.6 10.46 16.6 13 C 16.6 15.54 14.54 17.6 12 17.6 C 9.46 17.6 7.4 15.54 7.4 13 C 7.4 10.46 9.46 8.4 12 8.4 Z M 12 9.2 C 9.9 9.2 8.2 10.9 8.2 13 C 8.2 15.1 9.9 16.8 12 16.8 C 14.1 16.8 15.8 15.1 15.8 13 C 15.8 10.9 14.1 9.2 12 9.2 Z" fill={color} />
+      </svg>
+    );
+  },
+);
+
+export default CameraIcon;

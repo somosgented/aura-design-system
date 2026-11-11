@@ -8,7 +8,9 @@ import { ArrowTopLeftIcon } from "./ArrowTopLeftIcon";
 import { ArrowTopRightIcon } from "./ArrowTopRightIcon";
 import { ArrowUpIcon } from "./ArrowUpIcon";
 import { BellIcon } from "./BellIcon";
+import { BugIcon } from "./BugIcon";
 import { CalendarIcon } from "./CalendarIcon";
+import { CameraIcon } from "./CameraIcon";
 import { CaretDownIcon } from "./CaretDownIcon";
 import { CaretLeftIcon } from "./CaretLeftIcon";
 import { CaretRightIcon } from "./CaretRightIcon";
@@ -19,6 +21,8 @@ import { ChevronDownIcon } from "./ChevronDownIcon";
 import { ChevronLeftIcon } from "./ChevronLeftIcon";
 import { ChevronRightIcon } from "./ChevronRightIcon";
 import { ChevronUpIcon } from "./ChevronUpIcon";
+import { CloudIcon } from "./CloudIcon";
+import { ContactsIcon } from "./ContactsIcon";
 import { CopyIcon } from "./CopyIcon";
 import { CrossIcon } from "./CrossIcon";
 import { CubeIcon } from "./CubeIcon";
@@ -30,24 +34,38 @@ import { DownloadIcon } from "./DownloadIcon";
 import { EnvelopeIcon } from "./EnvelopeIcon";
 import { EyeNoneIcon } from "./EyeNoneIcon";
 import { EyeOpenIcon } from "./EyeOpenIcon";
+import { FaceIcon } from "./FaceIcon";
+import { FilterIcon } from "./FilterIcon";
+import { FolderIcon } from "./FolderIcon";
+import { GroupIcon } from "./GroupIcon";
 import { HamburgerMenuIcon } from "./HamburgerMenuIcon";
 import { HeartFilledIcon } from "./HeartFilledIcon";
 import { HeartIcon } from "./HeartIcon";
+import { HomeIcon } from "./HomeIcon";
+import { IdCardIcon } from "./IdCardIcon";
 import { KeyIcon } from "./KeyIcon";
 import { LinkIcon } from "./LinkIcon";
+import { LockIcon } from "./LockIcon";
 import { MagnifyingGlassIcon } from "./MagnifyingGlassIcon";
+import { MessageIcon } from "./MessageIcon";
 import { PencilIcon } from "./PencilIcon";
+import { PersonAddIcon } from "./PersonAddIcon";
+import { PersonCheckIcon } from "./PersonCheckIcon";
+import { PersonDeleteIcon } from "./PersonDeleteIcon";
 import { PersonIcon } from "./PersonIcon";
 import { PinIcon } from "./PinIcon";
+import { RocketIcon } from "./RocketIcon";
 import { SettingsIcon } from "./SettingsIcon";
 import { ShareIcon } from "./ShareIcon";
 import { StarIcon } from "./StarIcon";
 import { StoreIcon } from "./StoreIcon";
+import { ThunderboltIcon } from "./ThunderboltIcon";
 import { TrashIcon } from "./TrashIcon";
 import { TriangleDownIcon } from "./TriangleDownIcon";
 import { TriangleLeftIcon } from "./TriangleLeftIcon";
 import { TriangleRightIcon } from "./TriangleRightIcon";
 import { TriangleUpIcon } from "./TriangleUpIcon";
+import { TrophyIcon } from "./TrophyIcon";
 import type { IconProps } from "./types";
 
 export type IconCatalogEntry = {
@@ -115,10 +133,22 @@ export const iconCatalog: IconCatalogEntry[] = [
     Icon: BellIcon,
   },
   {
+    name: "BugIcon",
+    fileName: "bug",
+    tags: ["bug"],
+    Icon: BugIcon,
+  },
+  {
     name: "CalendarIcon",
     fileName: "calendar",
     tags: ["calendar"],
     Icon: CalendarIcon,
+  },
+  {
+    name: "CameraIcon",
+    fileName: "camera",
+    tags: ["camera"],
+    Icon: CameraIcon,
   },
   {
     name: "CaretDownIcon",
@@ -179,6 +209,18 @@ export const iconCatalog: IconCatalogEntry[] = [
     fileName: "chevron-up",
     tags: ["chevron","up"],
     Icon: ChevronUpIcon,
+  },
+  {
+    name: "CloudIcon",
+    fileName: "cloud",
+    tags: ["cloud"],
+    Icon: CloudIcon,
+  },
+  {
+    name: "ContactsIcon",
+    fileName: "contacts",
+    tags: ["contacts"],
+    Icon: ContactsIcon,
   },
   {
     name: "CopyIcon",
@@ -247,6 +289,30 @@ export const iconCatalog: IconCatalogEntry[] = [
     Icon: EyeOpenIcon,
   },
   {
+    name: "FaceIcon",
+    fileName: "face",
+    tags: ["face"],
+    Icon: FaceIcon,
+  },
+  {
+    name: "FilterIcon",
+    fileName: "filter",
+    tags: ["filter"],
+    Icon: FilterIcon,
+  },
+  {
+    name: "FolderIcon",
+    fileName: "folder",
+    tags: ["folder"],
+    Icon: FolderIcon,
+  },
+  {
+    name: "GroupIcon",
+    fileName: "group",
+    tags: ["group"],
+    Icon: GroupIcon,
+  },
+  {
     name: "HamburgerMenuIcon",
     fileName: "hamburger-menu",
     tags: ["hamburger","menu"],
@@ -265,6 +331,18 @@ export const iconCatalog: IconCatalogEntry[] = [
     Icon: HeartIcon,
   },
   {
+    name: "HomeIcon",
+    fileName: "home",
+    tags: ["home"],
+    Icon: HomeIcon,
+  },
+  {
+    name: "IdCardIcon",
+    fileName: "id-card",
+    tags: ["id","card"],
+    Icon: IdCardIcon,
+  },
+  {
     name: "KeyIcon",
     fileName: "key",
     tags: ["key"],
@@ -277,16 +355,46 @@ export const iconCatalog: IconCatalogEntry[] = [
     Icon: LinkIcon,
   },
   {
+    name: "LockIcon",
+    fileName: "lock",
+    tags: ["lock"],
+    Icon: LockIcon,
+  },
+  {
     name: "MagnifyingGlassIcon",
     fileName: "magnifying-glass",
     tags: ["magnifying","glass"],
     Icon: MagnifyingGlassIcon,
   },
   {
+    name: "MessageIcon",
+    fileName: "message",
+    tags: ["message"],
+    Icon: MessageIcon,
+  },
+  {
     name: "PencilIcon",
     fileName: "pencil",
     tags: ["pencil"],
     Icon: PencilIcon,
+  },
+  {
+    name: "PersonAddIcon",
+    fileName: "person-add",
+    tags: ["person","add"],
+    Icon: PersonAddIcon,
+  },
+  {
+    name: "PersonCheckIcon",
+    fileName: "person-check",
+    tags: ["person","check"],
+    Icon: PersonCheckIcon,
+  },
+  {
+    name: "PersonDeleteIcon",
+    fileName: "person-delete",
+    tags: ["person","delete"],
+    Icon: PersonDeleteIcon,
   },
   {
     name: "PersonIcon",
@@ -299,6 +407,12 @@ export const iconCatalog: IconCatalogEntry[] = [
     fileName: "pin",
     tags: ["pin"],
     Icon: PinIcon,
+  },
+  {
+    name: "RocketIcon",
+    fileName: "rocket",
+    tags: ["rocket"],
+    Icon: RocketIcon,
   },
   {
     name: "SettingsIcon",
@@ -323,6 +437,12 @@ export const iconCatalog: IconCatalogEntry[] = [
     fileName: "store",
     tags: ["store"],
     Icon: StoreIcon,
+  },
+  {
+    name: "ThunderboltIcon",
+    fileName: "thunderbolt",
+    tags: ["thunderbolt"],
+    Icon: ThunderboltIcon,
   },
   {
     name: "TrashIcon",
@@ -353,5 +473,11 @@ export const iconCatalog: IconCatalogEntry[] = [
     fileName: "triangle-up",
     tags: ["triangle","up"],
     Icon: TriangleUpIcon,
+  },
+  {
+    name: "TrophyIcon",
+    fileName: "trophy",
+    tags: ["trophy"],
+    Icon: TrophyIcon,
   },
 ];
