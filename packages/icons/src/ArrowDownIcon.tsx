@@ -13,8 +13,7 @@ export const ArrowDownIcon = React.forwardRef<SVGSVGElement, IconProps>(
         {...props}
         ref={forwardedRef}
       >
-        <path d="M 12 0.3667 L 12 23.6337" fill="none" stroke={color} strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M 16.623 19.0103 L 12 23.6333 L 7.377 19.0103" fill="none" stroke={color} strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M 11.6 2.2 L 11.6 20.57 L 5.766 14.734 A 0.4 0.4 0 0 0 5.2 15.3 L 12 22.1 L 18.8 15.3 A 0.4 0.4 0 0 0 18.234 14.734 L 12.4 20.57 L 12.4 2.2 A 0.4 0.4 0 0 0 11.6 2.2 Z" fill={color} />
       </svg>
     );
   },

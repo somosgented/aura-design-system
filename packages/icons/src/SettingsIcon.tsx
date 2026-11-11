@@ -1,0 +1,27 @@
+import * as React from "react";
+import type { IconProps } from "./types";
+
+export const SettingsIcon = React.forwardRef<SVGSVGElement, IconProps>(
+  function SettingsIcon({ color = "currentColor", ...props }, forwardedRef) {
+    return (
+      <svg
+        width="15"
+        height="15"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        {...props}
+        ref={forwardedRef}
+      >
+        <path d="M 2.4 4.6 L 6.0 4.6 L 6.0 5.4 L 2.4 5.4 A 0.4 0.4 0 0 1 2.4 4.6 Z M 10.0 4.6 L 21.6 4.6 A 0.4 0.4 0 0 1 21.6 5.4 L 10.0 5.4 Z" fill={color} />
+        <path d="M 5.6 5 A 2.4 2.4 0 1 1 10.4 5 A 2.4 2.4 0 1 1 5.6 5 Z M 6.4 5 A 1.6 1.6 0 1 0 9.6 5 A 1.6 1.6 0 1 0 6.4 5 Z" fill={color} />
+        <path d="M 2.4 11.6 L 14.0 11.6 L 14.0 12.4 L 2.4 12.4 A 0.4 0.4 0 0 1 2.4 11.6 Z M 18.0 11.6 L 21.6 11.6 A 0.4 0.4 0 0 1 21.6 12.4 L 18.0 12.4 Z" fill={color} />
+        <path d="M 13.6 12 A 2.4 2.4 0 1 1 18.4 12 A 2.4 2.4 0 1 1 13.6 12 Z M 14.4 12 A 1.6 1.6 0 1 0 17.6 12 A 1.6 1.6 0 1 0 14.4 12 Z" fill={color} />
+        <path d="M 2.4 18.6 L 8.0 18.6 L 8.0 19.4 L 2.4 19.4 A 0.4 0.4 0 0 1 2.4 18.6 Z M 12.0 18.6 L 21.6 18.6 A 0.4 0.4 0 0 1 21.6 19.4 L 12.0 19.4 Z" fill={color} />
+        <path d="M 7.6 19 A 2.4 2.4 0 1 1 12.4 19 A 2.4 2.4 0 1 1 7.6 19 Z M 8.4 19 A 1.6 1.6 0 1 0 11.6 19 A 1.6 1.6 0 1 0 8.4 19 Z" fill={color} />
+      </svg>
+    );
+  },
+);
+
+export default SettingsIcon;

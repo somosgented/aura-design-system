@@ -1,9 +1,20 @@
 import type * as React from "react";
+import { ArrowBottomLeftIcon } from "./ArrowBottomLeftIcon";
+import { ArrowBottomRightIcon } from "./ArrowBottomRightIcon";
 import { ArrowDownIcon } from "./ArrowDownIcon";
 import { ArrowLeftIcon } from "./ArrowLeftIcon";
 import { ArrowRightIcon } from "./ArrowRightIcon";
+import { ArrowTopLeftIcon } from "./ArrowTopLeftIcon";
+import { ArrowTopRightIcon } from "./ArrowTopRightIcon";
 import { ArrowUpIcon } from "./ArrowUpIcon";
 import { BellIcon } from "./BellIcon";
+import { CalendarIcon } from "./CalendarIcon";
+import { CaretDownIcon } from "./CaretDownIcon";
+import { CaretLeftIcon } from "./CaretLeftIcon";
+import { CaretRightIcon } from "./CaretRightIcon";
+import { CaretSortIcon } from "./CaretSortIcon";
+import { CaretUpIcon } from "./CaretUpIcon";
+import { CheckIcon } from "./CheckIcon";
 import { ChevronDownIcon } from "./ChevronDownIcon";
 import { ChevronLeftIcon } from "./ChevronLeftIcon";
 import { ChevronRightIcon } from "./ChevronRightIcon";
@@ -11,6 +22,11 @@ import { ChevronUpIcon } from "./ChevronUpIcon";
 import { CopyIcon } from "./CopyIcon";
 import { CrossIcon } from "./CrossIcon";
 import { CubeIcon } from "./CubeIcon";
+import { DoubleArrowDownIcon } from "./DoubleArrowDownIcon";
+import { DoubleArrowLeftIcon } from "./DoubleArrowLeftIcon";
+import { DoubleArrowRightIcon } from "./DoubleArrowRightIcon";
+import { DoubleArrowUpIcon } from "./DoubleArrowUpIcon";
+import { DownloadIcon } from "./DownloadIcon";
 import { EnvelopeIcon } from "./EnvelopeIcon";
 import { EyeNoneIcon } from "./EyeNoneIcon";
 import { EyeOpenIcon } from "./EyeOpenIcon";
@@ -23,8 +39,15 @@ import { MagnifyingGlassIcon } from "./MagnifyingGlassIcon";
 import { PencilIcon } from "./PencilIcon";
 import { PersonIcon } from "./PersonIcon";
 import { PinIcon } from "./PinIcon";
+import { SettingsIcon } from "./SettingsIcon";
+import { ShareIcon } from "./ShareIcon";
+import { StarIcon } from "./StarIcon";
 import { StoreIcon } from "./StoreIcon";
 import { TrashIcon } from "./TrashIcon";
+import { TriangleDownIcon } from "./TriangleDownIcon";
+import { TriangleLeftIcon } from "./TriangleLeftIcon";
+import { TriangleRightIcon } from "./TriangleRightIcon";
+import { TriangleUpIcon } from "./TriangleUpIcon";
 import type { IconProps } from "./types";
 
 export type IconCatalogEntry = {
@@ -37,6 +60,18 @@ export type IconCatalogEntry = {
 };
 
 export const iconCatalog: IconCatalogEntry[] = [
+  {
+    name: "ArrowBottomLeftIcon",
+    fileName: "arrow-bottom-left",
+    tags: ["arrow","bottom","left"],
+    Icon: ArrowBottomLeftIcon,
+  },
+  {
+    name: "ArrowBottomRightIcon",
+    fileName: "arrow-bottom-right",
+    tags: ["arrow","bottom","right"],
+    Icon: ArrowBottomRightIcon,
+  },
   {
     name: "ArrowDownIcon",
     fileName: "arrow-down",
@@ -56,6 +91,18 @@ export const iconCatalog: IconCatalogEntry[] = [
     Icon: ArrowRightIcon,
   },
   {
+    name: "ArrowTopLeftIcon",
+    fileName: "arrow-top-left",
+    tags: ["arrow","top","left"],
+    Icon: ArrowTopLeftIcon,
+  },
+  {
+    name: "ArrowTopRightIcon",
+    fileName: "arrow-top-right",
+    tags: ["arrow","top","right"],
+    Icon: ArrowTopRightIcon,
+  },
+  {
     name: "ArrowUpIcon",
     fileName: "arrow-up",
     tags: ["arrow","up"],
@@ -66,6 +113,48 @@ export const iconCatalog: IconCatalogEntry[] = [
     fileName: "bell",
     tags: ["bell"],
     Icon: BellIcon,
+  },
+  {
+    name: "CalendarIcon",
+    fileName: "calendar",
+    tags: ["calendar"],
+    Icon: CalendarIcon,
+  },
+  {
+    name: "CaretDownIcon",
+    fileName: "caret-down",
+    tags: ["caret","down"],
+    Icon: CaretDownIcon,
+  },
+  {
+    name: "CaretLeftIcon",
+    fileName: "caret-left",
+    tags: ["caret","left"],
+    Icon: CaretLeftIcon,
+  },
+  {
+    name: "CaretRightIcon",
+    fileName: "caret-right",
+    tags: ["caret","right"],
+    Icon: CaretRightIcon,
+  },
+  {
+    name: "CaretSortIcon",
+    fileName: "caret-sort",
+    tags: ["caret","sort"],
+    Icon: CaretSortIcon,
+  },
+  {
+    name: "CaretUpIcon",
+    fileName: "caret-up",
+    tags: ["caret","up"],
+    Icon: CaretUpIcon,
+  },
+  {
+    name: "CheckIcon",
+    fileName: "check",
+    tags: ["check"],
+    Icon: CheckIcon,
   },
   {
     name: "ChevronDownIcon",
@@ -108,6 +197,36 @@ export const iconCatalog: IconCatalogEntry[] = [
     fileName: "cube",
     tags: ["cube"],
     Icon: CubeIcon,
+  },
+  {
+    name: "DoubleArrowDownIcon",
+    fileName: "double-arrow-down",
+    tags: ["double","arrow","down"],
+    Icon: DoubleArrowDownIcon,
+  },
+  {
+    name: "DoubleArrowLeftIcon",
+    fileName: "double-arrow-left",
+    tags: ["double","arrow","left"],
+    Icon: DoubleArrowLeftIcon,
+  },
+  {
+    name: "DoubleArrowRightIcon",
+    fileName: "double-arrow-right",
+    tags: ["double","arrow","right"],
+    Icon: DoubleArrowRightIcon,
+  },
+  {
+    name: "DoubleArrowUpIcon",
+    fileName: "double-arrow-up",
+    tags: ["double","arrow","up"],
+    Icon: DoubleArrowUpIcon,
+  },
+  {
+    name: "DownloadIcon",
+    fileName: "download",
+    tags: ["download"],
+    Icon: DownloadIcon,
   },
   {
     name: "EnvelopeIcon",
@@ -182,6 +301,24 @@ export const iconCatalog: IconCatalogEntry[] = [
     Icon: PinIcon,
   },
   {
+    name: "SettingsIcon",
+    fileName: "settings",
+    tags: ["settings"],
+    Icon: SettingsIcon,
+  },
+  {
+    name: "ShareIcon",
+    fileName: "share",
+    tags: ["share"],
+    Icon: ShareIcon,
+  },
+  {
+    name: "StarIcon",
+    fileName: "star",
+    tags: ["star"],
+    Icon: StarIcon,
+  },
+  {
     name: "StoreIcon",
     fileName: "store",
     tags: ["store"],
@@ -192,5 +329,29 @@ export const iconCatalog: IconCatalogEntry[] = [
     fileName: "trash",
     tags: ["trash"],
     Icon: TrashIcon,
+  },
+  {
+    name: "TriangleDownIcon",
+    fileName: "triangle-down",
+    tags: ["triangle","down"],
+    Icon: TriangleDownIcon,
+  },
+  {
+    name: "TriangleLeftIcon",
+    fileName: "triangle-left",
+    tags: ["triangle","left"],
+    Icon: TriangleLeftIcon,
+  },
+  {
+    name: "TriangleRightIcon",
+    fileName: "triangle-right",
+    tags: ["triangle","right"],
+    Icon: TriangleRightIcon,
+  },
+  {
+    name: "TriangleUpIcon",
+    fileName: "triangle-up",
+    tags: ["triangle","up"],
+    Icon: TriangleUpIcon,
   },
 ];

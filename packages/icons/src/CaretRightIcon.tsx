@@ -1,0 +1,22 @@
+import * as React from "react";
+import type { IconProps } from "./types";
+
+export const CaretRightIcon = React.forwardRef<SVGSVGElement, IconProps>(
+  function CaretRightIcon({ color = "currentColor", ...props }, forwardedRef) {
+    return (
+      <svg
+        width="15"
+        height="15"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        {...props}
+        ref={forwardedRef}
+      >
+        <path d="M 9.7 6.3 L 15.6 11.25 C 16.1 11.67 16.1 12.33 15.6 12.75 L 9.7 17.7 C 9.2 18.12 8.6 17.86 8.6 17.2 L 8.6 6.8 C 8.6 6.14 9.2 5.88 9.7 6.3 Z" fill={color} />
+      </svg>
+    );
+  },
+);
+
+export default CaretRightIcon;

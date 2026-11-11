@@ -13,8 +13,7 @@ export const ArrowLeftIcon = React.forwardRef<SVGSVGElement, IconProps>(
         {...props}
         ref={forwardedRef}
       >
-        <path d="M 23.6333 12 L 0.3663 12" fill="none" stroke={color} strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M 4.9897 16.623 L 0.3667 12 L 4.9897 7.377" fill="none" stroke={color} strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M 2.293 12 L 9.646 4.646 A 0.5 0.5 0 0 1 10.354 5.354 L 4.207 11.5 L 21 11.5 A 0.5 0.5 0 0 1 21 12.5 L 4.207 12.5 L 10.354 18.646 A 0.5 0.5 0 0 1 9.646 19.354 Z" fill={color} />
       </svg>
     );
   },

@@ -13,8 +13,7 @@ export const ArrowUpIcon = React.forwardRef<SVGSVGElement, IconProps>(
         {...props}
         ref={forwardedRef}
       >
-        <path d="M 12 23.6333 L 12 0.3663" fill="none" stroke={color} strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M 7.377 4.9897 L 12 0.3667 L 16.623 4.9897" fill="none" stroke={color} strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M 11.6 1.7 L 5 8.3 A 0.5 0.5 0 0 0 5.707 9.007 L 11.5 3.214 L 11.5 22.2 A 0.5 0.5 0 0 0 12.5 22.2 L 12.5 3.214 L 18.293 9.007 A 0.5 0.5 0 0 0 19 8.3 L 12.4 1.7 Q 12 1.3 11.6 1.7 Z" fill={color} />
       </svg>
     );
   },

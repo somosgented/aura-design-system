@@ -1,0 +1,22 @@
+import * as React from "react";
+import type { IconProps } from "./types";
+
+export const TriangleDownIcon = React.forwardRef<SVGSVGElement, IconProps>(
+  function TriangleDownIcon({ color = "currentColor", ...props }, forwardedRef) {
+    return (
+      <svg
+        width="15"
+        height="15"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        {...props}
+        ref={forwardedRef}
+      >
+        <path d="M 4.2 5.5 L 19.8 5.5 C 20.6 5.5 21.1 6.4 20.6 7.1 L 12.8 18.6 C 12.4 19.2 11.6 19.2 11.2 18.6 L 3.4 7.1 C 2.9 6.4 3.4 5.5 4.2 5.5 Z M 12.35 17.85 L 19.7 7.0 C 19.9 6.7 19.8 6.3 19.4 6.3 L 4.6 6.3 C 4.2 6.3 4.1 6.7 4.3 7.0 L 11.65 17.85 C 11.8 18.1 12.2 18.1 12.35 17.85 Z" fill={color} />
+      </svg>
+    );
+  },
+);
+
+export default TriangleDownIcon;
