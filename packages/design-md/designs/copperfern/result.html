@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Copperfern · Aura flavor</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="stylesheet" href="/aura/main.css"/>
+<link rel="stylesheet" href="theme.css"/>
+<script>
+(function(){
+var p=new URLSearchParams(window.location.search).get("appearance");
+var d=p==="dark"||p==="light"?p:(window.matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
+var r=document.documentElement;
+r.classList.add(d);
+r.style.colorScheme=d;
+if(window.matchMedia("(prefers-reduced-motion:no-preference)").matches)r.classList.add("motion");
+})();
+</script>
+<style>
+*{box-sizing:border-box;}
+html{margin:0;padding:0;font-family:var(--aura-font-stack);background:var(--canvas);color:var(--ink);scroll-padding-top:calc(var(--aura)*4);}
+body{margin:0;padding:0;background:var(--canvas);color:var(--ink);font-size:16px;line-height:1.5;min-width:320px;}
+h1,h2,h3,h4,h5,h6,p,ul,ol,dl{margin:0;}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+button{cursor:pointer;font-family:inherit;}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+
+.cf-skip{position:absolute;left:13px;top:-60px;z-index:300;padding:8px 20px;border-radius:9999px;background:var(--ink);color:var(--canvas);font-weight:600;font-size:14px;border:0;transition:top .15s;}
+.cf-skip:focus{top:8px;}
+
+.cf{
+  --cf-btn-r:8px;
+  --cf-section-pad:calc(var(--aura)*6);
+}
+
+.cf :focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+
+.cf .cf-wrap{width:min(100% - calc(var(--aura)*6),1280px);margin-inline:auto;}
+@media(max-width:767px){.cf .cf-wrap{width:min(100% - calc(var(--aura)*3),1280px);}}
+
+.cf input:not([type=checkbox]):not([type=radio]),.cf textarea,.cf select{
+  background:var(--paper);border:1px solid var(--control-line);color:var(--ink);
+  border-radius:var(--cf-btn-r);padding:0 13px;font-family:inherit;font-size:16px;width:100%;
+}
+.cf input:not([type=checkbox]):not([type=radio]),.cf select{height:calc(var(--aura)*3.5);}
+.cf textarea{padding:13px;height:calc(var(--aura)*7);resize:vertical;}
+.cf input:focus,.cf textarea:focus,.cf select:focus{outline:2px solid var(--focus);outline-offset:0;}
+.cf input::placeholder,.cf textarea::placeholder{color:var(--ink-muted);}
+.cf select{appearance:none;-webkit-appearance:none;}
+.cf .cf-sel-wrap{position:relative;}
+.cf .cf-sel-wrap::after{content:"";position:absolute;right:14px;top:50%;transform:translateY(-50%);border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid var(--control-line);pointer-events:none;}
+
+.cf-btn-fill{display:inline-flex;align-items:center;justify-content:center;border-radius:var(--cf-btn-r);background:var(--ink);color:var(--canvas);border:1px solid var(--ink);padding:0 calc(var(--aura)*2);height:calc(var(--aura)*3.5);font-size:15px;font-weight:400;font-family:inherit;transition:opacity .15s;}
+.cf-btn-fill:hover:not(:disabled){opacity:.82;}
+.cf-btn-fill:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+
+.dark .cf-btn-fill{background:var(--ink);color:var(--canvas);}
+
+.cf-btn-ghost{display:inline-flex;align-items:center;justify-content:center;border-radius:var(--cf-btn-r);background:transparent;color:var(--ink);border:1px solid var(--ink);padding:0 calc(var(--aura)*2);height:calc(var(--aura)*3.5);font-size:15px;font-weight:400;font-family:inherit;transition:background .15s;}
+.cf-btn-ghost:hover:not(:disabled){background:var(--accent-a3);}
+.cf-btn-ghost:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+
+.cf-label{font-family:var(--aura-font-label);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);}
+
+.cf-nav{position:sticky;top:0;z-index:200;background:var(--canvas);border-bottom:1px solid var(--rule);}
+.cf-nav-inner{display:flex;align-items:center;gap:0;height:calc(var(--aura)*4);width:min(100% - calc(var(--aura)*6),1280px);margin-inline:auto;}
+@media(max-width:767px){.cf-nav-inner{width:min(100% - calc(var(--aura)*3),1280px);}}
+.cf-logo{display:flex;align-items:center;gap:calc(var(--aura)*.75);text-decoration:none;color:var(--ink);flex-shrink:0;}
+.cf-logo-sq{width:28px;height:28px;background:var(--ink);border-radius:4px;display:flex;align-items:center;justify-content:center;}
+.cf-logo-sq svg{width:16px;height:16px;fill:var(--canvas);}
+.cf-logo-name{font-size:15px;font-weight:400;}
+.cf-nav-menu{display:flex;align-items:center;gap:0;list-style:none;padding:0;margin:0 0 0 calc(var(--aura)*3);}
+.cf-nav-menu>li{position:static;}
+.cf-nav-trig{display:flex;align-items:center;gap:4px;height:calc(var(--aura)*4);padding:0 calc(var(--aura)*1);background:transparent;border:0;font-size:14px;color:var(--ink);font-family:inherit;cursor:pointer;white-space:nowrap;}
+.cf-nav-trig svg{width:12px;height:12px;fill:var(--ink-muted);transition:transform .18s;}
+.cf-nav-trig[aria-expanded=true] svg{transform:rotate(180deg);}
+.cf-nav-trig:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.cf-nav-link{display:flex;align-items:center;height:calc(var(--aura)*4);padding:0 calc(var(--aura)*1);font-size:14px;color:var(--ink);}
+.cf-nav-right{margin-left:auto;display:flex;align-items:center;gap:calc(var(--aura)*1);}
+.cf-nav-mobile-btn{display:none;background:transparent;border:0;color:var(--ink);padding:4px;}
+@media(max-width:767px){
+  .cf-nav-menu{display:none;}
+  .cf-nav-right .cf-btn-fill{display:none;}
+  .cf-nav-mobile-btn{display:flex;}
+}
+
+.cf-flyout{position:fixed;top:calc(var(--aura)*4 + 1px);left:0;right:0;background:var(--canvas);border-bottom:1px solid var(--rule);padding:calc(var(--aura)*2.5) 0;z-index:199;opacity:0;pointer-events:none;transform:translateY(-6px);transition:opacity .15s ease,transform .15s ease;}
+html.motion .cf-flyout{transition:opacity .18s ease,transform .18s ease;}
+.cf-flyout.open{opacity:1;pointer-events:auto;transform:none;}
+.cf-flyout-inner{width:min(100% - calc(var(--aura)*6),1280px);margin-inline:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:calc(var(--aura)*2);}
+@media(max-width:767px){.cf-flyout-inner{grid-template-columns:1fr 1fr;}}
+.cf-flyout-item{display:flex;flex-direction:column;gap:4px;}
+.cf-flyout-item a{font-size:14px;color:var(--ink);padding:4px 0;border-bottom:1px solid transparent;transition:border-color .12s;}
+.cf-flyout-item a:hover{border-bottom-color:var(--ink);}
+.cf-flyout-head{font-family:var(--aura-font-label);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:calc(var(--aura)*.5);}
+
+.cf-hero{padding:calc(var(--aura)*5) 0 calc(var(--aura)*4);}
+.cf-hero-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:calc(var(--aura)*3);align-items:center;}
+@media(max-width:900px){.cf-hero-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:600px){.cf-hero-grid{grid-template-columns:1fr;}}
+.cf-hero h1{font-size:clamp(32px,4.4vw,56px);font-weight:400;line-height:1.02;letter-spacing:-.022em;color:var(--ink);}
+.cf-hero-collage{position:relative;min-height:300px;display:flex;align-items:center;justify-content:center;}
+.cf-collage-stack{position:relative;width:220px;height:280px;margin:auto;}
+.cf-card-art{position:absolute;border-radius:6px;overflow:hidden;}
+html.motion .cf-card-art.float-a{animation:floatA 3.4s ease-in-out infinite;}
+html.motion .cf-card-art.float-b{animation:floatB 3.8s ease-in-out infinite .6s;}
+html.motion .cf-card-art.float-c{animation:floatC 4.1s ease-in-out infinite 1.1s;}
+@keyframes floatA{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+@keyframes floatB{0%,100%{transform:translateY(0);}50%{transform:translateY(5px);}}
+@keyframes floatC{0%,100%{transform:translateY(0);}50%{transform:translateY(-4px);}}
+.cf-hero-cta{display:flex;align-items:center;justify-content:center;}
+.cf-hero-cta .cf-btn-fill{font-size:22px;padding:0 calc(var(--aura)*4);height:calc(var(--aura)*6);border-radius:16px;}
+
+.cf-statement{padding:var(--cf-section-pad) 0;border-top:1px solid var(--rule);}
+.cf-statement-grid{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--aura)*5);align-items:center;}
+@media(max-width:767px){.cf-statement-grid{grid-template-columns:1fr;}}
+.cf-statement-left{background:var(--ink);color:var(--canvas);border-radius:8px;padding:calc(var(--aura)*4);}
+.cf-statement-left h2{font-size:clamp(22px,2.6vw,36px);font-weight:400;line-height:1.1;letter-spacing:-.01em;}
+.cf-statement-left p{margin-top:calc(var(--aura)*1.5);font-size:16px;line-height:1.6;opacity:.72;}
+.cf-statement-right{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--aura)*1.5);}
+.cf-art-panel{border-radius:8px;overflow:hidden;aspect-ratio:1;}
+
+.cf-features{padding:var(--cf-section-pad) 0;border-top:1px solid var(--rule);}
+.cf-features-grid{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--aura)*5);}
+@media(max-width:767px){.cf-features-grid{grid-template-columns:1fr;}}
+.cf-feature{display:flex;flex-direction:column;gap:calc(var(--aura)*1.5);}
+.cf-feature h3{font-size:20px;font-weight:400;line-height:1.2;}
+.cf-feature p{font-size:15px;line-height:1.6;color:var(--ink-muted);}
+.cf-feature-art{border-radius:8px;overflow:hidden;height:220px;}
+.cf-link-arrow{display:inline-flex;align-items:center;gap:6px;font-size:14px;color:var(--ink);text-decoration:underline;text-underline-offset:3px;}
+
+.cf-mosaic{padding:var(--cf-section-pad) 0;border-top:1px solid var(--rule);}
+.cf-mosaic h2{font-size:clamp(22px,2.4vw,32px);font-weight:400;line-height:1.1;margin-bottom:calc(var(--aura)*1);}
+.cf-mosaic-sub{font-size:16px;color:var(--ink-muted);margin-bottom:calc(var(--aura)*3);}
+.cf-mosaic-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:calc(var(--aura)*1.5);}
+.cf-mosaic-counter{font-family:var(--aura-font-label);font-size:12px;color:var(--ink-muted);}
+.cf-mosaic-nav{display:flex;gap:calc(var(--aura)*.75);}
+.cf-mosaic-nav button{width:32px;height:32px;border-radius:9999px;border:1px solid var(--rule);background:var(--canvas);color:var(--ink);display:flex;align-items:center;justify-content:center;font-size:14px;}
+.cf-mosaic-nav button:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.cf-mosaic-scroll{overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.cf-mosaic-scroll::-webkit-scrollbar{display:none;}
+.cf-mosaic-track{display:flex;gap:calc(var(--aura)*1.5);min-width:max-content;}
+.cf-mosaic-tile{width:240px;flex-shrink:0;scroll-snap-align:start;border-radius:8px;overflow:hidden;border:1px solid var(--rule);}
+.cf-mosaic-tile-art{height:180px;position:relative;}
+.cf-mosaic-tile-play{position:absolute;bottom:10px;right:10px;width:36px;height:36px;border-radius:9999px;background:var(--ink);color:var(--canvas);border:0;display:flex;align-items:center;justify-content:center;}
+.cf-mosaic-tile-play svg{width:14px;height:14px;fill:var(--canvas);}
+.cf-mosaic-tile-info{padding:calc(var(--aura)*1) calc(var(--aura)*1.5);}
+.cf-mosaic-tile-info p{font-size:13px;color:var(--ink-muted);margin-top:2px;}
+
+.cf-context{padding:var(--cf-section-pad) 0;border-top:1px solid var(--rule);}
+.cf-context-top{margin-bottom:calc(var(--aura)*3);}
+.cf-context-top h2{font-size:clamp(20px,2.4vw,32px);font-weight:400;line-height:1.1;}
+.cf-context-top p{font-size:16px;color:var(--ink-muted);margin-top:calc(var(--aura)*1);}
+.cf-context-grid{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--aura)*3);align-items:start;}
+@media(max-width:767px){.cf-context-grid{grid-template-columns:1fr;}}
+.cf-app-window{background:var(--paper);border:1px solid var(--rule);border-radius:10px;overflow:hidden;}
+.cf-app-topbar{height:36px;background:var(--canvas);border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:6px;padding:0 12px;}
+.cf-app-dot{width:10px;height:10px;border-radius:9999px;background:var(--rule);}
+.cf-app-body{display:grid;grid-template-columns:180px 1fr;min-height:260px;}
+.cf-app-sidebar{border-right:1px solid var(--rule);padding:calc(var(--aura)*1);}
+.cf-app-sidebar-item{font-size:12px;padding:5px 8px;border-radius:4px;color:var(--ink-muted);display:flex;align-items:center;gap:6px;}
+.cf-app-sidebar-item.active{background:var(--accent-a3);color:var(--ink);}
+.cf-app-main-pane{padding:calc(var(--aura)*1.5);}
+.cf-app-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:12px;color:var(--ink-muted);}
+.cf-app-check{width:14px;height:14px;border-radius:3px;border:1px solid var(--control-line);flex-shrink:0;}
+.cf-app-check.done{background:var(--ink);border-color:var(--ink);}
+.cf-context-cyan{background:color-mix(in srgb,var(--tile-cyan) 10%,var(--canvas));border:1px solid color-mix(in srgb,var(--tile-cyan) 30%,transparent);border-radius:10px;padding:calc(var(--aura)*2.5);}
+.cf-context-cyan h3{font-size:17px;font-weight:400;margin-bottom:calc(var(--aura)*1);}
+.cf-context-cyan p{font-size:14px;line-height:1.6;color:var(--ink-muted);}
+
+.cf-proof{padding:var(--cf-section-pad) 0;border-top:1px solid var(--rule);}
+.cf-proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--aura)*5);align-items:start;}
+@media(max-width:767px){.cf-proof-grid{grid-template-columns:1fr;}}
+.cf .cf-quote{font-family:var(--aura-font-stack);font-size:clamp(20px,2.5vw,32px);font-weight:400;line-height:1.3;color:var(--ink);text-transform:none;padding-left:calc(var(--aura)*1.5);border-left:1px solid var(--ink);margin:0;}
+.cf-quote-attr{margin-top:calc(var(--aura)*2);display:flex;align-items:center;gap:calc(var(--aura)*1);}
+.cf-quote-avatar{width:40px;height:40px;border-radius:9999px;background:var(--accent-a4);overflow:hidden;flex-shrink:0;}
+.cf-quote-name{font-size:14px;font-weight:400;}
+.cf-quote-title{font-size:13px;color:var(--ink-muted);}
+.cf-stat-block{display:flex;flex-direction:column;gap:calc(var(--aura)*1);}
+.cf-stat-num{font-size:64px;font-weight:400;line-height:1;letter-spacing:-.03em;color:var(--ink);}
+.cf-stat-label{font-size:14px;color:var(--ink-muted);}
+.cf-stat-footnote{font-size:12px;color:var(--ink-muted);margin-top:4px;}
+
+.cf-marquee-wrap{margin-top:calc(var(--aura)*4);padding-top:calc(var(--aura)*2.5);border-top:1px solid var(--rule);position:relative;overflow:hidden;}
+.cf-marquee-ctrl{position:absolute;right:0;top:calc(var(--aura)*2.5);z-index:2;padding:0 calc(var(--aura)*1);}
+.cf-marquee-ctrl button{width:36px;height:36px;border-radius:9999px;background:var(--ink);color:var(--canvas);border:0;display:flex;align-items:center;justify-content:center;font-size:12px;}
+.cf-marquee-ctrl button:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.cf-marquee-track{display:flex;gap:calc(var(--aura)*4);white-space:nowrap;width:max-content;}
+html.motion .cf-marquee-track.running{animation:marqueeScroll 18s linear infinite;}
+@keyframes marqueeScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.cf-marquee-item{font-size:clamp(28px,4vw,52px);font-weight:300;color:var(--ink-muted);font-family:var(--aura-font-stack);padding:calc(var(--aura)*.5) 0;}
+
+.cf-closing{padding:calc(var(--aura)*5) 0;border-top:1px solid var(--rule);}
+.cf-closing-inner{text-align:center;}
+.cf-closing h2{font-size:clamp(22px,3vw,40px);font-weight:400;line-height:1.1;margin-bottom:calc(var(--aura)*3);}
+.cf-closing-btn{display:flex;align-items:center;justify-content:center;width:100%;background:var(--ink);color:var(--canvas);border:0;border-radius:16px;height:calc(var(--aura)*6.5);font-size:clamp(18px,2.4vw,28px);font-weight:400;font-family:inherit;cursor:pointer;transition:opacity .15s;}
+.cf-closing-btn:hover{opacity:.85;}
+.cf-closing-btn:focus-visible{outline:2px solid var(--focus);outline-offset:3px;}
+
+.cf-stats-band{padding:var(--cf-section-pad) 0;border-top:1px solid var(--rule);}
+.cf-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:calc(var(--aura)*2);}
+@media(max-width:767px){.cf-stats-grid{grid-template-columns:repeat(2,1fr);}}
+.cf-stat-item{display:flex;flex-direction:column;gap:4px;}
+.cf-stat-val{font-size:40px;font-weight:400;line-height:1;letter-spacing:-.025em;}
+.cf-stat-lbl{font-size:13px;color:var(--ink-muted);}
+
+.cf-table-section{padding:var(--cf-section-pad) 0;border-top:1px solid var(--rule);}
+.cf-table-section h2{font-size:clamp(20px,2.4vw,32px);font-weight:400;margin-bottom:calc(var(--aura)*2);}
+.cf-table-wrap{overflow-x:auto;border:1px solid var(--rule);border-radius:8px;}
+.cf-table{width:100%;border-collapse:collapse;font-size:14px;}
+.cf-table th{text-align:left;padding:calc(var(--aura)*1) calc(var(--aura)*1.5);font-weight:400;font-family:var(--aura-font-label);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted);border-bottom:1px solid var(--rule);}
+.cf-table td{padding:calc(var(--aura)*1) calc(var(--aura)*1.5);border-bottom:1px solid var(--rule);color:var(--ink);}
+.cf-table tr:last-child td{border-bottom:0;}
+.cf-check-yes::before{content:"✓";color:var(--ink);}
+.cf-check-no::before{content:"–";color:var(--ink-muted);}
+
+.cf-form-section{padding:var(--cf-section-pad) 0;border-top:1px solid var(--rule);}
+.cf-form-section h2{font-size:clamp(20px,2.4vw,32px);font-weight:400;margin-bottom:calc(var(--aura)*2);}
+.cf-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--aura)*1.5);}
+@media(max-width:600px){.cf-form-grid{grid-template-columns:1fr;}}
+.cf-form-field{display:flex;flex-direction:column;gap:calc(var(--aura)*.5);}
+.cf-form-field label{font-size:13px;color:var(--ink-muted);font-family:var(--aura-font-label);letter-spacing:.04em;}
+.cf-form-col-span{grid-column:1/-1;}
+.cf-form-submit{margin-top:calc(var(--aura)*1);}
+.cf-form-notice{font-size:13px;color:var(--ink-muted);margin-top:calc(var(--aura)*1);}
+.cf-form-live{font-size:14px;color:var(--ink);min-height:22px;}
+
+.cf-pricing-section{padding:var(--cf-section-pad) 0;border-top:1px solid var(--rule);}
+.cf-pricing-section h2{font-size:clamp(20px,2.4vw,32px);font-weight:400;margin-bottom:calc(var(--aura)*2);}
+.cf-pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--aura)*2);}
+@media(max-width:767px){.cf-pricing-grid{grid-template-columns:1fr;}}
+.cf-plan{border:1px solid var(--rule);border-radius:8px;padding:calc(var(--aura)*2.5);display:flex;flex-direction:column;gap:calc(var(--aura)*1.5);}
+.cf-plan.featured{border-color:var(--ink);border-width:2px;}
+.cf-plan-name{font-size:14px;font-family:var(--aura-font-label);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted);}
+.cf-plan-price{font-size:36px;font-weight:400;line-height:1;letter-spacing:-.02em;}
+.cf-plan-price span{font-size:14px;color:var(--ink-muted);font-weight:400;}
+.cf-plan-desc{font-size:14px;color:var(--ink-muted);line-height:1.5;}
+.cf-plan-features{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px;}
+.cf-plan-features li{font-size:14px;display:flex;align-items:flex-start;gap:8px;}
+.cf-plan-features li::before{content:"✓";flex-shrink:0;color:var(--ink);}
+.cf-plan-cta{margin-top:auto;}
+
+.cf-faq-section{padding:var(--cf-section-pad) 0;border-top:1px solid var(--rule);}
+.cf-faq-section h2{font-size:clamp(20px,2.4vw,32px);font-weight:400;margin-bottom:calc(var(--aura)*2);}
+.cf-accordion{border-top:1px solid var(--rule);}
+.cf-accordion-item{}
+.cf-accordion-btn{width:100%;display:flex;align-items:center;justify-content:space-between;padding:calc(var(--aura)*1.5) 0;background:transparent;border:0;border-bottom:1px solid var(--rule);font-size:16px;font-family:inherit;color:var(--ink);text-align:left;gap:calc(var(--aura)*2);}
+.cf-accordion-btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.cf-accordion-chev{flex-shrink:0;width:18px;height:18px;fill:var(--ink-muted);transition:transform .2s;}
+.cf-accordion-btn[aria-expanded=true] .cf-accordion-chev{transform:rotate(180deg);}
+.cf-accordion-panel{font-size:15px;line-height:1.6;color:var(--ink-muted);max-height:0;overflow:hidden;transition:max-height .25s ease,padding .2s ease;}
+.cf-accordion-panel.open{max-height:300px;padding-bottom:calc(var(--aura)*1.5);}
+
+.cf-carousel-section{padding:var(--cf-section-pad) 0;border-top:1px solid var(--rule);}
+.cf-carousel-section h2{font-size:clamp(20px,2.4vw,32px);font-weight:400;margin-bottom:calc(var(--aura)*.5);}
+.cf-carousel-section p{font-size:16px;color:var(--ink-muted);margin-bottom:calc(var(--aura)*2);}
+.cf-carousel-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:calc(var(--aura)*1.5);}
+.cf-carousel-counter{font-family:var(--aura-font-label);font-size:12px;color:var(--ink-muted);}
+.cf-carousel-nav{display:flex;gap:calc(var(--aura)*.75);}
+.cf-carousel-nav button{width:36px;height:36px;border-radius:9999px;border:1px solid var(--rule);background:var(--canvas);color:var(--ink);display:flex;align-items:center;justify-content:center;font-size:16px;}
+.cf-carousel-nav button:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.cf-carousel-scroll{overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;scroll-behavior:smooth;}
+.cf-carousel-scroll::-webkit-scrollbar{display:none;}
+.cf-carousel-track{display:flex;gap:calc(var(--aura)*2);}
+.cf-carousel-card{width:260px;flex-shrink:0;scroll-snap-align:start;border:1px solid var(--rule);border-radius:8px;overflow:hidden;}
+.cf-carousel-art{height:170px;}
+.cf-carousel-info{padding:calc(var(--aura)*1.5);}
+.cf-carousel-info h4{font-size:15px;font-weight:400;margin-bottom:4px;}
+.cf-carousel-info p{font-size:13px;color:var(--ink-muted);}
+
+.cf-footer{background:var(--footer-bg);color:var(--footer-ink);padding:calc(var(--aura)*5) 0 calc(var(--aura)*3);}
+.cf-footer-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:calc(var(--aura)*3);margin-bottom:calc(var(--aura)*4);}
+@media(max-width:900px){.cf-footer-top{grid-template-columns:1fr 1fr;}}
+@media(max-width:500px){.cf-footer-top{grid-template-columns:1fr;}}
+.cf-footer-brand{display:flex;flex-direction:column;gap:calc(var(--aura)*1.5);}
+.cf-footer-logo{display:flex;align-items:center;gap:8px;font-size:16px;}
+.cf-footer-logo-sq{width:28px;height:28px;background:var(--footer-ink);border-radius:4px;display:flex;align-items:center;justify-content:center;}
+.cf-footer-logo-sq svg{width:16px;height:16px;fill:var(--footer-bg);}
+.cf-footer-tagline{font-size:14px;color:var(--footer-muted);line-height:1.5;}
+.cf-footer-socials{display:flex;gap:calc(var(--aura)*1);}
+.cf-footer-soc{width:34px;height:34px;border-radius:9999px;border:1px solid color-mix(in srgb,var(--footer-ink) 30%,transparent);display:flex;align-items:center;justify-content:center;color:var(--footer-ink);font-size:14px;transition:border-color .15s;}
+.cf-footer-soc:hover{border-color:var(--footer-ink);}
+.cf-footer-soc:focus-visible{outline:2px solid var(--footer-ink);outline-offset:2px;}
+.cf-footer-col-head{font-family:var(--aura-font-label);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--footer-muted);margin-bottom:calc(var(--aura)*1);}
+.cf-footer-col ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:calc(var(--aura)*.75);}
+.cf-footer-col ul li a{font-size:14px;color:var(--footer-muted);transition:color .12s;}
+.cf-footer-col ul li a:hover{color:var(--footer-ink);}
+.cf-footer-col ul li a:focus-visible{outline:2px solid var(--footer-ink);outline-offset:2px;}
+.cf-footer-bottom{border-top:1px solid color-mix(in srgb,var(--footer-ink) 15%,transparent);padding-top:calc(var(--aura)*2);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:calc(var(--aura)*1);}
+.cf-footer-legal{font-size:13px;color:var(--footer-muted);}
+.cf-footer-lang{display:flex;align-items:center;gap:6px;}
+.cf-footer-lang select{background:transparent;border:1px solid color-mix(in srgb,var(--footer-ink) 30%,transparent);color:var(--footer-muted);border-radius:6px;padding:4px 28px 4px 10px;font-size:13px;font-family:inherit;height:32px;appearance:none;-webkit-appearance:none;cursor:pointer;}
+.cf-footer-lang select:focus{outline:2px solid var(--footer-ink);outline-offset:2px;}
+.cf-footer-lang select option{background:var(--footer-bg);color:var(--footer-ink);}
+.cf-footer-lang-wrap{position:relative;display:inline-block;}
+.cf-footer-lang-wrap::after{content:"";position:absolute;right:9px;top:50%;transform:translateY(-50%);border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid var(--footer-muted);pointer-events:none;}
+
+.cf-mobile-panel{display:none;position:fixed;inset:0;z-index:300;background:var(--canvas);overflow-y:auto;flex-direction:column;}
+.cf-mobile-panel.open{display:flex;}
+.cf-mobile-panel-header{display:flex;align-items:center;justify-content:space-between;height:calc(var(--aura)*4);padding:0 calc(var(--aura)*1.5);border-bottom:1px solid var(--rule);flex-shrink:0;}
+.cf-mobile-panel-close{background:transparent;border:0;color:var(--ink);padding:4px;display:flex;align-items:center;justify-content:center;border-radius:4px;}
+.cf-mobile-panel-close:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.cf-mobile-panel-body{flex:1;padding:calc(var(--aura)*1.5);}
+.cf-mobile-acc-btn{width:100%;display:flex;align-items:center;justify-content:space-between;background:transparent;border:0;border-bottom:1px solid var(--rule);padding:calc(var(--aura)*1.5) 0;font-size:16px;font-family:inherit;color:var(--ink);text-align:left;cursor:pointer;}
+.cf-mobile-acc-btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.cf-mobile-acc-chev{width:16px;height:16px;fill:none;stroke:var(--ink-muted);stroke-width:1.5;flex-shrink:0;transition:transform .18s;}
+.cf-mobile-acc-btn[aria-expanded=true] .cf-mobile-acc-chev{transform:rotate(180deg);}
+.cf-mobile-acc-panel{max-height:0;overflow:hidden;transition:max-height .22s ease;}
+.cf-mobile-acc-panel.open{max-height:400px;}
+.cf-mobile-acc-links{display:flex;flex-direction:column;gap:0;padding:calc(var(--aura)*.5) 0 calc(var(--aura)*1);}
+.cf-mobile-acc-links a{font-size:15px;color:var(--ink);padding:calc(var(--aura)*.75) 0;border-bottom:1px solid var(--rule);display:block;}
+.cf-mobile-acc-links a:last-child{border-bottom:0;}
+.cf-mobile-acc-links a:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.cf-mobile-plain-links{display:flex;flex-direction:column;border-bottom:1px solid var(--rule);}
+.cf-mobile-plain-links a{font-size:16px;color:var(--ink);padding:calc(var(--aura)*1.5) 0;border-bottom:1px solid var(--rule);display:block;}
+.cf-mobile-plain-links a:last-child{border-bottom:0;}
+.cf-mobile-plain-links a:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.cf-mobile-cta{margin-top:calc(var(--aura)*2);display:flex;flex-direction:column;gap:calc(var(--aura)*1);}
+@media(prefers-reduced-motion:reduce){
+  .cf *,.cf *::before,.cf *::after{transition:none!important;animation:none!important;}
+}
+@media(forced-colors:active){
+  .cf-btn-fill,.cf-btn-ghost,.cf-closing-btn{border:2px solid ButtonBorder;background:ButtonFace;color:ButtonText;}
+  .cf :focus-visible{outline:2px solid Highlight;}
+}
+</style>
+<body class="cf">
+<a href="#main" class="cf-skip">Skip to content</a>
+
+<nav class="cf-nav" aria-label="Main navigation">
+  <div class="cf-nav-inner">
+    <a href="#" class="cf-logo" aria-label="Copperfern home">
+      <span class="cf-logo-sq" aria-hidden="true">
+        <svg viewBox="0 0 16 16"><path d="M4 2h3v3H4zM9 2h3v3H9zM4 7h3v3H4zM9 7h3v3H9zM4 12h3v3H4zM9 12h3v3H9z"/></svg>
+      </span>
+      <span class="cf-logo-name">Copperfern</span>
+    </a>
+    <ul class="cf-nav-menu" role="list">
+      <li>
+        <button class="cf-nav-trig" aria-expanded="false" aria-controls="fly-studio" id="trig-studio">
+          Studio
+          <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4"/></svg>
+        </button>
+      </li>
+      <li>
+        <button class="cf-nav-trig" aria-expanded="false" aria-controls="fly-workshops" id="trig-workshops">
+          Workshops
+          <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4"/></svg>
+        </button>
+      </li>
+      <li>
+        <button class="cf-nav-trig" aria-expanded="false" aria-controls="fly-learn" id="trig-learn">
+          Learn
+          <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4"/></svg>
+        </button>
+      </li>
+      <li><a href="#" class="cf-nav-link">Plans</a></li>
+    </ul>
+    <div class="cf-nav-right">
+      <a href="#" class="cf-nav-link">Sign in</a>
+      <a href="#" class="cf-btn-fill" style="text-decoration:none;">Start a board</a>
+      <button class="cf-nav-mobile-btn" aria-label="Open menu" id="mobile-menu-btn">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="3" y1="6" x2="19" y2="6"/><line x1="3" y1="11" x2="19" y2="11"/><line x1="3" y1="16" x2="19" y2="16"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="cf-mobile-panel" id="mobile-panel" role="dialog" aria-modal="true" aria-label="Site navigation">
+  <div class="cf-mobile-panel-header">
+    <a href="#" class="cf-logo" aria-label="Copperfern home" tabindex="-1">
+      <span class="cf-logo-sq" aria-hidden="true">
+        <svg viewBox="0 0 16 16"><path d="M4 2h3v3H4zM9 2h3v3H9zM4 7h3v3H4zM9 7h3v3H9zM4 12h3v3H4zM9 12h3v3H9z"/></svg>
+      </span>
+      <span class="cf-logo-name">Copperfern</span>
+    </a>
+    <button class="cf-mobile-panel-close" id="mobile-panel-close" aria-label="Close menu">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="4" y1="4" x2="18" y2="18"/><line x1="18" y1="4" x2="4" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="cf-mobile-panel-body">
+    <div class="cf-mobile-acc-item">
+      <button class="cf-mobile-acc-btn" aria-expanded="false" aria-controls="macc-studio">
+        Studio
+        <svg class="cf-mobile-acc-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg>
+      </button>
+      <div class="cf-mobile-acc-panel" id="macc-studio">
+        <div class="cf-mobile-acc-links">
+          <a href="#">Shared planning boards</a>
+          <a href="#">Workshop scheduler</a>
+          <a href="#">Material tracker</a>
+          <a href="#">Real-time annotation</a>
+          <a href="#">Version history</a>
+          <a href="#">Guest access</a>
+        </div>
+      </div>
+    </div>
+    <div class="cf-mobile-acc-item">
+      <button class="cf-mobile-acc-btn" aria-expanded="false" aria-controls="macc-workshops">
+        Workshops
+        <svg class="cf-mobile-acc-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg>
+      </button>
+      <div class="cf-mobile-acc-panel" id="macc-workshops">
+        <div class="cf-mobile-acc-links">
+          <a href="#">Ceramics &amp; glaze</a>
+          <a href="#">Warp &amp; textile</a>
+          <a href="#">Printmaking</a>
+          <a href="#">Woodcraft</a>
+          <a href="#">All workshops</a>
+          <a href="#">Gift vouchers</a>
+        </div>
+      </div>
+    </div>
+    <div class="cf-mobile-acc-item">
+      <button class="cf-mobile-acc-btn" aria-expanded="false" aria-controls="macc-learn">
+        Learn
+        <svg class="cf-mobile-acc-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg>
+      </button>
+      <div class="cf-mobile-acc-panel" id="macc-learn">
+        <div class="cf-mobile-acc-links">
+          <a href="#">Getting started</a>
+          <a href="#">Planning a collection</a>
+          <a href="#">Handoff to makers</a>
+          <a href="#">Materials glossary</a>
+          <a href="#">Technique library</a>
+        </div>
+      </div>
+    </div>
+    <div class="cf-mobile-plain-links">
+      <a href="#">Plans</a>
+      <a href="#">Sign in</a>
+    </div>
+    <div class="cf-mobile-cta">
+      <a href="#" class="cf-btn-fill" style="text-decoration:none;width:100%;justify-content:center;">Start a board</a>
+    </div>
+  </div>
+</div>
+
+<div class="cf-flyout" id="fly-studio" role="region" aria-label="Studio menu">
+  <div class="cf-flyout-inner">
+    <div class="cf-flyout-item">
+      <div class="cf-flyout-head">Boards</div>
+      <a href="#">Shared planning boards</a>
+      <a href="#">Workshop scheduler</a>
+      <a href="#">Material tracker</a>
+    </div>
+    <div class="cf-flyout-item">
+      <div class="cf-flyout-head">Collaboration</div>
+      <a href="#">Real-time annotation</a>
+      <a href="#">Version history</a>
+      <a href="#">Guest access</a>
+    </div>
+    <div class="cf-flyout-item">
+      <div class="cf-flyout-head">Assets</div>
+      <a href="#">Pattern library</a>
+      <a href="#">Colour-way archive</a>
+      <a href="#">Supplier contacts</a>
+    </div>
+    <div class="cf-flyout-item">
+      <div class="cf-flyout-head">Integrations</div>
+      <a href="#">Export to production</a>
+      <a href="#">Inventory sync</a>
+      <a href="#">API access</a>
+    </div>
+  </div>
+</div>
+
+<div class="cf-flyout" id="fly-workshops" role="region" aria-label="Workshops menu">
+  <div class="cf-flyout-inner">
+    <div class="cf-flyout-item">
+      <div class="cf-flyout-head">By discipline</div>
+      <a href="#">Ceramics &amp; glaze</a>
+      <a href="#">Warp &amp; textile</a>
+      <a href="#">Printmaking</a>
+      <a href="#">Woodcraft</a>
+    </div>
+    <div class="cf-flyout-item">
+      <div class="cf-flyout-head">By level</div>
+      <a href="#">Beginner sessions</a>
+      <a href="#">Practitioner track</a>
+      <a href="#">Residency programme</a>
+    </div>
+    <div class="cf-flyout-item">
+      <div class="cf-flyout-head">Format</div>
+      <a href="#">Half-day intensives</a>
+      <a href="#">Multi-week series</a>
+      <a href="#">Open studio</a>
+    </div>
+    <div class="cf-flyout-item">
+      <div class="cf-flyout-head">Browse</div>
+      <a href="#">All workshops</a>
+      <a href="#">Upcoming dates</a>
+      <a href="#">Gift vouchers</a>
+    </div>
+  </div>
+</div>
+
+<div class="cf-flyout" id="fly-learn" role="region" aria-label="Learn menu">
+  <div class="cf-flyout-inner">
+    <div class="cf-flyout-item">
+      <div class="cf-flyout-head">Guides</div>
+      <a href="#">Getting started</a>
+      <a href="#">Planning a collection</a>
+      <a href="#">Handoff to makers</a>
+    </div>
+    <div class="cf-flyout-item">
+      <div class="cf-flyout-head">Reference</div>
+      <a href="#">Materials glossary</a>
+      <a href="#">Technique library</a>
+      <a href="#">Tool index</a>
+    </div>
+    <div class="cf-flyout-item">
+      <div class="cf-flyout-head">Community</div>
+      <a href="#">Member showcases</a>
+      <a href="#">Discussion forum</a>
+      <a href="#">Monthly brief</a>
+    </div>
+    <div class="cf-flyout-item">
+      <div class="cf-flyout-head">About</div>
+      <a href="#">Our story</a>
+      <a href="#">Studio ethics</a>
+      <a href="#">Press</a>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+<section class="cf-hero">
+  <div class="cf-wrap">
+    <div class="cf-hero-grid">
+      <div>
+        <h1>Sketch, plan and hand off craft collections together.</h1>
+      </div>
+      <div class="cf-hero-collage" aria-hidden="true">
+        <div class="cf-collage-stack">
+          <div class="cf-card-art float-a" style="width:160px;height:120px;top:20px;left:0;background:linear-gradient(135deg,var(--tile-lavender),var(--tile-magenta));">
+            <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="20" stroke="rgba(255,255,255,0.4)" stroke-width="2"/><circle cx="24" cy="24" r="10" fill="rgba(255,255,255,0.25)"/></svg>
+            </div>
+          </div>
+          <div class="cf-card-art float-b" style="width:140px;height:100px;top:60px;left:60px;background:var(--tile-cobalt);display:flex;align-items:center;justify-content:center;">
+            <svg width="60" height="40" viewBox="0 0 60 40" fill="none"><rect x="4" y="4" width="52" height="32" rx="3" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/><line x1="4" y1="14" x2="56" y2="14" stroke="rgba(255,255,255,0.3)" stroke-width="1"/><circle cx="12" cy="9" r="2" fill="rgba(255,255,255,0.6)"/><circle cx="20" cy="9" r="2" fill="rgba(255,255,255,0.4)"/></svg>
+          </div>
+          <div class="cf-card-art float-c" style="width:130px;height:110px;top:140px;left:30px;background:var(--tile-lime);display:flex;align-items:center;justify-content:center;">
+            <svg width="50" height="50" viewBox="0 0 50 50" fill="none"><path d="M10 40 Q25 10 40 40" stroke="rgba(0,0,0,0.4)" stroke-width="2" fill="none"/><path d="M10 40 Q25 20 40 40" stroke="rgba(0,0,0,0.25)" stroke-width="1.5" fill="none"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="cf-hero-cta">
+        <a href="#" class="cf-btn-fill" style="font-size:22px;padding:0 calc(var(--aura)*4);height:calc(var(--aura)*6);border-radius:16px;text-decoration:none;">Start a board</a>
+      </div>
+    </div>
+    <div style="margin-top:calc(var(--aura)*4);max-width:600px;">
+      <p style="font-size:18px;line-height:1.5;color:var(--ink);">Move at the pace of making. Makers and coordinators work in one shared board with live context — sketch new ideas, align on materials, and send to production together.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cf-statement">
+  <div class="cf-wrap">
+    <div class="cf-statement-grid">
+      <div class="cf-statement-left">
+        <div class="cf-label" style="color:rgba(255,255,255,.5);margin-bottom:calc(var(--aura)*1.5);">One workspace</div>
+        <h2>Everything your craft studio needs, in one place.</h2>
+        <p>From the first sketch to the final handoff, Copperfern keeps every detail — materials, timelines, notes — connected and visible to your whole team.</p>
+      </div>
+      <div class="cf-statement-right">
+        <div class="cf-art-panel" style="background:linear-gradient(145deg,var(--tile-coral),var(--tile-magenta));"></div>
+        <div class="cf-art-panel" style="background:var(--tile-moss);display:flex;align-items:center;justify-content:center;">
+          <svg width="60" height="60" viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="22" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-dasharray="4 3"/><circle cx="30" cy="30" r="10" fill="rgba(255,255,255,0.2)"/></svg>
+        </div>
+        <div class="cf-art-panel" style="background:var(--tile-cyan);display:flex;align-items:center;justify-content:center;">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none"><rect x="8" y="8" width="48" height="48" rx="4" stroke="rgba(0,0,0,0.3)" stroke-width="1.5" fill="rgba(255,255,255,0.15)"/><line x1="8" y1="24" x2="56" y2="24" stroke="rgba(0,0,0,0.2)" stroke-width="1"/><line x1="8" y1="40" x2="56" y2="40" stroke="rgba(0,0,0,0.2)" stroke-width="1"/></svg>
+        </div>
+        <div class="cf-art-panel" style="background:var(--tile-lavender);display:flex;align-items:center;justify-content:center;">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none"><path d="M8 48 L28 8 L48 48 Z" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" fill="rgba(255,255,255,0.1)"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cf-features">
+  <div class="cf-wrap">
+    <div class="cf-features-grid">
+      <div class="cf-feature">
+        <div class="cf-feature-art" style="background:color-mix(in srgb,var(--tile-cyan) 12%,var(--canvas));">
+          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+            <svg width="120" height="100" viewBox="0 0 120 100" fill="none">
+              <rect x="10" y="10" width="100" height="80" rx="6" stroke="var(--tile-cyan)" stroke-width="1.5" fill="color-mix(in srgb,var(--tile-cyan) 8%,transparent)"/>
+              <rect x="20" y="24" width="80" height="8" rx="2" fill="color-mix(in srgb,var(--tile-cyan) 30%,transparent)"/>
+              <rect x="20" y="38" width="60" height="8" rx="2" fill="color-mix(in srgb,var(--tile-cyan) 20%,transparent)"/>
+              <rect x="20" y="52" width="70" height="8" rx="2" fill="color-mix(in srgb,var(--tile-cyan) 20%,transparent)"/>
+              <rect x="20" y="66" width="40" height="8" rx="2" fill="color-mix(in srgb,var(--tile-cyan) 15%,transparent)"/>
+            </svg>
+          </div>
+        </div>
+        <h3>Live shared boards</h3>
+        <p>Sketch, comment, and annotate in real time. Every change is visible to collaborators the moment it lands — no refresh needed.</p>
+        <a href="#" class="cf-link-arrow">Explore boards <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4"/></svg></a>
+      </div>
+      <div class="cf-feature">
+        <div class="cf-feature-art" style="background:color-mix(in srgb,var(--tile-lavender) 10%,var(--canvas));">
+          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+            <svg width="120" height="100" viewBox="0 0 120 100" fill="none">
+              <circle cx="40" cy="50" r="22" stroke="var(--tile-lavender)" stroke-width="1.5" fill="color-mix(in srgb,var(--tile-lavender) 10%,transparent)"/>
+              <circle cx="80" cy="50" r="22" stroke="var(--tile-magenta)" stroke-width="1.5" fill="color-mix(in srgb,var(--tile-magenta) 10%,transparent)"/>
+              <path d="M58 32 Q62 50 58 68" fill="color-mix(in srgb,var(--tile-lavender) 20%,transparent)" stroke="none"/>
+            </svg>
+          </div>
+        </div>
+        <h3>Plan every detail, before anything ships</h3>
+        <p>Material decisions, supplier contacts, and production notes live beside your designs — so the whole team ships with the same understanding.</p>
+        <a href="#" class="cf-link-arrow">Explore tools <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cf-mosaic">
+  <div class="cf-wrap">
+    <h2>Nuanced tools for exacting craft.</h2>
+    <p class="cf-mosaic-sub">Adjust, annotate and refine until your collection is exactly right.</p>
+    <div class="cf-mosaic-row">
+      <span class="cf-mosaic-counter" id="mosaic-counter" aria-live="polite">1 of 6</span>
+      <div class="cf-mosaic-nav" role="group" aria-label="Mosaic navigation">
+        <button aria-label="Previous" id="mosaic-prev" onclick="mosaicNav(-1)">&#8592;</button>
+        <button aria-label="Next" id="mosaic-next" onclick="mosaicNav(1)">&#8594;</button>
+      </div>
+    </div>
+    <div class="cf-mosaic-scroll" id="mosaic-scroll" role="region" aria-label="Workshop preview tiles" tabindex="0">
+      <div class="cf-mosaic-track">
+        <div class="cf-mosaic-tile">
+          <div class="cf-mosaic-tile-art" style="background:linear-gradient(145deg,var(--tile-lavender),var(--tile-magenta));">
+            <button class="cf-mosaic-tile-play" aria-label="Play Glazed Surface preview"><svg viewBox="0 0 14 14"><path d="M4 2l9 5-9 5V2z"/></svg></button>
+          </div>
+          <div class="cf-mosaic-tile-info"><strong style="font-size:14px;font-weight:400;">Glazed Surface</strong><p>Ceramics · 3h session</p></div>
+        </div>
+        <div class="cf-mosaic-tile">
+          <div class="cf-mosaic-tile-art" style="background:var(--tile-cobalt);position:relative;">
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+              <svg width="80" height="80" viewBox="0 0 80 80" fill="none"><rect x="10" y="10" width="60" height="60" rx="4" stroke="rgba(255,255,255,0.3)" stroke-width="1"/><line x1="10" y1="30" x2="70" y2="30" stroke="rgba(255,255,255,0.2)"/><line x1="10" y1="50" x2="70" y2="50" stroke="rgba(255,255,255,0.2)"/><line x1="30" y1="10" x2="30" y2="70" stroke="rgba(255,255,255,0.2)"/><line x1="50" y1="10" x2="50" y2="70" stroke="rgba(255,255,255,0.2)"/></svg>
+            </div>
+            <button class="cf-mosaic-tile-play" aria-label="Play Warp Grid preview"><svg viewBox="0 0 14 14"><path d="M4 2l9 5-9 5V2z"/></svg></button>
+          </div>
+          <div class="cf-mosaic-tile-info"><strong style="font-size:14px;font-weight:400;">Warp Grid</strong><p>Warp textile · 2h session</p></div>
+        </div>
+        <div class="cf-mosaic-tile">
+          <div class="cf-mosaic-tile-art" style="background:var(--tile-lime);">
+            <button class="cf-mosaic-tile-play" aria-label="Play Block Print preview"><svg viewBox="0 0 14 14"><path d="M4 2l9 5-9 5V2z"/></svg></button>
+          </div>
+          <div class="cf-mosaic-tile-info"><strong style="font-size:14px;font-weight:400;">Block Print</strong><p>Printmaking · 4h session</p></div>
+        </div>
+        <div class="cf-mosaic-tile">
+          <div class="cf-mosaic-tile-art" style="background:var(--tile-coral);">
+            <button class="cf-mosaic-tile-play" aria-label="Play Wood Stripe preview"><svg viewBox="0 0 14 14"><path d="M4 2l9 5-9 5V2z"/></svg></button>
+          </div>
+          <div class="cf-mosaic-tile-info"><strong style="font-size:14px;font-weight:400;">Wood Stripe</strong><p>Woodcraft · Half-day</p></div>
+        </div>
+        <div class="cf-mosaic-tile">
+          <div class="cf-mosaic-tile-art" style="background:var(--tile-moss);">
+            <button class="cf-mosaic-tile-play" aria-label="Play Node Sketch preview"><svg viewBox="0 0 14 14"><path d="M4 2l9 5-9 5V2z"/></svg></button>
+          </div>
+          <div class="cf-mosaic-tile-info"><strong style="font-size:14px;font-weight:400;">Node Sketch</strong><p>Mixed media · 2h session</p></div>
+        </div>
+        <div class="cf-mosaic-tile">
+          <div class="cf-mosaic-tile-art" style="background:var(--tile-cyan);">
+            <button class="cf-mosaic-tile-play" aria-label="Play Dye Bath preview"><svg viewBox="0 0 14 14"><path d="M4 2l9 5-9 5V2z"/></svg></button>
+          </div>
+          <div class="cf-mosaic-tile-info"><strong style="font-size:14px;font-weight:400;">Dye Bath</strong><p>Textile · Full-day session</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cf-context">
+  <div class="cf-wrap">
+    <div class="cf-context-top">
+      <div class="cf-label" style="margin-bottom:calc(var(--aura)*1);">Connected context</div>
+      <h2>Bring your whole studio into one board.</h2>
+      <p>Your materials, codebase, and collaborators stay connected so what you design is what gets made.</p>
+    </div>
+    <div class="cf-context-grid">
+      <div class="cf-app-window">
+        <div class="cf-app-topbar">
+          <div class="cf-app-dot"></div>
+          <div class="cf-app-dot"></div>
+          <div class="cf-app-dot"></div>
+          <span style="font-size:11px;color:var(--ink-muted);margin-left:8px;font-family:var(--aura-font-label);">Copperfern · Spring Ceramics</span>
+        </div>
+        <div class="cf-app-body">
+          <div class="cf-app-sidebar">
+            <div class="cf-app-sidebar-item active">&#9632; Planning board</div>
+            <div class="cf-app-sidebar-item">&#9632; Materials</div>
+            <div class="cf-app-sidebar-item">&#9632; Workshops</div>
+            <div class="cf-app-sidebar-item">&#9632; Handoff</div>
+          </div>
+          <div class="cf-app-main-pane">
+            <div class="cf-app-row"><div class="cf-app-check done"></div><span>Brief confirmed</span></div>
+            <div class="cf-app-row"><div class="cf-app-check done"></div><span>Materials sourced</span></div>
+            <div class="cf-app-row"><div class="cf-app-check done"></div><span>Prototype reviewed</span></div>
+            <div class="cf-app-row"><div class="cf-app-check"></div><span>Production handoff</span></div>
+            <div class="cf-app-row"><div class="cf-app-check"></div><span>Photography brief</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="cf-context-cyan">
+        <div class="cf-label" style="margin-bottom:calc(var(--aura)*.75);">Why it works</div>
+        <h3>One board, every discipline</h3>
+        <p>Ceramicists, textile workers, printmakers, and coordinators share a single planning board. Decisions made in the morning are visible in the studio by afternoon — no email chains, no version drift.</p>
+        <a href="#" class="cf-link-arrow" style="margin-top:calc(var(--aura)*1.5);display:inline-flex;">Explore the studio <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cf-proof">
+  <div class="cf-wrap">
+    <div class="cf-label" style="margin-bottom:calc(var(--aura)*2);">Makers who use Copperfern</div>
+    <div class="cf-proof-grid">
+      <div>
+        <blockquote class="cf-quote">"Everyone in the studio — from the lead maker to the logistics coordinator — can see what is happening and why. That shared context is what keeps our collections coherent."</blockquote>
+        <div class="cf-quote-attr">
+          <div class="cf-quote-avatar" aria-hidden="true" style="background:var(--tile-lavender);"></div>
+          <div>
+            <div class="cf-quote-name">Marta Osei</div>
+            <div class="cf-quote-title">Studio Director, Ashford Ceramics</div>
+          </div>
+        </div>
+      </div>
+      <div class="cf-stat-block">
+        <div class="cf-stat-num">94<span style="font-size:36px;">%</span></div>
+        <div class="cf-stat-label" style="font-size:16px;">of studios say handoff time dropped in the first month.</div>
+        <div class="cf-stat-footnote">Sample stat · fictional survey of 240 workshops, 2026.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-bottom:var(--cf-section-pad);border-top:1px solid var(--rule);">
+  <div class="cf-wrap">
+    <div class="cf-marquee-wrap" aria-label="Partner studios" role="region">
+      <div class="cf-marquee-ctrl">
+        <button id="marquee-btn" aria-label="Pause partner studio scroll" onclick="toggleMarquee()">
+          <svg id="marquee-icon-pause" width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><rect x="2" y="2" width="4" height="10"/><rect x="8" y="2" width="4" height="10"/></svg>
+          <svg id="marquee-icon-play" width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true" style="display:none;"><path d="M3 2l9 5-9 5V2z"/></svg>
+        </button>
+      </div>
+      <div class="cf-marquee-track" id="marquee-track" aria-hidden="true">
+        <span class="cf-marquee-item">Ashford Ceramics</span>
+        <span class="cf-marquee-item">·</span>
+        <span class="cf-marquee-item">Fernhill Textiles</span>
+        <span class="cf-marquee-item">·</span>
+        <span class="cf-marquee-item">Saltmere Press</span>
+        <span class="cf-marquee-item">·</span>
+        <span class="cf-marquee-item">Greenbrook Studio</span>
+        <span class="cf-marquee-item">·</span>
+        <span class="cf-marquee-item">Tidemark Craft</span>
+        <span class="cf-marquee-item">·</span>
+        <span class="cf-marquee-item">Ashford Ceramics</span>
+        <span class="cf-marquee-item">·</span>
+        <span class="cf-marquee-item">Fernhill Textiles</span>
+        <span class="cf-marquee-item">·</span>
+        <span class="cf-marquee-item">Saltmere Press</span>
+        <span class="cf-marquee-item">·</span>
+        <span class="cf-marquee-item">Greenbrook Studio</span>
+        <span class="cf-marquee-item">·</span>
+        <span class="cf-marquee-item">Tidemark Craft</span>
+        <span class="cf-marquee-item">·</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cf-closing">
+  <div class="cf-wrap">
+    <div class="cf-closing-inner">
+      <h2>Your next collection starts here.</h2>
+      <button class="cf-closing-btn">Open your first board</button>
+    </div>
+  </div>
+</section>
+
+<section class="cf-stats-band">
+  <div class="cf-wrap">
+    <div class="cf-stats-grid">
+      <div class="cf-stat-item">
+        <div class="cf-stat-val">12k+</div>
+        <div class="cf-stat-lbl">Active makers</div>
+      </div>
+      <div class="cf-stat-item">
+        <div class="cf-stat-val">3.4m</div>
+        <div class="cf-stat-lbl">Boards created</div>
+      </div>
+      <div class="cf-stat-item">
+        <div class="cf-stat-val">98%</div>
+        <div class="cf-stat-lbl">Uptime over 12 months</div>
+      </div>
+      <div class="cf-stat-item">
+        <div class="cf-stat-val">46</div>
+        <div class="cf-stat-lbl">Countries represented</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cf-table-section">
+  <div class="cf-wrap">
+    <h2>Plan comparison</h2>
+    <div class="cf-table-wrap" role="region" aria-label="Plan comparison table" tabindex="0">
+      <table class="cf-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Maker</th>
+            <th>Studio</th>
+            <th>Collective</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Shared boards</td><td>3</td><td>Unlimited</td><td>Unlimited</td></tr>
+          <tr><td>Collaborators per board</td><td>2</td><td>15</td><td>Unlimited</td></tr>
+          <tr><td>Asset storage</td><td>2 GB</td><td>50 GB</td><td>500 GB</td></tr>
+          <tr><td>Version history</td><td>7 days</td><td>90 days</td><td>Unlimited</td></tr>
+          <tr><td>Guest access</td><td class="cf-check-no"></td><td class="cf-check-yes"></td><td class="cf-check-yes"></td></tr>
+          <tr><td>Production handoff export</td><td class="cf-check-no"></td><td class="cf-check-yes"></td><td class="cf-check-yes"></td></tr>
+          <tr><td>API access</td><td class="cf-check-no"></td><td class="cf-check-no"></td><td class="cf-check-yes"></td></tr>
+          <tr><td>Priority support</td><td class="cf-check-no"></td><td class="cf-check-yes"></td><td class="cf-check-yes"></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="cf-form-section">
+  <div class="cf-wrap">
+    <h2>Book a studio walkthrough</h2>
+    <form id="cf-form" novalidate style="max-width:680px;">
+      <div class="cf-form-grid">
+        <div class="cf-form-field">
+          <label for="cf-name">Your name</label>
+          <input type="text" id="cf-name" name="name" autocomplete="name" placeholder="Marta Osei" required/>
+        </div>
+        <div class="cf-form-field">
+          <label for="cf-email">Email address</label>
+          <input type="email" id="cf-email" name="email" autocomplete="email" placeholder="marta@studio.example" required/>
+        </div>
+        <div class="cf-form-field cf-form-col-span">
+          <label for="cf-workshop">Workshop type</label>
+          <div class="cf-sel-wrap">
+            <select id="cf-workshop" name="workshop" required>
+              <option value="">Select a discipline…</option>
+              <option value="ceramics">Ceramics &amp; glaze</option>
+              <option value="warp-textile">Warp &amp; textile</option>
+              <option value="print">Printmaking</option>
+              <option value="wood">Woodcraft</option>
+              <option value="mixed">Mixed media</option>
+            </select>
+          </div>
+        </div>
+        <div class="cf-form-field cf-form-col-span">
+          <label for="cf-message">Tell us about your studio</label>
+          <textarea id="cf-message" name="message" placeholder="What you make, how many people, any questions…"></textarea>
+        </div>
+      </div>
+      <div class="cf-form-submit">
+        <button type="submit" class="cf-btn-fill">Request walkthrough</button>
+      </div>
+      <div class="cf-form-live" role="status" aria-live="polite" id="cf-form-status"></div>
+    </form>
+  </div>
+</section>
+
+<section class="cf-pricing-section">
+  <div class="cf-wrap">
+    <h2>Simple, honest pricing</h2>
+    <div class="cf-pricing-grid">
+      <div class="cf-plan">
+        <div class="cf-plan-name">Maker</div>
+        <div class="cf-plan-price">Free<span> forever</span></div>
+        <div class="cf-plan-desc">For individuals and small side-projects. Up and running in minutes.</div>
+        <ul class="cf-plan-features">
+          <li>3 shared boards</li>
+          <li>2 collaborators</li>
+          <li>2 GB storage</li>
+          <li>7-day version history</li>
+        </ul>
+        <div class="cf-plan-cta"><a href="#" class="cf-btn-ghost" style="width:100%;justify-content:center;text-decoration:none;">Open a free board</a></div>
+      </div>
+      <div class="cf-plan featured">
+        <div class="cf-plan-name">Studio</div>
+        <div class="cf-plan-price">£28<span> / month</span></div>
+        <div class="cf-plan-desc">For growing studios that need space to collaborate and hand off work professionally.</div>
+        <ul class="cf-plan-features">
+          <li>Unlimited boards</li>
+          <li>15 collaborators</li>
+          <li>50 GB storage</li>
+          <li>90-day version history</li>
+          <li>Guest access</li>
+          <li>Production handoff export</li>
+        </ul>
+        <div class="cf-plan-cta"><a href="#" class="cf-btn-fill" style="width:100%;justify-content:center;text-decoration:none;">Start free trial</a></div>
+      </div>
+      <div class="cf-plan">
+        <div class="cf-plan-name">Collective</div>
+        <div class="cf-plan-price">£90<span> / month</span></div>
+        <div class="cf-plan-desc">For collectives and guilds coordinating across multiple studios and disciplines.</div>
+        <ul class="cf-plan-features">
+          <li>Everything in Studio</li>
+          <li>Unlimited collaborators</li>
+          <li>500 GB storage</li>
+          <li>Unlimited history</li>
+          <li>API access</li>
+          <li>Priority support</li>
+        </ul>
+        <div class="cf-plan-cta"><a href="#" class="cf-btn-ghost" style="width:100%;justify-content:center;text-decoration:none;">Contact us</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cf-faq-section">
+  <div class="cf-wrap">
+    <h2>Frequently asked</h2>
+    <div class="cf-accordion" id="cf-faq">
+      <div class="cf-accordion-item">
+        <button class="cf-accordion-btn" aria-expanded="false" aria-controls="faq-p1" id="faq-b1">
+          <span>Can I try Copperfern before committing to a plan?</span>
+          <svg class="cf-accordion-chev" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 6l6 6 6-6" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+        </button>
+        <div class="cf-accordion-panel" id="faq-p1" role="region" aria-labelledby="faq-b1">
+          Yes — the Maker plan is free forever and needs no payment details. The Studio plan also comes with a 14-day free trial so you can explore every feature with your team before deciding.
+        </div>
+      </div>
+      <div class="cf-accordion-item">
+        <button class="cf-accordion-btn" aria-expanded="false" aria-controls="faq-p2" id="faq-b2">
+          <span>How many people can collaborate on a single board?</span>
+          <svg class="cf-accordion-chev" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 6l6 6 6-6" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+        </button>
+        <div class="cf-accordion-panel" id="faq-p2" role="region" aria-labelledby="faq-b2">
+          The Maker plan supports 2 collaborators per board. Studio supports 15, and Collective is fully unlimited. Guest links work on Studio and above and do not count towards your seat total.
+        </div>
+      </div>
+      <div class="cf-accordion-item">
+        <button class="cf-accordion-btn" aria-expanded="false" aria-controls="faq-p3" id="faq-b3">
+          <span>What does the production handoff export include?</span>
+          <svg class="cf-accordion-chev" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 6l6 6 6-6" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+        </button>
+        <div class="cf-accordion-panel" id="faq-p3" role="region" aria-labelledby="faq-b3">
+          The handoff pack bundles your annotated board, the materials specification sheet, supplier contacts, and a checklist PDF — everything the maker or manufacturer needs in one structured download.
+        </div>
+      </div>
+      <div class="cf-accordion-item">
+        <button class="cf-accordion-btn" aria-expanded="false" aria-controls="faq-p4" id="faq-b4">
+          <span>Is my data secure and stored in Europe?</span>
+          <svg class="cf-accordion-chev" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 6l6 6 6-6" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+        </button>
+        <div class="cf-accordion-panel" id="faq-p4" role="region" aria-labelledby="faq-b4">
+          All data is encrypted at rest and in transit and hosted in EU-based data centres. Copperfern is GDPR-compliant and you can export or delete your data at any time from your account settings.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cf-carousel-section">
+  <div class="cf-wrap">
+    <div class="cf-label" style="margin-bottom:calc(var(--aura)*1);">Templates</div>
+    <h2>Ready-made boards for every discipline.</h2>
+    <p>Start from a tested layout, then shape it around your practice.</p>
+    <div class="cf-carousel-row">
+      <span class="cf-carousel-counter" id="carousel-counter" aria-live="polite">1 of 6</span>
+      <div class="cf-carousel-nav" role="group" aria-label="Template carousel navigation">
+        <button aria-label="Previous template" id="car-prev" onclick="carNav(-1)">&#8592;</button>
+        <button aria-label="Next template" id="car-next" onclick="carNav(1)">&#8594;</button>
+      </div>
+    </div>
+    <div class="cf-carousel-scroll" id="carousel-scroll" role="region" aria-label="Community templates">
+      <div class="cf-carousel-track">
+        <div class="cf-carousel-card">
+          <div class="cf-carousel-art" style="background:linear-gradient(135deg,var(--tile-lavender) 0%,var(--tile-magenta) 100%);"></div>
+          <div class="cf-carousel-info"><h4>Spring Ceramics Board</h4><p>Ceramic collections planning template</p></div>
+        </div>
+        <div class="cf-carousel-card">
+          <div class="cf-carousel-art" style="background:var(--tile-cobalt);"></div>
+          <div class="cf-carousel-info"><h4>Textile Handoff Kit</h4><p>Warp &amp; dye supplier tracker</p></div>
+        </div>
+        <div class="cf-carousel-card">
+          <div class="cf-carousel-art" style="background:var(--tile-lime);"></div>
+          <div class="cf-carousel-info"><h4>Print Run Planner</h4><p>Edition tracking for printmakers</p></div>
+        </div>
+        <div class="cf-carousel-card">
+          <div class="cf-carousel-art" style="background:var(--tile-coral);"></div>
+          <div class="cf-carousel-info"><h4>Open Studio Schedule</h4><p>Multi-week session planner</p></div>
+        </div>
+        <div class="cf-carousel-card">
+          <div class="cf-carousel-art" style="background:var(--tile-moss);"></div>
+          <div class="cf-carousel-info"><h4>Residency Brief</h4><p>Proposal &amp; material specification</p></div>
+        </div>
+        <div class="cf-carousel-card">
+          <div class="cf-carousel-art" style="background:var(--tile-cyan);"></div>
+          <div class="cf-carousel-info"><h4>Commission Tracker</h4><p>End-to-end commission workflow</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="cf-footer" role="contentinfo">
+  <div class="cf-wrap">
+    <div class="cf-footer-top">
+      <div class="cf-footer-brand">
+        <div class="cf-footer-logo">
+          <span class="cf-footer-logo-sq" aria-hidden="true">
+            <svg viewBox="0 0 16 16" fill="var(--footer-bg)"><path d="M4 2h3v3H4zM9 2h3v3H9zM4 7h3v3H4zM9 7h3v3H9zM4 12h3v3H4zM9 12h3v3H9z"/></svg>
+          </span>
+          <span>Copperfern</span>
+        </div>
+        <p class="cf-footer-tagline">The shared planning studio for craft collectives.</p>
+        <div class="cf-footer-socials" aria-label="Sample channels">
+          <a href="#" class="cf-footer-soc" aria-label="Sample channel 1">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="8" cy="8" r="4"/></svg>
+          </a>
+          <a href="#" class="cf-footer-soc" aria-label="Sample channel 2">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 3l9 5-9 5V3z"/></svg>
+          </a>
+          <a href="#" class="cf-footer-soc" aria-label="Sample channel 3">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="10" height="10"/></svg>
+          </a>
+          <a href="#" class="cf-footer-soc" aria-label="Sample channel 4">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 8 Q4 4 8 8 Q12 12 15 8"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="cf-footer-col">
+        <div class="cf-footer-col-head">Studio</div>
+        <ul>
+          <li><a href="#">Shared boards</a></li>
+          <li><a href="#">Version history</a></li>
+          <li><a href="#">Handoff export</a></li>
+          <li><a href="#">Guest access</a></li>
+          <li><a href="#">API</a></li>
+          <li><a href="#">Release notes</a></li>
+        </ul>
+      </div>
+      <div class="cf-footer-col">
+        <div class="cf-footer-col-head">Workshops</div>
+        <ul>
+          <li><a href="#">Ceramics</a></li>
+          <li><a href="#">Warp textile</a></li>
+          <li><a href="#">Printmaking</a></li>
+          <li><a href="#">Woodcraft</a></li>
+          <li><a href="#">All disciplines</a></li>
+          <li><a href="#">Gift vouchers</a></li>
+        </ul>
+      </div>
+      <div class="cf-footer-col">
+        <div class="cf-footer-col-head">Company</div>
+        <ul>
+          <li><a href="#">About us</a></li>
+          <li><a href="#">Studio ethics</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Support</a></li>
+          <li><a href="#">Legal &amp; privacy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="cf-footer-bottom">
+      <span class="cf-footer-legal">2026 Copperfern, a fictional company.</span>
+      <div class="cf-footer-lang">
+        <div class="cf-footer-lang-wrap">
+          <select aria-label="Language" id="footer-lang">
+            <option value="en">English</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="es">Español</option>
+            <option value="pt">Português</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+var TILE_W=240+20;
+var mosaicEl=document.getElementById("mosaic-scroll");
+var mosaicCountEl=document.getElementById("mosaic-counter");
+var mosaicIdx=0;
+var mosaicTotal=6;
+function mosaicNav(dir){
+  mosaicIdx=Math.max(0,Math.min(mosaicTotal-1,mosaicIdx+dir));
+  mosaicEl.scrollTo({left:mosaicIdx*TILE_W,behavior:"smooth"});
+  if(mosaicCountEl)mosaicCountEl.textContent=(mosaicIdx+1)+" of "+mosaicTotal;
+}
+window.mosaicNav=mosaicNav;
+
+var CAR_W=260+26;
+var carEl=document.getElementById("carousel-scroll");
+var carCountEl=document.getElementById("carousel-counter");
+var carIdx=0;
+var carTotal=6;
+function carNav(dir){
+  carIdx=Math.max(0,Math.min(carTotal-1,carIdx+dir));
+  carEl.scrollTo({left:carIdx*CAR_W,behavior:"smooth"});
+  if(carCountEl)carCountEl.textContent=(carIdx+1)+" of "+carTotal;
+}
+window.carNav=carNav;
+
+var marqueeRunning=false;
+var marqueeTrack=document.getElementById("marquee-track");
+var marqueeBtn=document.getElementById("marquee-btn");
+var marqueePauseIcon=document.getElementById("marquee-icon-pause");
+var marqueePlayIcon=document.getElementById("marquee-icon-play");
+function startMarquee(){
+  if(marqueeTrack){marqueeTrack.classList.add("running");marqueeRunning=true;}
+  if(marqueePauseIcon)marqueePauseIcon.style.display="";
+  if(marqueePlayIcon)marqueePlayIcon.style.display="none";
+  if(marqueeBtn)marqueeBtn.setAttribute("aria-label","Pause partner studio scroll");
+}
+function stopMarquee(){
+  if(marqueeTrack){marqueeTrack.classList.remove("running");marqueeRunning=false;}
+  if(marqueePauseIcon)marqueePauseIcon.style.display="none";
+  if(marqueePlayIcon)marqueePlayIcon.style.display="";
+  if(marqueeBtn)marqueeBtn.setAttribute("aria-label","Play partner studio scroll");
+}
+function toggleMarquee(){if(marqueeRunning)stopMarquee();else startMarquee();}
+window.toggleMarquee=toggleMarquee;
+if(document.documentElement.classList.contains("motion")){startMarquee();}else{stopMarquee();}
+
+var trigs=document.querySelectorAll(".cf-nav-trig");
+var flyouts=document.querySelectorAll(".cf-flyout");
+var activeTrig=null;
+function closeAll(){
+  trigs.forEach(function(t){t.setAttribute("aria-expanded","false");});
+  flyouts.forEach(function(f){f.classList.remove("open");});
+  activeTrig=null;
+}
+trigs.forEach(function(trig){
+  trig.addEventListener("click",function(){
+    var controlId=trig.getAttribute("aria-controls");
+    var flyout=document.getElementById(controlId);
+    var isOpen=trig.getAttribute("aria-expanded")==="true";
+    closeAll();
+    if(!isOpen&&flyout){
+      trig.setAttribute("aria-expanded","true");
+      flyout.classList.add("open");
+      activeTrig=trig;
+    }
+  });
+  trig.addEventListener("keydown",function(e){
+    if(e.key==="Escape"){closeAll();}
+  });
+});
+document.addEventListener("click",function(e){
+  var inside=e.target.closest(".cf-nav-trig")||e.target.closest(".cf-flyout");
+  if(!inside)closeAll();
+});
+document.addEventListener("keydown",function(e){
+  if(e.key==="Escape")closeAll();
+});
+
+var accBtns=document.querySelectorAll(".cf-accordion-btn");
+accBtns.forEach(function(btn){
+  btn.addEventListener("click",function(){
+    var panelId=btn.getAttribute("aria-controls");
+    var panel=document.getElementById(panelId);
+    var open=btn.getAttribute("aria-expanded")==="true";
+    accBtns.forEach(function(b){
+      b.setAttribute("aria-expanded","false");
+      var p=document.getElementById(b.getAttribute("aria-controls"));
+      if(p)p.classList.remove("open");
+    });
+    if(!open&&panel){
+      btn.setAttribute("aria-expanded","true");
+      panel.classList.add("open");
+    }
+  });
+  btn.addEventListener("keydown",function(e){
+    if(e.key==="Escape"){btn.setAttribute("aria-expanded","false");var p=document.getElementById(btn.getAttribute("aria-controls"));if(p)p.classList.remove("open");}
+  });
+});
+
+var form=document.getElementById("cf-form");
+var status=document.getElementById("cf-form-status");
+if(form){
+  form.addEventListener("submit",function(e){
+    e.preventDefault();
+    if(status)status.textContent="Request received — we will be in touch within one working day.";
+    form.reset();
+  });
+}
+
+var mobilePanel=document.getElementById("mobile-panel");
+var mobilePanelClose=document.getElementById("mobile-panel-close");
+var mobileMenuBtn=document.getElementById("mobile-menu-btn");
+function openMobileMenu(){
+  if(!mobilePanel)return;
+  mobilePanel.classList.add("open");
+  document.body.style.overflow="hidden";
+  if(mobilePanelClose)mobilePanelClose.focus();
+  mobileMenuBtn&&mobileMenuBtn.setAttribute("aria-expanded","true");
+}
+function closeMobileMenu(){
+  if(!mobilePanel)return;
+  mobilePanel.classList.remove("open");
+  document.body.style.overflow="";
+  if(mobileMenuBtn){mobileMenuBtn.focus();mobileMenuBtn.setAttribute("aria-expanded","false");}
+}
+if(mobileMenuBtn)mobileMenuBtn.addEventListener("click",openMobileMenu);
+if(mobilePanelClose)mobilePanelClose.addEventListener("click",closeMobileMenu);
+document.addEventListener("keydown",function(e){
+  if(e.key==="Escape"&&mobilePanel&&mobilePanel.classList.contains("open"))closeMobileMenu();
+});
+
+var mobileAccBtns=document.querySelectorAll(".cf-mobile-acc-btn");
+mobileAccBtns.forEach(function(btn){
+  btn.addEventListener("click",function(){
+    var panelId=btn.getAttribute("aria-controls");
+    var panel=document.getElementById(panelId);
+    var open=btn.getAttribute("aria-expanded")==="true";
+    mobileAccBtns.forEach(function(b){
+      b.setAttribute("aria-expanded","false");
+      var p=document.getElementById(b.getAttribute("aria-controls"));
+      if(p)p.classList.remove("open");
+    });
+    if(!open&&panel){btn.setAttribute("aria-expanded","true");panel.classList.add("open");}
+  });
+});
+
+})();
+</script>
+</body>
+</html>
