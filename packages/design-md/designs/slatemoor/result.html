@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Slatemoor · Aura flavor</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="stylesheet" href="/aura/main.css"/>
+<link rel="stylesheet" href="theme.css"/>
+<script>
+(function(){
+  var p=new URLSearchParams(window.location.search).get("appearance");
+  var d=p==="dark"?"dark":p==="light"?"light":(window.matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
+  var r=document.documentElement;
+  r.classList.add(d);
+  r.style.colorScheme=d;
+  if(window.matchMedia("(prefers-reduced-motion: no-preference)").matches)r.classList.add("motion");
+})();
+</script>
+<style>
+*{box-sizing:border-box;}
+html{font-family:var(--aura-font-stack);background:var(--canvas);color:var(--ink);scroll-padding-top:calc(var(--aura)*5);}
+body{margin:0;padding:0;background:var(--canvas);color:var(--ink);font-size:15px;line-height:1.5;min-width:0;}
+h1,h2,h3,h4,h5,h6,p,figure,ul,ol,dl{margin:0;}
+ul,ol{padding:0;list-style:none;}
+h1,h2,h3,h4{font-family:var(--aura-font-stack);font-weight:500;letter-spacing:-0.045em;text-wrap:balance;overflow-wrap:break-word;min-width:0;line-height:1.0;}
+h3,h4{letter-spacing:-0.03em;}
+p{overflow-wrap:break-word;min-width:0;}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;height:auto;}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+.skip-link{position:absolute;left:calc(var(--aura)*1);top:calc(var(--aura)*-5);z-index:300;padding:calc(var(--aura)*0.5) calc(var(--aura)*2);border-radius:9999px;background:var(--ink);color:var(--canvas);font-weight:600;font-size:14px;}
+.skip-link:focus{top:calc(var(--aura)*1);}
+
+.sm{--aura-accents-primary:var(--ink);--aura-button-hover:var(--body);--aura-input-bg:var(--canvas);--aura-input-placeholder-color:var(--muted);--aura-link:var(--ink);--aura-outline:2px solid var(--focus);--control-line:var(--gray-10);}
+.sm button,.sm input,.sm select,.sm textarea{font-family:inherit;}
+.sm .btn-solid{display:inline-flex;align-items:center;justify-content:center;gap:calc(var(--aura)*0.5);border-radius:9999px;background:var(--ink);color:var(--canvas);border:1px solid var(--ink);font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap;flex-shrink:0;text-decoration:none;padding:0 calc(var(--aura)*2);height:calc(var(--aura)*3);}
+.sm .btn-solid:hover{opacity:.85;}
+.sm .btn-solid.hero{height:calc(var(--aura)*3.5);font-size:15px;}
+.sm .btn-outline{display:inline-flex;align-items:center;justify-content:center;gap:calc(var(--aura)*0.5);border-radius:9999px;background:var(--canvas);color:var(--ink);border:1px solid var(--control-line);font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap;flex-shrink:0;text-decoration:none;padding:0 calc(var(--aura)*2);height:calc(var(--aura)*3);}
+.sm .btn-outline:hover{background:var(--card-bg);}
+.sm .btn-outline.hero{height:calc(var(--aura)*3.5);font-size:15px;}
+.sm .btn-hdr{display:inline-flex;align-items:center;justify-content:center;gap:calc(var(--aura)*0.5);border-radius:6px;background:var(--canvas);color:var(--ink);border:1px solid var(--control-line);font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;flex-shrink:0;text-decoration:none;padding:0 calc(var(--aura)*1.5);height:calc(var(--aura)*2.5);}
+.sm .btn-hdr:hover{background:var(--card-bg);}
+.sm .btn-hdr-solid{display:inline-flex;align-items:center;justify-content:center;gap:calc(var(--aura)*0.5);border-radius:6px;background:var(--ink);color:var(--canvas);border:1px solid var(--ink);font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;flex-shrink:0;text-decoration:none;padding:0 calc(var(--aura)*1.5);height:calc(var(--aura)*2.5);}
+.sm .btn-hdr-solid:hover{opacity:.85;}
+.sm input:not(.default),.sm textarea:not(.default){background:var(--canvas);border:1px solid var(--control-line);color:var(--ink);border-radius:6px;padding:0 calc(var(--aura)*1.5);font-family:inherit;width:100%;}
+.sm input:not(.default){height:calc(var(--aura)*3.5);}
+.sm textarea:not(.default){padding:calc(var(--aura)*1) calc(var(--aura)*1.5);min-height:calc(var(--aura)*7);resize:vertical;}
+.sm input:not(.default):focus,.sm textarea:not(.default):focus{outline:2px solid var(--focus);outline-offset:0;}
+.sm input:not(.default)::placeholder,.sm textarea:not(.default)::placeholder{color:var(--muted);}
+.sm select.inputer{appearance:none;-webkit-appearance:none;border:1px solid var(--control-line);background:var(--canvas);background-image:linear-gradient(45deg,transparent 50%,var(--control-line) 50%),linear-gradient(135deg,var(--control-line) 50%,transparent 50%);background-position:right 18px center,right 14px center;background-size:4px 4px,4px 4px;background-repeat:no-repeat,no-repeat;color:var(--ink);border-radius:6px;height:calc(var(--aura)*3.5);padding:0 calc(var(--aura)*3.5) 0 calc(var(--aura)*1.5);font-family:inherit;font-size:15px;width:100%;cursor:pointer;}
+.sm select.inputer:focus{outline:2px solid var(--focus);outline-offset:0;}
+.dark .sm select.inputer{background-image:linear-gradient(45deg,transparent 50%,var(--control-line) 50%),linear-gradient(135deg,var(--control-line) 50%,transparent 50%);background-position:right 18px center,right 14px center;background-size:4px 4px,4px 4px;background-repeat:no-repeat,no-repeat;}.dark .sm{--control-line:var(--gray-8);}
+.sm blockquote{font-family:var(--aura-font-stack);font-weight:500;font-size:32px;line-height:1.15;letter-spacing:-0.03em;text-transform:none;font-style:normal;quotes:none;border:0;padding:0;margin:0;background:none;}
+.sm blockquote p{font-family:var(--aura-font-stack);font-weight:500;font-size:32px;line-height:1.15;letter-spacing:-0.03em;text-transform:none;font-style:normal;}
+
+.wrap{width:min(100% - calc(var(--aura)*4),1280px);margin-inline:auto;}
+.section-pad{padding-block:calc(var(--aura)*11);}
+.section-pad-sm{padding-block:calc(var(--aura)*7.5);}
+.rule-top{border-top:1px solid var(--rule);}
+.chip{display:inline-flex;align-items:center;border-radius:9999px;background:var(--chip-bg);color:var(--chip-ink);font-size:11px;font-family:var(--aura-font-label);padding:1px calc(var(--aura)*0.75);flex-shrink:0;}
+.muted{color:var(--muted);}
+.mono{font-family:var(--aura-font-label);}
+
+#sm-header{position:sticky;top:0;z-index:100;background:var(--canvas);border-bottom:1px solid var(--rule);height:calc(var(--aura)*5);}
+.sm-hdr-inner{display:flex;align-items:center;height:100%;gap:calc(var(--aura)*1);}
+.sm-wordmark{display:inline-flex;align-items:center;gap:calc(var(--aura)*0.75);font-weight:600;font-size:16px;color:var(--ink);flex-shrink:0;text-decoration:none;}
+.sm-logo{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;flex-shrink:0;}
+.sm-nav{display:flex;align-items:center;gap:0;margin-left:calc(var(--aura)*1);}
+.sm-nav-trigger,.sm-nav-plain{display:inline-flex;align-items:center;gap:4px;padding:calc(var(--aura)*0.5) calc(var(--aura)*0.75);border:0;background:none;color:var(--muted);font:inherit;font-size:14px;font-weight:500;cursor:pointer;border-radius:6px;white-space:nowrap;flex-shrink:0;}
+.sm-nav-trigger:hover,.sm-nav-plain:hover{color:var(--ink);background:var(--card-bg);}
+.sm-nav-trigger[aria-expanded="true"]{color:var(--ink);}
+.sm-nav-trigger svg{flex-shrink:0;transition:transform 0.15s;}
+.sm-nav-trigger[aria-expanded="true"] svg{transform:rotate(180deg);}
+.sm-hdr-end{display:flex;align-items:center;gap:calc(var(--aura)*0.75);margin-left:auto;flex-shrink:0;}
+.sm-menu-btn{display:none;align-items:center;justify-content:center;width:calc(var(--aura)*3);height:calc(var(--aura)*3);border:1px solid var(--control-line);background:none;color:var(--ink);cursor:pointer;border-radius:6px;flex-shrink:0;padding:0;}
+.sm-menu-btn:hover{background:var(--card-bg);}
+
+.sm-flyout{position:absolute;top:calc(100% + 4px);width:min(560px, calc(100vw - 32px));background:var(--canvas);border:1px solid var(--rule);border-radius:12px;box-shadow:0 8px 32px color-mix(in srgb,var(--ink) 8%,transparent);z-index:200;padding:calc(var(--aura)*1.5);}
+.sm-flyout[hidden]{display:none;}
+.sm-flyout-grid{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--aura)*0.5);}
+.sm-flyout-item{display:flex;align-items:flex-start;gap:calc(var(--aura)*1);padding:calc(var(--aura)*0.75);border-radius:8px;text-decoration:none;color:var(--ink);}
+.sm-flyout-item:hover{background:var(--card-bg);}
+.sm-flyout-glyph{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;flex-shrink:0;margin-top:2px;color:var(--muted);}
+.sm-flyout-title{font-size:14px;font-weight:500;color:var(--ink);line-height:1.3;}
+.sm-flyout-desc{font-size:13px;color:var(--muted);line-height:1.4;margin-top:1px;}
+
+#sm-mobile-menu{position:fixed;left:0;top:0;width:100vw;height:100vh;background:var(--canvas);z-index:200;display:flex;flex-direction:column;padding:calc(var(--aura)*2);}
+#sm-mobile-menu[hidden]{display:none;}
+.sm-mmenu-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:calc(var(--aura)*3);}
+.sm-mmenu-nav{display:flex;flex-direction:column;gap:calc(var(--aura)*0.5);flex:1;}
+.sm-mmenu-link{font-size:24px;font-weight:500;color:var(--ink);text-decoration:none;padding:calc(var(--aura)*0.5) 0;letter-spacing:-0.03em;}
+.sm-mmenu-link:hover{color:var(--muted);}
+.sm-mmenu-btns{display:flex;flex-direction:column;gap:calc(var(--aura)*1);padding-top:calc(var(--aura)*2);border-top:1px solid var(--rule);}
+.sm-mmenu-btns .btn-solid,.sm-mmenu-btns .btn-outline{width:100%;height:calc(var(--aura)*4);font-size:16px;border-radius:9999px;}
+
+#sm-hero{padding-block:calc(var(--aura)*5) calc(var(--aura)*7.5);border-bottom:1px solid var(--rule);}
+.sm-hero-inner{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:calc(var(--aura)*2);min-height:460px;}
+.sm-hero-left{min-width:0;}
+.sm-hero-h1{font-size:clamp(44px,5.5vw,64px);font-weight:500;letter-spacing:-0.045em;line-height:1.0;margin-bottom:calc(var(--aura)*2.5);}
+.sm-hero-btns{display:flex;flex-wrap:wrap;gap:calc(var(--aura)*1);}
+.sm-hero-subline{display:none;font-size:14px;font-family:var(--aura-font-label);color:var(--muted);margin-top:calc(var(--aura)*1);margin-bottom:0;}
+.sm-hero-art{width:260px;height:260px;flex-shrink:0;position:relative;display:flex;align-items:center;justify-content:center;}
+.sm-art-slab{width:200px;height:200px;border-radius:32px;background:var(--ink);position:relative;overflow:hidden;box-shadow:0 8px 40px 0 color-mix(in srgb,var(--ink) 18%,transparent),0 2px 8px 0 color-mix(in srgb,var(--ink) 10%,transparent);}
+.sm-art-slab::before{content:"";position:absolute;inset:0;border-radius:32px;background:radial-gradient(circle at 40% 35%,color-mix(in srgb,var(--canvas) 30%,transparent),transparent 70%);opacity:.7;}
+.sm-hero-art::before{content:"";position:absolute;inset:-40px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--ink) 8%,transparent),transparent 65%);pointer-events:none;z-index:0;}
+.sm-art-slab{z-index:1;position:relative;}
+.dark .sm-art-slab{box-shadow:0 0 60px 20px color-mix(in srgb,var(--ink) 40%,transparent);}
+.dark .sm-hero-art::before{background:radial-gradient(circle,color-mix(in srgb,var(--ink) 25%,transparent),transparent 65%);}
+.sm-art-slab::after{content:"";position:absolute;inset:-40px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--ink) 12%,transparent),transparent 70%);pointer-events:none;}
+.sm-hero-right{min-width:0;}
+.sm-hero-desc{display:flex;flex-direction:column;gap:calc(var(--aura)*1);font-size:16px;color:var(--muted);}
+.sm-hero-desc span{color:var(--ink);}
+
+#sm-logostrip{padding-block:calc(var(--aura)*3.5);border-bottom:1px solid var(--rule);}
+.sm-logostrip-inner{display:flex;align-items:center;justify-content:space-between;gap:calc(var(--aura)*2);}
+.sm-logostrip-label{font-size:12px;color:var(--muted);white-space:nowrap;flex-shrink:0;}
+.sm-logostrip-names{display:flex;align-items:center;justify-content:space-between;gap:calc(var(--aura)*2);flex:1;flex-wrap:wrap;}
+.sm-logostrip-name{font-size:14px;color:var(--muted);white-space:nowrap;flex-shrink:0;}
+.sm-logostrip-name:nth-child(1){font-weight:600;}
+.sm-logostrip-name:nth-child(2){font-weight:400;font-style:italic;}
+.sm-logostrip-name:nth-child(3){font-weight:500;}
+.sm-logostrip-name:nth-child(4){font-weight:600;letter-spacing:-0.02em;}
+.sm-logostrip-name:nth-child(5){font-weight:400;}
+.sm-logostrip-name:nth-child(6){font-weight:500;font-style:italic;}
+
+.sm-story{padding-block:calc(var(--aura)*7.5);border-bottom:1px solid var(--rule);}
+.sm-story-h2{font-size:clamp(28px,4vw,48px);max-width:520px;margin-bottom:calc(var(--aura)*5);}
+.sm-story-h2-right{text-align:right;margin-left:auto;}
+.sm-story-cols{display:grid;grid-template-columns:1fr 320px;gap:calc(var(--aura)*5);align-items:start;}
+.sm-story-cols-rev{display:grid;grid-template-columns:320px 1fr;gap:calc(var(--aura)*5);align-items:start;}
+.sm-story-result{font-size:22px;font-weight:400;line-height:1.35;margin-bottom:calc(var(--aura)*2);}
+.sm-story-result .sm-muted{color:var(--muted);}
+.sm-story-cap{font-size:12px;color:var(--muted);font-family:var(--aura-font-label);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:calc(var(--aura)*0.75);}
+.sm-story-list{display:flex;flex-direction:column;gap:calc(var(--aura)*0.5);}
+.sm-story-list li{font-size:13px;color:var(--muted);}
+
+.sm-mockwin{background:var(--canvas);border:1px solid var(--rule);border-radius:12px;overflow:hidden;}
+.sm-mockwin-bar{display:flex;align-items:center;gap:calc(var(--aura)*0.5);padding:calc(var(--aura)*0.75) calc(var(--aura)*1);border-bottom:1px solid var(--rule);}
+.sm-mockwin-dot{width:8px;height:8px;border-radius:50%;background:var(--rule);flex-shrink:0;}
+.sm-mockwin-label{font-size:12px;color:var(--muted);font-family:var(--aura-font-label);margin-left:auto;}
+.sm-mockwin-iconbtn{width:18px;height:18px;border-radius:4px;border:1px solid var(--control-line);background:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;color:var(--muted);padding:0;flex-shrink:0;}
+.sm-mockwin-body{padding:calc(var(--aura)*1.5);}
+.sm-mockbot-glyph{width:32px;height:32px;border-radius:50%;background:var(--ink);color:var(--canvas);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;font-family:var(--aura-font-label);margin-bottom:calc(var(--aura)*0.75);}
+.sm-mockbot-q{font-size:20px;font-weight:500;letter-spacing:-0.02em;margin-bottom:calc(var(--aura)*1);}
+.sm-mockbot-row{display:flex;align-items:center;gap:calc(var(--aura)*0.75);padding:calc(var(--aura)*0.5) 0;border-bottom:1px solid var(--rule);font-size:13px;color:var(--muted);}
+.sm-mockbot-rowglyph{width:14px;height:14px;border-radius:3px;background:var(--rule);flex-shrink:0;}
+.sm-mockbot-input{display:flex;align-items:center;gap:calc(var(--aura)*0.75);border:1px solid var(--rule);border-radius:9999px;padding:calc(var(--aura)*0.5) calc(var(--aura)*1);margin-top:calc(var(--aura)*1);}
+.sm-mockbot-chip{font-size:11px;font-family:var(--aura-font-label);background:var(--chip-bg);color:var(--chip-ink);padding:2px calc(var(--aura)*0.5);border-radius:4px;}
+.sm-mockbot-ph{font-size:12px;color:var(--muted);font-family:var(--aura-font-label);}
+.sm-mockdoc{position:relative;}
+.sm-mockdoc-bg{position:absolute;top:12px;left:12px;right:-12px;bottom:-12px;background:var(--canvas);border:1px solid var(--rule);border-radius:12px;}
+
+.sm-mockbrowser-bar{display:flex;align-items:center;gap:calc(var(--aura)*0.75);padding:calc(var(--aura)*0.75) calc(var(--aura)*1);border-bottom:1px solid var(--rule);}
+.sm-mockbrowser-dots{display:flex;gap:5px;}
+.sm-mockbrowser-dot{width:8px;height:8px;border-radius:50%;background:var(--rule);}
+.sm-mockbrowser-minibar{display:flex;gap:calc(var(--aura)*1.5);padding:calc(var(--aura)*0.5) calc(var(--aura)*1);border-bottom:1px solid var(--rule);}
+.sm-mockbrowser-mintab{font-size:11px;color:var(--muted);font-family:var(--aura-font-label);}
+.sm-mockbrowser-body{padding:calc(var(--aura)*2.5) calc(var(--aura)*2);text-align:center;}
+.sm-mockbrowser-h{font-size:32px;font-weight:500;letter-spacing:-0.04em;line-height:1.1;margin-bottom:calc(var(--aura)*1);}
+.sm-mockbrowser-sub{font-size:13px;color:var(--muted);margin-bottom:calc(var(--aura)*1.5);}
+.sm-mockbrowser-btns{display:flex;gap:calc(var(--aura)*0.75);justify-content:center;}
+.sm-mockbrowser-btn{font-size:11px;padding:4px calc(var(--aura)*1);border-radius:9999px;border:1px solid var(--control-line);background:none;color:var(--muted);cursor:pointer;}
+
+.sm-mockdocs-wrap{display:grid;grid-template-columns:140px 1fr;gap:0;border:1px solid var(--rule);border-radius:12px;overflow:hidden;}
+.sm-mockdocs-side{background:var(--card-bg);padding:calc(var(--aura)*1);border-right:1px solid var(--rule);}
+.sm-mockdocs-link{display:block;font-size:12px;color:var(--muted);padding:4px calc(var(--aura)*0.5);border-radius:4px;}
+.sm-mockdocs-link.active{color:var(--ink);background:var(--rule);}
+.sm-mockdocs-main{padding:calc(var(--aura)*1.5);}
+.sm-mockdocs-h{font-size:16px;font-weight:500;margin-bottom:calc(var(--aura)*0.75);}
+.sm-mockdocs-line{height:8px;border-radius:4px;background:var(--rule);margin-bottom:6px;}
+
+#sm-bento{padding-block:calc(var(--aura)*7.5);border-bottom:1px solid var(--rule);}
+.sm-bento-h2{font-size:clamp(28px,4vw,48px);margin-bottom:calc(var(--aura)*3);}
+.sm-bento-grid{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--aura)*1);align-items:stretch;}
+.sm-bento-col{display:flex;flex-direction:column;gap:calc(var(--aura)*1);}.sm-bento-col-tall{align-self:stretch;}
+.sm-bento-col-tall{grid-row:span 2;}
+.sm-card{background:var(--card-bg);border:1px solid var(--rule);border-radius:12px;padding:calc(var(--aura)*2);display:flex;flex-direction:column;min-height:220px;overflow:hidden;position:relative;}
+.sm-card-tall{min-height:360px;height:100%;}
+.sm-card-short{min-height:160px;}
+.sm-card-title{font-size:20px;font-weight:500;letter-spacing:-0.025em;line-height:1.2;margin-top:auto;}
+.sm-card-sub{font-size:14px;color:var(--muted);margin-top:calc(var(--aura)*0.5);}
+.sm-card-art{flex:1;display:flex;align-items:flex-start;justify-content:flex-start;padding-bottom:calc(var(--aura)*1.5);}
+
+.sm-art-bubbles{display:flex;flex-direction:column;gap:calc(var(--aura)*0.75);padding:calc(var(--aura)*1) 0;}
+.sm-bubble{max-width:80%;padding:calc(var(--aura)*0.75) calc(var(--aura)*1);border-radius:12px;background:var(--canvas);border:1px solid var(--rule);font-size:13px;color:var(--body);}
+.sm-bubble.bot{margin-left:auto;background:var(--ink);color:var(--canvas);border-color:var(--ink);display:block;}
+.sm-bubble-label{font-size:11px;color:var(--muted);font-family:var(--aura-font-label);margin-bottom:4px;}
+.sm-bubble-num{font-size:22px;font-weight:600;font-family:var(--aura-font-label);color:inherit;}
+.dark .sm-bubble.bot{background:var(--ink);color:var(--canvas);}
+
+.sm-art-windows{position:relative;height:100px;}
+.sm-art-win{position:absolute;width:100px;height:70px;background:var(--canvas);border:1px solid var(--rule);border-radius:8px;}
+.sm-art-win:nth-child(1){left:0;top:0;}
+.sm-art-win:nth-child(2){left:20px;top:10px;}
+.sm-art-win:nth-child(3){left:40px;top:20px;}
+.sm-art-win-bar{height:16px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:4px;padding:0 6px;}
+.sm-art-win-dot{width:6px;height:6px;border-radius:50%;background:var(--rule);}
+
+.sm-art-cobalt{width:100%;height:90px;border-radius:8px;background:var(--cobalt);position:relative;overflow:hidden;}
+.sm-art-cobalt-grid{position:absolute;inset:0;background-image:linear-gradient(color-mix(in srgb,white 20%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,white 20%,transparent) 1px,transparent 1px);background-size:16px 16px;border-radius:8px;}
+.sm-art-cobalt-fold{position:absolute;bottom:0;right:0;width:0;height:0;border-style:solid;border-width:0 0 24px 24px;border-color:transparent transparent var(--canvas) transparent;}
+
+.sm-art-rings{position:relative;width:80px;height:80px;margin:auto;}
+.sm-art-ring{position:absolute;border-radius:50%;border:1px solid var(--rule);}
+.sm-art-ring:nth-child(1){inset:0;}
+.sm-art-ring:nth-child(2){inset:12px;}
+.sm-art-ring:nth-child(3){inset:24px;border-width:2px;border-color:var(--muted);}
+.sm-art-ring:nth-child(4){inset:36px;background:var(--ink);}
+
+.sm-art-bars{display:flex;align-items:flex-end;gap:4px;height:60px;padding-bottom:0;}
+.sm-art-bar{width:16px;border-radius:3px 3px 0 0;background:var(--rule);}
+.sm-art-bar.active{background:var(--ink);}
+
+#sm-stats{padding-block:calc(var(--aura)*7.5);border-bottom:1px solid var(--rule);}
+.sm-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:calc(var(--aura)*2);}
+.sm-stat-val{font-size:48px;font-weight:500;letter-spacing:-0.045em;line-height:1.0;color:var(--ink);}
+.sm-stat-label{font-size:14px;color:var(--muted);margin-top:calc(var(--aura)*0.5);}
+
+#sm-features{padding-block:calc(var(--aura)*7.5);border-bottom:1px solid var(--rule);}
+.sm-features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--aura)*5);}
+.sm-feature-mono{font-size:12px;font-family:var(--aura-font-label);color:var(--muted);margin-bottom:calc(var(--aura)*1);}
+.sm-feature-title{font-size:20px;font-weight:500;letter-spacing:-0.025em;margin-bottom:calc(var(--aura)*0.75);}
+.sm-feature-body{font-size:14px;color:var(--muted);line-height:1.6;}
+
+#sm-table{padding-block:calc(var(--aura)*7.5);border-bottom:1px solid var(--rule);}
+.sm-table-scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:12px;}
+table{width:100%;border-collapse:collapse;min-width:600px;}
+caption{font-size:12px;color:var(--muted);font-family:var(--aura-font-label);text-align:left;padding:calc(var(--aura)*1) calc(var(--aura)*1.5);border-bottom:1px solid var(--rule);}
+th,td{padding:calc(var(--aura)*1) calc(var(--aura)*1.5);text-align:left;border-bottom:1px solid var(--rule);font-size:14px;}
+th{font-weight:500;color:var(--ink);font-size:13px;}
+td{color:var(--body);}
+tr:last-child td{border-bottom:0;}
+.td-check{color:var(--ink);font-weight:600;}
+.td-dash{color:var(--muted);}
+
+#sm-form{padding-block:calc(var(--aura)*7.5);border-bottom:1px solid var(--rule);}
+.sm-form-wrap{max-width:560px;}
+.sm-form-h2{font-size:clamp(24px,3vw,36px);margin-bottom:calc(var(--aura)*3);}
+.sm-field{display:flex;flex-direction:column;gap:calc(var(--aura)*0.5);margin-bottom:calc(var(--aura)*1.5);}
+.sm-label{font-size:14px;font-weight:500;color:var(--ink);}
+.sm-form-confirm{font-size:14px;color:var(--ink);margin-top:calc(var(--aura)*1);min-height:calc(var(--aura)*1.5);}
+
+#sm-pricing{padding-block:calc(var(--aura)*7.5);border-bottom:1px solid var(--rule);}
+.sm-pricing-h2{font-size:clamp(28px,4vw,48px);margin-bottom:calc(var(--aura)*3);}
+.sm-pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--aura)*1.5);}
+.sm-plan{background:var(--canvas);border:1px solid var(--rule);border-radius:12px;padding:calc(var(--aura)*2);}
+.sm-plan-featured{background:var(--card-bg);}
+.sm-plan-name{font-size:16px;font-weight:500;margin-bottom:calc(var(--aura)*0.5);}
+.sm-plan-price{font-size:36px;font-weight:500;letter-spacing:-0.045em;margin-bottom:calc(var(--aura)*0.25);}
+.sm-plan-cycle{font-size:13px;color:var(--muted);margin-bottom:calc(var(--aura)*2);}
+.sm-plan-feat{font-size:13px;color:var(--muted);margin-bottom:calc(var(--aura)*0.5);}
+.sm-plan-feat:before{content:"· ";color:var(--ink);}
+
+#sm-faq{padding-block:calc(var(--aura)*7.5);border-bottom:1px solid var(--rule);}
+.sm-faq-h2{font-size:clamp(28px,4vw,48px);margin-bottom:calc(var(--aura)*3);}
+.sm-faq-item{border-top:1px solid var(--rule);}
+.sm-faq-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:calc(var(--aura)*1);padding:calc(var(--aura)*1.5) 0;background:none;border:0;color:var(--ink);font:inherit;font-size:16px;font-weight:500;cursor:pointer;text-align:left;}
+.sm-faq-btn svg{flex-shrink:0;transition:transform 0.15s;}
+.sm-faq-btn[aria-expanded="true"] svg{transform:rotate(180deg);}
+.sm-faq-panel{font-size:14px;color:var(--muted);line-height:1.6;padding-bottom:calc(var(--aura)*1.5);display:none;}
+.sm-faq-panel.open{display:block;}
+
+#sm-quote{padding-block:calc(var(--aura)*7.5);border-bottom:1px solid var(--rule);text-align:center;}
+.sm-quote-attr{font-size:14px;color:var(--muted);margin-top:calc(var(--aura)*2);}
+
+#sm-cta{padding-block:calc(var(--aura)*7.5);border-bottom:1px solid var(--rule);text-align:center;}
+.sm-cta-h2{font-size:clamp(28px,4vw,48px);margin-bottom:calc(var(--aura)*2.5);}
+.sm-cta-btns{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:calc(var(--aura)*1);}
+.sm-cta-outline-pill{display:inline-flex;align-items:center;gap:calc(var(--aura)*0.75);border-radius:9999px;background:var(--canvas);color:var(--ink);border:1px solid var(--control-line);font-size:14px;font-weight:500;cursor:pointer;padding:0 calc(var(--aura)*2);height:calc(var(--aura)*3.5);}
+.sm-cta-glyphs{display:flex;gap:5px;}
+.sm-cta-glyph{width:18px;height:18px;border-radius:50%;background:var(--rule);}
+.sm-cta-copyicon{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;border:1px solid var(--control-line);background:none;color:var(--muted);cursor:pointer;margin-left:4px;padding:0;flex-shrink:0;}
+.sm-cta-copyicon:hover{background:var(--card-bg);color:var(--ink);}
+.sm-cta-live[aria-live]{font-size:12px;color:var(--muted);font-family:var(--aura-font-label);min-height:1em;margin-top:calc(var(--aura)*1);}
+
+#sm-footer{background:var(--canvas);border-top:1px solid var(--rule);padding-block:calc(var(--aura)*5);}
+.sm-footer-dir{display:grid;grid-template-columns:repeat(6,1fr);gap:calc(var(--aura)*2);margin-bottom:calc(var(--aura)*3);}
+.sm-footer-dir-b{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--aura)*2);margin-bottom:calc(var(--aura)*5);padding-top:calc(var(--aura)*3);border-top:1px solid var(--rule);}
+.sm-footer-col-h{font-size:14px;font-weight:500;color:var(--ink);margin-bottom:calc(var(--aura)*1);}
+.sm-footer-col ul{display:flex;flex-direction:column;gap:calc(var(--aura)*0.5);}
+.sm-footer-col li a{font-size:13px;color:var(--muted);display:inline-flex;align-items:center;gap:calc(var(--aura)*0.5);}
+.sm-footer-col li a:hover{color:var(--ink);}
+.sm-footer-bottom{display:flex;align-items:center;gap:calc(var(--aura)*2);flex-wrap:wrap;border-top:1px solid var(--rule);padding-top:calc(var(--aura)*2);}
+.sm-footer-monogram{flex-shrink:0;}
+.sm-appearance-sw{display:flex;gap:2px;background:var(--canvas);border:1px solid var(--control-line);border-radius:9999px;padding:3px;}
+.sm-sw-btn{padding:4px calc(var(--aura)*1);border-radius:9999px;border:0;background:none;color:var(--muted);font:inherit;font-size:12px;cursor:pointer;white-space:nowrap;}
+.sm-sw-btn[aria-checked="true"]{background:var(--gray-9);color:var(--ink);}html.dark .sm-sw-btn[aria-checked="true"]{background:var(--gray-8);}
+.sm-sw-btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.sm-status{display:flex;align-items:center;gap:calc(var(--aura)*0.5);font-size:13px;color:var(--muted);margin-left:auto;}
+.sm-status-dot{width:8px;height:8px;border-radius:50%;background:color-mix(in srgb,var(--green-dot) 50%,black);flex-shrink:0;}.dark .sm-status-dot{background:var(--green-dot);}
+.sm-legal{font-size:13px;color:var(--muted);}
+
+@media(max-width:1023px){
+  .sm-nav,.sm-hdr-end{display:none;}
+  .sm-menu-btn{display:inline-flex;}
+  .sm-hdr-inner{justify-content:space-between;}
+}
+@media(min-width:1024px){
+  #sm-mobile-menu{display:none!important;}
+}
+@media(max-width:767px){
+  .sm-hero-inner{grid-template-columns:1fr;grid-template-rows:auto auto auto;justify-items:center;min-height:unset;}
+  .sm-hero-left{text-align:center;order:2;}
+  .sm-hero-art{order:1;width:200px;height:200px;}
+  .sm-hero-h1{font-size:44px;}
+  .sm-hero-subline{display:block;}
+  .sm-hero-right{order:3;text-align:center;}
+  .sm-hero-btns{justify-content:center;flex-direction:column;align-items:stretch;width:100%;}
+  .sm-hero-btns .btn-solid,.sm-hero-btns .btn-outline{height:48px;width:100%;justify-content:center;}
+  .sm-hero-desc{align-items:center;}
+  .sm-story-cols,.sm-story-cols-rev{grid-template-columns:1fr;}
+  .sm-story-h2-right{text-align:left;margin-left:0;}
+  .sm-logostrip-names{grid-template-columns:1fr 1fr;display:grid;gap:calc(var(--aura)*1);}
+  .sm-logostrip-inner{flex-direction:column;align-items:flex-start;gap:calc(var(--aura)*1);}
+  .sm-bento-grid{grid-template-columns:1fr;}
+  .sm-stats-grid{grid-template-columns:1fr 1fr;}
+  .sm-features-grid{grid-template-columns:1fr;}
+  .sm-pricing-grid{grid-template-columns:1fr;}
+  .sm-footer-dir,.sm-footer-dir-b{grid-template-columns:repeat(2,1fr);}
+  .sm-footer-bottom{flex-direction:column;align-items:flex-start;}
+  .sm-status{margin-left:0;}
+  .sm blockquote,.sm blockquote p{font-size:24px;}
+}
+@media(min-width:768px) and (max-width:1023px){
+  .sm-footer-dir,.sm-footer-dir-b{grid-template-columns:repeat(3,1fr);}
+}
+@media(max-width:479px){
+  .sm-stats-grid{grid-template-columns:1fr 1fr;}
+  .sm-hero-h1{font-size:40px;}
+  h2.sm-story-h2{font-size:28px;}
+}
+html.motion .sm-nav-trigger svg{transition:transform 0.15s;}
+html.motion .sm-flyout{transition:opacity 0.12s;}
+</style>
+</head>
+<body class="sm">
+<a href="#sm-main" class="skip-link">Skip to content</a>
+<header id="sm-header" role="banner">
+<nav class="wrap sm-hdr-inner" aria-label="Main navigation">
+  <a href="#" class="sm-wordmark" aria-label="Slatemoor home">
+    <svg class="sm-logo" aria-hidden="true" width="28" height="28" viewBox="0 0 28 28" fill="none">
+      <rect x="4" y="8" width="14" height="14" rx="4" fill="currentColor" opacity="0.9"/>
+      <rect x="10" y="4" width="14" height="14" rx="4" fill="currentColor" opacity="0.5"/>
+    </svg>
+    Slatemoor
+  </a>
+  <ul class="sm-nav">
+    <li style="position:relative;">
+      <button class="sm-nav-trigger" aria-expanded="false" aria-controls="sm-fly-platform" data-dropdown="platform" id="sm-trig-platform">
+        Platform
+        <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+      <div id="sm-fly-platform" class="sm-flyout" hidden role="region" aria-label="Main product areas">
+        <div class="sm-flyout-grid">
+          <a href="#" class="sm-flyout-item"><span class="sm-flyout-glyph" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/></svg></span><span><div class="sm-flyout-title">Cairn Builds</div><div class="sm-flyout-desc">Compile and deploy in one motion</div></span></a>
+          <a href="#" class="sm-flyout-item"><span class="sm-flyout-glyph" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.2"/></svg></span><span><div class="sm-flyout-title">Bot Lanes</div><div class="sm-flyout-desc">Dedicated run paths for helper bots</div></span></a>
+          <a href="#" class="sm-flyout-item"><span class="sm-flyout-glyph" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 10h10M2 7h7M2 4h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></span><span><div class="sm-flyout-title">Log Streams</div><div class="sm-flyout-desc">Real-time build and runtime logs</div></span></a>
+          <a href="#" class="sm-flyout-item"><span class="sm-flyout-glyph" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="4" width="12" height="7" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M4 4V3a3 3 0 016 0v1" stroke="currentColor" stroke-width="1.2"/></svg></span><span><div class="sm-flyout-title">Access Keys</div><div class="sm-flyout-desc">Scoped tokens for teams and bots</div></span></a>
+          <a href="#" class="sm-flyout-item"><span class="sm-flyout-glyph" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v2M7 11v2M1 7h2M11 7h2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><circle cx="7" cy="7" r="3" stroke="currentColor" stroke-width="1.2"/></svg></span><span><div class="sm-flyout-title">Edge Regions</div><div class="sm-flyout-desc">Serve cairns close to every visitor</div></span></a>
+          <a href="#" class="sm-flyout-item"><span class="sm-flyout-glyph" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></span><span><div class="sm-flyout-title">Rollback Pins</div><div class="sm-flyout-desc">Instant rollback to any prior cairn</div></span></a>
+        </div>
+      </div>
+    </li>
+    <li style="position:relative;">
+      <button class="sm-nav-trigger" aria-expanded="false" aria-controls="sm-fly-guides" data-dropdown="guides" id="sm-trig-guides">
+        Guides
+        <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+      <div id="sm-fly-guides" class="sm-flyout" hidden role="region" aria-label="Documentation and tutorials">
+        <div class="sm-flyout-grid">
+          <a href="#" class="sm-flyout-item"><span class="sm-flyout-glyph" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 3h10M2 7h7M2 11h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></span><span><div class="sm-flyout-title">Quickstart</div><div class="sm-flyout-desc">Ship a cairn in under five minutes</div></span></a>
+          <a href="#" class="sm-flyout-item"><span class="sm-flyout-glyph" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.2"/><path d="M7 5v2l1.5 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></span><span><div class="sm-flyout-title">Benchwork CLI</div><div class="sm-flyout-desc">Full command reference and patterns</div></span></a>
+          <a href="#" class="sm-flyout-item"><span class="sm-flyout-glyph" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 4l3 3-3 3M7 10h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></span><span><div class="sm-flyout-title">Bot Recipes</div><div class="sm-flyout-desc">Starter patterns for helper bot tasks</div></span></a>
+          <a href="#" class="sm-flyout-item"><span class="sm-flyout-glyph" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="2" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M5 7h4M7 5v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></span><span><div class="sm-flyout-title">Integrations</div><div class="sm-flyout-desc">Connect your existing toolchain</div></span></a>
+          <a href="#" class="sm-flyout-item"><span class="sm-flyout-glyph" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 12l3-3M9 2l3 3-6 6-3-3z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><div class="sm-flyout-title">Migration Paths</div><div class="sm-flyout-desc">Move existing projects to Slatemoor</div></span></a>
+          <a href="#" class="sm-flyout-item"><span class="sm-flyout-glyph" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2a5 5 0 100 10A5 5 0 007 2zm0 0v5l3 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></span><span><div class="sm-flyout-title">Changelog</div><div class="sm-flyout-desc">What landed in the last sprint</div></span></a>
+        </div>
+      </div>
+    </li>
+    <li style="position:relative;"><a href="#" class="sm-nav-plain">Teams</a></li>
+    <li style="position:relative;"><a href="#" class="sm-nav-plain">Plans</a></li>
+  </ul>
+  <div class="sm-hdr-end">
+    <a href="#" class="btn-hdr sm">Book a walkthrough</a>
+    <a href="#" class="btn-hdr sm">Sign in</a>
+    <a href="#" class="btn-hdr-solid sm">Start free</a>
+  </div>
+  <button class="sm-menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="sm-mobile-menu" id="sm-menu-toggle">
+    <svg aria-hidden="true" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+</nav>
+</header>
+
+<div id="sm-mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu" hidden>
+  <div class="sm-mmenu-top">
+    <span style="font-weight:600;font-size:16px;">Slatemoor</span>
+    <button id="sm-menu-close" aria-label="Close menu" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border:1px solid var(--control-line);border-radius:6px;background:none;color:var(--ink);cursor:pointer;padding:0;">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <nav class="sm-mmenu-nav" aria-label="Mobile navigation">
+    <a href="#" class="sm-mmenu-link">Platform</a>
+    <a href="#" class="sm-mmenu-link">Guides</a>
+    <a href="#" class="sm-mmenu-link">Teams</a>
+    <a href="#" class="sm-mmenu-link">Plans</a>
+  </nav>
+  <div class="sm-mmenu-btns">
+    <a href="#" class="btn-solid sm">Start free</a>
+    <a href="#" class="btn-outline sm">Book a walkthrough</a>
+  </div>
+</div>
+
+<main id="sm-main">
+
+<section id="sm-hero" aria-labelledby="sm-hero-h1">
+  <div class="wrap">
+    <div class="sm-hero-inner">
+      <div class="sm-hero-left">
+        <h1 class="sm-hero-h1" id="sm-hero-h1">Benchwork for builders<br>and their bots</h1>
+        <p class="sm-hero-subline">Ship cairns and run bots — no ops team needed.</p>
+        <div class="sm-hero-btns">
+          <a href="#" class="btn-solid hero sm">Open a cairn</a>
+          <a href="#" class="btn-outline hero sm">Ask a person</a>
+        </div>
+      </div>
+      <div class="sm-hero-art" aria-hidden="true">
+        <div class="sm-art-slab"></div>
+      </div>
+      <div class="sm-hero-right">
+        <div class="sm-hero-desc">
+          <p><span>Push code</span> and your cairn is live in seconds</p>
+          <p><span>Bots run</span> alongside you in isolated lanes</p>
+          <p><span>Small teams</span> ship without ops overhead</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sm-logostrip" aria-label="Sample teams using Slatemoor">
+  <div class="wrap">
+    <div class="sm-logostrip-inner">
+      <span class="sm-logostrip-label sr-only">Sample teams</span>
+      <span aria-hidden="true" class="sm-logostrip-label muted">Sample teams</span>
+      <ul class="sm-logostrip-names">
+        <li class="sm-logostrip-name">Harrowgate Labs</li>
+        <li class="sm-logostrip-name">Pebblewick</li>
+        <li class="sm-logostrip-name">Northloom</li>
+        <li class="sm-logostrip-name">Cobaltine</li>
+        <li class="sm-logostrip-name">Fennick &amp; Co</li>
+        <li class="sm-logostrip-name">Quarrel Studio</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sm-story rule-top" aria-labelledby="sm-s04-h2">
+  <div class="wrap">
+    <h2 class="sm-story-h2" id="sm-s04-h2">Your bot handles the routine.<br>Your team handles the vision.</h2>
+    <div class="sm-story-cols">
+      <div>
+        <div class="sm-mockdoc" aria-hidden="true">
+          <div class="sm-mockdoc-bg"></div>
+          <div class="sm-mockwin" style="position:relative;z-index:1;">
+            <div class="sm-mockwin-bar">
+              <div class="sm-mockwin-dot"></div>
+              <div class="sm-mockwin-dot"></div>
+              <div class="sm-mockwin-dot"></div>
+              <span class="sm-mockwin-label">New thread</span>
+              <button class="sm-mockwin-iconbtn" aria-hidden="true" tabindex="-1"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 8l1-3L8 2 8 3 3 8z" stroke="currentColor" stroke-width="1" fill="none"/></svg></button>
+              <button class="sm-mockwin-iconbtn" aria-hidden="true" tabindex="-1"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><rect x="1" y="1" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1"/></svg></button>
+              <button class="sm-mockwin-iconbtn" aria-hidden="true" tabindex="-1"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2L2 8" stroke="currentColor" stroke-width="1"/></svg></button>
+            </div>
+            <div class="sm-mockwin-body">
+              <div class="sm-mockbot-glyph" aria-hidden="true">B</div>
+              <div class="sm-mockbot-q">What can I build today?</div>
+              <div class="sm-mockbot-row"><div class="sm-mockbot-rowglyph"></div>Scaffold a landing page</div>
+              <div class="sm-mockbot-row"><div class="sm-mockbot-rowglyph"></div>Run a nightly report</div>
+              <div class="sm-mockbot-row" style="border-bottom:0;"><div class="sm-mockbot-rowglyph"></div>Sync the staging cairn</div>
+              <div class="sm-mockbot-input">
+                <span class="sm-mockbot-chip">bench-01</span>
+                <span class="sm-mockbot-ph">Ask, search, or make anything…</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="sm-story-result">Harrowgate Labs <span class="sm-muted">cut weekly ops time by 60% using bot-assisted cairn management (sample figure).</span></p>
+        <p class="sm-story-cap">Capabilities</p>
+        <ul class="sm-story-list" aria-label="Platform capabilities">
+          <li>Automated cairn provisioning</li>
+          <li>Bot task scheduling and retry</li>
+          <li>Threaded build diagnostics</li>
+          <li>Live log tailing per cairn</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sm-story rule-top" aria-labelledby="sm-s05-h2">
+  <div class="wrap">
+    <h2 class="sm-story-h2 sm-story-h2-right" id="sm-s05-h2">Cairns ship as polished<br>pages from day one.</h2>
+    <div class="sm-story-cols-rev">
+      <div>
+        <p class="sm-story-result">Pebblewick <span class="sm-muted">launched their marketing cairn in an afternoon with zero config (sample result).</span></p>
+        <p class="sm-story-cap">Capabilities</p>
+        <ul class="sm-story-list" aria-label="Delivery capabilities">
+          <li>Instant preview URLs per branch</li>
+          <li>Built-in performance scoring</li>
+          <li>Asset fingerprinting and caching</li>
+          <li>Custom domain mapping in one step</li>
+        </ul>
+      </div>
+      <div>
+        <div class="sm-mockwin" aria-hidden="true">
+          <div class="sm-mockbrowser-bar">
+            <div class="sm-mockbrowser-dots"><div class="sm-mockbrowser-dot"></div><div class="sm-mockbrowser-dot"></div><div class="sm-mockbrowser-dot"></div></div>
+          </div>
+          <div class="sm-mockbrowser-minibar">
+            <span class="sm-mockbrowser-mintab">Home</span>
+            <span class="sm-mockbrowser-mintab">About</span>
+            <span class="sm-mockbrowser-mintab">Pricing</span>
+          </div>
+          <div class="sm-mockbrowser-body">
+            <div class="sm-mockbrowser-h">Build things that last</div>
+            <div class="sm-mockbrowser-sub">A fictional sample landing headline from your cairn</div>
+            <div class="sm-mockbrowser-btns">
+              <button class="sm-mockbrowser-btn" tabindex="-1" aria-hidden="true">Get started</button>
+              <button class="sm-mockbrowser-btn" tabindex="-1" aria-hidden="true">Learn more</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sm-story rule-top" aria-labelledby="sm-s06-h2">
+  <div class="wrap">
+    <h2 class="sm-story-h2" id="sm-s06-h2">Documentation that keeps<br>pace with your cairns.</h2>
+    <div class="sm-story-cols">
+      <div>
+        <div class="sm-mockdocs-wrap" aria-hidden="true">
+          <div class="sm-mockdocs-side">
+            <a href="#" class="sm-mockdocs-link active">Overview</a>
+            <a href="#" class="sm-mockdocs-link">Quickstart</a>
+            <a href="#" class="sm-mockdocs-link">Cairn config</a>
+            <a href="#" class="sm-mockdocs-link">Bot lanes</a>
+            <a href="#" class="sm-mockdocs-link">CLI reference</a>
+            <a href="#" class="sm-mockdocs-link">Changelog</a>
+          </div>
+          <div class="sm-mockdocs-main">
+            <div class="sm-mockdocs-h">Cairn configuration</div>
+            <div class="sm-mockdocs-line" style="width:95%;"></div>
+            <div class="sm-mockdocs-line" style="width:80%;"></div>
+            <div class="sm-mockdocs-line" style="width:88%;"></div>
+            <div class="sm-mockdocs-line" style="width:60%;margin-top:calc(var(--aura)*1.5);"></div>
+            <div class="sm-mockdocs-line" style="width:75%;"></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="sm-story-result">Northloom <span class="sm-muted">maintains docs for 40 cairns with one engineer using Benchwork auto-docs (sample figure).</span></p>
+        <p class="sm-story-cap">Capabilities</p>
+        <ul class="sm-story-list" aria-label="Docs capabilities">
+          <li>Auto-generated cairn changelogs</li>
+          <li>Versioned API reference pages</li>
+          <li>Searchable across all cairns</li>
+          <li>Markdown and MDX support</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sm-bento" aria-labelledby="sm-bento-h2">
+  <div class="wrap">
+    <h2 class="sm-bento-h2" id="sm-bento-h2">Fresh from the bench</h2>
+    <div class="sm-bento-grid">
+      <div class="sm-bento-col sm-bento-col-tall">
+        <div class="sm-card sm-card-tall">
+          <div class="sm-card-art" aria-hidden="true">
+            <div class="sm-art-bubbles">
+              <div>
+                <div class="sm-bubble-label">ops-bot</div>
+                <div class="sm-bubble">How did throughput trend this week?</div>
+              </div>
+              <div class="sm-bubble bot">Cairns processed <span class="sm-bubble-num">14,280</span> requests — up 18% (sample).</div>
+              <div class="sm-bubble">Peak hour was Tuesday 09:14. Stats are in the #bench-ops summary.</div>
+            </div>
+          </div>
+          <div class="sm-card-title">Ops bot conversations</div>
+          <div class="sm-card-sub">Sample figures from a fictional team</div>
+        </div>
+      </div>
+      <div class="sm-bento-col">
+        <div class="sm-card">
+          <div class="sm-card-art" aria-hidden="true">
+            <div class="sm-art-windows">
+              <div class="sm-art-win"><div class="sm-art-win-bar"><div class="sm-art-win-dot"></div><div class="sm-art-win-dot"></div></div></div>
+              <div class="sm-art-win"><div class="sm-art-win-bar"><div class="sm-art-win-dot"></div><div class="sm-art-win-dot"></div></div></div>
+              <div class="sm-art-win"><div class="sm-art-win-bar"><div class="sm-art-win-dot"></div><div class="sm-art-win-dot"></div></div></div>
+            </div>
+          </div>
+          <div class="sm-card-title">Stacked cairn tiles</div>
+          <div class="sm-card-sub">View all active cairns at a glance</div>
+        </div>
+        <div class="sm-card">
+          <div class="sm-card-art" aria-hidden="true">
+            <div class="sm-art-cobalt">
+              <div class="sm-art-cobalt-grid" aria-hidden="true"></div>
+              <div class="sm-art-cobalt-fold" aria-hidden="true"></div>
+            </div>
+          </div>
+          <div class="sm-card-title">Cobalt sandbox tile</div>
+          <div class="sm-card-sub">Jobs run in sealed lanes — isolated from your main cairn</div>
+        </div>
+      </div>
+    </div>
+    <div class="sm-bento-grid" style="margin-top:calc(var(--aura)*1);">
+      <div class="sm-card sm-card-short">
+        <div class="sm-card-art" aria-hidden="true">
+          <div class="sm-art-rings" aria-hidden="true">
+            <div class="sm-art-ring"></div>
+            <div class="sm-art-ring"></div>
+            <div class="sm-art-ring"></div>
+            <div class="sm-art-ring"></div>
+          </div>
+        </div>
+        <div class="sm-card-title">Concentric health rings</div>
+        <div class="sm-card-sub">System health at every level</div>
+      </div>
+      <div class="sm-card sm-card-short">
+        <div class="sm-card-art" aria-hidden="true">
+          <div class="sm-art-bars" aria-hidden="true">
+            <div class="sm-art-bar" style="height:30%;"></div>
+            <div class="sm-art-bar" style="height:55%;"></div>
+            <div class="sm-art-bar active" style="height:80%;"></div>
+            <div class="sm-art-bar" style="height:65%;"></div>
+            <div class="sm-art-bar" style="height:45%;"></div>
+            <div class="sm-art-bar active" style="height:90%;"></div>
+            <div class="sm-art-bar" style="height:70%;"></div>
+          </div>
+        </div>
+        <div class="sm-card-title">Bench throughput chart</div>
+        <div class="sm-card-sub">Sample build throughput by day</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sm-stats" aria-label="Sample figures">
+  <div class="wrap">
+    <div class="sm-stats-grid">
+      <div>
+        <div class="sm-stat-val">12,400</div>
+        <div class="sm-stat-label">Active cairns (sample)</div>
+      </div>
+      <div>
+        <div class="sm-stat-val">98.9%</div>
+        <div class="sm-stat-label">Uptime across all cairns (sample)</div>
+      </div>
+      <div>
+        <div class="sm-stat-val">3.4s</div>
+        <div class="sm-stat-label">Median cold-start time (sample)</div>
+      </div>
+      <div>
+        <div class="sm-stat-val">840</div>
+        <div class="sm-stat-label">Bot lane runs today (sample)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sm-features" aria-labelledby="sm-features-h2">
+  <div class="wrap">
+    <div class="sm-features-grid">
+      <div>
+        <div class="sm-feature-mono">01 / CAIRN BUILDS</div>
+        <h3 class="sm-feature-title">Compile once, serve everywhere</h3>
+        <p class="sm-feature-body">Every push triggers a Benchwork build that produces an immutable cairn artifact. Instant rollback, zero drift between environments.</p>
+      </div>
+      <div>
+        <div class="sm-feature-mono">02 / BOT LANES</div>
+        <h3 class="sm-feature-title">Isolated paths for every bot</h3>
+        <p class="sm-feature-body">Helper bots run in dedicated lanes with scoped credentials. They never touch your main cairn traffic, even when they hit rate limits.</p>
+      </div>
+      <div>
+        <div class="sm-feature-mono">03 / BENCHWORK CLI</div>
+        <h3 class="sm-feature-title">Ship from your terminal</h3>
+        <p class="sm-feature-body">The Benchwork CLI wires your local project to Slatemoor in one command. Branch previews and log streaming included out of the box.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sm-table" aria-labelledby="sm-table-h2">
+  <div class="wrap">
+    <h2 class="sm-story-h2" id="sm-table-h2" style="font-size:clamp(24px,3vw,36px);margin-bottom:calc(var(--aura)*2);">Plan comparison</h2>
+    <div class="sm-table-scroll" role="region" aria-label="Plan comparison table" tabindex="0">
+      <table>
+        <caption>Sample plan limits — all figures are fictional</caption>
+        <thead>
+          <tr>
+            <th scope="col">Feature</th>
+            <th scope="col">Starter</th>
+            <th scope="col">Team</th>
+            <th scope="col">Studio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Active cairns</td><td class="td-check">3</td><td class="td-check">25</td><td class="td-check">Unlimited</td></tr>
+          <tr><td>Bot lane minutes / month</td><td class="td-check">500</td><td class="td-check">10,000</td><td class="td-check">Unlimited</td></tr>
+          <tr><td>Custom domains</td><td class="td-dash">—</td><td class="td-check">Yes</td><td class="td-check">Unlimited</td></tr>
+          <tr><td>Access key scoping</td><td class="td-dash">—</td><td class="td-check">Yes</td><td class="td-check">Advanced</td></tr>
+          <tr><td>Priority build queue</td><td class="td-dash">—</td><td class="td-dash">—</td><td class="td-check">Yes</td></tr>
+          <tr><td>Dedicated support</td><td class="td-dash">—</td><td class="td-dash">—</td><td class="td-check">Yes</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="sm-form" aria-labelledby="sm-form-h2">
+  <div class="wrap">
+    <div class="sm-form-wrap">
+      <h2 class="sm-form-h2" id="sm-form-h2">Request a walkthrough</h2>
+      <form id="sm-contact-form" novalidate>
+        <div class="sm-field">
+          <label class="sm-label" for="sm-name">Name</label>
+          <input type="text" id="sm-name" name="name" placeholder="Your name" autocomplete="name"/>
+        </div>
+        <div class="sm-field">
+          <label class="sm-label" for="sm-email">Work email</label>
+          <input type="email" id="sm-email" name="email" placeholder="you@yourteam.example" autocomplete="email"/>
+        </div>
+        <div class="sm-field">
+          <label class="sm-label" for="sm-teamsize">Team size</label>
+          <select class="inputer" id="sm-teamsize" name="teamsize">
+            <option value="">Select team size</option>
+            <option value="1">Just me</option>
+            <option value="2-5">2–5 people</option>
+            <option value="6-20">6–20 people</option>
+            <option value="21+">21 or more</option>
+          </select>
+        </div>
+        <div class="sm-field">
+          <label class="sm-label" for="sm-message">Message</label>
+          <textarea id="sm-message" name="message" placeholder="Tell us about your project"></textarea>
+        </div>
+        <button type="submit" class="btn-solid sm" style="height:calc(var(--aura)*3.5);font-size:15px;">Send request</button>
+        <div class="sm-form-confirm" aria-live="polite" id="sm-form-confirm"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="sm-pricing" aria-labelledby="sm-pricing-h2">
+  <div class="wrap">
+    <h2 class="sm-pricing-h2" id="sm-pricing-h2">Simple, honest pricing</h2>
+    <div class="sm-pricing-grid">
+      <div class="sm-plan">
+        <div class="sm-plan-name">Starter</div>
+        <div class="sm-plan-price">Free</div>
+        <div class="sm-plan-cycle">Always free, no card needed</div>
+        <div class="sm-plan-feat">3 active cairns</div>
+        <div class="sm-plan-feat">500 bot lane minutes / month</div>
+        <div class="sm-plan-feat">Community support</div>
+        <div class="sm-plan-feat">Benchwork CLI included</div>
+        <div style="margin-top:calc(var(--aura)*2);">
+          <a href="#" class="btn-outline sm" style="width:100%;justify-content:center;">Open a cairn</a>
+        </div>
+      </div>
+      <div class="sm-plan sm-plan-featured">
+        <div class="sm-plan-name">Team</div>
+        <div class="sm-plan-price">$29</div>
+        <div class="sm-plan-cycle">per seat / month (sample pricing)</div>
+        <div class="sm-plan-feat">25 active cairns</div>
+        <div class="sm-plan-feat">10,000 bot lane minutes / month</div>
+        <div class="sm-plan-feat">Custom domains</div>
+        <div class="sm-plan-feat">Access key scoping</div>
+        <div style="margin-top:calc(var(--aura)*2);">
+          <a href="#" class="btn-solid sm" style="width:100%;justify-content:center;height:calc(var(--aura)*3.5);">Start team trial</a>
+        </div>
+      </div>
+      <div class="sm-plan">
+        <div class="sm-plan-name">Studio</div>
+        <div class="sm-plan-price">$99</div>
+        <div class="sm-plan-cycle">per seat / month (sample pricing)</div>
+        <div class="sm-plan-feat">Unlimited cairns</div>
+        <div class="sm-plan-feat">Unlimited bot lane minutes</div>
+        <div class="sm-plan-feat">Priority build queue</div>
+        <div class="sm-plan-feat">Dedicated support</div>
+        <div style="margin-top:calc(var(--aura)*2);">
+          <a href="#" class="btn-outline sm" style="width:100%;justify-content:center;">Contact us</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sm-faq" aria-labelledby="sm-faq-h2">
+  <div class="wrap">
+    <h2 class="sm-faq-h2" id="sm-faq-h2">Common questions</h2>
+    <div>
+      <div class="sm-faq-item">
+        <button class="sm-faq-btn" aria-expanded="false" aria-controls="sm-faq-p1" id="sm-faq-btn1">
+          What is a cairn?
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div id="sm-faq-p1" class="sm-faq-panel" role="region" aria-labelledby="sm-faq-btn1">A cairn is a deployed project on Slatemoor — an immutable build artifact that is live, versioned and rollback-ready. Each push creates a new cairn; previous ones stay available for instant restoration. All figures in this page are sample data.</div>
+      </div>
+      <div class="sm-faq-item">
+        <button class="sm-faq-btn" aria-expanded="false" aria-controls="sm-faq-p2" id="sm-faq-btn2">
+          How do bot lanes work?
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div id="sm-faq-p2" class="sm-faq-panel" role="region" aria-labelledby="sm-faq-btn2">Bot lanes are isolated execution paths within your Slatemoor account. Each bot receives a scoped access key and runs in a sandboxed environment that cannot touch your main cairn traffic. Sample figures on this page are fictional.</div>
+      </div>
+      <div class="sm-faq-item">
+        <button class="sm-faq-btn" aria-expanded="false" aria-controls="sm-faq-p3" id="sm-faq-btn3">
+          Can I migrate an existing project?
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div id="sm-faq-p3" class="sm-faq-panel" role="region" aria-labelledby="sm-faq-btn3">Yes. The Benchwork CLI has a <code>bench migrate</code> command that imports your existing build config. Static sites, Node services and containerized apps are all supported. The first cairn is free regardless of plan.</div>
+      </div>
+      <div class="sm-faq-item">
+        <button class="sm-faq-btn" aria-expanded="false" aria-controls="sm-faq-p4" id="sm-faq-btn4">
+          What counts as a bot lane minute?
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div id="sm-faq-p4" class="sm-faq-panel" role="region" aria-labelledby="sm-faq-btn4">One bot lane minute is 60 seconds of active execution time for a single bot task. Idle wait time between tasks is not counted. All plan limits shown are sample figures for illustration purposes.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sm-quote" aria-label="Sample quote">
+  <div class="wrap" style="max-width:860px;">
+    <blockquote>
+      <p>&#8220;Benchwork changed how our team ships. We went from two-day deploys to two-minute cairns — and our bots handle the overnight maintenance now.&#8221;</p>
+    </blockquote>
+    <p class="sm-quote-attr muted">— Mira Calloway, lead engineer at Fennick &amp; Co (sample)</p>
+  </div>
+</section>
+
+<section id="sm-cta" aria-labelledby="sm-cta-h2">
+  <div class="wrap">
+    <h2 class="sm-cta-h2" id="sm-cta-h2">Your next cairn is one push away</h2>
+    <div class="sm-cta-btns">
+      <a href="#" class="btn-solid hero sm">Open a cairn</a>
+      <span class="sm-cta-outline-pill">
+        <span class="sm-cta-glyphs" aria-hidden="true">
+          <span class="sm-cta-glyph"></span>
+          <span class="sm-cta-glyph"></span>
+          <span class="sm-cta-glyph"></span>
+        </span>
+        Brief your bot
+        <button class="sm-cta-copyicon" aria-label="Copy setup command" id="sm-copy-btn">
+          <svg aria-hidden="true" width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="4" y="4" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M2 9V2h7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </span>
+    </div>
+    <div class="sm-cta-live" aria-live="polite" aria-atomic="true" id="sm-copy-live"></div>
+  </div>
+</section>
+
+</main>
+<footer id="sm-footer" role="contentinfo">
+  <div class="wrap">
+    <div class="sm-footer-dir">
+      <div class="sm-footer-col">
+        <div class="sm-footer-col-h">Platform</div>
+        <ul>
+          <li><a href="#">Cairn Builds</a></li>
+          <li><a href="#">Bot Lanes</a></li>
+          <li><a href="#">Edge Regions</a></li>
+          <li><a href="#">Log Streams</a></li>
+          <li><a href="#">Rollback Pins <span class="chip">New</span></a></li>
+        </ul>
+      </div>
+      <div class="sm-footer-col">
+        <div class="sm-footer-col-h">Build</div>
+        <ul>
+          <li><a href="#">Web projects</a></li>
+          <li><a href="#">API services</a></li>
+          <li><a href="#">Container cairns <span class="chip">New</span></a></li>
+          <li><a href="#">Static sites</a></li>
+        </ul>
+      </div>
+      <div class="sm-footer-col">
+        <div class="sm-footer-col-h">Learn</div>
+        <ul>
+          <li><a href="#">Docs</a></li>
+          <li><a href="#">Benchwork CLI</a></li>
+          <li><a href="#">Bot recipes</a></li>
+          <li><a href="#">Changelog</a></li>
+          <li><a href="#">Community</a></li>
+        </ul>
+      </div>
+      <div class="sm-footer-col">
+        <div class="sm-footer-col-h">Explore</div>
+        <ul>
+          <li><a href="#">Templates</a></li>
+          <li><a href="#">Integrations</a></li>
+          <li><a href="#">Marketplace</a></li>
+          <li><a href="#">Partner program</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="sm-footer-dir-b">
+      <div class="sm-footer-col">
+        <div class="sm-footer-col-h">Company</div>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Status</a></li>
+        </ul>
+      </div>
+      <div class="sm-footer-col">
+        <div class="sm-footer-col-h">Social</div>
+        <ul>
+          <li><a href="#">Sample channel 1</a></li>
+          <li><a href="#">Sample channel 2</a></li>
+          <li><a href="#">Sample channel 3</a></li>
+          <li><a href="#">Sample channel 4</a></li>
+        </ul>
+      </div>
+      <div class="sm-footer-col">
+        <div class="sm-footer-col-h">Legal</div>
+        <ul>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Cookie choices</a></li>
+          <li><a href="#">Accessibility</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="sm-footer-bottom">
+      <div class="sm-footer-monogram" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
+          <rect x="4" y="8" width="14" height="14" rx="4" fill="currentColor" opacity="0.9"/>
+          <rect x="10" y="4" width="14" height="14" rx="4" fill="currentColor" opacity="0.5"/>
+        </svg>
+      </div>
+      <div class="sm-appearance-sw" role="radiogroup" aria-label="Appearance">
+        <button class="sm-sw-btn" role="radio" aria-checked="false" data-appearance="system">System</button>
+        <button class="sm-sw-btn" role="radio" aria-checked="false" data-appearance="light">Light</button>
+        <button class="sm-sw-btn" role="radio" aria-checked="false" data-appearance="dark">Dark</button>
+      </div>
+      <div class="sm-status">
+        <span class="sm-status-dot" aria-hidden="true"></span>
+        All systems normal (sample)
+      </div>
+      <span class="sm-legal">2026 Slatemoor, a fictional studio.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var triggers=document.querySelectorAll(".sm-nav-trigger[data-dropdown]");
+  var flyouts={};
+  triggers.forEach(function(t){
+    flyouts[t.dataset.dropdown]=document.getElementById(t.getAttribute("aria-controls"));
+  });
+  function closeAll(except){
+    triggers.forEach(function(t){
+      var id=t.dataset.dropdown;
+      if(id===except)return;
+      t.setAttribute("aria-expanded","false");
+      flyouts[id].hidden=true;
+    });
+  }
+  triggers.forEach(function(t){
+    t.addEventListener("click",function(e){
+      var id=t.dataset.dropdown;
+      var open=t.getAttribute("aria-expanded")==="true";
+      closeAll(open?null:id);
+      if(!open){
+        t.setAttribute("aria-expanded","true");
+        flyouts[id].hidden=false;
+        flyouts[id].querySelector("a").focus();
+      } else {
+        t.setAttribute("aria-expanded","false");
+        flyouts[id].hidden=true;
+      }
+      e.stopPropagation();
+    });
+    var fl=flyouts[t.dataset.dropdown];
+    fl.addEventListener("keydown",function(e){
+      if(e.key==="Escape"){
+        t.setAttribute("aria-expanded","false");
+        fl.hidden=true;
+        t.focus();
+      }
+    });
+  });
+  document.addEventListener("click",function(){closeAll(null);});
+  document.addEventListener("keydown",function(e){
+    if(e.key==="Escape")closeAll(null);
+  });
+
+  var menuBtn=document.getElementById("sm-menu-toggle");
+  var menuClose=document.getElementById("sm-menu-close");
+  var mobileMenu=document.getElementById("sm-mobile-menu");
+  var focusable="a[href],button:not([disabled]),input,select,textarea,[tabindex]:not([tabindex='-1'])";
+  function openMenu(){
+    mobileMenu.hidden=false;
+    menuBtn.setAttribute("aria-expanded","true");
+    document.body.style.overflow="hidden";
+    var first=mobileMenu.querySelectorAll(focusable)[0];
+    if(first)first.focus();
+    document.addEventListener("keydown",trapMenu);
+  }
+  function closeMenu(){
+    mobileMenu.hidden=true;
+    menuBtn.setAttribute("aria-expanded","false");
+    document.body.style.overflow="";
+    menuBtn.focus();
+    document.removeEventListener("keydown",trapMenu);
+  }
+  function trapMenu(e){
+    if(e.key==="Escape"){closeMenu();return;}
+    if(e.key!=="Tab")return;
+    var items=Array.from(mobileMenu.querySelectorAll(focusable));
+    var first=items[0],last=items[items.length-1];
+    if(e.shiftKey){if(document.activeElement===first){e.preventDefault();last.focus();}}
+    else{if(document.activeElement===last){e.preventDefault();first.focus();}}
+  }
+  menuBtn.addEventListener("click",openMenu);
+  menuClose.addEventListener("click",closeMenu);
+
+  var faqBtns=document.querySelectorAll(".sm-faq-btn");
+  faqBtns.forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var expanded=btn.getAttribute("aria-expanded")==="true";
+      btn.setAttribute("aria-expanded",String(!expanded));
+      var panel=document.getElementById(btn.getAttribute("aria-controls"));
+      if(expanded){panel.classList.remove("open");}else{panel.classList.add("open");}
+    });
+  });
+
+  var copyBtn=document.getElementById("sm-copy-btn");
+  var copyLive=document.getElementById("sm-copy-live");
+  copyBtn.addEventListener("click",function(){
+    var cmd="bench init --cairn my-project --bot-lane default";
+    if(navigator.clipboard){
+      navigator.clipboard.writeText(cmd).then(function(){
+        copyLive.textContent="Copied (sample)";
+        setTimeout(function(){copyLive.textContent="";},2000);
+      });
+    } else {
+      copyLive.textContent="Copied (sample)";
+      setTimeout(function(){copyLive.textContent="";},2000);
+    }
+  });
+
+  var form=document.getElementById("sm-contact-form");
+  var confirm=document.getElementById("sm-form-confirm");
+  form.addEventListener("submit",function(e){
+    e.preventDefault();
+    confirm.textContent="Thank you — we will be in touch soon (sample confirmation).";
+  });
+
+  var swBtns=document.querySelectorAll(".sm-sw-btn[data-appearance]");
+  var html=document.documentElement;
+  function getCurrentAppearance(){
+    if(html.classList.contains("dark"))return"dark";
+    if(html.classList.contains("light"))return"light";
+    return"system";
+  }
+  function setAppearanceUI(){
+    var cur=getCurrentAppearance();
+    swBtns.forEach(function(b){
+      b.setAttribute("aria-checked",b.dataset.appearance===cur?"true":"false");
+    });
+  }
+  setAppearanceUI();
+  swBtns.forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var ap=btn.dataset.appearance;
+      html.classList.remove("light","dark");
+      if(ap==="light"){html.classList.add("light");html.style.colorScheme="light";}
+      else if(ap==="dark"){html.classList.add("dark");html.style.colorScheme="dark";}
+      else{
+        var sys=window.matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light";
+        html.classList.add(sys);html.style.colorScheme=sys;
+      }
+      setAppearanceUI();
+    });
+  });
+})();
+</script>
+</body>
+</html>
