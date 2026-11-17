@@ -229,7 +229,7 @@ The dark `--muted` is raised to `#9a9ab8` (≈ 4.5:1 on `--canvas` `#15151d` and
 
 The hero landscape art and CSS laptop dashboard use dedicated named tokens so no hex literals appear in component CSS. They are listed in `aura.tokens.light` and `aura.tokens.dark` in the front matter and emitted into `theme.css` as CSS custom properties.
 
-Hero sky gradient stops (`--hero-sky-a` … `--hero-sky-f`): light values depict a warm dusk haze fading through dusty blue to deep ink; dark values use deep midnight blue shades for a painted nocturnal valley. Ridge layers (`--hero-ridge` … `--hero-ridge6`) define the layered silhouette colors; river glow bands (`--hero-river-a/b/c`) give the lower glow. Dashboard chrome tokens (`--dash-bg`, `--dash-screen`, `--dash-deck`, `--dash-hinge`, `--dash-sidebar`, `--dash-border`, `--dash-active`, `--dash-active-color`, `--dash-muted`, `--dash-label`, `--dash-card`, `--dash-card-border`, `--dash-text`, `--dash-chart`, `--dash-ex-bg`, `--dash-ex-color`, `--dash-ex-border`) paint the CSS laptop frame and its dashboard mock. The keyboard deck (`.ir-laptop-deck`) is a thin metallic trapezoid (16–20px tall, slightly wider than the lid) with a cool-gray gradient built from `color-mix(in srgb, var(--dash-border) N%, white)` — light top edge, darker bottom — plus a small centered notch; it reads as cool gray in both light and dark, never beige.
+Hero sky gradient stops (`--hero-sky-a` … `--hero-sky-f`): light values depict a warm dusk haze fading through dusty blue to deep ink; dark values use deep midnight blue shades for a painted nocturnal valley. Ridge layers (`--hero-ridge` … `--hero-ridge6`) define the layered silhouette colors; river glow bands (`--hero-river-a/b/c`) give the lower glow. Dashboard chrome tokens (`--dash-bg`, `--dash-screen`, `--dash-deck`, `--dash-hinge`, `--dash-sidebar`, `--dash-border`, `--dash-active`, `--dash-active-color`, `--dash-muted`, `--dash-label`, `--dash-card`, `--dash-card-border`, `--dash-text`, `--dash-chart`, `--dash-ex-bg`, `--dash-ex-color`, `--dash-ex-border`) paint the CSS laptop frame and its dashboard mock. The keyboard deck (`.ir-laptop-deck`) is a thin metallic trapezoid (16–20px tall, slightly wider than the lid) with a cool-gray gradient built from `color-mix(in srgb, var(--dash-border) N%, white)` — light top edge, darker bottom — plus a small centered notch; it reads as cool gray in both light and dark, never beige. The deck is positioned at `top: 80%` (the lid's bottom edge) so it sits flush under the lid with no gap. The hinge element is hidden (`display: none`).
 
 ### Dark mode
 
@@ -260,7 +260,7 @@ Albert Sans loads at weights 400, 500 and 600 from the flavor's Google Fonts hre
 - Hero: full-width painted band, ≈ 640px tall at 1280px. Hero content max-width is 860px so the h1 fits on one line at 1280px.
 - Content sections are centered with `width: min(100% - calc(var(--aura)*4), 880px)`.
 - Two-column layouts split at 1024px; cards grid at 768px.
-- At 360px: 1-column stacking, h1 ≤ 40px (`text-wrap: balance`, `max-width: 280px` for two-line break; 36px at ≤ 399px), h2 ≤ 32px, no overflow. Hero submit button is `position: static`, full-width, 48px tall, below the input field at < 768px.
+- At 360px: 1-column stacking, h1 38px (`text-wrap: balance`, no max-width — two lines fit at 360; 36px at ≤ 399px), h2 ≤ 32px, no overflow. Hero submit button is `position: static`, full-width, 48px tall, below the input field at < 768px. All form inputs and selects are 48px tall (`height: 48px`, `box-sizing: border-box`); textarea `min-height` is unchanged.
 
 Spacing table (design px to 13px grid):
 
@@ -295,12 +295,12 @@ Sections separate by surface color, not shadows. Cards use a 1px `--rule` hairli
 
 Ironmere overrides these Aura defaults under the `.ir` root wrapper class:
 
-- `Button variant="fill"` (`.btn-pill-solid`): `border-radius: 9999px`, `--periwinkle` fill, `--on-periwinkle` text, 36px header height, 44px hero height.
+- `Button variant="fill"` (`.btn-pill-solid`): `border-radius: 9999px`, `--periwinkle` fill, `--on-periwinkle` text, 36px header height. Hero email-capture row: input is 48px tall (`flex: none`, `height: 48px`); inner "Get started" button is 40px (inset 4px top/bottom) at ≥ 768px, 48px full-width stacked at < 768px; "Try the sample" pill is 48px at all widths.
 - `Button variant="pill"` (`.btn-pill-glass`): `border-radius: 9999px`, `--pill-glass-bg` fill, `--pill-glass-border` 1px border, band/near-white text; for use on ink bands.
 - `Button variant="outline"` (`.btn-pill-outline`): `border-radius: 9999px`, `--canvas` fill, 1px `--control-line` border, `--ink` text; meets 3:1.
 - `NavigationMenu` triggers (`button[data-dropdown]`): `aria-expanded`, `aria-controls`, hairline chevron; flyout panels are 12px radius, 1px `--rule` border, soft shadow.
 - `Card`: `--card-bg` surface, 1px `--rule` border, 12px radius, `shadow-none`.
-- `Input`, `NativeSelect` (`select.inputer`): `border-radius: 9999px`, 1px `--control-line` border, `--canvas` fill, CSS gradient chevron for select (two `linear-gradient` triangles at `right 18px center`, `right 14px center`).
+- `Input`, `NativeSelect` (`select.inputer`): `border-radius: 9999px`, 1px `--control-line` border, `--canvas` fill, CSS gradient chevron for select (two `linear-gradient` triangles at `right 18px center`, `right 14px center`). Both have `height: 48px`, `box-sizing: border-box`. Textarea `min-height` unchanged.
 - `Accordion`: disclosure pattern, `aria-expanded` buttons, `--rule` hairline separators.
 - `Badge` / chips: pill, `--chip-bg` fill, `--chip-ink` text, 13px.
 - Press cards (S-09): each card wraps the outlet name in a `.ir-press-outlet-tile` inner div — `color-mix(in srgb, var(--band-fg) 6%, var(--band))` background, `border-radius: 8px`, 96px tall, name centered. The headline and read-more button sit below the tile in the same card surface.
