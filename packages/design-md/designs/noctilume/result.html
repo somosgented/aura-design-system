@@ -65,8 +65,11 @@ img{max-width:100%;height:auto;}
 .nl-poster-cap{font-size:9.6px;font-weight:300;text-transform:uppercase;letter-spacing:0.08em;color:var(--tile-caption-fg);display:block;margin-top:3px;}
 
 .light .nl-h2{color:var(--ink);}
+.light .nl-new-h2{color:var(--body);}
 
 :root{
+--hero-band:rgb(0,0,0);
+--hero-cta-fg:rgb(255,255,255);
 --cw-inactive:rgba(255,255,255,0.45);
 --hero-sub-fg:rgba(255,255,255,0.80);
 --hero-fine-fg:rgba(255,255,255,0.65);
@@ -91,6 +94,8 @@ img{max-width:100%;height:auto;}
 --orb-glow:rgba(0,0,0,0.0);
 }
 .dark{
+--hero-band:rgb(0,0,0);
+--hero-cta-fg:rgb(255,255,255);
 --cw-inactive:rgba(255,255,255,0.45);
 --hero-sub-fg:rgba(255,255,255,0.80);
 --hero-fine-fg:rgba(255,255,255,0.65);
@@ -115,6 +120,8 @@ img{max-width:100%;height:auto;}
 --orb-glow:rgba(0,0,0,0.0);
 }
 .light{
+--hero-band:rgb(0,0,0);
+--hero-cta-fg:rgb(255,255,255);
 --cw-inactive:rgba(11,11,12,0.35);
 --hero-sub-fg:rgba(255,255,255,0.80);
 --hero-fine-fg:rgba(255,255,255,0.65);
@@ -152,7 +159,7 @@ img{max-width:100%;height:auto;}
 @media(max-width:399px){.nl-join-btn-full{display:none;}.nl-join-btn-short{display:inline-flex!important;}}
 .nl-join-btn-short{display:none;}
 
-.nl-hero{min-height:600px;padding-top:60px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:black;}
+.nl-hero{min-height:600px;padding-top:60px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--hero-band);}
 .nl-orb{position:absolute;top:50%;left:50%;transform:translate(-50%,-54%);width:clamp(360px,52vw,640px);height:clamp(360px,52vw,640px);border-radius:50%;pointer-events:none;background:
   radial-gradient(ellipse 55% 35% at 28% 20%, var(--orb-sheen-hi) 0%, transparent 55%),
   radial-gradient(circle at 50% 50%, var(--orb-inner) 0%, var(--orb-mid) 48%, transparent 70%),
@@ -162,8 +169,8 @@ img{max-width:100%;height:auto;}
 .nl-orb::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(ellipse 38% 18% at 26% 17%, var(--orb-sheen-arc) 0%, transparent 100%);}
 .nl-hero-content{position:relative;z-index:2;text-align:center;padding:40px 26px;max-width:900px;width:100%;}
 .nl-hero-eyebrow{font-size:clamp(20px,2.5vw,28px);font-weight:700;text-transform:uppercase;letter-spacing:0.11em;color:var(--hero-eyebrow-fg);margin-bottom:12px;text-shadow:0 1px 8px var(--orb-shadow);}
-.light .nl-hero-eyebrow{color:var(--hero-eyebrow-fg);}
-.nl-hero-h1{font-size:clamp(56px,8vw,88px);font-weight:700;text-transform:uppercase;line-height:1.0;margin-bottom:16px;overflow-wrap:break-word;min-width:0;color:var(--hero-title-fb);background-image:linear-gradient(90deg,var(--icy-hero-start) 0%,var(--icy-hero-mid) 30%,var(--icy-hero-end) 70%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}@supports not (background-clip:text){.nl-hero-h1{-webkit-text-fill-color:unset;color:var(--icy-hero-end);}}
+.light .nl-hero-eyebrow{color:var(--hero-eyebrow-fg);}.light .nl-hero-cta{color:var(--hero-cta-fg);}
+.nl-hero-h1{font-size:clamp(72px,8vw,88px);font-weight:700;text-transform:uppercase;line-height:1.0;margin-bottom:16px;overflow-wrap:break-word;min-width:0;color:var(--hero-title-fb);background-image:linear-gradient(90deg,var(--icy-hero-start) 0%,var(--icy-hero-mid) 30%,var(--icy-hero-end) 70%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}@supports not (background-clip:text){.nl-hero-h1{-webkit-text-fill-color:unset;color:var(--icy-hero-end);}}
 .nl-hero-sub{font-size:15px;font-weight:400;text-transform:uppercase;letter-spacing:0.08em;color:var(--hero-sub-fg);margin-bottom:12px;}
 .nl-hero-price{display:flex;align-items:baseline;justify-content:center;gap:8px;flex-wrap:nowrap;margin-bottom:20px;overflow:visible;position:relative;}
 .nl-price-old{font-size:40px;font-weight:400;color:var(--price-old-fg);text-decoration:line-through;text-decoration-color:var(--price-old-fg);}
@@ -171,7 +178,7 @@ img{max-width:100%;height:auto;}
 .nl-price-new{font-size:64px;font-weight:700;color:white;}
 .nl-price-unit{font-size:24px;font-weight:400;color:white;}@media(max-width:480px){.nl-price-old{font-size:24px;}.nl-price-new{font-size:38px;}.nl-price-unit{font-size:16px;}.nl-hero-price{margin-bottom:38px;}.nl-price-chip{position:absolute;bottom:-24px;left:50%;transform:translateX(-50%);white-space:nowrap;}}
 .nl-price-chip{font-size:10px;color:var(--hero-fine-fg);align-self:flex-end;padding-bottom:4px;flex-shrink:1;min-width:0;white-space:nowrap;}
-.nl-hero-cta{font-size:16px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;padding:0 32px;height:52px;width:clamp(160px,40vw,220px);color:white !important;}
+.nl-hero-cta{font-size:16px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;padding:0 32px;height:52px;width:clamp(160px,40vw,220px);color:var(--hero-cta-fg);}
 .nl-hero-fine{font-size:12px;color:var(--hero-fine-fg);max-width:600px;margin:16px auto 0;line-height:1.6;overflow-wrap:break-word;}
 
 .nl-plans{padding-block:80px;text-align:center;}
@@ -216,7 +223,7 @@ details.nl-compare[open] summary::after{content:" ▴";}
 
 .nl-genres{padding-block:0;overflow:hidden;}
 .nl-genre-wall{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0;width:100%;}
-@media(max-width:768px){.nl-genre-wall{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:768px){.nl-genre-wall{grid-template-columns:repeat(2,minmax(0,1fr));}}@media(max-width:768px){.nl-genre-tile-art svg text{display:none;}}
 .nl-genre-tile{position:relative;overflow:hidden;aspect-ratio:2/3;cursor:default;}
 .nl-genre-tile-art{position:absolute;inset:0;width:100%;height:100%;}
 .nl-genre-scrim{position:absolute;inset:0;background:linear-gradient(to top,var(--scrim-mid) 0%,transparent 55%);}
@@ -246,7 +253,7 @@ details.nl-compare[open] summary::after{content:" ▴";}
 .nl-cw{font-size:56px;font-weight:200;color:var(--cw-inactive);white-space:nowrap;user-select:none;min-width:0;overflow:visible;}
 
 .nl-cw.active{color:var(--ink);font-size:56px;}
-@media(max-width:480px){.nl-cw{font-size:32px;min-width:0;overflow:visible;display:none;}.nl-cw.active{font-size:32px;min-width:0;overflow:visible;white-space:nowrap;display:flex;}}
+@media(max-width:480px){.nl-cw{font-size:32px;min-width:0;overflow:visible;display:none;}.nl-cw.active{font-size:32px;min-width:0;overflow:visible;white-space:nowrap;display:flex;max-width:100%;}.nl-cw.active.nl-cw-long{font-size:28px;}}
 .nl-carousel-posters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:30px;row-gap:31px;max-width:1110px;margin:40px auto 0;}
 @media(max-width:768px){.nl-carousel-posters{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:14px;row-gap:14px;}}
 .nl-carousel-status{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
@@ -578,7 +585,7 @@ details.nl-compare[open] summary::after{content:" ▴";}
 </section>
 
 <section class="nl-new nl-section-wrap" aria-label="Nuevos lanzamientos">
-  <h2 class="nl-h2 nl-new-h2" style="color:var(--body);">El cine y las series del momento</h2>
+  <h2 class="nl-h2 nl-new-h2">El cine y las series del momento</h2>
   <div class="nl-poster-grid" role="list" aria-label="Títulos ficticios">
     <div class="nl-landscape" role="listitem">
       <div class="nl-land-art nl-s05-p1" aria-hidden="true">
@@ -896,6 +903,7 @@ function renderCarousel(){
   var next=(current+1)%n;
   document.getElementById("cw-prev").textContent=GENRES[prev].name;
   document.getElementById("cw-active").textContent=GENRES[current].name;
+  document.getElementById("cw-active").classList.toggle("nl-cw-long",GENRES[current].name.length>10);
   document.getElementById("cw-next").textContent=GENRES[next].name;
   var status="Género: "+GENRES[current].name+", "+(current+1)+" de "+n;
   document.getElementById("carousel-status").textContent=status;
@@ -988,6 +996,7 @@ function setAppearance(mode,btn){
     r.classList.add(sys);r.style.colorScheme=sys;
   }
 }
+window.carouselMove=carouselMove;window.toggleFaq=toggleFaq;window.switchPeriod=switchPeriod;window.setAppearance=setAppearance;
 })();
 </script>
 </body>

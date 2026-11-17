@@ -130,6 +130,8 @@
   --poster-lilac: #6a1888;
   --poster-dark: #0a0a14;
   --cw-inactive: rgba(11,11,12,0.35);
+  --hero-band: #000000;
+  --hero-cta-fg: #ffffff;
   --hero-eyebrow-fg: rgba(255,255,255,0.65);
   --hero-link-blue: #71b8f2;
   --hero-link-blue-hover: #80c6ff;
@@ -268,6 +270,8 @@
     --poster-lilac: #6a1888;
     --poster-dark: #0a0a14;
     --cw-inactive: rgba(255,255,255,0.45);
+    --hero-band: #000000;
+    --hero-cta-fg: #ffffff;
     --hero-eyebrow-fg: rgba(255,255,255,0.5);
     --hero-link-blue: #71b8f2;
     --hero-link-blue-hover: #80c6ff;
@@ -406,6 +410,8 @@
   --poster-lilac: #6a1888;
   --poster-dark: #0a0a14;
   --cw-inactive: rgba(255,255,255,0.45);
+  --hero-band: #000000;
+  --hero-cta-fg: #ffffff;
   --hero-eyebrow-fg: rgba(255,255,255,0.5);
   --hero-link-blue: #71b8f2;
   --hero-link-blue-hover: #80c6ff;

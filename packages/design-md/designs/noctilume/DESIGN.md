@@ -112,6 +112,8 @@ aura:
       poster-lilac: "#6a1888"
       poster-dark: "#0a0a14"
       cw-inactive: "rgba(11,11,12,0.35)"
+      hero-band: "#000000"
+      hero-cta-fg: "#ffffff"
       hero-eyebrow-fg: "rgba(255,255,255,0.65)"
       hero-link-blue: "#71b8f2"
       hero-link-blue-hover: "#80c6ff"
@@ -188,6 +190,8 @@ aura:
       poster-lilac: "#6a1888"
       poster-dark: "#0a0a14"
       cw-inactive: "rgba(255,255,255,0.45)"
+      hero-band: "#000000"
+      hero-cta-fg: "#ffffff"
       hero-eyebrow-fg: "rgba(255,255,255,0.5)"
       hero-link-blue: "#71b8f2"
       hero-link-blue-hover: "#80c6ff"
@@ -231,7 +235,7 @@ An agent that receives this file's link inside an Aura project does this, in ord
 
 Noctilume is an evening streaming demo with a single dramatic visual language: pure black canvas, one icy chrome gradient for display headlines and badges, loud gray fill buttons, and a night-blue panel with an outer glow for bottom-of-page conversion. The light appearance flips to a cool off-white canvas while keeping the same structural hierarchy.
 
-The page has ten sections in fixed order: fixed header, glass-orb hero, three-plan picker with a tab switch, full-bleed genre portrait wall, new-arrivals poster grid, large-word genre carousel, brand moment, FAQ with a notification form, night-blue promo bar, and footer with an appearance switch.
+The page has ten sections in fixed order: fixed header, glass-orb hero, three-plan picker with a tab switch, full-bleed genre portrait wall, new-arrivals poster grid, large-word genre carousel, brand moment, FAQ with a section h2 «Preguntas frecuentes» and a notification form, night-blue promo bar, and footer with an appearance switch.
 
 ## Colors
 
@@ -281,13 +285,13 @@ One family, **Outfit**, loaded at weights 200/300/400/500/600/700.
 | Badge | 9.6px | 600 | uppercase | 0.08em |
 | Tile caption | 9.6px | 300 | uppercase | 0.08em |
 | Tile genre label | 20px | 600 | uppercase | 0 |
-| Carousel word | 56px (32px at 360) | 200 | — | 0 |
+| Carousel word | 56px (32px at 360, 28px for names longer than 10 chars) | 200 | — | 0 |
 | FAQ question | 16px | 500 | — | 0 |
 | Footer link | 15px | 600 | — | 0 |
 | Legal / fine print | 11.7px | 400 | — | 0 |
 | New-arrivals h2 | clamp(24px,3vw,35px) | 600 | uppercase | 0 |
 
-Hero h1 uses the bright icy chrome gradient via `background-clip:text` and the `--icy-hero-*` tokens (same values in both appearances, because the hero stays a dark band). The promo-bar headline uses `--icy-grad-*` (bright in dark, darkened navy in light for contrast on the pale panel). Every uppercase label is Outfit; no second family is introduced.
+Hero h1 uses the bright icy chrome gradient via `background-clip:text` and the `--icy-hero-*` tokens (same values in both appearances, because the hero stays a dark band). `--hero-eyebrow-fg`, `--hero-sub-fg`, and `--hero-fine-fg` are white alphas measured on `--hero-band` (not on the canvas) in both appearances. The hero outline CTA keeps a white label (`--hero-cta-fg`) in both appearances because it sits on `--hero-band`. The promo-bar headline uses `--icy-grad-*` (bright in dark, darkened navy in light for contrast on the pale panel). Every uppercase label is Outfit; no second family is introduced.
 
 ## Layout
 
@@ -302,9 +306,13 @@ Hero h1 uses the bright icy chrome gradient via `background-clip:text` and the `
 | FAQ card width 736px | 56.5 | 734.5 |
 | Ancho total 1280px | 98.5 | 1280.5 |
 
+At 360px only the active carousel word is shown, centered, without adjacent words or edge fade; genre names longer than 10 characters drop to 28px.
+
 Sections stack in normal flow. The header is `position:fixed`; the hero adds 60px top padding to clear it. The genre wall sits outside the centered wrapper in a `width:100%` block so it spans edge to edge. The promo bar is centered at max-width 888px inside its own section. All grid children carry `min-width:0`.
 
 ## Elevation & Depth
+
+At 768px and below, the in-art SVG `<text>` inside each genre tile is hidden via `@media(max-width:768px){.nl-genre-tile-art svg text{display:none;}}` to avoid title duplication with the label block beneath the tile.
 
 No shadows on cards; `#171717` on black provides low-contrast distinction. The promo bar uses `box-shadow: 0 0 24px 0 var(--promo-glow)` as the only shadow. The glass orb uses layered radial-gradients with no box-shadow. The header blurs the content behind it via `backdrop-filter:blur(16px)`.
 
@@ -328,6 +336,8 @@ The showcase uses these Aura patterns, overridden with Noctilume tokens and the 
 - **Form (notification)**: `name + email + NativeSelect + submit`; `preventDefault`; `aria-live` confirmation.
 - **Appearance switch**: `role=radiogroup`; three `button[aria-checked]` pills; sets `html` class and `colorScheme`. Border: `1.5px solid var(--outline-cta-border)` to meet the ≥3:1 boundary contrast requirement.
 
+The new-arrivals section h2 uses `--body` instead of `--ink` to read as an editorial lead-in.
+
 Poster tiles are CSS-only art: `background` with named gradient tokens or `color-mix` of them; large Outfit text for invented titles inside. The glass orb is four layered `radial-gradient` stops on a circle element: a cold blue-gray inner fill, a bright rim ring at ~57% radius (white 45%), a fainter outer concentric ring, and an upper-left sheen arc — no box-shadow on the orb itself.
 
 ## Do's and Don'ts
@@ -336,7 +346,7 @@ Poster tiles are CSS-only art: `background` with named gradient tokens or `color
 
 Three elements use CSS gradient text clipping:
 
-1. **Hero h1** ("NOCHE LARGA") — horizontal icy chrome: `background-image:linear-gradient(90deg,var(--icy-grad-start) 0%,var(--icy-grad-mid) 30%,var(--icy-grad-end) 70%); -webkit-background-clip:text; background-clip:text; color:transparent`. Works in both dark and light: the hero is always a dark band, so it uses `--icy-hero-*` (`#dce0ee` → `#dfe9f5` → `#b3c8f1`) in both appearances. A `@supports not (background-clip:text)` rule provides `color:var(--icy-grad-end)` as a solid fallback.
+1. **Hero h1** ("NOCHE LARGA") — horizontal icy chrome: `background-image:linear-gradient(90deg,var(--icy-hero-start) 0%,var(--icy-hero-mid) 30%,var(--icy-hero-end) 70%); -webkit-background-clip:text; background-clip:text; color:transparent`. Works in both dark and light: the hero is always a dark band, so it uses `--icy-hero-*` (`#dce0ee` → `#dfe9f5` → `#b3c8f1`) in both appearances. A `@supports not (background-clip:text)` rule provides `color:var(--icy-hero-end)` as a solid fallback.
 
 2. **Promo-bar headline** ("NOCHE LARGA") — same horizontal icy gradient and clip technique. In light mode the promo bar uses the darker icy tokens (`--icy-grad-start:#2b3a5c`, `--icy-grad-mid:#3f66b3`, `--icy-grad-end:#2b3a5c`) which already provide sufficient contrast on the pale icy panel background.
 
@@ -349,7 +359,7 @@ Never set `color` to any value other than `transparent` (or the fallback) on the
 - Keep the page canvas pure black (`#000000`) in dark, `#f5f5f7` in light; never introduce a tertiary surface color.
 - Use Outfit weight 200 only for carousel genre words.
 - Keep loud buttons gray-fill (`#dddddd` dark / `#111114` light) with no border.
-- Full-bleed the genre portrait wall and the promo bar; clip their internal art to their own elements.
+- Full-bleed the genre portrait wall; clip its internal art to its own elements.
 
 **Don't:**
 - Do not use violet, purple or warm-tinted grays anywhere on the page.
