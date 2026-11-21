@@ -170,12 +170,12 @@ The orange primary button deliberately carries dark text. Do not switch it to wh
 | Category band | `--charcoal` | `#262626` | `#1c1c1c` |
 | Feature band | `--void` | `#0a0a0a` | `#000000` |
 | Primary button | `--orange` / `--orange-ink` | `#f27a1a` / `#1a1a1a` | same |
-| Subscribe button | `--blue` | `#0a56c9` | same |
+| Subscribe button | `--orange` / `--orange-ink` (same orange pill as the primary button) | `#f27a1a` / `#1a1a1a` | same |
 | Footer | `--foot`, `--foot-ink`, `--foot-muted`, `--foot-line` | `#151515`, `#f5f5f5`, `#d0d0d0`, `#9a9a9a` | `#0a0a0a`, same, same, same |
 | Badges | `--badge-green`, `--badge-yellow` | `#0c6a38`, `#ffcf1a` | same |
 | Illustration palette | `--toy-red`, `--toy-blue`, `--toy-sky`, `--toy-plum`, `--toy-teal`, `--toy-sand`, `--toy-slate` | see header block | lifted or deepened in header block |
 
-Contrast computed from these values: ink on canvas 17.4:1; muted on canvas 6.69:1 and on the gray panel 5.92:1; dark ink on the yellow bar 11.76:1; dark ink on orange 6.28:1; white on forest 6.7:1; white on the subscribe blue 6.59:1; link on canvas 6.59:1 and on the gray panel 5.83:1; light control border on canvas 4.54:1 and on the gray panel 4.02:1.
+Contrast computed from these values: ink on canvas 17.4:1; muted on canvas 6.69:1 and on the gray panel 5.92:1; dark ink on the yellow bar 11.76:1; dark ink on orange 6.28:1; near-white `#f5f5f5` on forest 6.15:1 and on the dark forest 8.9:1; dark ink on the yellow badge 11.76:1; link on canvas 6.59:1 and on the gray panel 5.83:1; light control border on canvas 4.54:1 and on the gray panel 4.02:1.
 
 Colored bands override `--focus` locally so the ring stays at least 3:1: white on the forest, charcoal, near-black and footer bands, ink on the yellow bar.
 
@@ -188,11 +188,14 @@ Dark is its own scheme, not an inversion. The page is `#121212` with near-white 
 | Role | Face | Weight | Size 1280 / 360 | Notes |
 | --- | --- | --- | --- | --- |
 | Hero h1 | Outfit | 700 | 40px / 28px | line-height 1.25, left aligned |
-| Section h2 | Outfit | 700 | 32px / 24px | centered, with a 16px Nunito Sans second line |
+| Section h2 | Outfit | 700 | 32px / 24px | centered, with a 16px Nunito Sans second line; the weekend-ideas h2 is left aligned |
 | Card title | Outfit | 600 | 20px | two lines at most |
-| Buttons, tabs, prices | Outfit | 600 | 15px | no uppercase |
+| Buttons and header triggers | Outfit | 600 | 15px | no uppercase |
+| Tabs, prices | Outfit | 600 | 16px | tabs underline the selected item |
+| Segmented tabs | Outfit | 600 | 13px below 640px, 15px from 640px | pill track |
+| Spotlight panel heading | Outfit | 700 | 32px / 24px | left aligned |
 | Body | Nunito Sans | 400 | 16px | line-height 1.5 |
-| Small | Nunito Sans | 400–600 | 14px (13px for notes) | muted token |
+| Small | Nunito Sans | 400–600 | 14px (13px for notes, 12px for badges) | muted token |
 | Footer headings | Outfit | 700 | 16px | uppercase |
 | logotype | Outfit | 700 | 20px | lowercase, -0.02em tracking |
 
@@ -202,14 +205,14 @@ There is no mono face.
 
 - Content width 1232px at 1280, with 24px side padding at 360.
 - Section rhythm 64px at 1280 and 48px at 360. The hero, quick-link band and info strip are full-bleed bands; every section sits in normal flow.
-- Header is 64px tall at 1280. Below 1024px a hamburger replaces the three drop panel triggers and the search pill takes its own full-width row.
+- Header is 68px tall at 1280. Below 1024px a hamburger replaces the three dropdown triggers and the search pill takes its own full-width row. At 480px and below, the hamburger, the logotype and the three 36px icon buttons (account, saved list, bag with count) share one row, and the search pill sits full width under them.
 - Hero: a full-bleed forest band with a 1232px inner width. At 1280 the text column sits on the left (5/12) and the diamond-ring art on the right (7/12), minimum height 320px, bleeding to the right edge of the band and clipped by its own `overflow: hidden`. At 360 the art is a 200px full-bleed band above the text.
-- Quick links: eight equal tiles at 1280, each with the label at the top and a centered 56px line glyph (44px at 360) inside a lighter green diamond; the Trending and Themes panels each hold eight tiles with different labels and glyphs. The strip scrolls at 360 (scroll-snap, about 3.3 tiles visible). The band ends in a slanted clip-path edge with enough bottom padding.
-- Product track: five cards visible at 1280, 1.15 at 360, scroll-snap, in a keyboard-reachable region. Every card has the same structure and height: a note row ("Example set (sample)"), a badges row, a 170px scene, a meta row, a two-line title block, a price block with a reserved flag row, and a button row pinned to the bottom.
-- Spotlight: a near-black full-bleed band; at 1280 the text column is on the left and the scene art on the right, bleeding to the right edge; the three segmented tabs (Points, Early access, Monthly build) use 13px labels on small screens so all three fit at 360 without scrolling; the small label sits bottom-left.
-- Footer: the gray info strip touches the footer. A "Country / region" button opens three sample regions (Region A, Region B, Region C), four round "Sample channel 1" to "Sample channel 4" buttons, a legal links row with its own spacing, and the appearance switch.
+- Quick links: eight equal tiles at 1280, each with the label at the top and a centered 56px line glyph (44px at 360) inside a lighter green diamond; the "Hot right now" and "By style" panels each hold eight tiles with different labels and glyphs. The strip scrolls at 360 (scroll-snap, about 3.3 tiles visible). The band ends in a slanted clip-path edge with enough bottom padding.
+- Product track: six cards, five visible at 1280 (four from 900px, five from 1100px), one card filling the track at 360 (2.2 from 480px, 3.2 from 640px), scroll-snap, in a keyboard-reachable region. Every card has the same structure and height: a note row ("Example set (sample)"), a badges row, a 170px scene, a meta row, a two-line title block, a price block with a reserved flag row, and a button row pinned to the bottom.
+- Spotlight: a near-black full-bleed band; at 1280 the text column is on the left and the scene art on the right, bleeding to the right edge; the three segmented tabs (On the bench, Bonus tray, Club corner) use 13px labels below 640px so all three fit at 360 without scrolling; the small label sits bottom-left.
+- Footer: the gray info strip touches the footer. A "Country / region" button opens three sample regions (Region A, Region B, Region C), four round channel buttons under "Find us online" (aria-labels "Sample channel one" to "Sample channel four"), a secondary link list (Present vouchers, All pages, Pop-in counters, Paper booklets), a legal links row (Privacy, Cookies, Terms, Accessibility) with a top hairline, and the appearance switch.
 - Gallery: one large 2x2 tile at left and four small tiles at right at 1280; one column of 4:3 tiles at 360.
-- Discover: three equal cards, one column at 360.
+- Weekend ideas: three equal cards, one column at 360.
 
 Spacing table (design px to the 13px grid):
 
@@ -227,14 +230,14 @@ Button heights (40px and 44px) and the 1232px width are kept literal.
 
 ## Elevation & Depth
 
-Flat. Cards use a 1px `--rule` hairline and no shadow. Only the drop panel panels and the gallery popover carry a soft ambient shadow made with `color-mix(in srgb, var(--ink) 14%, transparent)`. The hero and tile patterns are flat color fields with dotted stud edges built from `radial-gradient`.
+Flat. Cards use a 1px `--rule` hairline and no shadow. Only the dropdown panels, the gallery popover and the hero badge card carry a soft ambient shadow made with `color-mix`. The hero rings and tile patterns are flat color fields with dotted stud edges built from dotted outlines and borders.
 
 ## Shapes
 
-- Pills: `9999px` on every button, the search field, the email field, badges and tabs of the segmented control.
-- Round icon buttons: 40px circles with a 1.5px `--control-line` border.
-- Cards, tiles and the gallery popover: 8px radius.
-- drop panel panels: 8px radius, exactly 520px wide.
+- Pills: `9999px` on every button, the search field, the email field and the tabs of the segmented control. Badges use a 4px radius.
+- Round icon buttons: 40px circles with a 1.5px `--control-line` border; the dismiss and popover close buttons are 32px circles.
+- Cards, tiles and gallery tiles: 8px radius; the gallery popover and the hero badge card use 12px.
+- Dropdown panels: 8px radius, exactly 520px wide.
 - Mark: a 26px rounded square (6px radius) in the ink color holding a 2x2 grid of four small circles (inline SVG), followed by the lowercase logotype "cobblewick".
 - Slanted band edge: `clip-path: polygon(...)` a few degrees on the quick-link band's own box.
 
@@ -245,20 +248,21 @@ Cobblewick overrides these Aura defaults. Flavor controls live under the `cw` cl
 | Component | Aura base | Cobblewick treatment |
 | --- | --- | --- |
 | Primary button "Add to bag" | `Button variant="fill"` | `pill pill-orange`: `--orange` fill, `--orange-ink` text, bag glyph, 44px |
-| Light pill "Join the club" | `Button variant="pill"` | `pill pill-light`: near-white fill, dark text, trailing chevron |
-| Outline pill "See how it works" | `Button variant="pill"` | `pill pill-line`: 1.5px border in the surface's text color, trailing chevron |
-| Subscribe "Subscribe" | `Button variant="fill"` | `pill pill-blue`: `--blue` fill, white text, inside the white email pill |
-| Header link "Weekend deal" | `Button variant="pill"` | `pill pill-white`: white fill, dark text, 40px |
-| Icon buttons | `Button size="icon-md"` | `round`: 40px circle, 1.5px `--control-line` border (heart toggle, previous, next, plus hotspot) |
-| Search | `InputGroup` | `search` wrapper with `role="search"`, magnifier glyph, pill input "Search the shop" |
-| drop panels "Shop", "Discover", "Help" | `NavigationMenu` | `button[data-dropdown]` with `aria-expanded` and `aria-controls`; white panel, two columns of six items |
-| Tabs | `Tabs` | `tablist` with underline on the selected tab; arrow keys move focus |
-| Segmented control | `ToggleGroup` | pill track with three tabs; selected is a filled near-white pill |
+| Light pill "Join the club" | `Button variant="pill"` | `pill pill-light`: near-white fill, dark text; the hero button has a trailing chevron |
+| Outline pill "See how it works" | `Button variant="pill"` | `pill pill-line`: 1.5px border in the surface's text color; the hero button has a trailing chevron |
+| Subscribe "Subscribe" | `Button variant="fill"` | `pill pill-orange`: same orange fill and dark text as the primary button, 40px, inside the white email pill |
+| Header link "Gift wrap" | `Button variant="pill"` | `pill pill-sm pill-white`: near-white fill, dark text, 40px, visible from 1024px and repeated in the overlay menu as an orange pill |
+| Icon buttons | `Button size="icon-md"` | `round`: 40px circle, 1.5px `--control-line` border (heart toggle, previous, next, channel buttons, menu close) |
+| Search | `InputGroup` | `search` wrapper with `role="search"`, magnifier glyph, pill input "Search sets and ideas" |
+| Dropdowns "Sets", "Ideas", "Care" | `NavigationMenu` | `button[data-dropdown]` with `aria-expanded` and `aria-controls`; white panel, two columns of six items; Escape or an outside click closes, focus returns to the trigger |
+| Gallery hotspot | `Button variant="pill"` | `pill pill-sm hot`: 40px pill labeled with the build name, `aria-expanded`, opens a popover with a close button; the large tile starts open |
+| Tabs | `Tabs` | `tablist` with underline on the selected tab; arrow keys, Home and End move focus. Used for "Hot right now" / "By style" and "This week" / "Crowd picks" |
+| Segmented control | `ToggleGroup` | pill track with three tabs ("On the bench", "Bonus tray", "Club corner"); selected is a filled near-white pill |
 | Product card | `Card` | `set-card`: hairline, 8px radius, 16px padding, note row, badges row, 170px SVG scene, meta row (age, pieces, rating), two-line title block, price block, button row pinned to the bottom |
-| Badges | `Badge` | `badge-green` ("Triple points (sample)", "Member price") and `badge-yellow` ("New", "Online only") |
+| Badges | `Badge` | `badge-green` ("Marked down (sample)") and `badge-yellow` ("Fresh", "Online only") |
 | Appearance switch | `ToggleGroup` | `radiogroup` of System, Light, Dark with `aria-checked`; System follows `prefers-color-scheme`, Light and Dark set the `html` class |
 | Country button "Country / region" | `Button variant="pill"` | `pill pill-white pill-sm` with `aria-expanded`; discloses Region A, Region B and Region C |
-| Channel buttons | `Button size="icon-md"` | `round` buttons labeled "Sample channel 1" to "Sample channel 4" |
+| Channel buttons | `Button size="icon-md"` | `round` buttons showing 1 to 4, labeled "Sample channel one" to "Sample channel four" |
 
 The literal measurements the page implements:
 
@@ -267,7 +271,7 @@ menu-overlay-width: 100vw
 dropdown-width: 520px
 ```
 
-drop panel panels are `min(520px, 100vw - 32px)` wide and sit under their trigger. The menu overlay is `position: fixed` with `left: 0`, `width: 100vw`, `height: 100vh`, `role="dialog"`, `aria-modal="true"`, a focus trap and a locked body scroll while open.
+Dropdown panels are `min(520px, 100vw - 32px)` wide and sit under their trigger. The menu overlay is `position: fixed` with `left: 0`, `width: 100vw`, `height: 100vh`, `role="dialog"`, `aria-modal="true"`, a focus trap and a locked body scroll while open.
 
 The page uses no quote block.
 
@@ -284,12 +288,12 @@ The page uses no quote block.
 - Do not use photographs or external images.
 - Do not use white text on the orange button.
 - Do not put separators or pipes between inline items that can wrap.
-- Do not hide content below 480px; only the desktop drop panel triggers are replaced by the hamburger.
+- Do not hide content below 480px; only the desktop dropdown triggers and the header "Gift wrap" pill are replaced by the hamburger, and the overlay menu repeats them.
 - Do not use gradient text; any gradient label must be decorative and `aria-hidden`.
 
 ## Motion
 
-All transitions sit behind `html.motion`, which the head script sets only when the user has no reduced-motion preference. Transitions are short one-shot fades and transforms (0.15s) on hover, drop panels and the chevron. Nothing loops, so no pause control is needed. With `prefers-reduced-motion: reduce` nothing animates.
+All transitions sit behind `html.motion`, which the head script sets only when the user has no reduced-motion preference. Transitions are 0.15s one-shot background fades on pills, round and header buttons, dropdown triggers and tiles, and a 0.15s chevron rotation on dropdown triggers and overlay accordions. Dropdown panels appear without a transition. Nothing loops, so no pause control is needed. With `prefers-reduced-motion: reduce` nothing animates.
 
 ## Usage example
 
@@ -300,7 +304,7 @@ export function CobblewickPromo() {
   return (
     <section className="cw" style={{ background: "var(--forest)", color: "var(--paper)" }}>
       <h1 className="h1" style={{ fontFamily: "var(--aura-font-display)", fontSize: 40, lineHeight: 1.25 }}>
-        Members save on weekend builds
+        Free sample gift wrapping on weekend orders
       </h1>
       <Button variant="pill" className="pill pill-light">Join the club</Button>
       <Button variant="pill" className="pill pill-line">See how it works</Button>

@@ -80,7 +80,7 @@ body.cw{margin:0;background:var(--canvas);color:var(--ink);font-family:var(--aur
 .top-in{display:flex;flex-wrap:wrap;align-items:center;gap:8px 2px;padding-block:10px;}
 .top .brand{margin-inline:4px 6px;}
 .acts{display:flex;align-items:center;margin-left:auto;}
-.cw .nav,.cw .deal{display:none;}
+.cw .nav,.cw .gift{display:none;}
 .nav-list{display:flex;gap:2px;}
 .nav-list>li{position:relative;}
 .cw .trigger{display:inline-flex;align-items:center;gap:4px;height:40px;padding:0 12px;border:0;border-radius:9999px;background:none;color:inherit;font-family:var(--aura-font-display);font-weight:600;font-size:15px;cursor:pointer;}
@@ -99,16 +99,16 @@ body.cw{margin:0;background:var(--canvas);color:var(--ink);font-family:var(--aur
 .fly b{display:block;font-family:var(--aura-font-display);font-weight:600;font-size:15px;line-height:1.3;}
 .fly span{display:block;font-size:13px;line-height:1.4;color:var(--muted);}
 
-.cw .sheet{position:fixed;left:0;top:0;width:100vw;height:100vh;z-index:400;display:flex;flex-direction:column;gap:12px;padding:12px 24px 32px;overflow-y:auto;background:var(--canvas);color:var(--ink);--focus:var(--ink);--control-line:var(--ink);--mark-bg:var(--ink);--mark-fg:var(--canvas);}
+.cw .sheet{position:fixed;left:0;top:0;width:100vw;height:100vh;z-index:400;display:flex;flex-direction:column;gap:0;padding:12px 24px 32px;overflow-y:auto;background:var(--canvas);color:var(--ink);--focus:var(--ink);--control-line:var(--ink);--mark-bg:var(--ink);--mark-fg:var(--canvas);}
 .cw .sheet[hidden]{display:none;}
-.sheet-top{display:flex;align-items:center;justify-content:space-between;min-height:52px;}
+.sheet-top{display:flex;align-items:center;justify-content:space-between;min-height:52px;margin-bottom:12px;}
 .sheet-acc{border-top:1px solid var(--rule);}
-.cw .sheet-acc>button{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:56px;padding:0;border:0;border-bottom:1px solid var(--rule);background:none;color:inherit;text-align:left;font-family:var(--aura-font-display);font-weight:600;font-size:20px;cursor:pointer;}
+.cw .sheet-acc>button{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:56px;padding:0;border:0;background:none;color:inherit;text-align:left;font-family:var(--aura-font-display);font-weight:600;font-size:20px;cursor:pointer;}
 .sheet-acc>button svg{width:20px;height:20px;}
 .sheet-acc>button[aria-expanded="true"] svg{transform:rotate(180deg);}
 .sheet-acc ul{padding:8px 0 12px;}
 .sheet-acc li a{display:block;padding:10px 0;font-size:16px;}
-.sheet-links{display:grid;gap:12px;padding-top:12px;justify-items:start;}
+.sheet-links{display:grid;gap:12px;margin-top:0;padding-top:20px;border-top:1px solid var(--rule);justify-items:start;}
 
 .hero{background:var(--forest);color:var(--paper);--focus:var(--paper);--control-line:var(--paper);}
 .hero-in{display:grid;grid-template-columns:minmax(0,1fr);--gut:max(24px,calc((100% - 1232px) / 2));}
@@ -231,7 +231,7 @@ body.cw{margin:0;background:var(--canvas);color:var(--ink);font-family:var(--aur
 .regions-title{font-size:13px;color:var(--foot-muted);}
 .cw .regions button{padding:8px 12px;border:1.5px solid var(--foot-line);border-radius:8px;background:transparent;color:var(--foot-ink);text-align:left;font-size:14px;cursor:pointer;}
 .regions button:hover{background:color-mix(in srgb,var(--foot-ink) 12%,transparent);}
-.foot-mid{display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px;margin-top:40px;padding-top:32px;border-top:1px solid color-mix(in srgb,var(--foot-ink) 18%,transparent);}
+.foot-mid{display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px;margin-top:40px;padding-bottom:8px;padding-top:32px;border-top:1px solid color-mix(in srgb,var(--foot-ink) 18%,transparent);}
 .sub{display:grid;flex:1 1 320px;gap:8px;max-width:440px;}
 .sub label,.follow h3{font-family:var(--aura-font-display);font-weight:700;font-size:16px;text-transform:uppercase;letter-spacing:0.04em;}
 .sub-form{position:relative;}
@@ -243,7 +243,10 @@ body.cw{margin:0;background:var(--canvas);color:var(--ink);font-family:var(--aur
 .follow ul{display:flex;flex-wrap:wrap;gap:8px;}
 .cw .foot .round{background:transparent;color:var(--foot-ink);font-family:var(--aura-font-display);font-weight:600;font-size:15px;}
 .cw .foot .round:hover{background:color-mix(in srgb,var(--foot-ink) 14%,transparent);}
-.legal{display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:40px;font-size:13px;}
+.foot-more{display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:32px;font-size:14px;}
+.foot-more a{color:var(--foot-muted);}
+.foot-more a:hover{color:var(--foot-ink);text-decoration:underline;}
+.legal{display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:24px;padding-top:16px;border-top:1px solid color-mix(in srgb,var(--foot-ink) 18%,transparent);font-size:13px;}
 .legal a{color:var(--foot-muted);}
 .legal a:hover{color:var(--foot-ink);text-decoration:underline;}
 .fine{max-width:90ch;margin-top:16px;font-size:13px;line-height:1.5;color:var(--foot-muted);}
@@ -267,8 +270,13 @@ body.cw{margin:0;background:var(--canvas);color:var(--ink);font-family:var(--aur
 .ln{fill:none;stroke:var(--toy-slate);stroke-width:3;stroke-linecap:round;}
 .ln-lamp{fill:none;stroke:var(--toy-sand);stroke-width:3;}
 
-.cw .nav,.cw .deal{display:none;}
-@media(max-width:479px){.cards{--v:1;}}
+.cw .nav,.cw .gift{display:none;}
+@media(max-width:479px){.cards{--v:1;}
+  .top-in{width:min(100% - 16px,1232px);gap:8px 0;padding-block:8px;}
+  .top .hbtn{height:36px;min-width:36px;padding:0 6px;}
+  .top .hbtn svg{width:20px;height:20px;}
+  .top .brand{margin-inline:2px 4px;}
+}
 @media(min-width:480px){.cards{--v:2.2;}.tile{font-size:15px;}}
 @media(min-width:640px){.cards{--v:3.2;}.tile-row{--v:5.3;}
   .tile .gem{width:84px;height:84px;}
@@ -295,7 +303,7 @@ body.cw{margin:0;background:var(--canvas);color:var(--ink);font-family:var(--aur
   .top .brand{margin-inline:0;}
   .cw .menu-btn{display:none;}
   .cw .nav{display:block;}
-  .cw .deal{display:inline-flex;}
+  .cw .gift{display:inline-flex;}
   .search{flex:1 1 280px;max-width:410px;order:0;}
   .acts{margin-left:auto;}
   .hero-in{grid-template-columns:var(--gut) minmax(0,5fr) minmax(0,7fr) var(--gut);min-height:320px;}
@@ -364,7 +372,7 @@ html.motion .cw :is(.trigger svg,.sheet-acc>button svg){transition:transform .15
 <div class="notice" id="notice" role="region" aria-label="Announcement">
   <div class="wrap notice-in">
     <span aria-hidden="true"></span>
-    <p>Free shipping on sample orders over $50 (sample) <a href="#find">Shop now</a></p>
+    <p>Free sample delivery on orders over $50 (sample) <a href="#find">See details</a></p>
     <button class="round round-sm" type="button" id="notice-close" aria-label="Dismiss announcement"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>
   </div>
 </div>
@@ -372,69 +380,69 @@ html.motion .cw :is(.trigger svg,.sheet-acc>button svg){transition:transform .15
   <div class="wrap top-in">
     <button class="hbtn menu-btn" type="button" id="menu-open" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg></button>
     <a class="brand" href="#top" aria-label="cobblewick home"><svg class="mark" viewBox="0 0 26 26" aria-hidden="true"><rect width="26" height="26" rx="6"/><circle cx="9" cy="9" r="2.8"/><circle cx="17" cy="9" r="2.8"/><circle cx="9" cy="17" r="2.8"/><circle cx="17" cy="17" r="2.8"/></svg>cobblewick</a>
-    <nav class="nav" aria-label="Main">
+    <nav class="nav" aria-label="Site sections">
       <ul class="nav-list">
         <li>
-          <button class="trigger" type="button" data-dropdown="shop" aria-expanded="false" aria-controls="fly-shop">Shop<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></button>
-          <div class="fly" id="fly-shop" hidden>
+          <button class="trigger" type="button" data-dropdown="sets" aria-expanded="false" aria-controls="fly-sets">Sets<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></button>
+          <div class="fly" id="fly-sets" hidden>
             <ul>
-              <li><a href="#find"><b>New arrivals</b><span>Fresh sets each week</span></a></li>
-              <li><a href="#find"><b>Best sellers</b><span>What builders pick</span></a></li>
-              <li><a href="#find"><b>Bridges and ships</b><span>Water and span builds</span></a></li>
-              <li><a href="#find"><b>Castles and towers</b><span>Stack up and defend</span></a></li>
-              <li><a href="#find"><b>Trains and cities</b><span>Rails, roads, rooftops</span></a></li>
-              <li><a href="#find"><b>Robots and gadgets</b><span>Moving parts, no wires</span></a></li>
-              <li><a href="#find"><b>Small sets</b><span>Quick weekend builds</span></a></li>
-              <li><a href="#find"><b>Big builds</b><span>Long evenings, big sets</span></a></li>
-              <li><a href="#find"><b>Gift sets</b><span>Ready to wrap</span></a></li>
-              <li><a href="#find"><b>Under $25 (sample)</b><span>Pocket-money sets</span></a></li>
-              <li><a href="#find"><b>Member offers</b><span>Weekend savings</span></a></li>
-              <li><a href="#find"><b>Last chance</b><span>Final sets in stock</span></a></li>
+              <li><a href="#find"><b>Just landed</b><span>Added in the last few days</span></a></li>
+              <li><a href="#find"><b>Most hearted</b><span>Saved most by our sample builders</span></a></li>
+              <li><a href="#find"><b>Spans and sails</b><span>Spans, boats and harbors</span></a></li>
+              <li><a href="#find"><b>Walls and turrets</b><span>Fortress builds with flags</span></a></li>
+              <li><a href="#find"><b>Rails and rooftops</b><span>Trains, stations and towns</span></a></li>
+              <li><a href="#find"><b>Gear and gizmos</b><span>Clever moving pieces</span></a></li>
+              <li><a href="#find"><b>Pocket builds</b><span>Done in a single evening</span></a></li>
+              <li><a href="#find"><b>Slow builds</b><span>Settle in for a long project</span></a></li>
+              <li><a href="#find"><b>Ready to wrap</b><span>Boxed with gifting in mind</span></a></li>
+              <li><a href="#find"><b>Under $25 (sample)</b><span>Light on the wallet</span></a></li>
+              <li><a href="#find"><b>Club shelf</b><span>Picks with a lower sample price</span></a></li>
+              <li><a href="#find"><b>Last few</b><span>The final boxes on the shelf</span></a></li>
             </ul>
           </div>
         </li>
         <li>
-          <button class="trigger" type="button" data-dropdown="discover" aria-expanded="false" aria-controls="fly-discover">Discover<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></button>
-          <div class="fly" id="fly-discover" hidden>
+          <button class="trigger" type="button" data-dropdown="ideas" aria-expanded="false" aria-controls="fly-ideas">Ideas<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></button>
+          <div class="fly" id="fly-ideas" hidden>
             <ul>
-              <li><a href="#gallery"><b>Build guides</b><span>Step-by-step pages</span></a></li>
-              <li><a href="#gallery"><b>Idea gallery</b><span>Sets from the community</span></a></li>
-              <li><a href="#more"><b>Weekly digest</b><span>News for builders</span></a></li>
-              <li><a href="#spotlight"><b>Club</b><span>Points and perks</span></a></li>
-              <li><a href="#more"><b>Events (sample)</b><span>Nearby gatherings</span></a></li>
-              <li><a href="#gallery"><b>Videos</b><span>Short build clips</span></a></li>
-              <li><a href="#more"><b>Stories</b><span>Notes from builders</span></a></li>
-              <li><a href="#spotlight"><b>Challenges</b><span>Monthly build themes</span></a></li>
-              <li><a href="#more"><b>Families</b><span>Tips for shared builds</span></a></li>
-              <li><a href="#more"><b>Hobbyists</b><span>Large, detailed builds</span></a></li>
-              <li><a href="#more"><b>Teachers</b><span>Ideas for class</span></a></li>
-              <li><a href="#more"><b>Gift guide</b><span>Picks by age</span></a></li>
+              <li><a href="#gallery"><b>Step sheets</b><span>Walk-through pages to follow</span></a></li>
+              <li><a href="#gallery"><b>Maker showcase</b><span>Creations by sample makers</span></a></li>
+              <li><a href="#more"><b>Weekly note</b><span>A short letter for builders</span></a></li>
+              <li><a href="#spotlight"><b>Clubhouse</b><span>Perks for sample regulars</span></a></li>
+              <li><a href="#more"><b>Gatherings (sample)</b><span>Gatherings in a made-up town</span></a></li>
+              <li><a href="#gallery"><b>Time-lapses</b><span>Whole builds in a minute</span></a></li>
+              <li><a href="#more"><b>Maker tales</b><span>Short stories from the bench</span></a></li>
+              <li><a href="#spotlight"><b>Monthly puzzle</b><span>A fresh build task each month</span></a></li>
+              <li><a href="#more"><b>Shared tables</b><span>Tips for sharing a table</span></a></li>
+              <li><a href="#more"><b>Deep dives</b><span>Large, intricate projects</span></a></li>
+              <li><a href="#more"><b>Lesson corners</b><span>Plans for a roomful of builders</span></a></li>
+              <li><a href="#more"><b>Wrap-up picks</b><span>Suggestions sorted by age</span></a></li>
             </ul>
           </div>
         </li>
         <li>
-          <button class="trigger" type="button" data-dropdown="help" aria-expanded="false" aria-controls="fly-help">Help<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></button>
-          <div class="fly" id="fly-help" hidden>
+          <button class="trigger" type="button" data-dropdown="care" aria-expanded="false" aria-controls="fly-care">Care<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></button>
+          <div class="fly" id="fly-care" hidden>
             <ul>
-              <li><a href="#foot"><b>Order status</b><span>Track a sample order</span></a></li>
-              <li><a href="#foot"><b>Shipping</b><span>Costs and timing</span></a></li>
-              <li><a href="#foot"><b>Returns</b><span>Simple return steps</span></a></li>
-              <li><a href="#foot"><b>Contact us</b><span>Chat or email</span></a></li>
-              <li><a href="#foot"><b>Find a store</b><span>Shops near you</span></a></li>
-              <li><a href="#foot"><b>Missing pieces</b><span>Request replacements</span></a></li>
-              <li><a href="#foot"><b>Care guide</b><span>Keep sets tidy</span></a></li>
-              <li><a href="#foot"><b>Gift cards</b><span>Send a balance</span></a></li>
-              <li><a href="#foot"><b>Accessibility</b><span>Tools and support</span></a></li>
-              <li><a href="#foot"><b>Product safety</b><span>Ages and notes</span></a></li>
-              <li><a href="#foot"><b>FAQs</b><span>Quick answers</span></a></li>
-              <li><a href="#foot"><b>Feedback</b><span>Tell us more</span></a></li>
+              <li><a href="#foot"><b>Where is my box</b><span>Watch a sample parcel travel</span></a></li>
+              <li><a href="#foot"><b>Parcel timing</b><span>How long and how much</span></a></li>
+              <li><a href="#foot"><b>Swap or refund</b><span>Steps to send a box back</span></a></li>
+              <li><a href="#foot"><b>Talk to us</b><span>Chat or write a note</span></a></li>
+              <li><a href="#foot"><b>Pop-in counters</b><span>Sample places to browse</span></a></li>
+              <li><a href="#foot"><b>Spare pieces</b><span>Ask for a missing part</span></a></li>
+              <li><a href="#foot"><b>Tidy tips</b><span>Storing and cleaning builds</span></a></li>
+              <li><a href="#foot"><b>Vouchers</b><span>Send a balance to a friend</span></a></li>
+              <li><a href="#foot"><b>Easy access</b><span>Tools for every builder</span></a></li>
+              <li><a href="#foot"><b>Tiny-piece notes</b><span>Ages and handling</span></a></li>
+              <li><a href="#foot"><b>Quick answers</b><span>Short replies to common questions</span></a></li>
+              <li><a href="#foot"><b>Tell us</b><span>Share a thought with the crew</span></a></li>
             </ul>
           </div>
         </li>
       </ul>
     </nav>
-    <a class="pill pill-sm pill-white deal" href="#find">Weekend deal</a>
-    <div class="search" role="search"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><input type="search" placeholder="Search the shop" aria-label="Search the shop"/></div>
+    <a class="pill pill-sm pill-white gift" href="#find">Gift wrap</a>
+    <div class="search" role="search"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><input type="search" placeholder="Search sets and ideas" aria-label="Search sets and ideas"/></div>
     <div class="acts">
       <button class="hbtn" type="button" aria-label="Account"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg></button>
       <button class="hbtn" type="button" aria-label="Saved list"><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg></button>
@@ -448,21 +456,21 @@ html.motion .cw :is(.trigger svg,.sheet-acc>button svg){transition:transform .15
     <button class="round" type="button" id="menu-close" aria-label="Close menu"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>
   </div>
   <div class="sheet-acc">
-    <button type="button" aria-expanded="false" aria-controls="acc-shop">Shop<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></button>
-    <ul id="acc-shop" hidden><li><a href="#find">New arrivals</a></li><li><a href="#find">Best sellers</a></li><li><a href="#find">Bridges and ships</a></li><li><a href="#find">Castles and towers</a></li><li><a href="#find">Trains and cities</a></li><li><a href="#find">Robots and gadgets</a></li></ul>
+    <button type="button" aria-expanded="false" aria-controls="acc-sets">Sets<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></button>
+    <ul id="acc-sets" hidden><li><a href="#find">Just landed</a></li><li><a href="#find">Most hearted</a></li><li><a href="#find">Spans and sails</a></li><li><a href="#find">Walls and turrets</a></li><li><a href="#find">Rails and rooftops</a></li><li><a href="#find">Gear and gizmos</a></li></ul>
   </div>
   <div class="sheet-acc">
-    <button type="button" aria-expanded="false" aria-controls="acc-discover">Discover<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></button>
-    <ul id="acc-discover" hidden><li><a href="#gallery">Build guides</a></li><li><a href="#gallery">Idea gallery</a></li><li><a href="#more">Weekly digest</a></li><li><a href="#spotlight">Club</a></li><li><a href="#spotlight">Challenges</a></li><li><a href="#more">Gift guide</a></li></ul>
+    <button type="button" aria-expanded="false" aria-controls="acc-ideas">Ideas<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></button>
+    <ul id="acc-ideas" hidden><li><a href="#gallery">Step sheets</a></li><li><a href="#gallery">Maker showcase</a></li><li><a href="#more">Weekly note</a></li><li><a href="#spotlight">Clubhouse</a></li><li><a href="#more">Gatherings (sample)</a></li><li><a href="#gallery">Time-lapses</a></li></ul>
   </div>
   <div class="sheet-acc">
-    <button type="button" aria-expanded="false" aria-controls="acc-help">Help<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></button>
-    <ul id="acc-help" hidden><li><a href="#foot">Order status</a></li><li><a href="#foot">Shipping</a></li><li><a href="#foot">Returns</a></li><li><a href="#foot">Contact us</a></li><li><a href="#foot">Find a store</a></li><li><a href="#foot">FAQs</a></li></ul>
+    <button type="button" aria-expanded="false" aria-controls="acc-care">Care<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></button>
+    <ul id="acc-care" hidden><li><a href="#foot">Where is my box</a></li><li><a href="#foot">Parcel timing</a></li><li><a href="#foot">Swap or refund</a></li><li><a href="#foot">Talk to us</a></li><li><a href="#foot">Pop-in counters</a></li><li><a href="#foot">Spare pieces</a></li></ul>
   </div>
   <div class="sheet-links">
-    <a class="pill pill-orange" href="#find">Weekend deal</a>
+    <a class="pill pill-orange" href="#find">Gift wrap</a>
     <a class="pill pill-line" href="#spotlight">Join the club</a>
-    <a class="pill pill-line" href="#foot">Gift cards</a>
+    <a class="pill pill-line" href="#foot">Vouchers</a>
   </div>
 </div>
 <main id="main">
@@ -472,10 +480,10 @@ html.motion .cw :is(.trigger svg,.sheet-acc>button svg){transition:transform .15
       <div class="rs rs-b"><span class="ring ring-1"></span><span class="ring ring-2"></span><span class="ring ring-3"></span><span class="ring ring-4"></span><span class="ring ring-5"></span><span class="ring ring-6"></span></div>
       <div class="rs rs-c"><span class="ring ring-1"></span><span class="ring ring-2"></span><span class="ring ring-3"></span><span class="ring ring-4"></span><span class="ring ring-5"></span><span class="ring ring-6"></span></div>
       <div class="rs rs-a"><span class="ring ring-1"></span><span class="ring ring-2"></span><span class="ring ring-3"></span><span class="ring ring-4"></span><span class="ring ring-5"></span><span class="ring ring-6"></span></div>
-      <div class="hero-badge"><span class="brand"><svg class="mark" viewBox="0 0 26 26"><rect width="26" height="26" rx="6"/><circle cx="9" cy="9" r="2.8"/><circle cx="17" cy="9" r="2.8"/><circle cx="9" cy="17" r="2.8"/><circle cx="17" cy="17" r="2.8"/></svg>cobblewick</span><span>Club weekend (sample)</span></div>
+      <div class="hero-badge"><span class="brand"><svg class="mark" viewBox="0 0 26 26"><rect width="26" height="26" rx="6"/><circle cx="9" cy="9" r="2.8"/><circle cx="17" cy="9" r="2.8"/><circle cx="9" cy="17" r="2.8"/><circle cx="17" cy="17" r="2.8"/></svg>cobblewick</span><span>Open house (sample)</span></div>
     </div>
     <div class="hero-copy">
-      <h1 id="hero-h">Members save 10% on weekend builds with code WELCOME10 (sample)</h1>
+      <h1 id="hero-h">Free sample gift wrapping for club members on weekend orders with code WRAPIT (sample)</h1>
       <p class="hero-note">On qualifying sample purchases. Not a real offer.</p>
       <div class="hero-btns">
         <a class="pill pill-light" href="#spotlight">Join the club<svg class="ic" aria-hidden="true"><use href="#i-chev-r"/></svg></a>
@@ -488,35 +496,35 @@ html.motion .cw :is(.trigger svg,.sheet-acc>button svg){transition:transform .15
 <section class="links" aria-labelledby="links-h">
   <div class="wrap">
     <h2 class="sr-only" id="links-h">Quick links</h2>
-    <div class="tabs" role="tablist" aria-label="Quick link groups">
-      <button type="button" role="tab" id="tab-trending" aria-selected="true" aria-controls="panel-trending">Trending</button>
-      <button type="button" role="tab" id="tab-themes" aria-selected="false" aria-controls="panel-themes" tabindex="-1">Themes</button>
+    <div class="tabs" role="tablist" aria-label="Tile strips">
+      <button type="button" role="tab" id="tab-hot" aria-selected="true" aria-controls="panel-hot">Hot right now</button>
+      <button type="button" role="tab" id="tab-style" aria-selected="false" aria-controls="panel-style" tabindex="-1">By style</button>
     </div>
-    <div id="panel-trending" role="tabpanel" aria-labelledby="tab-trending">
-      <div class="tiles" role="region" aria-label="Trending quick links" tabindex="0">
+    <div id="panel-hot" role="tabpanel" aria-labelledby="tab-hot">
+      <div class="tiles" role="region" aria-label="Hot right now tiles" tabindex="0">
         <ul class="tile-row">
-          <li><a class="tile" href="#find"><span>Member price</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-tag"/></svg></span></a></li>
-          <li><a class="tile" href="#find"><span>Triple points</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-bag"/></svg></span></a></li>
-          <li><a class="tile" href="#find"><span>Double points</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-star"/></svg></span></a></li>
-          <li><a class="tile" href="#find"><span>All offers</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-grid"/></svg></span></a></li>
-          <li><a class="tile" href="#find"><span>For grown-ups</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-cup"/></svg></span></a></li>
-          <li><a class="tile" href="#find"><span>Gift ideas</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-gift"/></svg></span></a></li>
-          <li><a class="tile" href="#find"><span>Best sellers</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-heart"/></svg></span></a></li>
-          <li><a class="tile" href="#find"><span>Rewards</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-coin"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Under $25 (sample)</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-tag"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Small builds</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-grid"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Long builds</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-city"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Display pieces</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-cup"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Bridges</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-bridge"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Trains</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-train"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Castles</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-castle"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Robots</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-robot"/></svg></span></a></li>
         </ul>
       </div>
     </div>
-    <div id="panel-themes" role="tabpanel" aria-labelledby="tab-themes" hidden>
-      <div class="tiles" role="region" aria-label="Theme quick links" tabindex="0">
+    <div id="panel-style" role="tabpanel" aria-labelledby="tab-style" hidden>
+      <div class="tiles" role="region" aria-label="By style tiles" tabindex="0">
         <ul class="tile-row">
-          <li><a class="tile" href="#find"><span>Castles</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-castle"/></svg></span></a></li>
-          <li><a class="tile" href="#find"><span>Ships</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-ship"/></svg></span></a></li>
-          <li><a class="tile" href="#find"><span>Trains</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-train"/></svg></span></a></li>
-          <li><a class="tile" href="#find"><span>Robots</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-robot"/></svg></span></a></li>
-          <li><a class="tile" href="#find"><span>Cities</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-city"/></svg></span></a></li>
-          <li><a class="tile" href="#find"><span>Bridges</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-bridge"/></svg></span></a></li>
-          <li><a class="tile" href="#find"><span>Gardens</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-flower"/></svg></span></a></li>
-          <li><a class="tile" href="#find"><span>Space ports</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-rocket"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Cozy</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-heart"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Bold</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-star"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Retro</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-coin"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Space</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-rocket"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Garden</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-flower"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Harbor</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-ship"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Mountain</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-grid"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Festival</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-gift"/></svg></span></a></li>
         </ul>
       </div>
     </div>
@@ -525,68 +533,68 @@ html.motion .cw :is(.trigger svg,.sheet-acc>button svg){transition:transform .15
 <section class="sec" id="find" aria-labelledby="find-h">
   <div class="wrap">
     <div class="sec-head">
-      <h2 id="find-h">Find your next build</h2>
+      <h2 id="find-h">Snap one up for Saturday</h2>
       <p>Pick a set for the weekend. Prices, ages, piece counts and ratings are example data (sample).</p>
     </div>
     <div class="rail-bar">
-      <div class="tabs" role="tablist" aria-label="Set lists">
-        <button type="button" role="tab" id="tab-offers" data-sort="offer" aria-selected="true" aria-controls="rail-panel">Offers</button>
-        <button type="button" role="tab" id="tab-popular" data-sort="pop" aria-selected="false" aria-controls="rail-panel" tabindex="-1">Popular</button>
+      <div class="tabs" role="tablist" aria-label="Product rail tabs">
+        <button type="button" role="tab" id="tab-week" data-sort="wk" aria-selected="true" aria-controls="rail-panel">This week</button>
+        <button type="button" role="tab" id="tab-picks" data-sort="pk" aria-selected="false" aria-controls="rail-panel" tabindex="-1">Crowd picks</button>
       </div>
       <div class="rail-ctl">
         <button class="round" type="button" id="rail-prev" aria-label="Previous sets"><svg class="ic" aria-hidden="true"><use href="#i-chev-l"/></svg></button>
         <button class="round" type="button" id="rail-next" aria-label="Next sets"><svg class="ic" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
       </div>
     </div>
-    <div id="rail-panel" role="tabpanel" aria-labelledby="tab-offers">
-      <div class="track" id="track" role="region" aria-label="Sale list (sample)" tabindex="0">
+    <div id="rail-panel" role="tabpanel" aria-labelledby="tab-week">
+      <div class="track" id="track" role="region" aria-label="Product rail (sample)" tabindex="0">
         <ul class="cards" id="cards">
-          <li data-offer="1" data-pop="5"><article class="set-card">
+          <li data-wk="1" data-pk="5"><article class="set-card">
             <p class="card-note">Example set (sample)</p>
-            <div class="badges"><span class="badge badge-green">Triple points (sample)</span><span class="badge badge-yellow">New</span></div>
+            <div class="badges"><span class="badge badge-green">Marked down (sample)</span><span class="badge badge-yellow">Fresh</span></div>
             <svg class="scene" viewBox="0 0 240 170" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of a bridge set"><use href="#sc-bridge"/></svg>
             <ul class="meta"><li><svg class="ic" aria-hidden="true"><use href="#i-age"/></svg><span class="sr-only">Ages </span>8+</li><li><svg class="ic" aria-hidden="true"><use href="#i-pieces"/></svg><span class="sr-only">Pieces </span>1,240</li><li><svg class="ic" aria-hidden="true"><use href="#i-star"/></svg><span class="sr-only">Rating </span>4.6</li></ul>
             <h3 class="set-title">Harbor Bridge Builder</h3>
             <div class="price"><span class="price-flag"></span><span class="price-now">$89.99</span></div>
             <div class="buy"><button class="pill pill-orange" type="button" data-add="Harbor Bridge Builder"><svg class="ic" aria-hidden="true"><use href="#i-bag"/></svg>Add to bag</button><button class="round heart" type="button" aria-pressed="false" aria-label="Save Harbor Bridge Builder to saved list"><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg></button></div>
           </article></li>
-          <li data-offer="2" data-pop="3"><article class="set-card">
+          <li data-wk="2" data-pk="3"><article class="set-card">
             <p class="card-note">Example set (sample)</p>
             <div class="badges"><span class="badge badge-yellow">Online only</span></div>
             <svg class="scene" viewBox="0 0 240 170" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of a ship set"><use href="#sc-ship"/></svg>
             <ul class="meta"><li><svg class="ic" aria-hidden="true"><use href="#i-age"/></svg><span class="sr-only">Ages </span>9+</li><li><svg class="ic" aria-hidden="true"><use href="#i-pieces"/></svg><span class="sr-only">Pieces </span>860</li><li><svg class="ic" aria-hidden="true"><use href="#i-star"/></svg><span class="sr-only">Rating </span>4.8</li></ul>
             <h3 class="set-title">Sailing Ship Studio</h3>
-            <div class="price"><span class="price-flag"><span class="badge badge-green">Member price</span></span><span class="price-now"><s>$74.99</s>$58.99</span></div>
+            <div class="price"><span class="price-flag"><span class="badge badge-green">Marked down (sample)</span></span><span class="price-now"><s>$74.99</s>$58.99</span></div>
             <div class="buy"><button class="pill pill-orange" type="button" data-add="Sailing Ship Studio"><svg class="ic" aria-hidden="true"><use href="#i-bag"/></svg>Add to bag</button><button class="round heart" type="button" aria-pressed="false" aria-label="Save Sailing Ship Studio to saved list"><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg></button></div>
           </article></li>
-          <li data-offer="3" data-pop="2"><article class="set-card">
+          <li data-wk="3" data-pk="2"><article class="set-card">
             <p class="card-note">Example set (sample)</p>
-            <div class="badges"><span class="badge badge-green">Triple points (sample)</span></div>
+            <div class="badges"><span class="badge badge-green">Marked down (sample)</span></div>
             <svg class="scene" viewBox="0 0 240 170" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of a castle set"><use href="#sc-castle"/></svg>
             <ul class="meta"><li><svg class="ic" aria-hidden="true"><use href="#i-age"/></svg><span class="sr-only">Ages </span>10+</li><li><svg class="ic" aria-hidden="true"><use href="#i-pieces"/></svg><span class="sr-only">Pieces </span>2,010</li><li><svg class="ic" aria-hidden="true"><use href="#i-star"/></svg><span class="sr-only">Rating </span>4.7</li></ul>
             <h3 class="set-title">Hilltop Castle Kit</h3>
             <div class="price"><span class="price-flag"></span><span class="price-now">$129.99</span></div>
             <div class="buy"><button class="pill pill-orange" type="button" data-add="Hilltop Castle Kit"><svg class="ic" aria-hidden="true"><use href="#i-bag"/></svg>Add to bag</button><button class="round heart" type="button" aria-pressed="false" aria-label="Save Hilltop Castle Kit to saved list"><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg></button></div>
           </article></li>
-          <li data-offer="4" data-pop="1"><article class="set-card">
+          <li data-wk="4" data-pk="1"><article class="set-card">
             <p class="card-note">Example set (sample)</p>
-            <div class="badges"><span class="badge badge-yellow">New</span></div>
+            <div class="badges"><span class="badge badge-yellow">Fresh</span></div>
             <svg class="scene" viewBox="0 0 240 170" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of a robot set"><use href="#sc-robot"/></svg>
             <ul class="meta"><li><svg class="ic" aria-hidden="true"><use href="#i-age"/></svg><span class="sr-only">Ages </span>7+</li><li><svg class="ic" aria-hidden="true"><use href="#i-pieces"/></svg><span class="sr-only">Pieces </span>540</li><li><svg class="ic" aria-hidden="true"><use href="#i-star"/></svg><span class="sr-only">Rating </span>4.5</li></ul>
             <h3 class="set-title">Tinker Robot Pal</h3>
             <div class="price"><span class="price-flag"></span><span class="price-now">$39.99</span></div>
             <div class="buy"><button class="pill pill-orange" type="button" data-add="Tinker Robot Pal"><svg class="ic" aria-hidden="true"><use href="#i-bag"/></svg>Add to bag</button><button class="round heart" type="button" aria-pressed="false" aria-label="Save Tinker Robot Pal to saved list"><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg></button></div>
           </article></li>
-          <li data-offer="5" data-pop="6"><article class="set-card">
+          <li data-wk="5" data-pk="6"><article class="set-card">
             <p class="card-note">Example set (sample)</p>
-            <div class="badges"><span class="badge badge-green">Double points (sample)</span></div>
+            <div class="badges"><span class="badge badge-yellow">Fresh</span></div>
             <svg class="scene" viewBox="0 0 240 170" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of a train set"><use href="#sc-train"/></svg>
             <ul class="meta"><li><svg class="ic" aria-hidden="true"><use href="#i-age"/></svg><span class="sr-only">Ages </span>8+</li><li><svg class="ic" aria-hidden="true"><use href="#i-pieces"/></svg><span class="sr-only">Pieces </span>1,120</li><li><svg class="ic" aria-hidden="true"><use href="#i-star"/></svg><span class="sr-only">Rating </span>4.4</li></ul>
             <h3 class="set-title">Express Train Station</h3>
-            <div class="price"><span class="price-flag"><span class="badge badge-green">Member price</span></span><span class="price-now"><s>$99.99</s>$84.99</span></div>
+            <div class="price"><span class="price-flag"><span class="badge badge-green">Marked down (sample)</span></span><span class="price-now"><s>$99.99</s>$84.99</span></div>
             <div class="buy"><button class="pill pill-orange" type="button" data-add="Express Train Station"><svg class="ic" aria-hidden="true"><use href="#i-bag"/></svg>Add to bag</button><button class="round heart" type="button" aria-pressed="false" aria-label="Save Express Train Station to saved list"><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg></button></div>
           </article></li>
-          <li data-offer="6" data-pop="4"><article class="set-card">
+          <li data-wk="6" data-pk="4"><article class="set-card">
             <p class="card-note">Example set (sample)</p>
             <div class="badges"><span class="badge badge-yellow">Online only</span></div>
             <svg class="scene" viewBox="0 0 240 170" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of a house set"><use href="#sc-house"/></svg>
@@ -603,8 +611,8 @@ html.motion .cw :is(.trigger svg,.sheet-acc>button svg){transition:transform .15
 <section class="sec" id="gallery" aria-labelledby="gallery-h">
   <div class="wrap">
     <div class="sec-head">
-      <h2 id="gallery-h">Builds from the community</h2>
-      <p>Tap a spot to peek at a sample build. Every set shown is example content.</p>
+      <h2 id="gallery-h">Made by our sample makers</h2>
+      <p>Tap a spot to peek at a sample creation. Everything shown is example content.</p>
     </div>
     <div class="mosaic">
       <figure class="shot shot-big">
@@ -614,7 +622,7 @@ html.motion .cw :is(.trigger svg,.sheet-acc>button svg){transition:transform .15
           <button class="round round-sm" type="button" data-close="pop-1" aria-label="Close Harbor morning details"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>
           <h3>Harbor morning</h3>
           <p>A busy dock with a red tug and a sand-colored lift. Built by a sample member.</p>
-          <a href="#find">See the set<svg class="ic" aria-hidden="true"><use href="#i-chev-r"/></svg></a>
+          <a href="#find">Open the plans<svg class="ic" aria-hidden="true"><use href="#i-chev-r"/></svg></a>
         </div>
       </figure>
       <figure class="shot">
@@ -624,7 +632,7 @@ html.motion .cw :is(.trigger svg,.sheet-acc>button svg){transition:transform .15
           <button class="round round-sm" type="button" data-close="pop-2" aria-label="Close Night light details"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>
           <h3>Night light</h3>
           <p>A tall tower with a yellow beam.</p>
-          <a href="#find">See the set<svg class="ic" aria-hidden="true"><use href="#i-chev-r"/></svg></a>
+          <a href="#find">Open the plans<svg class="ic" aria-hidden="true"><use href="#i-chev-r"/></svg></a>
         </div>
       </figure>
       <figure class="shot edge">
@@ -634,7 +642,7 @@ html.motion .cw :is(.trigger svg,.sheet-acc>button svg){transition:transform .15
           <button class="round round-sm" type="button" data-close="pop-3" aria-label="Close Launch pad details"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>
           <h3>Launch pad</h3>
           <p>A small rocket ready for liftoff.</p>
-          <a href="#find">See the set<svg class="ic" aria-hidden="true"><use href="#i-chev-r"/></svg></a>
+          <a href="#find">Open the plans<svg class="ic" aria-hidden="true"><use href="#i-chev-r"/></svg></a>
         </div>
       </figure>
       <figure class="shot">
@@ -644,7 +652,7 @@ html.motion .cw :is(.trigger svg,.sheet-acc>button svg){transition:transform .15
           <button class="round round-sm" type="button" data-close="pop-4" aria-label="Close Flower bed details"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>
           <h3>Flower bed</h3>
           <p>Four blooms on a leafy terrace.</p>
-          <a href="#find">See the set<svg class="ic" aria-hidden="true"><use href="#i-chev-r"/></svg></a>
+          <a href="#find">Open the plans<svg class="ic" aria-hidden="true"><use href="#i-chev-r"/></svg></a>
         </div>
       </figure>
       <figure class="shot edge">
@@ -654,7 +662,7 @@ html.motion .cw :is(.trigger svg,.sheet-acc>button svg){transition:transform .15
           <button class="round round-sm" type="button" data-close="pop-5" aria-label="Close Tinker bench details"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>
           <h3>Tinker bench</h3>
           <p>Shelves of spare parts and a half-built crane.</p>
-          <a href="#find">See the set<svg class="ic" aria-hidden="true"><use href="#i-chev-r"/></svg></a>
+          <a href="#find">Open the plans<svg class="ic" aria-hidden="true"><use href="#i-chev-r"/></svg></a>
         </div>
       </figure>
     </div>
@@ -662,56 +670,56 @@ html.motion .cw :is(.trigger svg,.sheet-acc>button svg){transition:transform .15
 </section>
 <section class="stage" id="spotlight" aria-labelledby="spot-h">
   <div class="wrap">
-    <h2 class="sr-only" id="spot-h">Club spotlight</h2>
+    <h2 class="sr-only" id="spot-h">Clubhouse corner</h2>
     <div class="seg-wrap">
-      <div class="seg" role="tablist" aria-label="Club spotlight topics">
-        <button type="button" role="tab" id="seg-1" aria-selected="true" aria-controls="seg-p1">Points</button>
-        <button type="button" role="tab" id="seg-2" aria-selected="false" aria-controls="seg-p2" tabindex="-1">Early access</button>
-        <button type="button" role="tab" id="seg-3" aria-selected="false" aria-controls="seg-p3" tabindex="-1">Monthly build</button>
+      <div class="seg" role="tablist" aria-label="Clubhouse topics">
+        <button type="button" role="tab" id="seg-bench" aria-selected="true" aria-controls="seg-p-bench">On the bench</button>
+        <button type="button" role="tab" id="seg-tray" aria-selected="false" aria-controls="seg-p-tray" tabindex="-1">Bonus tray</button>
+        <button type="button" role="tab" id="seg-corner" aria-selected="false" aria-controls="seg-p-corner" tabindex="-1">Club corner</button>
       </div>
     </div>
   </div>
-    <div class="stage-panel" id="seg-p1" role="tabpanel" aria-labelledby="seg-1">
+    <div class="stage-panel" id="seg-p-bench" role="tabpanel" aria-labelledby="seg-bench">
       <div class="stage-art acc-blue"><svg viewBox="0 0 480 340" preserveAspectRatio="xMidYMax slice" role="img" aria-label="Illustration of a blue tower"><use href="#sc-tower"/></svg></div>
       <div class="stage-copy">
-        <h3>Earn points on every sample order</h3>
-        <p>Collect points with each build and trade them for example rewards. Nothing here is a real offer.</p>
-        <div class="stage-btns"><a class="pill pill-light" href="#foot">Join the club</a><a class="pill pill-line" href="#find">Browse sets</a></div>
+        <h3>See what is on the bench this week</h3>
+        <p>Peek at the sample build our makers are working on, with notes from each stage. Nothing here can be bought.</p>
+        <div class="stage-btns"><a class="pill pill-light" href="#foot">Join the club</a><a class="pill pill-line" href="#find">Visit the shelves</a></div>
       </div>
     </div>
-    <div class="stage-panel" id="seg-p2" role="tabpanel" aria-labelledby="seg-2" hidden>
+    <div class="stage-panel" id="seg-p-tray" role="tabpanel" aria-labelledby="seg-tray" hidden>
       <div class="stage-art acc-plum"><svg viewBox="0 0 480 340" preserveAspectRatio="xMidYMax slice" role="img" aria-label="Illustration of a plum tower"><use href="#sc-tower"/></svg></div>
       <div class="stage-copy">
-        <h3>Peek at new sets before launch day</h3>
-        <p>Members see sample releases a few days early and can save them to a saved list.</p>
-        <div class="stage-btns"><a class="pill pill-light" href="#foot">Join the club</a><a class="pill pill-line" href="#gallery">See previews</a></div>
+        <h3>A little extra tucked in every box</h3>
+        <p>Each sample order arrives with a spare tray of odd pieces to tinker with. Example content only.</p>
+        <div class="stage-btns"><a class="pill pill-light" href="#foot">Join the club</a><a class="pill pill-line" href="#gallery">Peek at the trays</a></div>
       </div>
     </div>
-    <div class="stage-panel" id="seg-p3" role="tabpanel" aria-labelledby="seg-3" hidden>
+    <div class="stage-panel" id="seg-p-corner" role="tabpanel" aria-labelledby="seg-corner" hidden>
       <div class="stage-art acc-teal"><svg viewBox="0 0 480 340" preserveAspectRatio="xMidYMax slice" role="img" aria-label="Illustration of a teal tower"><use href="#sc-tower"/></svg></div>
       <div class="stage-copy">
-        <h3>A small build to try each month</h3>
-        <p>Pick up a free sample build guide every month and share a photo of your result.</p>
-        <div class="stage-btns"><a class="pill pill-light" href="#foot">Join the club</a><a class="pill pill-line" href="#more">Read more</a></div>
+        <h3>A corner for club regulars</h3>
+        <p>Fellow builders swap notes and vote on the next group project. Nothing here is a real offer.</p>
+        <div class="stage-btns"><a class="pill pill-light" href="#foot">Join the club</a><a class="pill pill-line" href="#more">Meet the regulars</a></div>
       </div>
     </div>
-  <div class="wrap"><p class="stage-brand brand-line">Cobblewick Club (sample)</p></div>
+  <div class="wrap"><p class="stage-brand brand-line">Cobblewick Clubhouse (sample)</p></div>
 </section>
 <section class="sec sec-left" id="more" aria-labelledby="more-h">
   <div class="wrap">
-    <h2 id="more-h">Ideas for your next free weekend</h2>
+    <h2 id="more-h">Ideas for a free weekend</h2>
     <div class="disc">
       <article class="disc-card">
         <div class="disc-art"><svg viewBox="0 0 240 170" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of rails and a station"><use href="#sc-train"/></svg></div>
         <h3>Rail day guide</h3>
         <p>Lay track, add a station and run a sample timetable.</p>
-        <a class="pill pill-line" href="#gallery">Read the guide</a>
+        <a class="pill pill-line" href="#gallery">Open the guide</a>
       </article>
       <article class="disc-card">
         <div class="disc-art"><svg viewBox="0 0 240 170" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of a fortress on a hill"><use href="#sc-castle"/></svg></div>
-        <h3>Castle weekend</h3>
+        <h3>Castle afternoon</h3>
         <p>Three sample plans for walls, gates and flags.</p>
-        <a class="pill pill-line" href="#gallery">See the plans</a>
+        <a class="pill pill-line" href="#gallery">Browse the plans</a>
       </article>
       <article class="disc-card">
         <div class="disc-art"><svg viewBox="0 0 240 170" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of a mechanical pal"><use href="#sc-robot"/></svg></div>
@@ -722,9 +730,9 @@ html.motion .cw :is(.trigger svg,.sheet-acc>button svg){transition:transform .15
     </div>
   </div>
 </section>
-<section class="note-strip" aria-label="Notes about this sample">
+<section class="note-strip" aria-label="Sample disclaimer">
   <div class="wrap">
-    <p>All sets, prices, ratings and offers on this page are example content for a design sample. <a href="#foot">Read the small print</a>.</p>
+    <p>All sets, prices, ratings and offers on this page are example content for a design sample. <a href="#foot">Check the fine print</a>.</p>
   </div>
 </section>
 </main>
@@ -742,15 +750,15 @@ html.motion .cw :is(.trigger svg,.sheet-acc>button svg){transition:transform .15
         </div>
       </div>
       <div class="foot-cols">
-        <div><h2 class="foot-h">Shop</h2><ul><li><a href="#find">New arrivals</a></li><li><a href="#find">Best sellers</a></li><li><a href="#find">Gift sets</a></li><li><a href="#find">Member offers</a></li></ul></div>
-        <div><h2 class="foot-h">Help</h2><ul><li><a href="#foot">Order status</a></li><li><a href="#foot">Shipping</a></li><li><a href="#foot">Returns</a></li><li><a href="#foot">Contact us</a></li></ul></div>
-        <div><h2 class="foot-h">Club</h2><ul><li><a href="#spotlight">Points</a></li><li><a href="#spotlight">Early access</a></li><li><a href="#spotlight">Monthly build</a></li><li><a href="#foot">Gift cards</a></li></ul></div>
-        <div><h2 class="foot-h">About</h2><ul><li><a href="#foot">Our story</a></li><li><a href="#foot">Careers (sample)</a></li><li><a href="#foot">Press</a></li><li><a href="#foot">Accessibility</a></li></ul></div>
+        <div><h2 class="foot-h">Cobblewick</h2><ul><li><a href="#foot">Our workshop</a></li><li><a href="#foot">Join the crew (sample)</a></li><li><a href="#foot">Media kit (sample)</a></li><li><a href="#foot">Made-up facts</a></li></ul></div>
+        <div><h2 class="foot-h">Customer care</h2><ul><li><a href="#foot">Where is my box</a></li><li><a href="#foot">Parcel timing</a></li><li><a href="#foot">Swap or refund</a></li><li><a href="#foot">Talk to us</a></li></ul></div>
+        <div><h2 class="foot-h">Clubhouse</h2><ul><li><a href="#spotlight">On the bench</a></li><li><a href="#spotlight">Bonus tray</a></li><li><a href="#spotlight">Club corner</a></li><li><a href="#spotlight">Join the club</a></li></ul></div>
+        <div><h2 class="foot-h">Elsewhere</h2><ul><li><a href="#foot">Partner makers (sample)</a></li><li><a href="#foot">Trade desk (sample)</a></li><li><a href="#foot">Pop-up days (sample)</a></li><li><a href="#foot">Fan clubs (sample)</a></li></ul></div>
       </div>
     </div>
     <div class="foot-mid">
       <form class="sub" id="sub" novalidate>
-        <label for="sub-email">Join the newsletter</label>
+        <label for="sub-email">Weekly note by email</label>
         <div class="sub-form">
           <input id="sub-email" type="email" placeholder="Your email" autocomplete="email"/>
           <button class="pill pill-orange" type="submit">Subscribe</button>
@@ -758,20 +766,26 @@ html.motion .cw :is(.trigger svg,.sheet-acc>button svg){transition:transform .15
         <p class="sub-live" id="sub-live" aria-live="polite"></p>
       </form>
       <div class="follow">
-        <h2 class="foot-h">Follow along</h2>
+        <h2 class="foot-h">Find us online</h2>
         <ul>
-          <li><button class="round" type="button" aria-label="Sample channel 1">1</button></li>
-          <li><button class="round" type="button" aria-label="Sample channel 2">2</button></li>
-          <li><button class="round" type="button" aria-label="Sample channel 3">3</button></li>
-          <li><button class="round" type="button" aria-label="Sample channel 4">4</button></li>
+          <li><button class="round" type="button" aria-label="Sample channel one">1</button></li>
+          <li><button class="round" type="button" aria-label="Sample channel two">2</button></li>
+          <li><button class="round" type="button" aria-label="Sample channel three">3</button></li>
+          <li><button class="round" type="button" aria-label="Sample channel four">4</button></li>
         </ul>
       </div>
     </div>
+    <ul class="foot-more" aria-label="More links">
+      <li><a href="#foot">Present vouchers</a></li>
+      <li><a href="#foot">All pages</a></li>
+      <li><a href="#foot">Pop-in counters</a></li>
+      <li><a href="#foot">Paper booklets</a></li>
+    </ul>
     <ul class="legal">
       <li><a href="#foot">Privacy</a></li>
-      <li><a href="#foot">Terms of use</a></li>
-      <li><a href="#foot">Cookie choices</a></li>
-      <li><a href="#foot">Site index</a></li>
+      <li><a href="#foot">Cookies</a></li>
+      <li><a href="#foot">Terms</a></li>
+      <li><a href="#foot">Accessibility</a></li>
     </ul>
     <p class="fine">Cobblewick is a made-up shop used to show a design flavor. Names, prices, ratings, offers and codes are example data and cannot be redeemed.</p>
     <div class="foot-end">
@@ -794,7 +808,12 @@ html.motion .cw :is(.trigger svg,.sheet-acc>button svg){transition:transform .15
   var say=function(t){live.textContent="";setTimeout(function(){live.textContent=t;},30);};
 
   var notice=$("#notice");
-  $("#notice-close").addEventListener("click",function(){notice.hidden=true;say("Announcement dismissed");$("#menu-open").focus();});
+  $("#notice-close").addEventListener("click",function(){
+    notice.hidden=true;
+    say("Announcement dismissed");
+    var landing=[$("#menu-open"),$(".top .brand"),$(".trigger[data-dropdown]")].filter(function(el){return el&&el.offsetParent!==null;})[0];
+    if(landing)landing.focus();
+  });
 
   var triggers=$$(".trigger[data-dropdown]");
   function closeFly(t,back){
@@ -876,19 +895,20 @@ html.motion .cw :is(.trigger svg,.sheet-acc>button svg){transition:transform .15
       });
     });
   }
-  tabs($('[aria-label="Quick link groups"]'),function(t){
-    ["trending","themes"].forEach(function(k){$("#panel-"+k).hidden=("tab-"+k)!==t.id;});
+  tabs($('[aria-label="Tile strips"]'),function(t){
+    ["hot","style"].forEach(function(k){$("#panel-"+k).hidden=("tab-"+k)!==t.id;});
   });
   var cards=$("#cards");
-  tabs($('[aria-label="Set lists"]'),function(t){
+  tabs($('[aria-label="Product rail tabs"]'),function(t){
     var key=t.getAttribute("data-sort");
+    var attr=key==="pk"?"data-pk":"data-wk";
     var items=$$("li",cards).sort(function(a,b){
-      return key==="pop"?a.getAttribute("data-pop")-b.getAttribute("data-pop"):a.getAttribute("data-offer")-b.getAttribute("data-offer");
+      return a.getAttribute(attr)-b.getAttribute(attr);
     });
     items.forEach(function(li){cards.appendChild(li);});
     $("#rail-panel").setAttribute("aria-labelledby",t.id);
     $("#track").scrollLeft=0;
-    say(key==="pop"?"Showing popular sets":"Showing offers");
+    say(key==="pk"?"Showing crowd picks":"Showing this week");
   });
   tabs($(".seg"),function(t){
     $$(".stage-panel").forEach(function(p){p.hidden=p.id!==t.getAttribute("aria-controls");});
