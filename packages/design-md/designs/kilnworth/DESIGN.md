@@ -223,7 +223,7 @@ Content width is 1200px (`max-w-92.5`) with 39px side margins at 1280 and 16px a
 
 ## Elevation & Depth
 
-Cards carry a hairline and no shadow. Only the header bar (soft shadow with backdrop blur), the flyout panels and the era ink panel carry shadows. Art uses a faint dot grid and grain made of CSS gradients, at about half strength in dark.
+Cards carry a hairline and no shadow. Only the header bar (soft shadow with backdrop blur), the flyout panels and the workflow ink panel carry shadows. Art uses a faint dot grid and grain made of CSS gradients, at about half strength in dark.
 
 ## Shapes
 
@@ -292,17 +292,13 @@ Every transition and animation sits behind `html.motion`, which the head script 
 ```tsx
 import { Button } from "@aura/ui";
 
-export function KilnworthHero() {
+export function KilnworthRuntimeActions() {
   return (
-    <section className="rounded-b-[48px] bg-[var(--ink-band)] text-[var(--on-ink)]">
-      <h1 className="h1 font-normal tracking-[-0.03em]">
-        Run helpers in cells
-        <br />
-        <span className="text-[var(--hero-dim)]">you can inspect.</span>
-      </h1>
-      <div className="mt-6 flex gap-2">
-        <Button variant="fill" className="h-11 rounded-[4px]">Open a cell</Button>
-        <Button variant="pill" className="h-11 rounded-[4px] border-[var(--ink-control)]">Read the guides</Button>
+    <section className="bg-[var(--ink-band)] text-[var(--on-ink)]">
+      <h2 className="h2 font-normal tracking-[-0.03em]">Try a cell on the machine you have.</h2>
+      <div className="mt-6 flex flex-wrap gap-2">
+        <Button variant="fill" className="h-11 rounded-[4px]">Get it for laptop</Button>
+        <Button variant="pill" className="h-11 rounded-[4px] border-[var(--ink-control)]">What&rsquo;s inside</Button>
       </div>
     </section>
   );
