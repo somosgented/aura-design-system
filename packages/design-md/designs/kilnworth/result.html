@@ -168,16 +168,16 @@ body.kw{margin:0;padding:0;background:var(--canvas);color:var(--body);font-famil
 .kw .mock-card svg{color:var(--ink);margin-top:2px;}
 
 .kw .stone-wrap{background:var(--stone);}
-.kw .era{display:grid;grid-template-columns:minmax(0,487fr) minmax(0,618fr);gap:95px;align-items:start;padding-block:calc(var(--aura)*11) calc(var(--aura)*7.5);}
-.kw .era-list{margin-top:45px;border-top:1px solid var(--rule);}
-.kw .era-list li{border-bottom:1px solid var(--rule);}
-.kw .era-list h3{font-size:inherit;letter-spacing:inherit;}
+.kw .flow{display:grid;grid-template-columns:minmax(0,487fr) minmax(0,618fr);gap:95px;align-items:start;padding-block:calc(var(--aura)*11) calc(var(--aura)*7.5);}
+.kw .flow-list{margin-top:45px;border-top:1px solid var(--rule);}
+.kw .flow-list li{border-bottom:1px solid var(--rule);}
+.kw .flow-list h3{font-size:inherit;letter-spacing:inherit;}
 .kw .row-btn{display:block;width:100%;padding:21px 0;border:0;background:none;text-align:left;font-family:inherit;font-size:25px;line-height:1.25;letter-spacing:-0.02em;font-weight:400;color:var(--muted);cursor:pointer;}
 .kw .row-btn[aria-expanded="true"]{color:var(--ink);}
 .kw .row-body{padding-bottom:24px;}
 .kw .row-body p{font-size:15px;line-height:1.6;margin-bottom:16px;max-width:46ch;}
-.kw .era-prog{height:2px;margin-top:-1px;background:var(--rule);}
-.kw .era-prog span{display:block;width:33.333%;height:100%;background:var(--ink);transform:translateX(calc(var(--i,0)*100%));}
+.kw .flow-prog{height:2px;margin-top:-1px;background:var(--rule);}
+.kw .flow-prog span{display:block;width:33.333%;height:100%;background:var(--ink);transform:translateX(calc(var(--i,0)*100%));}
 .kw .panel{position:sticky;top:96px;height:617px;padding:32px;border-radius:16px;overflow:hidden;background-color:var(--ink-card);background-image:radial-gradient(color-mix(in srgb,var(--on-ink) 8%,transparent) 1px,transparent 1px);background-size:16px 16px;color:var(--on-ink);box-shadow:0 40px 80px -40px color-mix(in srgb,black 55%,transparent);}
 .dark .kw .panel{box-shadow:inset 0 0 0 1px var(--rule);}
 .kw .panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;}
@@ -357,12 +357,12 @@ html.motion .kw .mq.paused .mq-track{animation-play-state:paused;}
 .kw .foot .seg button{height:28px;}
 
 html.motion .kw .btn,html.motion .kw .icon-btn,html.motion .kw .round{transition:background-color .15s ease,border-color .15s ease;}
-html.motion .kw .era-prog span,html.motion .kw .tprog span{transition:transform .25s ease;}
+html.motion .kw .flow-prog span,html.motion .kw .tprog span{transition:transform .25s ease;}
 .dark .kw .petals::after,.dark .kw .jart::after{opacity:.5;}
 .dark .kw .jart{filter:saturate(.85) brightness(.92);}
 
 @media (max-width:1279px){
-  .kw .era{gap:64px;}
+  .kw .flow{gap:64px;}
   .kw .run-grid{gap:64px;}
 }
 @media (min-width:1024px){
@@ -371,14 +371,14 @@ html.motion .kw .era-prog span,html.motion .kw .tprog span{transition:transform 
   .kw .hdr-menu-btn{display:none;}
 }
 @media (max-width:1023px){
-  .kw .hero-grid,.kw .why-head,.kw .form-grid,.kw .run-grid,.kw .era{grid-template-columns:minmax(0,1fr);}
+  .kw .hero-grid,.kw .why-head,.kw .form-grid,.kw .run-grid,.kw .flow{grid-template-columns:minmax(0,1fr);}
   .kw .hero-grid{gap:20px;}
   .kw .hero-sub,.kw .why-head p{text-align:left;}
   .kw .hero-sub{font-size:19px;}
   .kw .why-box{grid-template-columns:minmax(0,1fr);}
   .kw .why-col+.why-col{border-left:0;border-top:1px solid var(--rule);}
   .kw .panel{position:static;height:auto;min-height:540px;}
-  .kw .era{gap:48px;}
+  .kw .flow{gap:48px;}
   .kw .bento{grid-template-columns:minmax(0,1fr);}
   .kw .bento>*{grid-column:1/-1;grid-row:auto;}
   .kw .art2{min-height:220px;}
@@ -398,7 +398,7 @@ html.motion .kw .era-prog span,html.motion .kw .tprog span{transition:transform 
   .kw .hero-sub{font-size:17px;padding-bottom:0;}
   .kw .customers{padding-block:40px 48px;}
   .kw .customers ul{justify-content:flex-start;gap:30px;}
-  .kw .customers li:nth-child(n+4){display:none;}
+  .kw .customers ul{flex-wrap:wrap;row-gap:12px;}
   .kw .customers li{font-size:19px;}
   .kw .why-col{padding:24px;}
   .kw .why-col h3{font-size:26px;}
@@ -425,10 +425,12 @@ html.motion .kw .era-prog span,html.motion .kw .tprog span{transition:transform 
   .kw .foot-cols>.last{grid-column:1/-1;}
   .kw .close{padding-block:calc(var(--aura)*9);}
   .kw .runtime{padding-top:calc(var(--aura)*8);}
-  .kw .era{padding-block:calc(var(--aura)*9) calc(var(--aura)*6);}
+  .kw .flow{padding-block:calc(var(--aura)*9) calc(var(--aura)*6);}
 }
 .kw .seg button[aria-checked="true"]{background:var(--on-ink);color:var(--ink-band);box-shadow:0 0 0 2px var(--on-ink)}
-@media (max-width:480px){.kw .customers li{font-size:18px}.kw .customers ul{gap:20px}.kw .customers li:nth-child(n+3){display:none}}
+@media (max-width:480px){.kw .customers li{font-size:18px}.kw .customers ul{gap:12px 20px;flex-wrap:wrap}
+.kw .tick ul{gap:4px 20px}.kw .tick li+li::before{display:none}
+.kw .lineart{aspect-ratio:1/1}.kw .lineart .cap{font-size:11px}.kw .lineart .cap:nth-of-type(1){left:4%;top:4%}.kw .lineart .cap:nth-of-type(2){left:4%!important;right:auto!important;top:auto!important;bottom:2%!important}}
 </style>
 </head>
 <body class="kw" id="top">
@@ -631,12 +633,12 @@ html.motion .kw .era-prog span,html.motion .kw .tprog span{transition:transform 
 </section>
 
 <div class="stone-wrap">
-<section id="workflow" aria-labelledby="era-title">
-  <div class="wrap era">
+<section id="workflow" aria-labelledby="flow-title">
+  <div class="wrap flow">
     <div>
       <span class="chip">Workflow</span>
-      <h2 class="h2" id="era-title">Three steps from idea to shipped.</h2>
-      <ul class="era-list" id="era-list">
+      <h2 class="h2" id="flow-title">Three steps from idea to shipped.</h2>
+      <ul class="flow-list" id="flow-list">
         <li>
           <h3><button class="row-btn" type="button" id="eb-1" aria-expanded="true" aria-controls="rb-1" data-pane="1">Open the cells</button></h3>
           <div class="row-body" id="rb-1" role="region" aria-labelledby="eb-1">
@@ -659,9 +661,9 @@ html.motion .kw .era-prog span,html.motion .kw .tprog span{transition:transform 
           </div>
         </li>
       </ul>
-      <div class="era-prog" aria-hidden="true"><span id="era-bar"></span></div>
+      <div class="flow-prog" aria-hidden="true"><span id="flow-bar"></span></div>
     </div>
-    <div class="panel on-dark" id="era-panel">
+    <div class="panel on-dark" id="flow-panel">
       <div class="panel-head">
         <h3 id="panel-title">Cells in use (sample)</h3>
         <a class="btn btn-line btn-xs" href="#runtime">See the cells<svg class="ic" aria-hidden="true"><use href="#i-bent"/></svg></a>
@@ -1048,7 +1050,7 @@ html.motion .kw .era-prog span,html.motion .kw .tprog span{transition:transform 
       $("#pane-"+b.getAttribute("data-pane")).hidden=!on;
     });
     $("#panel-title").textContent=titles[n];
-    $("#era-bar").style.setProperty("--i",String(Number(n)-1));
+    $("#flow-bar").style.setProperty("--i",String(Number(n)-1));
   }
   rowBtns.forEach(function(b){b.addEventListener("click",function(){showRow(b.getAttribute("data-pane"));});});
 
