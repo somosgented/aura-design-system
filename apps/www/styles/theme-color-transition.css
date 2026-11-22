@@ -1,49 +1,49 @@
 @property --accent-1 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #fdfdff;
+  initial-value: #fcfdff;
 }
 
 @property --accent-2 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #f7f8ff;
+  initial-value: #f8f9ff;
 }
 
 @property --accent-3 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #eef1ff;
+  initial-value: #eff1ff;
 }
 
 @property --accent-4 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #e2e7ff;
+  initial-value: #e2e6ff;
 }
 
 @property --accent-5 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #d5dcff;
+  initial-value: #d5dbff;
 }
 
 @property --accent-6 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #c5cdff;
+  initial-value: #c6ccff;
 }
 
 @property --accent-7 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #b0b9ff;
+  initial-value: #afb7ff;
 }
 
 @property --accent-8 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #939bff;
+  initial-value: #929afa;
 }
 
 @property --accent-9 {
@@ -61,61 +61,61 @@
 @property --accent-11 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #5446e1;
+  initial-value: #4a3ec9;
 }
 
 @property --accent-12 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #272370;
+  initial-value: #241e6c;
 }
 
 @property --accent-a1 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #0000ff02;
+  initial-value: #0055ff03;
 }
 
 @property --accent-a2 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #0020ff08;
+  initial-value: #0025ff07;
 }
 
 @property --accent-a3 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #002dff11;
+  initial-value: #0020ff10;
 }
 
 @property --accent-a4 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #002cff1d;
+  initial-value: #0024ff1d;
 }
 
 @property --accent-a5 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #002bff2a;
+  initial-value: #0025ff2a;
 }
 
 @property --accent-a6 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #0024ff3a;
+  initial-value: #001bff39;
 }
 
 @property --accent-a7 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #001eff4f;
+  initial-value: #001aff50;
 }
 
 @property --accent-a8 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #0013ff6c;
+  initial-value: #0013f46d;
 }
 
 @property --accent-a9 {
@@ -133,13 +133,13 @@
 @property --accent-a11 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #1300d6b9;
+  initial-value: #1000b8c1;
 }
 
 @property --accent-a12 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #050059dc;
+  initial-value: #070058e1;
 }
 
 @property --accent-contrast {
@@ -151,7 +151,7 @@
 @property --accent-surface {
   syntax: "<color>";
   inherits: true;
-  initial-value: #f5f6ffcc;
+  initial-value: #f6f8ffcc;
 }
 
 @property --accent-indicator {
@@ -169,145 +169,145 @@
 @property --gray-1 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #fcfaff;
+  initial-value: #fcfcfd;
 }
 
 @property --gray-2 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #f9f6ff;
+  initial-value: #f8f9fc;
 }
 
 @property --gray-3 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #f0ecff;
+  initial-value: #eff0f4;
 }
 
 @property --gray-4 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #e8e2ff;
+  initial-value: #e7e8ee;
 }
 
 @property --gray-5 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #e0daff;
+  initial-value: #dfe0e7;
 }
 
 @property --gray-6 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #d9d1ff;
+  initial-value: #d7d8e1;
 }
 
 @property --gray-7 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #cfc4ff;
+  initial-value: #cccdd8;
 }
 
 @property --gray-8 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #bcabff;
+  initial-value: #b8bac8;
 }
 
 @property --gray-9 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #936cff;
+  initial-value: #898b9a;
 }
 
 @property --gray-10 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #8863f2;
+  initial-value: #7f818f;
 }
 
 @property --gray-11 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #6949bf;
+  initial-value: #5e5f6c;
 }
 
 @property --gray-12 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #27005f;
+  initial-value: #1a1b24;
 }
 
 @property --gray-a1 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #6600ff05;
+  initial-value: #00005503;
 }
 
 @property --gray-a2 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #5500ff09;
+  initial-value: #00259207;
 }
 
 @property --gray-a3 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #3600ff13;
+  initial-value: #00105010;
 }
 
 @property --gray-a4 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #3500ff1d;
+  initial-value: #000b4b18;
 }
 
 @property --gray-a5 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #2a00ff25;
+  initial-value: #00084020;
 }
 
 @property --gray-a6 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #2d00ff2e;
+  initial-value: #00074028;
 }
 
 @property --gray-a7 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #3001ff3b;
+  initial-value: #00053c33;
 }
 
 @property --gray-a8 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #3400ff54;
+  initial-value: #00083a47;
 }
 
 @property --gray-a9 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #4400ff93;
+  initial-value: #00052576;
 }
 
 @property --gray-a10 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #3d00ea9c;
+  initial-value: #00042080;
 }
 
 @property --gray-a11 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #2d00a6b6;
+  initial-value: #000216a1;
 }
 
 @property --gray-a12 {
   syntax: "<color>";
   inherits: true;
-  initial-value: #27005f;
+  initial-value: #00010be5;
 }
 
 @property --gray-contrast {
@@ -325,13 +325,13 @@
 @property --gray-indicator {
   syntax: "<color>";
   inherits: true;
-  initial-value: #936cff;
+  initial-value: #898b9a;
 }
 
 @property --gray-track {
   syntax: "<color>";
   inherits: true;
-  initial-value: #936cff;
+  initial-value: #898b9a;
 }
 
 @property --info {
@@ -421,19 +421,19 @@
 @property --aura-mark-plate {
   syntax: "<color>";
   inherits: true;
-  initial-value: #fcfaff;
+  initial-value: #fcfcfd;
 }
 
 @property --aura-mark-stroke {
   syntax: "<color>";
   inherits: true;
-  initial-value: #e8e2ff;
+  initial-value: #e7e8ee;
 }
 
 @property --aura-mark-hole {
   syntax: "<color>";
   inherits: true;
-  initial-value: #fcfaff;
+  initial-value: #fcfcfd;
 }
 
 @property --aura-mark-from {
@@ -445,7 +445,7 @@
 @property --aura-mark-to {
   syntax: "<color>";
   inherits: true;
-  initial-value: #27005f;
+  initial-value: #1a1b24;
 }
 
 html[data-theme-transition] {
