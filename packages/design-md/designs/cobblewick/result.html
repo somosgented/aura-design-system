@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Cobblewick · Aura flavor</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="stylesheet" href="/aura/main.css"/>
+<link rel="stylesheet" href="theme.css"/>
+<script>
+(function(){
+  var q=new URLSearchParams(window.location.search).get("appearance");
+  var m=q==="dark"||q==="light"?q:"system";
+  var r=document.documentElement;
+  var d=m==="system"?(window.matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"):m;
+  r.dataset.mode=m;
+  r.classList.add(d);
+  r.style.colorScheme=d;
+  if(window.matchMedia("(prefers-reduced-motion: no-preference)").matches)r.classList.add("motion");
+})();
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+html{font-family:var(--aura-font-stack);background:var(--canvas);color:var(--ink);scroll-padding-top:16px;}
+body.cw{margin:0;background:var(--canvas);color:var(--ink);font-family:var(--aura-font-stack);font-size:16px;line-height:1.5;min-width:0;--paper:var(--foot-ink);--dark:var(--yellow-ink);--rhythm:48px;--mark-bg:var(--ink);--mark-fg:var(--canvas);--tab-muted:var(--muted);}
+:where(.cw) :is(h1,h2,h3,h4,p,ul,figure,dl){margin:0;}
+.cw ul{padding:0;list-style:none;}
+.cw h1,.cw h2,.cw h3,.cw h4{font-family:var(--aura-font-display);font-weight:700;color:inherit;text-transform:none;letter-spacing:0;min-width:0;overflow-wrap:break-word;}
+.cw h1{font-size:28px;line-height:1.25;letter-spacing:-0.01em;}
+.cw h2{font-size:24px;line-height:1.25;}
+.cw h3{font-size:20px;line-height:1.3;font-weight:600;}
+.cw a{color:inherit;text-decoration:none;}
+.cw p{min-width:0;overflow-wrap:break-word;}
+.cw button,.cw input,.cw select{font:inherit;margin:0;}
+.cw svg{flex-shrink:0;}
+.cw .ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+:root:focus-visible{outline:3px solid var(--focus);outline-offset:-3px;}
+.cw :is(a,button,input,select,textarea,[tabindex]):focus-visible{outline:3px solid var(--focus)!important;outline-offset:2px;}
+.cw .track,.cw .tiles{position:relative;}
+.cw .tabs :focus-visible,.cw .seg :focus-visible,.cw .track :focus-visible,.cw .tiles :focus-visible{outline-offset:-3px;}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+.cw .skip{position:absolute;left:16px;top:-80px;z-index:500;padding:10px 20px;border-radius:9999px;background:var(--ink);color:var(--canvas);font-weight:700;}
+.cw .skip:focus{top:8px;}
+.wrap{width:min(100% - 48px,1232px);margin-inline:auto;}
+.sprite{position:absolute;width:0;height:0;overflow:hidden;}
+
+.cw .pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 20px;border-radius:9999px;border:1.5px solid transparent;background:none;color:inherit;font-family:var(--aura-font-display);font-weight:600;font-size:15px;line-height:1;white-space:nowrap;cursor:pointer;text-decoration:none;flex-shrink:0;}
+.cw .pill svg{width:18px;height:18px;}
+.cw .pill-sm{height:40px;padding:0 16px;}
+.cw .pill-orange{background:var(--orange);color:var(--orange-ink);border-color:var(--orange-ink);}
+.cw .pill-orange:hover{background:color-mix(in srgb,var(--orange) 88%,black);}
+.cw .pill-light{background:var(--paper);color:var(--dark);border-color:var(--paper);}
+.cw .pill-light:hover{background:color-mix(in srgb,var(--paper) 88%,black);}
+.cw .pill-line{background:transparent;border-color:currentColor;}
+.cw .pill-line:hover{background:color-mix(in srgb,currentColor 10%,transparent);}
+.cw .pill-blue{background:var(--blue);color:var(--paper);border-color:var(--paper);}
+.cw .pill-white{background:var(--paper);color:var(--dark);border-color:var(--dark);}
+.cw .round{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;padding:0;border-radius:50%;border:1.5px solid var(--control-line);background:var(--card);color:var(--ink);cursor:pointer;flex-shrink:0;}
+.cw .round svg{width:20px;height:20px;}
+.cw .round:hover{background:var(--panel);}
+.cw .round-sm{width:32px;height:32px;}
+.cw .round-sm svg{width:16px;height:16px;}
+.cw .heart[aria-pressed="true"]{color:var(--toy-red);}
+.cw .heart[aria-pressed="true"] svg{fill:currentColor;}
+.cw .hbtn{display:inline-flex;align-items:center;justify-content:center;gap:4px;height:40px;min-width:40px;padding:0 8px;border:0;border-radius:9999px;background:none;color:inherit;font-family:var(--aura-font-display);font-weight:600;font-size:14px;cursor:pointer;}
+.cw .hbtn svg{width:22px;height:22px;}
+.cw .hbtn:hover{background:color-mix(in srgb,var(--yellow-ink) 12%,transparent);}
+
+.cw .mark{width:26px;height:26px;}
+.mark rect{fill:var(--mark-bg);}
+.mark circle{fill:var(--mark-fg);}
+.cw .brand{display:inline-flex;align-items:center;gap:8px;font-family:var(--aura-font-display);font-weight:700;font-size:20px;letter-spacing:-0.02em;line-height:1;color:inherit;}
+
+.notice{background:var(--canvas);border-bottom:1px solid var(--rule);}
+.notice[hidden]{display:none;}
+.notice-in{display:grid;grid-template-columns:32px minmax(0,1fr) 32px;align-items:center;gap:8px;padding-block:6px;font-size:13px;line-height:1.4;text-align:center;}
+.cw .notice a{color:var(--link);font-weight:700;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;}
+
+.top{position:relative;z-index:50;background:var(--yellow);color:var(--yellow-ink);--focus:var(--yellow-ink);--control-line:var(--yellow-ink);--mark-bg:var(--yellow-ink);--mark-fg:var(--yellow);}
+.top-in{display:flex;flex-wrap:wrap;align-items:center;gap:8px 2px;padding-block:10px;}
+.top .brand{margin-inline:4px 6px;}
+.acts{display:flex;align-items:center;margin-left:auto;}
+.cw .nav,.cw .gift{display:none;}
+.nav-list{display:flex;gap:2px;}
+.nav-list>li{position:relative;}
+.cw .trigger{display:inline-flex;align-items:center;gap:4px;height:40px;padding:0 12px;border:0;border-radius:9999px;background:none;color:inherit;font-family:var(--aura-font-display);font-weight:600;font-size:15px;cursor:pointer;}
+.cw .trigger:hover,.cw .trigger[aria-expanded="true"]{background:color-mix(in srgb,var(--yellow-ink) 12%,transparent);}
+.cw .trigger svg{width:16px;height:16px;}
+.cw .trigger[aria-expanded="true"] svg{transform:rotate(180deg);}
+.search{position:relative;flex:1 1 100%;order:9;}
+.search svg{position:absolute;left:14px;top:50%;margin-top:-10px;width:20px;height:20px;color:var(--dark);pointer-events:none;}
+.cw .search input{display:block;width:100%;height:44px;padding:0 16px 0 44px;border-radius:9999px;border:1.5px solid var(--yellow-ink);background:var(--paper);color:var(--dark);font-size:15px;}
+.cw .search input::placeholder{color:color-mix(in srgb,var(--dark) 72%,var(--paper));opacity:1;}
+.cw .fly{position:absolute;left:0;top:calc(100% + 8px);z-index:80;width:min(520px,calc(100vw - 32px));padding:12px;background:var(--card);color:var(--ink);--focus:var(--ink);border:1px solid var(--rule);border-radius:8px;box-shadow:0 12px 32px color-mix(in srgb,var(--ink) 14%,transparent);}
+.cw .fly[hidden]{display:none;}
+.fly ul{display:grid;grid-auto-flow:column;grid-template-rows:repeat(6,auto);grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 8px;}
+.fly a{display:block;padding:8px 10px;border-radius:6px;}
+.fly a:hover{background:var(--panel);}
+.fly b{display:block;font-family:var(--aura-font-display);font-weight:600;font-size:15px;line-height:1.3;}
+.fly span{display:block;font-size:13px;line-height:1.4;color:var(--muted);}
+
+.cw .sheet{position:fixed;left:0;top:0;width:100vw;height:100vh;z-index:400;display:flex;flex-direction:column;gap:0;padding:12px 24px 32px;overflow-y:auto;background:var(--canvas);color:var(--ink);--focus:var(--ink);--control-line:var(--ink);--mark-bg:var(--ink);--mark-fg:var(--canvas);}
+.cw .sheet[hidden]{display:none;}
+.sheet-top{display:flex;align-items:center;justify-content:space-between;min-height:52px;margin-bottom:12px;}
+.sheet-acc{border-top:1px solid var(--rule);}
+.cw .sheet-acc>button{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:56px;padding:0;border:0;background:none;color:inherit;text-align:left;font-family:var(--aura-font-display);font-weight:600;font-size:20px;cursor:pointer;}
+.sheet-acc>button svg{width:20px;height:20px;}
+.sheet-acc>button[aria-expanded="true"] svg{transform:rotate(180deg);}
+.sheet-acc ul{padding:8px 0 12px;}
+.sheet-acc li a{display:block;padding:10px 0;font-size:16px;}
+.sheet-links{display:grid;gap:12px;margin-top:0;padding-top:20px;border-top:1px solid var(--rule);justify-items:start;}
+
+.hero{background:var(--forest);color:var(--paper);--focus:var(--paper);--control-line:var(--paper);}
+.hero-in{display:grid;grid-template-columns:minmax(0,1fr);--gut:max(24px,calc((100% - 1232px) / 2));}
+.hero-art{order:-1;container-type:size;position:relative;height:200px;overflow:hidden;background:color-mix(in srgb,var(--forest) 62%,black);}
+.hero-copy{min-width:0;width:min(100% - 48px,1232px);margin-inline:auto;padding-block:32px 40px;}
+.hero-note{margin-top:12px;font-size:13px;line-height:1.4;}
+.hero-btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;}
+.rs{position:absolute;inset:0;--k:1;--cx:50%;}
+.rs-b{--cx:4%;--k:.9;}
+.rs-c{--cx:96%;--k:.9;}
+.ring{position:absolute;left:var(--cx);top:50%;width:calc(var(--n)*var(--k)*1cqh);height:calc(var(--n)*var(--k)*1cqh);transform:translate(-50%,-50%) rotate(45deg);outline:4px dotted var(--dot);outline-offset:-10px;background:var(--fill);}
+.ring-1{--n:130;--fill:var(--forest-mid);--dot:var(--forest-light);}
+.ring-2{--n:108;--fill:var(--forest-light);--dot:var(--forest-mid);}
+.ring-3{--n:86;--fill:var(--forest-mid);--dot:var(--forest-light);}
+.ring-4{--n:64;--fill:var(--forest-light);--dot:var(--forest-mid);}
+.ring-5{--n:44;--fill:var(--forest-mid);--dot:var(--forest-light);}
+.ring-6{--n:26;--fill:var(--forest);--dot:var(--forest-light);}
+.hero-badge{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 16px;border-radius:12px;background:var(--paper);color:var(--dark);--mark-bg:var(--dark);--mark-fg:var(--paper);text-align:center;white-space:nowrap;box-shadow:0 6px 20px color-mix(in srgb,black 28%,transparent);}
+.hero-badge .brand{font-size:22px;}
+.hero-badge span{font-size:13px;font-weight:700;line-height:1.2;}
+.fine-note{padding-top:16px;font-size:13px;line-height:1.4;text-align:center;color:var(--muted);}
+
+.links{--slant:clamp(12px,3.2vw,40px);--tab-muted:var(--foot-muted);--focus:var(--paper);--control-line:var(--foot-line);margin-top:24px;padding:32px 0 calc(var(--slant) + 40px);background:var(--charcoal);color:var(--paper);clip-path:polygon(0 0,100% 0,100% calc(100% - var(--slant)),0 100%);}
+.dark .links{border-top:1px solid color-mix(in srgb,var(--foot-ink) 24%,transparent);background:color-mix(in srgb,var(--charcoal) 88%,var(--foot-ink));}
+.cw .tabs{display:flex;gap:24px;overflow-x:auto;min-width:0;}
+.cw .tabs [role="tab"]{min-height:44px;padding:0;border:0;border-bottom:3px solid transparent;background:none;color:var(--tab-muted);font-family:var(--aura-font-display);font-weight:600;font-size:16px;white-space:nowrap;cursor:pointer;}
+.cw .tabs [role="tab"][aria-selected="true"]{color:inherit;border-bottom-color:currentColor;}
+.cw .tabs [role="tab"]:hover{color:inherit;}
+.tiles{overflow-x:auto;scroll-snap-type:x mandatory;margin:16px -4px 0;padding:4px;}
+.tile-row{display:flex;gap:8px;--v:3.3;}
+.tile-row>li{flex:0 0 calc((100% - (var(--v) - 1)*8px)/var(--v));min-width:0;scroll-snap-align:start;}
+.cw .tile{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;height:196px;padding:16px 8px 12px;border-radius:8px;background:var(--forest-tile);color:var(--paper);font-family:var(--aura-font-display);font-weight:600;font-size:14px;line-height:1.25;text-align:center;}
+.tile::before{content:"";position:absolute;inset:5px;border-radius:5px;border:3px dotted color-mix(in srgb,var(--forest-light) 70%,transparent);pointer-events:none;}
+.tile:hover{background:color-mix(in srgb,var(--forest-tile) 80%,var(--forest-mid));}
+.tile .gem{position:relative;display:grid;place-items:center;width:68px;height:68px;margin:auto 0;}
+.tile .gem::before{content:"";position:absolute;width:48px;height:48px;border-radius:8px;transform:rotate(45deg);background:color-mix(in srgb,var(--forest-tile) 45%,var(--forest-mid));}
+.cw .glyph{position:relative;width:44px;height:44px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+
+.sec{padding-block:var(--rhythm);}
+.sec-head{display:grid;gap:8px;justify-items:center;margin-bottom:32px;text-align:center;}
+.sec-head p{max-width:62ch;color:var(--muted);}
+.rail-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px;}
+.rail-ctl{display:flex;gap:8px;}
+.track{overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -4px;padding:4px;}
+.cards{display:flex;align-items:stretch;gap:16px;--v:1.15;}
+.cards>li{display:flex;flex:0 0 calc((100% - (var(--v) - 1)*16px)/var(--v));min-width:0;scroll-snap-align:start;}
+.set-card{display:flex;flex-direction:column;gap:12px;width:100%;padding:16px;border:1px solid var(--rule);border-radius:8px;background:var(--card);}
+.card-note{font-size:12px;line-height:1.3;color:var(--muted);}
+.badges{display:flex;flex-wrap:wrap;align-content:flex-start;justify-content:flex-end;gap:4px;min-height:24px;margin-top:-4px;}
+.badge{display:inline-block;padding:3px 8px;border-radius:4px;font-size:12px;font-weight:700;line-height:1.3;}
+.badge-green{background:var(--badge-green);color:var(--paper);}
+.badge-yellow{background:var(--badge-yellow);color:var(--dark);}
+.scene{display:block;width:100%;height:170px;border-radius:6px;}
+.meta{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:13px;line-height:1.3;color:var(--muted);}
+.meta li{display:inline-flex;align-items:center;gap:4px;}
+.meta svg{width:16px;height:16px;}
+.cw .set-title{min-height:52px;}
+.price{display:grid;align-content:start;min-height:64px;font-family:var(--aura-font-display);font-weight:600;font-size:16px;line-height:1.4;}
+.price s{margin-right:6px;font-family:var(--aura-font-stack);font-weight:400;font-size:14px;color:var(--muted);}
+.price-flag{display:block;min-height:24px;margin-bottom:4px;}
+.price-now{display:block;}
+.buy{display:flex;align-items:center;gap:8px;margin-top:auto;}
+.buy .pill{flex:1 1 auto;padding:0 12px;}
+
+.mosaic{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;}
+.shot{position:relative;min-width:0;aspect-ratio:4/3;--pop-w:calc(100% - 32px);}
+.shot-art{position:absolute;inset:0;overflow:hidden;border-radius:8px;background:var(--panel);}
+.shot-art svg{display:block;width:100%;height:100%;}
+.cw .hot{position:absolute;left:16px;bottom:16px;z-index:2;background:var(--paper);color:var(--dark);border-color:var(--dark);}
+.cw .hot:hover{background:color-mix(in srgb,var(--paper) 86%,black);}
+.cw .pop{position:absolute;left:16px;bottom:64px;z-index:3;width:var(--pop-w);padding:16px;border:1px solid var(--rule);border-radius:12px;background:var(--card);color:var(--ink);--focus:var(--ink);--control-line:var(--ink);box-shadow:0 12px 32px color-mix(in srgb,var(--ink) 18%,transparent);}
+.cw .pop[hidden]{display:none;}
+.pop .round{position:absolute;top:8px;right:8px;}
+.cw .pop h3{padding-right:36px;font-size:18px;}
+.pop p{margin-top:2px;font-size:14px;color:var(--muted);}
+.cw .pop a{display:inline-flex;align-items:center;gap:4px;margin-top:8px;color:var(--link);font-family:var(--aura-font-display);font-weight:600;font-size:15px;}
+.pop a svg{width:16px;height:16px;}
+
+.cw .stage{position:relative;min-height:450px;padding-block:32px 24px;background:var(--void);color:var(--paper);--focus:var(--paper);--control-line:var(--foot-line);--mark-bg:var(--paper);--mark-fg:var(--void);}
+.seg-wrap{display:flex;justify-content:center;}
+.cw .seg{display:flex;gap:4px;max-width:100%;padding:4px;overflow-x:auto;border:1.5px solid var(--foot-line);border-radius:9999px;}
+.cw .seg [role="tab"]{flex-shrink:0;height:40px;padding:0 12px;border:0;border-radius:9999px;background:transparent;color:var(--paper);font-family:var(--aura-font-display);font-weight:600;font-size:13px;white-space:nowrap;cursor:pointer;}
+.cw .seg [role="tab"][aria-selected="true"]{background:var(--paper);color:var(--dark);}
+.stage-panel{display:grid;grid-template-columns:minmax(0,1fr);align-items:center;gap:24px;margin-top:32px;}
+.stage-panel[hidden]{display:none;}
+.stage-art{order:-1;min-width:0;width:min(100% - 48px,1232px);margin-inline:auto;}
+.stage-art svg{display:block;width:100%;height:auto;aspect-ratio:480/340;border-radius:8px;}
+.stage-copy{display:grid;gap:16px;justify-items:start;min-width:0;width:min(100% - 48px,1232px);margin-inline:auto;}
+.cw .stage-copy h3{font-size:24px;line-height:1.3;font-weight:700;}
+.stage-copy p{font-size:15px;max-width:48ch;}
+.stage-btns{display:flex;flex-wrap:wrap;gap:12px;}
+.stage-brand{margin-top:24px;font-size:16px;}
+.acc-blue{--acc-1:var(--toy-blue);--acc-2:var(--toy-sky);}
+.acc-plum{--acc-1:var(--toy-plum);--acc-2:var(--toy-sand);}
+.acc-teal{--acc-1:var(--toy-teal);--acc-2:var(--toy-sky);}
+
+.disc{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;}
+.disc-card{display:flex;flex-direction:column;align-items:center;gap:12px;min-width:0;text-align:center;}
+.disc-art{width:100%;aspect-ratio:4/3;overflow:hidden;border-radius:8px;}
+.disc-art svg{display:block;width:100%;height:100%;}
+.disc-card p{max-width:34ch;}
+.disc-card .pill{margin-top:auto;}
+.cw .sec-left h2{margin-bottom:24px;text-align:left;}
+
+.note-strip{padding:24px 0;background:var(--panel);}
+.note-strip p{font-size:14px;line-height:1.5;}
+.cw .note-strip a{color:var(--link);font-weight:600;text-decoration:underline;text-underline-offset:2px;}
+
+.cw .foot{--focus:var(--paper);--control-line:var(--foot-line);--mark-bg:var(--foot-ink);--mark-fg:var(--foot);margin-top:0;padding:48px 0 32px;background:var(--foot);color:var(--foot-ink);}
+.foot .pill-white{border-color:var(--paper);}
+.foot-top{display:grid;grid-template-columns:minmax(0,1fr);gap:32px;}
+.foot-side{display:grid;gap:16px;justify-items:start;align-content:start;}
+.foot-side ul,.foot-cols ul{display:grid;gap:10px;}
+.foot-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 24px;}
+.cw .foot-h{font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:16px;}
+.foot ul a{font-size:14px;color:var(--foot-muted);}
+.foot ul a:hover{color:var(--foot-ink);text-decoration:underline;}
+.regions{display:grid;gap:4px;width:min(100%,240px);}
+.regions[hidden]{display:none;}
+.regions-title{font-size:13px;color:var(--foot-muted);}
+.cw .regions button{padding:8px 12px;border:1.5px solid var(--foot-line);border-radius:8px;background:transparent;color:var(--foot-ink);text-align:left;font-size:14px;cursor:pointer;}
+.regions button:hover{background:color-mix(in srgb,var(--foot-ink) 12%,transparent);}
+.foot-mid{display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px;margin-top:40px;padding-bottom:8px;padding-top:32px;border-top:1px solid color-mix(in srgb,var(--foot-ink) 18%,transparent);}
+.sub{display:grid;flex:1 1 320px;gap:8px;max-width:440px;}
+.sub label,.follow h3{font-family:var(--aura-font-display);font-weight:700;font-size:16px;text-transform:uppercase;letter-spacing:0.04em;}
+.sub-form{position:relative;}
+.cw .sub-form input{display:block;width:100%;height:48px;padding:0 140px 0 20px;border:1.5px solid var(--foot-line);border-radius:9999px;background:var(--paper);color:var(--dark);font-size:15px;}
+.cw .sub-form input::placeholder{color:color-mix(in srgb,var(--dark) 72%,var(--paper));opacity:1;}
+.sub-form .pill{position:absolute;right:4px;top:4px;height:40px;}
+.sub-live{min-height:20px;font-size:14px;color:var(--foot-muted);}
+.follow{display:grid;gap:12px;align-content:start;min-width:0;}
+.follow ul{display:flex;flex-wrap:wrap;gap:8px;}
+.cw .foot .round{background:transparent;color:var(--foot-ink);font-family:var(--aura-font-display);font-weight:600;font-size:15px;}
+.cw .foot .round:hover{background:color-mix(in srgb,var(--foot-ink) 14%,transparent);}
+.foot-more{display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:32px;font-size:14px;}
+.foot-more a{color:var(--foot-muted);}
+.foot-more a:hover{color:var(--foot-ink);text-decoration:underline;}
+.legal{display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:24px;padding-top:16px;border-top:1px solid color-mix(in srgb,var(--foot-ink) 18%,transparent);font-size:13px;}
+.legal a{color:var(--foot-muted);}
+.legal a:hover{color:var(--foot-ink);text-decoration:underline;}
+.fine{max-width:90ch;margin-top:16px;font-size:13px;line-height:1.5;color:var(--foot-muted);}
+.foot-end{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin-top:24px;}
+.foot-end>span{font-family:var(--aura-font-display);font-weight:600;font-size:14px;}
+.cw .sw{display:inline-flex;gap:2px;padding:3px;border:1.5px solid var(--foot-line);border-radius:9999px;}
+.cw .sw button{height:36px;padding:0 16px;border:0;border-radius:9999px;background:transparent;color:var(--foot-ink);font-family:var(--aura-font-display);font-weight:600;font-size:14px;cursor:pointer;}
+.cw .sw button[aria-checked="true"]{background:var(--paper);color:var(--dark);}
+
+.f-red{fill:var(--toy-red);}.f-blue{fill:var(--toy-blue);}.f-sky{fill:var(--toy-sky);}.f-plum{fill:var(--toy-plum);}.f-teal{fill:var(--toy-teal);}.f-sand{fill:var(--toy-sand);}.f-slate{fill:var(--toy-slate);}
+.f-paper{fill:var(--foot-ink);}.f-dark{fill:var(--yellow-ink);}.f-yellow{fill:var(--yellow);}.f-green{fill:var(--forest-mid);}.f-leaf{fill:var(--forest-light);}.f-orange{fill:var(--orange);}.f-acc1{fill:var(--acc-1);}.f-acc2{fill:var(--acc-2);}
+.f-wall{fill:color-mix(in srgb,var(--toy-slate) 30%,black);}
+.bg-sky{fill:color-mix(in srgb,var(--toy-sky) 40%,var(--card));}
+.bg-sand{fill:color-mix(in srgb,var(--toy-sand) 45%,var(--card));}
+.bg-plum{fill:color-mix(in srgb,var(--toy-plum) 38%,var(--card));}
+.bg-teal{fill:color-mix(in srgb,var(--toy-teal) 38%,var(--card));}
+.bg-red{fill:color-mix(in srgb,var(--toy-red) 30%,var(--card));}
+.bg-leaf{fill:color-mix(in srgb,var(--forest-light) 45%,var(--card));}
+.st{fill:none;stroke-width:8;stroke-linecap:round;stroke-dasharray:0 14;}
+.st-red{stroke:var(--toy-red);}.st-blue{stroke:var(--toy-blue);}.st-sky{stroke:var(--toy-sky);}.st-plum{stroke:var(--toy-plum);}.st-teal{stroke:var(--toy-teal);}.st-sand{stroke:var(--toy-sand);}.st-slate{stroke:var(--toy-slate);}.st-green{stroke:var(--forest-mid);}.st-yellow{stroke:var(--yellow);}.st-acc1{stroke:var(--acc-1);}.st-acc2{stroke:var(--acc-2);}
+.ln{fill:none;stroke:var(--toy-slate);stroke-width:3;stroke-linecap:round;}
+.ln-lamp{fill:none;stroke:var(--toy-sand);stroke-width:3;}
+
+.cw .nav,.cw .gift{display:none;}
+@media(max-width:479px){.cards{--v:1;}
+  .top-in{width:min(100% - 16px,1232px);gap:8px 0;padding-block:8px;}
+  .top .hbtn{height:36px;min-width:36px;padding:0 6px;}
+  .top .hbtn svg{width:20px;height:20px;}
+  .top .brand{margin-inline:2px 4px;}
+}
+@media(min-width:480px){.cards{--v:2.2;}.tile{font-size:15px;}}
+@media(min-width:640px){.cards{--v:3.2;}.tile-row{--v:5.3;}
+  .tile .gem{width:84px;height:84px;}
+  .tile .gem::before{width:60px;height:60px;}
+  .cw .glyph{width:56px;height:56px;}
+  .cw .seg [role="tab"]{padding:0 20px;font-size:15px;}
+}
+@media(min-width:768px){
+  .cw h1{font-size:34px;}
+  .cw h2{font-size:28px;}
+  .mosaic{grid-template-columns:repeat(4,minmax(0,1fr));}
+  .shot{aspect-ratio:1;--pop-w:min(240px,calc(100vw - 48px));}
+  .shot-big{grid-column:1/3;grid-row:1/3;aspect-ratio:auto;--pop-w:min(280px,calc(100% - 32px));}
+  .shot.edge .pop{left:auto;right:16px;}
+  .disc{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .foot-cols{grid-template-columns:repeat(4,minmax(0,1fr));}
+}
+@media(min-width:900px){.cards{--v:4;}}
+@media(min-width:1024px){
+  body.cw{--rhythm:64px;}
+  .cw h1{font-size:40px;}
+  .cw h2{font-size:32px;}
+  .top-in{flex-wrap:nowrap;gap:16px;padding-block:12px;}
+  .top .brand{margin-inline:0;}
+  .cw .menu-btn{display:none;}
+  .cw .nav{display:block;}
+  .cw .gift{display:inline-flex;}
+  .search{flex:1 1 280px;max-width:410px;order:0;}
+  .acts{margin-left:auto;}
+  .hero-in{grid-template-columns:var(--gut) minmax(0,5fr) minmax(0,7fr) var(--gut);min-height:320px;}
+  .hero-art{order:0;grid-column:3/5;grid-row:1;height:auto;min-height:320px;}
+  .hero-copy{grid-column:2;grid-row:1;align-self:center;width:auto;margin:0;padding:48px 32px 48px 0;}
+  .tile-row{--v:8;}
+  .cw .tile{font-size:15px;}
+  .stage-panel{grid-template-columns:var(--gut) minmax(0,1fr) minmax(0,1fr) var(--gut);gap:0;--gut:max(24px,calc((100% - 1232px) / 2));}
+  .stage-copy{grid-column:2;grid-row:1;width:auto;margin:0;padding-right:48px;}
+  .stage-art{order:0;grid-column:3/5;grid-row:1;width:auto;margin:0;}
+  .stage-art svg{height:400px;aspect-ratio:auto;border-radius:8px 0 0 8px;}
+  .cw .stage-copy h3{font-size:32px;}
+  .foot-top{grid-template-columns:minmax(0,1fr) minmax(0,3fr);gap:48px;}
+}
+@media(min-width:1100px){.cards{--v:5;}}
+html.motion .cw :is(.pill,.round,.hbtn,.trigger,.tile){transition:background-color .15s ease;}
+html.motion .cw :is(.trigger svg,.sheet-acc>button svg){transition:transform .15s ease;}
+</style>
+</head>
+<body class="cw">
+<svg class="sprite" aria-hidden="true" focusable="false">
+<symbol id="i-chev" viewBox="0 0 20 20"><path d="M5 8l5 5 5-5"/></symbol>
+<symbol id="i-chev-r" viewBox="0 0 20 20"><path d="M8 5l5 5-5 5"/></symbol>
+<symbol id="i-chev-l" viewBox="0 0 20 20"><path d="M12 5l-5 5 5 5"/></symbol>
+<symbol id="i-search" viewBox="0 0 20 20"><circle cx="9" cy="9" r="5.5"/><path d="M13.2 13.2L17 17"/></symbol>
+<symbol id="i-user" viewBox="0 0 20 20"><circle cx="10" cy="6.8" r="3.2"/><path d="M3.5 17c.8-3.6 3.4-5 6.5-5s5.7 1.4 6.5 5"/></symbol>
+<symbol id="i-heart" viewBox="0 0 20 20"><path d="M10 16.5S3 12.2 3 7.6A3.6 3.6 0 0 1 10 6a3.6 3.6 0 0 1 7 1.6c0 4.6-7 8.9-7 8.9z"/></symbol>
+<symbol id="i-bag" viewBox="0 0 20 20"><path d="M4.5 7h11l-.8 9.5H5.3z"/><path d="M7.5 7V6a2.5 2.5 0 0 1 5 0v1"/></symbol>
+<symbol id="i-menu" viewBox="0 0 20 20"><path d="M3 6h14M3 10h14M3 14h14"/></symbol>
+<symbol id="i-close" viewBox="0 0 20 20"><path d="M5 5l10 10M15 5L5 15"/></symbol>
+<symbol id="i-plus" viewBox="0 0 20 20"><path d="M10 4v12M4 10h12"/></symbol>
+<symbol id="i-pin" viewBox="0 0 20 20"><path d="M10 17s5-4.6 5-8.5a5 5 0 0 0-10 0C5 12.4 10 17 10 17z"/><circle cx="10" cy="8.5" r="1.8"/></symbol>
+<symbol id="i-star" viewBox="0 0 20 20"><path fill="currentColor" d="M10 2.8l2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5L2.8 8.1l5-.7z"/></symbol>
+<symbol id="i-age" viewBox="0 0 20 20"><path d="M4 17h12v-5H4zM10 12V8M10 5.2v.6"/></symbol>
+<symbol id="i-pieces" viewBox="0 0 20 20"><rect x="3.5" y="3.5" width="5" height="5" rx="1"/><rect x="11.5" y="3.5" width="5" height="5" rx="1"/><rect x="3.5" y="11.5" width="5" height="5" rx="1"/><rect x="11.5" y="11.5" width="5" height="5" rx="1"/></symbol>
+<symbol id="g-tag" viewBox="0 0 40 40"><path d="M8 8h13l11 11-12 12L8 20z"/><circle cx="14" cy="14" r="2"/></symbol>
+<symbol id="g-bag" viewBox="0 0 40 40"><path d="M9 13h22l-2 21H11z"/><path d="M15 13v-2a5 5 0 0 1 10 0v2"/></symbol>
+<symbol id="g-star" viewBox="0 0 40 40"><path d="M20 5l4.5 9.5 10 1.3-7.4 7 2 10.2L20 28l-9.1 5 2-10.2-7.4-7 10-1.3z"/></symbol>
+<symbol id="g-grid" viewBox="0 0 40 40"><rect x="7" y="7" width="11" height="11" rx="2"/><rect x="22" y="7" width="11" height="11" rx="2"/><rect x="7" y="22" width="11" height="11" rx="2"/><rect x="22" y="22" width="11" height="11" rx="2"/></symbol>
+<symbol id="g-gift" viewBox="0 0 40 40"><rect x="6" y="16" width="28" height="18" rx="2"/><path d="M5 16h30v-4H5zM20 12v22M20 12c-4 0-8-1-8-4s5-3 8 4c3-7 8-7 8-4s-4 4-8 4"/></symbol>
+<symbol id="g-heart" viewBox="0 0 40 40"><path d="M20 33S6 25 6 15a7 7 0 0 1 14-2 7 7 0 0 1 14 2c0 10-14 18-14 18z"/></symbol>
+<symbol id="g-cup" viewBox="0 0 40 40"><path d="M12 6h16v9a8 8 0 0 1-16 0zM12 9H6c0 5 2 8 6 8M28 9h6c0 5-2 8-6 8M20 23v6M13 34h14M16 29h8"/></symbol>
+<symbol id="g-coin" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14"/><path d="M20 12v16M15 17c0-2 2-3 5-3s5 1 5 3-2 3-5 3-5 1-5 3 2 3 5 3 5-1 5-3"/></symbol>
+<symbol id="g-castle" viewBox="0 0 40 40"><path d="M6 34V12h8v22M26 34V12h8v22M14 22h12M6 12l2-3h4l2 3M26 12l2-3h4l2 3"/><path d="M17 34v-6a3 3 0 0 1 6 0v6"/></symbol>
+<symbol id="g-ship" viewBox="0 0 40 40"><path d="M5 25h30l-5 9H10z"/><path d="M20 25V6l10 13H20M20 11l-9 8h9"/></symbol>
+<symbol id="g-train" viewBox="0 0 40 40"><rect x="5" y="12" width="30" height="16" rx="3"/><path d="M5 20h30M12 12V8h6v4"/><circle cx="12" cy="32" r="3"/><circle cx="28" cy="32" r="3"/></symbol>
+<symbol id="g-robot" viewBox="0 0 40 40"><rect x="9" y="12" width="22" height="18" rx="3"/><path d="M20 12V6M17 6h6M5 18v6M35 18v6M15 34v-4M25 34v-4M15 26h10"/><circle cx="15" cy="20" r="2"/><circle cx="25" cy="20" r="2"/></symbol>
+<symbol id="g-city" viewBox="0 0 40 40"><path d="M5 34V18h8v16M13 34V8h12v26M25 34V16h10v18M17 14h4M17 20h4M17 26h4M29 22h2M29 28h2"/></symbol>
+<symbol id="g-bridge" viewBox="0 0 40 40"><path d="M3 26h34M8 26V10M32 26V10M8 10c8 14 16 14 24 0M3 34h34M14 26v5M26 26v5"/></symbol>
+<symbol id="g-flower" viewBox="0 0 40 40"><path d="M20 34V19M20 24c-6 0-8-3-8-6M20 28c6 0 8-3 8-6M8 34h24"/><circle cx="20" cy="13" r="5"/></symbol>
+<symbol id="g-rocket" viewBox="0 0 40 40"><path d="M20 5c6 5 7 13 5 22H15c-2-9-1-17 5-22zM15 27l-5 6v-9l5-3M25 27l5 6v-9l-5-3"/><circle cx="20" cy="16" r="3"/></symbol>
+<symbol id="sc-bridge" viewBox="0 0 240 170"><rect width="240" height="170" class="bg-sky"/><circle cx="204" cy="30" r="13" class="f-yellow"/><rect y="128" width="240" height="42" class="f-teal"/><rect x="44" y="50" width="24" height="84" class="f-blue"/><rect x="172" y="50" width="24" height="84" class="f-blue"/><path d="M52 44h1M60 44h1M180 44h1M188 44h1" class="st st-blue"/><path d="M56 50Q120 114 184 50" class="ln"/><rect x="12" y="92" width="216" height="16" rx="3" class="f-red"/><path d="M22 86h200" class="st st-red"/><rect x="96" y="108" width="8" height="22" class="f-slate"/><rect x="136" y="108" width="8" height="22" class="f-slate"/></symbol>
+<symbol id="sc-ship" viewBox="0 0 240 170"><rect width="240" height="170" class="bg-teal"/><rect y="134" width="240" height="36" class="f-blue"/><path d="M36 106h168l-26 30H62z" class="f-red"/><rect x="82" y="78" width="76" height="28" rx="3" class="f-paper"/><rect x="100" y="56" width="40" height="22" rx="3" class="f-sand"/><rect x="113" y="36" width="14" height="20" class="f-dark"/><path d="M90 72h60" class="st st-slate"/><path d="M106 50h28" class="st st-sand"/><rect x="92" y="86" width="14" height="10" class="f-sky"/><rect x="113" y="86" width="14" height="10" class="f-sky"/><rect x="134" y="86" width="14" height="10" class="f-sky"/><path d="M10 148q14-8 28 0t28 0 28 0 28 0 28 0 28 0 28 0 28 0" class="ln"/></symbol>
+<symbol id="sc-castle" viewBox="0 0 240 170"><rect width="240" height="170" class="bg-sand"/><rect y="138" width="240" height="32" class="f-green"/><rect x="36" y="52" width="36" height="88" class="f-slate"/><rect x="168" y="52" width="36" height="88" class="f-slate"/><rect x="72" y="80" width="96" height="60" class="f-slate"/><path d="M44 46h20M176 46h20M80 74h80" class="st st-slate"/><path d="M120 80V44" class="ln"/><path d="M120 44l24 8-24 8z" class="f-red"/><path d="M104 140v-24a16 16 0 0 1 32 0v24z" class="f-dark"/><rect x="48" y="78" width="12" height="16" class="f-sky"/><rect x="180" y="78" width="12" height="16" class="f-sky"/></symbol>
+<symbol id="sc-robot" viewBox="0 0 240 170"><rect width="240" height="170" class="bg-plum"/><rect y="150" width="240" height="20" class="f-slate"/><rect x="56" y="78" width="20" height="46" rx="4" class="f-slate"/><rect x="164" y="78" width="20" height="46" rx="4" class="f-slate"/><rect x="92" y="130" width="22" height="22" class="f-slate"/><rect x="126" y="130" width="22" height="22" class="f-slate"/><rect x="78" y="70" width="84" height="62" rx="6" class="f-blue"/><rect x="92" y="32" width="56" height="36" rx="6" class="f-sky"/><circle cx="108" cy="50" r="6" class="f-dark"/><circle cx="132" cy="50" r="6" class="f-dark"/><path d="M120 32V16" class="ln"/><circle cx="120" cy="14" r="6" class="f-yellow"/><rect x="102" y="86" width="36" height="24" rx="3" class="f-yellow"/><path d="M96 64h48" class="st st-sky"/></symbol>
+<symbol id="sc-train" viewBox="0 0 240 170"><rect width="240" height="170" class="bg-sky"/><rect y="140" width="240" height="8" class="f-slate"/><rect y="148" width="240" height="22" class="f-green"/><rect x="40" y="62" width="16" height="26" class="f-dark"/><rect x="26" y="88" width="94" height="40" rx="4" class="f-red"/><rect x="120" y="66" width="58" height="62" rx="4" class="f-red"/><rect x="114" y="58" width="70" height="9" class="f-dark"/><rect x="130" y="76" width="36" height="24" class="f-sky"/><rect x="186" y="92" width="44" height="36" rx="3" class="f-teal"/><path d="M34 82h78M192 86h30" class="st st-red"/><circle cx="52" cy="132" r="11" class="f-dark"/><circle cx="96" cy="132" r="11" class="f-dark"/><circle cx="144" cy="132" r="11" class="f-dark"/><circle cx="204" cy="132" r="9" class="f-dark"/></symbol>
+<symbol id="sc-house" viewBox="0 0 240 170"><rect width="240" height="170" class="bg-leaf"/><rect y="134" width="240" height="36" class="f-green"/><rect x="150" y="38" width="16" height="30" class="f-slate"/><rect x="56" y="84" width="128" height="52" class="f-sand"/><path d="M44 86L120 38l76 48z" class="f-red"/><rect x="108" y="102" width="26" height="34" rx="2" class="f-blue"/><rect x="70" y="98" width="24" height="22" class="f-sky"/><rect x="146" y="98" width="24" height="22" class="f-sky"/><path d="M66 78h108" class="st st-sand"/><circle cx="36" cy="124" r="12" class="f-leaf"/><circle cx="208" cy="122" r="14" class="f-leaf"/></symbol>
+<symbol id="sc-harbor" viewBox="0 0 240 180"><rect width="240" height="180" class="bg-sky"/><circle cx="196" cy="34" r="16" class="f-yellow"/><ellipse cx="60" cy="38" rx="26" ry="9" class="f-paper"/><ellipse cx="84" cy="46" rx="22" ry="8" class="f-paper"/><rect y="118" width="240" height="62" class="f-blue"/><path d="M40 134h110l-18 22H58z" class="f-red"/><rect x="62" y="116" width="54" height="18" class="f-paper"/><path d="M130 60l32 52h-32z" class="f-sand"/><path d="M128 56V112" class="ln"/><rect x="170" y="128" width="70" height="14" rx="3" class="f-sand"/><path d="M178 122h54" class="st st-sand"/><path d="M10 160q14-8 28 0t28 0 28 0 28 0 28 0 28 0 28 0" class="ln"/></symbol>
+<symbol id="sc-lighthouse" viewBox="0 0 240 180"><rect width="240" height="180" class="bg-plum"/><circle cx="52" cy="40" r="10" class="f-paper"/><rect y="138" width="240" height="42" class="f-teal"/><path d="M70 146q50-34 100 0z" class="f-slate"/><path d="M100 140l8-76h24l8 76z" class="f-paper"/><path d="M104 104h32l2 14h-36zM109 66h22l1 12h-24z" class="f-red"/><rect x="104" y="46" width="32" height="18" class="f-yellow"/><path d="M98 46h44l-22-16z" class="f-dark"/><path d="M104 40h32" class="st st-yellow"/><path d="M142 54l60-14v28z" class="f-yellow"/><path d="M10 160q14-8 28 0t28 0 28 0 28 0 28 0 28 0 28 0" class="ln"/></symbol>
+<symbol id="sc-spaceport" viewBox="0 0 240 180"><rect width="240" height="180" class="f-wall"/><circle cx="40" cy="30" r="2.5" class="f-paper"/><circle cx="110" cy="22" r="2" class="f-paper"/><circle cx="200" cy="64" r="2.5" class="f-paper"/><circle cx="170" cy="20" r="2" class="f-paper"/><circle cx="64" cy="76" r="2" class="f-paper"/><circle cx="188" cy="42" r="20" class="f-sand"/><path d="M158 46q30 16 60-10" class="ln-lamp"/><rect y="150" width="240" height="30" class="f-slate"/><rect x="104" y="60" width="32" height="84" rx="8" class="f-paper"/><path d="M104 74q16-34 32 0z" class="f-red"/><circle cx="120" cy="104" r="8" class="f-sky"/><path d="M104 120l-16 28h16zM136 120l16 28h-16z" class="f-red"/><rect x="30" y="118" width="40" height="32" class="f-blue"/><path d="M36 112h28" class="st st-blue"/></symbol>
+<symbol id="sc-garden" viewBox="0 0 240 180"><rect width="240" height="180" class="bg-leaf"/><rect y="132" width="240" height="48" class="f-green"/><rect x="18" y="104" width="204" height="34" rx="4" class="f-leaf"/><path d="M30 98h180" class="st st-green"/><path d="M60 100V70M110 100V56M160 100V74M200 100V64" class="ln"/><circle cx="60" cy="64" r="11" class="f-red"/><circle cx="110" cy="50" r="12" class="f-yellow"/><circle cx="160" cy="68" r="11" class="f-plum"/><circle cx="200" cy="58" r="12" class="f-red"/><circle cx="60" cy="64" r="4" class="f-yellow"/><circle cx="110" cy="50" r="4" class="f-orange"/><circle cx="160" cy="68" r="4" class="f-yellow"/><circle cx="200" cy="58" r="4" class="f-yellow"/><rect x="92" y="142" width="56" height="26" rx="3" class="f-sand"/></symbol>
+<symbol id="sc-workshop" viewBox="0 0 240 180"><rect width="240" height="180" class="bg-sand"/><rect x="16" y="40" width="208" height="8" class="f-slate"/><rect x="16" y="92" width="208" height="8" class="f-slate"/><rect x="30" y="16" width="28" height="24" class="f-red"/><rect x="62" y="22" width="24" height="18" class="f-blue"/><rect x="150" y="14" width="34" height="26" class="f-teal"/><rect x="188" y="24" width="22" height="16" class="f-plum"/><path d="M34 11h20M154 9h26" class="st st-red"/><rect x="40" y="62" width="30" height="30" class="f-blue"/><rect x="74" y="72" width="30" height="20" class="f-red"/><rect x="170" y="56" width="36" height="36" class="f-yellow"/><path d="M44 57h22M174 51h28" class="st st-blue"/><rect x="10" y="140" width="220" height="12" rx="3" class="f-slate"/><rect x="94" y="116" width="22" height="24" class="f-teal"/><rect x="118" y="106" width="22" height="34" class="f-red"/><rect x="142" y="120" width="22" height="20" class="f-blue"/><path d="M98 111h14M122 101h14M146 115h14" class="st st-teal"/></symbol>
+<symbol id="sc-tower" viewBox="0 0 480 340"><rect width="480" height="340" class="f-wall"/><rect y="316" width="480" height="24" class="f-slate"/><rect x="150" y="248" width="180" height="68" rx="3" class="f-acc1"/><rect x="172" y="188" width="136" height="60" rx="3" class="f-slate"/><rect x="194" y="138" width="92" height="50" rx="3" class="f-acc2"/><rect x="214" y="98" width="52" height="40" rx="3" class="f-acc1"/><rect x="228" y="64" width="24" height="34" rx="3" class="f-slate"/><path d="M160 242h160M182 182h116M204 132h72M222 92h36M232 58h16" class="st st-acc2"/><rect x="170" y="268" width="24" height="30" class="f-wall"/><rect x="228" y="268" width="24" height="30" class="f-wall"/><rect x="286" y="268" width="24" height="30" class="f-wall"/><rect x="196" y="208" width="20" height="24" class="f-wall"/><rect x="262" y="208" width="20" height="24" class="f-wall"/><path d="M400 0v70" class="ln-lamp"/><path d="M372 104a28 28 0 0 1 56 0z" class="f-yellow"/><circle cx="400" cy="108" r="8" class="f-paper"/><path d="M60 316v-70h40v70z" class="f-acc2"/><path d="M66 240h28" class="st st-acc1"/></symbol>
+</svg>
+<a class="skip" href="#main">Skip to main content</a>
+<div class="notice" id="notice" role="region" aria-label="Announcement">
+  <div class="wrap notice-in">
+    <span aria-hidden="true"></span>
+    <p>Free sample delivery on orders over $50 (sample) <a href="#find">See details</a></p>
+    <button class="round round-sm" type="button" id="notice-close" aria-label="Dismiss announcement"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>
+  </div>
+</div>
+<header class="top" id="top">
+  <div class="wrap top-in">
+    <button class="hbtn menu-btn" type="button" id="menu-open" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    <a class="brand" href="#top" aria-label="cobblewick home"><svg class="mark" viewBox="0 0 26 26" aria-hidden="true"><rect width="26" height="26" rx="6"/><circle cx="9" cy="9" r="2.8"/><circle cx="17" cy="9" r="2.8"/><circle cx="9" cy="17" r="2.8"/><circle cx="17" cy="17" r="2.8"/></svg>cobblewick</a>
+    <nav class="nav" aria-label="Site sections">
+      <ul class="nav-list">
+        <li>
+          <button class="trigger" type="button" data-dropdown="sets" aria-expanded="false" aria-controls="fly-sets">Sets<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></button>
+          <div class="fly" id="fly-sets" hidden>
+            <ul>
+              <li><a href="#find"><b>Just landed</b><span>Added in the last few days</span></a></li>
+              <li><a href="#find"><b>Most hearted</b><span>Saved most by our sample builders</span></a></li>
+              <li><a href="#find"><b>Spans and sails</b><span>Spans, boats and harbors</span></a></li>
+              <li><a href="#find"><b>Walls and turrets</b><span>Fortress builds with flags</span></a></li>
+              <li><a href="#find"><b>Rails and rooftops</b><span>Trains, stations and towns</span></a></li>
+              <li><a href="#find"><b>Gear and gizmos</b><span>Clever moving pieces</span></a></li>
+              <li><a href="#find"><b>Pocket builds</b><span>Done in a single evening</span></a></li>
+              <li><a href="#find"><b>Slow builds</b><span>Settle in for a long project</span></a></li>
+              <li><a href="#find"><b>Ready to wrap</b><span>Boxed with gifting in mind</span></a></li>
+              <li><a href="#find"><b>Under $25 (sample)</b><span>Light on the wallet</span></a></li>
+              <li><a href="#find"><b>Club shelf</b><span>Picks with a lower sample price</span></a></li>
+              <li><a href="#find"><b>Last few</b><span>The final boxes on the shelf</span></a></li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <button class="trigger" type="button" data-dropdown="ideas" aria-expanded="false" aria-controls="fly-ideas">Ideas<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></button>
+          <div class="fly" id="fly-ideas" hidden>
+            <ul>
+              <li><a href="#gallery"><b>Step sheets</b><span>Walk-through pages to follow</span></a></li>
+              <li><a href="#gallery"><b>Maker showcase</b><span>Creations by sample makers</span></a></li>
+              <li><a href="#more"><b>Weekly note</b><span>A short letter for builders</span></a></li>
+              <li><a href="#spotlight"><b>Clubhouse</b><span>Perks for sample regulars</span></a></li>
+              <li><a href="#more"><b>Gatherings (sample)</b><span>Gatherings in a made-up town</span></a></li>
+              <li><a href="#gallery"><b>Time-lapses</b><span>Whole builds in a minute</span></a></li>
+              <li><a href="#more"><b>Maker tales</b><span>Short stories from the bench</span></a></li>
+              <li><a href="#spotlight"><b>Monthly puzzle</b><span>A fresh build task each month</span></a></li>
+              <li><a href="#more"><b>Shared tables</b><span>Tips for sharing a table</span></a></li>
+              <li><a href="#more"><b>Deep dives</b><span>Large, intricate projects</span></a></li>
+              <li><a href="#more"><b>Lesson corners</b><span>Plans for a roomful of builders</span></a></li>
+              <li><a href="#more"><b>Wrap-up picks</b><span>Suggestions sorted by age</span></a></li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <button class="trigger" type="button" data-dropdown="care" aria-expanded="false" aria-controls="fly-care">Care<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></button>
+          <div class="fly" id="fly-care" hidden>
+            <ul>
+              <li><a href="#foot"><b>Where is my box</b><span>Watch a sample parcel travel</span></a></li>
+              <li><a href="#foot"><b>Parcel timing</b><span>How long and how much</span></a></li>
+              <li><a href="#foot"><b>Swap or refund</b><span>Steps to send a box back</span></a></li>
+              <li><a href="#foot"><b>Talk to us</b><span>Chat or write a note</span></a></li>
+              <li><a href="#foot"><b>Pop-in counters</b><span>Sample places to browse</span></a></li>
+              <li><a href="#foot"><b>Spare pieces</b><span>Ask for a missing part</span></a></li>
+              <li><a href="#foot"><b>Tidy tips</b><span>Storing and cleaning builds</span></a></li>
+              <li><a href="#foot"><b>Vouchers</b><span>Send a balance to a friend</span></a></li>
+              <li><a href="#foot"><b>Easy access</b><span>Tools for every builder</span></a></li>
+              <li><a href="#foot"><b>Tiny-piece notes</b><span>Ages and handling</span></a></li>
+              <li><a href="#foot"><b>Quick answers</b><span>Short replies to common questions</span></a></li>
+              <li><a href="#foot"><b>Tell us</b><span>Share a thought with the crew</span></a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </nav>
+    <a class="pill pill-sm pill-white gift" href="#find">Gift wrap</a>
+    <div class="search" role="search"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><input type="search" placeholder="Search sets and ideas" aria-label="Search sets and ideas"/></div>
+    <div class="acts">
+      <button class="hbtn" type="button" aria-label="Account"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg></button>
+      <button class="hbtn" type="button" aria-label="Saved list"><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg></button>
+      <button class="hbtn" type="button" aria-label="Bag, 0 items (sample)" id="bag-btn"><svg class="ic" aria-hidden="true"><use href="#i-bag"/></svg><span id="bag-count" aria-hidden="true">(0)</span></button>
+    </div>
+  </div>
+</header>
+<div class="sheet" id="menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="sheet-top">
+    <a class="brand" href="#top"><svg class="mark" viewBox="0 0 26 26" aria-hidden="true"><rect width="26" height="26" rx="6"/><circle cx="9" cy="9" r="2.8"/><circle cx="17" cy="9" r="2.8"/><circle cx="9" cy="17" r="2.8"/><circle cx="17" cy="17" r="2.8"/></svg>cobblewick</a>
+    <button class="round" type="button" id="menu-close" aria-label="Close menu"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>
+  </div>
+  <div class="sheet-acc">
+    <button type="button" aria-expanded="false" aria-controls="acc-sets">Sets<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></button>
+    <ul id="acc-sets" hidden><li><a href="#find">Just landed</a></li><li><a href="#find">Most hearted</a></li><li><a href="#find">Spans and sails</a></li><li><a href="#find">Walls and turrets</a></li><li><a href="#find">Rails and rooftops</a></li><li><a href="#find">Gear and gizmos</a></li></ul>
+  </div>
+  <div class="sheet-acc">
+    <button type="button" aria-expanded="false" aria-controls="acc-ideas">Ideas<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></button>
+    <ul id="acc-ideas" hidden><li><a href="#gallery">Step sheets</a></li><li><a href="#gallery">Maker showcase</a></li><li><a href="#more">Weekly note</a></li><li><a href="#spotlight">Clubhouse</a></li><li><a href="#more">Gatherings (sample)</a></li><li><a href="#gallery">Time-lapses</a></li></ul>
+  </div>
+  <div class="sheet-acc">
+    <button type="button" aria-expanded="false" aria-controls="acc-care">Care<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></button>
+    <ul id="acc-care" hidden><li><a href="#foot">Where is my box</a></li><li><a href="#foot">Parcel timing</a></li><li><a href="#foot">Swap or refund</a></li><li><a href="#foot">Talk to us</a></li><li><a href="#foot">Pop-in counters</a></li><li><a href="#foot">Spare pieces</a></li></ul>
+  </div>
+  <div class="sheet-links">
+    <a class="pill pill-orange" href="#find">Gift wrap</a>
+    <a class="pill pill-line" href="#spotlight">Join the club</a>
+    <a class="pill pill-line" href="#foot">Vouchers</a>
+  </div>
+</div>
+<main id="main">
+<section class="hero" aria-labelledby="hero-h">
+  <div class="hero-in">
+    <div class="hero-art" aria-hidden="true">
+      <div class="rs rs-b"><span class="ring ring-1"></span><span class="ring ring-2"></span><span class="ring ring-3"></span><span class="ring ring-4"></span><span class="ring ring-5"></span><span class="ring ring-6"></span></div>
+      <div class="rs rs-c"><span class="ring ring-1"></span><span class="ring ring-2"></span><span class="ring ring-3"></span><span class="ring ring-4"></span><span class="ring ring-5"></span><span class="ring ring-6"></span></div>
+      <div class="rs rs-a"><span class="ring ring-1"></span><span class="ring ring-2"></span><span class="ring ring-3"></span><span class="ring ring-4"></span><span class="ring ring-5"></span><span class="ring ring-6"></span></div>
+      <div class="hero-badge"><span class="brand"><svg class="mark" viewBox="0 0 26 26"><rect width="26" height="26" rx="6"/><circle cx="9" cy="9" r="2.8"/><circle cx="17" cy="9" r="2.8"/><circle cx="9" cy="17" r="2.8"/><circle cx="17" cy="17" r="2.8"/></svg>cobblewick</span><span>Open house (sample)</span></div>
+    </div>
+    <div class="hero-copy">
+      <h1 id="hero-h">Free sample gift wrapping for club members on weekend orders with code WRAPIT (sample)</h1>
+      <p class="hero-note">On qualifying sample purchases. Not a real offer.</p>
+      <div class="hero-btns">
+        <a class="pill pill-light" href="#spotlight">Join the club<svg class="ic" aria-hidden="true"><use href="#i-chev-r"/></svg></a>
+        <a class="pill pill-line" href="#spotlight">See how it works<svg class="ic" aria-hidden="true"><use href="#i-chev-r"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+<p class="wrap fine-note">Cobblewick is a fictional design sample. Every price, offer and rating is example data.</p>
+<section class="links" aria-labelledby="links-h">
+  <div class="wrap">
+    <h2 class="sr-only" id="links-h">Quick links</h2>
+    <div class="tabs" role="tablist" aria-label="Tile strips">
+      <button type="button" role="tab" id="tab-hot" aria-selected="true" aria-controls="panel-hot">Hot right now</button>
+      <button type="button" role="tab" id="tab-style" aria-selected="false" aria-controls="panel-style" tabindex="-1">By style</button>
+    </div>
+    <div id="panel-hot" role="tabpanel" aria-labelledby="tab-hot">
+      <div class="tiles" role="region" aria-label="Hot right now tiles" tabindex="0">
+        <ul class="tile-row">
+          <li><a class="tile" href="#find"><span>Under $25 (sample)</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-tag"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Small builds</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-grid"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Long builds</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-city"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Display pieces</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-cup"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Bridges</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-bridge"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Trains</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-train"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Castles</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-castle"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Robots</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-robot"/></svg></span></a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="panel-style" role="tabpanel" aria-labelledby="tab-style" hidden>
+      <div class="tiles" role="region" aria-label="By style tiles" tabindex="0">
+        <ul class="tile-row">
+          <li><a class="tile" href="#find"><span>Cozy</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-heart"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Bold</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-star"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Retro</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-coin"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Space</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-rocket"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Garden</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-flower"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Harbor</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-ship"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Mountain</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-grid"/></svg></span></a></li>
+          <li><a class="tile" href="#find"><span>Festival</span><span class="gem" aria-hidden="true"><svg class="glyph"><use href="#g-gift"/></svg></span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="sec" id="find" aria-labelledby="find-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="find-h">Snap one up for Saturday</h2>
+      <p>Pick a set for the weekend. Prices, ages, piece counts and ratings are example data (sample).</p>
+    </div>
+    <div class="rail-bar">
+      <div class="tabs" role="tablist" aria-label="Product rail tabs">
+        <button type="button" role="tab" id="tab-week" data-sort="wk" aria-selected="true" aria-controls="rail-panel">This week</button>
+        <button type="button" role="tab" id="tab-picks" data-sort="pk" aria-selected="false" aria-controls="rail-panel" tabindex="-1">Crowd picks</button>
+      </div>
+      <div class="rail-ctl">
+        <button class="round" type="button" id="rail-prev" aria-label="Previous sets"><svg class="ic" aria-hidden="true"><use href="#i-chev-l"/></svg></button>
+        <button class="round" type="button" id="rail-next" aria-label="Next sets"><svg class="ic" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
+      </div>
+    </div>
+    <div id="rail-panel" role="tabpanel" aria-labelledby="tab-week">
+      <div class="track" id="track" role="region" aria-label="Product rail (sample)" tabindex="0">
+        <ul class="cards" id="cards">
+          <li data-wk="1" data-pk="5"><article class="set-card">
+            <p class="card-note">Example set (sample)</p>
+            <div class="badges"><span class="badge badge-green">Marked down (sample)</span><span class="badge badge-yellow">Fresh</span></div>
+            <svg class="scene" viewBox="0 0 240 170" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of a bridge set"><use href="#sc-bridge"/></svg>
+            <ul class="meta"><li><svg class="ic" aria-hidden="true"><use href="#i-age"/></svg><span class="sr-only">Ages </span>8+</li><li><svg class="ic" aria-hidden="true"><use href="#i-pieces"/></svg><span class="sr-only">Pieces </span>1,240</li><li><svg class="ic" aria-hidden="true"><use href="#i-star"/></svg><span class="sr-only">Rating </span>4.6</li></ul>
+            <h3 class="set-title">Harbor Bridge Builder</h3>
+            <div class="price"><span class="price-flag"></span><span class="price-now">$89.99</span></div>
+            <div class="buy"><button class="pill pill-orange" type="button" data-add="Harbor Bridge Builder"><svg class="ic" aria-hidden="true"><use href="#i-bag"/></svg>Add to bag</button><button class="round heart" type="button" aria-pressed="false" aria-label="Save Harbor Bridge Builder to saved list"><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg></button></div>
+          </article></li>
+          <li data-wk="2" data-pk="3"><article class="set-card">
+            <p class="card-note">Example set (sample)</p>
+            <div class="badges"><span class="badge badge-yellow">Online only</span></div>
+            <svg class="scene" viewBox="0 0 240 170" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of a ship set"><use href="#sc-ship"/></svg>
+            <ul class="meta"><li><svg class="ic" aria-hidden="true"><use href="#i-age"/></svg><span class="sr-only">Ages </span>9+</li><li><svg class="ic" aria-hidden="true"><use href="#i-pieces"/></svg><span class="sr-only">Pieces </span>860</li><li><svg class="ic" aria-hidden="true"><use href="#i-star"/></svg><span class="sr-only">Rating </span>4.8</li></ul>
+            <h3 class="set-title">Sailing Ship Studio</h3>
+            <div class="price"><span class="price-flag"><span class="badge badge-green">Marked down (sample)</span></span><span class="price-now"><s>$74.99</s>$58.99</span></div>
+            <div class="buy"><button class="pill pill-orange" type="button" data-add="Sailing Ship Studio"><svg class="ic" aria-hidden="true"><use href="#i-bag"/></svg>Add to bag</button><button class="round heart" type="button" aria-pressed="false" aria-label="Save Sailing Ship Studio to saved list"><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg></button></div>
+          </article></li>
+          <li data-wk="3" data-pk="2"><article class="set-card">
+            <p class="card-note">Example set (sample)</p>
+            <div class="badges"><span class="badge badge-green">Marked down (sample)</span></div>
+            <svg class="scene" viewBox="0 0 240 170" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of a castle set"><use href="#sc-castle"/></svg>
+            <ul class="meta"><li><svg class="ic" aria-hidden="true"><use href="#i-age"/></svg><span class="sr-only">Ages </span>10+</li><li><svg class="ic" aria-hidden="true"><use href="#i-pieces"/></svg><span class="sr-only">Pieces </span>2,010</li><li><svg class="ic" aria-hidden="true"><use href="#i-star"/></svg><span class="sr-only">Rating </span>4.7</li></ul>
+            <h3 class="set-title">Hilltop Castle Kit</h3>
+            <div class="price"><span class="price-flag"></span><span class="price-now">$129.99</span></div>
+            <div class="buy"><button class="pill pill-orange" type="button" data-add="Hilltop Castle Kit"><svg class="ic" aria-hidden="true"><use href="#i-bag"/></svg>Add to bag</button><button class="round heart" type="button" aria-pressed="false" aria-label="Save Hilltop Castle Kit to saved list"><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg></button></div>
+          </article></li>
+          <li data-wk="4" data-pk="1"><article class="set-card">
+            <p class="card-note">Example set (sample)</p>
+            <div class="badges"><span class="badge badge-yellow">Fresh</span></div>
+            <svg class="scene" viewBox="0 0 240 170" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of a robot set"><use href="#sc-robot"/></svg>
+            <ul class="meta"><li><svg class="ic" aria-hidden="true"><use href="#i-age"/></svg><span class="sr-only">Ages </span>7+</li><li><svg class="ic" aria-hidden="true"><use href="#i-pieces"/></svg><span class="sr-only">Pieces </span>540</li><li><svg class="ic" aria-hidden="true"><use href="#i-star"/></svg><span class="sr-only">Rating </span>4.5</li></ul>
+            <h3 class="set-title">Tinker Robot Pal</h3>
+            <div class="price"><span class="price-flag"></span><span class="price-now">$39.99</span></div>
+            <div class="buy"><button class="pill pill-orange" type="button" data-add="Tinker Robot Pal"><svg class="ic" aria-hidden="true"><use href="#i-bag"/></svg>Add to bag</button><button class="round heart" type="button" aria-pressed="false" aria-label="Save Tinker Robot Pal to saved list"><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg></button></div>
+          </article></li>
+          <li data-wk="5" data-pk="6"><article class="set-card">
+            <p class="card-note">Example set (sample)</p>
+            <div class="badges"><span class="badge badge-yellow">Fresh</span></div>
+            <svg class="scene" viewBox="0 0 240 170" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of a train set"><use href="#sc-train"/></svg>
+            <ul class="meta"><li><svg class="ic" aria-hidden="true"><use href="#i-age"/></svg><span class="sr-only">Ages </span>8+</li><li><svg class="ic" aria-hidden="true"><use href="#i-pieces"/></svg><span class="sr-only">Pieces </span>1,120</li><li><svg class="ic" aria-hidden="true"><use href="#i-star"/></svg><span class="sr-only">Rating </span>4.4</li></ul>
+            <h3 class="set-title">Express Train Station</h3>
+            <div class="price"><span class="price-flag"><span class="badge badge-green">Marked down (sample)</span></span><span class="price-now"><s>$99.99</s>$84.99</span></div>
+            <div class="buy"><button class="pill pill-orange" type="button" data-add="Express Train Station"><svg class="ic" aria-hidden="true"><use href="#i-bag"/></svg>Add to bag</button><button class="round heart" type="button" aria-pressed="false" aria-label="Save Express Train Station to saved list"><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg></button></div>
+          </article></li>
+          <li data-wk="6" data-pk="4"><article class="set-card">
+            <p class="card-note">Example set (sample)</p>
+            <div class="badges"><span class="badge badge-yellow">Online only</span></div>
+            <svg class="scene" viewBox="0 0 240 170" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of a house set"><use href="#sc-house"/></svg>
+            <ul class="meta"><li><svg class="ic" aria-hidden="true"><use href="#i-age"/></svg><span class="sr-only">Ages </span>6+</li><li><svg class="ic" aria-hidden="true"><use href="#i-pieces"/></svg><span class="sr-only">Pieces </span>380</li><li><svg class="ic" aria-hidden="true"><use href="#i-star"/></svg><span class="sr-only">Rating </span>4.9</li></ul>
+            <h3 class="set-title">Cozy Garden House</h3>
+            <div class="price"><span class="price-flag"></span><span class="price-now">$29.99</span></div>
+            <div class="buy"><button class="pill pill-orange" type="button" data-add="Cozy Garden House"><svg class="ic" aria-hidden="true"><use href="#i-bag"/></svg>Add to bag</button><button class="round heart" type="button" aria-pressed="false" aria-label="Save Cozy Garden House to saved list"><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg></button></div>
+          </article></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="sec" id="gallery" aria-labelledby="gallery-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="gallery-h">Made by our sample makers</h2>
+      <p>Tap a spot to peek at a sample creation. Everything shown is example content.</p>
+    </div>
+    <div class="mosaic">
+      <figure class="shot shot-big">
+        <div class="shot-art"><svg viewBox="0 0 240 180" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of a harbor scene"><use href="#sc-harbor"/></svg></div>
+        <button class="pill pill-sm hot" type="button" aria-expanded="true" aria-controls="pop-1">Harbor morning</button>
+        <div class="pop" id="pop-1" role="group" aria-label="Harbor morning details">
+          <button class="round round-sm" type="button" data-close="pop-1" aria-label="Close Harbor morning details"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>
+          <h3>Harbor morning</h3>
+          <p>A busy dock with a red tug and a sand-colored lift. Built by a sample member.</p>
+          <a href="#find">Open the plans<svg class="ic" aria-hidden="true"><use href="#i-chev-r"/></svg></a>
+        </div>
+      </figure>
+      <figure class="shot">
+        <div class="shot-art"><svg viewBox="0 0 240 180" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of a lighthouse"><use href="#sc-lighthouse"/></svg></div>
+        <button class="pill pill-sm hot" type="button" aria-expanded="false" aria-controls="pop-2">Night light</button>
+        <div class="pop" id="pop-2" role="group" aria-label="Night light details" hidden>
+          <button class="round round-sm" type="button" data-close="pop-2" aria-label="Close Night light details"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>
+          <h3>Night light</h3>
+          <p>A tall tower with a yellow beam.</p>
+          <a href="#find">Open the plans<svg class="ic" aria-hidden="true"><use href="#i-chev-r"/></svg></a>
+        </div>
+      </figure>
+      <figure class="shot edge">
+        <div class="shot-art"><svg viewBox="0 0 240 180" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of a space port"><use href="#sc-spaceport"/></svg></div>
+        <button class="pill pill-sm hot" type="button" aria-expanded="false" aria-controls="pop-3">Launch pad</button>
+        <div class="pop" id="pop-3" role="group" aria-label="Launch pad details" hidden>
+          <button class="round round-sm" type="button" data-close="pop-3" aria-label="Close Launch pad details"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>
+          <h3>Launch pad</h3>
+          <p>A small rocket ready for liftoff.</p>
+          <a href="#find">Open the plans<svg class="ic" aria-hidden="true"><use href="#i-chev-r"/></svg></a>
+        </div>
+      </figure>
+      <figure class="shot">
+        <div class="shot-art"><svg viewBox="0 0 240 180" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of a garden"><use href="#sc-garden"/></svg></div>
+        <button class="pill pill-sm hot" type="button" aria-expanded="false" aria-controls="pop-4">Flower bed</button>
+        <div class="pop" id="pop-4" role="group" aria-label="Flower bed details" hidden>
+          <button class="round round-sm" type="button" data-close="pop-4" aria-label="Close Flower bed details"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>
+          <h3>Flower bed</h3>
+          <p>Four blooms on a leafy terrace.</p>
+          <a href="#find">Open the plans<svg class="ic" aria-hidden="true"><use href="#i-chev-r"/></svg></a>
+        </div>
+      </figure>
+      <figure class="shot edge">
+        <div class="shot-art"><svg viewBox="0 0 240 180" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of a workshop"><use href="#sc-workshop"/></svg></div>
+        <button class="pill pill-sm hot" type="button" aria-expanded="false" aria-controls="pop-5">Tinker bench</button>
+        <div class="pop" id="pop-5" role="group" aria-label="Tinker bench details" hidden>
+          <button class="round round-sm" type="button" data-close="pop-5" aria-label="Close Tinker bench details"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>
+          <h3>Tinker bench</h3>
+          <p>Shelves of spare parts and a half-built crane.</p>
+          <a href="#find">Open the plans<svg class="ic" aria-hidden="true"><use href="#i-chev-r"/></svg></a>
+        </div>
+      </figure>
+    </div>
+  </div>
+</section>
+<section class="stage" id="spotlight" aria-labelledby="spot-h">
+  <div class="wrap">
+    <h2 class="sr-only" id="spot-h">Clubhouse corner</h2>
+    <div class="seg-wrap">
+      <div class="seg" role="tablist" aria-label="Clubhouse topics">
+        <button type="button" role="tab" id="seg-bench" aria-selected="true" aria-controls="seg-p-bench">On the bench</button>
+        <button type="button" role="tab" id="seg-tray" aria-selected="false" aria-controls="seg-p-tray" tabindex="-1">Bonus tray</button>
+        <button type="button" role="tab" id="seg-corner" aria-selected="false" aria-controls="seg-p-corner" tabindex="-1">Club corner</button>
+      </div>
+    </div>
+  </div>
+    <div class="stage-panel" id="seg-p-bench" role="tabpanel" aria-labelledby="seg-bench">
+      <div class="stage-art acc-blue"><svg viewBox="0 0 480 340" preserveAspectRatio="xMidYMax slice" role="img" aria-label="Illustration of a blue tower"><use href="#sc-tower"/></svg></div>
+      <div class="stage-copy">
+        <h3>See what is on the bench this week</h3>
+        <p>Peek at the sample build our makers are working on, with notes from each stage. Nothing here can be bought.</p>
+        <div class="stage-btns"><a class="pill pill-light" href="#foot">Join the club</a><a class="pill pill-line" href="#find">Visit the shelves</a></div>
+      </div>
+    </div>
+    <div class="stage-panel" id="seg-p-tray" role="tabpanel" aria-labelledby="seg-tray" hidden>
+      <div class="stage-art acc-plum"><svg viewBox="0 0 480 340" preserveAspectRatio="xMidYMax slice" role="img" aria-label="Illustration of a plum tower"><use href="#sc-tower"/></svg></div>
+      <div class="stage-copy">
+        <h3>A little extra tucked in every box</h3>
+        <p>Each sample order arrives with a spare tray of odd pieces to tinker with. Example content only.</p>
+        <div class="stage-btns"><a class="pill pill-light" href="#foot">Join the club</a><a class="pill pill-line" href="#gallery">Peek at the trays</a></div>
+      </div>
+    </div>
+    <div class="stage-panel" id="seg-p-corner" role="tabpanel" aria-labelledby="seg-corner" hidden>
+      <div class="stage-art acc-teal"><svg viewBox="0 0 480 340" preserveAspectRatio="xMidYMax slice" role="img" aria-label="Illustration of a teal tower"><use href="#sc-tower"/></svg></div>
+      <div class="stage-copy">
+        <h3>A corner for club regulars</h3>
+        <p>Fellow builders swap notes and vote on the next group project. Nothing here is a real offer.</p>
+        <div class="stage-btns"><a class="pill pill-light" href="#foot">Join the club</a><a class="pill pill-line" href="#more">Meet the regulars</a></div>
+      </div>
+    </div>
+  <div class="wrap"><p class="stage-brand brand-line">Cobblewick Clubhouse (sample)</p></div>
+</section>
+<section class="sec sec-left" id="more" aria-labelledby="more-h">
+  <div class="wrap">
+    <h2 id="more-h">Ideas for a free weekend</h2>
+    <div class="disc">
+      <article class="disc-card">
+        <div class="disc-art"><svg viewBox="0 0 240 170" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of rails and a station"><use href="#sc-train"/></svg></div>
+        <h3>Rail day guide</h3>
+        <p>Lay track, add a station and run a sample timetable.</p>
+        <a class="pill pill-line" href="#gallery">Open the guide</a>
+      </article>
+      <article class="disc-card">
+        <div class="disc-art"><svg viewBox="0 0 240 170" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of a fortress on a hill"><use href="#sc-castle"/></svg></div>
+        <h3>Castle afternoon</h3>
+        <p>Three sample plans for walls, gates and flags.</p>
+        <a class="pill pill-line" href="#gallery">Browse the plans</a>
+      </article>
+      <article class="disc-card">
+        <div class="disc-art"><svg viewBox="0 0 240 170" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of a mechanical pal"><use href="#sc-robot"/></svg></div>
+        <h3>Robot club night</h3>
+        <p>Swap tips for joints, gears and moving arms.</p>
+        <a class="pill pill-line" href="#spotlight">Join in</a>
+      </article>
+    </div>
+  </div>
+</section>
+<section class="note-strip" aria-label="Sample disclaimer">
+  <div class="wrap">
+    <p>All sets, prices, ratings and offers on this page are example content for a design sample. <a href="#foot">Check the fine print</a>.</p>
+  </div>
+</section>
+</main>
+<footer class="foot" id="foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-side">
+        <a class="brand" href="#top"><svg class="mark" viewBox="0 0 26 26" aria-hidden="true"><rect width="26" height="26" rx="6"/><circle cx="9" cy="9" r="2.8"/><circle cx="17" cy="9" r="2.8"/><circle cx="9" cy="17" r="2.8"/><circle cx="17" cy="17" r="2.8"/></svg>cobblewick</a>
+        <button class="pill pill-white pill-sm" type="button" id="region-btn" aria-expanded="false" aria-controls="regions"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg><span id="region-label">Country / region</span><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></button>
+        <div class="regions" id="regions" hidden>
+          <p class="regions-title">Sample list</p>
+          <button type="button" data-region="Region A">Region A</button>
+          <button type="button" data-region="Region B">Region B</button>
+          <button type="button" data-region="Region C">Region C</button>
+        </div>
+      </div>
+      <div class="foot-cols">
+        <div><h2 class="foot-h">Cobblewick</h2><ul><li><a href="#foot">Our workshop</a></li><li><a href="#foot">Join the crew (sample)</a></li><li><a href="#foot">Media kit (sample)</a></li><li><a href="#foot">Made-up facts</a></li></ul></div>
+        <div><h2 class="foot-h">Customer care</h2><ul><li><a href="#foot">Where is my box</a></li><li><a href="#foot">Parcel timing</a></li><li><a href="#foot">Swap or refund</a></li><li><a href="#foot">Talk to us</a></li></ul></div>
+        <div><h2 class="foot-h">Clubhouse</h2><ul><li><a href="#spotlight">On the bench</a></li><li><a href="#spotlight">Bonus tray</a></li><li><a href="#spotlight">Club corner</a></li><li><a href="#spotlight">Join the club</a></li></ul></div>
+        <div><h2 class="foot-h">Elsewhere</h2><ul><li><a href="#foot">Partner makers (sample)</a></li><li><a href="#foot">Trade desk (sample)</a></li><li><a href="#foot">Pop-up days (sample)</a></li><li><a href="#foot">Fan clubs (sample)</a></li></ul></div>
+      </div>
+    </div>
+    <div class="foot-mid">
+      <form class="sub" id="sub" novalidate>
+        <label for="sub-email">Weekly note by email</label>
+        <div class="sub-form">
+          <input id="sub-email" type="email" placeholder="Your email" autocomplete="email"/>
+          <button class="pill pill-orange" type="submit">Subscribe</button>
+        </div>
+        <p class="sub-live" id="sub-live" aria-live="polite"></p>
+      </form>
+      <div class="follow">
+        <h2 class="foot-h">Find us online</h2>
+        <ul>
+          <li><button class="round" type="button" aria-label="Sample channel one">1</button></li>
+          <li><button class="round" type="button" aria-label="Sample channel two">2</button></li>
+          <li><button class="round" type="button" aria-label="Sample channel three">3</button></li>
+          <li><button class="round" type="button" aria-label="Sample channel four">4</button></li>
+        </ul>
+      </div>
+    </div>
+    <ul class="foot-more" aria-label="More links">
+      <li><a href="#foot">Present vouchers</a></li>
+      <li><a href="#foot">All pages</a></li>
+      <li><a href="#foot">Pop-in counters</a></li>
+      <li><a href="#foot">Paper booklets</a></li>
+    </ul>
+    <ul class="legal">
+      <li><a href="#foot">Privacy</a></li>
+      <li><a href="#foot">Cookies</a></li>
+      <li><a href="#foot">Terms</a></li>
+      <li><a href="#foot">Accessibility</a></li>
+    </ul>
+    <p class="fine">Cobblewick is a made-up shop used to show a design flavor. Names, prices, ratings, offers and codes are example data and cannot be redeemed.</p>
+    <div class="foot-end">
+      <span>Cobblewick sample, no real orders</span>
+      <div class="sw" role="radiogroup" aria-label="Appearance">
+        <button type="button" role="radio" aria-checked="false" data-mode="system">System</button>
+        <button type="button" role="radio" aria-checked="false" data-mode="light">Light</button>
+        <button type="button" role="radio" aria-checked="false" data-mode="dark">Dark</button>
+      </div>
+    </div>
+  </div>
+</footer>
+<p class="sr-only" id="live" role="status" aria-live="polite"></p>
+<script>
+(function(){
+  var $=function(s,r){return(r||document).querySelector(s);};
+  var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));};
+  var root=document.documentElement;
+  var live=$("#live");
+  var say=function(t){live.textContent="";setTimeout(function(){live.textContent=t;},30);};
+
+  var notice=$("#notice");
+  $("#notice-close").addEventListener("click",function(){
+    notice.hidden=true;
+    say("Announcement dismissed");
+    var landing=[$("#menu-open"),$(".top .brand"),$(".trigger[data-dropdown]")].filter(function(el){return el&&el.offsetParent!==null;})[0];
+    if(landing)landing.focus();
+  });
+
+  var triggers=$$(".trigger[data-dropdown]");
+  function closeFly(t,back){
+    t.setAttribute("aria-expanded","false");
+    $("#"+t.getAttribute("aria-controls")).hidden=true;
+    if(back)t.focus();
+  }
+  function openFly(t){
+    triggers.forEach(function(o){if(o!==t)closeFly(o,false);});
+    t.setAttribute("aria-expanded","true");
+    $("#"+t.getAttribute("aria-controls")).hidden=false;
+  }
+  triggers.forEach(function(t){
+    t.addEventListener("click",function(){
+      if(t.getAttribute("aria-expanded")==="true")closeFly(t,false);else openFly(t);
+    });
+  });
+  document.addEventListener("click",function(e){
+    triggers.forEach(function(t){
+      var box=t.parentNode;
+      if(t.getAttribute("aria-expanded")==="true"&&!box.contains(e.target))closeFly(t,false);
+    });
+  });
+
+  var sheet=$("#menu"),menuOpen=$("#menu-open"),menuClose=$("#menu-close");
+  function sheetFocusables(){return $$("a[href],button:not([disabled])",sheet).filter(function(el){return el.offsetParent!==null||el===document.activeElement;});}
+  function openSheet(){
+    sheet.hidden=false;
+    menuOpen.setAttribute("aria-expanded","true");
+    document.body.style.overflow="hidden";
+    menuClose.focus();
+  }
+  function closeSheet(){
+    sheet.hidden=true;
+    menuOpen.setAttribute("aria-expanded","false");
+    document.body.style.overflow="";
+    menuOpen.focus();
+  }
+  menuOpen.addEventListener("click",function(){if(sheet.hidden)openSheet();else closeSheet();});
+  menuClose.addEventListener("click",closeSheet);
+  sheet.addEventListener("keydown",function(e){
+    if(e.key!=="Tab")return;
+    var f=sheetFocusables();
+    if(!f.length)return;
+    var first=f[0],last=f[f.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+  });
+  $$(".sheet-acc>button").forEach(function(b){
+    b.addEventListener("click",function(){
+      var open=b.getAttribute("aria-expanded")==="true";
+      b.setAttribute("aria-expanded",String(!open));
+      $("#"+b.getAttribute("aria-controls")).hidden=open;
+    });
+  });
+  $$("#menu a").forEach(function(a){a.addEventListener("click",function(){if(!sheet.hidden)closeSheet();});});
+  window.matchMedia("(min-width:1024px)").addEventListener("change",function(m){if(m.matches&&!sheet.hidden)closeSheet();});
+
+  function tabs(list,onSelect){
+    var tabsEl=$$('[role="tab"]',list);
+    function select(t,focus){
+      tabsEl.forEach(function(o){
+        var on=o===t;
+        o.setAttribute("aria-selected",String(on));
+        o.tabIndex=on?0:-1;
+      });
+      if(focus)t.focus();
+      onSelect(t);
+    }
+    tabsEl.forEach(function(t,i){
+      t.addEventListener("click",function(){select(t,false);});
+      t.addEventListener("keydown",function(e){
+        var n=null;
+        if(e.key==="ArrowRight")n=tabsEl[(i+1)%tabsEl.length];
+        else if(e.key==="ArrowLeft")n=tabsEl[(i-1+tabsEl.length)%tabsEl.length];
+        else if(e.key==="Home")n=tabsEl[0];
+        else if(e.key==="End")n=tabsEl[tabsEl.length-1];
+        if(n){e.preventDefault();select(n,true);}
+      });
+    });
+  }
+  tabs($('[aria-label="Tile strips"]'),function(t){
+    ["hot","style"].forEach(function(k){$("#panel-"+k).hidden=("tab-"+k)!==t.id;});
+  });
+  var cards=$("#cards");
+  tabs($('[aria-label="Product rail tabs"]'),function(t){
+    var key=t.getAttribute("data-sort");
+    var attr=key==="pk"?"data-pk":"data-wk";
+    var items=$$("li",cards).sort(function(a,b){
+      return a.getAttribute(attr)-b.getAttribute(attr);
+    });
+    items.forEach(function(li){cards.appendChild(li);});
+    $("#rail-panel").setAttribute("aria-labelledby",t.id);
+    $("#track").scrollLeft=0;
+    say(key==="pk"?"Showing crowd picks":"Showing this week");
+  });
+  tabs($(".seg"),function(t){
+    $$(".stage-panel").forEach(function(p){p.hidden=p.id!==t.getAttribute("aria-controls");});
+  });
+
+  var track=$("#track");
+  function step(dir){
+    var li=$("li",cards);
+    var w=li?li.getBoundingClientRect().width+16:track.clientWidth;
+    track.scrollBy({left:dir*w*Math.max(1,Math.floor(track.clientWidth/w)),behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+  }
+  $("#rail-prev").addEventListener("click",function(){step(-1);});
+  $("#rail-next").addEventListener("click",function(){step(1);});
+
+  var bag=0;
+  $$("[data-add]").forEach(function(b){
+    b.addEventListener("click",function(){
+      bag+=1;
+      $("#bag-count").textContent="("+bag+")";
+      $("#bag-btn").setAttribute("aria-label","Bag, "+bag+" items (sample)");
+      say(b.getAttribute("data-add")+" added to bag (sample)");
+    });
+  });
+  $$(".heart").forEach(function(b){
+    b.addEventListener("click",function(){
+      var on=b.getAttribute("aria-pressed")!=="true";
+      b.setAttribute("aria-pressed",String(on));
+      say(on?"Saved to saved list":"Removed from saved list");
+    });
+  });
+
+  var hots=$$(".hot");
+  function setPop(h,open,back){
+    h.setAttribute("aria-expanded",String(open));
+    $("#"+h.getAttribute("aria-controls")).hidden=!open;
+    if(!open&&back)h.focus();
+  }
+  hots.forEach(function(h){
+    h.addEventListener("click",function(){
+      var open=h.getAttribute("aria-expanded")!=="true";
+      hots.forEach(function(o){if(o!==h)setPop(o,false,false);});
+      setPop(h,open,false);
+    });
+  });
+  $$("[data-close]").forEach(function(c){
+    c.addEventListener("click",function(){
+      var h=$('[aria-controls="'+c.getAttribute("data-close")+'"]');
+      setPop(h,false,true);
+    });
+  });
+
+  var regionBtn=$("#region-btn"),regions=$("#regions");
+  function closeRegions(back){
+    regionBtn.setAttribute("aria-expanded","false");
+    regions.hidden=true;
+    if(back)regionBtn.focus();
+  }
+  regionBtn.addEventListener("click",function(){
+    var open=regionBtn.getAttribute("aria-expanded")==="true";
+    regionBtn.setAttribute("aria-expanded",String(!open));
+    regions.hidden=open;
+  });
+  $$("[data-region]",regions).forEach(function(b){
+    b.addEventListener("click",function(){
+      $("#region-label").textContent="Country / region: "+b.getAttribute("data-region");
+      closeRegions(true);
+      say("Country set to "+b.getAttribute("data-region"));
+    });
+  });
+
+  $("#sub").addEventListener("submit",function(e){
+    e.preventDefault();
+    var v=$("#sub-email").value.trim();
+    var ok=/^[^\s@]+@[^\s@]+$/.test(v);
+    $("#sub-live").textContent=ok?"Thanks, you are on the sample list.":"Enter an email address to subscribe.";
+  });
+
+  var modes=$$("[data-mode]");
+  var scheme=window.matchMedia("(prefers-color-scheme:dark)");
+  function applyMode(){
+    var m=root.dataset.mode;
+    var d=m==="system"?(scheme.matches?"dark":"light"):m;
+    root.classList.remove("light","dark");
+    root.classList.add(d);
+    root.style.colorScheme=d;
+    modes.forEach(function(b){
+      var on=b.getAttribute("data-mode")===m;
+      b.setAttribute("aria-checked",String(on));
+      b.tabIndex=on?0:-1;
+    });
+  }
+  modes.forEach(function(b,i){
+    b.addEventListener("click",function(){
+      root.dataset.mode=b.getAttribute("data-mode");
+      applyMode();
+    });
+    b.addEventListener("keydown",function(e){
+      var n=null;
+      if(e.key==="ArrowRight"||e.key==="ArrowDown")n=modes[(i+1)%modes.length];
+      if(e.key==="ArrowLeft"||e.key==="ArrowUp")n=modes[(i-1+modes.length)%modes.length];
+      if(n){e.preventDefault();n.click();n.focus();}
+    });
+  });
+  scheme.addEventListener("change",function(){if(root.dataset.mode==="system")applyMode();});
+  applyMode();
+
+  document.addEventListener("keydown",function(e){
+    if(e.key!=="Escape")return;
+    if(!sheet.hidden){closeSheet();return;}
+    var open=triggers.filter(function(t){return t.getAttribute("aria-expanded")==="true";})[0];
+    if(open){closeFly(open,true);return;}
+    if(regionBtn.getAttribute("aria-expanded")==="true"){closeRegions(true);return;}
+    var pop=hots.filter(function(h){return h.getAttribute("aria-expanded")==="true";})[0];
+    if(pop)setPop(pop,false,true);
+  });
+})();
+</script>
+</body>
+</html>

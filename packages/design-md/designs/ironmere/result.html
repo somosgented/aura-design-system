@@ -1,0 +1,1642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Ironmere · Aura flavor</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="stylesheet" href="/aura/main.css"/>
+<link rel="stylesheet" href="theme.css"/>
+<script>
+(function(){
+  var p=new URLSearchParams(window.location.search).get("appearance");
+  var d=p==="dark"?"dark":p==="light"?"light":(window.matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
+  var r=document.documentElement;
+  r.classList.add(d);
+  r.style.colorScheme=d;
+  if(window.matchMedia("(prefers-reduced-motion: no-preference)").matches)r.classList.add("motion");
+})();
+</script>
+<style>
+*{box-sizing:border-box;}
+html{font-family:var(--aura-font-stack);background:var(--canvas);color:var(--ink);scroll-padding-top:calc(var(--aura)*4.5);}
+body{margin:0;padding:0;background:var(--canvas);color:var(--ink);font-size:16px;line-height:1.5;min-width:0;}
+h1,h2,h3,h4,h5,h6,p,figure,ul,ol,dl{margin:0;}
+ul,ol{padding:0;list-style:none;}
+h1,h2,h3,h4{font-family:var(--aura-font-stack);font-weight:500;letter-spacing:-0.02em;text-wrap:balance;overflow-wrap:break-word;min-width:0;line-height:1.1;}
+p{overflow-wrap:break-word;min-width:0;}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;height:auto;}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.on-band :focus-visible{outline:2px solid var(--focus-on-band);outline-offset:2px;}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+.skip-link{position:absolute;left:calc(var(--aura)*1);top:calc(var(--aura)*-5);z-index:400;padding:calc(var(--aura)*0.5) calc(var(--aura)*2);border-radius:9999px;background:var(--periwinkle);color:var(--on-periwinkle);font-weight:600;font-size:14px;}
+.skip-link:focus{top:calc(var(--aura)*1);}
+
+.ir button,.ir input,.ir select,.ir textarea{font-family:inherit;}
+
+.ir .btn-pill-solid{display:inline-flex;align-items:center;justify-content:center;gap:calc(var(--aura)*0.5);border-radius:9999px;background:var(--periwinkle);color:var(--on-periwinkle);border:none;font-size:15px;font-weight:500;cursor:pointer;white-space:nowrap;flex-shrink:0;text-decoration:none;padding:0 calc(var(--aura)*2);height:calc(var(--aura)*2.75);}
+.ir .btn-pill-solid:hover{background:var(--periwinkle-hover);}
+.ir .btn-pill-solid.hero{height:calc(var(--aura)*3.5);font-size:15px;}
+
+.ir .btn-pill-glass{display:inline-flex;align-items:center;justify-content:center;gap:calc(var(--aura)*0.5);border-radius:9999px;background:var(--pill-glass-bg);color:white;border:2px solid color-mix(in srgb,var(--band-fg) 70%,var(--band));font-size:15px;font-weight:500;cursor:pointer;white-space:nowrap;flex-shrink:0;text-decoration:none;padding:0 calc(var(--aura)*2);height:calc(var(--aura)*2.75);}
+.ir .btn-pill-glass:hover{background:var(--pill-glass-border);}
+.ir .btn-pill-glass.hero{height:calc(var(--aura)*3.5);}
+
+.ir .btn-pill-outline{display:inline-flex;align-items:center;justify-content:center;gap:calc(var(--aura)*0.5);border-radius:9999px;background:var(--canvas);color:var(--ink);border:1px solid var(--control-line);font-size:15px;font-weight:500;cursor:pointer;white-space:nowrap;flex-shrink:0;text-decoration:none;padding:0 calc(var(--aura)*2);height:calc(var(--aura)*2.75);}
+.ir .btn-pill-outline:hover{background:var(--card-bg);}
+
+.ir .text-link{font-size:15px;font-weight:500;color:var(--ink);text-decoration:underline;text-underline-offset:4px;cursor:pointer;background:none;border:none;padding:0;display:inline;}
+.ir .text-link.on-band{color:var(--band-fg);}
+
+.ir input:not(.default),.ir textarea:not(.default){background:var(--canvas);border:2px solid var(--control-line);color:var(--ink);border-radius:9999px;padding:0 calc(var(--aura)*1.5);font-family:inherit;font-size:15px;width:100%;}
+.ir input:not(.default){height:48px;box-sizing:border-box;}
+.ir textarea:not(.default){padding:calc(var(--aura)*1) calc(var(--aura)*1.5);min-height:calc(var(--aura)*7);resize:vertical;border-radius:12px;}
+.ir input:not(.default):focus,.ir textarea:not(.default):focus{outline:2px solid var(--focus);outline-offset:0;}
+.ir input:not(.default)::placeholder,.ir textarea:not(.default)::placeholder{color:var(--muted);}
+
+.ir select.inputer{appearance:none;-webkit-appearance:none;border:2px solid var(--control-line);background:var(--canvas);background-image:linear-gradient(45deg,transparent 50%,var(--control-line) 50%),linear-gradient(135deg,var(--control-line) 50%,transparent 50%);background-position:right 18px center,right 14px center;background-size:4px 4px,4px 4px;background-repeat:no-repeat,no-repeat;color:var(--ink);border-radius:12px;height:48px;box-sizing:border-box;padding:0 calc(var(--aura)*3.5) 0 calc(var(--aura)*1.5);font-family:inherit;font-size:15px;width:100%;cursor:pointer;}
+.ir select.inputer:focus{outline:2px solid var(--focus);outline-offset:0;}
+.dark .ir select.inputer{background-image:linear-gradient(45deg,transparent 50%,var(--control-line) 50%),linear-gradient(135deg,var(--control-line) 50%,transparent 50%);background-position:right 18px center,right 14px center;background-size:4px 4px,4px 4px;background-repeat:no-repeat,no-repeat;}.dark .ir .btn-pill-outline{border-color:color-mix(in srgb,var(--control-line) 100%,white 30%);}
+.dark .ir-nav-trigger,.dark .ir-nav-plain{color:var(--body);}
+.dark .ir .btn-pill-solid{background:var(--periwinkle);color:var(--band);}
+.dark .ir .btn-pill-solid:hover{background:var(--periwinkle-hover);color:var(--band);}
+
+.ir blockquote{font-family:var(--aura-font-stack);font-weight:500;font-size:32px;line-height:1.2;letter-spacing:-0.02em;text-transform:none;font-style:normal;quotes:none;border:0;padding:0;margin:0;background:none;text-align:center;}
+.ir blockquote p{font-family:var(--aura-font-stack);font-weight:500;font-size:32px;line-height:1.2;letter-spacing:-0.02em;text-transform:none;font-style:normal;text-align:center;}
+
+.wrap{width:min(100% - calc(var(--aura)*4),880px);margin-inline:auto;}
+.wrap-wide{width:min(100% - calc(var(--aura)*4),1280px);margin-inline:auto;}
+.section-pad{padding-block:calc(var(--aura)*11);}
+.section-pad-sm{padding-block:calc(var(--aura)*7.5);}
+.muted{color:var(--muted);}
+.tabnum{font-variant-numeric:tabular-nums;}
+.chip-ex{display:inline-flex;align-items:center;border-radius:9999px;background:var(--chip-bg);color:var(--chip-ink);font-size:12px;font-weight:500;padding:2px calc(var(--aura)*0.75);flex-shrink:0;}
+
+#ir-header{position:sticky;top:0;z-index:200;background:var(--canvas);border-bottom:1px solid var(--rule);height:calc(var(--aura)*4.5);}
+.ir-hdr-inner{display:flex;align-items:center;height:100%;gap:calc(var(--aura)*1);}
+.ir-wordmark{display:inline-flex;align-items:center;gap:calc(var(--aura)*0.75);flex-shrink:0;text-decoration:none;color:var(--ink);}
+.ir-logo-sq{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;flex-shrink:0;}
+.ir-wordmark-text{font-size:15px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink);}
+.ir-band .ir-wordmark-text{color:var(--band-fg);}.ir-band .btn-pill-solid,.on-band .btn-pill-solid,.ir-hero .btn-pill-solid{border:1.5px solid color-mix(in srgb,white 70%,var(--periwinkle));}
+
+.ir-nav{display:flex;align-items:center;gap:0;margin-left:calc(var(--aura)*1);}
+.ir-nav-trigger,.ir-nav-plain{display:inline-flex;align-items:center;gap:4px;padding:calc(var(--aura)*0.5) calc(var(--aura)*0.75);border:0;background:none;color:var(--muted);font:inherit;font-size:15px;font-weight:500;cursor:pointer;border-radius:8px;white-space:nowrap;flex-shrink:0;}
+.ir-nav-trigger:hover,.ir-nav-plain:hover{color:var(--ink);background:var(--card-bg);}
+.ir-nav-trigger[aria-expanded="true"]{color:var(--ink);}
+.ir-nav-trigger svg{flex-shrink:0;}
+
+.ir-hero-scrim{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse 70% 50% at 50% 40%,color-mix(in srgb,var(--hero-sky-f) 55%,transparent) 0%,transparent 100%),linear-gradient(180deg,color-mix(in srgb,var(--hero-sky-f) 40%,transparent) 0%,color-mix(in srgb,var(--hero-sky-f) 55%,transparent) 100%);pointer-events:none;}
+html.motion .ir-nav-trigger svg{transition:transform 0.15s;}
+.ir-nav-trigger[aria-expanded="true"] svg{transform:rotate(180deg);}
+.ir-hdr-end{display:flex;align-items:center;gap:calc(var(--aura)*0.75);margin-left:auto;flex-shrink:0;}
+.ir-signin{font-size:15px;font-weight:500;color:var(--ink);background:none;border:none;cursor:pointer;padding:0 calc(var(--aura)*0.75);text-decoration:underline;text-underline-offset:4px;}
+.ir-signin:hover{color:var(--muted);}
+.ir-menu-btn{display:none;align-items:center;justify-content:center;width:calc(var(--aura)*3);height:calc(var(--aura)*3);border:1.5px solid var(--control-line);background:none;color:var(--ink);cursor:pointer;border-radius:8px;flex-shrink:0;padding:0;}
+.ir-menu-btn:hover{background:var(--card-bg);}
+
+.ir-flyout{position:absolute;top:calc(100% + 6px);width:min(520px,100vw - 32px);background:var(--canvas);border:1px solid var(--rule);border-radius:12px;box-shadow:0 8px 32px color-mix(in srgb,var(--ink) 10%,transparent);z-index:200;padding:calc(var(--aura)*1.5);}
+.ir-flyout[hidden]{display:none;}
+.ir-flyout-grid{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--aura)*0.5);}
+.ir-flyout-item{display:flex;align-items:flex-start;gap:calc(var(--aura)*0.75);padding:calc(var(--aura)*0.75);border-radius:8px;text-decoration:none;color:var(--ink);}
+.ir-flyout-item:hover{background:var(--card-bg);}
+.ir-flyout-icon{width:16px;height:16px;flex-shrink:0;margin-top:1px;color:var(--periwinkle);}
+.ir-flyout-title{font-size:15px;font-weight:500;color:var(--ink);display:block;}
+.ir-flyout-desc{font-size:13px;color:var(--muted);display:block;line-height:1.4;}
+
+.ir-mobile-menu{position:fixed;left:0;top:0;width:100vw;height:100vh;background:var(--canvas);z-index:300;display:flex;flex-direction:column;padding:calc(var(--aura)*2);}
+.ir-mobile-menu[hidden]{display:none;}
+.ir-mobile-menu-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:calc(var(--aura)*3);}
+.ir-mobile-menu-links{display:flex;flex-direction:column;gap:calc(var(--aura)*1.5);flex:1;}
+.ir-mobile-menu-links a,.ir-mobile-menu-links button.mm-link{font-size:24px;font-weight:500;color:var(--ink);text-decoration:none;background:none;border:none;cursor:pointer;padding:0;text-align:left;}
+.ir-mobile-menu-btns{display:flex;flex-direction:column;gap:calc(var(--aura)*1);margin-top:calc(var(--aura)*3);}
+.ir-mobile-menu-btns .btn-pill-solid,.ir-mobile-menu-btns .btn-pill-outline{width:100%;justify-content:center;height:calc(var(--aura)*3.5);}
+
+.ir-hero{position:relative;overflow:hidden;min-height:640px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:calc(var(--aura)*9) calc(var(--aura)*2) calc(var(--aura)*7);background-color:var(--hero-sky-f);}
+.ir-hero-bg{position:absolute;inset:0;z-index:0;}
+.ir-hero-sky{position:absolute;inset:0;background:linear-gradient(180deg,var(--hero-sky-a) 0%,var(--hero-sky-b) 18%,var(--hero-sky-c) 42%,var(--hero-sky-d) 62%,var(--hero-sky-e) 80%,var(--hero-sky-f) 100%);}
+.ir-hero-ridge1{position:absolute;bottom:0;left:0;right:0;height:60%;background:var(--hero-ridge);clip-path:polygon(0% 100%,0% 55%,8% 48%,16% 38%,22% 32%,30% 28%,38% 26%,46% 30%,54% 34%,62% 28%,70% 22%,78% 26%,86% 32%,92% 40%,100% 44%,100% 100%);}
+.ir-hero-ridge2{position:absolute;bottom:0;left:0;right:0;height:46%;background:var(--hero-ridge3);clip-path:polygon(0% 100%,0% 60%,5% 52%,12% 45%,20% 40%,28% 38%,36% 42%,44% 36%,52% 30%,60% 36%,68% 42%,76% 38%,84% 44%,92% 50%,100% 55%,100% 100%);}
+.ir-hero-ridge3{position:absolute;bottom:0;left:0;right:0;height:32%;background:var(--hero-ridge5);clip-path:polygon(0% 100%,0% 65%,6% 60%,14% 55%,22% 50%,30% 55%,38% 48%,46% 42%,54% 46%,62% 52%,70% 48%,78% 54%,86% 60%,94% 65%,100% 68%,100% 100%);}
+.ir-hero-river{position:absolute;bottom:0;left:calc(50% - 18px);width:36px;height:38%;background:linear-gradient(180deg,transparent 0%,var(--hero-river-a) 25%,var(--hero-river-b) 60%,var(--hero-river-c) 100%);opacity:0.55;border-radius:40% 40% 0 0;transform:rotate(-4deg);}
+.ir-hero-mist{position:absolute;bottom:28%;left:0;right:0;height:14%;background:linear-gradient(180deg,transparent 0%,color-mix(in srgb,var(--hero-sky-b) 35%,white) 50%,transparent 100%);opacity:0.22;}.ir-hero-horizon-glow{position:absolute;bottom:30%;left:10%;right:10%;height:12%;background:radial-gradient(ellipse 60% 100% at 50% 100%,color-mix(in srgb,var(--hero-sky-a) 55%,white) 0%,transparent 100%);opacity:0.45;}
+.ir-hero-content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;max-width:860px;gap:calc(var(--aura)*2);}
+.ir-hero h1{color:white;font-size:56px;font-weight:500;letter-spacing:-0.02em;line-height:1.05;}
+.ir-hero-sub{font-size:20px;color:rgba(255,255,255,0.90);font-weight:400;line-height:1.45;max-width:520px;}
+.ir-hero-form{display:flex;align-items:center;gap:calc(var(--aura)*0.75);max-width:480px;width:100%;position:relative;}
+.ir-hero-form input{flex:none;background:color-mix(in srgb,var(--hero-sky-f) 55%,var(--band));border:1.5px solid color-mix(in srgb,white 80%,var(--band));border-radius:9999px;font-family:inherit;font-size:15px;color:white;padding:0 calc(var(--aura)*1.5);padding-right:calc(var(--aura)*9);height:48px;box-sizing:border-box;line-height:normal;min-width:0;width:100%;}
+.ir-hero-form input:focus-visible{outline:2px solid var(--focus-on-band);outline-offset:2px;}
+.ir-hero-form input::placeholder{color:color-mix(in srgb,white 80%,transparent);}
+.ir-hero-form .btn-pill-solid{position:absolute;right:4px;top:4px;bottom:4px;height:40px;flex-shrink:0;}
+.ir-hero-glass{background:color-mix(in srgb,var(--hero-sky-f) 55%,transparent);border:1.5px solid color-mix(in srgb,white 80%,var(--band));color:white;}
+.ir-hero-disclaimer{background:color-mix(in srgb,var(--band) 72%,transparent);border-radius:12px;padding:calc(var(--aura)*1) calc(var(--aura)*2);max-width:760px;text-align:center;}
+.ir-hero-cta-row{display:flex;align-items:center;gap:calc(var(--aura)*1);flex-wrap:wrap;justify-content:center;width:min(100%,680px);}
+.ir-hero-try{flex-shrink:0;height:48px;}.ir .ir-hero-try{height:48px;}
+.ir-hero-disclaimer p{font-size:13px;color:color-mix(in srgb,white 80%,transparent);line-height:1.4;}
+
+.ir-band{background:var(--band);color:var(--band-fg);}
+.ir-stone{background:var(--stone);}
+
+.ir-laptop-wrap{display:flex;justify-content:center;padding:calc(var(--aura)*5) 0 0;}
+.ir-laptop{width:min(760px,92vw);position:relative;padding-bottom:min(475px,57.5vw);}
+.ir-laptop-lid{position:absolute;top:0;left:2%;right:2%;height:80%;background:var(--dash-bg);border-radius:12px 12px 4px 4px;border:10px solid var(--dash-border);overflow:hidden;}
+.ir-laptop-screen{position:absolute;inset:2px;background:var(--dash-screen);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;}
+.ir-laptop-deck{position:absolute;top:80%;left:-4%;right:-4%;height:4%;min-height:16px;max-height:20px;background:linear-gradient(180deg,color-mix(in srgb,var(--dash-border) 25%,white) 0%,color-mix(in srgb,var(--dash-border) 60%,white) 50%,color-mix(in srgb,var(--dash-border) 85%,white) 100%);clip-path:polygon(1% 0%,99% 0%,100% 100%,0% 100%);border-radius:0 0 3px 3px;}
+.ir-laptop-hinge{display:none;}
+.ir-dash{display:flex;width:100%;height:100%;font-size:8px;overflow:hidden;}
+.ir-dash-sidebar{width:22%;background:var(--dash-sidebar);padding:4px 3px;display:flex;flex-direction:column;gap:2px;border-right:1px solid var(--dash-border);}
+.ir-dash-sidebar-row{display:flex;align-items:center;gap:3px;padding:3px 4px;border-radius:3px;color:var(--dash-muted);font-size:11px;cursor:default;}
+.ir-dash-sidebar-row.active{background:var(--dash-active);color:var(--dash-active-color);}
+.ir-dash-main{flex:1;padding:5px 6px;overflow:hidden;display:flex;flex-direction:column;gap:4px;}
+.ir-dash-greeting{font-size:15px;font-weight:600;color:var(--dash-text);white-space:nowrap;}
+.ir-dash-chips{display:flex;gap:3px;}
+.ir-dash-chip{background:var(--dash-chart);color:white;font-size:10px;padding:2px 6px;border-radius:3px;}
+.ir-dash-cards{display:grid;grid-template-columns:1fr 1fr;gap:4px;}
+.ir-dash-card{background:var(--dash-card);border-radius:5px;padding:5px;border:1px solid var(--dash-card-border);}
+.ir-dash-card-label{font-size:11px;color:var(--dash-label);margin-bottom:4px;}
+.ir-dash-balance{font-size:22px;font-weight:600;color:var(--dash-text);font-variant-numeric:tabular-nums;white-space:nowrap;}
+.ir-dash-sparkline{height:16px;position:relative;overflow:hidden;}
+.ir-dash-sparkline svg{position:absolute;inset:0;width:100%;height:100%;}
+.ir-dash-acct-row{display:flex;justify-content:space-between;align-items:center;padding:2px 0;border-bottom:1px solid var(--dash-border);font-size:11px;color:var(--dash-muted);}
+.ir-dash-acct-row:last-child{border-bottom:none;}
+.ir-dash-acct-amt{color:var(--dash-text);font-variant-numeric:tabular-nums;opacity:0.85;}
+.ir-dash-mini-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;}
+.ir-dash-mini{background:var(--dash-card);border-radius:5px;padding:4px;border:1px solid var(--dash-card-border);}
+.ir-dash-mini-label{font-size:10px;color:var(--dash-label);margin-bottom:2px;}
+.ir-dash-mini-val{font-size:10px;color:var(--dash-text);font-variant-numeric:tabular-nums;}
+.ir-dash-pb{height:3px;background:var(--dash-card-border);border-radius:2px;margin-top:2px;overflow:hidden;}
+.ir-dash-pb-fill{height:100%;border-radius:2px;background:var(--dash-chart);}
+.ir-ex-chip{position:absolute;bottom:8px;right:8px;background:var(--dash-ex-bg);color:var(--dash-ex-color);font-size:10px;padding:2px 6px;border-radius:3px;border:1px solid var(--dash-ex-border);}
+
+.ir-workspace{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--aura)*5);align-items:start;}
+.ir-workspace-list{display:flex;flex-direction:column;}
+.ir-ws-divider{height:1px;background:color-mix(in srgb,var(--band-fg) 15%,transparent);margin:calc(var(--aura)*1.5) 0;}
+.ir-ws-li{border-top:1px solid color-mix(in srgb,var(--band-fg) 25%,transparent);list-style:none;}.ir-ws-li:first-child{border-top:none;}.ir-ws-row{display:flex;align-items:flex-start;gap:calc(var(--aura)*1);padding:calc(var(--aura)*1.25) 0;cursor:pointer;border:none;background:transparent;text-align:left;width:100%;color:var(--band-fg);font-family:inherit;}
+
+.ir-ws-dot{width:6px;height:6px;border-radius:50%;background:var(--periwinkle);flex-shrink:0;margin-top:5px;opacity:0;}
+.ir-ws-row[aria-expanded="true"] .ir-ws-dot{opacity:1;}
+.ir-ws-title{font-size:15px;font-weight:500;line-height:1.3;display:block;}
+.ir-ws-desc{font-size:15px;color:var(--band-muted);margin-top:calc(var(--aura)*0.5);line-height:1.4;overflow:hidden;display:block;}
+.ir-ws-row[aria-expanded="false"] .ir-ws-desc{display:none;}
+.ir-ws-panel{background:color-mix(in srgb,var(--band-fg) 7%,transparent);border:1px solid color-mix(in srgb,var(--band-fg) 12%,transparent);border-radius:12px;padding:calc(var(--aura)*2);min-height:320px;display:flex;flex-direction:column;gap:calc(var(--aura)*1);}
+.ir-ws-panel-row{display:flex;justify-content:space-between;align-items:center;padding:calc(var(--aura)*0.75);background:color-mix(in srgb,var(--band-fg) 5%,transparent);border-radius:8px;border:1px solid color-mix(in srgb,var(--band-fg) 8%,transparent);}
+.ir-ws-panel-glyph{width:24px;height:24px;border-radius:50%;background:color-mix(in srgb,var(--periwinkle) 30%,var(--band));display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--band-fg);flex-shrink:0;font-weight:600;}
+.ir-ws-panel-name{font-size:13px;font-weight:500;color:var(--band-fg);flex:1;padding-left:calc(var(--aura)*0.75);}
+.ir-ws-panel-amt{font-size:13px;color:var(--band-fg);font-variant-numeric:tabular-nums;opacity:0.85;}
+
+.ir-proof-row{display:flex;flex-direction:column;gap:calc(var(--aura)*3);}
+.ir-proof-line{font-size:15px;color:var(--muted);}
+.ir-testimonial-card{background:var(--card-bg);border:1px solid var(--rule);border-radius:12px;padding:calc(var(--aura)*3);}
+.ir-testimonial-quote{font-size:18px;font-weight:400;color:var(--body);line-height:1.6;margin-bottom:calc(var(--aura)*1.5);}
+.ir-testimonial-author{font-size:14px;color:var(--muted);}
+.ir-testimonial-author strong{color:var(--ink);font-weight:600;}
+.ir-sample-label{display:inline-flex;align-items:center;border-radius:9999px;background:var(--chip-bg);color:var(--muted);font-size:12px;padding:1px calc(var(--aura)*0.75);}
+
+.ir-tasks-grid{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--aura)*2);}
+.ir-task-card{display:flex;flex-direction:column;gap:calc(var(--aura)*1.5);}
+.ir-task-art{aspect-ratio:4/3;border-radius:12px;background:color-mix(in srgb,var(--stone) 70%,color-mix(in srgb,var(--periwinkle) 15%,white));overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;}
+.dark .ir-task-art{background:var(--card-bg);}
+.ir-task-title{font-size:17px;font-weight:600;color:var(--ink);}
+.ir-task-desc{font-size:15px;color:var(--muted);line-height:1.5;}
+
+.ir-cards-art-inner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.ir-vcard{position:absolute;width:52%;height:60%;border-radius:10px;display:flex;flex-direction:column;justify-content:space-between;padding:calc(var(--aura)*1) calc(var(--aura)*1);}
+.ir-vcard1{background:var(--periwinkle);transform:rotate(-8deg) translateY(8px);z-index:1;left:12%;top:14%;}
+.ir-vcard2{background:color-mix(in srgb,var(--periwinkle) 60%,var(--band));transform:rotate(-2deg) translateY(4px);z-index:2;left:20%;top:10%;}
+.ir-vcard3{background:color-mix(in srgb,var(--periwinkle) 85%,white);z-index:3;left:28%;top:6%;}
+.ir-vcard-chip{width:28px;height:18px;background:rgba(255,255,255,0.3);border-radius:4px;}
+.ir-vcard-label{font-size:8px;color:rgba(255,255,255,0.8);font-weight:500;}
+
+.ir-bill-list{display:flex;flex-direction:column;gap:calc(var(--aura)*0.5);padding:calc(var(--aura)*1);width:85%;}
+.ir-bill-row{display:flex;justify-content:space-between;align-items:center;background:white;border-radius:8px;padding:calc(var(--aura)*0.75) calc(var(--aura)*1);border:1px solid var(--rule);font-size:11px;}
+.dark .ir-bill-row{background:var(--card-bg);border-color:var(--rule);}
+.ir-bill-name{color:var(--ink);font-weight:500;}
+.ir-bill-amt{color:var(--muted);font-variant-numeric:tabular-nums;}
+
+.ir-invoice-mock{background:white;border-radius:10px;padding:calc(var(--aura)*1) calc(var(--aura)*1);box-shadow:0 2px 8px color-mix(in srgb,var(--ink) 8%,transparent);width:85%;font-size:11px;}
+.dark .ir-invoice-mock{background:var(--card-bg);}
+.ir-invoice-row{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--aura)*0.75);margin-bottom:calc(var(--aura)*0.75);}
+.ir-invoice-label{color:var(--muted);font-size:10px;}
+.ir-invoice-val{color:var(--ink);}
+.ir-invoice-select{border:1px solid var(--rule);border-radius:6px;padding:3px 6px;background:var(--canvas);color:var(--ink);font-size:10px;font-family:inherit;}
+.ir-toggle-row{display:flex;align-items:center;gap:calc(var(--aura)*0.75);font-size:10px;color:var(--muted);}
+.ir-toggle{width:28px;height:16px;background:var(--periwinkle);border-radius:9999px;position:relative;flex-shrink:0;}
+.ir-toggle-thumb{width:12px;height:12px;background:white;border-radius:50%;position:absolute;top:2px;right:2px;}
+
+.ir-match-pill{background:white;border-radius:9999px;box-shadow:0 2px 8px color-mix(in srgb,var(--ink) 8%,transparent);padding:calc(var(--aura)*0.75) calc(var(--aura)*1.5);display:flex;align-items:center;gap:calc(var(--aura)*0.75);font-size:12px;font-weight:500;color:var(--ink);}
+.dark .ir-match-pill{background:var(--card-bg);}
+.ir-match-dot{width:8px;height:8px;border-radius:50%;background:var(--periwinkle);flex-shrink:0;}
+
+.ir-pull-quote-section{display:flex;flex-direction:column;align-items:center;gap:calc(var(--aura)*2);}
+.ir-pq-attr{font-size:14px;color:var(--muted);text-align:center;}
+.ir-pq-attr strong{color:var(--ink);font-weight:600;}
+
+.ir-story-row{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--aura)*5);align-items:start;}
+.ir-story-row.mirror{direction:rtl;}
+.ir-story-row.mirror>*{direction:ltr;}
+.ir-story-col{display:flex;flex-direction:column;justify-content:space-between;min-height:440px;}
+.ir-story-col-top{display:flex;flex-direction:column;gap:calc(var(--aura)*1);}
+.ir-story-disclosure{display:flex;flex-direction:column;}
+.ir-sd-divider{height:1px;background:var(--rule);margin:0;}
+.ir-sd-row{display:flex;align-items:flex-start;gap:calc(var(--aura)*0.75);padding:calc(var(--aura)*1.25) 0;cursor:pointer;border:none;background:transparent;text-align:left;width:100%;color:var(--ink);font-family:inherit;}
+.ir-story-disclosure li{border-top:1px solid var(--rule);list-style:none;}.ir-story-disclosure li:first-child{border-top:none;}
+.ir-story-disclosure li:last-child{border-bottom:none;}
+
+.ir-sd-dot{width:6px;height:6px;border-radius:50%;background:var(--periwinkle);flex-shrink:0;margin-top:5px;opacity:0;}
+.ir-sd-row[aria-expanded="true"] .ir-sd-dot{opacity:1;}
+.ir-sd-title{font-size:15px;font-weight:500;color:var(--ink);display:block;line-height:1.3;}
+.ir-sd-desc{font-size:15px;color:var(--muted);margin-top:calc(var(--aura)*0.5);line-height:1.4;display:block;}
+.ir-sd-row[aria-expanded="false"] .ir-sd-desc{display:none;}
+.ir-art-dark{border-radius:12px;background:var(--band);min-height:440px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.ir-art-light{border-radius:12px;background:var(--stone);min-height:440px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.dark .ir-art-light{background:var(--card-bg);}
+
+.ir-beam-art{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.ir-beam-glow{position:absolute;bottom:30%;left:50%;transform:translateX(-50%);width:2px;height:55%;background:linear-gradient(180deg,rgba(160,170,255,0.9) 0%,rgba(100,120,255,0.4) 60%,transparent 100%);}
+.ir-beam-horizon{position:absolute;bottom:28%;left:10%;right:10%;height:40px;background:radial-gradient(ellipse 80% 100% at 50% 100%,rgba(130,145,255,0.5) 0%,transparent 100%);}
+.ir-beam-top-glow{position:absolute;top:12%;left:50%;transform:translateX(-50%);width:40px;height:40px;border-radius:50%;background:radial-gradient(circle,rgba(180,190,255,0.9) 0%,rgba(140,160,255,0.3) 50%,transparent 100%);}
+.ir-beam-dots{position:absolute;inset:0;}
+.ir-beam-dot{position:absolute;width:4px;height:4px;border-radius:50%;background:rgba(180,190,255,0.8);}
+
+.ir-sphere-art{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.ir-sphere-ring{position:absolute;border-radius:50%;border:1px solid color-mix(in srgb,var(--muted) 40%,transparent);}
+
+.ir-toolkit-grid{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--aura)*2);}
+.ir-tk-card{border-radius:12px;border:1px solid var(--rule);overflow:hidden;display:flex;flex-direction:column;}
+.ir-tk-art{padding:calc(var(--aura)*2);min-height:160px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.ir-tk-art.pale{background:color-mix(in srgb,var(--periwinkle) 6%,var(--stone));}
+.dark .ir-tk-art.pale{background:color-mix(in srgb,var(--periwinkle) 8%,var(--card-bg));}
+.ir-tk-art.ink{background:var(--band);color:var(--band-fg);}
+.ir-tk-body{padding:calc(var(--aura)*1.5);background:var(--canvas);border-top:1px solid var(--rule);}
+.dark .ir-tk-body{background:var(--card-bg);}
+.ir-tk-title{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:calc(var(--aura)*0.5);}
+.ir-tk-desc{font-size:14px;color:var(--muted);}
+
+.ir-rings-art{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.ir-ring{position:absolute;border-radius:50%;border:2px solid color-mix(in srgb,var(--periwinkle) 30%,transparent);}
+
+.ir-auto-list{display:flex;flex-direction:column;gap:calc(var(--aura)*0.5);width:90%;}
+.ir-auto-row{background:white;border:1px solid var(--rule);border-radius:8px;padding:calc(var(--aura)*0.75) calc(var(--aura)*1);font-size:12px;display:flex;align-items:center;gap:calc(var(--aura)*0.5);}
+.dark .ir-auto-row{background:var(--card-bg);}
+.ir-auto-dot{width:6px;height:6px;border-radius:50%;background:var(--periwinkle);flex-shrink:0;}
+.ir-auto-label{color:var(--ink);font-weight:500;}
+.ir-auto-when{color:var(--muted);font-size:11px;}
+
+.ir-perm-mock{background:white;border-radius:10px;padding:calc(var(--aura)*1.25);box-shadow:0 2px 8px color-mix(in srgb,var(--ink) 8%,transparent);width:88%;}
+.dark .ir-perm-mock{background:color-mix(in srgb,var(--band-fg) 7%,transparent);}
+.ir-perm-name{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:calc(var(--aura)*0.75);}
+.ir-perm-role-label{font-size:11px;color:var(--muted);margin-bottom:3px;}
+.ir-perm-select{border:1.5px solid var(--control-line);border-radius:6px;padding:4px 24px 4px 8px;background:var(--canvas);background-image:linear-gradient(45deg,transparent 50%,var(--control-line) 50%),linear-gradient(135deg,var(--control-line) 50%,transparent 50%);background-position:right 10px center,right 7px center;background-size:3px 3px,3px 3px;background-repeat:no-repeat,no-repeat;color:var(--ink);font-size:12px;font-family:inherit;width:100%;margin-bottom:calc(var(--aura)*0.75);appearance:none;-webkit-appearance:none;cursor:pointer;}
+.ir-perm-check-label{font-size:11px;color:var(--muted);}
+.ir-perm-check{font-size:11px;color:var(--ink);display:flex;align-items:center;gap:5px;margin-bottom:3px;}
+.ir-perm-check::before{content:"✓";color:var(--periwinkle);font-weight:600;}
+
+.ir-dots-art{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.ir-dots-rings{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.ir-dots-ring{position:absolute;border-radius:50%;border:1px solid rgba(160,170,255,0.2);}
+.ir-three-dots{display:flex;gap:8px;align-items:center;position:relative;z-index:1;}
+.ir-three-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.7);}
+
+.ir-stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid color-mix(in srgb,var(--band-fg) 15%,transparent);border-bottom:1px solid color-mix(in srgb,var(--band-fg) 15%,transparent);padding:calc(var(--aura)*3) 0;list-style:none;margin:0;padding-left:0;}
+.ir-stat-cell{display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 calc(var(--aura)*2);border-right:1px solid color-mix(in srgb,var(--band-fg) 15%,transparent);}
+.ir-stat-cell:last-child{border-right:none;}
+.ir-stat-value{font-size:52px;font-weight:500;color:var(--band-fg);letter-spacing:-0.02em;line-height:1;font-variant-numeric:tabular-nums;}
+.ir-stat-label{font-size:15px;color:var(--band-muted);margin-top:calc(var(--aura)*0.75);line-height:1.4;max-width:120px;}
+
+.ir-cover-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--aura)*2);}
+.ir-cover-card{border-radius:12px;overflow:hidden;border:1px solid color-mix(in srgb,var(--band-fg) 10%,var(--band));background:color-mix(in srgb,var(--band-fg) 7%,var(--band));}
+.ir-cover-art{min-height:160px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:calc(var(--aura)*1.5);}
+.ir-cover-body{padding:calc(var(--aura)*1.5);border-top:1px solid color-mix(in srgb,var(--band-fg) 8%,var(--band));background:color-mix(in srgb,var(--band-fg) 5%,var(--band));}
+.ir-cover-title{font-size:15px;font-weight:600;color:var(--band-fg);margin-bottom:calc(var(--aura)*0.5);}
+.ir-cover-desc{font-size:14px;color:var(--band-muted);line-height:1.4;}
+
+.ir-bar-art{display:flex;align-items:flex-end;gap:8px;height:80px;}
+.ir-bar{border-radius:4px 4px 0 0;width:36px;}
+.ir-bar-tall{background:color-mix(in srgb,var(--periwinkle) 80%,white);height:100%;}
+.dark .ir-bar-tall{background:var(--periwinkle);}
+.ir-bar-short{background:color-mix(in srgb,var(--band-fg) 25%,transparent);height:40%;}
+.ir-bar-label{font-size:10px;color:var(--band-muted);text-align:center;margin-top:4px;font-variant-numeric:tabular-nums;}
+
+.ir-arc-art{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.ir-arc{position:absolute;border-radius:50%;border-top:2px solid rgba(160,170,255,0.25);border-left:2px solid rgba(160,170,255,0.25);border-bottom:2px solid transparent;border-right:2px solid transparent;}
+
+.ir-toggle-art{display:flex;flex-direction:column;gap:calc(var(--aura)*1);width:70%;}
+.ir-toggle-item{display:flex;align-items:center;justify-content:space-between;background:color-mix(in srgb,var(--band-fg) 7%,transparent);border-radius:8px;padding:calc(var(--aura)*0.75) calc(var(--aura)*1);border:1px solid color-mix(in srgb,var(--band-fg) 10%,transparent);}
+.ir-toggle-item-label{font-size:12px;font-weight:500;color:var(--band-fg);}
+.ir-tswitch{width:32px;height:18px;background:var(--periwinkle);border-radius:9999px;position:relative;flex-shrink:0;}
+.ir-tswitch-thumb{width:14px;height:14px;background:white;border-radius:50%;position:absolute;top:2px;right:2px;}
+.ir-tswitch.off{background:color-mix(in srgb,var(--band-fg) 20%,transparent);}
+.ir-tswitch.off .ir-tswitch-thumb{right:auto;left:2px;}
+
+.ir-press-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--aura)*2);}
+.ir-press-card{border-radius:12px;overflow:hidden;border:1px solid color-mix(in srgb,var(--band-fg) 10%,var(--band));background:color-mix(in srgb,var(--band-fg) 7%,var(--band));padding:calc(var(--aura)*2);}
+.ir-press-outlet-tile{background:color-mix(in srgb,var(--band-fg) 6%,var(--band));border-radius:8px;height:96px;display:flex;align-items:center;justify-content:center;margin-bottom:calc(var(--aura)*1.5);padding:0 calc(var(--aura)*1.5);}
+.ir-press-outlet{font-size:16px;font-weight:400;color:var(--band-fg);display:block;text-align:center;}
+.ir-press-outlet.serif{font-style:italic;letter-spacing:0.04em;}
+.ir-press-outlet.condensed{letter-spacing:-0.02em;font-weight:600;}
+.ir-press-headline{font-size:20px;font-weight:500;color:var(--band-fg);line-height:1.3;margin-bottom:calc(var(--aura)*1.5);}
+.ir-press-btn{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:2px solid color-mix(in srgb,var(--band-fg) 70%,var(--band));background:none;color:var(--band-fg);cursor:pointer;}
+.ir-press-btn:hover{background:color-mix(in srgb,var(--band-fg) 10%,transparent);}
+
+.ir-features-list{display:flex;flex-direction:column;gap:calc(var(--aura)*2);}
+.ir-feat-item{display:flex;flex-direction:column;gap:calc(var(--aura)*0.5);}
+.ir-feat-label{font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--periwinkle);}
+.dark .ir-feat-label{color:var(--periwinkle);}
+.ir-feat-title{font-size:17px;font-weight:600;color:var(--ink);}
+.ir-feat-desc{font-size:15px;color:var(--muted);}
+
+.ir-table-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--rule);}
+.ir-table-wrap[role="region"]{outline:none;}
+.ir-table-wrap:focus{outline:2px solid var(--focus);outline-offset:2px;}
+.ir-table{width:100%;border-collapse:collapse;font-size:14px;}
+.ir-table caption{text-align:left;font-size:13px;color:var(--muted);padding:calc(var(--aura)*1) calc(var(--aura)*1.5);border-bottom:1px solid var(--rule);}
+.ir-table th{font-weight:600;font-size:13px;color:var(--muted);text-align:left;padding:calc(var(--aura)*1) calc(var(--aura)*1.5);border-bottom:1px solid var(--rule);white-space:nowrap;background:var(--card-bg);}
+.ir-table td{padding:calc(var(--aura)*1) calc(var(--aura)*1.5);border-bottom:1px solid var(--rule);color:var(--body);vertical-align:middle;}
+.ir-table tr:last-child td{border-bottom:none;}
+.ir-table td.check{color:var(--periwinkle);font-weight:600;text-align:center;}
+.ir-table td.dash{color:var(--muted);text-align:center;}
+
+.ir form input:not(.default),.ir form select:not(.default),.ir form textarea:not(.default){border:1.5px solid var(--control-line);}
+.ir-callback-form{display:flex;flex-direction:column;gap:calc(var(--aura)*1.5);}
+.ir-form-label{font-size:14px;font-weight:500;color:var(--ink);margin-bottom:calc(var(--aura)*0.5);display:block;}
+.ir-form-group{display:flex;flex-direction:column;gap:4px;}
+.ir-cb-grid{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--aura)*1.5);}
+
+.ir-pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--aura)*2);}
+.ir-plan-card{border:1px solid var(--rule);border-radius:12px;padding:calc(var(--aura)*2.5);display:flex;flex-direction:column;gap:calc(var(--aura)*1.5);background:var(--canvas);}
+.ir-plan-card.featured{border-color:var(--periwinkle);box-shadow:0 0 0 1px var(--periwinkle);}
+.dark .ir-plan-card{background:var(--card-bg);}
+.ir-plan-name{font-size:15px;font-weight:600;color:var(--ink);}
+.ir-plan-price{font-size:36px;font-weight:500;color:var(--ink);letter-spacing:-0.02em;font-variant-numeric:tabular-nums;}
+.ir-plan-price sup{font-size:18px;vertical-align:super;}
+.ir-plan-price-note{font-size:13px;color:var(--muted);}
+.ir-plan-features{display:flex;flex-direction:column;gap:calc(var(--aura)*0.75);flex:1;}
+.ir-plan-feat{font-size:14px;color:var(--body);display:flex;gap:calc(var(--aura)*0.5);align-items:flex-start;}
+.ir-plan-feat::before{content:"✓";color:var(--periwinkle);font-weight:700;flex-shrink:0;margin-top:1px;}
+
+.ir-faq{display:flex;flex-direction:column;list-style:none;margin:0;padding:0;}
+.ir-faq-item{border-bottom:1px solid var(--rule);list-style:none;}
+.ir-faq-btn{display:flex;align-items:center;justify-content:space-between;width:100%;padding:calc(var(--aura)*1.5) 0;background:none;border:none;cursor:pointer;font:inherit;font-size:16px;font-weight:500;color:var(--ink);text-align:left;gap:calc(var(--aura)*1);}
+.ir-faq-btn:hover{color:var(--muted);}
+.ir-faq-icon{flex-shrink:0;width:20px;height:20px;color:var(--muted);}
+.ir-faq-btn[aria-expanded="true"] .ir-faq-icon{transform:rotate(45deg);}
+.ir-faq-panel{font-size:15px;color:var(--muted);line-height:1.6;padding-bottom:calc(var(--aura)*1.5);}
+.ir-faq-panel[hidden]{display:none;}
+
+.ir-cta-cards{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--aura)*2);margin-top:calc(var(--aura)*5);}
+.ir-cta-card{border:2px solid color-mix(in srgb,var(--band-fg) 70%,var(--band));border-radius:12px;padding:calc(var(--aura)*2.5);background:color-mix(in srgb,var(--band-fg) 7%,var(--band));display:flex;flex-direction:column;gap:calc(var(--aura)*1);}
+.ir-cta-card-title{font-size:24px;font-weight:500;color:var(--band-fg);}
+.ir-cta-card-desc{font-size:15px;color:var(--band-muted);}
+
+.ir-band-h2-statement{font-size:44px;}
+.ir-appearance-switch{display:flex;align-items:center;gap:4px;border:1px solid color-mix(in srgb,var(--band-fg) 55%,var(--band));border-radius:9999px;padding:3px;}
+.ir-app-btn{background:none;border:none;padding:4px 12px;border-radius:9999px;font:inherit;font-size:13px;font-weight:500;color:var(--band-fg);cursor:pointer;}
+.ir-app-btn[aria-checked="true"]{background:color-mix(in srgb,var(--band-fg) 30%,var(--band));color:var(--band-fg);border:2px solid color-mix(in srgb,var(--band-fg) 55%,var(--band));}
+.ir-app-btn:hover:not([aria-checked="true"]){color:var(--band-fg);}
+
+.ir-footer-cols{display:flex;flex-direction:column;gap:calc(var(--aura)*5);}
+.ir-footer-cols-row{display:grid;grid-template-columns:repeat(4,1fr);gap:calc(var(--aura)*2);}
+.ir-footer-col-head{font-size:14px;font-weight:500;color:var(--band-muted);margin-bottom:calc(var(--aura)*1);}
+.ir-footer-links{display:flex;flex-direction:column;gap:calc(var(--aura)*0.75);}
+.ir-footer-links li a,.ir-footer-links li button.fl-btn{font-size:15px;color:var(--band-fg);text-decoration:none;background:none;border:none;cursor:pointer;padding:0;text-align:left;font-family:inherit;}
+.ir-footer-links li a:hover,.ir-footer-links li button.fl-btn:hover{color:var(--band-muted);}
+.ir-footer-rule{height:1px;background:color-mix(in srgb,var(--band-fg) 10%,transparent);margin:calc(var(--aura)*3) 0;}
+.ir-footer-fine{display:flex;flex-direction:column;gap:calc(var(--aura)*1);}
+.ir-footer-fine p{font-size:13px;color:var(--band-muted);line-height:1.6;}
+.ir-footer-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:calc(var(--aura)*3);flex-wrap:wrap;gap:calc(var(--aura)*1);}
+.ir-footer-legal{font-size:13px;color:var(--band-muted);}
+
+@media (max-width:1023px){
+  .ir-nav,.ir-hdr-end .ir-signin,.ir-hdr-end .btn-pill-solid{display:none;}
+  .ir-menu-btn{display:flex;}
+  .ir-workspace{grid-template-columns:1fr;}
+  .ir-story-row{grid-template-columns:1fr;}
+  .ir-story-row.mirror{direction:ltr;}
+  .ir-art-dark,.ir-art-light{min-height:260px;}
+}
+@media (max-width:767px){
+  .ir-tasks-grid{grid-template-columns:1fr;}
+  .ir-toolkit-grid{grid-template-columns:1fr;}
+  .ir-stat-row{grid-template-columns:1fr 1fr;}
+  .ir-stat-cell{border-right:none;border-bottom:1px solid color-mix(in srgb,var(--band-fg) 15%,transparent);padding:calc(var(--aura)*1.5) 0;}
+  .ir-stat-cell:nth-child(even){border-left:1px solid color-mix(in srgb,var(--band-fg) 15%,transparent);padding-left:calc(var(--aura)*2);}
+  .ir-stat-cell:last-child{border-bottom:none;}
+  .ir-cover-cards{grid-template-columns:1fr;}
+  .ir-press-grid{grid-template-columns:1fr;}
+  .ir-pricing-grid{grid-template-columns:1fr;}
+  .ir-cb-grid{grid-template-columns:1fr;}
+  .ir-cta-cards{grid-template-columns:1fr;}
+  .ir-footer-cols-row{grid-template-columns:1fr 1fr;}
+  .ir-footer-bottom{flex-direction:column;align-items:flex-start;}
+}
+@media (max-width:479px){
+  .ir-hero h1{font-size:38px;text-wrap:balance;}
+  h2{font-size:clamp(24px,8vw,32px);}
+  .ir-hero-form{flex-direction:column;padding:0;}
+  .ir-hero-form input{width:100%;padding:0 calc(var(--aura)*1.5);height:48px;box-sizing:border-box;border-radius:9999px;}
+  .ir-hero-form .btn-pill-solid{width:100%;justify-content:center;border-radius:9999px;position:static;right:auto;top:auto;bottom:auto;height:48px;margin-top:calc(var(--aura)*1);}
+  .ir-hero-cta-row{flex-direction:column;align-items:stretch;width:100%;}
+  .ir-hero-try{width:100%;justify-content:center;}
+
+  .ir-band-h2-statement{font-size:32px;}
+  .ir-stat-value{font-size:36px;}
+}
+@media (max-width:399px){
+  .ir-hero h1{font-size:36px;}
+  .ir blockquote,.ir blockquote p{font-size:24px;}
+}
+@media (max-width:767px){
+  .ir-hero-form{flex-direction:column;padding:0;}
+  .ir-hero-form input{width:100%;padding:0 calc(var(--aura)*1.5);height:48px;box-sizing:border-box;border-radius:9999px;}
+  .ir-hero-form .btn-pill-solid{position:static;right:auto;top:auto;bottom:auto;width:100%;height:48px;justify-content:center;border-radius:9999px;margin-top:calc(var(--aura)*1);}
+  .ir-hero-cta-row{flex-direction:column;align-items:stretch;width:100%;}
+  .ir-hero-try{width:100%;justify-content:center;}
+  .ir-band-h2-statement{font-size:32px;}
+}
+html.motion .ir-nav-trigger svg{transition:transform 0.15s;}
+html.motion .ir-flyout{transition:opacity 0.18s,transform 0.18s;}
+html.motion .btn-pill-solid,html.motion .btn-pill-glass,html.motion .btn-pill-outline{transition:background 0.15s,opacity 0.15s;}
+html.motion .ir-faq-btn .ir-faq-icon{transition:transform 0.2s;}
+</style>
+</head>
+<body class="ir">
+<a href="#ir-main" class="skip-link">Skip to main content</a>
+<div aria-live="polite" aria-atomic="true" class="sr-only" id="ir-live"></div>
+
+<header id="ir-header" role="banner">
+<div class="wrap-wide ir-hdr-inner">
+<a href="#" class="ir-wordmark" aria-label="Ironmere home">
+<span class="ir-logo-sq" aria-hidden="true">
+<svg width="22" height="22" viewBox="0 0 22 22" fill="none" >
+<rect width="22" height="22" rx="5" fill="var(--periwinkle)"/>
+<path d="M5 17 L17 5" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+</svg>
+</span>
+<span class="ir-wordmark-text">Ironmere</span>
+</a>
+<nav class="ir-nav" aria-label="Primary">
+<div style="position:relative;">
+<button class="ir-nav-trigger" data-dropdown aria-expanded="false" aria-controls="ir-fly-business" id="ir-trig-business">
+Business
+<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+<div class="ir-flyout" id="ir-fly-business" hidden aria-labelledby="ir-trig-business">
+<div class="ir-flyout-grid">
+<a href="#" class="ir-flyout-item">
+<svg class="ir-flyout-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="2" y="2" width="12" height="12" rx="3" stroke="currentColor" stroke-width="1.4"/><path d="M5 8h6M5 11h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+<span><span class="ir-flyout-title">Accounts</span><span class="ir-flyout-desc">View and manage all your business balances</span></span>
+</a>
+<a href="#" class="ir-flyout-item">
+<svg class="ir-flyout-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="2" y="5" width="12" height="8" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M5 5V4a3 3 0 016 0v1" stroke="currentColor" stroke-width="1.4"/></svg>
+<span><span class="ir-flyout-title">Cards</span><span class="ir-flyout-desc">Issue virtual and physical team cards</span></span>
+</a>
+<a href="#" class="ir-flyout-item">
+<svg class="ir-flyout-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+<span><span class="ir-flyout-title">Payments</span><span class="ir-flyout-desc">Send transfers, pay bills and vendors</span></span>
+</a>
+<a href="#" class="ir-flyout-item">
+<svg class="ir-flyout-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 4h10M3 8h7M3 12h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+<span><span class="ir-flyout-title">Invoicing</span><span class="ir-flyout-desc">Create and send invoices in seconds</span></span>
+</a>
+<a href="#" class="ir-flyout-item">
+<svg class="ir-flyout-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.4"/><path d="M6 8l2 2 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<span><span class="ir-flyout-title">Spend control</span><span class="ir-flyout-desc">Set limits and approval flows for your team</span></span>
+</a>
+<a href="#" class="ir-flyout-item">
+<svg class="ir-flyout-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="2" y="2" width="5" height="5" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="2" width="5" height="5" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="2" y="9" width="5" height="5" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="9" width="5" height="5" rx="1.5" stroke="currentColor" stroke-width="1.4"/></svg>
+<span><span class="ir-flyout-title">Bookkeeping</span><span class="ir-flyout-desc">Categorize and sync transactions automatically</span></span>
+</a>
+</div>
+</div>
+</div>
+<div style="position:relative;">
+<button class="ir-nav-trigger" data-dropdown aria-expanded="false" aria-controls="ir-fly-toolkit" id="ir-trig-toolkit">
+Toolkit
+<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+<div class="ir-flyout" id="ir-fly-toolkit" hidden aria-labelledby="ir-trig-toolkit">
+<div class="ir-flyout-grid">
+<a href="#" class="ir-flyout-item">
+<svg class="ir-flyout-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 12l3-4 3 2 2-3 4 5H2z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+<span><span class="ir-flyout-title">Cashflow view</span><span class="ir-flyout-desc">See all cash flows collected in one live view</span></span>
+</a>
+<a href="#" class="ir-flyout-item">
+<svg class="ir-flyout-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 8h8M4 11h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M2 5h12v9H2z" stroke="currentColor" stroke-width="1.4" rx="2"/></svg>
+<span><span class="ir-flyout-title">Automation rules</span><span class="ir-flyout-desc">Move funds and tag transactions automatically</span></span>
+</a>
+<a href="#" class="ir-flyout-item">
+<svg class="ir-flyout-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="6" r="3" stroke="currentColor" stroke-width="1.4"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+<span><span class="ir-flyout-title">Team roles</span><span class="ir-flyout-desc">Granular permissions for every team member</span></span>
+</a>
+<a href="#" class="ir-flyout-item">
+<svg class="ir-flyout-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2l1.5 4.5H14l-3.75 2.75 1.5 4.5L8 11l-3.75 2.75 1.5-4.5L2 6.5h4.5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+<span><span class="ir-flyout-title">Integrations</span><span class="ir-flyout-desc">Connect your accounting and payroll tools</span></span>
+</a>
+<a href="#" class="ir-flyout-item">
+<svg class="ir-flyout-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="2" y="3" width="12" height="10" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M2 6h12" stroke="currentColor" stroke-width="1.3"/></svg>
+<span><span class="ir-flyout-title">Bill pay</span><span class="ir-flyout-desc">Schedule and automate recurring bills</span></span>
+</a>
+<a href="#" class="ir-flyout-item">
+<svg class="ir-flyout-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.4"/><path d="M8 5v3l2 2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<span><span class="ir-flyout-title">Reimbursements</span><span class="ir-flyout-desc">Approve and pay team expenses quickly</span></span>
+</a>
+</div>
+</div>
+</div>
+<div style="position:relative;">
+<button class="ir-nav-trigger" data-dropdown aria-expanded="false" aria-controls="ir-fly-learn" id="ir-trig-learn">
+Learn
+<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+<div class="ir-flyout" id="ir-fly-learn" hidden aria-labelledby="ir-trig-learn">
+<div class="ir-flyout-grid">
+<a href="#" class="ir-flyout-item">
+<svg class="ir-flyout-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 4h12M2 8h9M2 12h6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+<span><span class="ir-flyout-title">Blog</span><span class="ir-flyout-desc">Finance tips and product updates</span></span>
+</a>
+<a href="#" class="ir-flyout-item">
+<svg class="ir-flyout-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.4"/><path d="M8 5v3l2 2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<span><span class="ir-flyout-title">Guides</span><span class="ir-flyout-desc">Step-by-step help for your money workflow</span></span>
+</a>
+<a href="#" class="ir-flyout-item">
+<svg class="ir-flyout-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 8h6M5 11h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.4"/></svg>
+<span><span class="ir-flyout-title">Help center</span><span class="ir-flyout-desc">Answers for common tasks and questions</span></span>
+</a>
+<a href="#" class="ir-flyout-item">
+<svg class="ir-flyout-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v4M6 4h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M3 8h10M5 11h6M7 14h2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+<span><span class="ir-flyout-title">Events</span><span class="ir-flyout-desc">Workshops and webinars for finance teams</span></span>
+</a>
+<a href="#" class="ir-flyout-item">
+<svg class="ir-flyout-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 14l4-8 4 6 2-3 2 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<span><span class="ir-flyout-title">Case studies</span><span class="ir-flyout-desc">How small teams use Ironmere today (sample)</span></span>
+</a>
+<a href="#" class="ir-flyout-item">
+<svg class="ir-flyout-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3l2 5h5l-4 3 1.5 5L8 13l-4.5 3L5 11 1 8h5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+<span><span class="ir-flyout-title">Changelog</span><span class="ir-flyout-desc">What is new in Ironmere (sample)</span></span>
+</a>
+</div>
+</div>
+</div>
+<a href="#" class="ir-nav-plain">Personal</a>
+<a href="#" class="ir-nav-plain">Rates</a>
+</nav>
+<div class="ir-hdr-end">
+<button class="ir-signin">Sign in</button>
+<a href="#" class="btn-pill-solid">Get started</a>
+</div>
+<button class="ir-menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="ir-mobile-menu" id="ir-menu-trigger">
+<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M2 4h14M2 9h14M2 14h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+</button>
+</div>
+</header>
+
+<div id="ir-mobile-menu" class="ir-mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu" hidden>
+<div class="ir-mobile-menu-top">
+<a href="#" class="ir-wordmark" aria-label="Ironmere home">
+<span class="ir-logo-sq" aria-hidden="true">
+<svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect width="22" height="22" rx="5" fill="var(--periwinkle)"/><path d="M5 17 L17 5" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>
+</span>
+<span class="ir-wordmark-text">Ironmere</span>
+</a>
+<button id="ir-menu-close" aria-label="Close menu" style="background:none;border:1px solid var(--control-line);color:var(--ink);border-radius:8px;width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+</button>
+</div>
+<div class="ir-mobile-menu-links">
+<a href="#">Business</a>
+<a href="#">Toolkit</a>
+<a href="#">Learn</a>
+<a href="#">Personal</a>
+<a href="#">Rates</a>
+</div>
+<div class="ir-mobile-menu-btns">
+<a href="#" class="btn-pill-solid" style="width:100%;justify-content:center;height:calc(var(--aura)*3.5);display:flex;align-items:center;border-radius:9999px;">Get started</a>
+<a href="#" class="btn-pill-outline" style="width:100%;justify-content:center;height:calc(var(--aura)*3.5);display:flex;align-items:center;border-radius:9999px;">Sign in</a>
+</div>
+</div>
+
+<main id="ir-main">
+
+<section id="ir-s01-hero" class="ir-hero" aria-label="Ironmere homepage hero">
+<div class="ir-hero-bg" aria-hidden="true">
+<div class="ir-hero-sky"></div>
+<div class="ir-hero-ridge1"></div>
+<div class="ir-hero-ridge2"></div>
+<div class="ir-hero-ridge3"></div>
+<div class="ir-hero-river"></div>
+<div class="ir-hero-mist"></div>
+<div class="ir-hero-horizon-glow"></div>
+</div>
+<div class="ir-hero-scrim" aria-hidden="true"></div><div class="ir-hero-content">
+<h1>Your team's money, made clear</h1>
+<p class="ir-hero-sub">Accounts, cards, bills and invoices in one workspace — built for small companies that want to move fast.</p>
+<div class="ir-hero-cta-row">
+<form class="ir-hero-form" id="ir-hero-form" aria-label="Start with your work email" novalidate>
+<label for="ir-hero-email" class="sr-only">Work email</label>
+<input id="ir-hero-email" type="email" placeholder="Your work email" autocomplete="email"/>
+<button type="submit" class="btn-pill-solid">Get started</button>
+</form>
+<button class="btn-pill-glass ir-hero-glass ir-hero-try" type="button" onclick="document.getElementById('ir-live').textContent='Launching sample — this is a demo, no account created.'">Try the sample</button>
+</div>
+<div class="ir-hero-disclaimer" role="note">
+<p>Ironmere is a fictional design sample, not a bank. All figures on this page are example data.</p>
+</div>
+</div>
+</section>
+
+<section id="ir-s02-device" class="ir-band on-band section-pad" aria-label="Dashboard preview">
+<div class="wrap">
+<div class="ir-laptop-wrap">
+<figure class="ir-laptop" role="img" aria-label="Ironmere dashboard mock showing accounts, balances and transaction summary (example data)">
+<div class="ir-laptop-lid">
+<div class="ir-laptop-screen">
+<div class="ir-dash" aria-hidden="true">
+<div class="ir-dash-sidebar">
+<div class="ir-dash-sidebar-row active">&#9632; Home</div>
+<div class="ir-dash-sidebar-row">&#9632; Transactions</div>
+<div class="ir-dash-sidebar-row">&#9632; Payments</div>
+<div class="ir-dash-sidebar-row">&#9632; Cards</div>
+<div class="ir-dash-sidebar-row">&#9632; Accounts</div>
+<div class="ir-dash-sidebar-row">&#9632; Invoices</div>
+<div class="ir-dash-sidebar-row">&#9632; Bill pay</div>
+<div class="ir-dash-sidebar-row">&#9632; Reports</div>
+</div>
+<div class="ir-dash-main">
+<div class="ir-dash-greeting">Good morning, Ines</div>
+<div class="ir-dash-chips">
+<span class="ir-dash-chip">Send</span>
+<span class="ir-dash-chip">Request</span>
+<span class="ir-dash-chip">Pay bill</span>
+<span class="ir-dash-chip">Invoice</span>
+</div>
+<div class="ir-dash-cards">
+<div class="ir-dash-card" style="grid-column:span 1;">
+<div class="ir-dash-card-label">Total balance</div>
+<div class="ir-dash-balance">$1,284,350.12 <span style="font-size:9px;font-weight:400;opacity:0.75;">(example)</span></div>
+<div class="ir-dash-sparkline">
+<svg viewBox="0 0 100 20" preserveAspectRatio="none">
+<defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--dash-chart)" stop-opacity="0.4"/><stop offset="100%" stop-color="var(--dash-chart)" stop-opacity="0"/></linearGradient></defs>
+<path d="M0 15 Q10 12 20 14 Q30 16 40 10 Q50 4 60 8 Q70 12 80 7 Q90 2 100 5 L100 20 L0 20Z" fill="url(#sg)"/>
+<path d="M0 15 Q10 12 20 14 Q30 16 40 10 Q50 4 60 8 Q70 12 80 7 Q90 2 100 5" fill="none" stroke="var(--dash-chart)" stroke-width="1.2"/>
+</svg>
+</div>
+</div>
+<div class="ir-dash-card">
+<div class="ir-dash-card-label">Accounts</div>
+<div class="ir-dash-acct-row"><span>Checking</span><span class="ir-dash-acct-amt">$842,100.00</span></div>
+<div class="ir-dash-acct-row"><span>Savings</span><span class="ir-dash-acct-amt">$320,000.00</span></div>
+<div class="ir-dash-acct-row"><span>Payroll</span><span class="ir-dash-acct-amt">$78,250.12</span></div>
+<div class="ir-dash-acct-row"><span>Treasury</span><span class="ir-dash-acct-amt">$44,000.00</span></div>
+<div class="ir-dash-acct-row"><span>FX reserve</span><span class="ir-dash-acct-amt">$0.00</span></div>
+</div>
+</div>
+<div class="ir-dash-mini-cards">
+<div class="ir-dash-mini">
+<div class="ir-dash-mini-label">Invoices</div>
+<div class="ir-dash-mini-val">12 open</div>
+</div>
+<div class="ir-dash-mini">
+<div class="ir-dash-mini-label">Card spend</div>
+<div class="ir-dash-mini-val">$8,420</div>
+<div class="ir-dash-pb"><div class="ir-dash-pb-fill" style="width:62%"></div></div>
+</div>
+<div class="ir-dash-mini">
+<div class="ir-dash-mini-label">Bills due</div>
+<div class="ir-dash-mini-val">4 pending</div>
+</div>
+</div>
+<div style="position:absolute;bottom:6px;right:6px;" class="ir-ex-chip">Example data</div>
+</div>
+</div>
+</div>
+</div>
+<div class="ir-laptop-deck" aria-hidden="true"><div style="position:absolute;top:0;left:calc(50% - 16px);width:32px;height:3px;background:color-mix(in srgb,var(--dash-border) 80%,white);border-radius:0 0 3px 3px;"></div></div>
+<div class="ir-laptop-hinge" aria-hidden="true"></div>
+<figcaption class="sr-only">Ironmere dashboard (example data) showing a main balance of $1,284,350.12, accounts breakdown, invoice and card spend summary.</figcaption>
+</figure>
+</div>
+</div>
+</section>
+
+<section id="ir-s03-workspace" class="ir-band on-band section-pad" aria-label="Workspace features">
+<div class="wrap">
+<div class="ir-workspace">
+<div class="ir-workspace-list">
+<h2 style="font-size:28px;color:var(--band-fg);line-height:1.2;max-width:340px;">Everything your team does with money, right here.</h2>
+<div class="ir-ws-divider" aria-hidden="true"></div>
+<ul style="list-style:none;padding:0;margin:0;">
+<li class="ir-ws-li">
+<button class="ir-ws-row" aria-expanded="true" aria-controls="ir-ws-panel" data-panel="accounts" id="ir-ws-row-0">
+<span class="ir-ws-dot" aria-hidden="true"></span>
+<span>
+<span class="ir-ws-title">Accounts and balances</span>
+<span class="ir-ws-desc">Checking, savings, payroll, and more — all account balances together with no switching tabs.</span>
+</span>
+</button>
+</li>
+<li class="ir-ws-li">
+<button class="ir-ws-row" aria-expanded="false" aria-controls="ir-ws-panel" data-panel="cards" id="ir-ws-row-1">
+<span class="ir-ws-dot" aria-hidden="true"></span>
+<span><span class="ir-ws-title">Cards and spend</span><span class="ir-ws-desc">Issue virtual or physical cards with per-card limits and instant freeze controls.</span></span>
+</button>
+</li>
+<li class="ir-ws-li">
+<button class="ir-ws-row" aria-expanded="false" aria-controls="ir-ws-panel" data-panel="payments" id="ir-ws-row-2">
+<span class="ir-ws-dot" aria-hidden="true"></span>
+<span><span class="ir-ws-title">Payments and transfers</span><span class="ir-ws-desc">Send money with a few clicks. Schedule recurring transfers and automate vendor payments.</span></span>
+</button>
+</li>
+<li class="ir-ws-li">
+<button class="ir-ws-row" aria-expanded="false" aria-controls="ir-ws-panel" data-panel="bookkeeping" id="ir-ws-row-3">
+<span class="ir-ws-dot" aria-hidden="true"></span>
+<span><span class="ir-ws-title">Bookkeeping</span><span class="ir-ws-desc">Transactions auto-categorize and sync to your accounting tool — less manual entry every month.</span></span>
+</button>
+</li>
+</ul>
+<div style="margin-top:calc(var(--aura)*2);">
+<button class="text-link on-band" type="button">Tour the sample</button>
+</div>
+</div>
+<div id="ir-ws-panel" class="ir-ws-panel" aria-label="Workspace panel (example data)" aria-live="polite">
+<div id="ir-ws-accounts" data-panel-content>
+<div style="font-size:13px;font-weight:600;color:var(--band-muted);margin-bottom:calc(var(--aura)*1);letter-spacing:0.04em;text-transform:uppercase;">Accounts (example)</div>
+<div class="ir-ws-panel-row"><div class="ir-ws-panel-glyph">Ch</div><span class="ir-ws-panel-name">Checking</span><span class="ir-ws-panel-amt">$842,100.00</span></div>
+<div class="ir-ws-panel-row" style="margin-top:4px;"><div class="ir-ws-panel-glyph">Sv</div><span class="ir-ws-panel-name">Savings</span><span class="ir-ws-panel-amt">$320,000.00</span></div>
+<div class="ir-ws-panel-row" style="margin-top:4px;"><div class="ir-ws-panel-glyph">Pr</div><span class="ir-ws-panel-name">Payroll</span><span class="ir-ws-panel-amt">$78,250.12</span></div>
+<div class="ir-ws-panel-row" style="margin-top:4px;"><div class="ir-ws-panel-glyph">Tr</div><span class="ir-ws-panel-name">Treasury</span><span class="ir-ws-panel-amt">$44,000.00</span></div>
+<div class="ir-ws-panel-row" style="margin-top:4px;"><div class="ir-ws-panel-glyph">AP</div><span class="ir-ws-panel-name">Accounts payable</span><span class="ir-ws-panel-amt">$226,767.00</span></div>
+</div>
+<div id="ir-ws-cards" data-panel-content style="display:none;">
+<div style="font-size:13px;font-weight:600;color:var(--band-muted);margin-bottom:calc(var(--aura)*1);letter-spacing:0.04em;text-transform:uppercase;">Cards (example)</div>
+<div class="ir-ws-panel-row"><div class="ir-ws-panel-glyph">V</div><span class="ir-ws-panel-name">Ops card — Juno R.</span><span class="ir-ws-panel-amt">$2,340 / $5,000</span></div>
+<div class="ir-ws-panel-row" style="margin-top:4px;"><div class="ir-ws-panel-glyph">V</div><span class="ir-ws-panel-name">Travel card — Dan K.</span><span class="ir-ws-panel-amt">$890 / $2,000</span></div>
+<div class="ir-ws-panel-row" style="margin-top:4px;"><div class="ir-ws-panel-glyph">P</div><span class="ir-ws-panel-name">Marketing card</span><span class="ir-ws-panel-amt">$5,190 / $8,000</span></div>
+</div>
+<div id="ir-ws-payments" data-panel-content style="display:none;">
+<div style="font-size:13px;font-weight:600;color:var(--band-muted);margin-bottom:calc(var(--aura)*1);letter-spacing:0.04em;text-transform:uppercase;">Recent payments (example)</div>
+<div class="ir-ws-panel-row"><div class="ir-ws-panel-glyph">→</div><span class="ir-ws-panel-name">Vendor — Aldgate Supplies</span><span class="ir-ws-panel-amt">−$4,200.00</span></div>
+<div class="ir-ws-panel-row" style="margin-top:4px;"><div class="ir-ws-panel-glyph">→</div><span class="ir-ws-panel-name">Wire — Colton Partners</span><span class="ir-ws-panel-amt">−$12,000.00</span></div>
+<div class="ir-ws-panel-row" style="margin-top:4px;"><div class="ir-ws-panel-glyph">←</div><span class="ir-ws-panel-name">Client — Brightwater Goods</span><span class="ir-ws-panel-amt">+$18,500.00</span></div>
+</div>
+<div id="ir-ws-bookkeeping" data-panel-content style="display:none;">
+<div style="font-size:13px;font-weight:600;color:var(--band-muted);margin-bottom:calc(var(--aura)*1);letter-spacing:0.04em;text-transform:uppercase;">Bookkeeping (example)</div>
+<div class="ir-ws-panel-row"><div class="ir-ws-panel-glyph">✓</div><span class="ir-ws-panel-name">Operating expenses — auto-tagged</span><span class="ir-ws-panel-amt">142 tx</span></div>
+<div class="ir-ws-panel-row" style="margin-top:4px;"><div class="ir-ws-panel-glyph">✓</div><span class="ir-ws-panel-name">Payroll sync</span><span class="ir-ws-panel-amt">Last: today</span></div>
+<div class="ir-ws-panel-row" style="margin-top:4px;"><div class="ir-ws-panel-glyph">!</div><span class="ir-ws-panel-name">3 transactions need a category</span><span class="ir-ws-panel-amt">Review</span></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="ir-s04-proof" class="section-pad" aria-label="Social proof">
+<div class="wrap">
+<div class="ir-proof-row">
+<p class="ir-proof-line" style="color:var(--body);">Chosen by thousands of small teams who want cleaner books and faster payments (example)</p>
+<div class="ir-testimonial-card">
+<p class="ir-testimonial-quote">"We cut our bill-pay time in half within the first month. The automation rules alone are worth it." <span class="ir-sample-label">Sample</span></p>
+<p class="ir-testimonial-author"><strong>Tamsin Okafor</strong> — Founder, Brightwater Goods (sample)</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="ir-s05-tasks" class="ir-stone section-pad" aria-label="Everyday tasks">
+<div class="wrap">
+<h2 style="font-size:32px;margin-bottom:calc(var(--aura)*5);">Handle every daily money task<br>without the busywork.</h2>
+<div class="ir-tasks-grid">
+<div class="ir-task-card">
+<div class="ir-task-art" aria-hidden="true">
+<div class="ir-cards-art-inner">
+<div class="ir-vcard ir-vcard1">
+<div class="ir-vcard-chip"></div>
+<div class="ir-vcard-label">•••• 4821</div>
+</div>
+<div class="ir-vcard ir-vcard2">
+<div class="ir-vcard-chip"></div>
+<div class="ir-vcard-label">•••• 7033</div>
+</div>
+<div class="ir-vcard ir-vcard3">
+<div class="ir-vcard-chip"></div>
+<div class="ir-vcard-label">•••• 2290</div>
+</div>
+</div>
+</div>
+<div>
+<h3 class="ir-task-title">Instant virtual cards for every need</h3>
+<p class="ir-task-desc">Create a card, set a limit, freeze it instantly. Manage the whole team's spend from one screen.</p>
+</div>
+</div>
+<div class="ir-task-card">
+<div class="ir-task-art" aria-hidden="true">
+<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;padding:calc(var(--aura)*1);">
+<div class="ir-bill-list">
+<div class="ir-bill-row"><span class="ir-bill-name">Office lease</span><span class="ir-bill-amt">$3,400 (example)</span></div>
+<div class="ir-bill-row"><span class="ir-bill-name">SaaS tools</span><span class="ir-bill-amt">$620 (example)</span></div>
+<div class="ir-bill-row"><span class="ir-bill-name">Utilities</span><span class="ir-bill-amt">$280 (example)</span></div>
+</div>
+</div>
+</div>
+<div>
+<h3 class="ir-task-title">Bills that pay on schedule</h3>
+<p class="ir-task-desc">Set up recurring payments once. Ironmere moves the money on time — no manual follow-up needed.</p>
+</div>
+</div>
+<div class="ir-task-card">
+<div class="ir-task-art" aria-hidden="true">
+<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;padding:calc(var(--aura)*1);">
+<div class="ir-invoice-mock">
+<div class="ir-invoice-row">
+<div><div class="ir-invoice-label">Invoice date</div><div class="ir-invoice-val">Jun 1, 2026</div></div>
+<div><div class="ir-invoice-label">Due date</div><div class="ir-invoice-val">Net 30</div></div>
+</div>
+<div class="ir-toggle-row">
+<div class="ir-toggle"><div class="ir-toggle-thumb"></div></div>
+<span>Repeat this invoice</span>
+</div>
+<div style="margin-top:calc(var(--aura)*0.75);">
+<div class="ir-invoice-label">Repeat</div>
+<div class="ir-invoice-val" style="margin-top:4px;">Monthly on the 1st</div>
+</div>
+</div>
+</div>
+</div>
+<div>
+<h3 class="ir-task-title">Invoices that go out automatically</h3>
+<p class="ir-task-desc">Set a schedule and Ironmere sends the invoice, tracks the payment and marks it paid when it arrives.</p>
+</div>
+</div>
+<div class="ir-task-card">
+<div class="ir-task-art" aria-hidden="true">
+<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;">
+<div class="ir-match-pill">
+<div class="ir-match-dot"></div>
+<span>Matching 1/3 (example)</span>
+</div>
+</div>
+</div>
+<div>
+<h3 class="ir-task-title">Receipts matched without the effort</h3>
+<p class="ir-task-desc">Upload or forward a receipt and Ironmere finds the right transaction automatically.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="ir-s06-quote" class="section-pad" aria-label="Featured quote">
+<div class="wrap">
+<div class="ir-pull-quote-section">
+<blockquote cite="">
+<p>"Ironmere gave our finance team a single source of truth. Month-end close went from two weeks to three days."</p>
+</blockquote>
+<p class="ir-pq-attr"><strong>Hollis Dunmore</strong> — Head of Finance, Larchmont Supply (sample) <span class="ir-sample-label">Sample</span></p>
+</div>
+</div>
+</section>
+
+<section id="ir-s07-stories" class="section-pad" aria-label="Two-column story sections">
+<div class="wrap">
+<div style="display:flex;flex-direction:column;gap:calc(var(--aura)*9);">
+
+<div class="ir-story-row">
+<div class="ir-story-col">
+<div class="ir-story-col-top">
+<h2 style="font-size:28px;">Move money faster than your competitors can react.</h2>
+</div>
+<div style="flex:1;"></div>
+<ul class="ir-story-disclosure">
+<li>
+<button class="ir-sd-row" aria-expanded="true" aria-controls="ir-sd-a0">
+<span class="ir-sd-dot" aria-hidden="true"></span>
+<span>
+<span class="ir-sd-title">Same-day transfers</span>
+<span class="ir-sd-desc" id="ir-sd-a0">Move funds between accounts or to vendors the same day — no waiting, no overnight lag.</span>
+</span>
+</button>
+</li>
+<li>
+<button class="ir-sd-row" aria-expanded="false" aria-controls="ir-sd-a1">
+<span class="ir-sd-dot" aria-hidden="true"></span>
+<span><span class="ir-sd-title">Approval workflows</span><span class="ir-sd-desc" id="ir-sd-a1">Require a second approver for large payments and keep an audit trail automatically.</span></span>
+</button>
+</li>
+<li>
+<button class="ir-sd-row" aria-expanded="false" aria-controls="ir-sd-a2">
+<span class="ir-sd-dot" aria-hidden="true"></span>
+<span><span class="ir-sd-title">Multi-currency ready</span><span class="ir-sd-desc" id="ir-sd-a2">Pay overseas vendors without leaving Ironmere — conversion rates shown before you confirm (example).</span></span>
+</button>
+</li>
+</ul>
+<div style="margin-top:calc(var(--aura)*2);"><button class="text-link" type="button">Tour the sample</button></div>
+</div>
+<div class="ir-art-dark" aria-label="Luminous beam art" aria-hidden="true">
+<div class="ir-beam-art">
+<div class="ir-beam-horizon"></div>
+<div class="ir-beam-glow"></div>
+<div class="ir-beam-top-glow"></div>
+<div class="ir-beam-dots">
+<div class="ir-beam-dot" style="top:20%;left:48%;"></div>
+<div class="ir-beam-dot" style="top:38%;left:49%;"></div>
+<div class="ir-beam-dot" style="top:56%;left:50%;"></div>
+<div class="ir-beam-dot" style="top:70%;left:51%;"></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="ir-story-row mirror">
+<div class="ir-art-light" aria-label="Wire sphere art" aria-hidden="true">
+<div class="ir-sphere-art">
+<div class="ir-sphere-ring" style="width:160px;height:160px;"></div>
+<div class="ir-sphere-ring" style="width:160px;height:80px;top:40px;border-color:color-mix(in srgb,var(--muted) 25%,transparent);"></div>
+<div class="ir-sphere-ring" style="width:80px;height:160px;left:calc(50% - 40px);border-color:color-mix(in srgb,var(--muted) 25%,transparent);"></div>
+<div class="ir-sphere-ring" style="width:120px;height:120px;top:20px;left:calc(50% - 60px);border-color:color-mix(in srgb,var(--muted) 20%,transparent);"></div>
+</div>
+</div>
+<div class="ir-story-col">
+<div class="ir-story-col-top">
+<h2 style="font-size:28px;">Visibility that removes the need to ask anyone for a number.</h2>
+</div>
+<div style="flex:1;"></div>
+<ul class="ir-story-disclosure">
+<li>
+<button class="ir-sd-row" aria-expanded="true" aria-controls="ir-sd-b0">
+<span class="ir-sd-dot" aria-hidden="true"></span>
+<span>
+<span class="ir-sd-title">Live balance everywhere</span>
+<span class="ir-sd-desc" id="ir-sd-b0">Every balance updates in real time so your team always has the same number (example data).</span>
+</span>
+</button>
+</li>
+<li>
+<button class="ir-sd-row" aria-expanded="false" aria-controls="ir-sd-b1">
+<span class="ir-sd-dot" aria-hidden="true"></span>
+<span><span class="ir-sd-title">Spending by category</span><span class="ir-sd-desc" id="ir-sd-b1">Break down where money goes — marketing, ops, payroll — without building a report from scratch.</span></span>
+</button>
+</li>
+<li>
+<button class="ir-sd-row" aria-expanded="false" aria-controls="ir-sd-b2">
+<span class="ir-sd-dot" aria-hidden="true"></span>
+<span><span class="ir-sd-title">Exportable statements</span><span class="ir-sd-desc" id="ir-sd-b2">Download statements in one click and hand them directly to your accountant or investor (example).</span></span>
+</button>
+</li>
+</ul>
+<div style="margin-top:calc(var(--aura)*2);"><button class="text-link" type="button">Tour the sample</button></div>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<section id="ir-s08-toolkit" class="ir-stone section-pad" aria-label="Toolkit grid">
+<div class="wrap">
+<h2 style="font-size:32px;margin-bottom:calc(var(--aura)*5);">Everything in one workspace, nothing left out.</h2>
+<div class="ir-toolkit-grid">
+<div class="ir-tk-card">
+<div class="ir-tk-art pale" aria-hidden="true">
+<div class="ir-rings-art">
+<div class="ir-ring" style="width:120px;height:120px;"></div>
+<div class="ir-ring" style="width:80px;height:80px;"></div>
+<div class="ir-ring" style="width:48px;height:48px;"></div>
+</div>
+</div>
+<div class="ir-tk-body">
+<div class="ir-tk-title">Clear view of cash</div>
+<div class="ir-tk-desc">A live view of cash: amounts, accounts and totals gathered without manual work (example data).</div>
+</div>
+</div>
+<div class="ir-tk-card">
+<div class="ir-tk-art pale" aria-hidden="true">
+<div class="ir-auto-list">
+<div class="ir-auto-row"><span class="ir-auto-dot"></span><span class="ir-auto-label">Tag operating expense</span><span class="ir-auto-when" style="margin-left:auto;">After each tx</span></div>
+<div class="ir-auto-row"><span class="ir-auto-dot"></span><span class="ir-auto-label">Move to Savings above $200K</span><span class="ir-auto-when" style="margin-left:auto;">Weekly</span></div>
+<div class="ir-auto-row"><span class="ir-auto-dot"></span><span class="ir-auto-label">Notify approver over $5K</span><span class="ir-auto-when" style="margin-left:auto;">On send</span></div>
+</div>
+</div>
+<div class="ir-tk-body">
+<div class="ir-tk-title">Automation rules</div>
+<div class="ir-tk-desc">Build rules that move money and tag transactions without lifting a finger.</div>
+</div>
+</div>
+<div class="ir-tk-card">
+<div class="ir-tk-art pale" aria-hidden="true">
+<div class="ir-perm-mock">
+<div class="ir-perm-name">Juno Reyes</div>
+<div class="ir-perm-role-label">Role</div>
+<select class="inputer ir-perm-select" aria-label="Team member role" disabled><option>Finance manager</option></select>
+<div class="ir-perm-check-label" style="margin-bottom:4px;">Permissions</div>
+<div class="ir-perm-check">View all accounts</div>
+<div class="ir-perm-check">Approve payments</div>
+<div class="ir-perm-check">Issue cards</div>
+</div>
+</div>
+<div class="ir-tk-body">
+<div class="ir-tk-title">Team permissions</div>
+<div class="ir-tk-desc">Set exactly what each team member can see, approve or manage with granular role controls.</div>
+</div>
+</div>
+<div class="ir-tk-card">
+<div class="ir-tk-art ink" aria-label="Support availability art" aria-hidden="true">
+<div class="ir-dots-art">
+<div class="ir-dots-rings">
+<div class="ir-dots-ring" style="width:120px;height:120px;"></div>
+<div class="ir-dots-ring" style="width:80px;height:80px;"></div>
+<div class="ir-dots-ring" style="width:48px;height:48px;"></div>
+</div>
+<div class="ir-three-dots">
+<div class="ir-three-dot"></div>
+<div class="ir-three-dot"></div>
+<div class="ir-three-dot"></div>
+</div>
+</div>
+</div>
+<div class="ir-tk-body">
+<div class="ir-tk-title" style="color:var(--ink);">Real people on call</div>
+<div class="ir-tk-desc">Talk to a person, not a bot. Support is included for every team on Ironmere (sample).</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="ir-s09-statement" class="ir-band on-band section-pad" aria-label="Statement and coverage">
+<div class="wrap">
+<h2 class="ir-band-h2-statement" style="text-align:center;color:var(--band-fg);max-width:640px;margin:0 auto calc(var(--aura)*4);">Built to hold your company's money with care, all day, every day.</h2>
+<ul class="ir-stat-row">
+<li class="ir-stat-cell">
+<span class="ir-stat-value tabnum">12K+</span>
+<span class="ir-stat-label">Small companies on Ironmere (example)</span>
+</li>
+<li class="ir-stat-cell">
+<span class="ir-stat-value tabnum">$4B+</span>
+<span class="ir-stat-label">Monthly transaction volume (example)</span>
+</li>
+<li class="ir-stat-cell">
+<span class="ir-stat-value tabnum">99.9%</span>
+<span class="ir-stat-label">Platform uptime over 12 months (example)</span>
+</li>
+<li class="ir-stat-cell">
+<span class="ir-stat-value tabnum">4.8</span>
+<span class="ir-stat-label">Average product rating from sample teams</span>
+</li>
+</ul>
+
+<div style="height:1px;background:color-mix(in srgb,var(--band-fg) 15%,transparent);margin:calc(var(--aura)*4) 0 calc(var(--aura)*3);"></div>
+<h2 style="font-size:32px;color:var(--band-fg);margin-bottom:calc(var(--aura)*4);">Protection that scales with your balance.</h2>
+<div class="ir-cover-cards">
+<div class="ir-cover-card">
+<div class="ir-cover-art">
+<div class="ir-bar-art" aria-hidden="true">
+<div>
+<div class="ir-bar ir-bar-tall"></div>
+<div class="ir-bar-label">Ironmere<br>(example)</div>
+</div>
+<div>
+<div class="ir-bar ir-bar-short"></div>
+<div class="ir-bar-label">Standard<br>(example)</div>
+</div>
+</div>
+</div>
+<div class="ir-cover-body">
+<div class="ir-cover-title">Broader coverage depth</div>
+<div class="ir-cover-desc">Ironmere distributes balances across multiple partner institutions to keep more of your money covered (example, not an insurance guarantee).</div>
+</div>
+</div>
+<div class="ir-cover-card" style="position:relative;overflow:hidden;">
+<div class="ir-cover-art">
+<div class="ir-arc-art" aria-hidden="true">
+<div class="ir-arc" style="width:140px;height:140px;top:calc(50% - 70px);left:calc(50% - 70px);transform:rotate(30deg);"></div>
+<div class="ir-arc" style="width:100px;height:100px;top:calc(50% - 50px);left:calc(50% - 50px);transform:rotate(60deg);"></div>
+<div class="ir-arc" style="width:64px;height:64px;top:calc(50% - 32px);left:calc(50% - 32px);transform:rotate(90deg);"></div>
+</div>
+</div>
+<div class="ir-cover-body">
+<div class="ir-cover-title">Layered account security</div>
+<div class="ir-cover-desc">Multi-factor authentication, real-time fraud signals and approval locks keep your accounts protected (sample security model).</div>
+</div>
+</div>
+<div class="ir-cover-card">
+<div class="ir-cover-art">
+<div class="ir-toggle-art" aria-hidden="true">
+<div class="ir-toggle-item">
+<span class="ir-toggle-item-label">Outbound limit</span>
+<div class="ir-tswitch"><div class="ir-tswitch-thumb"></div></div>
+</div>
+<div class="ir-toggle-item">
+<span class="ir-toggle-item-label">Approval required</span>
+<div class="ir-tswitch off"><div class="ir-tswitch-thumb"></div></div>
+</div>
+</div>
+</div>
+<div class="ir-cover-body">
+<div class="ir-cover-title">Controls on demand</div>
+<div class="ir-cover-desc">Turn limits on or off, require approvals, and lock or unlock accounts in seconds — all without calling anyone.</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="ir-s10-press" class="ir-band on-band section-pad" aria-label="Ironmere in the news (sample)">
+<div class="wrap">
+<h2 style="font-size:32px;color:var(--band-fg);margin-bottom:calc(var(--aura)*5);">Ironmere in the news (sample)</h2>
+<div class="ir-press-grid">
+<div class="ir-press-card">
+<div class="ir-press-outlet-tile"><span class="ir-press-outlet serif">The Ledger Weekly</span></div>
+<p class="ir-press-headline">"Ironmere is changing how small firms think about day-to-day cash."</p>
+<button class="ir-press-btn" aria-label="Read sample story 1">
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+</div>
+<div class="ir-press-card">
+<div class="ir-press-outlet-tile"><span class="ir-press-outlet condensed">Northfield Post</span></div>
+<p class="ir-press-headline">"The workspace for founders who want finance handled before breakfast."</p>
+<button class="ir-press-btn" aria-label="Read sample story 2">
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+</div>
+<div class="ir-press-card">
+<div class="ir-press-outlet-tile"><span class="ir-press-outlet">Quillfield Review</span></div>
+<p class="ir-press-headline">"A product that makes the CFO role accessible to every small-company owner."</p>
+<button class="ir-press-btn" aria-label="Read sample story 3">
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+</div>
+</div>
+</div>
+</section>
+
+<section id="ir-s11-skeleton" class="section-pad" aria-label="Platform features and plans">
+<div class="wrap" style="display:flex;flex-direction:column;gap:calc(var(--aura)*9);">
+
+<div>
+<h2 style="font-size:32px;margin-bottom:calc(var(--aura)*4);">What you get with Ironmere</h2>
+<div class="ir-features-list">
+<div class="ir-feat-item">
+<span class="ir-feat-label">Accounts</span>
+<div class="ir-feat-title">Every balance, always current</div>
+<p class="ir-feat-desc">Checking, savings, payroll and treasury balances update in real time so your team never works from stale numbers (example data).</p>
+</div>
+<div class="ir-feat-item">
+<span class="ir-feat-label">Automation</span>
+<div class="ir-feat-title">Rules that work while you sleep</div>
+<p class="ir-feat-desc">Move money, tag transactions and notify approvers based on conditions you set once and never think about again.</p>
+</div>
+<div class="ir-feat-item">
+<span class="ir-feat-label">Collaboration</span>
+<div class="ir-feat-title">Roles that actually make sense</div>
+<p class="ir-feat-desc">Give your CFO, bookkeeper and ops lead exactly the access they need — nothing more and nothing less.</p>
+</div>
+</div>
+</div>
+
+<div>
+<h2 style="font-size:32px;margin-bottom:calc(var(--aura)*3);">Plan comparison</h2>
+<div class="ir-table-wrap" role="region" aria-label="Plan comparison table" tabindex="0">
+<table class="ir-table">
+<caption>Sample plan comparison (all figures are example data)</caption>
+<thead>
+<tr>
+<th scope="col">Feature</th>
+<th scope="col">Starter</th>
+<th scope="col">Growth</th>
+<th scope="col">Scale</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Accounts</td><td class="check">2</td><td class="check">10</td><td class="check">Unlimited</td></tr>
+<tr><td>Virtual cards</td><td class="check">5</td><td class="check">50</td><td class="check">Unlimited</td></tr>
+<tr><td>Automation rules</td><td class="dash">—</td><td class="check">20</td><td class="check">Unlimited</td></tr>
+<tr><td>Team members</td><td class="check">3</td><td class="check">25</td><td class="check">Unlimited</td></tr>
+<tr><td>Priority support</td><td class="dash">—</td><td class="dash">—</td><td class="check">Included</td></tr>
+<tr><td>Custom permissions</td><td class="dash">—</td><td class="check">Basic</td><td class="check">Advanced</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div>
+<h2 style="font-size:32px;margin-bottom:calc(var(--aura)*1);">Request a callback</h2>
+<p class="muted" style="margin-bottom:calc(var(--aura)*3);font-size:15px;">This is a sample form — no data is sent anywhere.</p>
+<form class="ir-callback-form" id="ir-callback-form" novalidate>
+<div class="ir-cb-grid">
+<div class="ir-form-group">
+<label class="ir-form-label" for="ir-cb-name">Name</label>
+<input id="ir-cb-name" type="text" placeholder="Your name" autocomplete="name"/>
+</div>
+<div class="ir-form-group">
+<label class="ir-form-label" for="ir-cb-email">Work email</label>
+<input id="ir-cb-email" type="email" placeholder="Work email address" autocomplete="email"/>
+</div>
+</div>
+<div class="ir-form-group">
+<label class="ir-form-label" for="ir-cb-size">Team size</label>
+<select id="ir-cb-size" class="inputer">
+<option value="">Select team size</option>
+<option>1–5 people</option>
+<option>6–20 people</option>
+<option>21–100 people</option>
+<option>100+ people</option>
+</select>
+</div>
+<div class="ir-form-group">
+<label class="ir-form-label" for="ir-cb-msg">Message</label>
+<textarea id="ir-cb-msg" placeholder="What brings you to Ironmere?"></textarea>
+</div>
+<button type="submit" class="btn-pill-solid" style="align-self:flex-start;">Send request</button>
+</form>
+<div aria-live="polite" id="ir-cb-live" class="sr-only"></div>
+</div>
+
+<div>
+<h2 style="font-size:32px;margin-bottom:calc(var(--aura)*4);">Sample plans</h2>
+<div class="ir-pricing-grid">
+<div class="ir-plan-card">
+<div>
+<div class="ir-plan-name">Starter</div>
+<div class="ir-plan-price"><sup>$</sup>0 <span class="ir-plan-price-note">/ month (example)</span></div>
+</div>
+<div class="ir-plan-features">
+<div class="ir-plan-feat">2 accounts</div>
+<div class="ir-plan-feat">5 virtual cards</div>
+<div class="ir-plan-feat">3 team members</div>
+<div class="ir-plan-feat">Basic invoicing</div>
+</div>
+<button class="btn-pill-outline" style="width:100%;justify-content:center;">Get started</button>
+</div>
+<div class="ir-plan-card featured">
+<div>
+<div class="ir-plan-name">Growth</div>
+<div class="ir-plan-price"><sup>$</sup>49 <span class="ir-plan-price-note">/ month (example)</span></div>
+</div>
+<div class="ir-plan-features">
+<div class="ir-plan-feat">10 accounts</div>
+<div class="ir-plan-feat">50 virtual cards</div>
+<div class="ir-plan-feat">25 team members</div>
+<div class="ir-plan-feat">20 automation rules</div>
+<div class="ir-plan-feat">Basic permissions</div>
+</div>
+<button class="btn-pill-solid" style="width:100%;justify-content:center;">Get started</button>
+</div>
+<div class="ir-plan-card">
+<div>
+<div class="ir-plan-name">Scale</div>
+<div class="ir-plan-price"><span class="ir-plan-price-note" style="font-size:24px;">Custom (example)</span></div>
+</div>
+<div class="ir-plan-features">
+<div class="ir-plan-feat">Unlimited accounts</div>
+<div class="ir-plan-feat">Unlimited cards</div>
+<div class="ir-plan-feat">Unlimited team members</div>
+<div class="ir-plan-feat">Advanced permissions</div>
+<div class="ir-plan-feat">Priority support</div>
+</div>
+<button class="btn-pill-outline" style="width:100%;justify-content:center;">Talk to us</button>
+</div>
+</div>
+</div>
+
+<div>
+<h2 style="font-size:32px;margin-bottom:calc(var(--aura)*3);">Frequently asked questions</h2>
+<ul class="ir-faq">
+<li class="ir-faq-item">
+<button class="ir-faq-btn" aria-expanded="false" aria-controls="ir-faq-0">
+Is Ironmere a real bank?
+<svg class="ir-faq-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+</button>
+<div class="ir-faq-panel" id="ir-faq-0" hidden>Ironmere is a fictional design sample, not a bank or financial service. No real accounts can be opened and no money is held here. All figures are example data for demonstration purposes only.</div>
+</li>
+<li class="ir-faq-item">
+<button class="ir-faq-btn" aria-expanded="false" aria-controls="ir-faq-1">
+How does the sample data work?
+<svg class="ir-faq-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+</button>
+<div class="ir-faq-panel" id="ir-faq-1" hidden>Every balance, transaction, name and rate shown on this page is invented and labelled as example data. It is here to illustrate the product's visual design, not to represent real financial figures.</div>
+</li>
+<li class="ir-faq-item">
+<button class="ir-faq-btn" aria-expanded="false" aria-controls="ir-faq-2">
+Who is Ironmere designed for?
+<svg class="ir-faq-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+</button>
+<div class="ir-faq-panel" id="ir-faq-2" hidden>Ironmere is an Aura design system flavor for teams building business-finance workspace marketing pages. The fictional product concept targets small companies with 1–100 employees that need accounts, cards, bill pay and invoicing in one place.</div>
+</li>
+<li class="ir-faq-item">
+<button class="ir-faq-btn" aria-expanded="false" aria-controls="ir-faq-3">
+Can I use this flavor in my own project?
+<svg class="ir-faq-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+</button>
+<div class="ir-faq-panel" id="ir-faq-3" hidden>Yes. Add the Ironmere flavor to any Aura project using the steps in the Apply to an Aura project section of the DESIGN.md file. All copy and fictional data in this showcase should be replaced with your product's real content.</div>
+</li>
+</ul>
+</div>
+
+</div>
+</section>
+
+<section id="ir-s12-cta" class="ir-band on-band section-pad" aria-label="Closing call to action">
+<div class="wrap">
+<div style="text-align:center;">
+<h2 class="ir-band-h2-statement" style="color:var(--band-fg);max-width:580px;margin:0 auto calc(var(--aura)*3);">Start running your company's money the clear way.</h2>
+<div style="display:flex;gap:calc(var(--aura)*1);justify-content:center;flex-wrap:wrap;">
+<button class="btn-pill-solid hero" style="height:calc(var(--aura)*3.5);">Get started</button>
+<button class="btn-pill-glass hero" style="height:calc(var(--aura)*3.5);">Talk to us &#8599;</button>
+</div>
+</div>
+<div class="ir-cta-cards">
+<div class="ir-cta-card">
+<div class="ir-cta-card-title">For companies</div>
+<p class="ir-cta-card-desc">Accounts, cards, bill pay, invoicing and bookkeeping for teams of any size. Free to try (sample plan).</p>
+<button class="btn-pill-glass" style="align-self:flex-start;margin-top:calc(var(--aura)*1);">Learn more</button>
+</div>
+<div class="ir-cta-card">
+<div class="ir-cta-card-title">For individuals</div>
+<p class="ir-cta-card-desc">Keep your freelance income and expenses separate with a lightweight personal workspace (sample).</p>
+<button class="btn-pill-glass" style="align-self:flex-start;margin-top:calc(var(--aura)*1);">Learn more</button>
+</div>
+</div>
+</div>
+</section>
+
+<footer id="ir-footer" class="ir-band on-band" aria-label="Ironmere site footer">
+<div class="wrap-wide" style="padding-block:calc(var(--aura)*7);">
+<div class="ir-footer-cols">
+<div class="ir-footer-cols-row">
+<div>
+<div class="ir-footer-col-head">Workspace</div>
+<ul class="ir-footer-links">
+<li><a href="#">Accounts</a></li>
+<li><a href="#">Cards</a></li>
+<li><a href="#">Payments</a></li>
+<li><a href="#">Invoicing</a></li>
+<li><a href="#">Spend control</a></li>
+<li><a href="#">Bookkeeping</a></li>
+</ul>
+</div>
+<div>
+<div class="ir-footer-col-head">Platform</div>
+<ul class="ir-footer-links">
+<li><a href="#">Automation rules</a></li>
+<li><a href="#">Integrations</a></li>
+<li><a href="#">Permissions</a></li>
+<li><a href="#">Reimbursements</a></li>
+<li><a href="#">Bill pay</a></li>
+<li><a href="#">Cashflow view</a></li>
+</ul>
+</div>
+<div>
+<div class="ir-footer-col-head">Resources</div>
+<ul class="ir-footer-links">
+<li><a href="#">Blog</a></li>
+<li><a href="#">Guides</a></li>
+<li><a href="#">Help center</a></li>
+<li><a href="#">Events</a></li>
+<li><a href="#">Case studies</a></li>
+<li><a href="#">Changelog</a></li>
+</ul>
+</div>
+<div>
+<div class="ir-footer-col-head">Company</div>
+<ul class="ir-footer-links">
+<li><a href="#">About</a></li>
+<li><a href="#">Careers</a></li>
+<li><a href="#">Press</a></li>
+<li><a href="#">Contact</a></li>
+</ul>
+</div>
+</div>
+<div class="ir-footer-cols-row">
+<div>
+<div class="ir-footer-col-head">Teams</div>
+<ul class="ir-footer-links">
+<li><a href="#">Small business</a></li>
+<li><a href="#">Freelancers</a></li>
+<li><a href="#">Finance teams</a></li>
+<li><a href="#">Ops leads</a></li>
+</ul>
+</div>
+<div>
+<div class="ir-footer-col-head">Account</div>
+<ul class="ir-footer-links">
+<li><a href="#">Sign in</a></li>
+<li><a href="#">Get started</a></li>
+<li><a href="#">Pricing</a></li>
+<li><a href="#">Status</a></li>
+</ul>
+</div>
+<div>
+<div class="ir-footer-col-head">Legal</div>
+<ul class="ir-footer-links">
+<li><a href="#">Privacy</a></li>
+<li><a href="#">Terms</a></li>
+<li><a href="#">Cookies</a></li>
+<li><a href="#">Disclaimer</a></li>
+</ul>
+</div>
+<div>
+<div class="ir-footer-col-head">Follow</div>
+<ul class="ir-footer-links">
+<li><button class="fl-btn">Sample channel 1</button></li>
+<li><button class="fl-btn">Sample channel 2</button></li>
+<li><button class="fl-btn">Sample channel 3</button></li>
+<li><button class="fl-btn">Sample channel 4</button></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="ir-footer-rule" aria-hidden="true"></div>
+
+<div class="ir-footer-fine">
+<p>Ironmere is a fictional design sample created for the Aura design system gallery. It does not represent a real bank, financial institution or regulated entity. No accounts can be opened through this page, and no money is held or transferred here.</p>
+<p>All balances, transaction amounts, company names, person names, rates and statistics shown on this page are invented example data provided solely to demonstrate visual design. They do not reflect real financial figures or real business outcomes.</p>
+<p>Ironmere makes no representation about returns, coverage, insurance or regulatory status. If you need a real business finance product, please consult a licensed financial institution.</p>
+</div>
+
+<div class="ir-footer-bottom">
+<a href="#" class="ir-wordmark" aria-label="Ironmere home" style="text-decoration:none;">
+<span class="ir-logo-sq" aria-hidden="true">
+<svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect width="22" height="22" rx="5" fill="var(--periwinkle)"/><path d="M5 17 L17 5" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>
+</span>
+<span class="ir-wordmark-text">Ironmere</span>
+</a>
+<div class="ir-appearance-switch" role="radiogroup" aria-label="Appearance">
+<button class="ir-app-btn" role="radio" aria-checked="false" data-appearance="system">System</button>
+<button class="ir-app-btn" role="radio" aria-checked="false" data-appearance="light">Light</button>
+<button class="ir-app-btn" role="radio" aria-checked="false" data-appearance="dark">Dark</button>
+</div>
+<span class="ir-footer-legal">2026 Ironmere, a fictional studio.</span>
+</div>
+</div>
+</footer>
+
+</main>
+
+<script>
+(function(){
+  function $(s,c){return (c||document).querySelector(s);}
+  function $$(s,c){return Array.from((c||document).querySelectorAll(s));}
+
+  var live=$("#ir-live");
+  function announce(msg){if(live){live.textContent="";requestAnimationFrame(function(){live.textContent=msg;});}}
+
+  var heroForm=$("#ir-hero-form");
+  if(heroForm){
+    heroForm.addEventListener("submit",function(e){
+      e.preventDefault();
+      announce("Thanks, this is a sample (no email sent).");
+    });
+  }
+
+  var cbForm=$("#ir-callback-form");
+  var cbLive=$("#ir-cb-live");
+  if(cbForm){
+    cbForm.addEventListener("submit",function(e){
+      e.preventDefault();
+      if(cbLive)cbLive.textContent="";
+      requestAnimationFrame(function(){
+        if(cbLive)cbLive.textContent="Request received — this is a sample form, no data was sent.";
+      });
+    });
+  }
+
+  var triggers=$$("button[data-dropdown]");
+  function closeAll(except){
+    triggers.forEach(function(t){
+      if(t===except)return;
+      t.setAttribute("aria-expanded","false");
+      var id=t.getAttribute("aria-controls");
+      var panel=document.getElementById(id);
+      if(panel)panel.hidden=true;
+    });
+  }
+  triggers.forEach(function(t){
+    t.addEventListener("click",function(){
+      var expanded=t.getAttribute("aria-expanded")==="true";
+      closeAll(t);
+      t.setAttribute("aria-expanded",expanded?"false":"true");
+      var id=t.getAttribute("aria-controls");
+      var panel=document.getElementById(id);
+      if(panel)panel.hidden=expanded;
+    });
+    t.addEventListener("keydown",function(e){
+      if(e.key==="Escape"){
+        t.setAttribute("aria-expanded","false");
+        var id=t.getAttribute("aria-controls");
+        var panel=document.getElementById(id);
+        if(panel)panel.hidden=true;
+        t.focus();
+      }
+    });
+  });
+  document.addEventListener("click",function(e){
+    var inside=e.target.closest("[data-dropdown],[id^='ir-fly-']");
+    if(!inside)closeAll(null);
+  });
+  document.addEventListener("keydown",function(e){
+    if(e.key==="Escape")closeAll(null);
+  });
+
+  var menuTrigger=$("#ir-menu-trigger");
+  var mobileMenu=$("#ir-mobile-menu");
+  var menuClose=$("#ir-menu-close");
+  var focusable="a[href],button:not([disabled]),input,select,textarea,[tabindex]:not([tabindex='-1'])";
+  function getFocusable(el){return $$(focusable,el).filter(function(e){return !e.closest("[hidden]");});}
+  function openMenu(){
+    mobileMenu.hidden=false;
+    menuTrigger.setAttribute("aria-expanded","true");
+    document.body.style.overflow="hidden";
+    var first=getFocusable(mobileMenu)[0];
+    if(first)setTimeout(function(){first.focus();},30);
+  }
+  function closeMenu(){
+    mobileMenu.hidden=true;
+    menuTrigger.setAttribute("aria-expanded","false");
+    document.body.style.overflow="";
+    menuTrigger.focus();
+  }
+  if(menuTrigger)menuTrigger.addEventListener("click",openMenu);
+  if(menuClose)menuClose.addEventListener("click",closeMenu);
+  if(mobileMenu){
+    mobileMenu.addEventListener("keydown",function(e){
+      if(e.key==="Escape"){closeMenu();return;}
+      if(e.key==="Tab"){
+        var items=getFocusable(mobileMenu);
+        if(!items.length)return;
+        var first=items[0],last=items[items.length-1];
+        if(e.shiftKey){if(document.activeElement===first){e.preventDefault();last.focus();}}
+        else{if(document.activeElement===last){e.preventDefault();first.focus();}}
+      }
+    });
+  }
+
+  var wsRows=$$(".ir-ws-row");
+  var wsPanels=$$("[data-panel-content]");
+  wsRows.forEach(function(row,i){
+    row.addEventListener("click",function(){
+      wsRows.forEach(function(r,j){
+        r.setAttribute("aria-expanded",j===i?"true":"false");
+      });
+      var key=row.getAttribute("data-panel");
+      wsPanels.forEach(function(p){
+        p.style.display=p.id==="ir-ws-"+key?"":"none";
+      });
+    });
+  });
+
+  function makeDisclosure(rows){
+    rows.forEach(function(row,i){
+      row.addEventListener("click",function(){
+        var open=row.getAttribute("aria-expanded")==="true";
+        rows.forEach(function(r,j){
+          r.setAttribute("aria-expanded",j===i&&!open?"true":"false");
+        });
+      });
+    });
+    if(rows.length>0)rows[0].setAttribute("aria-expanded","true");
+  }
+  makeDisclosure($$(".ir-sd-row"));
+
+  var faqBtns=$$(".ir-faq-btn");
+  faqBtns.forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var expanded=btn.getAttribute("aria-expanded")==="true";
+      btn.setAttribute("aria-expanded",expanded?"false":"true");
+      var panelId=btn.getAttribute("aria-controls");
+      var panel=document.getElementById(panelId);
+      if(panel)panel.hidden=expanded;
+    });
+  });
+
+  var appBtns=$$(".ir-app-btn");
+  function getCurrentAppearance(){
+    var r=document.documentElement;
+    if(r.classList.contains("dark"))return "dark";
+    if(r.classList.contains("light"))return "light";
+    return "system";
+  }
+  function markAppBtn(){
+    var cur=getCurrentAppearance();
+    appBtns.forEach(function(b){
+      b.setAttribute("aria-checked",b.getAttribute("data-appearance")===cur?"true":"false");
+    });
+  }
+  markAppBtn();
+  appBtns.forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var app=btn.getAttribute("data-appearance");
+      var r=document.documentElement;
+      r.classList.remove("light","dark");
+      if(app==="light"){r.classList.add("light");r.style.colorScheme="light";}
+      else if(app==="dark"){r.classList.add("dark");r.style.colorScheme="dark";}
+      else{
+        var sys=window.matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light";
+        r.classList.add(sys);r.style.colorScheme=sys;
+      }
+      markAppBtn();
+    });
+  });
+})();
+</script>
+</body>
+</html>

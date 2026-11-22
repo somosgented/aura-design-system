@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Larkspan · Aura flavor</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="stylesheet" href="/aura/main.css"/>
+<link rel="stylesheet" href="theme.css"/>
+<script>
+(function(){
+var p=new URLSearchParams(window.location.search).get("appearance");
+var d=p==="dark"||p==="light"?p:(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
+var r=document.documentElement;
+r.classList.add(d);
+r.style.colorScheme=d;
+if(window.matchMedia("(prefers-reduced-motion: no-preference)").matches)r.classList.add("motion");
+})();
+</script>
+<style>
+*{box-sizing:border-box;}
+html{margin:0;padding:0;font-family:var(--aura-font-stack);background:var(--canvas);color:var(--ink);scroll-padding-top:calc(var(--aura)*5);}
+body{margin:0;padding:0;background:var(--canvas);color:var(--ink);font-size:16px;line-height:1.5;min-width:320px;overflow-x:hidden;}
+h1,h2,h3,h4,h5,h6,p,ul,ol,dl{margin:0;}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+.lk-skip{position:absolute;left:13px;top:-60px;z-index:200;padding:8px 20px;border-radius:9999px;background:var(--ink);color:var(--canvas);font-size:14px;font-weight:400;border:0;cursor:pointer;}
+.lk-skip:focus{top:8px;}
+
+.lk{--aura-accents-primary:var(--ink);--aura-button-hover:var(--gray-12);--aura-input-bg:var(--paper);--aura-input-placeholder-color:var(--muted);--aura-outline:2px solid var(--focus);--aura-text-primary-inverse:var(--canvas);}
+.lk :focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+
+.lk input:not(.default):not([type=checkbox]):not([type=radio]),
+.lk textarea:not(.default){background:var(--paper);border:1px solid var(--control-line);color:var(--ink);border-radius:8px;padding:0 13px;font-family:inherit;font-size:16px;width:100%;}
+.lk input:not(.default){height:calc(var(--aura)*3.5);}
+.lk textarea:not(.default){padding:10px 13px;resize:vertical;min-height:calc(var(--aura)*5);}
+.lk input:not(.default):focus,.lk textarea:not(.default):focus{outline:2px solid var(--focus);outline-offset:0;}
+.lk input:not(.default)::placeholder,.lk textarea:not(.default)::placeholder{color:var(--muted);}
+.lk select:not(.default),.lk select.inputer{background:var(--paper);border:1px solid var(--control-line);color:var(--ink);border-radius:8px;height:calc(var(--aura)*3.5);padding:0 40px 0 13px;font-family:inherit;font-size:16px;width:100%;appearance:none;-webkit-appearance:none;cursor:pointer;}
+.lk select:not(.default):focus,.lk select.inputer:focus{outline:2px solid var(--focus);outline-offset:0;}
+.lk .inputer{margin-bottom:0;padding:0;}
+.lk-select-wrap{position:relative;display:block;}
+.lk-select-wrap::after{content:"";position:absolute;right:14px;top:50%;transform:translateY(-50%);border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid var(--control-line);pointer-events:none;}
+
+.lk-wrap{width:min(100% - 80px,1280px);margin-inline:auto;}
+@media(max-width:767px){.lk-wrap{width:min(100% - 32px,1280px);}}
+
+.lk-btn-primary{display:inline-flex;align-items:center;justify-content:center;background:var(--ink);color:var(--canvas);border:0;border-radius:8px;padding:0 24px;height:45px;font-size:15px;font-family:inherit;cursor:pointer;white-space:nowrap;text-align:center;}
+.lk-btn-primary:hover:not(:disabled){background:var(--gray-12);}
+.lk-btn-primary:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.lk-btn-outline{display:inline-flex;align-items:center;justify-content:center;background:var(--btn-outline-bg);color:var(--ink);border:1px solid var(--btn-outline-border);border-radius:8px;padding:0 20px;height:40px;font-size:14px;font-family:inherit;cursor:pointer;white-space:nowrap;text-align:center;}
+.lk-btn-outline:hover:not(:disabled){background:var(--gray-3);}
+.lk-btn-outline:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.lk-btn-hero{display:inline-flex;align-items:center;justify-content:center;background:var(--ink);color:var(--canvas);border:0;border-radius:16px;padding:0 32px;height:70px;font-size:22px;font-family:inherit;cursor:pointer;white-space:nowrap;text-align:center;text-decoration:none;width:100%;}
+.lk-btn-hero:hover:not(:disabled){background:var(--gray-12);}
+.lk-btn-hero:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.lk-btn-cta{display:flex;align-items:center;justify-content:center;background:var(--ink);color:var(--canvas);border:0;border-radius:16px;height:80px;font-size:28px;font-family:inherit;cursor:pointer;width:100%;text-decoration:none;}
+.lk-btn-cta:hover:not(:disabled){background:var(--gray-12);}
+.lk-btn-cta:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.lk-btn-round{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:9999px;background:var(--ink);color:var(--canvas);border:0;cursor:pointer;font-family:inherit;flex-shrink:0;}
+.lk-btn-round:hover:not(:disabled){background:var(--gray-12);}
+.lk-btn-round:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.lk-btn-round:disabled{opacity:0.4;cursor:default;}
+.lk-btn-round-outline{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:9999px;background:var(--btn-outline-bg);color:var(--ink);border:1px solid var(--control-line);cursor:pointer;font-family:inherit;flex-shrink:0;}
+.lk-btn-round-outline:hover:not(:disabled){background:var(--gray-3);}
+.lk-btn-round-outline:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.lk-btn-round-outline:disabled{opacity:0.4;cursor:default;}
+.lk-btn-social{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:9999px;background:color-mix(in srgb,var(--footer-ink) 15%,transparent);color:var(--footer-ink);border:0;cursor:pointer;font-family:inherit;flex-shrink:0;}
+.lk-btn-social:hover:not(:disabled){background:color-mix(in srgb,var(--footer-ink) 25%,transparent);}
+.lk-btn-social:focus-visible{outline:2px solid var(--footer-ink);outline-offset:2px;}
+.lk-btn-nav-sm{display:inline-flex;align-items:center;justify-content:center;background:var(--ink);color:var(--canvas);border:0;border-radius:6px;padding:0 14px;height:34px;font-size:13px;font-family:inherit;cursor:pointer;white-space:nowrap;}
+.lk-btn-nav-sm:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+
+.lk-eyebrow{font-family:var(--aura-font-label);font-size:14px;font-weight:400;letter-spacing:0.04em;color:var(--muted);text-transform:uppercase;}
+.lk-mono{font-family:var(--aura-font-label);}
+.lk-h1{font-size:clamp(36px,5vw,56px);font-weight:400;letter-spacing:-0.022em;line-height:1.0;}
+.lk-h2{font-size:32px;font-weight:400;letter-spacing:-0.015em;line-height:1.1;}
+.lk-h3{font-size:24px;font-weight:400;letter-spacing:-0.01em;line-height:1.2;}
+.lk-muted{color:var(--muted);}
+.lk-link{text-decoration:underline;cursor:pointer;color:inherit;}
+.lk-link:hover{opacity:0.75;}
+.lk-link:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.lk-arrow-link{display:inline-flex;align-items:center;gap:5px;text-decoration:underline;cursor:pointer;color:inherit;border:0;background:none;font:inherit;padding:0;}
+.lk-arrow-link:hover{opacity:0.75;}
+.lk-arrow-link:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+
+.lk-rule{border:0;border-top:1px solid var(--rule);margin:0;}
+
+#lk-nav{position:sticky;top:0;z-index:50;background:var(--canvas);border-bottom:1px solid var(--rule);}
+.lk-nav-inner{display:flex;align-items:center;height:65px;gap:0;position:relative;}
+.lk-wordmark{display:inline-flex;align-items:center;gap:10px;font-size:17px;font-weight:400;color:var(--ink);text-decoration:none;flex-shrink:0;letter-spacing:-0.01em;}
+.lk-mark{display:inline-flex;align-items:center;flex-shrink:0;}
+.lk-nav-menu{display:flex;align-items:center;list-style:none;margin:0;padding:0;gap:2px;margin-left:20px;}
+.lk-nav-menu>li{position:static;}
+.lk-trig{display:inline-flex;align-items:center;gap:4px;padding:7px 10px;border:0;background:none;color:var(--muted);font:inherit;font-size:14px;cursor:pointer;border-radius:6px;white-space:nowrap;}
+.lk-trig:hover{color:var(--ink);background:var(--gray-3);}
+.lk-trig[aria-expanded=true]{color:var(--ink);}
+.lk-trig svg.lk-chev{transition:transform 160ms ease;flex-shrink:0;}
+.lk-trig[aria-expanded=true] svg.lk-chev{transform:rotate(180deg);}
+.lk-trig:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.lk-nav-plain{display:inline-flex;align-items:center;padding:7px 10px;color:var(--muted);font-size:14px;border-radius:6px;white-space:nowrap;text-decoration:none;}
+.lk-nav-plain:hover{color:var(--ink);}
+.lk-nav-plain:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.lk-nav-end{display:flex;align-items:center;gap:10px;margin-left:auto;}
+.lk-nav-signin{font-size:14px;color:var(--muted);text-decoration:none;padding:7px 2px;white-space:nowrap;}
+.lk-nav-signin:hover{color:var(--ink);}
+.lk-nav-signin:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+
+.lk-flyout{position:absolute;left:0;right:0;top:100%;background:var(--canvas);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);box-shadow:0 4px 20px rgba(0,0,0,0.08);z-index:60;}
+.lk-flyout[hidden]{display:none!important;}
+.lk-flyout-inner{max-width:1280px;margin:0 auto;padding:calc(var(--aura)*2) calc(var(--aura)*3);}
+.lk-flyout-col-title{font-family:var(--aura-font-label);font-size:12px;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:calc(var(--aura)*1);}
+.lk-flyout-links{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px;}
+.lk-flyout-links li a{display:block;padding:6px 0;text-decoration:none;color:var(--ink);font-size:14px;border-radius:4px;}
+.lk-flyout-links li a:hover{color:var(--muted);}
+.lk-flyout-links li a:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.lk-flyout-links li small{display:block;font-size:12px;color:var(--muted);line-height:1.3;}
+.lk-flyout-cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:calc(var(--aura)*2);}
+@media(max-width:767px){.lk-flyout-cols{grid-template-columns:1fr;}}
+
+#lk-menu-toggle{display:none;align-items:center;justify-content:center;width:36px;height:36px;border:0;background:none;color:var(--ink);cursor:pointer;border-radius:6px;flex-shrink:0;margin-left:auto;}
+#lk-menu-toggle:hover{background:var(--gray-3);}
+#lk-menu-toggle:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+#lk-menu{position:fixed;inset:0;z-index:70;background:var(--canvas);overflow-y:auto;display:flex;flex-direction:column;}
+#lk-menu[hidden]{display:none!important;}
+.lk-menu-head{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--rule);height:65px;}
+#lk-menu-close{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border:0;background:none;color:var(--ink);cursor:pointer;border-radius:6px;}
+#lk-menu-close:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.lk-menu-body{flex:1;overflow-y:auto;}
+.lk-menu-acc-trigger{display:flex;align-items:center;justify-content:space-between;width:100%;padding:18px 20px;border:0;background:none;color:var(--ink);font:inherit;font-size:16px;cursor:pointer;text-align:left;border-bottom:1px solid var(--rule);}
+.lk-menu-acc-trigger:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.lk-menu-acc-trigger svg{transition:transform 160ms ease;flex-shrink:0;}
+.lk-menu-acc-trigger[aria-expanded=true] svg{transform:rotate(180deg);}
+.lk-menu-acc-panel{padding:12px 20px 20px;border-bottom:1px solid var(--rule);}
+.lk-menu-acc-panel[hidden]{display:none!important;}
+.lk-menu-acc-links{list-style:none;margin:0;padding:0;}
+.lk-menu-acc-links li{padding:8px 0;border-bottom:1px solid var(--gray-3);}
+.lk-menu-acc-links li:last-child{border-bottom:0;}
+.lk-menu-acc-links a{font-size:16px;color:var(--ink);text-decoration:none;display:block;}
+.lk-menu-acc-links a:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.lk-menu-foot{padding:20px;display:flex;flex-direction:column;gap:12px;border-top:1px solid var(--rule);}
+
+.lk-section{padding:calc(var(--aura)*6) 0;}
+
+#lk-hero{padding:calc(var(--aura)*7) 0 calc(var(--aura)*6);}
+.lk-hero-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.4fr) minmax(0,0.7fr);gap:calc(var(--aura)*3);align-items:center;}
+@media(max-width:1023px){.lk-hero-grid{grid-template-columns:1fr;gap:calc(var(--aura)*3);}}
+.lk-collage{position:relative;height:380px;overflow:hidden;}
+.lk-collage>div{position:absolute;overflow:hidden;}
+
+#lk-statement{padding:calc(var(--aura)*6) 0;}
+.lk-statement-p{font-size:24px;line-height:1.35;max-width:580px;}
+.lk-media-panel{position:relative;border-radius:4px;overflow:hidden;aspect-ratio:16/9;background:var(--gray-3);}
+.lk-media-art{width:100%;height:100%;position:relative;overflow:hidden;}
+.lk-info-card{position:absolute;right:calc(var(--aura)*2);bottom:calc(var(--aura)*2);background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:calc(var(--aura)*1.5);max-width:240px;z-index:2;}
+.lk-info-card-icon{width:24px;height:24px;background:var(--ink);border-radius:4px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;}
+.lk-play-btn{position:absolute;right:calc(var(--aura)*2);top:50%;transform:translateY(-50%);z-index:3;}
+@media(max-width:767px){.lk-info-card{position:static;margin-top:calc(var(--aura)*1.5);max-width:100%;}}
+
+#lk-features{padding:calc(var(--aura)*6) 0;}
+.lk-feat-cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:calc(var(--aura)*4);}
+@media(max-width:767px){.lk-feat-cols{grid-template-columns:1fr;gap:calc(var(--aura)*3);}}
+.lk-feat-dot{width:12px;height:12px;background:var(--ink);border-radius:1px;flex-shrink:0;}
+.lk-feat-art{margin-top:calc(var(--aura)*2);border-radius:4px;overflow:hidden;aspect-ratio:4/3;background:var(--gray-3);}
+
+.lk-statement2{padding:calc(var(--aura)*5) 0;}
+.lk-statement2-row{display:flex;align-items:flex-start;justify-content:space-between;gap:calc(var(--aura)*3);}
+@media(max-width:767px){.lk-statement2-row{flex-direction:column;}}
+
+#lk-mosaic{padding:0;}
+.lk-mosaic-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;}
+@media(max-width:767px){.lk-mosaic-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+.lk-tile{position:relative;overflow:hidden;aspect-ratio:3/4;}
+.lk-tile-inner{width:100%;height:100%;position:relative;}
+.lk-tile-play{position:absolute;right:12px;bottom:12px;z-index:2;}
+
+#lk-context{padding:calc(var(--aura)*6) 0;}
+.lk-ctx-panel{background:var(--pale-cyan);border-radius:4px;padding:calc(var(--aura)*3);overflow:hidden;}
+.lk-ctx-window{border-radius:6px;background:var(--paper);border:1px solid var(--rule);overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);}
+@media(max-width:767px){.lk-ctx-window{grid-template-columns:1fr;}}
+.lk-ctx-pane{padding:calc(var(--aura)*1.5) calc(var(--aura)*1.5);}
+.lk-ctx-pane+.lk-ctx-pane{border-left:1px solid var(--rule);}
+@media(max-width:767px){.lk-ctx-pane+.lk-ctx-pane{border-left:0;border-top:1px solid var(--rule);}}
+.lk-ctx-pane-title{font-family:var(--aura-font-label);font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:calc(var(--aura)*1);}
+.lk-check-item{display:flex;align-items:center;gap:10px;padding:6px 0;font-size:14px;border-bottom:1px solid var(--gray-3);}
+.lk-check-item:last-child{border-bottom:0;}
+.lk-check-box{width:14px;height:14px;border-radius:3px;border:1px solid var(--control-line);flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.lk-swatch-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:calc(var(--aura)*0.5);}
+.lk-swatch{width:40px;height:40px;border-radius:4px;border:1px solid var(--rule);}
+
+#lk-proof{padding:calc(var(--aura)*6) 0;}
+.lk-proof-cols{display:grid;grid-template-columns:minmax(0,1.6fr) 1px minmax(0,0.8fr);gap:calc(var(--aura)*4);align-items:start;}
+@media(max-width:767px){.lk-proof-cols{grid-template-columns:1fr;gap:calc(var(--aura)*2);}}
+.lk-proof-vr{background:var(--rule);width:1px;align-self:stretch;}
+@media(max-width:767px){.lk-proof-vr{display:none;}}
+.lk-quote{font-size:28px;font-weight:400;line-height:1.3;padding-left:calc(var(--aura)*1.5);border-left:1px solid var(--ink);margin:calc(var(--aura)*1.5) 0;}
+.lk-avatar{width:36px;height:36px;border-radius:9999px;background:var(--gray-5);display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:400;flex-shrink:0;overflow:hidden;}
+.lk-stat-num{font-family:var(--aura-font-label);font-size:64px;font-weight:400;letter-spacing:-0.02em;line-height:1;}
+
+.lk-marquee-wrap{overflow:hidden;position:relative;padding:calc(var(--aura)*2) 0;}
+.lk-marquee-track{display:flex;gap:calc(var(--aura)*5);width:max-content;}
+.lk-marquee-item{font-size:16px;font-weight:400;color:var(--muted);white-space:nowrap;letter-spacing:0.01em;}
+.motion .lk-marquee-track{animation:lk-scroll 28s linear infinite;}
+@keyframes lk-scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.lk-marquee-paused .lk-marquee-track{animation-play-state:paused;}
+
+#lk-cta{padding:calc(var(--aura)*6) 0;text-align:center;}
+#lk-cta .lk-h2{margin-bottom:calc(var(--aura)*2.5);}
+
+#lk-carousel{padding:calc(var(--aura)*6) 0;}
+.lk-car-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:calc(var(--aura)*2);flex-wrap:wrap;gap:calc(var(--aura)*1);}
+.lk-car-controls{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.lk-car-counter{font-family:var(--aura-font-label);font-size:13px;color:var(--muted);}
+.lk-car-track-wrap{overflow:hidden;}
+.lk-car-track{display:flex;gap:16px;scroll-snap-type:x mandatory;overflow-x:auto;scroll-behavior:smooth;-ms-overflow-style:none;scrollbar-width:none;}
+.lk-car-track::-webkit-scrollbar{display:none;}
+.lk-car-card{flex:0 0 calc(25% - 12px);min-width:0;scroll-snap-align:start;border:1px solid var(--rule);border-radius:8px;overflow:hidden;cursor:pointer;}
+@media(max-width:767px){.lk-car-card{flex:0 0 calc(80% - 12px);}}
+.lk-car-art{aspect-ratio:4/3;overflow:hidden;background:var(--gray-3);position:relative;}
+.lk-car-label{padding:14px 16px;display:flex;align-items:center;justify-content:space-between;font-size:14px;}
+
+#lk-stats{padding:calc(var(--aura)*5) 0;}
+.lk-stats-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:calc(var(--aura)*2);text-align:center;}
+@media(max-width:767px){.lk-stats-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+.lk-stat-val{font-family:var(--aura-font-label);font-size:40px;font-weight:400;letter-spacing:-0.02em;line-height:1;}
+.lk-stat-label{font-size:14px;color:var(--muted);margin-top:6px;}
+
+#lk-table-section{padding:calc(var(--aura)*5) 0;}
+.lk-table-scroll{overflow-x:auto;border-radius:8px;border:1px solid var(--rule);}
+.lk-table-scroll[role=region]{outline:none;}
+.lk-table-scroll:focus{outline:2px solid var(--focus);outline-offset:2px;}
+.lk-table{width:100%;border-collapse:collapse;font-size:14px;}
+.lk-table caption{text-align:left;padding:14px 16px;font-family:var(--aura-font-label);font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--rule);}
+.lk-table th,.lk-table td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--rule);}
+.lk-table th{font-size:12px;font-family:var(--aura-font-label);letter-spacing:0.04em;text-transform:uppercase;color:var(--muted);font-weight:400;background:var(--gray-2);}
+.lk-table tr:last-child td{border-bottom:0;}
+.lk-table td:not(:first-child),.lk-table th:not(:first-child){text-align:center;}
+.lk-check-mark{color:var(--ink);font-size:16px;}
+.lk-dash{color:var(--muted);}
+
+#lk-form-section{padding:calc(var(--aura)*5) 0;}
+.lk-form{max-width:560px;display:flex;flex-direction:column;gap:calc(var(--aura)*1.5);}
+.lk-form-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:calc(var(--aura)*1.5);}
+@media(max-width:599px){.lk-form-row{grid-template-columns:1fr;}}
+.lk-form-field{display:flex;flex-direction:column;gap:6px;}
+.lk-form-label{font-size:14px;font-weight:400;color:var(--ink);}
+.lk-form-live{font-size:14px;color:var(--muted);min-height:1.5em;}
+
+#lk-pricing{padding:calc(var(--aura)*6) 0;}
+.lk-pricing-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(var(--aura)*1.5);margin-top:calc(var(--aura)*3);}
+@media(max-width:767px){.lk-pricing-grid{grid-template-columns:1fr;}}
+.lk-plan{border:1px solid var(--rule);border-radius:8px;padding:calc(var(--aura)*2.5);}
+.lk-plan-featured{background:var(--ink);color:var(--canvas);border-color:var(--ink);}
+.lk-plan-featured .lk-muted{color:color-mix(in srgb,var(--canvas) 65%,transparent);}
+.lk-plan-featured .lk-rule{border-color:color-mix(in srgb,var(--canvas) 25%,transparent);}
+.lk-plan-featured .lk-btn-outline{background:transparent;color:var(--canvas);border-color:color-mix(in srgb,var(--canvas) 50%,transparent);}
+.lk-plan-featured .lk-btn-outline:hover{background:color-mix(in srgb,var(--canvas) 10%,transparent);}
+.lk-plan-price{font-family:var(--aura-font-label);font-size:36px;font-weight:400;letter-spacing:-0.02em;line-height:1;}
+.lk-plan-features{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;margin-top:calc(var(--aura)*1.5);}
+.lk-plan-features li{font-size:14px;display:flex;align-items:flex-start;gap:8px;}
+.lk-plan-badge{display:inline-flex;background:var(--chip-bg);color:var(--chip-ink);font-family:var(--aura-font-label);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;border-radius:3px;padding:2px 6px;vertical-align:middle;margin-left:6px;}
+.lk-plan-featured .lk-plan-badge{background:color-mix(in srgb,var(--canvas) 20%,transparent);color:var(--canvas);}
+
+#lk-faq{padding:calc(var(--aura)*6) 0;}
+.lk-faq-list{margin-top:calc(var(--aura)*2.5);border-top:1px solid var(--rule);}
+.lk-faq-btn{display:flex;align-items:center;justify-content:space-between;width:100%;padding:calc(var(--aura)*1.5) 0;border:0;background:none;color:var(--ink);font:inherit;font-size:16px;cursor:pointer;text-align:left;border-bottom:1px solid var(--rule);}
+.lk-faq-btn[aria-expanded=true]{border-bottom-color:transparent;}
+.lk-faq-btn svg{flex-shrink:0;transition:transform 160ms ease;}
+.lk-faq-btn[aria-expanded=true] svg{transform:rotate(45deg);}
+.lk-faq-btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.lk-faq-panel{padding-bottom:calc(var(--aura)*1.5);border-bottom:1px solid var(--rule);font-size:15px;color:var(--muted);}
+.lk-faq-panel[hidden]{display:none!important;}
+
+#lk-footer{background:var(--footer-bg);color:var(--footer-ink);}
+.lk-footer-top{padding:calc(var(--aura)*5) 0 calc(var(--aura)*3);}
+.lk-footer-brand{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:calc(var(--aura)*2);margin-bottom:calc(var(--aura)*3);}
+.lk-footer-wordmark{font-size:36px;font-weight:400;letter-spacing:-0.015em;color:var(--footer-ink);}
+.lk-footer-socials{display:flex;gap:10px;}
+.lk-footer-cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:calc(var(--aura)*2);}
+@media(max-width:767px){.lk-footer-cols{grid-template-columns:repeat(2,minmax(0,1fr));}}
+.lk-footer-col-title{font-family:var(--aura-font-label);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--footer-muted);margin-bottom:calc(var(--aura)*1);}
+.lk-footer-links{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;}
+.lk-footer-links a{font-size:14px;color:var(--footer-ink);text-decoration:none;opacity:0.75;display:inline-flex;align-items:center;gap:6px;}
+.lk-footer-links a:hover{opacity:1;}
+.lk-footer-links a:focus-visible{outline:2px solid var(--footer-ink);outline-offset:2px;}
+.lk-footer-badge{display:inline-flex;background:color-mix(in srgb,var(--footer-ink) 20%,transparent);color:var(--footer-ink);font-family:var(--aura-font-label);font-size:9px;letter-spacing:0.06em;text-transform:uppercase;border-radius:3px;padding:2px 5px;vertical-align:middle;margin-left:5px;}
+.lk-footer-bottom{padding:calc(var(--aura)*1.5) 0;border-top:1px solid var(--footer-rule);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:calc(var(--aura)*1);}
+.lk-footer-legal{font-size:13px;color:var(--footer-muted);}
+.lk-footer-select-wrap{position:relative;display:inline-flex;align-items:center;}
+.lk-footer-select-wrap::after{content:"";position:absolute;right:10px;top:50%;transform:translateY(-50%);border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid var(--footer-ink);pointer-events:none;opacity:0.7;}
+.lk-footer-lang{background:transparent;border:1px solid color-mix(in srgb,var(--footer-ink) 40%,transparent);color:var(--footer-ink);font-family:var(--aura-font-label);font-size:13px;letter-spacing:0.03em;border-radius:4px;padding:5px 32px 5px 10px;appearance:none;-webkit-appearance:none;cursor:pointer;}
+.lk-footer-lang:focus-visible{outline:2px solid var(--footer-ink);outline-offset:2px;}
+
+@media(max-width:1023px){
+#lk-nav .lk-nav-menu,.lk-trig,.lk-nav-plain,.lk-nav-signin,.lk-btn-outline.lk-nav-talk{display:none;}
+#lk-menu-toggle{display:inline-flex;}
+}
+@media(max-width:767px){
+.lk-btn-nav-sm{display:inline-flex;}
+}
+
+.dark #lk-footer{border-top:1px solid var(--footer-rule);}
+.dark .lk-plan-featured{background:var(--paper);border-color:var(--rule);color:var(--ink);}
+.dark .lk-plan-featured .lk-muted{color:var(--muted);}
+.dark .lk-plan-featured .lk-rule{border-color:var(--rule);}
+.dark .lk-plan-featured .lk-btn-outline{background:transparent;color:var(--ink);border-color:var(--control-line);}
+.dark .lk-plan-featured .lk-plan-badge{background:var(--chip-bg);color:var(--chip-ink);}
+
+@media(prefers-reduced-motion:reduce){
+.lk *,.lk *::before,.lk *::after{transition:none!important;animation:none!important;scroll-behavior:auto!important;}
+}
+@media(forced-colors:active){
+.lk-btn-primary,.lk-btn-cta,.lk-btn-hero,.lk-btn-nav-sm{background:ButtonText;color:ButtonFace;border:2px solid ButtonBorder;}
+.lk :focus-visible{outline:2px solid Highlight;}
+}
+</style>
+<body class="lk">
+<a href="#lk-main" class="lk-skip">Skip to content</a>
+<header id="lk-nav" role="banner">
+<nav class="lk-wrap lk-nav-inner" aria-label="Larkspan main navigation">
+<a href="#" class="lk-wordmark" aria-label="Larkspan home">
+<span class="lk-mark" aria-hidden="true">
+<svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+<rect x="2" y="6" width="8" height="16" rx="1" fill="var(--lavender)"/>
+<rect x="10" y="10" width="8" height="12" rx="1" fill="var(--coral)"/>
+<rect x="18" y="4" width="8" height="18" rx="1" fill="var(--lime)" opacity="0.9"/>
+</svg>
+</span>
+Larkspan
+</a>
+<ul class="lk-nav-menu" role="list">
+<li>
+<button class="lk-trig" aria-expanded="false" aria-controls="lk-drop-studio" id="lk-trig-studio">Studio<svg class="lk-chev" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+</li>
+<li>
+<button class="lk-trig" aria-expanded="false" aria-controls="lk-drop-workshops" id="lk-trig-workshops">Workshops<svg class="lk-chev" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+</li>
+<li>
+<button class="lk-trig" aria-expanded="false" aria-controls="lk-drop-learn" id="lk-trig-learn">Learn<svg class="lk-chev" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+</li>
+<li>
+<button class="lk-trig" aria-expanded="false" aria-controls="lk-drop-library" id="lk-trig-library">Library<svg class="lk-chev" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+</li>
+<li><a href="#lk-pricing" class="lk-nav-plain">Plans</a></li>
+</ul>
+<div class="lk-nav-end">
+<a href="#" class="lk-nav-signin">Sign in</a>
+<button class="lk-btn-outline lk-nav-talk">Talk to us</button>
+<button class="lk-btn-nav-sm">Start a board</button>
+<button id="lk-menu-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="lk-menu">
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+</button>
+</div>
+<div class="lk-flyout" id="lk-drop-studio" role="region" aria-labelledby="lk-trig-studio" hidden>
+<div class="lk-flyout-inner">
+<div class="lk-flyout-cols">
+<div>
+<p class="lk-flyout-col-title">Sketch</p>
+<ul class="lk-flyout-links" role="list">
+<li><a href="#">Larkspan Board<small>Shared sketch wall for your whole team</small></a></li>
+<li><a href="#">Larkspan Stage<small>Present a collection to clients</small></a></li>
+<li><a href="#">Larkspan Lathe<small>Pattern and repeat generator</small></a></li>
+</ul>
+</div>
+<div>
+<p class="lk-flyout-col-title">Hand off</p>
+<ul class="lk-flyout-links" role="list">
+<li><a href="#">Larkspan Bench<small>Cut sheets and hand-off packs</small></a></li>
+<li><a href="#">Larkspan Tally<small>Materials and costing tracker</small></a></li>
+</ul>
+</div>
+<div>
+<p class="lk-flyout-col-title">Grain</p>
+<ul class="lk-flyout-links" role="list">
+<li><a href="#">Larkspan Grain<small>Shared component library for makers</small></a></li>
+<li><a href="#">Templates<small>Ready-made starting points</small></a></li>
+</ul>
+</div>
+<div>
+<p class="lk-flyout-col-title">More</p>
+<ul class="lk-flyout-links" role="list">
+<li><a href="#">Integrations<small>Connect your existing tools</small></a></li>
+<li><a href="#">Release notes<small>What is new this month</small></a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="lk-flyout" id="lk-drop-workshops" role="region" aria-labelledby="lk-trig-workshops" hidden>
+<div class="lk-flyout-inner">
+<div class="lk-flyout-cols">
+<div>
+<p class="lk-flyout-col-title">By trade</p>
+<ul class="lk-flyout-links" role="list">
+<li><a href="#">Joiners &amp; carpenters<small>Dovetails, joints and timber plans</small></a></li>
+<li><a href="#">Lamp makers<small>Shade patterns and wire schematics</small></a></li>
+<li><a href="#">Upholsterers<small>Fabric swatches and frame hand-offs</small></a></li>
+<li><a href="#">Metal spinners<small>Lathe diagrams and finishing specs</small></a></li>
+</ul>
+</div>
+<div>
+<p class="lk-flyout-col-title">By size</p>
+<ul class="lk-flyout-links" role="list">
+<li><a href="#">Solo makers<small>One seat, all the tools</small></a></li>
+<li><a href="#">Small studios<small>Up to 10 collaborators</small></a></li>
+<li><a href="#">Collectives<small>Multi-workshop hand-offs</small></a></li>
+</ul>
+</div>
+<div>
+<p class="lk-flyout-col-title">Stories</p>
+<ul class="lk-flyout-links" role="list">
+<li><a href="#">Hollow Oak Joinery (sample)<small>How they cut planning time by half</small></a></li>
+<li><a href="#">Brassmoth Lighting (sample)<small>From sketch to shade in one board</small></a></li>
+</ul>
+</div>
+<div>
+<p class="lk-flyout-col-title">Support</p>
+<ul class="lk-flyout-links" role="list">
+<li><a href="#">Help centre<small>Guides and walkthroughs</small></a></li>
+<li><a href="#">Status page<small>Service health</small></a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="lk-flyout" id="lk-drop-learn" role="region" aria-labelledby="lk-trig-learn" hidden>
+<div class="lk-flyout-inner">
+<div class="lk-flyout-cols">
+<div>
+<p class="lk-flyout-col-title">Guides</p>
+<ul class="lk-flyout-links" role="list">
+<li><a href="#">Maker handbook<small>End-to-end planning for independents</small></a></li>
+<li><a href="#">Bench tutorials<small>Video walkthroughs of hand-off flows</small></a></li>
+<li><a href="#">Pattern library<small>Built-in repeats for common trades</small></a></li>
+</ul>
+</div>
+<div>
+<p class="lk-flyout-col-title">Events</p>
+<ul class="lk-flyout-links" role="list">
+<li><a href="#">Larkspan Open Day<small>Monthly live session for new makers</small></a></li>
+<li><a href="#">Workshop showcases<small>Peer demos from the maker network</small></a></li>
+</ul>
+</div>
+<div>
+<p class="lk-flyout-col-title">Reading</p>
+<ul class="lk-flyout-links" role="list">
+<li><a href="#">Journal<small>Craft, process and trade writing</small></a></li>
+<li><a href="#">Changelog<small>Every update since day one</small></a></li>
+</ul>
+</div>
+<div>
+<p class="lk-flyout-col-title">Certify</p>
+<ul class="lk-flyout-links" role="list">
+<li><a href="#">Larkspan Accredited<small>Earn your maker badge</small></a></li>
+<li><a href="#">Educator access<small>Free for trade schools</small></a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="lk-flyout" id="lk-drop-library" role="region" aria-labelledby="lk-trig-library" hidden>
+<div class="lk-flyout-inner">
+<div class="lk-flyout-cols">
+<div>
+<p class="lk-flyout-col-title">Assets</p>
+<ul class="lk-flyout-links" role="list">
+<li><a href="#">Grain components<small>Ready-to-use maker UI blocks</small></a></li>
+<li><a href="#">Joinery diagrams<small>SVG joint and corner library</small></a></li>
+<li><a href="#">Shade patterns<small>Pleated and ribbed lamp templates</small></a></li>
+</ul>
+</div>
+<div>
+<p class="lk-flyout-col-title">Collections</p>
+<ul class="lk-flyout-links" role="list">
+<li><a href="#">Timber collection<small>50 wood-grain reference swatches</small></a></li>
+<li><a href="#">Metalwork collection<small>Spun and forged finish references</small></a></li>
+</ul>
+</div>
+<div>
+<p class="lk-flyout-col-title">Open source</p>
+<ul class="lk-flyout-links" role="list">
+<li><a href="#">Larkspan icons<small>400 craft-focused SVG icons</small></a></li>
+<li><a href="#">Contributor guide<small>How to submit a pattern</small></a></li>
+</ul>
+</div>
+<div>
+<p class="lk-flyout-col-title">Plugins</p>
+<ul class="lk-flyout-links" role="list">
+<li><a href="#">Tally sync<small>Live material pricing in your board</small></a></li>
+<li><a href="#">Bench export<small>PDF cut sheets in one click</small></a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div id="lk-menu" role="dialog" aria-modal="true" aria-label="Navigation" hidden>
+<div class="lk-menu-head">
+<a class="lk-wordmark" href="#" aria-label="Larkspan home">
+<span class="lk-mark" aria-hidden="true">
+<svg width="24" height="24" viewBox="0 0 28 28" fill="none"><rect x="2" y="6" width="8" height="16" rx="1" fill="var(--lavender)"/><rect x="10" y="10" width="8" height="12" rx="1" fill="var(--coral)"/><rect x="18" y="4" width="8" height="18" rx="1" fill="var(--lime)" opacity="0.9"/></svg>
+</span>Larkspan</a>
+<button id="lk-menu-close" aria-label="Close navigation menu">
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+</button>
+</div>
+<div class="lk-menu-body">
+<button class="lk-menu-acc-trigger" aria-expanded="false" aria-controls="lk-macc-studio">Studio<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+<div class="lk-menu-acc-panel" id="lk-macc-studio" hidden>
+<ul class="lk-menu-acc-links" role="list">
+<li><a href="#">Larkspan Board</a></li>
+<li><a href="#">Larkspan Bench</a></li>
+<li><a href="#">Larkspan Lathe</a></li>
+<li><a href="#">Larkspan Tally</a></li>
+<li><a href="#">Larkspan Stage</a></li>
+<li><a href="#">Larkspan Grain</a></li>
+</ul>
+</div>
+<button class="lk-menu-acc-trigger" aria-expanded="false" aria-controls="lk-macc-workshops">Workshops<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+<div class="lk-menu-acc-panel" id="lk-macc-workshops" hidden>
+<ul class="lk-menu-acc-links" role="list">
+<li><a href="#">Joiners &amp; carpenters</a></li>
+<li><a href="#">Lamp makers</a></li>
+<li><a href="#">Upholsterers</a></li>
+<li><a href="#">Metal spinners</a></li>
+<li><a href="#">Solo makers</a></li>
+</ul>
+</div>
+<button class="lk-menu-acc-trigger" aria-expanded="false" aria-controls="lk-macc-learn">Learn<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+<div class="lk-menu-acc-panel" id="lk-macc-learn" hidden>
+<ul class="lk-menu-acc-links" role="list">
+<li><a href="#">Maker handbook</a></li>
+<li><a href="#">Bench tutorials</a></li>
+<li><a href="#">Journal</a></li>
+<li><a href="#">Larkspan Open Day</a></li>
+</ul>
+</div>
+<button class="lk-menu-acc-trigger" aria-expanded="false" aria-controls="lk-macc-library">Library<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+<div class="lk-menu-acc-panel" id="lk-macc-library" hidden>
+<ul class="lk-menu-acc-links" role="list">
+<li><a href="#">Grain components</a></li>
+<li><a href="#">Joinery diagrams</a></li>
+<li><a href="#">Larkspan icons</a></li>
+<li><a href="#">Open source</a></li>
+</ul>
+</div>
+</div>
+<div class="lk-menu-foot">
+<a href="#" class="lk-nav-signin" style="font-size:16px;">Sign in</a>
+<button class="lk-btn-primary" style="width:100%;justify-content:center;border-radius:8px;height:50px;font-size:16px;">Start a board</button>
+</div>
+</div>
+
+<main id="lk-main">
+
+<section id="lk-hero" aria-label="Hero">
+<div class="lk-wrap">
+<div class="lk-hero-grid">
+<div>
+<h1 class="lk-h1">Sketch,<br>plan and<br>hand off<br>together.</h1>
+</div>
+<div>
+<div class="lk-collage" aria-hidden="true">
+<div style="left:10%;top:5%;width:55%;height:62%;background:var(--lavender);border-radius:4px;transform:rotate(-2deg);display:flex;align-items:center;justify-content:center;overflow:hidden;">
+<svg width="100%" height="100%" viewBox="0 0 200 240" fill="none" preserveAspectRatio="xMidYMid meet">
+<circle cx="100" cy="80" r="60" fill="rgba(255,255,255,0.15)"/>
+<circle cx="100" cy="80" r="40" fill="rgba(255,255,255,0.12)"/>
+<circle cx="100" cy="80" r="20" fill="rgba(255,255,255,0.10)"/>
+<rect x="40" y="160" width="120" height="2" fill="rgba(255,255,255,0.3)"/>
+<rect x="60" y="168" width="80" height="2" fill="rgba(255,255,255,0.2)"/>
+<rect x="80" y="176" width="40" height="2" fill="rgba(255,255,255,0.15)"/>
+</svg>
+</div>
+<div style="left:0%;top:28%;width:50%;height:48%;background:var(--paper);border:1px solid var(--rule);border-radius:4px;padding:14px;overflow:hidden;">
+<div style="font-family:var(--aura-font-label);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Planning list</div>
+<div style="display:flex;flex-direction:column;gap:6px;">
+<div style="display:flex;align-items:center;gap:6px;"><div style="width:12px;height:12px;border-radius:2px;border:1px solid var(--control-line);"></div><div style="font-size:11px;color:var(--ink);">Oak side rail — 4 pcs</div></div>
+<div style="display:flex;align-items:center;gap:6px;"><div style="width:12px;height:12px;border-radius:2px;background:var(--ink);"></div><div style="font-size:11px;color:var(--muted);text-decoration:line-through;">Dowel template B2</div></div>
+<div style="display:flex;align-items:center;gap:6px;"><div style="width:12px;height:12px;border-radius:2px;border:1px solid var(--control-line);"></div><div style="font-size:11px;color:var(--ink);">Shade pleats — 18cm</div></div>
+</div>
+</div>
+<div style="right:5%;top:40%;width:45%;height:38%;background:var(--coral);border-radius:4px;transform:rotate(1.5deg);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+<svg width="100%" height="100%" viewBox="0 0 160 140" fill="none" preserveAspectRatio="xMidYMid meet">
+<rect x="20" y="20" width="40" height="100" rx="2" fill="rgba(255,255,255,0.2)"/>
+<rect x="70" y="40" width="40" height="80" rx="2" fill="rgba(255,255,255,0.15)"/>
+<rect x="20" y="20" width="2" height="100" fill="rgba(255,255,255,0.4)"/>
+<rect x="58" y="20" width="2" height="100" fill="rgba(255,255,255,0.3)"/>
+<line x1="20" y1="70" x2="60" y2="70" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
+</svg>
+</div>
+<div style="right:2%;top:0%;width:35%;height:28%;background:var(--lime);border-radius:4px;transform:rotate(-1deg);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+<svg width="90%" height="90%" viewBox="0 0 120 80" fill="none" preserveAspectRatio="xMidYMid meet">
+<circle cx="30" cy="40" r="20" fill="rgba(0,0,0,0.12)"/>
+<circle cx="60" cy="40" r="20" fill="rgba(0,0,0,0.08)"/>
+<circle cx="90" cy="40" r="20" fill="rgba(0,0,0,0.05)"/>
+</svg>
+</div>
+<div style="left:30%;bottom:5%;width:40%;height:22%;background:var(--magenta);border-radius:3px;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+<svg width="100%" height="100%" viewBox="0 0 140 60" fill="none" preserveAspectRatio="xMidYMid meet">
+<rect x="10" y="20" width="20" height="20" rx="1" fill="rgba(255,255,255,0.25)"/>
+<rect x="38" y="20" width="20" height="20" rx="1" fill="rgba(255,255,255,0.18)"/>
+<rect x="66" y="20" width="20" height="20" rx="1" fill="rgba(255,255,255,0.12)"/>
+<rect x="94" y="20" width="20" height="20" rx="1" fill="rgba(255,255,255,0.08)"/>
+<rect x="110" y="20" width="20" height="20" rx="1" fill="rgba(255,255,255,0.05)"/>
+</svg>
+</div>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;align-items:stretch;">
+<a href="#" class="lk-btn-hero" aria-label="Start a board — open Larkspan">Start a board</a>
+</div>
+</div>
+</div>
+</section>
+
+<hr class="lk-rule"/>
+
+<section id="lk-stats" aria-label="Sample stats">
+<div class="lk-wrap">
+<div class="lk-stats-grid">
+<div>
+<div class="lk-stat-val lk-mono">3,400+</div>
+<div class="lk-stat-label">maker studios (sample)</div>
+</div>
+<div>
+<div class="lk-stat-val lk-mono">12 k</div>
+<div class="lk-stat-label">boards shared this month (sample)</div>
+</div>
+<div>
+<div class="lk-stat-val lk-mono">87%</div>
+<div class="lk-stat-label">reduce back-and-forth (sample)</div>
+</div>
+<div>
+<div class="lk-stat-val lk-mono">4.9</div>
+<div class="lk-stat-label">average rating (sample)</div>
+</div>
+</div>
+</div>
+</section>
+
+<hr class="lk-rule"/>
+
+<section id="lk-statement" aria-label="Statement">
+<div class="lk-wrap">
+<p class="lk-statement-p">One shared space for sketching, planning and handing off. <span class="lk-muted">Keep your whole workshop in step, from first grain to finished piece.</span></p>
+<div style="margin-top:calc(var(--aura)*3);">
+<div class="lk-media-panel">
+<div class="lk-media-art" aria-hidden="true">
+<svg width="100%" height="100%" viewBox="0 0 960 540" fill="none" preserveAspectRatio="xMidYMid meet">
+<rect width="960" height="540" fill="var(--cyan)" opacity="0.15"/>
+<g opacity="0.6">
+<ellipse cx="480" cy="270" rx="280" ry="180" fill="var(--cyan)" opacity="0.25"/>
+<ellipse cx="480" cy="270" rx="200" ry="130" fill="var(--cyan)" opacity="0.20"/>
+<ellipse cx="480" cy="270" rx="120" ry="80" fill="var(--cyan)" opacity="0.18"/>
+<ellipse cx="480" cy="270" rx="60" ry="40" fill="var(--cyan)" opacity="0.15"/>
+</g>
+<rect x="60" y="60" width="180" height="240" rx="4" fill="var(--paper)" opacity="0.9" stroke="var(--rule)" stroke-width="1"/>
+<text x="80" y="90" font-family="monospace" font-size="9" fill="var(--muted)">PLANNING LIST</text>
+<rect x="80" y="104" width="12" height="12" rx="2" fill="var(--ink)" opacity="0.8"/>
+<rect x="100" y="106" width="80" height="8" rx="2" fill="var(--ink)" opacity="0.4"/>
+<rect x="80" y="124" width="12" height="12" rx="2" stroke="var(--control-line)" stroke-width="1" fill="none"/>
+<rect x="100" y="126" width="100" height="8" rx="2" fill="var(--ink)" opacity="0.4"/>
+<rect x="80" y="144" width="12" height="12" rx="2" stroke="var(--control-line)" stroke-width="1" fill="none"/>
+<rect x="100" y="146" width="70" height="8" rx="2" fill="var(--ink)" opacity="0.4"/>
+<rect x="80" y="164" width="12" height="12" rx="2" stroke="var(--control-line)" stroke-width="1" fill="none"/>
+<rect x="100" y="166" width="90" height="8" rx="2" fill="var(--ink)" opacity="0.4"/>
+<rect x="260" y="60" width="560" height="380" rx="4" fill="var(--paper)" opacity="0.9" stroke="var(--rule)" stroke-width="1"/>
+<rect x="280" y="90" width="120" height="80" rx="4" fill="var(--lavender)" opacity="0.7"/>
+<rect x="414" y="90" width="100" height="80" rx="4" fill="var(--coral)" opacity="0.65"/>
+<rect x="528" y="90" width="80" height="80" rx="4" fill="var(--lime)" opacity="0.7"/>
+<rect x="280" y="186" width="80" height="60" rx="4" fill="var(--magenta)" opacity="0.5"/>
+<rect x="374" y="186" width="140" height="60" rx="4" fill="var(--cyan)" opacity="0.4"/>
+<rect x="528" y="186" width="80" height="60" rx="4" fill="var(--moss)" opacity="0.5"/>
+</svg>
+</div>
+<div class="lk-info-card">
+<div class="lk-info-card-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="2" y="2" width="8" height="8" rx="1" fill="white"/></svg></div>
+<p style="font-size:14px;font-weight:400;margin-bottom:4px;">Larkspan Board</p>
+<p class="lk-muted" style="font-size:13px;line-height:1.4;">A shared sketch wall that keeps your whole workshop aligned, piece by piece.</p>
+<a href="#" class="lk-arrow-link" style="font-size:13px;margin-top:8px;display:inline-flex;">See how it works &#8594;</a>
+</div>
+<button class="lk-btn-round lk-play-btn" id="lk-play-statement" aria-label="Play board animation" aria-pressed="false" style="position:absolute;right:calc(var(--aura)*2);top:calc(var(--aura)*2);">
+<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M4 2.5l8 4.5-8 4.5V2.5z" fill="currentColor"/></svg>
+</button>
+</div>
+</div>
+</div>
+</section>
+
+<section id="lk-features" aria-label="Features">
+<div class="lk-wrap">
+<div class="lk-feat-cols">
+<div>
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:calc(var(--aura)*1);">
+<span class="lk-feat-dot" aria-hidden="true"></span>
+<span style="font-size:16px;font-weight:400;">Sketch without bounds</span>
+</div>
+<p class="lk-muted" style="font-size:14px;">Draw directly on a shared board — timber joints, shade arcs and fabric swatches in one place.</p>
+<a href="#" class="lk-arrow-link" style="margin-top:calc(var(--aura)*1);font-size:14px;">Explore Larkspan Board &#8594;</a>
+<div class="lk-feat-art" aria-hidden="true">
+<svg width="100%" height="100%" viewBox="0 0 400 300" fill="none" preserveAspectRatio="xMidYMid meet">
+<rect width="400" height="300" fill="var(--gray-2)"/>
+<rect x="20" y="20" width="160" height="260" rx="3" fill="var(--lavender)" opacity="0.5"/>
+<line x1="20" y1="150" x2="180" y2="150" stroke="var(--lavender)" stroke-width="2" opacity="0.6"/>
+<line x1="100" y1="20" x2="100" y2="280" stroke="var(--lavender)" stroke-width="2" opacity="0.6"/>
+<rect x="30" y="30" width="60" height="110" rx="2" fill="var(--lavender)" opacity="0.4"/>
+<rect x="110" y="30" width="60" height="80" rx="2" fill="var(--lavender)" opacity="0.3"/>
+<path d="M220 60 L260 20 L380 20 L380 60 L340 100 L220 100 Z" fill="var(--coral)" opacity="0.35"/>
+<circle cx="300" cy="180" r="60" stroke="var(--ink)" stroke-width="1.5" fill="none" opacity="0.5"/>
+<circle cx="300" cy="180" r="40" stroke="var(--ink)" stroke-width="1" fill="none" opacity="0.35"/>
+<circle cx="300" cy="180" r="20" fill="var(--ink)" opacity="0.12"/>
+<text x="220" y="250" font-family="monospace" font-size="10" fill="var(--muted)" opacity="0.8">OAK SIDE TABLE — B4</text>
+</svg>
+</div>
+</div>
+<div>
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:calc(var(--aura)*1);">
+<span style="display:inline-block;width:12px;height:12px;background:var(--ink);border-radius:2px;flex-shrink:0;" aria-hidden="true"></span>
+<span style="font-size:16px;font-weight:400;">Hand off with precision</span>
+</div>
+<p class="lk-muted" style="font-size:14px;">Turn a board sketch into a cut sheet, costing sheet and delivery note in a single step.</p>
+<a href="#" class="lk-arrow-link" style="margin-top:calc(var(--aura)*1);font-size:14px;">Explore Larkspan Bench &#8594;</a>
+<div class="lk-feat-art" aria-hidden="true">
+<svg width="100%" height="100%" viewBox="0 0 400 300" fill="none" preserveAspectRatio="xMidYMid meet">
+<rect width="400" height="300" fill="var(--gray-2)"/>
+<rect x="20" y="20" width="360" height="260" rx="4" fill="var(--paper)" stroke="var(--rule)" stroke-width="1"/>
+<text x="40" y="50" font-family="monospace" font-size="9" fill="var(--muted)">CUT SHEET — BENCH-003</text>
+<rect x="40" y="60" width="140" height="20" rx="2" fill="var(--gray-4)"/>
+<rect x="40" y="88" width="100" height="16" rx="2" fill="var(--gray-3)"/>
+<rect x="40" y="112" width="120" height="16" rx="2" fill="var(--gray-3)"/>
+<rect x="40" y="136" width="80" height="16" rx="2" fill="var(--gray-3)"/>
+<rect x="200" y="60" width="160" height="120" rx="3" fill="var(--lime)" opacity="0.35"/>
+<line x1="280" y1="60" x2="280" y2="180" stroke="var(--ink)" stroke-width="1" opacity="0.4"/>
+<line x1="200" y1="120" x2="360" y2="120" stroke="var(--ink)" stroke-width="1" opacity="0.4"/>
+<text x="210" y="80" font-family="monospace" font-size="8" fill="var(--muted)">W: 1200mm</text>
+<text x="210" y="140" font-family="monospace" font-size="8" fill="var(--muted)">H: 760mm</text>
+<rect x="40" y="210" width="320" height="1" fill="var(--rule)"/>
+<rect x="40" y="222" width="80" height="12" rx="2" fill="var(--gray-3)"/>
+<rect x="130" y="222" width="80" height="12" rx="2" fill="var(--gray-3)"/>
+<rect x="220" y="222" width="60" height="12" rx="2" fill="var(--ink)" opacity="0.7"/>
+</svg>
+</div>
+</div>
+</div>
+<div class="lk-statement2" style="margin-top:calc(var(--aura)*4);">
+<div class="lk-statement2-row">
+<div>
+<p class="lk-statement-p">Every piece planned where your whole team can see it. <span class="lk-muted">From timber order to delivery note, nothing lives in an inbox.</span></p>
+</div>
+<div style="flex-shrink:0;padding-top:4px;">
+<a href="#" class="lk-arrow-link" style="font-size:14px;">Explore Larkspan Tally &#8594;</a>
+</div>
+</div>
+<div style="margin-top:calc(var(--aura)*3);">
+<div class="lk-media-panel" aria-hidden="true">
+<svg width="100%" height="100%" viewBox="0 0 960 400" fill="none" preserveAspectRatio="xMidYMid meet" style="display:block;">
+<rect width="960" height="400" fill="var(--gray-2)"/>
+<rect x="40" y="40" width="880" height="320" rx="4" fill="var(--paper)" stroke="var(--rule)" stroke-width="1"/>
+<text x="60" y="72" font-family="monospace" font-size="10" fill="var(--muted)">TALLY — MATERIALS &amp; COSTING</text>
+<rect x="60" y="84" width="300" height="1" fill="var(--rule)"/>
+<rect x="60" y="96" width="120" height="14" rx="2" fill="var(--gray-3)"/>
+<rect x="60" y="118" width="200" height="12" rx="2" fill="var(--gray-3)"/>
+<rect x="60" y="138" width="160" height="12" rx="2" fill="var(--gray-3)"/>
+<rect x="60" y="158" width="180" height="12" rx="2" fill="var(--gray-3)"/>
+<rect x="60" y="178" width="140" height="12" rx="2" fill="var(--ink)" opacity="0.1"/>
+<rect x="400" y="84" width="480" height="260" rx="4" fill="var(--cyan)" opacity="0.08"/>
+<rect x="420" y="104" width="80" height="80" rx="2" fill="var(--cyan)" opacity="0.5"/>
+<rect x="516" y="104" width="80" height="80" rx="2" fill="var(--lavender)" opacity="0.5"/>
+<rect x="612" y="104" width="80" height="80" rx="2" fill="var(--coral)" opacity="0.5"/>
+<rect x="708" y="104" width="80" height="80" rx="2" fill="var(--lime)" opacity="0.5"/>
+<rect x="420" y="200" width="368" height="1" fill="var(--rule)"/>
+<rect x="420" y="212" width="260" height="10" rx="2" fill="var(--gray-3)"/>
+<rect x="420" y="230" width="200" height="10" rx="2" fill="var(--gray-3)"/>
+</svg>
+<button class="lk-btn-round lk-play-btn" id="lk-play-feat" aria-label="Play tally animation" aria-pressed="false" style="position:absolute;right:calc(var(--aura)*2);top:50%;transform:translateY(-50%);">
+<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M4 2.5l8 4.5-8 4.5V2.5z" fill="currentColor"/></svg>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="lk-mosaic" aria-label="Tool samples gallery" style="padding:calc(var(--aura)*4) 0 0;">
+<div class="lk-mosaic-grid" aria-hidden="true">
+<div class="lk-tile" style="background:var(--gray-2);">
+<div class="lk-tile-inner">
+<svg width="100%" height="100%" viewBox="0 0 200 270" fill="none" preserveAspectRatio="xMidYMid meet">
+<rect width="200" height="270" fill="var(--paper)"/>
+<circle cx="100" cy="100" r="70" fill="none" stroke="var(--ink)" stroke-width="1" opacity="0.15"/>
+<circle cx="100" cy="100" r="52" fill="none" stroke="var(--ink)" stroke-width="1" opacity="0.2"/>
+<circle cx="100" cy="100" r="36" fill="none" stroke="var(--ink)" stroke-width="1.5" opacity="0.25"/>
+<circle cx="100" cy="100" r="20" fill="none" stroke="var(--ink)" stroke-width="2" opacity="0.3"/>
+<circle cx="100" cy="100" r="6" fill="var(--ink)" opacity="0.5"/>
+<rect x="20" y="200" width="160" height="1" fill="var(--rule)"/>
+<text x="20" y="220" font-family="monospace" font-size="9" fill="var(--muted)">GRAIN PATTERN</text>
+<rect x="20" y="230" width="80" height="20" rx="10" fill="var(--chip-bg)"/>
+<text x="34" y="244" font-family="monospace" font-size="9" fill="var(--chip-ink)">S 1 · R 50</text>
+</svg>
+</div>
+</div>
+<div class="lk-tile" style="background:var(--lavender);">
+<div class="lk-tile-inner">
+<svg width="100%" height="100%" viewBox="0 0 200 270" fill="none" preserveAspectRatio="xMidYMid meet">
+<rect width="200" height="270" fill="var(--lavender)"/>
+<g opacity="0.6">
+<line x1="30" y1="40" x2="100" y2="80" stroke="white" stroke-width="1.5"/>
+<line x1="100" y1="80" x2="170" y2="40" stroke="white" stroke-width="1.5"/>
+<line x1="30" y1="40" x2="30" y2="140" stroke="white" stroke-width="1.5"/>
+<line x1="170" y1="40" x2="170" y2="140" stroke="white" stroke-width="1.5"/>
+<line x1="30" y1="140" x2="100" y2="180" stroke="white" stroke-width="1.5"/>
+<line x1="170" y1="140" x2="100" y2="180" stroke="white" stroke-width="1.5"/>
+<line x1="100" y1="80" x2="100" y2="180" stroke="white" stroke-width="1" stroke-dasharray="4 3"/>
+</g>
+<circle cx="30" cy="40" r="5" fill="white" opacity="0.8"/>
+<circle cx="170" cy="40" r="5" fill="white" opacity="0.8"/>
+<circle cx="100" cy="80" r="7" fill="white"/>
+<circle cx="30" cy="140" r="5" fill="white" opacity="0.8"/>
+<circle cx="170" cy="140" r="5" fill="white" opacity="0.8"/>
+<circle cx="100" cy="180" r="5" fill="white" opacity="0.8"/>
+</svg>
+</div>
+<div class="lk-tile-play">
+<button class="lk-btn-round" aria-label="Play joinery animation" style="width:32px;height:32px;">
+<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 2l7 4-7 4V2z" fill="currentColor"/></svg>
+</button>
+</div>
+</div>
+<div class="lk-tile" style="background:var(--coral);">
+<div class="lk-tile-inner">
+<svg width="100%" height="100%" viewBox="0 0 200 270" fill="none" preserveAspectRatio="xMidYMid meet">
+<rect width="200" height="270" fill="var(--coral)"/>
+<g opacity="0.75">
+<path d="M40 50 Q100 30 160 50 L155 220 Q100 240 45 220 Z" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+<path d="M55 60 Q100 42 145 60 L142 210 Q100 228 58 210 Z" fill="rgba(255,255,255,0.1)"/>
+<line x1="40" y1="80" x2="160" y2="80" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+<line x1="40" y1="100" x2="160" y2="100" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+<line x1="42" y1="120" x2="158" y2="120" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+<line x1="44" y1="140" x2="156" y2="140" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+<line x1="46" y1="160" x2="154" y2="160" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+<line x1="48" y1="180" x2="152" y2="180" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+<line x1="50" y1="200" x2="150" y2="200" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+</g>
+</svg>
+</div>
+<div class="lk-tile-play">
+<button class="lk-btn-round" aria-label="Play shade animation" style="width:32px;height:32px;">
+<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 2l7 4-7 4V2z" fill="currentColor"/></svg>
+</button>
+</div>
+</div>
+<div class="lk-tile" style="background:var(--lime);">
+<div class="lk-tile-inner">
+<svg width="100%" height="100%" viewBox="0 0 200 270" fill="none" preserveAspectRatio="xMidYMid meet">
+<rect width="200" height="270" fill="var(--lime)"/>
+<g opacity="0.6">
+<circle cx="60" cy="90" r="30" fill="rgba(0,0,0,0.12)" stroke="rgba(0,0,0,0.3)" stroke-width="1.5"/>
+<circle cx="140" cy="90" r="30" fill="rgba(0,0,0,0.08)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5"/>
+<circle cx="100" cy="160" r="30" fill="rgba(0,0,0,0.1)" stroke="rgba(0,0,0,0.28)" stroke-width="1.5"/>
+<line x1="60" y1="90" x2="140" y2="90" stroke="rgba(0,0,0,0.4)" stroke-width="1.5"/>
+<line x1="60" y1="90" x2="100" y2="160" stroke="rgba(0,0,0,0.4)" stroke-width="1.5"/>
+<line x1="140" y1="90" x2="100" y2="160" stroke="rgba(0,0,0,0.4)" stroke-width="1.5"/>
+</g>
+<text x="20" y="240" font-family="monospace" font-size="8" fill="rgba(0,0,0,0.5)">NODE GRAPH — LATHE-07</text>
+</svg>
+</div>
+</div>
+<div class="lk-tile" style="background:var(--cyan);opacity:0.9;">
+<div class="lk-tile-inner">
+<svg width="100%" height="100%" viewBox="0 0 200 270" fill="none" preserveAspectRatio="xMidYMid meet">
+<rect width="200" height="270" fill="var(--cyan)"/>
+<rect x="20" y="30" width="160" height="210" rx="3" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+<rect x="20" y="30" width="160" height="30" rx="3" fill="rgba(255,255,255,0.3)"/>
+<text x="34" y="50" font-family="monospace" font-size="8" fill="rgba(0,0,0,0.6)">TIMELINE — TALLY-04</text>
+<rect x="34" y="74" width="130" height="8" rx="2" fill="rgba(255,255,255,0.5)"/>
+<rect x="34" y="74" width="80" height="8" rx="2" fill="rgba(0,0,0,0.3)"/>
+<rect x="34" y="90" width="130" height="8" rx="2" fill="rgba(255,255,255,0.5)"/>
+<rect x="34" y="90" width="110" height="8" rx="2" fill="rgba(0,0,0,0.2)"/>
+<rect x="34" y="106" width="130" height="8" rx="2" fill="rgba(255,255,255,0.5)"/>
+<rect x="34" y="106" width="50" height="8" rx="2" fill="rgba(0,0,0,0.25)"/>
+<text x="34" y="140" font-family="monospace" font-size="8" fill="rgba(0,0,0,0.5)">PHASE 2 — 14 NOV</text>
+<rect x="34" y="150" width="80" height="20" rx="10" fill="rgba(0,0,0,0.2)"/>
+<text x="52" y="164" font-family="monospace" font-size="8" fill="rgba(255,255,255,0.9)">BENCH &#8594;</text>
+</svg>
+</div>
+<div class="lk-tile-play">
+<button class="lk-btn-round" aria-label="Play timeline animation" style="width:32px;height:32px;">
+<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 2l7 4-7 4V2z" fill="currentColor"/></svg>
+</button>
+</div>
+</div>
+<div class="lk-tile" style="background:var(--moss);">
+<div class="lk-tile-inner">
+<svg width="100%" height="100%" viewBox="0 0 200 270" fill="none" preserveAspectRatio="xMidYMid meet">
+<rect width="200" height="270" fill="var(--moss)"/>
+<g opacity="0.65">
+<rect x="40" y="40" width="30" height="150" rx="1" fill="rgba(255,255,255,0.3)"/>
+<rect x="78" y="80" width="30" height="110" rx="1" fill="rgba(255,255,255,0.25)"/>
+<rect x="116" y="60" width="30" height="130" rx="1" fill="rgba(255,255,255,0.28)"/>
+<rect x="154" y="100" width="30" height="90" rx="1" fill="rgba(255,255,255,0.2)"/>
+<line x1="40" y1="200" x2="184" y2="200" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+<line x1="40" y1="40" x2="40" y2="200" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+</g>
+<text x="30" y="240" font-family="monospace" font-size="8" fill="rgba(255,255,255,0.7)">DIAL — DEPTH 20</text>
+</svg>
+</div>
+<div class="lk-tile-play">
+<button class="lk-btn-round" aria-label="Play dial animation" style="width:32px;height:32px;">
+<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 2l7 4-7 4V2z" fill="currentColor"/></svg>
+</button>
+</div>
+</div>
+<div class="lk-tile" style="background:var(--magenta);">
+<div class="lk-tile-inner">
+<svg width="100%" height="100%" viewBox="0 0 200 270" fill="none" preserveAspectRatio="xMidYMid meet">
+<rect width="200" height="270" fill="var(--magenta)"/>
+<g opacity="0.6">
+<path d="M20 200 Q50 80 100 60 Q150 40 180 150" stroke="rgba(255,255,255,0.7)" stroke-width="2" fill="none"/>
+<path d="M20 220 Q60 100 110 80 Q155 60 180 170" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" fill="none"/>
+<circle cx="100" cy="60" r="8" fill="white" opacity="0.8"/>
+<circle cx="180" cy="150" r="6" fill="white" opacity="0.6"/>
+<circle cx="20" cy="200" r="6" fill="white" opacity="0.6"/>
+</g>
+<text x="20" y="250" font-family="monospace" font-size="8" fill="rgba(255,255,255,0.8)">PATTERN — LATHE-02</text>
+</svg>
+</div>
+</div>
+<div class="lk-tile" style="background:var(--cobalt);">
+<div class="lk-tile-inner">
+<svg width="100%" height="100%" viewBox="0 0 200 270" fill="none" preserveAspectRatio="xMidYMid meet">
+<rect width="200" height="270" fill="var(--cobalt)"/>
+<g opacity="0.7">
+<rect x="30" y="30" width="60" height="100" rx="1" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+<rect x="30" y="140" width="60" height="100" rx="1" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+<line x1="30" y1="130" x2="90" y2="130" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+<line x1="58" y1="30" x2="58" y2="80" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+<line x1="58" y1="80" x2="80" y2="80" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+<line x1="58" y1="80" x2="36" y2="80" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+<rect x="110" y="40" width="70" height="80" rx="2" fill="rgba(255,255,255,0.1)"/>
+<rect x="118" y="52" width="54" height="8" rx="2" fill="rgba(255,255,255,0.3)"/>
+<rect x="118" y="68" width="40" height="8" rx="2" fill="rgba(255,255,255,0.25)"/>
+<rect x="118" y="84" width="48" height="8" rx="2" fill="rgba(255,255,255,0.2)"/>
+</g>
+<text x="20" y="250" font-family="monospace" font-size="8" fill="rgba(255,255,255,0.75)">DOVETAIL — BENCH-07</text>
+</svg>
+</div>
+<div class="lk-tile-play">
+<button class="lk-btn-round" aria-label="Play dovetail animation" style="width:32px;height:32px;">
+<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 2l7 4-7 4V2z" fill="currentColor"/></svg>
+</button>
+</div>
+</div>
+<div class="lk-tile" style="background:var(--gray-2);">
+<div class="lk-tile-inner">
+<svg width="100%" height="100%" viewBox="0 0 200 270" fill="none" preserveAspectRatio="xMidYMid meet">
+<rect width="200" height="270" fill="var(--paper)"/>
+<g opacity="0.7">
+<circle cx="100" cy="110" r="65" fill="none" stroke="var(--ink)" stroke-width="8" opacity="0.08"/>
+<circle cx="100" cy="110" r="50" fill="none" stroke="var(--ink)" stroke-width="6" opacity="0.1"/>
+<circle cx="100" cy="110" r="36" fill="none" stroke="var(--ink)" stroke-width="4" opacity="0.12"/>
+<circle cx="100" cy="110" r="22" fill="none" stroke="var(--ink)" stroke-width="3" opacity="0.15"/>
+<circle cx="100" cy="110" r="10" fill="var(--ink)" opacity="0.2"/>
+<line x1="100" y1="45" x2="100" y2="20" stroke="var(--ink)" stroke-width="2" opacity="0.3"/>
+<line x1="150" y1="75" x2="168" y2="58" stroke="var(--ink)" stroke-width="1.5" opacity="0.25"/>
+<line x1="165" y1="110" x2="190" y2="110" stroke="var(--ink)" stroke-width="1.5" opacity="0.25"/>
+</g>
+<text x="30" y="210" font-family="monospace" font-size="9" fill="var(--muted)">TURNED BOWL — LATHE-11</text>
+<rect x="30" y="222" width="140" height="8" rx="4" fill="var(--gray-4)"/>
+<rect x="30" y="222" width="90" height="8" rx="4" fill="var(--ink)" opacity="0.4"/>
+</svg>
+</div>
+</div>
+<div class="lk-tile" style="background:var(--coral);opacity:0.85;">
+<div class="lk-tile-inner">
+<svg width="100%" height="100%" viewBox="0 0 200 270" fill="none" preserveAspectRatio="xMidYMid meet">
+<rect width="200" height="270" fill="var(--coral)"/>
+<g opacity="0.6">
+<rect x="30" y="20" width="140" height="20" rx="2" fill="rgba(255,255,255,0.3)"/>
+<rect x="30" y="48" width="140" height="20" rx="2" fill="rgba(255,255,255,0.25)"/>
+<rect x="30" y="76" width="140" height="20" rx="2" fill="rgba(255,255,255,0.2)"/>
+<rect x="30" y="104" width="140" height="20" rx="2" fill="rgba(255,255,255,0.18)"/>
+<rect x="30" y="132" width="140" height="20" rx="2" fill="rgba(255,255,255,0.15)"/>
+<rect x="30" y="160" width="140" height="20" rx="2" fill="rgba(255,255,255,0.12)"/>
+<rect x="30" y="188" width="140" height="20" rx="2" fill="rgba(255,255,255,0.1)"/>
+<line x1="20" y1="30" x2="20" y2="208" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+</g>
+<text x="30" y="246" font-family="monospace" font-size="8" fill="rgba(255,255,255,0.85)">FABRIC SWATCHES</text>
+</svg>
+</div>
+<div class="lk-tile-play">
+<button class="lk-btn-round" aria-label="Play swatch animation" style="width:32px;height:32px;">
+<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 2l7 4-7 4V2z" fill="currentColor"/></svg>
+</button>
+</div>
+</div>
+<div class="lk-tile" style="background:var(--gray-3);">
+<div class="lk-tile-inner">
+<svg width="100%" height="100%" viewBox="0 0 200 270" fill="none" preserveAspectRatio="xMidYMid meet">
+<rect width="200" height="270" fill="var(--gray-3)"/>
+<g opacity="0.6">
+<path d="M40 200 L40 80 L80 50 L160 90 L160 200" fill="rgba(0,0,0,0.08)" stroke="var(--ink)" stroke-width="1.5" opacity="0.4"/>
+<line x1="40" y1="200" x2="160" y2="200" stroke="var(--ink)" stroke-width="1.5" opacity="0.5"/>
+<line x1="80" y1="50" x2="80" y2="200" stroke="var(--ink)" stroke-width="1" opacity="0.3" stroke-dasharray="4 3"/>
+<line x1="120" y1="70" x2="120" y2="200" stroke="var(--ink)" stroke-width="1" opacity="0.25" stroke-dasharray="4 3"/>
+<text x="38" y="224" font-family="monospace" font-size="7" fill="var(--muted)">W 820</text>
+<text x="78" y="224" font-family="monospace" font-size="7" fill="var(--muted)">D 420</text>
+<text x="130" y="224" font-family="monospace" font-size="7" fill="var(--muted)">H 760</text>
+</g>
+</svg>
+</div>
+</div>
+<div class="lk-tile" style="background:var(--lavender);opacity:0.8;">
+<div class="lk-tile-inner">
+<svg width="100%" height="100%" viewBox="0 0 200 270" fill="none" preserveAspectRatio="xMidYMid meet">
+<rect width="200" height="270" fill="var(--lavender)"/>
+<g opacity="0.65">
+<rect x="20" y="80" width="160" height="110" rx="4" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+<rect x="30" y="92" width="60" height="8" rx="2" fill="rgba(255,255,255,0.4)"/>
+<rect x="30" y="108" width="140" height="6" rx="2" fill="rgba(255,255,255,0.3)"/>
+<rect x="30" y="122" width="100" height="6" rx="2" fill="rgba(255,255,255,0.25)"/>
+<rect x="30" y="136" width="120" height="6" rx="2" fill="rgba(255,255,255,0.2)"/>
+<rect x="30" y="150" width="80" height="6" rx="2" fill="rgba(255,255,255,0.18)"/>
+<rect x="30" y="166" width="40" height="20" rx="10" fill="rgba(255,255,255,0.4)"/>
+<text x="38" y="180" font-family="monospace" font-size="8" fill="var(--lavender)">OPEN</text>
+</g>
+</svg>
+</div>
+</div>
+</div>
+</section>
+
+<section id="lk-context" aria-label="Planning panel">
+<div class="lk-wrap">
+<div class="lk-ctx-panel">
+<div class="lk-ctx-window">
+<div class="lk-ctx-pane">
+<p class="lk-ctx-pane-title">Planning list</p>
+<div class="lk-check-item"><div class="lk-check-box" aria-hidden="true"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 4l2 2 4-4" stroke="var(--ink)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:14px;">Measure oak rails — 4 pcs</span></div>
+<div class="lk-check-item"><div class="lk-check-box" aria-hidden="true"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 4l2 2 4-4" stroke="var(--ink)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:14px;color:var(--muted);text-decoration:line-through;">Route dowel template B2</span></div>
+<div class="lk-check-item"><div class="lk-check-box" aria-hidden="true"></div><span style="font-size:14px;">Pleat shade section C (18 cm)</span></div>
+<div class="lk-check-item"><div class="lk-check-box" aria-hidden="true"></div><span style="font-size:14px;">Spin base collar — brass</span></div>
+<div class="lk-check-item"><div class="lk-check-box" aria-hidden="true"></div><span style="font-size:14px;">Send cut sheet to Bench</span></div>
+</div>
+<div class="lk-ctx-pane">
+<p class="lk-ctx-pane-title">Pinned swatches</p>
+<div class="lk-swatch-row">
+<div class="lk-swatch" style="background:var(--lavender);" title="Lavender grain"></div>
+<div class="lk-swatch" style="background:var(--coral);" title="Coral twill"></div>
+<div class="lk-swatch" style="background:var(--lime);" title="Lime linen"></div>
+<div class="lk-swatch" style="background:var(--cyan);" title="Cyan canvas"></div>
+<div class="lk-swatch" style="background:var(--moss);" title="Moss felt"></div>
+<div class="lk-swatch" style="background:var(--magenta);" title="Magenta silk"></div>
+<div class="lk-swatch" style="background:var(--cobalt);" title="Cobalt velvet"></div>
+<div class="lk-swatch" style="background:var(--gray-5);" title="Ash timber"></div>
+</div>
+<p style="font-size:13px;color:var(--muted);margin-top:calc(var(--aura)*1);">8 swatches pinned · updated 2 days ago (sample)</p>
+</div>
+</div>
+<div style="margin-top:calc(var(--aura)*1.5);">
+<a href="#" class="lk-arrow-link" style="font-size:14px;">See how Larkspan Board works &#8594;</a>
+</div>
+</div>
+</div>
+</section>
+
+<section id="lk-proof" aria-label="Workshops proof (sample)">
+<div class="lk-wrap">
+<h2 class="lk-h2" style="margin-bottom:calc(var(--aura)*2.5);">Workshops plan with Larkspan (sample)</h2>
+<div class="lk-proof-cols">
+<div>
+<blockquote class="lk-quote">&#8220;Having every cut sheet, swatch and note in one board has halved the time we spend chasing approvals from our clients. The hand-off is so clear they almost never ask twice.&#8221;</blockquote>
+<div style="display:flex;align-items:center;gap:12px;margin-top:calc(var(--aura)*1.5);">
+<div class="lk-avatar" aria-hidden="true" style="background:var(--lavender);color:white;font-size:14px;">J</div>
+<div>
+<p style="font-size:14px;font-weight:400;">Juno Fairweather (sample)</p>
+<p class="lk-muted" style="font-size:13px;">Lead maker, Hollow Oak Joinery (fictional)</p>
+</div>
+</div>
+</div>
+<div class="lk-proof-vr" aria-hidden="true"></div>
+<div>
+<p class="lk-stat-num">87%</p>
+<p class="lk-muted lk-mono" style="font-size:13px;margin-top:8px;">of studios report fewer approval rounds (sample)</p>
+<p class="lk-muted" style="font-size:12px;margin-top:4px;">Sample datum · not independently verified</p>
+</div>
+</div>
+<div style="margin-top:calc(var(--aura)*4);">
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:calc(var(--aura)*1);">
+<p class="lk-eyebrow">Makers on Larkspan (sample)</p>
+<button class="lk-btn-round-outline" id="lk-marquee-pause" aria-label="Pause maker scroll" aria-pressed="false" style="width:28px;height:28px;">
+<svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><rect x="2" y="1" width="2.5" height="8" fill="currentColor"/><rect x="5.5" y="1" width="2.5" height="8" fill="currentColor"/></svg>
+</button>
+</div>
+<div class="lk-marquee-wrap" aria-hidden="true">
+<div class="lk-marquee-track" id="lk-marquee-track">
+<span class="lk-marquee-item">Hollow Oak Joinery (fictional)</span>
+<span class="lk-marquee-item">Brassmoth Lighting (fictional)</span>
+<span class="lk-marquee-item">The Pleat Studio (fictional)</span>
+<span class="lk-marquee-item">Ironwheel Metalwork (fictional)</span>
+<span class="lk-marquee-item">Ashwood Collective (fictional)</span>
+<span class="lk-marquee-item">Cordgrass Upholstery (fictional)</span>
+<span class="lk-marquee-item">Spindrift Lamps (fictional)</span>
+<span class="lk-marquee-item">Fernmill Furniture (fictional)</span>
+<span class="lk-marquee-item">Hollow Oak Joinery (fictional)</span>
+<span class="lk-marquee-item">Brassmoth Lighting (fictional)</span>
+<span class="lk-marquee-item">The Pleat Studio (fictional)</span>
+<span class="lk-marquee-item">Ironwheel Metalwork (fictional)</span>
+<span class="lk-marquee-item">Ashwood Collective (fictional)</span>
+<span class="lk-marquee-item">Cordgrass Upholstery (fictional)</span>
+<span class="lk-marquee-item">Spindrift Lamps (fictional)</span>
+<span class="lk-marquee-item">Fernmill Furniture (fictional)</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="lk-cta" aria-label="Closing call to action">
+<div class="lk-wrap">
+<h2 class="lk-h2">Every piece planned where it belongs.</h2>
+<a href="#" class="lk-btn-cta" style="margin-top:calc(var(--aura)*2.5);">Open a board today</a>
+</div>
+</section>
+
+<section id="lk-carousel" aria-label="Pattern templates carousel">
+<div class="lk-wrap">
+<div class="lk-car-header">
+<div>
+<h2 class="lk-h2">Patterns ready to use. <span class="lk-muted">Start from a proven layout.</span></h2>
+<a href="#" class="lk-arrow-link" style="font-size:14px;margin-top:calc(var(--aura)*0.5);">Browse all patterns &#8594;</a>
+</div>
+<div class="lk-car-controls">
+<span class="lk-car-counter lk-mono" id="lk-car-counter" aria-live="polite">1 of 8</span>
+<button class="lk-btn-round-outline" id="lk-car-prev" aria-label="Previous pattern" disabled>
+<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+<button class="lk-btn-round-outline" id="lk-car-next" aria-label="Next pattern">
+<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M5 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+</div>
+</div>
+<div class="lk-car-track-wrap">
+<div class="lk-car-track" id="lk-car-track" role="list">
+<div class="lk-car-card" role="listitem">
+<div class="lk-car-art" style="background:var(--lavender);" aria-hidden="true">
+<svg width="100%" height="100%" viewBox="0 0 240 180" fill="none" preserveAspectRatio="xMidYMid meet"><rect width="240" height="180" fill="var(--lavender)"/><rect x="20" y="20" width="80" height="140" rx="2" fill="rgba(255,255,255,0.2)"/><rect x="110" y="40" width="110" height="100" rx="2" fill="rgba(255,255,255,0.15)"/></svg>
+</div>
+<div class="lk-car-label"><span style="font-size:13px;">Joinery hand-off</span><span aria-hidden="true">&#8594;</span></div>
+</div>
+<div class="lk-car-card" role="listitem">
+<div class="lk-car-art" style="background:var(--coral);" aria-hidden="true">
+<svg width="100%" height="100%" viewBox="0 0 240 180" fill="none" preserveAspectRatio="xMidYMid meet"><rect width="240" height="180" fill="var(--coral)"/><circle cx="120" cy="90" r="60" fill="rgba(255,255,255,0.15)"/><circle cx="120" cy="90" r="35" fill="rgba(255,255,255,0.1)"/></svg>
+</div>
+<div class="lk-car-label"><span style="font-size:13px;">Shade arc plan</span><span aria-hidden="true">&#8594;</span></div>
+</div>
+<div class="lk-car-card" role="listitem">
+<div class="lk-car-art" style="background:var(--lime);" aria-hidden="true">
+<svg width="100%" height="100%" viewBox="0 0 240 180" fill="none" preserveAspectRatio="xMidYMid meet"><rect width="240" height="180" fill="var(--lime)"/><rect x="20" y="20" width="200" height="140" rx="2" fill="rgba(0,0,0,0.08)"/><rect x="30" y="30" width="80" height="8" rx="2" fill="rgba(0,0,0,0.2)"/><rect x="30" y="46" width="140" height="6" rx="2" fill="rgba(0,0,0,0.15)"/><rect x="30" y="60" width="110" height="6" rx="2" fill="rgba(0,0,0,0.12)"/></svg>
+</div>
+<div class="lk-car-label"><span style="font-size:13px;">Costing sheet</span><span aria-hidden="true">&#8594;</span></div>
+</div>
+<div class="lk-car-card" role="listitem">
+<div class="lk-car-art" style="background:var(--cyan);" aria-hidden="true">
+<svg width="100%" height="100%" viewBox="0 0 240 180" fill="none" preserveAspectRatio="xMidYMid meet"><rect width="240" height="180" fill="var(--cyan)"/><rect x="20" y="30" width="200" height="30" rx="2" fill="rgba(0,0,0,0.1)"/><rect x="20" y="70" width="140" height="30" rx="2" fill="rgba(0,0,0,0.08)"/><rect x="20" y="110" width="180" height="30" rx="2" fill="rgba(0,0,0,0.06)"/></svg>
+</div>
+<div class="lk-car-label"><span style="font-size:13px;">Timeline board</span><span aria-hidden="true">&#8594;</span></div>
+</div>
+<div class="lk-car-card" role="listitem">
+<div class="lk-car-art" style="background:var(--moss);" aria-hidden="true">
+<svg width="100%" height="100%" viewBox="0 0 240 180" fill="none" preserveAspectRatio="xMidYMid meet"><rect width="240" height="180" fill="var(--moss)"/><circle cx="80" cy="90" r="50" stroke="rgba(255,255,255,0.4)" stroke-width="2" fill="none"/><circle cx="160" cy="90" r="40" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none"/></svg>
+</div>
+<div class="lk-car-label"><span style="font-size:13px;">Node graph</span><span aria-hidden="true">&#8594;</span></div>
+</div>
+<div class="lk-car-card" role="listitem">
+<div class="lk-car-art" style="background:var(--magenta);" aria-hidden="true">
+<svg width="100%" height="100%" viewBox="0 0 240 180" fill="none" preserveAspectRatio="xMidYMid meet"><rect width="240" height="180" fill="var(--magenta)"/><path d="M20 160 Q80 40 160 80 Q200 100 220 60" stroke="rgba(255,255,255,0.6)" stroke-width="2.5" fill="none"/></svg>
+</div>
+<div class="lk-car-label"><span style="font-size:13px;">Upholstery map</span><span aria-hidden="true">&#8594;</span></div>
+</div>
+<div class="lk-car-card" role="listitem">
+<div class="lk-car-art" style="background:var(--cobalt);" aria-hidden="true">
+<svg width="100%" height="100%" viewBox="0 0 240 180" fill="none" preserveAspectRatio="xMidYMid meet"><rect width="240" height="180" fill="var(--cobalt)"/><rect x="30" y="20" width="50" height="140" rx="1" fill="rgba(255,255,255,0.2)"/><rect x="90" y="50" width="50" height="110" rx="1" fill="rgba(255,255,255,0.15)"/><rect x="150" y="30" width="60" height="130" rx="1" fill="rgba(255,255,255,0.18)"/></svg>
+</div>
+<div class="lk-car-label"><span style="font-size:13px;">Delivery pack</span><span aria-hidden="true">&#8594;</span></div>
+</div>
+<div class="lk-car-card" role="listitem">
+<div class="lk-car-art" style="background:var(--gray-3);" aria-hidden="true">
+<svg width="100%" height="100%" viewBox="0 0 240 180" fill="none" preserveAspectRatio="xMidYMid meet"><rect width="240" height="180" fill="var(--gray-3)"/><rect x="20" y="20" width="200" height="140" rx="4" fill="var(--paper)" stroke="var(--rule)" stroke-width="1"/><rect x="30" y="32" width="60" height="8" rx="2" fill="var(--gray-5)"/><rect x="30" y="50" width="180" height="1" fill="var(--rule)"/><rect x="30" y="62" width="140" height="6" rx="2" fill="var(--gray-4)"/><rect x="30" y="76" width="100" height="6" rx="2" fill="var(--gray-4)"/></svg>
+</div>
+<div class="lk-car-label"><span style="font-size:13px;">Grain library</span><span aria-hidden="true">&#8594;</span></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="lk-table-section" aria-label="Plan comparison table">
+<div class="lk-wrap">
+<h2 class="lk-h2" style="margin-bottom:calc(var(--aura)*2);">Compare plans</h2>
+<div class="lk-table-scroll" role="region" aria-label="Plan comparison" tabindex="0">
+<table class="lk-table">
+<caption>Larkspan plan comparison (sample data)</caption>
+<thead>
+<tr>
+<th scope="col">Feature</th>
+<th scope="col">Solo</th>
+<th scope="col">Studio</th>
+<th scope="col">Collective</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Larkspan Board seats</td><td>1</td><td>Up to 10</td><td>Unlimited</td></tr>
+<tr><td>Larkspan Bench exports/month</td><td>5</td><td>Unlimited</td><td>Unlimited</td></tr>
+<tr><td>Larkspan Lathe patterns</td><td>20</td><td>Unlimited</td><td>Unlimited</td></tr>
+<tr><td>Larkspan Tally costing sheets</td><td>3</td><td>50</td><td>Unlimited</td></tr>
+<tr><td>Larkspan Grain components</td><td class="lk-check-mark">&#10003;</td><td class="lk-check-mark">&#10003;</td><td class="lk-check-mark">&#10003;</td></tr>
+<tr><td>Multi-workshop hand-off</td><td class="lk-dash">—</td><td class="lk-check-mark">&#10003;</td><td class="lk-check-mark">&#10003;</td></tr>
+<tr><td>Priority support</td><td class="lk-dash">—</td><td class="lk-dash">—</td><td class="lk-check-mark">&#10003;</td></tr>
+<tr><td>SSO &amp; audit logs</td><td class="lk-dash">—</td><td class="lk-dash">—</td><td class="lk-check-mark">&#10003;</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+
+<section id="lk-pricing" aria-label="Pricing">
+<div class="lk-wrap">
+<h2 class="lk-h2">Simple pricing for every workshop.</h2>
+<div class="lk-pricing-grid">
+<div class="lk-plan">
+<p class="lk-eyebrow" style="margin-bottom:calc(var(--aura)*0.5);">Solo</p>
+<p class="lk-plan-price">Free</p>
+<hr class="lk-rule" style="margin:calc(var(--aura)*1.5) 0;"/>
+<ul class="lk-plan-features" role="list">
+<li>1 seat on Larkspan Board</li>
+<li>5 Bench exports per month</li>
+<li>20 Lathe patterns</li>
+<li>3 Tally costing sheets</li>
+<li>Grain component library</li>
+</ul>
+<button class="lk-btn-outline" style="margin-top:calc(var(--aura)*2);width:100%;">Start for nothing</button>
+</div>
+<div class="lk-plan lk-plan-featured">
+<p class="lk-eyebrow" style="margin-bottom:calc(var(--aura)*0.5);opacity:0.7;">Studio <span class="lk-plan-badge">Popular</span></p>
+<p class="lk-plan-price">£18 <span style="font-size:16px;font-weight:400;">/seat/month (sample)</span></p>
+<hr class="lk-rule" style="margin:calc(var(--aura)*1.5) 0;"/>
+<ul class="lk-plan-features" role="list">
+<li>Up to 10 seats on Board</li>
+<li>Unlimited Bench exports</li>
+<li>Unlimited Lathe patterns</li>
+<li>50 Tally sheets per month</li>
+<li>Multi-workshop hand-off</li>
+<li>Email support</li>
+</ul>
+<button class="lk-btn-outline" style="margin-top:calc(var(--aura)*2);width:100%;">Try Studio free for 14 days</button>
+</div>
+<div class="lk-plan">
+<p class="lk-eyebrow" style="margin-bottom:calc(var(--aura)*0.5);">Collective</p>
+<p class="lk-plan-price">£52 <span style="font-size:16px;font-weight:400;">/seat/month (sample)</span></p>
+<hr class="lk-rule" style="margin:calc(var(--aura)*1.5) 0;"/>
+<ul class="lk-plan-features" role="list">
+<li>Unlimited seats on all tools</li>
+<li>Unlimited everything</li>
+<li>Priority support &amp; onboarding</li>
+<li>SSO &amp; audit logs</li>
+<li>Dedicated account contact</li>
+</ul>
+<button class="lk-btn-outline" style="margin-top:calc(var(--aura)*2);width:100%;">Talk to us</button>
+</div>
+</div>
+</div>
+</section>
+
+<section id="lk-form-section" aria-label="Book a studio walkthrough">
+<div class="lk-wrap">
+<h2 class="lk-h2" style="margin-bottom:calc(var(--aura)*0.5);">Book a studio walkthrough</h2>
+<p class="lk-muted" style="font-size:15px;margin-bottom:calc(var(--aura)*2);">We will show you how Larkspan fits your trade in 20 minutes (sample demo).</p>
+<form class="lk-form" id="lk-form" novalidate>
+<div class="lk-form-row">
+<div class="lk-form-field">
+<label class="lk-form-label" for="lk-name">Your name</label>
+<input type="text" id="lk-name" name="name" autocomplete="name" placeholder="Ada Millard" required/>
+</div>
+<div class="lk-form-field">
+<label class="lk-form-label" for="lk-email">Work email</label>
+<input type="email" id="lk-email" name="email" autocomplete="email" placeholder="ada@hollowoak.example" required/>
+</div>
+</div>
+<div class="lk-form-field">
+<label class="lk-form-label" for="lk-trade">Workshop type</label>
+<div class="lk-select-wrap">
+<select id="lk-trade" name="trade" class="inputer" required>
+<option value="">Select your trade</option>
+<option value="joinery">Joinery &amp; carpentry</option>
+<option value="lamp">Lamp making</option>
+<option value="upholstery">Upholstery</option>
+<option value="metalwork">Metalwork &amp; spinning</option>
+<option value="other">Other craft</option>
+</select>
+</div>
+</div>
+<div class="lk-form-field">
+<label class="lk-form-label" for="lk-message">Anything you would like us to know</label>
+<textarea id="lk-message" name="message" placeholder="We are a small joinery of three and use spreadsheets at the moment…"></textarea>
+</div>
+<div>
+<button type="submit" class="lk-btn-primary" style="border-radius:8px;">Request a walkthrough</button>
+</div>
+<div class="lk-form-live" role="status" aria-live="polite" id="lk-form-status"></div>
+</form>
+</div>
+</section>
+
+<section id="lk-faq" aria-label="Frequently asked questions">
+<div class="lk-wrap">
+<h2 class="lk-h2">Questions makers ask</h2>
+<dl class="lk-faq-list">
+<dt><button class="lk-faq-btn" aria-expanded="false" aria-controls="lk-faq-1">Do I need to sign a long contract?<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></dt>
+<dd class="lk-faq-panel" id="lk-faq-1" hidden>No. All plans are month-to-month. Cancel any time from your account settings with no fee.</dd>
+<dt><button class="lk-faq-btn" aria-expanded="false" aria-controls="lk-faq-2">Can I invite a client to view a board without paying for a seat?<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></dt>
+<dd class="lk-faq-panel" id="lk-faq-2" hidden>Yes. Guest viewer links let anyone see a board in read-only mode at no extra cost on Studio and Collective plans.</dd>
+<dt><button class="lk-faq-btn" aria-expanded="false" aria-controls="lk-faq-3">What file formats does Bench export?<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></dt>
+<dd class="lk-faq-panel" id="lk-faq-3" hidden>PDF, SVG, DXF and CSV. DXF is available on Studio and Collective plans for direct CNC import.</dd>
+<dt><button class="lk-faq-btn" aria-expanded="false" aria-controls="lk-faq-4">Is there a version for trade schools?<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></dt>
+<dd class="lk-faq-panel" id="lk-faq-4" hidden>Yes. Accredited trade schools receive free Studio access for up to 30 student seats. Apply via the Educator access page.</dd>
+<dt><button class="lk-faq-btn" aria-expanded="false" aria-controls="lk-faq-5">How does Tally handle currency and VAT?<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></dt>
+<dd class="lk-faq-panel" id="lk-faq-5" hidden>Tally supports GBP, EUR and USD with adjustable VAT rates. It is for estimation only; always verify with a qualified accountant.</dd>
+</dl>
+</div>
+</section>
+
+</main>
+
+<footer id="lk-footer" role="contentinfo">
+<div class="lk-wrap">
+<div class="lk-footer-top">
+<div class="lk-footer-brand">
+<span class="lk-footer-wordmark">Larkspan</span>
+<div class="lk-footer-socials">
+<button class="lk-btn-social" aria-label="Sample channel 1">
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+</button>
+<button class="lk-btn-social" aria-label="Sample channel 2">
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 3l8 5-8 5V3z" fill="currentColor"/></svg>
+</button>
+<button class="lk-btn-social" aria-label="Sample channel 3">
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="3" y="3" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+</button>
+<button class="lk-btn-social" aria-label="Sample channel 4">
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 10 Q5 4 8 8 Q11 12 14 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>
+</button>
+</div>
+</div>
+<div class="lk-footer-cols">
+<div>
+<p class="lk-footer-col-title">Tools</p>
+<ul class="lk-footer-links" role="list">
+<li><a href="#">Larkspan Board</a></li>
+<li><a href="#">Larkspan Bench</a></li>
+<li><a href="#">Larkspan Lathe</a></li>
+<li><a href="#">Larkspan Tally</a></li>
+<li><a href="#">Larkspan Stage</a></li>
+<li><a href="#">Larkspan Grain<span class="lk-footer-badge">New</span></a></li>
+</ul>
+</div>
+<div>
+<p class="lk-footer-col-title">Plans</p>
+<ul class="lk-footer-links" role="list">
+<li><a href="#lk-pricing">Solo (free)</a></li>
+<li><a href="#lk-pricing">Studio</a></li>
+<li><a href="#lk-pricing">Collective</a></li>
+<li><a href="#">Educator access</a></li>
+</ul>
+</div>
+<div>
+<p class="lk-footer-col-title">Use cases</p>
+<ul class="lk-footer-links" role="list">
+<li><a href="#">Joiners &amp; carpenters</a></li>
+<li><a href="#">Lamp makers</a></li>
+<li><a href="#">Upholsterers</a></li>
+<li><a href="#">Metal spinners</a></li>
+<li><a href="#">Solo makers</a></li>
+<li><a href="#">Studio collectives</a></li>
+</ul>
+</div>
+<div>
+<p class="lk-footer-col-title">Learn</p>
+<ul class="lk-footer-links" role="list">
+<li><a href="#">Maker handbook</a></li>
+<li><a href="#">Bench tutorials</a></li>
+<li><a href="#">Journal</a></li>
+<li><a href="#">Larkspan Open Day</a></li>
+<li><a href="#">Accreditation</a></li>
+<li><a href="#">Changelog<span class="lk-footer-badge">Beta</span></a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="lk-footer-bottom">
+<p class="lk-footer-legal">2026 Larkspan, a fictional company.</p>
+<div class="lk-footer-select-wrap">
+<select class="lk-footer-lang" aria-label="Select language">
+<option value="en">English</option>
+<option value="es">Espa&#241;ol</option>
+<option value="fr">Fran&#231;ais</option>
+</select>
+</div>
+</div>
+</div>
+</footer>
+
+<script>
+(function(){
+
+var trigs=document.querySelectorAll('.lk-trig[aria-controls]');
+var flyouts=document.querySelectorAll('.lk-flyout');
+var openId=null;
+
+function closeAll(){
+trigs.forEach(function(t){t.setAttribute('aria-expanded','false');});
+flyouts.forEach(function(f){f.hidden=true;});
+openId=null;
+}
+
+function openFlyout(id,trig){
+closeAll();
+var fly=document.getElementById(id);
+if(fly){fly.hidden=false;trig.setAttribute('aria-expanded','true');openId=id;}
+}
+
+trigs.forEach(function(trig){
+trig.addEventListener('click',function(e){
+var id=trig.getAttribute('aria-controls');
+if(openId===id){closeAll();}else{openFlyout(id,trig);}
+});
+trig.addEventListener('keydown',function(e){
+if(e.key==='Enter'||e.key===' '){e.preventDefault();trig.click();}
+if(e.key==='Escape'){closeAll();trig.focus();}
+});
+});
+
+document.addEventListener('keydown',function(e){
+if(e.key==='Escape'&&openId){
+var t=document.querySelector('.lk-trig[aria-controls="'+openId+'"]');
+closeAll();
+if(t)t.focus();
+}
+});
+
+document.addEventListener('click',function(e){
+if(openId&&!e.target.closest('#lk-nav')){closeAll();}
+});
+
+flyouts.forEach(function(fly){
+fly.addEventListener('keydown',function(e){
+if(e.key==='Escape'){
+var id=fly.id;
+var t=document.querySelector('.lk-trig[aria-controls="'+id+'"]');
+closeAll();
+if(t)t.focus();
+}
+});
+});
+
+var menuToggle=document.getElementById('lk-menu-toggle');
+var menu=document.getElementById('lk-menu');
+var menuClose=document.getElementById('lk-menu-close');
+var lastFocus=null;
+
+function openMenu(){
+lastFocus=document.activeElement;
+menu.hidden=false;
+menuToggle.setAttribute('aria-expanded','true');
+document.body.style.overflow='hidden';
+menuClose.focus();
+}
+
+function closeMenu(){
+menu.hidden=true;
+menuToggle.setAttribute('aria-expanded','false');
+document.body.style.overflow='';
+if(lastFocus)lastFocus.focus();
+}
+
+if(menuToggle){menuToggle.addEventListener('click',openMenu);}
+if(menuClose){menuClose.addEventListener('click',closeMenu);}
+
+document.addEventListener('keydown',function(e){
+if(e.key==='Escape'&&!menu.hidden){closeMenu();}
+});
+
+var accTriggers=document.querySelectorAll('.lk-menu-acc-trigger');
+accTriggers.forEach(function(btn){
+btn.addEventListener('click',function(){
+var panelId=btn.getAttribute('aria-controls');
+var panel=document.getElementById(panelId);
+var expanded=btn.getAttribute('aria-expanded')==='true';
+accTriggers.forEach(function(b){
+b.setAttribute('aria-expanded','false');
+var p=document.getElementById(b.getAttribute('aria-controls'));
+if(p)p.hidden=true;
+});
+if(!expanded&&panel){panel.hidden=false;btn.setAttribute('aria-expanded','true');}
+});
+});
+
+var faqBtns=document.querySelectorAll('.lk-faq-btn');
+faqBtns.forEach(function(btn){
+btn.addEventListener('click',function(){
+var panelId=btn.getAttribute('aria-controls');
+var panel=document.getElementById(panelId);
+var expanded=btn.getAttribute('aria-expanded')==='true';
+btn.setAttribute('aria-expanded',expanded?'false':'true');
+panel.hidden=expanded;
+});
+});
+
+var form=document.getElementById('lk-form');
+var status=document.getElementById('lk-form-status');
+if(form){
+form.addEventListener('submit',function(e){
+e.preventDefault();
+status.textContent='Thank you — your walkthrough request has been received (sample demo only).';
+form.reset();
+});
+}
+
+var carTrack=document.getElementById('lk-car-track');
+var carPrev=document.getElementById('lk-car-prev');
+var carNext=document.getElementById('lk-car-next');
+var carCounter=document.getElementById('lk-car-counter');
+var carTotal=8;
+var carIdx=0;
+
+function getCardWidth(){
+var card=carTrack&&carTrack.querySelector('.lk-car-card');
+if(!card)return 0;
+var gap=16;
+return card.offsetWidth+gap;
+}
+
+function updateCar(){
+if(!carTrack)return;
+carTrack.scrollTo({left:carIdx*getCardWidth(),behavior:'smooth'});
+if(carCounter)carCounter.textContent=(carIdx+1)+' of '+carTotal;
+if(carPrev)carPrev.disabled=carIdx===0;
+if(carNext)carNext.disabled=carIdx>=carTotal-1;
+}
+
+if(carPrev)carPrev.addEventListener('click',function(){if(carIdx>0){carIdx--;updateCar();}});
+if(carNext)carNext.addEventListener('click',function(){if(carIdx<carTotal-1){carIdx++;updateCar();}});
+updateCar();
+
+var marqueeTrack=document.getElementById('lk-marquee-track');
+var marqueePause=document.getElementById('lk-marquee-pause');
+var marqueePaused=false;
+if(marqueePause){
+marqueePause.addEventListener('click',function(){
+marqueePaused=!marqueePaused;
+if(marqueeTrack){marqueeTrack.parentElement.classList.toggle('lk-marquee-paused',marqueePaused);}
+marqueePause.setAttribute('aria-pressed',marqueePaused?'true':'false');
+marqueePause.setAttribute('aria-label',marqueePaused?'Resume maker scroll':'Pause maker scroll');
+marqueePause.innerHTML=marqueePaused
+?'<svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 2l6 3-6 3V2z" fill="currentColor"/></svg>'
+:'<svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><rect x="2" y="1" width="2.5" height="8" fill="currentColor"/><rect x="5.5" y="1" width="2.5" height="8" fill="currentColor"/></svg>';
+});
+}
+
+var playBtns=document.querySelectorAll('.lk-btn-round[aria-pressed]');
+playBtns.forEach(function(btn){
+btn.addEventListener('click',function(){
+var pressed=btn.getAttribute('aria-pressed')==='true';
+btn.setAttribute('aria-pressed',pressed?'false':'true');
+var label=btn.getAttribute('aria-label')||'';
+btn.setAttribute('aria-label',pressed?label.replace('Pause','Play'):label.replace('Play','Pause'));
+});
+});
+
+})();
+</script>
+</body>
+</html>
