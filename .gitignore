@@ -132,6 +132,7 @@ packages/styles/dist
 packages/cli/dist
 packages/registry/build
 packages/react-fixture/dist
+packages/icons/
 
 # root inject
 packages/system/**.ts
