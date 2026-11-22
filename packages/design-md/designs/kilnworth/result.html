@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Kilnworth · Aura flavor</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="stylesheet" href="/aura/main.css"/>
+<link rel="stylesheet" href="theme.css"/>
+<script>
+(function(){
+  var p=new URLSearchParams(window.location.search).get("appearance");
+  var d=p==="dark"?"dark":p==="light"?"light":(window.matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
+  var r=document.documentElement;
+  r.classList.add(d);
+  r.style.colorScheme=d;
+  if(window.matchMedia("(prefers-reduced-motion: no-preference)").matches)r.classList.add("motion");
+})();
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+[hidden]{display:none!important;}
+html{background:var(--canvas);color:var(--ink);font-family:var(--aura-font-stack);scroll-padding-top:calc(var(--aura)*7);}
+body.kw{margin:0;padding:0;background:var(--canvas);color:var(--body);font-family:var(--aura-font-stack);font-size:17px;line-height:1.7;min-width:0;--gut:40px;--wrap:min(1200px,calc(100% - var(--gut)*2));}
+.kw h1,.kw h2,.kw h3,.kw h4,.kw p,.kw figure,.kw ul,.kw ol,.kw dl,.kw dd{margin:0;}
+.kw ul,.kw ol{padding:0;list-style:none;}
+.kw h1,.kw h2,.kw h3,.kw h4{font-family:var(--aura-font-stack);font-weight:400;letter-spacing:-0.03em;color:var(--ink);overflow-wrap:break-word;min-width:0;text-wrap:balance;}
+.kw a{color:inherit;text-decoration:none;}
+.kw svg{display:block;}
+.kw :focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.kw .on-dark :focus-visible,.kw .on-dark:focus-visible{outline-color:var(--on-ink);}
+.kw .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+.kw .skip{position:absolute;left:12px;top:-80px;z-index:300;padding:10px 18px;border-radius:4px;background:var(--ink);color:var(--canvas);font-size:14px;font-weight:600;}
+.kw .skip:focus{top:12px;}
+.kw .ic{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+.kw .ic-16{width:16px;height:16px;}
+.kw .ic-20{width:20px;height:20px;}
+.kw .wrap{width:var(--wrap);margin-inline:auto;min-width:0;}
+.kw .sec{padding-block:calc(var(--aura)*11);}
+.kw .sec-tight{padding-block:calc(var(--aura)*8.5);}
+.kw .chip{display:inline-flex;align-items:center;gap:6px;font:400 11px/1.2 var(--aura-font-label);text-transform:uppercase;letter-spacing:.06em;padding:4px 8px;border:1px solid color-mix(in srgb,var(--ink) 28%,transparent);border-radius:4px;color:var(--muted);}
+.kw .on-dark .chip{border-color:color-mix(in srgb,var(--on-ink) 32%,transparent);color:var(--on-ink-muted);}
+.kw .band .chip{border-color:color-mix(in srgb,white 50%,transparent);color:var(--on-band-muted);}
+.kw .h2{font-size:clamp(32px,3.6vw,46px);line-height:1.15;margin-top:16px;}
+.kw .lead{font-size:18px;line-height:1.6;color:var(--body);}
+.kw .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 20px;border-radius:4px;border:1px solid transparent;font-family:inherit;font-size:14px;font-weight:500;line-height:1;cursor:pointer;white-space:nowrap;text-decoration:none;flex-shrink:0;background:none;color:var(--ink);}
+.kw .btn-sm{height:36px;padding:0 14px;}
+.kw .btn-fill{background:var(--accent-9);border-color:var(--accent-9);color:white;}
+.kw .btn-fill:hover{background:var(--accent-10);border-color:var(--accent-10);}
+.kw .btn-line{background:transparent;color:var(--ink);border-color:var(--control-line);}
+.kw .btn-line:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);}
+.kw .on-dark .btn-line{color:var(--on-ink);border-color:var(--ink-control);}
+.kw .on-dark .btn-line:hover{background:color-mix(in srgb,var(--on-ink) 10%,transparent);}
+.kw .band .btn-line{color:var(--on-band);border-color:color-mix(in srgb,white 70%,transparent);}
+.kw .mlink{display:inline-flex;align-items:center;gap:8px;font:500 12px/1.2 var(--aura-font-label);text-transform:uppercase;letter-spacing:.04em;color:var(--link);}
+.kw .on-dark .mlink,.kw .band .mlink{color:var(--on-ink);}
+.kw .mlink:hover{text-decoration:underline;text-underline-offset:4px;}
+.kw .field{display:block;width:100%;height:44px;padding:0 14px;border:1px solid var(--control-line);border-radius:4px;background:var(--card-bg);color:var(--ink);font-family:inherit;font-size:16px;line-height:1.2;}
+.kw textarea.field{height:auto;min-height:112px;padding:12px 14px;line-height:1.5;resize:vertical;}
+.kw .field::placeholder{color:var(--muted);opacity:1;}
+.kw select.field{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:40px;background-image:linear-gradient(45deg,transparent 50%,var(--control-line) 50%),linear-gradient(135deg,var(--control-line) 50%,transparent 50%);background-position:calc(100% - 20px) 19px,calc(100% - 15px) 19px;background-size:5px 5px,5px 5px;background-repeat:no-repeat;}
+.kw .on-dark .field{background:transparent;border-color:var(--ink-control);color:var(--on-ink);}
+.kw .on-dark .field::placeholder{color:var(--on-ink-muted);}
+.kw label.lbl{display:block;font-size:14px;font-weight:500;color:var(--ink);margin-bottom:6px;}
+.kw .on-dark label.lbl{color:var(--on-ink);}
+
+.kw .hdr{position:sticky;top:0;height:0;z-index:100;}
+.kw .hdr-bar{position:relative;display:flex;align-items:center;gap:8px;width:var(--wrap);height:55px;margin:12px auto 0;padding:0 10px 0 18px;border-radius:8px;border:1px solid color-mix(in srgb,var(--on-ink) 16%,transparent);background:color-mix(in srgb,var(--ink-band) 88%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 10px 30px -12px color-mix(in srgb,black 55%,transparent);color:var(--on-ink);}
+.kw .brand{display:inline-flex;align-items:center;gap:8px;font-size:19px;font-weight:500;letter-spacing:-0.02em;line-height:1;color:inherit;}
+.kw .brand svg{width:20px;height:20px;}
+.kw .hdr-nav{display:none;margin-left:auto;}
+.kw .hdr-nav>ul{display:flex;align-items:center;gap:22px;}
+.kw .hdr-nav li{display:flex;align-items:center;}
+.kw .nav-link,.kw .nav-trigger{display:inline-flex;align-items:center;gap:5px;height:36px;padding:0 2px;border:0;background:none;color:var(--on-ink);font-family:inherit;font-size:14px;font-weight:400;cursor:pointer;}
+.kw .nav-link:hover,.kw .nav-trigger:hover{text-decoration:underline;text-underline-offset:5px;}
+.kw .nav-trigger .ic{width:10px;height:10px;}
+.kw .nav-trigger[aria-expanded="true"] .ic{transform:rotate(180deg);}
+.kw .icon-btn{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border:0;border-radius:4px;background:none;color:var(--on-ink);cursor:pointer;}
+.kw .icon-btn:hover{background:color-mix(in srgb,var(--on-ink) 12%,transparent);}
+.kw .hdr-actions{display:none;gap:8px;margin-left:8px;}
+.kw .hdr-menu-btn{margin-left:auto;}
+.kw .dd{position:absolute;top:calc(100% + 8px);left:0;width:min(520px,calc(100vw - 32px));padding:12px;border-radius:12px;border:1px solid color-mix(in srgb,var(--on-ink) 18%,transparent);background:var(--ink-band);color:var(--on-ink);box-shadow:0 24px 60px -16px color-mix(in srgb,black 70%,transparent);z-index:5;}
+.kw .dd ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;}
+.kw .dd a{display:grid;grid-template-columns:16px minmax(0,1fr);column-gap:12px;padding:10px;border-radius:8px;align-items:start;}
+.kw .dd a:hover{background:color-mix(in srgb,var(--on-ink) 9%,transparent);}
+.kw .dd a .ic{margin-top:4px;}
+.kw .dd b{display:block;font-size:15px;font-weight:500;line-height:1.3;}
+.kw .dd small{display:block;font-size:13px;line-height:1.4;color:var(--on-ink-muted);}
+.kw .dd-search{padding:16px;}
+.kw .dd-search ul{margin-top:12px;grid-template-columns:1fr;}
+.kw .ov{position:fixed;left:0;top:0;width:100vw;height:100vh;z-index:200;display:flex;flex-direction:column;padding:12px 16px 24px;overflow:auto;background:var(--ink-band);color:var(--on-ink);}
+.kw .ov-top{display:flex;align-items:center;justify-content:space-between;height:48px;flex-shrink:0;}
+.kw .ov nav{margin-top:32px;}
+.kw .ov nav a{display:block;padding:12px 0;font-size:24px;line-height:1.2;letter-spacing:-0.02em;border-bottom:1px solid color-mix(in srgb,var(--on-ink) 14%,transparent);}
+.kw .ov-actions{display:grid;gap:12px;margin-top:auto;padding-top:32px;}
+.kw .ov-actions .btn{width:100%;}
+
+.kw .inkb{background:var(--ink-band);color:var(--on-ink);}
+.dark .kw .inkb{box-shadow:inset 0 0 0 1px var(--rule);}
+.kw .hero{position:relative;display:flex;flex-direction:column;min-height:617px;padding-top:197px;border-radius:0 0 48px 48px;overflow:hidden;}
+.kw .hero-field{position:absolute;inset:0;pointer-events:none;}
+.kw .hero-field svg.swirl{position:absolute;inset:0;width:100%;height:100%;}
+.kw .swirl path{fill:none;stroke:var(--on-ink);stroke-linecap:round;}
+.kw .fchip{position:absolute;display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 10px 0 6px;border-radius:11px;border:1px solid color-mix(in srgb,var(--on-ink) 18%,transparent);background:color-mix(in srgb,var(--on-ink) 8%,var(--ink-band));font:400 11px/1 var(--aura-font-label);text-transform:uppercase;letter-spacing:.04em;color:var(--on-ink-muted);transform:rotate(var(--r,0deg));}
+.kw .fchip i{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--on-ink-muted);}
+.kw .fc1{top:14%;left:56%;--r:-3deg;}
+.kw .fc2{top:24%;left:41%;--r:2deg;}
+.kw .fc3{top:38%;left:63%;--r:3deg;}
+.kw .fc4{top:63%;left:54%;--r:-2deg;}
+.kw .fc5{top:70%;left:41%;--r:3deg;}
+.kw .fc6{top:76%;left:65%;--r:-3deg;}
+.kw .hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);gap:48px;align-items:end;}
+.kw .offer{display:inline-flex;align-items:center;gap:10px;min-height:24px;padding:2px 10px;margin-bottom:14px;border:1px solid color-mix(in srgb,var(--on-ink) 28%,transparent);border-radius:4px;font-size:13px;line-height:1.4;color:var(--on-ink);}
+.kw .offer .tag{font:500 11px/1 var(--aura-font-label);text-transform:uppercase;letter-spacing:.06em;color:var(--orange);}
+.kw .hero h1{font-size:clamp(40px,5vw,64px);line-height:1.1;color:var(--on-ink);}
+.kw .hero h1 span{display:block;}
+.kw .hero h1 .dim{color:var(--hero-dim);}
+.kw .hero-sub{font-size:21px;line-height:1.5;color:var(--on-ink);text-align:right;padding-bottom:20px;}
+.kw .customers{position:relative;margin-top:auto;padding-block:56px 62px;}
+.kw .customers ul{display:flex;align-items:center;justify-content:space-between;gap:24px;color:var(--on-ink-muted);}
+.kw .customers li{font-size:22px;line-height:1.2;white-space:nowrap;display:inline-flex;align-items:center;gap:8px;}
+.kw .cu1{font-weight:600;letter-spacing:.04em;}
+.kw .cu2{font-size:19px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;}
+.kw .cu3{font-weight:700;letter-spacing:-0.05em;}
+.kw .cu4{font-family:Georgia,serif;font-style:italic;}
+.kw .cu5{font-weight:500;}
+.kw .fiction{width:var(--wrap);margin:20px auto 0;text-align:center;font-size:13px;line-height:1.5;color:var(--muted);}
+
+.kw .why-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);gap:48px;align-items:end;}
+.kw .why-head p{text-align:right;font-size:19px;line-height:1.55;}
+.kw .why-box{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:calc(var(--aura)*7.5);border:1px solid var(--rule);background:color-mix(in srgb,var(--stone) 50%,var(--canvas));}
+.kw .why-col{display:flex;flex-direction:column;min-width:0;padding:32px;}
+.kw .why-col+.why-col{border-left:1px solid var(--rule);}
+.kw .why-col h3{font-size:30px;line-height:1.2;letter-spacing:-0.02em;margin-bottom:12px;}
+.kw .why-col p{font-size:17px;line-height:1.6;}
+.kw .why-col .mlink{margin-top:auto;padding-top:28px;}
+.kw .art{position:relative;height:310px;margin-bottom:32px;overflow:hidden;min-width:0;}
+.kw .win{position:absolute;background:var(--card-bg);border:1px solid var(--rule);border-radius:8px;box-shadow:0 8px 22px -10px color-mix(in srgb,var(--ink) 30%,transparent);overflow:hidden;}
+.kw .win-h{position:relative;display:flex;align-items:center;gap:4px;height:30px;padding:0 10px;}
+.kw .win-h i{width:6px;height:6px;border-radius:50%;background:var(--control-line);}
+.kw .win-h b{position:absolute;left:0;right:0;text-align:center;font-size:12px;font-weight:500;color:var(--muted);}
+.kw .w1{left:32px;right:32px;top:14px;height:70px;}
+.kw .w2{left:16px;right:16px;top:44px;height:80px;}
+.kw .w3{left:0;right:0;top:74px;bottom:-1px;}
+.kw .w3::after{content:"";position:absolute;left:0;right:0;top:30px;bottom:0;background:repeating-linear-gradient(180deg,color-mix(in srgb,var(--muted) 38%,transparent) 0 2px,transparent 2px 7px);-webkit-mask-image:linear-gradient(180deg,black 30%,transparent);mask-image:linear-gradient(180deg,black 30%,transparent);}
+.kw .sc{position:absolute;width:70%;padding:12px;background:var(--card-bg);border:1px solid var(--rule);border-radius:8px;box-shadow:0 10px 24px -12px color-mix(in srgb,var(--ink) 35%,transparent);}
+.kw .sc .lab{display:block;font:500 11px/1.2 var(--aura-font-label);text-transform:uppercase;letter-spacing:.06em;color:var(--link);margin-bottom:8px;}
+.kw .sc .row{display:flex;gap:12px;align-items:center;}
+.kw .sc .tile{width:48px;height:48px;border-radius:10px;background:var(--stone);display:grid;place-items:center;color:var(--ink);flex-shrink:0;}
+.kw .sc b{display:block;font-size:13px;font-weight:600;color:var(--ink);line-height:1.3;margin-bottom:6px;}
+.kw .sc .bar{display:block;height:5px;border-radius:3px;background:var(--rule);margin-top:4px;}
+.kw .sc .bar.s{width:60%;}
+.kw .s1{left:0;top:8px;}
+.kw .s2{left:15%;top:94px;}
+.kw .s3{left:30%;top:180px;}
+.kw .mock{position:absolute;left:8px;top:18px;width:430px;background:var(--card-bg);border:1px solid var(--rule);border-radius:8px;box-shadow:0 10px 26px -12px color-mix(in srgb,var(--ink) 35%,transparent);}
+.kw .mock-top{display:flex;align-items:center;gap:6px;padding:10px 12px;border-bottom:1px solid var(--rule);font-size:12px;color:var(--ink);}
+.kw .mock-top b{font-weight:600;margin-right:6px;}
+.kw .mock-top span{padding:3px 8px;border-radius:4px;color:var(--muted);}
+.kw .mock-top span.on{background:var(--stone);color:var(--ink);}
+.kw .mock-crumb{padding:8px 12px;font:400 11px/1.2 var(--aura-font-label);color:var(--muted);}
+.kw .mock-tabs{display:flex;gap:16px;padding:0 12px;border-bottom:1px solid var(--rule);font-size:12px;color:var(--muted);}
+.kw .mock-tabs span{padding:8px 0;}
+.kw .mock-tabs span.on{color:var(--link);border-bottom:2px solid var(--link);margin-bottom:-1px;}
+.kw .mock-card{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;margin:12px;padding:12px;border:1px solid var(--rule);border-radius:8px;}
+.kw .mock-card b{display:block;font-size:13px;color:var(--ink);line-height:1.3;}
+.kw .mock-card small{display:block;font-size:11px;color:var(--muted);line-height:1.5;}
+.kw .mock-card svg{color:var(--ink);margin-top:2px;}
+
+.kw .stone-wrap{background:var(--stone);}
+.kw .flow{display:grid;grid-template-columns:minmax(0,487fr) minmax(0,618fr);gap:95px;align-items:start;padding-block:calc(var(--aura)*11) calc(var(--aura)*7.5);}
+.kw .flow-list{margin-top:45px;border-top:1px solid var(--rule);}
+.kw .flow-list li{border-bottom:1px solid var(--rule);}
+.kw .flow-list h3{font-size:inherit;letter-spacing:inherit;}
+.kw .row-btn{display:block;width:100%;padding:21px 0;border:0;background:none;text-align:left;font-family:inherit;font-size:25px;line-height:1.25;letter-spacing:-0.02em;font-weight:400;color:var(--muted);cursor:pointer;}
+.kw .row-btn[aria-expanded="true"]{color:var(--ink);}
+.kw .row-body{padding-bottom:24px;}
+.kw .row-body p{font-size:15px;line-height:1.6;margin-bottom:16px;max-width:46ch;}
+.kw .flow-prog{height:2px;margin-top:-1px;background:var(--rule);}
+.kw .flow-prog span{display:block;width:33.333%;height:100%;background:var(--ink);transform:translateX(calc(var(--i,0)*100%));}
+.kw .panel{position:sticky;top:96px;height:617px;padding:32px;border-radius:16px;overflow:hidden;background-color:var(--ink-card);background-image:radial-gradient(color-mix(in srgb,var(--on-ink) 8%,transparent) 1px,transparent 1px);background-size:16px 16px;color:var(--on-ink);box-shadow:0 40px 80px -40px color-mix(in srgb,black 55%,transparent);}
+.dark .kw .panel{box-shadow:inset 0 0 0 1px var(--rule);}
+.kw .panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;}
+.kw .panel-head h3{font-size:30px;line-height:1.2;letter-spacing:-0.02em;color:var(--on-ink);}
+.kw .btn-xs{height:28px;padding:0 10px;font:500 11px/1 var(--aura-font-label);text-transform:uppercase;letter-spacing:.04em;gap:6px;}
+.kw .pane{margin-top:28px;}
+.kw .pane-1{display:flex;flex-direction:column;gap:16px;}
+.kw .nb{width:88%;padding:20px;border-radius:16px;border:1px solid color-mix(in srgb,var(--on-ink) 20%,transparent);background:color-mix(in srgb,var(--on-ink) 6%,transparent);}
+.kw .nb:nth-child(2){margin-left:6%;background:color-mix(in srgb,black 18%,var(--ink-card));}
+.kw .nb:nth-child(3){margin-left:12%;background:color-mix(in srgb,black 36%,var(--ink-card));}
+.kw .nb h4{font-size:20px;line-height:1.3;margin-bottom:12px;color:var(--on-ink);}
+.kw .rchips{display:flex;flex-wrap:wrap;gap:8px;}
+.kw .rchip{display:inline-flex;align-items:center;gap:8px;height:28px;padding:0 12px 0 4px;border-radius:14px;border:1px solid color-mix(in srgb,var(--on-ink) 26%,transparent);font:400 11px/1 var(--aura-font-label);text-transform:uppercase;letter-spacing:.04em;color:var(--on-ink);}
+.kw .rchip i{width:18px;height:18px;border-radius:50%;border:1px solid color-mix(in srgb,var(--on-ink) 40%,transparent);display:grid;place-items:center;}
+.kw .rchip i::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--peri-deep);}
+.kw .chart{position:relative;height:330px;margin-top:28px;}
+.kw .chart svg{width:100%;height:100%;}
+.kw .chart polyline{fill:none;stroke:var(--chart);stroke-width:2.5;stroke-linejoin:round;vector-effect:non-scaling-stroke;}
+.kw .chart line{stroke:color-mix(in srgb,var(--on-ink) 50%,transparent);stroke-width:1;stroke-dasharray:2 4;vector-effect:non-scaling-stroke;}
+.kw .chart .dot{position:absolute;left:96%;top:26%;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:var(--on-ink);}
+.kw .callout{position:absolute;right:4%;top:4px;display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px 0 6px;border-radius:20px;background:black;color:white;font-size:16px;font-weight:600;}
+.kw .callout i{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--green);color:black;}
+.kw .xlabels{display:flex;justify-content:space-between;margin-top:12px;font:400 11px/1.2 var(--aura-font-label);text-transform:uppercase;letter-spacing:.04em;color:var(--on-ink-muted);}
+.kw .log{margin-top:28px;border:1px solid color-mix(in srgb,var(--on-ink) 20%,transparent);border-radius:16px;}
+.kw .log li{display:grid;grid-template-columns:84px 76px minmax(0,1fr);gap:16px;align-items:center;padding:14px 20px;}
+.kw .log li+li{border-top:1px solid color-mix(in srgb,var(--on-ink) 16%,transparent);}
+.kw .log time{font:400 12px/1.2 var(--aura-font-label);color:var(--on-ink-muted);}
+.kw .st{display:inline-flex;align-items:center;justify-content:center;height:27px;border-radius:4px;font:500 11px/1 var(--aura-font-label);text-transform:uppercase;letter-spacing:.04em;}
+.kw .st-g{background:var(--mint);color:var(--mint-ink);}
+.kw .st-b{background:var(--sky);color:var(--navy);}
+.kw .st-v{background:var(--peri-deep);color:var(--navy);}
+.kw .log p{font-size:14px;line-height:1.4;color:var(--on-ink);}
+.kw .log small{display:block;font:400 12px/1.4 var(--aura-font-label);color:var(--on-ink-muted);}
+
+.kw .band{position:relative;background:var(--band);color:var(--on-band);border-radius:20px 20px 0 0;padding:calc(var(--aura)*9) 0 calc(var(--aura)*7);}
+.kw .band h2{color:var(--on-band);}
+.kw .bento{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:24px;margin-top:calc(var(--aura)*5);}
+.kw .pc{position:relative;display:flex;flex-direction:column;justify-content:space-between;min-width:0;min-height:250px;padding:24px;border-radius:14px;overflow:hidden;background:color-mix(in srgb,white 10%,var(--band));color:var(--on-band);}
+.kw .q1{grid-column:1/7;grid-row:1/3;}
+.kw .st1{grid-column:7/13;grid-row:1;}
+.kw .q2{grid-column:7/13;grid-row:2;}
+.kw .st2{grid-column:1/5;grid-row:3;}
+.kw .art2{grid-column:5/9;grid-row:3;padding:0;}
+.kw .st3{grid-column:9/13;grid-row:3;}
+.kw .trio{grid-column:1/4;grid-row:4;display:flex;flex-direction:column;justify-content:space-between;gap:16px;}
+.kw .bd1{grid-column:4/7;grid-row:4;}
+.kw .bd2{grid-column:7/10;grid-row:4;}
+.kw .bd3{grid-column:10/13;grid-row:4;}
+.kw blockquote{all:unset;display:block;position:relative;box-sizing:border-box;padding-left:26px;font-family:var(--aura-font-stack);color:var(--on-band);}
+.kw blockquote::before,.kw blockquote::after{content:none;}
+.kw blockquote p{all:unset;display:block;font-family:var(--aura-font-stack);font-size:32px;font-weight:400;font-style:normal;line-height:1.2;letter-spacing:-0.02em;text-transform:none;color:var(--on-band);}
+.kw .qm{position:absolute;left:0;top:0;font-size:32px;line-height:1.2;color:var(--on-band);}
+.kw .who{display:flex;align-items:center;gap:10px;margin-top:20px;font-size:13px;line-height:1.4;}
+.kw .who b{font-weight:700;}
+.kw .av{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;flex-shrink:0;background:color-mix(in srgb,white 22%,var(--band));color:var(--on-band);font-size:12px;font-weight:600;}
+.kw .samp{display:inline-block;margin-left:6px;padding:1px 6px;border:1px solid color-mix(in srgb,white 50%,transparent);border-radius:4px;font:400 10px/1.4 var(--aura-font-label);text-transform:uppercase;letter-spacing:.06em;}
+.kw .fig{font-size:96px;font-weight:400;line-height:1;letter-spacing:-0.04em;color:var(--on-band);}
+.kw .slab{font:400 11px/1.4 var(--aura-font-label);text-transform:uppercase;letter-spacing:.06em;color:var(--on-band-muted);}
+.kw .st1::before{content:"";position:absolute;right:-70px;top:-70px;width:240px;height:240px;border-radius:50%;border:1px solid color-mix(in srgb,white 25%,transparent);}
+.kw .st1::after{content:"";position:absolute;right:28px;top:28px;width:10px;height:10px;border-radius:50%;background:var(--green);}
+.kw .petals{position:absolute;inset:0;background:radial-gradient(circle at 50% 58%,var(--navy) 0 9%,transparent 10%),conic-gradient(from 30deg at 50% 58%,var(--sky),var(--peri-deep),var(--coral),var(--cream),var(--violet),var(--sky));}
+.kw .petals::after{content:"";position:absolute;inset:0;background:repeating-conic-gradient(from 0deg at 50% 58%,color-mix(in srgb,black 16%,transparent) 0 15deg,transparent 15deg 30deg);}
+.kw .checks{display:flex;}
+.kw .checks span{display:grid;place-items:center;width:25px;height:25px;margin-right:-6px;border-radius:50%;border:1.5px solid white;background:var(--band);}
+.kw .trio p{font-size:18px;line-height:1.4;color:var(--on-band);}
+.kw .badge{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:150px;padding:16px;border:1px solid color-mix(in srgb,white 35%,transparent);border-radius:12px;color:var(--on-band);}
+.kw .badge svg{width:90px;height:90px;fill:none;stroke:currentColor;stroke-width:1.5;}
+.kw .badge text{fill:currentColor;stroke:none;font:500 10px var(--aura-font-label);letter-spacing:.06em;}
+.kw .mq-ctl{display:flex;justify-content:flex-end;margin-top:calc(var(--aura)*6);margin-bottom:12px;}
+.kw .mq{overflow:hidden;border-block:1px solid color-mix(in srgb,white 30%,transparent);}
+.kw .mq-track{display:flex;width:max-content;}
+.kw .mq-seg{display:flex;flex-shrink:0;gap:75px;padding:10px 75px 10px 0;font-size:clamp(56px,9.4vw,120px);font-weight:700;line-height:1.1;letter-spacing:-0.02em;text-transform:uppercase;white-space:nowrap;color:var(--on-band);}
+@keyframes kw-mq{to{transform:translateX(-50%);}}
+html.motion .kw .mq-track{animation:kw-mq 42s linear infinite;}
+html.motion .kw .mq.paused .mq-track{animation-play-state:paused;}
+.kw .tick{border-bottom:1px solid color-mix(in srgb,white 30%,transparent);}
+.kw .tick ul{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 28px;padding:10px 0;font:400 11px/1.6 var(--aura-font-label);text-transform:uppercase;letter-spacing:.06em;color:var(--on-band-muted);}
+.kw .tick li{display:inline-flex;align-items:center;gap:28px;}
+.kw .tick li+li::before{content:"";width:6px;height:6px;border:1px solid currentColor;border-radius:2px;}
+
+.kw .run-wrap{background:linear-gradient(to bottom,var(--band) 16px,transparent 16px);}
+.kw .runtime{padding-block:calc(var(--aura)*10) calc(var(--aura)*4);border-radius:16px 16px 0 0;}
+.kw .run-grid{display:grid;grid-template-columns:minmax(0,480fr) minmax(0,560fr);gap:160px;align-items:center;padding-bottom:calc(var(--aura)*3.5);}
+.kw .runtime p.lead{margin-top:20px;color:var(--on-ink-muted);line-height:1.65;}
+.kw .seg{display:inline-flex;margin-top:28px;border:1px solid var(--ink-control);border-radius:4px;padding:2px;gap:2px;}
+.kw .seg button{height:30px;padding:0 12px;border:0;border-radius:2px;background:none;font:500 11px/1 var(--aura-font-label);text-transform:uppercase;letter-spacing:.06em;color:var(--on-ink-muted);cursor:pointer;}
+.kw .seg button[aria-checked="true"]{background:color-mix(in srgb,var(--on-ink) 18%,var(--ink-band));color:var(--on-ink);}
+.kw .run-btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+.kw .run-note{margin-top:12px;font-size:13px;line-height:1.5;color:var(--on-ink-muted);}
+.kw .cmd-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin-top:20px;}
+.kw .cmd{display:inline-flex;align-items:center;height:40px;border:1px solid var(--ink-control);border-radius:4px;}
+.kw .cmd code{padding:0 14px;font:400 12px/1 var(--aura-font-label);color:var(--on-ink);}
+.kw .cmd button{display:grid;place-items:center;width:40px;height:100%;border:0;border-left:1px solid var(--ink-control);background:none;color:var(--on-ink);cursor:pointer;}
+.kw .lineart{position:relative;aspect-ratio:4/3;overflow:hidden;}
+.kw .lineart svg{position:absolute;inset:0;width:100%;height:100%;}
+.kw .lineart path,.kw .lineart ellipse,.kw .lineart circle,.kw .lineart polygon,.kw .lineart line{fill:none;stroke:var(--on-ink);stroke-width:1.5;stroke-linejoin:round;vector-effect:non-scaling-stroke;}
+.kw .cap{position:absolute;font:400 12px/1.2 var(--aura-font-label);text-transform:uppercase;letter-spacing:.1em;color:var(--on-ink-muted);}
+
+.kw .journal-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px;}
+.kw .journal-head .sub{margin-top:12px;font-size:24px;line-height:1.4;color:var(--body);}
+.kw .arrows{display:flex;gap:8px;}
+.kw .round{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1px solid var(--control-line);background:transparent;color:var(--ink);cursor:pointer;}
+.kw .jmeta{margin-top:16px;}
+.kw .track{display:flex;gap:24px;margin:calc(var(--aura)*4.5) calc(var(--gut)*-1) 0 0;padding-bottom:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;}
+.kw .jcard{flex:0 0 min(588px,calc(100vw - var(--gut)*2 - 30px));min-width:0;scroll-snap-align:start;}
+.kw .jart{position:relative;aspect-ratio:2/1;border-radius:12px;overflow:hidden;}
+.kw .jart::after{content:"";position:absolute;inset:0;background:repeating-radial-gradient(circle at 20% 30%,color-mix(in srgb,black 5%,transparent) 0 1px,transparent 1px 3px);}
+.kw .ja1{background:linear-gradient(112deg,transparent 0 28%,color-mix(in srgb,white 32%,transparent) 28% 31%,transparent 31% 52%,color-mix(in srgb,white 24%,transparent) 52% 55%,transparent 55%),linear-gradient(120deg,var(--sky),var(--peri-deep) 40%,var(--coral) 72%,var(--peach));}
+.kw .ja2{background:radial-gradient(ellipse 80% 55% at 30% 115%,var(--navy) 0 55%,transparent 56%),linear-gradient(160deg,var(--sky),var(--peri-deep) 55%,var(--coral));}
+.kw .ja3{background:conic-gradient(from 200deg at 70% 120%,var(--peach),var(--coral),var(--violet),var(--sky),var(--peach));}
+.kw .ja4{background:linear-gradient(100deg,var(--cream),var(--peach) 40%,var(--coral)),linear-gradient(0deg,transparent,transparent);}
+.kw .ja5{background:radial-gradient(circle at 25% 30%,var(--cream) 0 18%,transparent 19%),linear-gradient(135deg,var(--violet),var(--sky));}
+.kw .ja6{background:radial-gradient(ellipse 90% 60% at 70% 110%,var(--coral) 0 50%,transparent 51%),linear-gradient(180deg,var(--navy),var(--violet));}
+.kw .jdate{position:absolute;z-index:1;left:12px;bottom:12px;padding:4px 8px;border-radius:3px;background:black;color:white;font:400 11px/1.2 var(--aura-font-label);text-transform:uppercase;letter-spacing:.04em;}
+.kw .jglyph{position:absolute;z-index:1;right:12px;bottom:12px;width:20px;height:20px;color:white;}
+.kw .jrow{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-top:24px;}
+.kw .jrow h3{font-size:21px;font-weight:500;line-height:1.4;letter-spacing:-0.01em;max-width:300px;}
+.kw .jwho{display:flex;align-items:center;gap:10px;margin-top:20px;font-size:13px;line-height:1.4;color:var(--body);}
+.kw .jwho b{color:var(--ink);font-weight:700;}
+.kw .jwho .av{background:var(--stone);color:var(--ink);border:1px solid var(--rule);}
+.kw .tprog{height:2px;margin-top:8px;background:var(--rule);}
+.kw .tprog span{display:block;height:100%;width:30%;background:var(--ink);transform:translateX(var(--x,0px));}
+
+.kw .feat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px;margin-top:calc(var(--aura)*5);}
+.kw .feat .mono{font:500 12px/1.2 var(--aura-font-label);text-transform:uppercase;letter-spacing:.06em;color:var(--link);}
+.kw .feat h3{margin:14px 0 10px;font-size:26px;line-height:1.2;letter-spacing:-0.02em;}
+.kw .feat{padding-top:20px;border-top:1px solid var(--rule);}
+.kw .tbl-region{margin-top:calc(var(--aura)*4);overflow-x:auto;border:1px solid var(--rule);border-radius:12px;background:var(--card-bg);}
+.kw table{width:100%;min-width:620px;border-collapse:collapse;font-size:15px;line-height:1.5;}
+.kw caption{padding:16px 20px;text-align:left;font-size:14px;color:var(--muted);}
+.kw th,.kw td{padding:14px 20px;text-align:left;border-top:1px solid var(--rule);}
+.kw th{font:500 11px/1.4 var(--aura-font-label);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);}
+.kw td{color:var(--body);}
+.kw tbody th{font:500 15px/1.5 var(--aura-font-stack);text-transform:none;letter-spacing:0;color:var(--ink);}
+.kw .form-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,560px);gap:96px;align-items:start;}
+.kw .form-grid .lead{margin-top:20px;}
+.kw .form{display:grid;gap:18px;}
+.kw .form .two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;}
+.kw .form-status{min-height:24px;font-size:14px;color:var(--ink);}
+.kw .price-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:calc(var(--aura)*5);}
+.kw .plan{display:flex;flex-direction:column;padding:28px;border:1px solid var(--rule);border-radius:12px;background:var(--card-bg);min-width:0;}
+.kw .plan h3{font-size:24px;line-height:1.2;}
+.kw .plan .price{margin:16px 0 4px;font-size:46px;line-height:1;letter-spacing:-0.03em;color:var(--ink);}
+.kw .plan .per{font-size:13px;color:var(--muted);}
+.kw .plan ul{margin:20px 0 28px;display:grid;gap:8px;font-size:15px;line-height:1.5;}
+.kw .plan li{display:flex;gap:10px;}
+.kw .plan li .ic{margin-top:5px;color:var(--link);}
+.kw .plan .btn{margin-top:auto;}
+.kw .faq{margin-top:calc(var(--aura)*4);border-top:1px solid var(--rule);max-width:860px;}
+.kw .faq li{border-bottom:1px solid var(--rule);}
+.kw .faq h3{font-size:inherit;letter-spacing:inherit;}
+.kw .faq-btn{display:flex;justify-content:space-between;align-items:center;gap:16px;width:100%;padding:20px 0;border:0;background:none;text-align:left;font-family:inherit;font-size:20px;line-height:1.3;font-weight:500;color:var(--ink);cursor:pointer;}
+.kw .faq-btn .ic{transition:none;}
+.kw .faq-btn[aria-expanded="true"] .ic{transform:rotate(45deg);}
+.kw .faq-body{padding-bottom:20px;max-width:64ch;}
+
+.kw .close{background:var(--stone);border-radius:20px 20px 0 0;padding:calc(var(--aura)*11) 0;text-align:center;}
+.kw .close h2{font-size:clamp(40px,5.625vw,72px);line-height:1.05;}
+.kw .close p{max-width:56ch;margin:24px auto 0;font-size:19px;line-height:1.6;}
+.kw .close .acts{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:32px;}
+.kw .wm{position:relative;height:calc(21vw*0.72);overflow:hidden;background:var(--ink-band);}
+.dark .kw .wm{box-shadow:inset 0 1px 0 var(--rule);}
+.kw .wm span{position:absolute;left:0;right:0;top:0;padding-top:.04em;text-align:center;font-size:21vw;font-weight:500;line-height:.9;letter-spacing:-0.05em;user-select:none;background-image:linear-gradient(90deg,var(--coral),var(--cream),var(--peri-deep),var(--violet),var(--coral),var(--peach));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;}
+.kw .foot{background:var(--panel);color:var(--on-ink);padding:50px 0 40px;}
+.kw .foot-cols{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:32px 24px;}
+.kw .foot h2{font-size:14px;font-weight:600;letter-spacing:0;line-height:1.4;color:var(--on-ink);margin-bottom:12px;}
+.kw .foot li{margin-bottom:0;}
+.kw .foot li a{display:inline-block;padding:3px 0;font-size:14px;line-height:1.6;color:var(--on-ink-muted);}
+.kw .foot li a:hover{color:var(--on-ink);text-decoration:underline;}
+.kw .foot .sub-h{margin-top:24px;}
+.kw .foot-fine{display:grid;gap:8px;margin-top:48px;max-width:760px;font-size:13px;line-height:1.5;color:var(--on-ink-muted);}
+.kw .foot-bottom{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;margin-top:32px;padding-top:24px;border-top:1px solid color-mix(in srgb,var(--on-ink) 16%,transparent);}
+.kw .foot-legal{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;font-size:14px;line-height:1.5;color:var(--on-ink-muted);}
+.kw .foot-legal svg{width:28px;height:28px;color:var(--on-ink);}
+.kw .foot-legal a:hover{color:var(--on-ink);text-decoration:underline;}
+.kw .foot .seg{margin-top:0;}
+.kw .foot .seg button{height:28px;}
+
+html.motion .kw .btn,html.motion .kw .icon-btn,html.motion .kw .round{transition:background-color .15s ease,border-color .15s ease;}
+html.motion .kw .flow-prog span,html.motion .kw .tprog span{transition:transform .25s ease;}
+.dark .kw .petals::after,.dark .kw .jart::after{opacity:.5;}
+.dark .kw .jart{filter:saturate(.85) brightness(.92);}
+
+@media (max-width:1279px){
+  .kw .flow{gap:64px;}
+  .kw .run-grid{gap:64px;}
+}
+@media (min-width:1024px){
+  .kw .hdr-nav{display:block;}
+  .kw .hdr-actions{display:flex;}
+  .kw .hdr-menu-btn{display:none;}
+}
+@media (max-width:1023px){
+  .kw .hero-grid,.kw .why-head,.kw .form-grid,.kw .run-grid,.kw .flow{grid-template-columns:minmax(0,1fr);}
+  .kw .hero-grid{gap:20px;}
+  .kw .hero-sub,.kw .why-head p{text-align:left;}
+  .kw .hero-sub{font-size:19px;}
+  .kw .why-box{grid-template-columns:minmax(0,1fr);}
+  .kw .why-col+.why-col{border-left:0;border-top:1px solid var(--rule);}
+  .kw .panel{position:static;height:auto;min-height:540px;}
+  .kw .flow{gap:48px;}
+  .kw .bento{grid-template-columns:minmax(0,1fr);}
+  .kw .bento>*{grid-column:1/-1;grid-row:auto;}
+  .kw .art2{min-height:220px;}
+  .kw .feat-grid,.kw .price-grid{grid-template-columns:minmax(0,1fr);gap:32px;}
+  .kw .foot-cols{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .kw .form-grid{gap:48px;}
+  .kw .run-grid{gap:48px;}
+}
+@media (max-width:700px){
+  .kw{--gut:16px;}
+  .kw .sec{padding-block:calc(var(--aura)*9);}
+  .kw .sec-tight{padding-block:calc(var(--aura)*7);}
+  .kw .hdr-bar{height:48px;margin-top:8px;padding:0 6px 0 14px;}
+  .kw .hero{min-height:0;padding-top:96px;border-radius:0 0 40px 40px;}
+  .kw .fchip{display:none;}
+  .kw .offer{display:flex;min-height:36px;padding:6px 12px;}
+  .kw .hero-sub{font-size:17px;padding-bottom:0;}
+  .kw .customers{padding-block:40px 48px;}
+  .kw .customers ul{justify-content:flex-start;gap:30px;}
+  .kw .customers ul{flex-wrap:wrap;row-gap:12px;}
+  .kw .customers li{font-size:19px;}
+  .kw .why-col{padding:24px;}
+  .kw .why-col h3{font-size:26px;}
+  .kw .art{height:290px;}
+  .kw .mock{width:380px;}
+  .kw .row-btn{font-size:26px;padding:24px 0;}
+  .kw .panel{padding:20px;}
+  .kw .panel-head h3{font-size:24px;}
+  .kw .pc{padding:20px;min-height:220px;}
+  .kw blockquote{padding-left:18px;}
+  .kw blockquote p{font-size:24px;}
+  .kw .qm{font-size:24px;}
+  .kw .fig{font-size:72px;}
+  .kw .badge{min-height:130px;}
+  .kw .log li{grid-template-columns:auto minmax(0,1fr);gap:8px 12px;}
+  .kw .log li p{grid-column:1/-1;}
+  .kw .band{padding-block:calc(var(--aura)*7) calc(var(--aura)*4);}
+  .kw .mq-ctl{margin-top:calc(var(--aura)*4);}
+  .kw .mq-seg{gap:40px;padding-right:40px;}
+  .kw .journal-head .sub{font-size:20px;}
+  .kw .form .two{grid-template-columns:minmax(0,1fr);}
+  .kw .plan{padding:24px;}
+  .kw .foot-cols{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .kw .foot-cols>.last{grid-column:1/-1;}
+  .kw .close{padding-block:calc(var(--aura)*9);}
+  .kw .runtime{padding-top:calc(var(--aura)*8);}
+  .kw .flow{padding-block:calc(var(--aura)*9) calc(var(--aura)*6);}
+}
+.kw .seg button[aria-checked="true"]{background:var(--on-ink);color:var(--ink-band);box-shadow:0 0 0 2px var(--on-ink)}
+@media (max-width:480px){.kw .customers li{font-size:18px}.kw .customers ul{gap:12px 20px;flex-wrap:wrap}
+.kw .tick ul{gap:4px 20px}.kw .tick li+li::before{display:none}
+.kw .lineart{aspect-ratio:1/1}.kw .lineart .cap{font-size:11px}.kw .lineart .cap:nth-of-type(1){left:4%;top:4%}.kw .lineart .cap:nth-of-type(2){left:4%!important;right:auto!important;top:auto!important;bottom:2%!important}}
+</style>
+</head>
+<body class="kw" id="top">
+<svg width="0" height="0" class="sr-only" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-mono" viewBox="0 0 20 20"><path fill="currentColor" stroke="none" d="M5 0H15A5 5 0 0 1 20 5V15A5 5 0 0 1 15 20H13.5V14.5A3.5 3.5 0 0 0 6.5 14.5V20H5A5 5 0 0 1 0 15V5A5 5 0 0 1 5 0Z"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 12 12"><path d="M1.5 6h9M6.5 2l4 4-4 4"/></symbol>
+    <symbol id="i-diag" viewBox="0 0 12 12"><path d="M3 9l6-6M4 3h5v5"/></symbol>
+    <symbol id="i-bent" viewBox="0 0 12 12"><path d="M3 2v5h6M6.5 4l2.5 3-2.5 3"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 12 12"><path d="M2.5 4.5l3.5 3.5 3.5-3.5"/></symbol>
+    <symbol id="i-search" viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 16 16"><path d="M2 4.5h12M2 8h12M2 11.5h12"/></symbol>
+    <symbol id="i-close" viewBox="0 0 16 16"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 16 16"><rect x="5.5" y="5.5" width="8" height="8" rx="1.5"/><path d="M10.5 3.5v-.5a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 3v5A1.5 1.5 0 0 0 4 9.5h.5"/></symbol>
+    <symbol id="i-download" viewBox="0 0 16 16"><path d="M8 2.5v8M4.5 7.5L8 11l3.5-3.5M3 13.5h10"/></symbol>
+    <symbol id="i-check" viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 16 16"><path d="M8 3v10M3 8h10"/></symbol>
+    <symbol id="i-prev" viewBox="0 0 16 16"><path d="M10 3.5L5.5 8l4.5 4.5"/></symbol>
+    <symbol id="i-next" viewBox="0 0 16 16"><path d="M6 3.5L10.5 8 6 12.5"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 16 16"><path d="M5.5 3.5v9M10.5 3.5v9"/></symbol>
+    <symbol id="i-play" viewBox="0 0 16 16"><path d="M5 3l8 5-8 5z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 16 16"><rect x="3" y="7" width="10" height="7" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></symbol>
+    <symbol id="i-box" viewBox="0 0 16 16"><path d="M8 1.5l5.5 3v7L8 14.5l-5.5-3v-7z M2.5 4.5L8 7.5l5.5-3M8 7.5v7"/></symbol>
+    <symbol id="i-dot" viewBox="0 0 16 16"><circle cx="8" cy="8" r="4"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 16 16"><path d="M8 2l6 3-6 3-6-3zM2 8l6 3 6-3M2 11l6 3 6-3"/></symbol>
+    <symbol id="i-pulse" viewBox="0 0 16 16"><path d="M1.5 8h3l2-5 3 10 2-5h3"/></symbol>
+    <symbol id="i-book" viewBox="0 0 16 16"><path d="M3 2.5h7a2 2 0 0 1 2 2v9H5a2 2 0 0 1-2-2zM3 11.5a2 2 0 0 1 2-2h7"/></symbol>
+    <symbol id="i-user" viewBox="0 0 16 16"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 13.5c.5-3 2.5-4 5-4s4.5 1 5 4"/></symbol>
+  </defs>
+</svg>
+<a class="skip" href="#main">Skip to content</a>
+<header class="hdr">
+  <div class="hdr-bar on-dark">
+    <a class="brand" href="#top" aria-label="Kilnworth home"><svg aria-hidden="true" focusable="false"><use href="#i-mono"/></svg>kilnworth</a>
+    <nav class="hdr-nav" aria-label="Primary">
+      <ul>
+        <li>
+          <button class="nav-trigger" type="button" data-dropdown aria-expanded="false" aria-controls="dd-platform">Platform<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></button>
+          <div class="dd" id="dd-platform" hidden>
+            <ul>
+              <li><a href="#why"><svg class="ic ic-16" aria-hidden="true"><use href="#i-box"/></svg><span><b>Cells</b><small>Sealed rooms for each runner.</small></span></a></li>
+              <li><a href="#why"><svg class="ic ic-16" aria-hidden="true"><use href="#i-lock"/></svg><span><b>Signed bases</b><small>Start from a checked image.</small></span></a></li>
+              <li><a href="#workflow"><svg class="ic ic-16" aria-hidden="true"><use href="#i-check"/></svg><span><b>Checks</b><small>Rules that run before a ship.</small></span></a></li>
+              <li><a href="#workflow"><svg class="ic ic-16" aria-hidden="true"><use href="#i-pulse"/></svg><span><b>Run log</b><small>Every step, in order.</small></span></a></li>
+              <li><a href="#runtime"><svg class="ic ic-16" aria-hidden="true"><use href="#i-download"/></svg><span><b>Local kit</b><small>Try a cell on your desk.</small></span></a></li>
+              <li><a href="#pricing"><svg class="ic ic-16" aria-hidden="true"><use href="#i-layers"/></svg><span><b>Plans</b><small>Three sample tiers.</small></span></a></li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <button class="nav-trigger" type="button" data-dropdown aria-expanded="false" aria-controls="dd-cases">Use cases<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></button>
+          <div class="dd" id="dd-cases" hidden>
+            <ul>
+              <li><a href="#workflow"><svg class="ic ic-16" aria-hidden="true"><use href="#i-dot"/></svg><span><b>Solo makers</b><small>One bench, one helper.</small></span></a></li>
+              <li><a href="#workflow"><svg class="ic ic-16" aria-hidden="true"><use href="#i-user"/></svg><span><b>Small teams</b><small>Share cells and rules.</small></span></a></li>
+              <li><a href="#proof"><svg class="ic ic-16" aria-hidden="true"><use href="#i-check"/></svg><span><b>Review desks</b><small>Prove what went in.</small></span></a></li>
+              <li><a href="#proof"><svg class="ic ic-16" aria-hidden="true"><use href="#i-lock"/></svg><span><b>Careful shops</b><small>Tight limits by default.</small></span></a></li>
+              <li><a href="#runtime"><svg class="ic ic-16" aria-hidden="true"><use href="#i-box"/></svg><span><b>Classrooms</b><small>Fresh cells for each learner.</small></span></a></li>
+              <li><a href="#journal"><svg class="ic ic-16" aria-hidden="true"><use href="#i-book"/></svg><span><b>Field notes</b><small>Stories from sample teams.</small></span></a></li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <button class="nav-trigger" type="button" data-dropdown aria-expanded="false" aria-controls="dd-help">Help<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></button>
+          <div class="dd" id="dd-help" hidden>
+            <ul>
+              <li><a href="#faq"><svg class="ic ic-16" aria-hidden="true"><use href="#i-book"/></svg><span><b>Questions</b><small>Short answers, no jargon.</small></span></a></li>
+              <li><a href="#walkthrough"><svg class="ic ic-16" aria-hidden="true"><use href="#i-user"/></svg><span><b>Walkthrough</b><small>Ask for a guided tour.</small></span></a></li>
+              <li><a href="#journal"><svg class="ic ic-16" aria-hidden="true"><use href="#i-book"/></svg><span><b>Guides</b><small>Step-by-step sample pages.</small></span></a></li>
+              <li><a href="#plans"><svg class="ic ic-16" aria-hidden="true"><use href="#i-layers"/></svg><span><b>Limits</b><small>What each plan allows.</small></span></a></li>
+              <li><a href="#runtime"><svg class="ic ic-16" aria-hidden="true"><use href="#i-copy"/></svg><span><b>Commands</b><small>A short list to copy.</small></span></a></li>
+              <li><a href="#walkthrough"><svg class="ic ic-16" aria-hidden="true"><use href="#i-pulse"/></svg><span><b>Status</b><small>Sample health page.</small></span></a></li>
+            </ul>
+          </div>
+        </li>
+        <li><a class="nav-link" href="#pricing">Plans</a></li>
+        <li><a class="nav-link" href="#journal">Journal</a></li>
+        <li><a class="nav-link" href="#faq">Guides</a></li>
+        <li>
+          <button class="icon-btn" type="button" data-dropdown aria-label="Search" aria-expanded="false" aria-controls="dd-search"><svg class="ic ic-16" aria-hidden="true"><use href="#i-search"/></svg></button>
+          <div class="dd dd-search" id="dd-search" hidden>
+            <label class="lbl" for="search-input">Search the sample</label>
+            <input class="field" id="search-input" type="text" placeholder="Try a word like cells"/>
+            <ul>
+              <li><a href="#why"><svg class="ic ic-16" aria-hidden="true"><use href="#i-arrow"/></svg><span><b>How cells stay sealed</b></span></a></li>
+              <li><a href="#pricing"><svg class="ic ic-16" aria-hidden="true"><use href="#i-arrow"/></svg><span><b>Sample plan prices</b></span></a></li>
+              <li><a href="#faq"><svg class="ic ic-16" aria-hidden="true"><use href="#i-arrow"/></svg><span><b>Common questions</b></span></a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </nav>
+    <div class="hdr-actions">
+      <a class="btn btn-sm btn-line" href="#walkthrough">Log in</a>
+      <a class="btn btn-sm btn-fill" href="#walkthrough">Talk to us</a>
+    </div>
+    <button class="icon-btn hdr-menu-btn" id="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="overlay"><svg class="ic ic-16" aria-hidden="true"><use href="#i-menu"/></svg></button>
+  </div>
+  <div class="ov on-dark" id="overlay" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+    <div class="ov-top">
+      <a class="brand" href="#top" aria-label="Kilnworth home"><svg aria-hidden="true" focusable="false"><use href="#i-mono"/></svg>kilnworth</a>
+      <button class="icon-btn" id="menu-close" type="button" aria-label="Close menu"><svg class="ic ic-16" aria-hidden="true"><use href="#i-close"/></svg></button>
+    </div>
+    <nav aria-label="Menu">
+      <a href="#why">Platform</a>
+      <a href="#workflow">Use cases</a>
+      <a href="#faq">Help</a>
+      <a href="#pricing">Plans</a>
+      <a href="#journal">Journal</a>
+      <a href="#faq">Guides</a>
+    </nav>
+    <div class="ov-actions">
+      <a class="btn btn-line" href="#walkthrough">Log in</a>
+      <a class="btn btn-fill" href="#walkthrough">Talk to us</a>
+    </div>
+  </div>
+</header>
+<main id="main">
+<section class="hero inkb on-dark" aria-labelledby="hero-title">
+  <div class="hero-field" aria-hidden="true">
+    <svg class="swirl" viewBox="0 0 1280 620" preserveAspectRatio="xMidYMid slice" focusable="false">
+      <path id="rib" d="M640 50C780 130 780 220 640 300S500 470 640 600" stroke-width="2" stroke-dasharray="0 9" opacity=".3"/>
+      <path transform="translate(-34 0)" d="M640 50C780 130 780 220 640 300S500 470 640 600" stroke-width="1.6" stroke-dasharray="0 13" opacity=".22"/>
+      <path transform="translate(34 0)" d="M640 50C780 130 780 220 640 300S500 470 640 600" stroke-width="1.6" stroke-dasharray="0 11" opacity=".2"/>
+      <path transform="translate(-74 0)" d="M640 50C780 130 780 220 640 300S500 470 640 600" stroke-width="1.2" stroke-dasharray="0 17" opacity=".14"/>
+      <path transform="translate(74 0)" d="M640 50C780 130 780 220 640 300S500 470 640 600" stroke-width="1.2" stroke-dasharray="0 15" opacity=".14"/>
+    </svg>
+    <span class="fchip fc1"><i></i>Runner A</span>
+    <span class="fchip fc2"><i></i>Runner B</span>
+    <span class="fchip fc3"><i></i>Runner C</span>
+    <span class="fchip fc4"><i></i>Runner D</span>
+    <span class="fchip fc5"><i></i>Runner E</span>
+    <span class="fchip fc6"><i></i>Runner F</span>
+  </div>
+  <div class="wrap hero-grid">
+    <div>
+      <a class="offer" href="#walkthrough"><span class="tag">New</span>Free sealed cells this season (sample)<svg class="ic" aria-hidden="true"><use href="#i-diag"/></svg></a>
+      <h1 id="hero-title"><span>Run helpers in cells</span><span class="dim">you can inspect.</span></h1>
+    </div>
+    <p class="hero-sub">Kilnworth is a bench where small teams let software helpers work in sealed rooms, check each load, and ship what passes.</p>
+  </div>
+  <div class="wrap customers">
+    <h2 class="sr-only">Sample customers (fictional)</h2>
+    <ul>
+      <li class="cu1">Fernhollow</li>
+      <li class="cu2">Quarryvale</li>
+      <li class="cu3">northbeam</li>
+      <li class="cu4">Marrowfield &amp; Co.</li>
+      <li class="cu5">Pellucid Labs</li>
+    </ul>
+  </div>
+</section>
+<p class="fiction">Kilnworth is a fictional design sample. Every figure on this page is example data.</p>
+
+<section class="sec" id="why" aria-labelledby="why-title">
+  <div class="wrap">
+    <div class="why-head">
+      <div>
+        <span class="chip">Why Kilnworth</span>
+        <h2 class="h2" id="why-title">Small rooms, clear rules, calm releases.</h2>
+      </div>
+      <p>Each helper gets its own sealed room and a short list of rules. You see what went in, what ran and what came out.</p>
+    </div>
+    <div class="why-box">
+      <div class="why-col">
+        <div class="art" aria-hidden="true">
+          <div class="win w1"><div class="win-h"><i></i><i></i><i></i><b>Cell</b></div></div>
+          <div class="win w2"><div class="win-h"><i></i><i></i><i></i><b>Cell</b></div></div>
+          <div class="win w3"><div class="win-h"><i></i><i></i><i></i><b>Cell</b></div></div>
+        </div>
+        <h3>One room per helper</h3>
+        <p>Start a cell in seconds, give it only what it needs, and throw it away when the job is done.</p>
+        <a class="mlink" href="#workflow">See cells<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="why-col">
+        <div class="art" aria-hidden="true">
+          <div class="sc s1"><span class="lab">Signed base</span><div class="row"><span class="tile"><svg class="ic ic-20"><use href="#i-box"/></svg></span><div style="flex:1"><b>Base layer</b><span class="bar"></span><span class="bar s"></span></div></div></div>
+          <div class="sc s2"><span class="lab">Signed base</span><div class="row"><span class="tile"><svg class="ic ic-20"><use href="#i-layers"/></svg></span><div style="flex:1"><b>Tools layer</b><span class="bar"></span><span class="bar s"></span></div></div></div>
+          <div class="sc s3"><span class="lab">Signed base</span><div class="row"><span class="tile"><svg class="ic ic-20"><use href="#i-lock"/></svg></span><div style="flex:1"><b>Rules layer</b><span class="bar"></span><span class="bar s"></span></div></div></div>
+        </div>
+        <h3>Check what goes in</h3>
+        <p>Every load is matched against a signed base before a runner can touch it, so surprises stay outside.</p>
+        <a class="mlink" href="#proof">See checks<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="why-col">
+        <div class="art" aria-hidden="true">
+          <div class="mock">
+            <div class="mock-top"><b>kilnworth</b><span class="on">Bases</span><span>Rules</span><span>Logs</span></div>
+            <div class="mock-crumb">team / web-shop</div>
+            <div class="mock-tabs"><span class="on">Overview</span><span>Runs</span><span>Limits</span></div>
+            <div class="mock-card"><svg class="ic ic-20"><use href="#i-lock"/></svg><div><b>team / web-shop</b><small>Sealed base for the shop helpers.</small><small>Updated in the sample logs.</small></div></div>
+          </div>
+        </div>
+        <h3>Ship with a record</h3>
+        <p>When a run passes, the record travels with it, so anyone on the team can retrace the steps.</p>
+        <a class="mlink" href="#journal">See records<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stone-wrap">
+<section id="workflow" aria-labelledby="flow-title">
+  <div class="wrap flow">
+    <div>
+      <span class="chip">Workflow</span>
+      <h2 class="h2" id="flow-title">Three steps from idea to shipped.</h2>
+      <ul class="flow-list" id="flow-list">
+        <li>
+          <h3><button class="row-btn" type="button" id="eb-1" aria-expanded="true" aria-controls="rb-1" data-pane="1">Open the cells</button></h3>
+          <div class="row-body" id="rb-1" role="region" aria-labelledby="eb-1">
+            <p>Spin up as many sealed rooms as the job needs. Runners join a cell, do their part and leave nothing behind.</p>
+            <a class="btn btn-sm btn-line" href="#why">Read the notes</a>
+          </div>
+        </li>
+        <li>
+          <h3><button class="row-btn" type="button" id="eb-2" aria-expanded="false" aria-controls="rb-2" data-pane="2">Watch the climb</button></h3>
+          <div class="row-body" id="rb-2" role="region" aria-labelledby="eb-2" hidden>
+            <p>A daily line shows how many runs finished cleanly, so slow drifts are easy to spot before they matter.</p>
+            <a class="btn btn-sm btn-line" href="#proof">Read the notes</a>
+          </div>
+        </li>
+        <li>
+          <h3><button class="row-btn" type="button" id="eb-3" aria-expanded="false" aria-controls="rb-3" data-pane="3">Read the log</button></h3>
+          <div class="row-body" id="rb-3" role="region" aria-labelledby="eb-3" hidden>
+            <p>Each check leaves a short line with a time and a verdict. Scan the list, open any row and see what happened.</p>
+            <a class="btn btn-sm btn-line" href="#runtime">Read the notes</a>
+          </div>
+        </li>
+      </ul>
+      <div class="flow-prog" aria-hidden="true"><span id="flow-bar"></span></div>
+    </div>
+    <div class="panel on-dark" id="flow-panel">
+      <div class="panel-head">
+        <h3 id="panel-title">Cells in use (sample)</h3>
+        <a class="btn btn-line btn-xs" href="#runtime">See the cells<svg class="ic" aria-hidden="true"><use href="#i-bent"/></svg></a>
+      </div>
+      <div class="pane pane-1" id="pane-1">
+        <div class="nb"><h4>Cell 1</h4><div class="rchips"><span class="rchip"><i></i>Runner 1</span><span class="rchip"><i></i>Runner 2</span><span class="rchip"><i></i>Runner 3</span><span class="rchip"><i></i>Runner 4</span></div></div>
+        <div class="nb"><h4>Cell 2</h4><div class="rchips"><span class="rchip"><i></i>Runner 1</span><span class="rchip"><i></i>Runner 2</span><span class="rchip"><i></i>Runner 3</span><span class="rchip"><i></i>Runner 4</span></div></div>
+        <div class="nb"><h4>Cell 3</h4><div class="rchips"><span class="rchip"><i></i>Runner 1</span><span class="rchip"><i></i>Runner 2</span><span class="rchip"><i></i>Runner 3</span><span class="rchip"><i></i>Runner 4</span></div></div>
+      </div>
+      <div class="pane" id="pane-2" hidden>
+        <div class="chart">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none" role="img" aria-label="Line chart of sample runs, rising over five days"><line x1="0" y1="26" x2="100" y2="26"/><polyline points="0,92 14,88 24,80 30,66 44,64 52,52 60,50 70,40 80,34 96,26"/></svg>
+          <span class="dot" aria-hidden="true"></span>
+          <span class="callout"><i aria-hidden="true"><svg class="ic" style="width:12px;height:12px"><use href="#i-diag"/></svg></i>418 (example)</span>
+        </div>
+        <div class="xlabels" aria-hidden="true"><span>Day 1</span><span>Day 2</span><span>Day 3</span><span>Day 4</span><span>Day 5</span></div>
+      </div>
+      <div class="pane" id="pane-3" hidden>
+        <ul class="log">
+          <li><time>09:02:11</time><span class="st st-g">Check</span><div><p>Base matches its signature</p><small>sample line</small></div></li>
+          <li><time>09:02:48</time><span class="st st-b">Limit</span><div><p>Memory cap held at half</p><small>sample line</small></div></li>
+          <li><time>09:03:20</time><span class="st st-v">Prove</span><div><p>Output traced to its inputs</p><small>sample line</small></div></li>
+          <li><time>09:03:57</time><span class="st st-g">Pass</span><div><p>Ready to ship</p><small>sample line</small></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band on-dark" id="proof" aria-labelledby="proof-title">
+  <div class="wrap">
+    <span class="chip">Proof</span>
+    <h2 class="h2" id="proof-title">Teams that wanted fewer surprises.</h2>
+    <div class="bento">
+      <article class="pc q1">
+        <blockquote><span class="qm" aria-hidden="true">&ldquo;</span><p>We used to guess which helper touched what. Now every cell tells us, and our Friday releases are boring in the best way.</p></blockquote>
+        <div class="who"><span class="av" aria-hidden="true">MV</span><span><b>Mira Voss</b> Release lead <span class="samp">Sample</span></span></div>
+      </article>
+      <article class="pc st1">
+        <div class="fig">4.2M+</div>
+        <div class="slab">Runs finished (example)</div>
+      </article>
+      <article class="pc q2">
+        <blockquote><span class="qm" aria-hidden="true">&ldquo;</span><p>The log reads like a diary of the build.</p></blockquote>
+        <div class="who"><span class="av" aria-hidden="true">TO</span><span><b>Tomas Ede</b> Shop engineer <span class="samp">Sample</span></span></div>
+      </article>
+      <article class="pc st2">
+        <div class="fig">12B+</div>
+        <div class="slab">Checks passed (example)</div>
+      </article>
+      <article class="pc art2" aria-hidden="true"><div class="petals"></div></article>
+      <article class="pc st3">
+        <div class="fig">87%</div>
+        <div class="slab">Runs without a retry (example)</div>
+      </article>
+      <div class="pc trio">
+        <div class="checks" aria-hidden="true"><span><svg class="ic ic-16"><use href="#i-check"/></svg></span><span><svg class="ic ic-16"><use href="#i-check"/></svg></span><span><svg class="ic ic-16"><use href="#i-check"/></svg></span></div>
+        <p>Three audits, run by sample reviewers, on every release.</p>
+      </div>
+      <p class="sr-only">Sample badges</p>
+      <div class="badge bd1"><svg viewBox="0 0 90 90" aria-hidden="true" focusable="false"><circle cx="45" cy="45" r="36"/><text x="45" y="49" text-anchor="middle">AUDIT A</text></svg></div>
+      <div class="badge bd2"><svg viewBox="0 0 90 90" aria-hidden="true" focusable="false"><polygon points="45,8 77,26 77,64 45,82 13,64 13,26"/><text x="45" y="49" text-anchor="middle">AUDIT B</text></svg></div>
+      <div class="badge bd3"><svg viewBox="0 0 90 90" aria-hidden="true" focusable="false"><rect x="12" y="12" width="66" height="66" rx="14" stroke-dasharray="2 5" stroke-linecap="round"/><text x="45" y="49" text-anchor="middle">AUDIT C</text></svg></div>
+    </div>
+  </div>
+  <div class="wrap mq-ctl"><button class="btn btn-sm btn-line" type="button" id="mq-btn" aria-pressed="false"><svg class="ic ic-16" aria-hidden="true"><use href="#i-pause"/></svg><span id="mq-label">Pause</span></button></div>
+  <div class="mq" id="mq" role="group" aria-label="Slogan, repeated">
+    <div class="mq-track">
+      <div class="mq-seg"><span>Seal it</span><span>Check it</span><span>Ship it</span></div>
+      <div class="mq-seg" aria-hidden="true"><span>Seal it</span><span>Check it</span><span>Ship it</span></div>
+    </div>
+  </div>
+  <div class="tick">
+    <div class="wrap">
+      <ul>
+        <li>3 cells per bench (example)</li>
+        <li>41 checks per run (example)</li>
+        <li>98 second median start (example)</li>
+        <li>30 day logs (example)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="run-wrap">
+<section class="runtime inkb on-dark" id="runtime" aria-labelledby="run-title">
+  <div class="wrap run-grid">
+    <div>
+      <span class="chip">Runtime</span>
+      <h2 class="h2" id="run-title" style="color:var(--on-ink)">Try a cell on the machine you have.</h2>
+      <p class="lead">The local kit starts a sealed room in a few seconds, with the same rules your team uses. Pick the size of machine and take it for a spin.</p>
+      <div class="seg" role="radiogroup" aria-label="Machine size" id="size-seg">
+        <button type="button" role="radio" aria-checked="true" data-label="laptop">Laptop</button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" data-label="workstation">Workstation</button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" data-label="server">Server</button>
+      </div>
+      <div class="run-btns">
+        <a class="btn btn-fill" href="#walkthrough" id="get-btn"><svg class="ic ic-16" aria-hidden="true"><use href="#i-download"/></svg><span id="get-label">Get it for laptop</span></a>
+        <a class="btn btn-line" href="#why">What&rsquo;s inside</a>
+      </div>
+      <p class="run-note">Sample download. Nothing is installed or sent.</p>
+      <div class="cmd-row">
+        <div class="cmd"><code>$ kiln up demo</code><button type="button" id="copy-btn" aria-label="Copy command"><svg class="ic ic-16" aria-hidden="true"><use href="#i-copy"/></svg></button></div>
+        <a class="mlink" href="#why">How cells work<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <p class="sr-only" id="copy-status" role="status" aria-live="polite"></p>
+    </div>
+    <div class="lineart" aria-hidden="true">
+      <svg viewBox="0 0 560 420" preserveAspectRatio="xMidYMid meet" focusable="false">
+        <polygon points="40,110 190,70 250,120 100,165"/>
+        <polygon points="40,110 40,122 100,177 100,165"/>
+        <polygon points="250,120 250,132 100,177"/>
+        <polygon points="230,220 300,200 360,230 290,252"/>
+        <polygon points="230,236 300,216 360,246 290,268"/>
+        <polygon points="230,252 300,232 360,262 290,284"/>
+        <polyline points="230,220 230,252 290,284 360,262 360,230" fill="none"/>
+        <line x1="290" y1="252" x2="290" y2="284"/>
+        <circle cx="440" cy="330" r="70"/>
+        <ellipse cx="440" cy="330" rx="70" ry="24"/>
+        <ellipse cx="440" cy="330" rx="30" ry="70"/>
+        <ellipse cx="440" cy="330" rx="55" ry="70"/>
+        <line x1="370" y1="330" x2="510" y2="330"/>
+        <path d="M200 150C260 150 280 190 280 200M370 250C400 260 420 280 430 270"/>
+      </svg>
+      <span class="cap" style="left:4%;top:6%">Draft</span>
+      <span class="cap" style="left:42%;top:42%">Running</span>
+      <span class="cap" style="right:4%;bottom:2%">Out in the world</span>
+    </div>
+  </div>
+</section>
+</div>
+
+<section class="sec" id="journal" aria-labelledby="journal-title">
+  <div class="wrap">
+    <div class="journal-head">
+      <div>
+        <span class="chip">From the journal</span>
+        <h2 class="h2" id="journal-title">Notes from the bench.</h2>
+        <p class="sub">Short, honest entries. All of them are samples.</p>
+        <p class="jmeta"><a class="mlink" href="#journal">All entries<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+      </div>
+      <div class="arrows">
+        <button class="round" type="button" id="j-prev" aria-label="Previous entries"><svg class="ic ic-16" aria-hidden="true"><use href="#i-prev"/></svg></button>
+        <button class="round" type="button" id="j-next" aria-label="Next entries"><svg class="ic ic-16" aria-hidden="true"><use href="#i-next"/></svg></button>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="track" id="track" role="region" aria-label="Journal entries" tabindex="0">
+      <article class="jcard"><div class="jart ja1" aria-hidden="true"><span class="jdate">Nov 18, 2026 (sample)</span><svg class="jglyph"><use href="#i-mono"/></svg></div><div class="jrow"><h3>What we learned from a thousand tiny cells</h3><a class="btn btn-sm btn-line" href="#journal">Read entry</a></div><div class="jwho"><span class="av" aria-hidden="true">AK</span><span><b>Author name (sample)</b></span></div></article>
+      <article class="jcard"><div class="jart ja2" aria-hidden="true"><span class="jdate">Nov 11, 2026 (sample)</span><svg class="jglyph"><use href="#i-mono"/></svg></div><div class="jrow"><h3>Why every run should leave a receipt</h3><a class="btn btn-sm btn-line" href="#journal">Read entry</a></div><div class="jwho"><span class="av" aria-hidden="true">BL</span><span><b>Author name (sample)</b></span></div></article>
+      <article class="jcard"><div class="jart ja3" aria-hidden="true"><span class="jdate">Nov 4, 2026 (sample)</span><svg class="jglyph"><use href="#i-mono"/></svg></div><div class="jrow"><h3>Setting limits without slowing anyone down</h3><a class="btn btn-sm btn-line" href="#journal">Read entry</a></div><div class="jwho"><span class="av" aria-hidden="true">CJ</span><span><b>Author name (sample)</b></span></div></article>
+      <article class="jcard"><div class="jart ja4" aria-hidden="true"><span class="jdate">Oct 28, 2026 (sample)</span><svg class="jglyph"><use href="#i-mono"/></svg></div><div class="jrow"><h3>A tour of the signed base shelf</h3><a class="btn btn-sm btn-line" href="#journal">Read entry</a></div><div class="jwho"><span class="av" aria-hidden="true">DM</span><span><b>Author name (sample)</b></span></div></article>
+      <article class="jcard"><div class="jart ja5" aria-hidden="true"><span class="jdate">Oct 21, 2026 (sample)</span><svg class="jglyph"><use href="#i-mono"/></svg></div><div class="jrow"><h3>Teaching a classroom to share one bench</h3><a class="btn btn-sm btn-line" href="#journal">Read entry</a></div><div class="jwho"><span class="av" aria-hidden="true">EN</span><span><b>Author name (sample)</b></span></div></article>
+      <article class="jcard"><div class="jart ja6" aria-hidden="true"><span class="jdate">Oct 14, 2026 (sample)</span><svg class="jglyph"><use href="#i-mono"/></svg></div><div class="jrow"><h3>Small checklists that catch big mistakes</h3><a class="btn btn-sm btn-line" href="#journal">Read entry</a></div><div class="jwho"><span class="av" aria-hidden="true">FP</span><span><b>Author name (sample)</b></span></div></article>
+    </div>
+    <div class="tprog" aria-hidden="true"><span id="tprog"></span></div>
+  </div>
+</section>
+
+<section class="sec" id="features" aria-labelledby="feat-title">
+  <div class="wrap">
+    <span class="chip">Features</span>
+    <h2 class="h2" id="feat-title">Small pieces that fit together.</h2>
+    <div class="feat-grid">
+      <div class="feat"><span class="mono">Seal</span><h3>Cells that close</h3><p>Each room has its own files, its own clock and a hard stop, so a helper cannot wander.</p></div>
+      <div class="feat"><span class="mono">Check</span><h3>Rules you can read</h3><p>Write a rule in a sentence. Kilnworth turns it into a check that runs before every ship.</p></div>
+      <div class="feat"><span class="mono">Ship</span><h3>Records that travel</h3><p>A finished run carries its log, so reviewers can follow the trail without asking around.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="plans" aria-labelledby="plans-title">
+  <div class="wrap">
+    <span class="chip">Plans</span>
+    <h2 class="h2" id="plans-title">Compare the sample plans.</h2>
+    <div class="tbl-region" role="region" aria-label="Plan comparison" tabindex="0">
+      <table>
+        <caption>Sample plan comparison. Every value is example data.</caption>
+        <thead><tr><th scope="col">Feature</th><th scope="col">Starter</th><th scope="col">Team</th><th scope="col">Studio</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Cells</th><td>3</td><td>20</td><td>Unlimited</td></tr>
+          <tr><th scope="row">Runners per cell</th><td>2</td><td>8</td><td>32</td></tr>
+          <tr><th scope="row">Log history</th><td>7 days</td><td>30 days</td><td>1 year</td></tr>
+          <tr><th scope="row">Signed bases</th><td>Shared</td><td>Shared and private</td><td>Private</td></tr>
+          <tr><th scope="row">Help</th><td>Guides</td><td>Email</td><td>Named contact</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="walkthrough" aria-labelledby="walk-title">
+  <div class="wrap form-grid">
+    <div>
+      <span class="chip">Walkthrough</span>
+      <h2 class="h2" id="walk-title">Request a walkthrough.</h2>
+      <p class="lead">Tell us a little about your bench. This form is a local demo, so nothing is sent anywhere.</p>
+    </div>
+    <form class="form" id="walk-form" novalidate>
+      <div class="two">
+        <div><label class="lbl" for="f-name">Name</label><input class="field" id="f-name" name="name" type="text" autocomplete="name" required/></div>
+        <div><label class="lbl" for="f-mail">Work email</label><input class="field" id="f-mail" name="mail" type="email" autocomplete="email" required/></div>
+      </div>
+      <div>
+        <label class="lbl" for="f-size">Team size</label>
+        <select class="field inputer" id="f-size" name="size">
+          <option>1 to 5 people</option>
+          <option>6 to 20 people</option>
+          <option>21 to 80 people</option>
+          <option>More than 80 people</option>
+        </select>
+      </div>
+      <div><label class="lbl" for="f-msg">Message</label><textarea class="field" id="f-msg" name="msg" placeholder="What would you like to see?"></textarea></div>
+      <div><button class="btn btn-fill" type="submit">Request walkthrough</button></div>
+      <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+<section class="sec" id="pricing" aria-labelledby="price-title">
+  <div class="wrap">
+    <span class="chip">Pricing</span>
+    <h2 class="h2" id="price-title">Three sample plans.</h2>
+    <div class="price-grid">
+      <article class="plan">
+        <h3>Starter</h3>
+        <p class="price">$0</p><p class="per">per month (example)</p>
+        <ul><li><svg class="ic ic-16" aria-hidden="true"><use href="#i-check"/></svg>3 cells</li><li><svg class="ic ic-16" aria-hidden="true"><use href="#i-check"/></svg>Shared signed bases</li><li><svg class="ic ic-16" aria-hidden="true"><use href="#i-check"/></svg>7 day logs</li></ul>
+        <a class="btn btn-line" href="#walkthrough">Choose Starter</a>
+      </article>
+      <article class="plan">
+        <h3>Team</h3>
+        <p class="price">$49</p><p class="per">per month (example)</p>
+        <ul><li><svg class="ic ic-16" aria-hidden="true"><use href="#i-check"/></svg>20 cells</li><li><svg class="ic ic-16" aria-hidden="true"><use href="#i-check"/></svg>Private signed bases</li><li><svg class="ic ic-16" aria-hidden="true"><use href="#i-check"/></svg>30 day logs</li></ul>
+        <a class="btn btn-fill" href="#walkthrough">Choose Team</a>
+      </article>
+      <article class="plan">
+        <h3>Studio</h3>
+        <p class="price">$199</p><p class="per">per month (example)</p>
+        <ul><li><svg class="ic ic-16" aria-hidden="true"><use href="#i-check"/></svg>Unlimited cells</li><li><svg class="ic ic-16" aria-hidden="true"><use href="#i-check"/></svg>Named contact</li><li><svg class="ic ic-16" aria-hidden="true"><use href="#i-check"/></svg>1 year logs</li></ul>
+        <a class="btn btn-line" href="#walkthrough">Choose Studio</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="faq" aria-labelledby="faq-title">
+  <div class="wrap">
+    <span class="chip">Questions</span>
+    <h2 class="h2" id="faq-title">Quick answers.</h2>
+    <ul class="faq">
+      <li><h3><button class="faq-btn" type="button" id="fq-1" aria-expanded="false" aria-controls="fa-1">Is Kilnworth a real service?<svg class="ic ic-16" aria-hidden="true"><use href="#i-plus"/></svg></button></h3><div class="faq-body" id="fa-1" role="region" aria-labelledby="fq-1" hidden><p>No. It is a fictional design sample. Nothing can be installed or bought, and every figure is example data.</p></div></li>
+      <li><h3><button class="faq-btn" type="button" id="fq-2" aria-expanded="false" aria-controls="fa-2">What is a runner?<svg class="ic ic-16" aria-hidden="true"><use href="#i-plus"/></svg></button></h3><div class="faq-body" id="fa-2" role="region" aria-labelledby="fq-2" hidden><p>A runner is a small software helper that does one job inside a cell and then stops.</p></div></li>
+      <li><h3><button class="faq-btn" type="button" id="fq-3" aria-expanded="false" aria-controls="fa-3">What is a cell?<svg class="ic ic-16" aria-hidden="true"><use href="#i-plus"/></svg></button></h3><div class="faq-body" id="fa-3" role="region" aria-labelledby="fq-3" hidden><p>A cell is an isolated room with its own files and limits. Runners cannot see outside it.</p></div></li>
+      <li><h3><button class="faq-btn" type="button" id="fq-4" aria-expanded="false" aria-controls="fa-4">Do the forms send anything?<svg class="ic ic-16" aria-hidden="true"><use href="#i-plus"/></svg></button></h3><div class="faq-body" id="fa-4" role="region" aria-labelledby="fq-4" hidden><p>No. Every control on this page is a local demo and makes no network request.</p></div></li>
+    </ul>
+  </div>
+</section>
+
+<section class="close" aria-labelledby="close-title">
+  <div class="wrap">
+    <h2 id="close-title">Put a cell around your next change.</h2>
+    <p>Start with one room and a few rules. Add more when the bench feels steady.</p>
+    <div class="acts">
+      <a class="btn btn-fill" href="#walkthrough">Start free (sample)</a>
+      <a class="btn btn-line" href="#faq">Read the guides</a>
+    </div>
+  </div>
+</section>
+<div class="wm inkb" aria-hidden="true"><span>kilnworth</span></div>
+</main>
+<footer class="foot on-dark">
+  <div class="wrap">
+    <div class="foot-cols">
+      <nav aria-labelledby="fh-1"><h2 id="fh-1">Platform</h2><ul><li><a href="#why">Cells</a></li><li><a href="#why">Signed bases</a></li><li><a href="#workflow">Checks</a></li><li><a href="#workflow">Run log</a></li><li><a href="#runtime">Local kit</a></li></ul></nav>
+      <nav aria-labelledby="fh-2"><h2 id="fh-2">Use cases</h2><ul><li><a href="#workflow">Solo makers</a></li><li><a href="#workflow">Small teams</a></li><li><a href="#proof">Review desks</a></li><li><a href="#proof">Careful shops</a></li><li><a href="#runtime">Classrooms</a></li></ul></nav>
+      <nav aria-labelledby="fh-3"><h2 id="fh-3">Help</h2><ul><li><a href="#faq">Questions</a></li><li><a href="#walkthrough">Walkthrough</a></li><li><a href="#plans">Limits</a></li><li><a href="#runtime">Commands</a></li></ul></nav>
+      <nav aria-labelledby="fh-4"><h2 id="fh-4">Studio</h2><ul><li><a href="#journal">Journal</a></li><li><a href="#pricing">Plans</a></li><li><a href="#proof">Proof</a></li><li><a href="#top">Back to top</a></li></ul></nav>
+      <div class="last">
+        <nav aria-labelledby="fh-5"><h2 id="fh-5">Social</h2><ul><li><a href="#top">Sample channel 1</a></li><li><a href="#top">Sample channel 2</a></li><li><a href="#top">Sample channel 3</a></li><li><a href="#top">Sample channel 4</a></li></ul></nav>
+        <h2 class="sub-h" id="fh-6">Languages</h2>
+        <ul aria-labelledby="fh-6"><li><a href="#top">English</a></li><li><a href="#top">Español (sample)</a></li></ul>
+      </div>
+    </div>
+    <div class="foot-fine">
+      <p>Kilnworth is a fictional design sample. Nothing here can be installed or bought.</p>
+      <p>All figures, quotes, badges, people and dates on this page are example data.</p>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-legal">
+        <svg aria-hidden="true" focusable="false"><use href="#i-mono"/></svg>
+        <span>2026 Kilnworth, a fictional studio.</span>
+        <a href="#top">Terms (sample)</a>
+        <a href="#top">Privacy (sample)</a>
+      </div>
+      <div class="seg" role="radiogroup" aria-label="Appearance" id="mode-seg">
+        <button type="button" role="radio" aria-checked="true" data-mode="system">System</button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" data-mode="light">Light</button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" data-mode="dark">Dark</button>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  var root=document.documentElement;
+  var $=function(s,c){return (c||document).querySelector(s);};
+  var $$=function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s));};
+  var motion=function(){return root.classList.contains("motion");};
+
+  var bar=$(".hdr-bar");
+  var triggers=$$("[data-dropdown]");
+  var openTrigger=null;
+  function closeDd(back){
+    triggers.forEach(function(t){
+      t.setAttribute("aria-expanded","false");
+      $("#"+t.getAttribute("aria-controls")).hidden=true;
+    });
+    if(back&&openTrigger)openTrigger.focus();
+    openTrigger=null;
+  }
+  function openDd(t){
+    closeDd(false);
+    var p=$("#"+t.getAttribute("aria-controls"));
+    p.hidden=false;
+    t.setAttribute("aria-expanded","true");
+    var b=bar.getBoundingClientRect(),r=t.getBoundingClientRect();
+    var w=Math.min(520,window.innerWidth-32);
+    var left=r.left-b.left;
+    if(left+w>b.width)left=r.right-b.left-w;
+    left=Math.max(0,Math.min(left,b.width-w));
+    p.style.left=left+"px";
+    openTrigger=t;
+  }
+  triggers.forEach(function(t){
+    t.addEventListener("click",function(e){
+      e.stopPropagation();
+      if(t.getAttribute("aria-expanded")==="true")closeDd(false);else openDd(t);
+    });
+  });
+  document.addEventListener("click",function(e){
+    if(openTrigger&&!e.target.closest(".hdr-nav li"))closeDd(false);
+    else if(openTrigger&&e.target.closest(".dd a"))closeDd(false);
+  });
+  document.addEventListener("keydown",function(e){
+    if(e.key==="Escape"&&openTrigger)closeDd(true);
+  });
+
+  var ov=$("#overlay"),menuBtn=$("#menu-btn"),menuClose=$("#menu-close");
+  function ovFocusables(){return $$("a,button",ov).filter(function(n){return !n.disabled;});}
+  function openOv(){
+    ov.hidden=false;
+    menuBtn.setAttribute("aria-expanded","true");
+    document.body.style.overflow="hidden";
+    menuClose.focus();
+  }
+  function closeOv(back){
+    ov.hidden=true;
+    menuBtn.setAttribute("aria-expanded","false");
+    document.body.style.overflow="";
+    if(back)menuBtn.focus();
+  }
+  menuBtn.addEventListener("click",openOv);
+  menuClose.addEventListener("click",function(){closeOv(true);});
+  $$("a",ov).forEach(function(a){a.addEventListener("click",function(){closeOv(false);});});
+  ov.addEventListener("keydown",function(e){
+    if(e.key==="Escape"){closeOv(true);return;}
+    if(e.key!=="Tab")return;
+    var f=ovFocusables(),first=f[0],last=f[f.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+  });
+  window.addEventListener("resize",function(){if(!ov.hidden&&window.innerWidth>=1024)closeOv(false);if(openTrigger)closeDd(false);});
+
+  var titles={"1":"Cells in use (sample)","2":"Runs per day (example)","3":"Run log (sample)"};
+  var rowBtns=$$(".row-btn");
+  function showRow(n){
+    rowBtns.forEach(function(b){
+      var on=b.getAttribute("data-pane")===n;
+      b.setAttribute("aria-expanded",on?"true":"false");
+      $("#"+b.getAttribute("aria-controls")).hidden=!on;
+      $("#pane-"+b.getAttribute("data-pane")).hidden=!on;
+    });
+    $("#panel-title").textContent=titles[n];
+    $("#flow-bar").style.setProperty("--i",String(Number(n)-1));
+  }
+  rowBtns.forEach(function(b){b.addEventListener("click",function(){showRow(b.getAttribute("data-pane"));});});
+
+  function radioGroup(group,onPick){
+    var items=$$("[role=radio]",group);
+    function pick(i,focus){
+      items.forEach(function(b,j){
+        b.setAttribute("aria-checked",j===i?"true":"false");
+        b.tabIndex=j===i?0:-1;
+      });
+      if(focus)items[i].focus();
+      onPick(items[i]);
+    }
+    items.forEach(function(b,i){
+      b.addEventListener("click",function(){pick(i,false);});
+      b.addEventListener("keydown",function(e){
+        var k=e.key,n=-1;
+        if(k==="ArrowRight"||k==="ArrowDown")n=(i+1)%items.length;
+        if(k==="ArrowLeft"||k==="ArrowUp")n=(i-1+items.length)%items.length;
+        if(n>=0){e.preventDefault();pick(n,true);}
+      });
+    });
+    return pick;
+  }
+  radioGroup($("#size-seg"),function(b){$("#get-label").textContent="Get it for "+b.getAttribute("data-label");});
+
+  var mq=window.matchMedia("(prefers-color-scheme:dark)");
+  function applyMode(m){
+    var d=m==="dark"||(m==="system"&&mq.matches);
+    root.classList.remove("light","dark");
+    root.classList.add(d?"dark":"light");
+    root.style.colorScheme=d?"dark":"light";
+  }
+  var modeNow="system";
+  var qp=new URLSearchParams(window.location.search).get("appearance");
+  var modeItems=$$("#mode-seg [role=radio]");
+  var modePick=radioGroup($("#mode-seg"),function(b){modeNow=b.getAttribute("data-mode");applyMode(modeNow);});
+  if(qp==="dark"||qp==="light"){
+    modeNow=qp;
+    modeItems.forEach(function(b,j){var on=b.getAttribute("data-mode")===qp;b.setAttribute("aria-checked",on?"true":"false");b.tabIndex=on?0:-1;});
+  }
+  mq.addEventListener("change",function(){if(modeNow==="system")applyMode("system");});
+
+  var copyBtn=$("#copy-btn"),copyStatus=$("#copy-status");
+  copyBtn.addEventListener("click",function(){
+    var done=function(){copyStatus.textContent="";setTimeout(function(){copyStatus.textContent="Copied (sample)";},30);};
+    try{
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText("kiln up demo").then(done,done);}
+      else done();
+    }catch(err){done();}
+  });
+
+  var mqEl=$("#mq"),mqBtn=$("#mq-btn");
+  mqBtn.addEventListener("click",function(){
+    var p=mqEl.classList.toggle("paused");
+    mqBtn.setAttribute("aria-pressed",p?"true":"false");
+    $("#mq-label").textContent=p?"Play":"Pause";
+    mqBtn.querySelector("use").setAttribute("href",p?"#i-play":"#i-pause");
+  });
+
+  var track=$("#track"),tp=$("#tprog");
+  function updateProg(){
+    var max=track.scrollWidth-track.clientWidth;
+    var room=track.parentNode.clientWidth*0.7;
+    var x=max>0?(track.scrollLeft/max)*room:0;
+    tp.style.setProperty("--x",x+"px");
+  }
+  function step(dir){
+    var c=$(".jcard",track);
+    track.scrollBy({left:dir*(c.offsetWidth+24),behavior:motion()?"smooth":"auto"});
+  }
+  $("#j-prev").addEventListener("click",function(){step(-1);});
+  $("#j-next").addEventListener("click",function(){step(1);});
+  track.addEventListener("scroll",updateProg);
+  window.addEventListener("resize",updateProg);
+  updateProg();
+
+  $$(".faq-btn").forEach(function(b){
+    b.addEventListener("click",function(){
+      var on=b.getAttribute("aria-expanded")==="true";
+      b.setAttribute("aria-expanded",on?"false":"true");
+      $("#"+b.getAttribute("aria-controls")).hidden=on;
+    });
+  });
+
+  $("#walk-form").addEventListener("submit",function(e){
+    e.preventDefault();
+    var f=e.target,st=$("#form-status");
+    var name=f.elements.name.value.trim(),mail=f.elements.mail.value.trim();
+    if(!name||mail.indexOf("@")<1){st.textContent="Please add your name and a work email.";return;}
+    st.textContent="Thanks, "+name+". This is a sample, so nothing was sent.";
+    f.reset();
+  });
+})();
+</script>
+</body>
+</html>
