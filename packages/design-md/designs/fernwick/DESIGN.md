@@ -218,16 +218,16 @@ All three faces load through the single font stylesheet href in frontmatter. Dis
 - Section order (12 sections):
   1. Sticky header (`64px` tall) with 22px 5-stroke fern frond mark and 22px Outfit wordmark, 5 muted 15px desktop nav links (3 dropdown triggers opening `560px` two-column flyouts; `--ink` on hover/expanded), transparent borderless search icon button opening a `320px` disclosure, muted `Guides` and `Help`, link-blue `Log in`, and `< 1024px` full-viewport dialog menu.
   2. Centered hero with 64px frond mark, 46px h1 (`40px` at 768px, `34px` at 360px), `16px` gap to a centered single-paragraph lead (`max-width: 600px`, two lines at 1280px with inline bold sample credit sentence), and `32px` gap to two 48px hero pills.
-  3. Full-bleed clipped story carousel (`448px` × `300px` dark cards with `20px` gaps at `>= 1024px`, `300px` tall at `768px`, `min(100vw - 48px, 448px)` × `280px` below `768px`, active card centered with previous/next cards peeking from both edges), segmented prev/next pill with `aria-live`, and bottom-right `Ask Fernwick` floating pill kept `hidden` until scroll exceeds `480px` (and always `hidden` below `600px`).
+  3. Full-bleed clipped story carousel (`448px` × `300px` dark cards with `20px` gaps at `>= 1024px`, `300px` tall at `768px`, `min(100vw - 48px, 448px)` × `280px` below `768px`, active card centered with previous/next cards peeking from both edges), segmented prev/next pill with `aria-live`, and bottom-right `Ask Fernwick` floating pill kept `hidden` until scroll exceeds `480px`, hidden again while any footer link or text would sit under it, and always `hidden` below `600px`; at `>= 600px` the footer reserves `76px` of extra bottom padding so the pill rests below the legal line at the end of the page.
   4. Inset `24px`-radius mist spotlight panel (`16px` viewport inset) with 3-tab list (`Builders`, `Leaders`, `Programs`) and 3 horizontal cards with right-side CSS/SVG thumbnails.
   5. Two-column platform overview with blue-highlighted h2 and an 8-family disclosure accordion covering Security, Networking, Models and training, Build tools, Compute, Analytics, Object storage, and Databases (each opening to 4 sample services in 2 columns).
   6. Full-width always-dark model band with saffron-highlighted h2, interactive 4-item vertical list paired with a responsive `16:9` CSS preview stage (`width: 100%`, `min-width: 0`, stacking to `minmax(0, 1fr)` below `1024px`) + play toggle, and 3 raised dark cards.
   7. Customer stories carousel with leaf-green-highlighted h2, 4 tall split cards (3 visible at `1280px`, 1 per snap view at `360px`) with tinted top story and abstract dark bottom scene + play button, progress bar, and segmented prev/next controls.
   8. Industries showcase with saffron-highlighted h2, 12-industry vertical tablist (horizontal scrollable chip strip below `900px`), and a 3-tile panel mosaic (wide art tile, dark 40px stat tile, light story tile).
-  9. Customer wordmarks strip of 8 fictional typographic marks (gentle marquee only under `html.motion` at `>= 900px` with pause/play button; static 2-column grid at `360px`) plus centered primary pill.
+  9. Customer wordmarks strip of 8 fictional typographic marks (gentle marquee only under `html.motion` at `>= 900px` with a pause/play button that freezes the strip in place and resumes from the same position; static 2-column grid at `360px`) plus centered primary pill.
   10. Aura overview skeleton block: 4 stats, 3 mono-labeled feature cards, keyboard-scrollable plan comparison `<table>`, 3 pricing cards, sample walkthrough `<form>`, 4-item FAQ accordion, and a pull quote `<blockquote>`.
   11. Sky-blue `24px`-radius CTA panel (`1232px` max width) with cobalt-accented three-line h2, two action pills, and a clipped three-color overlapping arc/frond illustration bleeding off the right edge.
-  12. Five-column footer directory (6–10 links per column), legal links + sustainability pledge + sample newsletter subscribe button + language `<select class="inputer">` pill, appearance `radiogroup` (`System`, `Light`, `Dark`), and legal line.
+  12. Five-column footer directory (6–10 links per column), legal links + sustainability pledge + sample newsletter subscribe button + language `<select class="inputer">` pill with a globe glyph, vertically aligned with the subscribe button, appearance `radiogroup` (`System`, `Light`, `Dark`), and legal line.
 
 Spacing table (design px to 13px grid):
 
@@ -270,7 +270,7 @@ Fernwick overrides Aura defaults under the `.fw` body scope:
 - `Accordion`: real `<button aria-expanded>` disclosures in the 8-family platform list and 4-item FAQ section.
 - `Stat`: 4-up grid with 44px Outfit 500 figures and `--muted` labels.
 - `Table`: semantic `<table>` with `<caption>` inside an `overflow-x: auto` keyboard-focusable region (`role="region"`, `tabindex="0"`).
-- `Input`, `NativeSelect` (`select.inputer`), `Textarea`: `12px` radius (`9999px` on footer language select), `--canvas` fill, `1px solid var(--control-line)` border; `select.inputer` renders a dual-gradient chevron in `--control-line` across both appearances.
+- `Input`, `NativeSelect` (`select.inputer`), `Textarea`: `12px` radius (`9999px` on footer language select), `--canvas` fill, `1px solid var(--control-line)` border, `position:static` and `margin:0` (overriding the base input margin); `select.inputer` renders a dual-gradient chevron in `--control-line` across both appearances.
 - `ToggleGroup` / radiogroup: footer appearance switch (`System`, `Light`, `Dark`) using `role="radiogroup"` and `role="radio"` with `aria-checked`, an outer `1px solid var(--control-line)` capsule, transparent borderless inactive buttons, and a bordered `--canvas` active pill.
 
 Measured structural contracts:
