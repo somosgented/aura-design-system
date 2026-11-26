@@ -1,337 +1,341 @@
 ---
 version: "alpha"
 name: "Fernwick"
-description: "Fernwick is a crisp white-canvas design with deep cerulean-teal lagoon pills, a green-black night band, pale mist and sky-wash panels, and geometric-humanist type at weight 500, a flavor of Aura for cloud-platform and developer-tool marketing pages."
+description: "Crisp white and charcoal cloud surfaces, saturated cobalt pill actions, soft sky and mist panels, a near-black model band, and calm Outfit-plus-Figtree typography, a flavor of Aura for cloud-platform marketing pages."
 extends: "../../DESIGN.md"
 colors:
-  primary: "#0e6e8c"
+  primary: "#0b5bd3"
   on-primary: "#ffffff"
   surface: "#ffffff"
-  surface-container: "#eef3ef"
-  on-surface: "#1c1f23"
-  on-surface-variant: "#586068"
-  outline: "#d2d8dc"
-  mist: "#eef3ef"
-  sky-wash: "#d8eeff"
-  night: "#0d1a14"
-  lagoon: "#0e6e8c"
-  lagoon-on-night: "#4dbfdf"
-  fern: "#1a7a3c"
-  amber: "#e8a020"
+  surface-container: "#f6f8fb"
+  on-surface: "#1f2024"
+  on-surface-variant: "#555961"
+  outline: "#e2e4e8"
+  sky: "#dcebfd"
+  band: "#1b1c1f"
+  hl-blue: "#1668d8"
+  hl-saffron: "#a87000"
+  hl-green: "#188038"
 typography:
   headline-display:
-    fontFamily: "Plus Jakarta Sans"
+    fontFamily: "Outfit"
     fontWeight: 500
-    lineHeight: 1.1
-    letterSpacing: -0.02em
+    lineHeight: 1.15
+    letterSpacing: -0.01em
   body-md:
-    fontFamily: "Plus Jakarta Sans"
+    fontFamily: "Figtree"
     fontWeight: 400
     lineHeight: 1.5
   label-md:
-    fontFamily: "Red Hat Mono"
+    fontFamily: "Roboto Mono"
     fontSize: 12px
     fontWeight: 500
-    letterSpacing: 0.1em
+    letterSpacing: 0.04em
 rounded:
-  md: 12px
+  md: 16px
+  lg: 24px
   full: 9999px
 spacing:
   unit: 13px
-  section: 143px
-  max-width: 1280px
+  section: 97.5px
+  max-width: 1232px
 aura:
   theme:
     light:
-      accent: "#0e6e8c"
-      gray: "#586068"
+      accent: "#0b5bd3"
+      gray: "#555961"
       background: "#ffffff"
     dark:
-      accent: "#4dbfdf"
-      gray: "#7a8a92"
-      background: "#0d1a14"
+      accent: "#9fc3ff"
+      gray: "#828896"
+      background: "#121316"
   fonts:
-    sans: "Plus Jakarta Sans"
-    display: "Plus Jakarta Sans"
-    label: "Red Hat Mono"
-    href: "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&family=Red+Hat+Mono:wght@400;500&display=swap"
+    sans: "Figtree"
+    display: "Outfit"
+    label: "Roboto Mono"
+    href: "https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Outfit:wght@400;500&family=Roboto+Mono:wght@400;500&display=swap"
   hero: "paper"
   headingWeight: 500
   radius:
     button: "9999px"
-    input: "9999px"
-    surface: "26px"
+    input: "12px"
+    surface: "16px"
   tokens:
     light:
-      ink: "#1c1f23"
-      body: "#586068"
       canvas: "#ffffff"
-      paper: "#ffffff"
-      mist: "#eef3ef"
-      sky-wash: "#d8eeff"
-      night: "#0d1a14"
-      night-ink: "#f0f4f2"
-      night-muted: "#8fa89a"
-      lagoon: "#0e6e8c"
-      lagoon-deep: "#0a5068"
-      fern: "#1a7a3c"
-      amber: "#e8a020"
-      rule: "#d2d8dc"
-      control-line: "#6b7c84"
-      on-lagoon: "#ffffff"
-      lagoon-on-night: "#4dbfdf"
-      chip-ink: "#1c1f23"
+      panel: "#f6f8fb"
+      panel-hover: "#ebeef4"
+      sky: "#dcebfd"
+      ink: "#1f2024"
+      body: "#3c4046"
+      muted: "#555961"
+      rule: "#e2e4e8"
+      control-line: "#70757e"
+      primary: "#0b5bd3"
+      primary-hover: "#0849ad"
+      on-primary: "#ffffff"
+      link: "#1d52cf"
+      focus: "#0b5bd3"
+      hl-blue: "#1668d8"
+      hl-saffron: "#a87000"
+      hl-green: "#188038"
+      art-saffron: "#f2b600"
+      art-magenta: "#c83b84"
+      art-cyan: "#38a1f3"
+      art-dark: "#101218"
+      band: "#1b1c1f"
+      band-card: "#282a2f"
+      band-active: "#2b3648"
+      band-rule: "#3c3f47"
+      on-dark: "#f3f4f6"
+      on-dark-muted: "#c2c6ce"
+      on-dark-link: "#9cc2ff"
+      on-dark-saffron: "#f6c433"
+      on-dark-line: "#8a909e"
+      on-dark-btn-bg: "#ffffff"
+      on-dark-btn-ink: "#1b1c1f"
     dark:
-      ink: "#e8f0eb"
-      body: "#a0b4a8"
-      canvas: "#0d1a14"
-      paper: "#162318"
-      mist: "#1c2e21"
-      sky-wash: "#0e2340"
-      night: "#080f0b"
-      night-ink: "#f0f4f2"
-      night-muted: "#8fa89a"
-      lagoon: "#4dbfdf"
-      lagoon-deep: "#6acde9"
-      fern: "#4ec27a"
-      amber: "#f0b840"
-      rule: "#2a3a30"
-      control-line: "#5a7a6a"
-      on-lagoon: "#0d1a14"
-      lagoon-on-night: "#4dbfdf"
-      chip-ink: "#e8f0eb"
+      canvas: "#121316"
+      panel: "#1b1d21"
+      panel-hover: "#24272c"
+      sky: "#182940"
+      ink: "#e8eaed"
+      body: "#d2d6dc"
+      muted: "#b4b8bf"
+      rule: "#33363d"
+      control-line: "#828896"
+      primary: "#9fc3ff"
+      primary-hover: "#b8d3ff"
+      on-primary: "#121316"
+      link: "#a8c7fa"
+      focus: "#9fc3ff"
+      hl-blue: "#8ab4f8"
+      hl-saffron: "#fdd663"
+      hl-green: "#81c995"
+      art-saffron: "#f2b600"
+      art-magenta: "#d45598"
+      art-cyan: "#5eb8ff"
+      art-dark: "#101218"
+      band: "#1e2024"
+      band-card: "#2a2c32"
+      band-active: "#2b3648"
+      band-rule: "#3c3f47"
+      on-dark: "#f3f4f6"
+      on-dark-muted: "#c2c6ce"
+      on-dark-link: "#9cc2ff"
+      on-dark-saffron: "#f6c433"
+      on-dark-line: "#8a909e"
+      on-dark-btn-bg: "#ffffff"
+      on-dark-btn-ink: "#1b1c1f"
 ---
 
 # Fernwick
 
-> Cloud infrastructure rendered in clean white air, deep cerulean-teal lagoon action pills and a green-black night band — Fernwick, a marketing theme built on Aura.
+> Calm white and charcoal cloud surfaces, saturated cobalt pill actions, mist and sky panels, and a high-contrast dark model band — a cloud-platform marketing theme built on Aura.
 
-This file is a **theme over Aura**, not a separate system: it changes color seeds, type, radius and voice. Everything it does not mention follows the base Aura spec at `extends`, resolved against this file's URL (13px grid, accent/gray step roles, Radix icons, forms, accessibility). All copy, data, figures and visuals in the showcase are original and fictional; any resemblance to a real product is coincidental.
+This file is a **theme over Aura**, not a separate system: it changes color seeds, type, radius, and voice. Everything it does not mention follows the base Aura spec at `extends` (13px grid, accent/gray step roles, Radix icons, forms, accessibility). All copy, metrics, stories, and visuals in the showcase are original and fictional.
 
 ## Apply to an Aura project
 
-An agent that receives this file's link inside an Aura project does this, in order:
+An agent that receives this file inside an Aura project does this, in order:
 
-1. Save this file as `DESIGN.theme.md` at the project root. Keep the root `DESIGN.md` (Aura base). Where the two disagree, this file wins on color, type, radius, shape, motion and voice; the base wins on grid, accessibility, icons and forms.
-2. Fetch the sibling `theme.css` (same URL, `DESIGN.md` → `theme.css`). Paste its `@import`, `@theme inline` block, `:root` block, dark media block and `.dark` block **after** the existing ones in the project's `globals.css`. Do not hand-edit the generated scale values.
-3. If the app uses `next/font`, load Plus Jakarta Sans (400;500;600) and Red Hat Mono (400;500) there instead of the `@import`, and point `--font-sans`, `--font-display` and `--font-label` at the font variables.
+1. Save this file as `DESIGN.theme.md` at the project root. Keep the root `DESIGN.md` (Aura base). Where the two disagree, this file wins on color, type, radius, shape, motion, and voice; the base wins on grid, accessibility, icons, and forms.
+2. Fetch the sibling `theme.css` (same folder, `DESIGN.md` → `theme.css`). Paste its `@import`, `@theme inline` block, `:root` block, dark media block, and `.dark` block **after** the existing ones in the project's `globals.css`. Do not hand-edit the generated values.
+3. If the app uses `next/font`, load Outfit (400;500), Figtree (400;500;600), and Roboto Mono (400;500) there instead of the `@import`, and point `--font-display`, `--font-sans`, and `--font-label` at the font variables.
 4. Restyle with Aura components and token classes only, following **Components** below. No new hex literals in components.
-5. Keep the product's content. Do not import Fernwick's sample copy into an unrelated product. All pricing, credits and latency figures are labelled as sample figures.
-6. Verify at 360px, 768px and 1280px, in dark mode and with `prefers-reduced-motion: reduce`, then check the Don't list.
+5. Keep the product's content. Do not import Fernwick's sample copy into an unrelated product.
+6. Verify at 360px, 768px, and 1280px, in light and dark mode, and with `prefers-reduced-motion: reduce`, then check the Don't list.
 
 ## Overview
 
-Fernwick is built on a white canvas with hairline `rule` borders, fully rounded pill controls filled with `lagoon` (a deep cerulean-teal), a 500-weight geometric-humanist sans throughout, and three named surface bands — `mist` (pale green-tinted inset panels), `sky-wash` (the final CTA panel) and `night` (a full-bleed green-black AI section). Highlight inks (`fern` on white, `amber` on the night band) color select headline words. A floating assistant chip lives fixed at the bottom-right. Use Fernwick for cloud, infrastructure, developer tools and SaaS marketing pages that need a clean, readable home.
+Fernwick pairs an open pure-white light canvas and a neutral charcoal dark canvas with generous section breathing room, full-pill cobalt actions, cool mist (`--panel`) and sky (`--sky`) containers, and one full-bleed near-black model band (`--band`). Display headlines use Outfit at weight 500 with selective single-accent highlight phrases (cobalt blue, warm saffron, leaf green). Body and UI text stay crisp in Figtree; tiny uppercase metadata labels use Roboto Mono. Decorative cards use subtle 1px hairlines (`--rule`), while every interactive control uses a stronger boundary (`--control-line`) that holds at least 3:1 contrast against every surface behind it.
 
 ## Colors
 
-Seeds generate the full Aura 12-step scales in `theme.css`. Custom tokens extend them for Fernwick-specific surfaces.
-
-| Role | Token | Aura step | Use |
+| Role | Token | Light | Dark |
 | --- | --- | --- | --- |
-| Page canvas | `--canvas` | `gray-1` | App background |
-| Cards, dropdowns | `--paper` | `gray-2` | Elevated surfaces |
-| Mist band | `--mist` | `accent-a3` tinted | Inset rounded section bands |
-| Sky-wash panel | `--sky-wash` | `accent-a5` pale | Final CTA rounded panel |
-| Night band | `--night` | dark `gray-1` scoped | Full-bleed AI section |
-| Night ink | `--night-ink` | `gray-12` on night | Headings on the night band |
-| Night muted | `--night-muted` | `gray-11` on night | Body on the night band |
-| Hairline border | `--rule` | `gray-6` | Dividers, card outlines |
-| Ink | `--ink` | `gray-12` | Primary text |
-| Body | `--body` | `gray-11` | Secondary prose |
-| Action fill | `--lagoon` | `accent-9` | Filled pill buttons, links |
-| Action hover | `--lagoon-deep` | `accent-10` | Hover state of lagoon pills |
-| Fern highlight | `--fern` | custom | Headline accent words on white |
-| Amber highlight | `--amber` | custom | Headline accent words on night |
-| Chip surface | `--sky-wash` | `accent-a5` | Floating assistant chip fill |
-| Chip ink | `--chip-ink` | `gray-12` | Text on the assistant chip |
-| Control border | `--control-line` | custom | Input/select/textarea borders and carousel pill borders; ≥ 3:1 on canvas, paper and mist |
-| On lagoon | `--on-lagoon` | custom | Text on lagoon-filled controls (white in light; dark canvas ink in dark); ≥ 4.5:1 on the lagoon fill |
-| Lagoon on night | `--lagoon-on-night` | custom | Links and focus outlines on night surfaces; ≥ 4.5:1 on night in both appearances |
+| Page canvas | `--canvas` | `#ffffff` | `#121316` |
+| Tinted panel surface | `--panel` | `#f6f8fb` | `#1b1d21` |
+| Panel hover / raised fill | `--panel-hover` | `#ebeef4` | `#24272c` |
+| Sky CTA / active chip fill | `--sky` | `#dcebfd` | `#182940` |
+| Primary ink | `--ink` | `#1f2024` | `#e8eaed` |
+| Body text | `--body` | `#3c4046` | `#d2d6dc` |
+| Muted body and captions | `--muted` | `#555961` | `#b4b8bf` |
+| Decorative hairline | `--rule` | `#e2e4e8` | `#33363d` |
+| Interactive control border | `--control-line` | `#70757e` | `#828896` |
+| Primary button fill | `--primary` | `#0b5bd3` | `#9fc3ff` |
+| Primary button hover | `--primary-hover` | `#0849ad` | `#b8d3ff` |
+| Primary button label | `--on-primary` | `#ffffff` | `#121316` |
+| Interactive link blue | `--link` | `#1d52cf` | `#a8c7fa` |
+| Focus ring | `--focus` | `#0b5bd3` | `#9fc3ff` |
+| Heading highlight (blue) | `--hl-blue` | `#1668d8` | `#8ab4f8` |
+| Heading highlight (saffron) | `--hl-saffron` | `#a87000` | `#fdd663` |
+| Heading highlight (green) | `--hl-green` | `#188038` | `#81c995` |
+| Abstract art accents | `--art-saffron`, `--art-magenta`, `--art-cyan` | `#f2b600`, `#c83b84`, `#38a1f3` | `#f2b600`, `#d45598`, `#5eb8ff` |
+| Always-dark art canvas | `--art-dark` | `#101218` | `#101218` |
+| Dark band surface | `--band` | `#1b1c1f` | `#1e2024` |
+| Dark band raised card | `--band-card` | `#282a2f` | `#2a2c32` |
+| Dark band active pill | `--band-active` | `#2b3648` | `#2b3648` |
+| Dark band hairline | `--band-rule` | `#3c3f47` | `#3c3f47` |
+| Fixed ink on dark | `--on-dark` | `#f3f4f6` | `#f3f4f6` |
+| Fixed muted text on dark | `--on-dark-muted` | `#c2c6ce` | `#c2c6ce` |
+| Fixed link on dark | `--on-dark-link` | `#9cc2ff` | `#9cc2ff` |
+| Fixed saffron on dark | `--on-dark-saffron` | `#f6c433` | `#f6c433` |
+| Fixed control border on dark | `--on-dark-line` | `#8a909e` | `#8a909e` |
+| Fixed light pill on dark | `--on-dark-btn-bg` / `--on-dark-btn-ink` | `#ffffff` / `#1b1c1f` | `#ffffff` / `#1b1c1f` |
 
-**Contrast rules:**
-- `--ink` on `--canvas` ≥ 7:1 light and dark. All normal body text meets WCAG AA (4.5:1).
-- `--night-ink` on `--night` ≥ 7:1. `--night-muted` on `--night` ≥ 4.5:1.
-- `--fern` on `--canvas` ≥ 4.5:1 for normal-size headline words; at large display sizes (≥ 36px / 500) the 3:1 large-text threshold applies.
-- `--amber` on `--night` ≥ 4.5:1 for normal-size text; 3:1 at large display sizes.
-- Lagoon pill: white `accent-contrast` on `--lagoon` ≥ 4.5:1. Outline pill: `--ink` on `--canvas` ≥ 7:1.
-- Control borders meet 3:1 against their adjacent background in both appearances.
+Computed contrast highlights:
+- Light mode: `--ink` on `--canvas` is `16.3:1`; `--muted` is `7.01:1` on `--canvas` and `6.61:1` on `--panel`; `--on-primary` on `--primary` is `6.09:1`; `--link` is `6.65:1` on `--canvas` and `5.49:1` on `--sky`; `--hl-saffron` on `--canvas` is `4.17:1` (large heading text); `--hl-green` on `--canvas` is `5.02:1`; `--control-line` is `4.63:1` on `--canvas`, `4.37:1` on `--panel`, and `3.82:1` on `--sky`.
+- Dark mode: `--ink` on `--canvas` is `15.4:1`; `--muted` is `9.34:1` on `--canvas` and `8.51:1` on `--panel`; `--on-primary` on `--primary` is `10.4:1`; `--link` is `11.1:1` on `--canvas` and `8.82:1` on `--sky`; `--control-line` is `5.20:1` on `--canvas`, `4.74:1` on `--panel`, and `4.14:1` on `--sky`.
+- Always-dark surfaces (`--band`, `--band-card`, `--band-active`, `--art-dark`): `--on-dark` stays `11.1:1` to `15.6:1`; `--on-dark-muted` stays `7.10:1` to `10.0:1`; `--on-dark-link` stays `6.72:1` to `9.48:1`; `--on-dark-saffron` stays `10.1:1` to `10.6:1`; `--on-dark-line` stays `4.32:1` to `5.38:1`.
 
 ### Dark mode
 
-Fernwick's dark appearance is its own adaptation of the light palette. The dark canvas is a **deep green-black** (`#0d1a14`), close in hue to the night band so the band reads as a deeper layer rather than a foreign element. Cards use `--paper` (`#162318`), a slightly lighter step of the same green-black hue. The `--mist` band becomes a dark forest tint; `--sky-wash` becomes a deep navy panel. In dark mode `--lagoon` becomes a light cerulean (`#4dbfdf`) so it reads at ≥ 4.5:1 as text on the dark canvas, paper and mist surfaces; lagoon-filled buttons keep `--on-lagoon` (`#0d1a14`, dark ink) for text so that combination also meets 4.5:1. Amber and fern shift lighter to meet contrast on dark backgrounds. A single `.dark` block on `<html>` switches all semantic tokens; no section needs its own dark override.
-
-| Variable | Light | Dark |
-| --- | --- | --- |
-| `--canvas` | white | deep green-black |
-| `--paper` | white | dark forest green |
-| `--mist` | pale green-tinted | dark forest tint |
-| `--sky-wash` | pale blue | deep navy |
-| `--lagoon` | mid blue | lighter blue |
-| `--fern` | forest green | bright mint-green |
-| `--amber` | warm gold | bright amber |
-| `--rule` | cool light gray | dark green-gray |
+Dark mode uses a calm neutral charcoal canvas (`#121316`) with lifted `#1b1d21` panels, `#24272c` hover fills, `#182940` midnight-sky panels, and ~14% white structural hairlines (`#33363d`). Primary actions lift to pale cobalt (`#9fc3ff`) with near-black ink (`#121316`), and heading accents lighten (`#8ab4f8`, `#fdd663`, `#81c995`). The dark model band lifts slightly to `#1e2024` framed by top and bottom `--band-rule` hairlines, while every always-dark art card and video stage keeps its fixed `--on-dark*` token family across both appearances.
 
 ## Typography
 
-Plus Jakarta Sans (SIL OFL) is used at weights 400, 500 and 600 for all text. Red Hat Mono (SIL OFL) is used at weights 400 and 500 for uppercase micro eyebrows only.
+| Role | Face | Weight | 1280px size | 360px size | Line height | Tracking |
+| --- | --- | --- | --- | --- | --- | --- |
+| Display h1 | Outfit | 500 | 46px (40px at 768px) | 34px | 1.15 | −0.01em |
+| Section h2 | Outfit | 500 | 44px | 30px | 1.18 | −0.01em |
+| Sub-section h2 / h3 | Outfit | 500 | 36px | 26px | 1.2 | −0.01em |
+| Pull quote | Outfit | 400 | 32px | 24px | 1.25 | −0.02em |
+| Card title | Outfit | 500 | 20px | 18px | 1.4 | 0 |
+| Wordmark | Outfit | 500 | 22px | 22px | 1.0 | −0.01em |
+| Body copy | Figtree | 400 | 16px | 16px | 1.5 | 0 |
+| Buttons / nav / tabs | Figtree | 500 | 15px | 15px | 1.2 | 0 |
+| Footer / compact copy | Figtree | 400 | 14px | 14px | 1.45 | 0 |
+| Uppercase micro labels | Roboto Mono | 500 | 12px | 12px | 1.35 | 0.04em |
 
-| Element | Size / Leading | Weight | Aura class |
-| --- | --- | --- | --- |
-| Hero `h1` (1280) | 48px / 52px | 500 | `.h1 font-display` |
-| Hero `h1` (360) | 32px / 36px | 500 | `.h1 font-display` |
-| Section `h2` | 36px / 40px | 500 | `.h2 font-display` |
-| Feature `h3` | 20px / 26px | 500 | `.h3` |
-| Body prose | 16px / 24px | 400 | `p` / `.body-md` |
-| Nav links | 14px / 20px | 400 | `.small` |
-| Eyebrow label | 11px / 16px | 500 | `font-label uppercase tracking-[0.1em]` |
-| Mono eyebrow | 11px / 16px | 500 | `font-label text-xs uppercase tracking-[0.1em]` |
+All three faces load through the single font stylesheet href in frontmatter. Display headings stay composed at weight 500 rather than heavy bold; emphasis comes from scale and single-accent phrases.
 
 ## Layout
 
-Fernwick's spacing maps to the 13px grid:
+- Max content container width: `1232px`, centered with `24px` side padding at `1280px` and `16px` at `360px`.
+- Sticky header: `64px` tall, `--canvas` background, persistent 1px bottom `--rule` hairline.
+- Section vertical padding: `96px` (`calc(var(--aura) * 7.5)` ≈ `97.5px`) at `1280px`, tightening to `64px` (`calc(var(--aura) * 5)` ≈ `65px`) at `360px`.
+- Section order (12 sections):
+  1. Sticky header (`64px` tall) with 22px 5-stroke fern frond mark and 22px Outfit wordmark, 5 muted 15px desktop nav links (3 dropdown triggers opening `560px` two-column flyouts; `--ink` on hover/expanded), transparent borderless search icon button opening a `320px` disclosure, muted `Guides` and `Help`, link-blue `Log in`, and `< 1024px` full-viewport dialog menu.
+  2. Centered hero with 64px frond mark, 46px h1 (`40px` at 768px, `34px` at 360px), `16px` gap to a centered single-paragraph lead (`max-width: 600px`, two lines at 1280px with inline bold sample credit sentence), and `32px` gap to two 48px hero pills.
+  3. Full-bleed clipped story carousel (`448px` × `300px` dark cards with `20px` gaps at `>= 1024px`, `300px` tall at `768px`, `min(100vw - 48px, 448px)` × `280px` below `768px`, active card centered with previous/next cards peeking from both edges), segmented prev/next pill with `aria-live`, and bottom-right `Ask Fernwick` floating pill kept `hidden` until scroll exceeds `480px`, hidden again while any footer link or text would sit under it, and always `hidden` below `600px`; at `>= 600px` the footer reserves `76px` of extra bottom padding so the pill rests below the legal line at the end of the page.
+  4. Inset `24px`-radius mist spotlight panel (`16px` viewport inset) with 3-tab list (`Builders`, `Leaders`, `Programs`) and 3 horizontal cards with right-side CSS/SVG thumbnails.
+  5. Two-column platform overview with blue-highlighted h2 and an 8-family disclosure accordion covering Security, Networking, Models and training, Build tools, Compute, Analytics, Object storage, and Databases (each opening to 4 sample services in 2 columns).
+  6. Full-width always-dark model band with saffron-highlighted h2, interactive 4-item vertical list paired with a responsive `16:9` CSS preview stage (`width: 100%`, `min-width: 0`, stacking to `minmax(0, 1fr)` below `1024px`) + play toggle, and 3 raised dark cards.
+  7. Customer stories carousel with leaf-green-highlighted h2, 4 tall split cards (3 visible at `1280px`, 1 per snap view at `360px`) with tinted top story and abstract dark bottom scene + play button, progress bar, and segmented prev/next controls.
+  8. Industries showcase with saffron-highlighted h2, 12-industry vertical tablist (horizontal scrollable chip strip below `900px`), and a 3-tile panel mosaic (wide art tile, dark 40px stat tile, light story tile).
+  9. Customer wordmarks strip of 8 fictional typographic marks (gentle marquee only under `html.motion` at `>= 900px` with a pause/play button that freezes the strip in place and resumes from the same position; static 2-column grid at `360px`) plus centered primary pill.
+  10. Aura overview skeleton block: 4 stats, 3 mono-labeled feature cards, keyboard-scrollable plan comparison `<table>`, 3 pricing cards, sample walkthrough `<form>`, 4-item FAQ accordion, and a pull quote `<blockquote>`.
+  11. Sky-blue `24px`-radius CTA panel (`1232px` max width) with cobalt-accented three-line h2, two action pills, and a clipped three-color overlapping arc/frond illustration bleeding off the right edge.
+  12. Five-column footer directory (6–10 links per column), legal links + sustainability pledge + sample newsletter subscribe button + language `<select class="inputer">` pill with a globe glyph, vertically aligned with the subscribe button, appearance `radiogroup` (`System`, `Light`, `Dark`), and legal line.
 
-| Source px | Aura step | px | Use |
-| --- | --- | --- | --- |
-| 8 | `0.5` | 6.5 | Icon gap, tight padding |
-| 12–16 | `1` | 13 | Nav item gap, label gap |
-| 24 | `2` | 26 | Card padding, pill padding-x |
-| 40–48 | `3–3.5` | 39–45.5 | Pill height |
-| 64 | `5` | 65 | Header height, hero glyph, header logo zone |
-| 96 | `7.5` | 97.5 | Section vertical padding |
-| 140 | `11` | 143 | Large section gap |
-| 215 | `16.5` | 214.5 | Mega-menu category rail width |
-| 443–539 | `34–41.5` | 442–539.5 | Mega-menu panel height |
-| 1280 | `98.5` | 1280.5 | Max content width |
+Spacing table (design px to 13px grid):
 
-**Header (1280px):** White bar `h-[65px]`, hairline `border-b border-(--rule)`. Left: wordmark, a "Platform" plain link, then 4 text nav triggers ("Use cases", "Services", "Plans", "Learn") at 14px. Right: search icon, "Guides", "Help", "Log in" in `--lagoon`. Each trigger opens a **full-width mega panel** (`NavigationMenu`) positioned against the header element. The panel is 1280px wide, white, with a hairline bottom border. Inside: a left category rail (`~215px`, `--mist` background, 5–8 items with `data-group` attributes, active item in a rounded `--lagoon`-tinted highlight, secondary action pill at the bottom) and a main area (dynamic panel title, close ×, 3-item grid updated when a rail item is activated). Rail items act as buttons (`aria-pressed`); clicking one updates the title and grid content via JS. One panel open at a time; clicking the same trigger closes it; click/Enter only — never hover.
-
-**Header (360px):** Hamburger, wordmark, search icon visible. The hamburger toggles a full-screen dialog (`z-index:62`, above the sticky header and assistant chip). The dialog header shows the wordmark and a × close button; below are nav rows — links for leaf pages, expandable buttons with `aria-expanded`+`aria-controls` for sections that reveal sub-link lists in-place ("Use cases", "Services", "Learning hub"). Footer of panel shows "Log in" outline pill and "Begin free" filled lagoon pill. Closes on Escape; focus returns to the burger. The footer row of the mobile panel shows "Log in" and "Begin free" pills.
-
-**Hero:** Centered on white. 64px multicolor SVG glyph above a 2-line `h1`, a centered `--body` paragraph with one bold sentence about sample free credits, then two pills: "Start for free" (lagoon fill) and "Talk to sales" (outline).
-
-**Mist bands:** Inset from page edges, `border-radius: 26px`, `background: --mist`. Used for the audience-tabs section and the platform-split section.
-
-**Night band:** Full-bleed, `background: --night`. Holds the AI features section. Headline words in `--amber`; body in `--night-muted`; buttons white pill.
-
-**Sky-wash panel:** Inset, `border-radius: 26px`, `background: --sky-wash`. Final CTA with a 3-line heading (first two words in `--lagoon`), two pills, and a large SVG brand glyph bleeding off the right edge.
-
-**Other patterns:** Stories carousel (wide media cards, pill-grouped prev/next below-left; disabled button shows `opacity:0.45`, dashed border, `cursor:not-allowed`); customer stories carousel (3 visible cards, progress bar, prev/next pill group); vertical industry tabs (12 industries, active in a `--lagoon`-tinted rounded highlight); logo band (SVG wordmarks, pausable animation visible only with motion enabled, filled pill + circular pause button hidden without motion); footer (5 columns — "The Fernwick story", "Services & plans", "Use cases", "Learning hub", "Connect" — hairline top, legal row with language select). The AI features product name is used throughout.
+| Design px | Aura step | px |
+| --- | --- | --- |
+| 6 | 0.5 | 6.5 |
+| 13 | 1 | 13 |
+| 20 | 1.5 | 19.5 |
+| 26 | 2 | 26 |
+| 32 | 2.5 | 32.5 |
+| 40 | 3 | 39 |
+| 48 | 3.5 | 45.5 |
+| 52 | 4 | 52 |
+| 64 | 5 | 65 |
+| 96 | 7.5 | 97.5 |
+| 1232 | 95 | 1235 |
 
 ## Elevation & Depth
 
-- **Flat default:** Canvas, mist and sky-wash bands carry no shadow.
-- **Cards:** `shadow-sm border border-(--rule)` on white; `shadow-none border border-(--rule)` inside the mist band.
-- **Mega panel and dropdowns:** `shadow-lg border-b border-(--rule)` — the only layer that floats above the header flow.
-- **Floating assistant chip:** `shadow-md` with a subtle ring. The dialog it opens uses `shadow-xl rounded-[26px]`.
-- **Night band:** No shadow; depth comes from the `--night` background against the white canvas.
-- Dark mode: shadows shorten and darken; no glow or blur is added.
+Surfaces separate through canvas contrast (`--canvas` vs `--panel` vs `--sky` vs `--band`) and 1px hairlines (`--rule` for decorative cards, `--control-line` for interactive controls). Ambient shadows are reserved strictly for floating popovers: header flyout panels, the search disclosure, and the floating `Ask Fernwick` pill/panel (`0 12px 32px color-mix(in srgb, var(--ink) 12%, transparent)`). Static cards never carry heavy drop shadows.
 
 ## Shapes
 
-- **Buttons and inputs:** Fully rounded pills (`9999px`). Both filled and outline variants.
-- **Surfaces (cards, panels, bands):** `border-radius: 26px` for mist bands, sky-wash panel, mega-panel, assistant dialog and carousel cards. `border-radius: 9999px` for suggestion chips.
-- **Category rail active item:** `border-radius: 13px`.
-- **Logo band items:** No radius (text-based wordmarks).
-- **Assistant chip:** `border-radius: 16px` (smaller pill for the fixed chip).
-- **Night band offer cards:** `border-radius: 13px`.
+- Buttons, segmented controls, chips, language select, and appearance switch: `9999px` full pill radius.
+- Cards, story frames, video stage, and mosaic tiles: `16px` radius.
+- Large spotlight panel, walkthrough panel, and sky CTA panel: `24px` radius.
+- Form inputs, textareas, and form selects: `12px` radius; header flyouts and disclosure popovers: `16px` radius.
+- Brand mark: five stacked rounded fern frond strokes (inline SVG paths) in a `--primary` to `--hl-green` gradient, paired with `Fernwick` in Outfit 500 at 22px (64px standalone frond in the hero).
+- CTA panel graphic: three overlapping thick rounded arcs/fronds in cobalt, leaf green, and saffron clipped inside the sky panel.
 
 ## Components
 
-| Flavor element | Aura component | Notes |
-| --- | --- | --- |
-| Filled "Start for free" button | `Button variant="fill"` | `bg-(--lagoon) text-white hover:bg-(--lagoon-deep) rounded-full` |
-| Outline "Talk to sales" button | `Button variant="pill"` | `border border-(--rule) text-(--ink) bg-(--canvas) rounded-full` |
-| Nav with mega panel | `NavigationMenu` | Full-width panel; category rail left (8 items for Services, 8 for Use cases, 5 for Plans, 5 for Learn); 3-col product grid right updated when rail item is clicked; click/Enter only |
-| Audience tabs (underline) | `Tabs` underline variant | Three tabs: "Builders", "Decision makers", "Access programs"; WAI-ARIA tabs; roving tabindex; Left/Right arrows; Home/End |
-| Industry tabs (vertical) | `Tabs` vertical variant | Up/Down arrows; active item in lagoon-tinted rounded highlight |
-| Platform accordion | `Accordion` | 8 categories (Network & Delivery, Managed Databases, Intelligent Automation, Security & Identity, Data & Storage, Build Tooling, Stream & Analytics, Core Compute) with chevrons; open item shows green-check inline links |
-| Mobile footer columns | `Accordion` | Collapses at < 768px; first item closed by default |
-| Stories carousel | `Carousel` with `Button size="icon-md"` pill-grouped prev/next | Slide; prev/next disable at ends; keyboard reachable |
-| Customer stories carousel | `Carousel` with progress track + `Button size="icon-md"` prev/next | 3 visible cards; progress bar beneath |
-| Floating assistant chip | `Button` fixed chip + `Dialog`/`Popover` | Chip: `bg-(--sky-wash) text-(--chip-ink) rounded-[16px] shadow-md`; dialog: `rounded-[26px] shadow-xl` |
-| Assistant suggestion chips | `Button variant="pill"` full-width | `bg-(--mist) text-(--ink) rounded-full justify-between` with `ArrowRightIcon` |
-| Assistant input | `Input` + circular send `Button` | Input row: `border: 1px solid var(--rule); border-radius: 9999px; background: var(--canvas)` wrapping a borderless inner input and a circular send button; send disabled until text |
-| Stats row | `Stat`, `StatValue`, `StatLabel` | Sample figures; `--body` labels in `font-label uppercase` |
-| Regions/latency table | `Table` | `text-sm` cells; `border-b border-(--rule)`; `font-label` headers |
-| Talk to sales form | `Input`, `NativeSelect`, `Textarea` | Local; `preventDefault`; `aria-live` confirmation |
-| Pricing plans | `Card` × 3 | Recommended plan: `border-2 border-(--lagoon)`; others: `border border-(--rule)` |
-| FAQ | `Accordion` | 5 items; `--body` answers; first item open |
-| Eyebrow badges | `Badge` | `font-label uppercase tracking-[0.1em] text-xs` |
-| Logo band | `Marquee` | SVG wordmarks; `--rule` tint; circular pause `Button size="icon-sm"`; hidden when `.motion` class absent |
-| Language select (footer) | `NativeSelect` | `border: 1px solid var(--control-line); background: var(--canvas); color: var(--body); appearance: none` with an inline SVG chevron in `--body` color overlaid via absolute positioning; consistent in light and dark |
+Fernwick overrides Aura defaults under the `.fw` body scope:
+
+- `Button variant="fill"`: full pill (`9999px`), `--primary` fill, `--on-primary` label, `40px` standard height (`48px` in hero), `15px` Figtree weight 500.
+- `Button variant="pill"` (secondary): full pill (`9999px`), `--canvas` fill, `--ink` label, `1px solid var(--control-line)` border (`>= 3.8:1` on every surface).
+- `NavigationMenu`: desktop dropdown triggers (`Use cases`, `Services`, `Learn`) use `<button data-dropdown>` with `aria-expanded`, `aria-controls`, and a trailing chevron. The header search icon button is transparent and borderless (retaining a visible `:focus-visible` ring) and opens a plain `min(320px, calc(100vw - 32px))` disclosure without `data-dropdown`. Below `1024px`, the menu button opens a full-viewport modal dialog (`role="dialog"`, `aria-modal="true"`, focus-trapped, Escape closes, body scroll locked).
+- `Card`: `16px` radius, `1px solid var(--rule)` border, `shadow-none`.
+- `Tabs`: underline tablist in the spotlight panel, vertical list in the dark model band, and vertical pill tablist (horizontal scrollable row `< 900px`) in the industries section, all supporting arrow-key navigation. Inactive list/tab items stay `background: transparent` with no border; active pills use their filled surface (`--band-active` or `--sky`) framed by a `1px` `--on-dark-line` or `--control-line` border.
+- `Accordion`: real `<button aria-expanded>` disclosures in the 8-family platform list and 4-item FAQ section.
+- `Stat`: 4-up grid with 44px Outfit 500 figures and `--muted` labels.
+- `Table`: semantic `<table>` with `<caption>` inside an `overflow-x: auto` keyboard-focusable region (`role="region"`, `tabindex="0"`).
+- `Input`, `NativeSelect` (`select.inputer`), `Textarea`: `12px` radius (`9999px` on footer language select), `--canvas` fill, `1px solid var(--control-line)` border, `position:static` and `margin:0` (overriding the base input margin); `select.inputer` renders a dual-gradient chevron in `--control-line` across both appearances.
+- `ToggleGroup` / radiogroup: footer appearance switch (`System`, `Light`, `Dark`) using `role="radiogroup"` and `role="radio"` with `aria-checked`, an outer `1px solid var(--control-line)` capsule, transparent borderless inactive buttons, and a bordered `--canvas` active pill.
+
+Measured structural contracts:
+
+```
+menu-overlay-width: 100vw
+dropdown-width: 560px
+quote-font: Outfit
+quote-size: 32px
+```
+
+Header flyout panels are `min(560px, calc(100vw - 32px))` wide, anchored under their trigger.
+
+Blockquote override: `.fw blockquote` and `.fw blockquote p` override Aura's uppercase quote style so pull quotes render in Outfit, `text-transform: none`, weight `400`, `32px` at `>= 1000px` (`24px` below `1000px`), `line-height: 1.25`, and `letter-spacing: -0.02em`.
 
 ## Do's and Don'ts
 
-- Do use `--lagoon` only for the primary action fill and inline links; never for section backgrounds.
-- Do use `--fern` only for highlighted headline words on a white or mist surface where contrast ≥ 4.5:1.
-- Do use `--amber` only for highlighted headline words on the `--night` band where contrast ≥ 4.5:1.
-- Do keep all pill buttons fully rounded; never square or partially rounded.
-- Do label all numbers, pricing and credit figures as sample figures.
-- Do close the mega panel when Escape is pressed and return focus to the trigger.
-- Do disable carousel prev/next at the ends and expose `aria-live` region for position.
+**Do:**
+- Keep display headings at weight 500 in Outfit with at most one highlight accent per headline.
+- Use `--control-line` (`>= 3:1`) on every interactive control border and `--rule` only on decorative dividers and static cards.
+- Use fixed `--on-dark*` tokens on every always-dark surface (`--band`, story cards, customer scenes, dark stat tiles) in both light and dark modes.
+- Clip full-bleed carousels and bleeding panel graphics inside their own `overflow: hidden` wrapper rather than hiding overflow on `html` or `body`.
+- Guard every transition and the desktop wordmark marquee behind `html.motion`.
 
-- Don't open the mega panel on hover — click or Enter only.
-- Don't use `--fern` or `--amber` for body text, labels or any text below 18px where contrast is not verified.
-- Don't use real logos, photos or external images; draw all visuals with HTML/CSS/inline SVG.
-- Don't add shadows to cards inside the mist band.
-- Don't make the floating assistant chip cover content permanently at 360px; keep it small with safe bottom and right margins.
-- Don't animate under `prefers-reduced-motion: reduce`; show all content in its final state.
-- Don't send, store or transmit any data from the form, assistant or search controls.
+**Don't:**
+- Do not use bright yellow saffron (`--art-saffron`) for text on light backgrounds; use `--hl-saffron` (`#a87000`) on white.
+- Do not apply dark `--ink` text onto always-dark cards or scenes.
+- Do not lock text-bearing cards to rigid heights that clip lines at `360px`.
+- Do not hide sections behind scroll-reveal opacity transitions.
+- Do not add external images or four-color cloud marks.
 
 ## Motion
 
-All motion sits behind `@media (prefers-reduced-motion: no-preference)`. Use only `opacity`, `transform` and `background-color`.
+All transitions, the one-shot reveal fade of the `Ask Fernwick` pill after `480px` of scroll, and the optional desktop customer-wordmark marquee sit strictly behind `html.motion`, which the head script adds only when `prefers-reduced-motion: no-preference` matches. Interactive hover, chevron, and carousel track transitions use `0.2s ease`. The customer-wordmark marquee includes a visible pause/play button (`aria-pressed`); under `prefers-reduced-motion: reduce`, the marquee stays static, the pause button is hidden, and `document.getAnimations()` contains no running animations.
 
-| Element | Animation | Timing |
-| --- | --- | --- |
-| Section entrance | Fade + raise `translateY(16px → 0)` | 400ms `cubic-bezier(0.4, 0, 0.2, 1)`, staggered |
-| Carousel slide | `scroll-behavior: smooth` | Native |
-| Button fill hover | `background-color` to `--lagoon-deep` (hover rule uses `!important` to override inline styles on fill buttons) | 200ms ease |
-| Mega panel open | Shown/hidden via `hidden` attribute (no fade transition currently) | — |
-| Logo band scroll | `transform: translateX` loop | 30s linear; the `.motion` class enables the animation via `.motion .fw-marquee-track { animation: fw-marquee 30s linear infinite }`. Adding `.paused` to the track sets `animation-play-state: paused` and wins because the base rule has no `.paused` class. The pause button is hidden when `.motion` is absent. |
-| Assistant chip open | `scale(0.95 → 1) opacity(0 → 1)` | 220ms ease |
-
-With `prefers-reduced-motion: reduce`: all entrances appear instantly, the logo band stops, carousels jump without slide, and the assistant dialog appears without scale.
-
-## Reference
+## Usage example
 
 ```tsx
-<section className="mx-auto max-w-[1280px] px-[26px] py-[97.5px]">
-  <div className="rounded-[26px] bg-(--sky-wash) px-[52px] py-[65px] flex items-center justify-between gap-[52px] overflow-hidden relative">
-    <div className="grid gap-[26px] max-w-[560px]">
-      <Badge className="font-label uppercase tracking-[0.1em] text-xs bg-(--mist) text-(--lagoon) border-none">
-        Platform update
-      </Badge>
-      <h2 className="h2 font-display font-medium text-(--ink)">
-        <span className="text-(--lagoon)">Start building</span> on a cloud made for every scale.
-      </h2>
-      <p className="text-[16px] leading-[24px] text-(--body)">
-        Deploy compute, storage and AI agents from one console. Sample credits available for new workspaces.
-      </p>
-      <div className="flex gap-[13px] flex-wrap">
-        <Button variant="fill" className="rounded-full bg-(--lagoon) text-white hover:bg-(--lagoon-deep) px-[26px] h-[45.5px]">
-          Start for free
+import { Button, Card } from "@aura/ui";
+
+export function FernwickHero() {
+  return (
+    <section style={{ background: "var(--canvas)", paddingBlock: "calc(var(--aura) * 5)" }}>
+      <h1
+        className="h1"
+        style={{
+          fontFamily: "var(--aura-font-display)",
+          fontSize: 46,
+          fontWeight: 500,
+          lineHeight: 1.15,
+          letterSpacing: "-0.01em",
+          color: "var(--ink)",
+        }}
+      >
+        One calm cloud for apps and models
+      </h1>
+      <div style={{ display: "flex", gap: "calc(var(--aura) * 1)", justifyContent: "center", marginTop: 32 }}>
+        <Button variant="fill" style={{ borderRadius: 9999, height: 48, background: "var(--primary)", color: "var(--on-primary)" }}>
+          Start building
         </Button>
-        <Button variant="pill" className="rounded-full border border-(--rule) text-(--ink) bg-(--canvas) px-[26px] h-[45.5px]">
-          Talk to sales
+        <Button variant="pill" style={{ borderRadius: 9999, height: 48, background: "var(--canvas)", color: "var(--ink)", border: "1px solid var(--control-line)" }}>
+          Talk to an expert
         </Button>
       </div>
-    </div>
-    <div aria-hidden className="absolute right-0 top-0 h-full w-[320px] pointer-events-none">
-      <svg viewBox="0 0 320 300" className="h-full w-full">
-        <defs>
-          <radialGradient id="fw-glyph" cx="50%" cy="40%" r="60%">
-            <stop offset="0%" stopColor="var(--lagoon)" stopOpacity="0.6" />
-            <stop offset="50%" stopColor="var(--fern)" stopOpacity="0.4" />
-            <stop offset="100%" stopColor="var(--sky-wash)" stopOpacity="0" />
-          </radialGradient>
-        </defs>
-        <circle cx="200" cy="150" r="140" fill="url(#fw-glyph)" />
-        <rect x="140" y="80" width="60" height="60" rx="13" fill="var(--lagoon)" fillOpacity="0.3" />
-        <rect x="175" y="115" width="60" height="60" rx="13" fill="var(--fern)" fillOpacity="0.25" />
-      </svg>
-    </div>
-  </div>
-</section>
+    </section>
+  );
+}
 ```
