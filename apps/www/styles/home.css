@@ -34,7 +34,7 @@
   content: "";
   position: fixed;
   inset: 0;
-  z-index: 50;
+  z-index: 30;
   pointer-events: none;
   opacity: var(--home-grain);
   mix-blend-mode: multiply;
