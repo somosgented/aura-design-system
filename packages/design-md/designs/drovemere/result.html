@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Drovemere · Aura flavor</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="stylesheet" href="/aura/main.css"/>
+<link rel="stylesheet" href="theme.css"/>
+<script>
+(function(){
+  var p=new URLSearchParams(window.location.search).get("appearance");
+  var d=p==="dark"?"dark":p==="light"?"light":(window.matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
+  var r=document.documentElement;
+  r.classList.add(d);
+  r.style.colorScheme=d;
+  if(window.matchMedia("(prefers-reduced-motion: no-preference)").matches)r.classList.add("motion");
+})();
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+html{font-family:var(--aura-font-stack);background:var(--canvas);color:var(--ink);scroll-padding-top:calc(var(--aura)*6);}
+body{margin:0;padding:0;background:var(--canvas);color:var(--ink);font-family:var(--aura-font-stack);font-size:15px;line-height:1.5;min-width:0;}
+h1,h2,h3,h4,h5,h6,p,figure,ul,ol,dl,blockquote{margin:0;}
+ul,ol{padding:0;list-style:none;}
+a{color:inherit;text-decoration:none;}
+button,input,select,textarea{font-family:inherit;}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+.skip-link{position:absolute;left:calc(var(--aura)*1);top:calc(var(--aura)*-6);z-index:400;padding:calc(var(--aura)*0.75) calc(var(--aura)*2);border-radius:9999px;background:var(--ink);color:var(--canvas);font-size:14px;font-weight:500;}
+.skip-link:focus{top:calc(var(--aura)*1);}
+
+.dv{--aura-accents-primary:var(--ink);--aura-button-hover:var(--body);--aura-input-bg:var(--canvas);--aura-input-placeholder-color:var(--muted);--aura-link:var(--ink);--aura-outline:2px solid var(--focus);}
+.dv h1,.dv h2,.dv h3,.dv h4{font-family:var(--aura-font-stack);font-weight:400;color:var(--ink);overflow-wrap:break-word;min-width:0;}
+.dv p,.dv li,.dv span,.dv td,.dv th{min-width:0;overflow-wrap:break-word;}
+.dv .mono{font-family:var(--aura-font-label);}
+.dv .muted{color:var(--muted);}
+.dv .wrap{width:min(calc(100% - calc(var(--aura)*4)),1280px);margin-inline:auto;min-width:0;}
+.dv .section-pad{padding-block:calc(var(--aura)*9);}
+.dv .rule-top{border-top:1px solid var(--rule);}
+
+.dv .dv-btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:calc(var(--aura)*0.6);height:48px;padding:0 calc(var(--aura)*1.8);border-radius:9999px;background:var(--ink);color:var(--canvas);border:1px solid var(--ink);font-size:15px;font-weight:500;cursor:pointer;white-space:nowrap;flex-shrink:0;text-decoration:none;}
+.dv .dv-btn-primary:hover{opacity:.86;}
+.dv .dv-btn-primary.sm{height:36px;padding:0 calc(var(--aura)*1.25);font-size:14px;}
+.dv .dv-btn-secondary{display:inline-flex;align-items:center;justify-content:center;gap:calc(var(--aura)*0.6);height:48px;padding:0 calc(var(--aura)*1.8);border-radius:9999px;background:var(--panel);color:var(--ink);border:1px solid var(--control-line);font-size:15px;font-weight:500;cursor:pointer;white-space:nowrap;flex-shrink:0;text-decoration:none;}
+.dv .dv-btn-secondary:hover{background:var(--panel-hover);}
+.dv .dv-btn-secondary.sm{height:36px;padding:0 calc(var(--aura)*1.25);font-size:14px;}
+.dv .dv-btn-light{display:inline-flex;align-items:center;justify-content:center;gap:calc(var(--aura)*0.6);height:48px;padding:0 calc(var(--aura)*2);border-radius:9999px;background:var(--on-dark,var(--dark-ink));color:var(--dark-stage);border:1px solid var(--on-dark,var(--dark-ink));font-size:15px;font-weight:500;cursor:pointer;white-space:nowrap;flex-shrink:0;text-decoration:none;}
+.dv .dv-btn-light:hover{opacity:.88;}
+.dv .dv-link-inline{display:inline-flex;align-items:center;gap:6px;font-size:14.5px;font-weight:500;color:var(--ink);text-decoration:none;}
+.dv .dv-link-inline:hover{text-decoration:underline;text-underline-offset:4px;}
+
+.dv input:not(.default):not([type="checkbox"]),.dv textarea:not(.default){width:100%;background:var(--canvas);color:var(--ink);border:1px solid var(--control-line);border-radius:12px;padding:0 calc(var(--aura)*1.25);font-size:15px;font-family:var(--aura-font-stack);}
+.dv input:not(.default):not([type="checkbox"]){height:46px;}
+.dv textarea:not(.default){padding:calc(var(--aura)*0.9) calc(var(--aura)*1.25);min-height:112px;resize:vertical;line-height:1.5;}
+.dv input:not(.default)::placeholder,.dv textarea:not(.default)::placeholder{color:var(--muted);opacity:1;}
+.dv input:not(.default):focus,.dv textarea:not(.default):focus{outline:2px solid var(--focus);outline-offset:0;background:var(--canvas);color:var(--ink);}
+.dv select.inputer{appearance:none;-webkit-appearance:none;width:100%;height:46px;padding:0 calc(var(--aura)*3) 0 calc(var(--aura)*1.25);border:1px solid var(--control-line);border-radius:12px;background-color:var(--canvas);background-image:linear-gradient(45deg,transparent 50%,var(--control-line) 50%),linear-gradient(135deg,var(--control-line) 50%,transparent 50%);background-position:right 18px center,right 13px center;background-size:5px 5px,5px 5px;background-repeat:no-repeat,no-repeat;color:var(--ink);font-size:15px;font-family:var(--aura-font-stack);cursor:pointer;}
+.dv select.inputer:focus{outline:2px solid var(--focus);outline-offset:0;}
+.dark .dv select.inputer{background-color:var(--canvas);border-color:var(--control-line);color:var(--ink);background-image:linear-gradient(45deg,transparent 50%,var(--control-line) 50%),linear-gradient(135deg,var(--control-line) 50%,transparent 50%);}
+
+.dv blockquote{font-family:var(--aura-font-stack);font-weight:400;font-size:32px;line-height:1.25;letter-spacing:-0.02em;text-transform:none;font-style:normal;quotes:none;border:0;padding:0;margin:0;background:none;color:var(--ink);}
+.dv blockquote p{font-family:var(--aura-font-stack);font-weight:400;font-size:32px;line-height:1.25;letter-spacing:-0.02em;text-transform:none;font-style:normal;color:var(--ink);}
+.dv blockquote::before,.dv blockquote::after{content:none;}
+
+html.motion .dv .dv-btn-primary,html.motion .dv .dv-btn-secondary,html.motion .dv .dv-btn-light,html.motion .dv .dv-nav-trigger,html.motion .dv .dv-nav-plain,html.motion .dv .dv-nav-trigger svg,html.motion .dv .dv-flyout-link,html.motion .dv .dv-topic-chip,html.motion .dv .dv-round-btn,html.motion .dv .dv-sw-btn,html.motion .dv .dv-faq-btn svg{transition:background-color 0.15s ease,color 0.15s ease,border-color 0.15s ease,opacity 0.15s ease,transform 0.15s ease;}
+
+#dv-header{position:sticky;top:0;z-index:100;height:64px;background:color-mix(in srgb,var(--canvas) 85%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);}
+.dv-hdr-inner{position:relative;display:flex;align-items:center;height:100%;gap:calc(var(--aura)*1.5);}
+.dv-brand{display:inline-flex;align-items:center;gap:9px;font-size:17px;font-weight:500;letter-spacing:-0.02em;color:var(--ink);flex-shrink:0;white-space:nowrap;}
+.dv-mark{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+.dv-nav{display:flex;align-items:center;gap:4px;margin-left:calc(var(--aura)*1);}
+.dv-nav-list{display:flex;align-items:center;gap:4px;}
+.dv-nav-item{position:relative;}
+.dv .dv-nav-trigger,.dv .dv-nav-plain{display:inline-flex;align-items:center;gap:5px;height:36px;padding:0 calc(var(--aura)*0.85);border:0;border-radius:9999px;background:transparent;color:var(--body);font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+.dv .dv-nav-trigger:hover,.dv .dv-nav-plain:hover{background:var(--panel);color:var(--ink);}
+.dv .dv-nav-trigger[aria-expanded="true"]{background:var(--panel);color:var(--ink);}
+.dv .dv-nav-trigger[aria-expanded="true"] svg{transform:rotate(180deg);}
+.dv-hdr-end{display:flex;align-items:center;gap:calc(var(--aura)*0.75);margin-left:auto;flex-shrink:0;}
+.dv-lang-wrap{position:relative;}
+.dv .dv-lang-btn{display:inline-flex;align-items:center;gap:5px;height:36px;padding:0 calc(var(--aura)*0.9);border-radius:9999px;background:var(--canvas);color:var(--ink);border:1px solid var(--control-line);font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;}
+.dv .dv-lang-btn:hover{background:var(--panel);}
+.dv-lang-panel{position:absolute;top:calc(100% + 8px);right:0;width:200px;background:var(--canvas);border:1px solid var(--rule);border-radius:16px;padding:calc(var(--aura)*0.5);box-shadow:0 12px 32px color-mix(in srgb,var(--ink) 10%,transparent);z-index:210;}
+.dv-lang-panel[hidden]{display:none;}
+.dv .dv-lang-opt{display:flex;align-items:center;justify-content:space-between;width:100%;padding:calc(var(--aura)*0.6) calc(var(--aura)*0.85);border:0;border-radius:10px;background:transparent;color:var(--ink);font-size:13.5px;text-align:left;cursor:pointer;}
+.dv .dv-lang-opt:hover{background:var(--panel);}
+.dv .dv-lang-opt[aria-current="true"]{background:var(--panel);font-weight:600;}
+
+.dv-flyout{position:absolute;top:calc(100% + 8px);left:0;width:min(560px, calc(100vw - 32px));background:var(--canvas);border:1px solid var(--rule);border-radius:16px;padding:calc(var(--aura)*1.25);box-shadow:0 14px 40px color-mix(in srgb,var(--ink) 10%,transparent);z-index:200;}
+.dv-flyout[hidden]{display:none;}
+.dv-flyout-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:calc(var(--aura)*0.5);}
+.dv-flyout-link{display:flex;flex-direction:column;gap:3px;padding:calc(var(--aura)*0.75) calc(var(--aura)*0.9);border-radius:12px;color:var(--ink);}
+.dv-flyout-link:hover{background:var(--panel);}
+.dv-flyout-title{font-size:14px;font-weight:500;color:var(--ink);line-height:1.3;}
+.dv-flyout-desc{font-size:13px;color:var(--muted);line-height:1.4;}
+
+.dv-hdr-mob{display:none;align-items:center;gap:calc(var(--aura)*0.6);margin-left:auto;flex-shrink:0;}
+.dv .dv-menu-btn{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:9999px;background:var(--ink);color:var(--canvas);border:1px solid var(--ink);cursor:pointer;padding:0;flex-shrink:0;}
+.dv .dv-menu-btn:hover{opacity:.86;}
+
+#dv-mobile-menu{position:fixed;left:0;top:0;width:100vw;height:100vh;background:var(--canvas);z-index:300;display:flex;flex-direction:column;padding:calc(var(--aura)*1.5) calc(var(--aura)*1.5) calc(var(--aura)*2.5);overflow-y:auto;}
+#dv-mobile-menu[hidden]{display:none;}
+.dv-mmenu-top{display:flex;align-items:center;justify-content:space-between;min-height:48px;padding-bottom:calc(var(--aura)*1.25);border-bottom:1px solid var(--rule);}
+.dv .dv-mmenu-close{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:9999px;background:var(--panel);color:var(--ink);border:1px solid var(--control-line);cursor:pointer;padding:0;}
+.dv-mmenu-nav{display:flex;flex-direction:column;gap:calc(var(--aura)*0.5);padding-block:calc(var(--aura)*2);flex:1;}
+.dv-mmenu-link{display:block;padding:calc(var(--aura)*0.75) 0;font-size:24px;font-weight:400;letter-spacing:-0.02em;color:var(--ink);border-bottom:1px solid var(--rule);}
+.dv-mmenu-actions{display:flex;flex-direction:column;gap:calc(var(--aura)*0.85);padding-top:calc(var(--aura)*1.5);}
+.dv-mmenu-actions .dv-btn-primary,.dv-mmenu-actions .dv-btn-secondary{width:100%;}
+
+#dv-notice{background:var(--panel);border-bottom:1px solid var(--rule);}
+#dv-notice[hidden]{display:none;}
+.dv-notice-inner{display:flex;align-items:center;justify-content:center;gap:calc(var(--aura)*0.85);min-height:44px;padding:calc(var(--aura)*0.6) calc(var(--aura)*3.5) calc(var(--aura)*0.6) calc(var(--aura)*1);position:relative;flex-wrap:wrap;text-align:center;}
+.dv-new-chip{display:inline-flex;align-items:center;gap:5px;padding:2px 10px;border-radius:9999px;background:var(--ink);color:var(--canvas);font-size:11px;font-weight:600;letter-spacing:0.04em;flex-shrink:0;}
+.dv-notice-text{font-size:14px;color:var(--ink);}
+.dv-notice-link{display:inline-flex;align-items:center;gap:4px;font-size:14px;font-weight:500;color:var(--ink);text-decoration:underline;text-underline-offset:3px;white-space:nowrap;}
+.dv .dv-notice-close{position:absolute;right:0;top:50%;transform:translateY(-50%);display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:9999px;background:var(--canvas);color:var(--ink);border:1px solid var(--control-line);cursor:pointer;padding:0;}
+.dv .dv-notice-close:hover{background:var(--panel-hover);}
+
+#dv-hero{position:relative;padding-block:calc(var(--aura)*6) calc(var(--aura)*5);}
+.dv-hero-stage{position:relative;min-height:520px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:calc(var(--aura)*3) calc(var(--aura)*1.5);overflow:hidden;border-radius:24px;}
+.dv-dash-field{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.dv-dash{position:absolute;width:2px;height:6px;border-radius:9999px;background:color-mix(in srgb,var(--ink) 28%,transparent);}
+.dv-dash.c{background:var(--cobalt);opacity:.78;}
+.dv-dash.r{background:var(--coral);opacity:.78;}
+.dv-dash.m{background:var(--mint);opacity:.78;}
+.dv-hero-lockup{position:relative;z-index:1;display:inline-flex;align-items:center;gap:10px;font-size:22px;font-weight:500;letter-spacing:-0.02em;color:var(--ink);margin-bottom:calc(var(--aura)*2);}
+.dv h1.dv-hero-h1{position:relative;z-index:1;font-size:80px;font-weight:400;line-height:1.1;letter-spacing:-0.025em;color:var(--ink);max-width:15ch;text-wrap:balance;margin-bottom:24px;}
+.dv-hero-ctas{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:calc(var(--aura)*1);}
+
+#dv-showcase{padding-block:0 calc(var(--aura)*7);}
+.dv-showcase-frame{position:relative;width:100%;max-width:680px;height:400px;margin-inline:auto;border-radius:20px;background:var(--dark-stage);border:1px solid var(--rule);overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.dv-orb-wrap{position:relative;width:240px;height:240px;display:flex;align-items:center;justify-content:center;}
+.dv-orb-halo{position:absolute;inset:-46px;border-radius:50%;background:conic-gradient(from 40deg,var(--cobalt),var(--mint),var(--coral),var(--cobalt));filter:blur(34px);opacity:.55;}
+.dark .dv-orb-halo{opacity:.42;}
+.dv-orb-ring{position:relative;width:196px;height:196px;border-radius:50%;background:radial-gradient(circle at 38% 32%,color-mix(in srgb,var(--mint) 48%,transparent) 0%,color-mix(in srgb,var(--cobalt) 62%,transparent) 34%,color-mix(in srgb,var(--coral) 55%,transparent) 62%,var(--dark-stage) 82%);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--on-dark,var(--dark-ink)) 22%,transparent),0 0 48px color-mix(in srgb,var(--cobalt) 35%,transparent);}
+.dv-orb-core{position:absolute;width:102px;height:102px;border-radius:50%;background:radial-gradient(circle at 42% 38%,var(--dark-surface) 0%,var(--dark-stage) 88%);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--on-dark,var(--dark-ink)) 20%,transparent);}
+.dv-orb-dots{position:absolute;display:flex;align-items:center;gap:8px;transform:rotate(-20deg);}
+.dv-orb-dots span{width:9px;height:9px;border-radius:50%;background:var(--on-dark,var(--dark-ink));}
+.dv .dv-showcase-status{position:absolute;left:18px;bottom:18px;padding:6px 12px;border-radius:9999px;background:var(--dark-surface);border:1px solid var(--dark-line);color:var(--on-dark,var(--dark-ink));font-family:var(--aura-font-label);font-size:12px;line-height:1.3;}
+.dv .dv-stage-btn{position:absolute;right:18px;bottom:18px;width:44px;height:44px;border-radius:9999px;background:var(--dark-surface);color:var(--on-dark,var(--dark-ink));border:1px solid var(--dark-line);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0;}
+.dv .dv-stage-btn:hover{background:color-mix(in srgb,var(--on-dark,var(--dark-ink)) 14%,var(--dark-surface));}
+.dv-showcase-frame.is-paused .dv-orb-halo{opacity:.22;}
+
+#dv-ribbon{padding-block:calc(var(--aura)*2) calc(var(--aura)*5);}
+.dv-ribbon-band{position:relative;width:100%;height:180px;overflow:hidden;display:flex;align-items:center;}
+.dv-ribbon-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
+.dv-ribbon-row{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;max-width:1240px;margin-inline:auto;padding-inline:24px;}
+.dv-tile{width:40px;height:40px;border-radius:50%;background:var(--canvas);color:var(--ink);border:1px solid var(--rule);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 10px color-mix(in srgb,var(--ink) 8%,transparent);transform:translateY(var(--wy,0px));}
+
+#dv-statement{padding-block:calc(var(--aura)*7) calc(var(--aura)*8);}
+.dv h2.dv-statement-h2{font-size:42px;font-weight:400;line-height:1.05;letter-spacing:-0.02em;max-width:720px;color:var(--ink);}
+
+#dv-tools{padding-block:calc(var(--aura)*2) calc(var(--aura)*9);}
+.dv-tool-list{display:flex;flex-direction:column;gap:calc(var(--aura)*8);}
+.dv-tool-row{display:grid;grid-template-columns:minmax(0,320px) minmax(0,440px);justify-content:space-between;align-items:center;gap:calc(var(--aura)*4);}
+.dv-tool-copy{display:flex;flex-direction:column;align-items:flex-start;gap:calc(var(--aura)*1.25);min-width:0;}
+.dv h3.dv-tool-title{font-size:32px;font-weight:400;line-height:1.12;letter-spacing:-0.02em;color:var(--ink);}
+.dv-tool-desc{font-size:15px;line-height:1.55;color:var(--muted);}
+.dv-tool-art{position:relative;width:100%;max-width:440px;aspect-ratio:1/1;border-radius:24px;overflow:hidden;border:1px solid var(--rule);display:flex;align-items:center;justify-content:center;padding:28px;}
+
+.dv-art-desk{background:var(--panel);}
+.dv-art-desk::before{content:"";position:absolute;inset:-16px;background:radial-gradient(ellipse 88% 58% at 50% 6%,color-mix(in srgb,var(--cobalt) 56%,transparent),transparent 66%),radial-gradient(ellipse 68% 56% at 8% 90%,color-mix(in srgb,var(--coral) 46%,transparent),transparent 66%),radial-gradient(ellipse 68% 56% at 92% 90%,color-mix(in srgb,var(--mint) 48%,transparent),transparent 66%);filter:blur(20px);pointer-events:none;}
+.dark .dv-art-desk::before{opacity:.52;}
+.dv-desk-win{position:relative;z-index:1;width:100%;background:var(--canvas);border:1px solid var(--rule);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:12px;box-shadow:0 12px 32px color-mix(in srgb,var(--cobalt) 10%,color-mix(in srgb,var(--ink) 8%,transparent));}
+.dv-desk-folder{display:inline-flex;align-items:center;gap:6px;font-family:var(--aura-font-label);font-size:12px;font-weight:500;color:var(--ink);}
+.dv-desk-prompt{border:1px solid var(--control-line);border-radius:12px;background:var(--panel);padding:10px 12px;display:flex;flex-direction:column;gap:8px;}
+.dv-desk-ask{font-size:12.5px;color:var(--muted);}
+.dv-desk-chips{display:flex;flex-wrap:wrap;gap:6px;}
+.dv-mini-chip{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:9999px;background:var(--canvas);border:1px solid var(--control-line);font-family:var(--aura-font-label);font-size:11px;color:var(--ink);}
+.dv-desk-pop{align-self:flex-start;background:var(--canvas);border:1px solid var(--rule);border-radius:10px;padding:6px;display:flex;flex-direction:column;gap:3px;min-width:152px;box-shadow:0 6px 16px color-mix(in srgb,var(--ink) 8%,transparent);}
+.dv-desk-pop-item{font-size:11.5px;color:var(--ink);padding:4px 8px;border-radius:6px;}
+.dv-desk-pop-item.on{background:var(--panel);font-weight:500;}
+
+.dv-art-line{background:var(--dark-stage);}
+.dv-art-line::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 16% 18%,var(--on-dark,var(--dark-ink)) 1px,transparent 1.5px),radial-gradient(circle at 74% 14%,var(--dark-cobalt) 1.5px,transparent 2px),radial-gradient(circle at 86% 24%,var(--on-dark,var(--dark-ink)) 1px,transparent 1.5px),radial-gradient(circle at 26% 86%,var(--dark-cobalt) 1.5px,transparent 2px),radial-gradient(circle at 64% 88%,var(--on-dark,var(--dark-ink)) 1px,transparent 1.5px);opacity:.7;pointer-events:none;}
+.dv-term-win{position:relative;z-index:1;width:100%;background:var(--dark-surface);border:1px solid color-mix(in srgb,var(--on-dark,var(--dark-ink)) 18%,transparent);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;}
+.dv-term-bar{display:flex;align-items:center;gap:6px;padding:10px 14px;border-bottom:1px solid color-mix(in srgb,var(--on-dark,var(--dark-ink)) 12%,transparent);}
+.dv-term-dot{width:8px;height:8px;border-radius:50%;}
+.dv-term-dot.r{background:var(--coral);}
+.dv-term-dot.m{background:var(--mint);}
+.dv-term-dot.c{background:var(--cobalt);}
+.dv .dv-term-title{margin-left:6px;font-family:var(--aura-font-label);font-size:11px;color:var(--dark-muted);}
+.dv .dv-term-body{padding:14px;display:flex;flex-direction:column;gap:6px;font-family:var(--aura-font-label);font-size:11.5px;line-height:1.45;color:var(--on-dark,var(--dark-ink));}
+.dv .dv-t-mint{color:var(--dark-mint);}
+.dv .dv-t-cob{color:var(--dark-cobalt);}
+.dv .dv-t-cor{color:var(--dark-coral);}
+.dv .dv-t-mut{color:var(--dark-muted);}
+
+.dv-art-bench{background:var(--panel);}
+.dv-art-bench::before{content:"";position:absolute;inset:-14px;background:radial-gradient(ellipse 80% 48% at 24% 8%,color-mix(in srgb,var(--cobalt) 26%,transparent),transparent 66%),radial-gradient(ellipse 68% 48% at 86% 90%,color-mix(in srgb,var(--mint) 26%,transparent),transparent 66%);filter:blur(18px);pointer-events:none;}
+.dark .dv-art-bench::before{opacity:.45;}
+.dv-bench-win{position:relative;z-index:1;width:100%;background:var(--canvas);border:1px solid var(--rule);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;}
+.dv-bench-tabs{display:flex;align-items:center;gap:2px;padding:8px 10px 0;background:var(--panel);border-bottom:1px solid var(--rule);font-family:var(--aura-font-label);font-size:11px;}
+.dv-bench-tab{padding:6px 10px;border-radius:8px 8px 0 0;color:var(--muted);}
+.dv-bench-tab.on{background:var(--canvas);color:var(--ink);border:1px solid var(--rule);border-bottom-color:var(--canvas);margin-bottom:-1px;font-weight:500;}
+.dv-bench-body{display:grid;grid-template-columns:minmax(0,96px) minmax(0,1fr);min-height:210px;}
+.dv-bench-tree{padding:10px;border-right:1px solid var(--rule);display:flex;flex-direction:column;gap:5px;font-family:var(--aura-font-label);font-size:11px;color:var(--muted);}
+.dv-bench-tree .on{color:var(--ink);font-weight:500;}
+.dv-bench-code{padding:10px 12px;display:flex;flex-direction:column;gap:5px;font-family:var(--aura-font-label);font-size:11px;line-height:1.45;color:var(--ink);}
+.dv-diff-add{background:color-mix(in srgb,var(--mint) 18%,var(--canvas));border-left:2px solid var(--mint);padding:3px 6px;border-radius:4px;color:var(--ink);}
+
+.dv-art-kit{background:var(--dark-stage);}
+.dv-kit-ring{position:relative;width:270px;height:270px;max-width:86%;max-height:86%;border-radius:50%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,var(--dark-stage) 44%,color-mix(in srgb,var(--cobalt) 82%,transparent) 62%,color-mix(in srgb,var(--cobalt) 35%,transparent) 74%,var(--dark-stage) 88%);box-shadow:0 0 56px color-mix(in srgb,var(--cobalt) 42%,transparent);}
+.dv .dv-kit-label{font-size:24px;font-weight:500;letter-spacing:-0.02em;color:var(--on-dark,var(--dark-ink));text-shadow:0 0 24px color-mix(in srgb,var(--dark-cobalt) 70%,transparent);text-align:center;padding-inline:12px;}
+
+#dv-audience{padding-block:calc(var(--aura)*9);}
+.dv-aud-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,360px);align-items:end;gap:calc(var(--aura)*3);margin-bottom:calc(var(--aura)*4);}
+.dv h2.dv-h2{font-size:42px;font-weight:400;line-height:1.05;letter-spacing:-0.02em;color:var(--ink);}
+.dv-aud-intro{font-size:15px;line-height:1.55;color:var(--muted);}
+.dv-role-card{max-width:600px;}
+.dv-role-art{position:relative;width:100%;height:360px;border-radius:24px;background:var(--dark-stage);border:1px solid var(--rule);overflow:hidden;display:flex;align-items:flex-end;padding:calc(var(--aura)*2.25);}
+.dv-role-blobs{position:absolute;inset:0;pointer-events:none;}
+.dv-role-art[data-tone="0"] .dv-role-blobs{background:radial-gradient(circle at 26% 28%,color-mix(in srgb,var(--cobalt) 60%,transparent),transparent 52%),radial-gradient(circle at 78% 36%,color-mix(in srgb,var(--mint) 48%,transparent),transparent 50%),radial-gradient(circle at 52% 84%,color-mix(in srgb,var(--coral) 40%,transparent),transparent 54%);}
+.dv-role-art[data-tone="1"] .dv-role-blobs{background:radial-gradient(circle at 72% 24%,color-mix(in srgb,var(--coral) 58%,transparent),transparent 52%),radial-gradient(circle at 24% 64%,color-mix(in srgb,var(--cobalt) 52%,transparent),transparent 50%),radial-gradient(circle at 74% 82%,color-mix(in srgb,var(--mint) 42%,transparent),transparent 50%);}
+.dv-role-art[data-tone="2"] .dv-role-blobs{background:radial-gradient(circle at 30% 24%,color-mix(in srgb,var(--mint) 58%,transparent),transparent 50%),radial-gradient(circle at 76% 62%,color-mix(in srgb,var(--cobalt) 58%,transparent),transparent 52%),radial-gradient(circle at 20% 84%,color-mix(in srgb,var(--coral) 36%,transparent),transparent 48%);}
+.dv-role-art[data-tone="3"] .dv-role-blobs{background:radial-gradient(circle at 50% 22%,color-mix(in srgb,var(--cobalt) 64%,transparent),transparent 54%),radial-gradient(circle at 22% 70%,color-mix(in srgb,var(--coral) 48%,transparent),transparent 50%),radial-gradient(circle at 82% 72%,color-mix(in srgb,var(--mint) 46%,transparent),transparent 50%);}
+.dv-role-scrim{position:absolute;inset:0;background:linear-gradient(180deg,color-mix(in srgb,var(--dark-stage) 16%,transparent) 0%,color-mix(in srgb,var(--dark-stage) 88%,transparent) 74%,var(--dark-stage) 100%);pointer-events:none;}
+.dv-role-overlay{position:relative;z-index:1;display:flex;flex-direction:column;gap:6px;}
+.dv .dv-role-tag{font-family:var(--aura-font-label);font-size:12px;color:var(--dark-muted);}
+.dv h3.dv-role-label{font-size:32px;font-weight:400;line-height:1.12;letter-spacing:-0.02em;color:var(--on-dark,var(--dark-ink));}
+.dv-role-foot{display:flex;align-items:flex-start;justify-content:space-between;gap:calc(var(--aura)*2);margin-top:calc(var(--aura)*1.5);}
+.dv-role-meta{display:flex;flex-direction:column;gap:6px;min-width:0;}
+.dv-role-caption{font-size:16px;font-weight:500;color:var(--ink);}
+.dv-role-desc{font-size:14px;line-height:1.5;color:var(--muted);max-width:44ch;}
+.dv-role-ctrls{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.dv .dv-round-btn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:9999px;background:var(--panel);color:var(--ink);border:1px solid var(--control-line);cursor:pointer;padding:0;flex-shrink:0;}
+.dv .dv-round-btn:hover{background:var(--panel-hover);}
+.dv-role-all{margin-top:calc(var(--aura)*2);}
+
+#dv-audiences{padding-block:calc(var(--aura)*9);}
+.dv-split-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:calc(var(--aura)*5);}
+.dv-split-col{display:flex;flex-direction:column;align-items:center;text-align:center;gap:calc(var(--aura)*1.25);padding:calc(var(--aura)*2);}
+.dv-kicker-chip{display:inline-flex;align-items:center;padding:4px 12px;border-radius:9999px;background:var(--panel);border:1px solid var(--control-line);font-size:12.5px;font-weight:500;color:var(--ink);}
+.dv-lead{font-size:24px;font-weight:500;line-height:1.25;letter-spacing:-0.015em;color:var(--ink);}
+.dv-lead-muted{font-size:24px;font-weight:500;line-height:1.25;letter-spacing:-0.015em;color:var(--muted);max-width:22ch;}
+
+#dv-skeleton{padding-block:calc(var(--aura)*9);}
+.dv-skel-stack{display:flex;flex-direction:column;gap:calc(var(--aura)*7);}
+.dv-stats-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:calc(var(--aura)*2);}
+.dv-stat-card{padding:calc(var(--aura)*2);border:1px solid var(--rule);border-radius:24px;background:var(--canvas);display:flex;flex-direction:column;gap:6px;}
+.dv-stat-val{font-size:42px;font-weight:400;line-height:1.05;letter-spacing:-0.02em;color:var(--ink);}
+.dv-stat-lbl{font-size:14.5px;color:var(--muted);}
+
+.dv-feat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(var(--aura)*2);}
+.dv-feat-card{padding:calc(var(--aura)*2);border:1px solid var(--rule);border-radius:24px;background:var(--panel);display:flex;flex-direction:column;gap:calc(var(--aura)*0.75);}
+.dv-feat-mono{font-family:var(--aura-font-label);font-size:12px;color:var(--muted);}
+.dv-feat-title{font-size:20px;font-weight:500;letter-spacing:-0.015em;color:var(--ink);}
+.dv-feat-body{font-size:14.5px;color:var(--muted);line-height:1.5;}
+
+.dv-table-scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:20px;background:var(--canvas);}
+.dv-table{width:100%;min-width:600px;border-collapse:collapse;text-align:left;font-size:14.5px;}
+.dv-table caption{padding:calc(var(--aura)*1.25) calc(var(--aura)*1.5);text-align:left;font-size:14px;font-weight:500;color:var(--muted);border-bottom:1px solid var(--rule);}
+.dv-table th,.dv-table td{padding:calc(var(--aura)*1.1) calc(var(--aura)*1.5);border-bottom:1px solid var(--rule);vertical-align:top;}
+.dv-table thead th{font-family:var(--aura-font-label);font-size:12px;font-weight:500;color:var(--muted);background:var(--panel);}
+.dv-table tbody tr:last-child th,.dv-table tbody tr:last-child td{border-bottom:0;}
+.dv-table tbody th{font-weight:500;color:var(--ink);}
+.dv-table td{color:var(--body);}
+
+.dv-price-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(var(--aura)*2);}
+.dv-price-card{padding:calc(var(--aura)*2.5);border:1px solid var(--rule);border-radius:24px;background:var(--canvas);display:flex;flex-direction:column;gap:calc(var(--aura)*1.25);}
+.dv-price-card.featured{background:var(--panel);border-color:var(--control-line);}
+.dv-price-head{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.dv-price-name{font-size:20px;font-weight:500;color:var(--ink);}
+.dv-price-badge{padding:2px 10px;border-radius:9999px;background:var(--ink);color:var(--canvas);font-family:var(--aura-font-label);font-size:11px;}
+.dv-price-num{font-size:42px;font-weight:400;line-height:1.05;letter-spacing:-0.02em;color:var(--ink);}
+.dv-price-num span{font-size:14.5px;color:var(--muted);letter-spacing:0;}
+.dv-price-list{display:flex;flex-direction:column;gap:8px;flex:1;font-size:14.5px;color:var(--body);}
+.dv-price-list li{display:flex;align-items:center;gap:8px;}
+.dv-price-card .dv-btn-primary,.dv-price-card .dv-btn-secondary{width:100%;}
+
+.dv-form-panel{padding:calc(var(--aura)*3);border:1px solid var(--rule);border-radius:24px;background:var(--panel);display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:calc(var(--aura)*3.5);align-items:start;}
+.dv-form-intro{display:flex;flex-direction:column;gap:calc(var(--aura)*1);}
+.dv-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:calc(var(--aura)*1.25);}
+.dv-field{display:flex;flex-direction:column;gap:6px;min-width:0;}
+.dv-field.full{grid-column:1/-1;}
+.dv-label{font-size:13.5px;font-weight:500;color:var(--ink);}
+.dv-form-actions{grid-column:1/-1;display:flex;align-items:center;gap:calc(var(--aura)*1.25);flex-wrap:wrap;margin-top:4px;}
+.dv-live{font-size:14px;color:var(--ink);font-weight:500;min-height:21px;}
+
+.dv-faq-wrap{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:calc(var(--aura)*3.5);align-items:start;}
+.dv-faq-list{border-top:1px solid var(--rule);}
+.dv-faq-item{border-bottom:1px solid var(--rule);}
+.dv .dv-faq-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:calc(var(--aura)*1.5);padding:calc(var(--aura)*1.5) 0;border:0;background:transparent;color:var(--ink);font-size:17px;font-weight:500;text-align:left;cursor:pointer;}
+.dv-faq-icon{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:9999px;border:1px solid var(--control-line);background:var(--panel);color:var(--ink);flex-shrink:0;}
+.dv-faq-btn[aria-expanded="true"] .dv-faq-icon svg{transform:rotate(45deg);}
+.dv-faq-panel{padding:0 0 calc(var(--aura)*1.5);font-size:14.5px;line-height:1.6;color:var(--muted);max-width:64ch;}
+.dv-faq-panel[hidden]{display:none;}
+
+.dv-quote-fig{padding:calc(var(--aura)*3.5);border:1px solid var(--rule);border-radius:24px;background:var(--canvas);display:flex;flex-direction:column;gap:calc(var(--aura)*1.75);}
+.dv-quote-cite{font-size:14.5px;color:var(--muted);font-style:normal;}
+
+#dv-notes{padding-block:calc(var(--aura)*9);}
+.dv-notes-head{display:flex;align-items:center;justify-content:space-between;gap:calc(var(--aura)*2);flex-wrap:wrap;margin-bottom:calc(var(--aura)*3);}
+.dv-notes-region{overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:calc(var(--aura)*1);border-radius:16px;}
+.dv-notes-track{display:flex;gap:calc(var(--aura)*2);width:max-content;}
+.dv-note-card{flex:0 0 240px;width:240px;scroll-snap-align:start;display:flex;flex-direction:column;gap:calc(var(--aura)*0.85);}
+.dv-note-thumb{position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;background:var(--dark-stage);border:1px solid var(--rule);overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.dv-note-title{font-size:18px;font-weight:500;line-height:1.3;letter-spacing:-0.015em;color:var(--ink);}
+.dv-note-meta{font-family:var(--aura-font-label);font-size:12px;color:var(--muted);}
+.dv-notes-ctrls{display:flex;align-items:center;gap:8px;margin-top:calc(var(--aura)*2);}
+
+.dv-thumb-grid{display:grid;grid-template-columns:repeat(6,14px);gap:6px;}
+.dv-thumb-grid span{width:14px;height:14px;border-radius:4px;background:color-mix(in srgb,var(--dark-ink) 16%,transparent);}
+.dv-thumb-grid span.c{background:var(--cobalt);}
+.dv-thumb-grid span.m{background:var(--mint);}
+.dv-thumb-grid span.r{background:var(--coral);}
+.dv-thumb-stack{position:relative;width:156px;height:84px;}
+.dv-thumb-pane{position:absolute;width:128px;height:56px;border-radius:10px;background:var(--dark-surface);border:1px solid color-mix(in srgb,var(--dark-ink) 22%,transparent);}
+.dv-thumb-pane.p1{left:0;top:0;opacity:.65;}
+.dv-thumb-pane.p2{left:14px;top:14px;border-color:var(--dark-cobalt);}
+.dv-thumb-pane.p3{left:28px;top:28px;display:flex;align-items:center;gap:6px;padding:0 10px;}
+.dv-thumb-pane.p3 i{display:block;height:6px;border-radius:9999px;background:var(--dark-mint);width:36px;}
+.dv-thumb-pane.p3 b{display:block;height:6px;border-radius:9999px;background:color-mix(in srgb,var(--dark-ink) 35%,transparent);width:48px;}
+.dv-thumb-puzzle{display:grid;grid-template-columns:repeat(3,34px);gap:8px;}
+.dv-thumb-puzzle span{height:34px;border-radius:10px;border:1px solid color-mix(in srgb,var(--dark-ink) 22%,transparent);background:var(--dark-surface);}
+.dv-thumb-puzzle span.c{background:color-mix(in srgb,var(--cobalt) 38%,var(--dark-surface));border-color:var(--dark-cobalt);}
+.dv-thumb-puzzle span.m{background:color-mix(in srgb,var(--mint) 34%,var(--dark-surface));border-color:var(--dark-mint);}
+.dv-thumb-puzzle span.r{background:color-mix(in srgb,var(--coral) 34%,var(--dark-surface));border-color:var(--dark-coral);}
+.dv .dv-thumb-glow{position:relative;z-index:1;font-size:20px;font-weight:500;letter-spacing:-0.02em;color:var(--on-dark,var(--dark-ink));text-shadow:0 0 18px var(--coral),0 0 32px var(--cobalt);}
+.dv-thumb-glow-bg{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,color-mix(in srgb,var(--coral) 40%,transparent),color-mix(in srgb,var(--cobalt) 25%,transparent) 48%,transparent 74%);pointer-events:none;}
+
+#dv-newsletter{padding-block:calc(var(--aura)*5) calc(var(--aura)*9);}
+.dv-news-box{background:var(--panel);border:1px solid var(--rule);border-radius:24px;padding:calc(var(--aura)*5) calc(var(--aura)*3);display:flex;flex-direction:column;align-items:center;text-align:center;gap:calc(var(--aura)*2);}
+.dv-news-sub{font-size:15px;color:var(--muted);max-width:46ch;}
+.dv-topic-group{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:680px;}
+.dv .dv-topic-chip{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:9999px;background:var(--canvas);color:var(--ink);border:1px solid var(--control-line);font-size:13.5px;font-weight:500;cursor:pointer;}
+.dv .dv-topic-chip:hover{background:var(--panel-hover);}
+.dv .dv-topic-chip[aria-checked="true"]{background:var(--ink);color:var(--canvas);border-color:var(--ink);}
+.dv-news-form{width:100%;max-width:520px;display:flex;flex-direction:column;align-items:center;gap:calc(var(--aura)*1.25);}
+.dv-pill-row{position:relative;width:100%;display:flex;align-items:center;}
+.dv .dv-pill-row input[type="email"]{height:52px;border-radius:9999px;padding:0 108px 0 22px;background:var(--canvas);border:1px solid var(--control-line);}
+.dv-pill-submit{position:absolute;right:5px;top:5px;height:42px;padding:0 22px;}
+.dv-consent{display:flex;align-items:flex-start;justify-content:center;gap:10px;font-size:13.5px;color:var(--muted);text-align:left;max-width:460px;cursor:pointer;}
+.dv input.dv-check-box{appearance:none;-webkit-appearance:none;width:18px;height:18px;margin:2px 0 0;padding:0;border:1.5px solid var(--control-line);border-radius:5px;background:var(--canvas);flex-shrink:0;cursor:pointer;position:relative;}
+.dv input.dv-check-box:checked{background:var(--ink);border-color:var(--ink);}
+.dv input.dv-check-box:checked::after{content:"";position:absolute;left:5px;top:1px;width:5px;height:10px;border:solid var(--canvas);border-width:0 2px 2px 0;transform:rotate(45deg);}
+.dv-consent a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;}
+
+#dv-download{padding-block:0 calc(var(--aura)*8);}
+.dv-banner{position:relative;width:calc(100% - 32px);max-width:1280px;margin-inline:auto;min-height:520px;border-radius:24px;background:var(--dark-stage);border:1px solid var(--rule);overflow:hidden;display:flex;align-items:flex-end;padding:calc(var(--aura)*4.5);}
+.dv-stars{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle at 12% 20%,var(--dark-ink) 1.2px,transparent 1.8px),radial-gradient(circle at 24% 38%,var(--dark-cobalt) 1.6px,transparent 2.4px),radial-gradient(circle at 38% 16%,var(--dark-ink) 1px,transparent 1.6px),radial-gradient(circle at 52% 28%,var(--dark-cobalt) 1.8px,transparent 2.6px),radial-gradient(circle at 66% 18%,var(--dark-ink) 1.2px,transparent 1.8px),radial-gradient(circle at 78% 34%,var(--dark-cobalt) 1.6px,transparent 2.4px),radial-gradient(circle at 88% 22%,var(--dark-ink) 1px,transparent 1.6px),radial-gradient(circle at 18% 68%,var(--dark-cobalt) 1.4px,transparent 2.2px),radial-gradient(circle at 46% 62%,var(--dark-ink) 1.1px,transparent 1.7px),radial-gradient(circle at 72% 70%,var(--dark-cobalt) 1.8px,transparent 2.6px),radial-gradient(circle at 84% 82%,var(--dark-ink) 1.2px,transparent 1.8px),radial-gradient(circle at 92% 58%,var(--dark-cobalt) 1.5px,transparent 2.2px);background-size:320px 260px;}
+.dv-banner-body{position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-start;gap:calc(var(--aura)*2);max-width:460px;}
+.dv h2.dv-banner-h2{font-size:42px;font-weight:400;line-height:1.05;letter-spacing:-0.02em;color:var(--on-dark,var(--dark-ink));}
+
+#dv-footer{border-top:1px solid var(--rule);padding-block:calc(var(--aura)*5) calc(var(--aura)*3);}
+.dv-ft-top{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:calc(var(--aura)*4);margin-bottom:calc(var(--aura)*5);}
+.dv-ft-lead{font-size:24px;font-weight:500;letter-spacing:-0.015em;color:var(--ink);}
+.dv-ft-cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:calc(var(--aura)*2);}
+.dv-ft-col-title{font-size:13px;font-weight:500;color:var(--muted);margin-bottom:calc(var(--aura)*1);}
+.dv-ft-links{display:flex;flex-direction:column;gap:calc(var(--aura)*0.65);}
+.dv-ft-links a{font-size:14px;color:var(--ink);}
+.dv-ft-links a:hover{text-decoration:underline;text-underline-offset:3px;}
+.dv-wordmark-wrap{container-type:inline-size;width:100%;overflow:hidden;padding-block:calc(var(--aura)*2) calc(var(--aura)*3);}
+.dv-wordmark-big{font-size:clamp(62px,18.6vw,248px);font-size:clamp(62px,20.4cqi,258px);font-weight:500;letter-spacing:-0.04em;line-height:0.94;color:var(--ink);text-align:center;white-space:nowrap;user-select:none;overflow-wrap:normal;}
+.dv-ft-bottom{border-top:1px solid var(--rule);padding-top:calc(var(--aura)*2);display:flex;align-items:center;justify-content:space-between;gap:calc(var(--aura)*1.5);flex-wrap:wrap;}
+.dv-ft-legal-row{display:flex;align-items:center;gap:calc(var(--aura)*1.5);flex-wrap:wrap;}
+.dv-ft-inline{display:flex;align-items:center;gap:calc(var(--aura)*1.25);flex-wrap:wrap;font-size:13.5px;color:var(--muted);}
+.dv-ft-inline a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:3px;}
+.dv-sw-group{display:inline-flex;align-items:center;gap:4px;padding:3px;border-radius:9999px;background:var(--panel);border:1px solid var(--control-line);}
+.dv .dv-sw-btn{height:30px;padding:0 12px;border-radius:9999px;border:1px solid var(--control-line);background:var(--canvas);color:var(--ink);font-size:12.5px;font-weight:500;cursor:pointer;}
+.dv .dv-sw-btn:hover{background:var(--panel-hover);}
+.dv .dv-sw-btn[aria-checked="true"]{background:var(--ink);color:var(--canvas);border-color:var(--ink);}
+.dv-ft-copy{font-size:13px;color:var(--muted);}
+
+@media (max-width: 1023px){
+  .dv-nav,.dv-hdr-end{display:none;}
+  .dv-hdr-mob{display:flex;}
+  .dv-tool-row{grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center;}
+  .dv-tool-copy{align-items:center;max-width:480px;}
+  .dv-aud-top{grid-template-columns:minmax(0,1fr);}
+  .dv-stats-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .dv-feat-grid,.dv-price-grid{grid-template-columns:minmax(0,1fr);}
+  .dv-form-panel,.dv-faq-wrap{grid-template-columns:minmax(0,1fr);}
+  .dv-ft-top{grid-template-columns:minmax(0,1fr);}
+  .dv-ft-cols{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media (max-width: 999px){
+  .dv blockquote,.dv blockquote p{font-size:24px;}
+}
+@media (max-width: 767px){
+  .dv .wrap{width:min(calc(100% - 32px),1280px);}
+  .dv .section-pad{padding-block:calc(var(--aura)*5);}
+  .dv-hero-stage{min-height:420px;padding:calc(var(--aura)*2.5) calc(var(--aura)*0.75);}
+  .dv-hero-lockup{font-size:18px;}
+  .dv h1.dv-hero-h1{font-size:36px;}
+  .dv-showcase-frame{height:240px;}
+  .dv-orb-wrap{width:140px;height:140px;}
+  .dv-orb-ring{width:120px;height:120px;}
+  .dv-orb-core{width:64px;height:64px;}
+  .dv-ribbon-band{height:140px;}
+  .dv-ribbon-row{padding-inline:8px;gap:2px;}
+  .dv-tile{width:24px;height:24px;transform:translateY(calc(var(--wy,0px)*0.55));}
+  .dv-tile svg{width:13px;height:13px;}
+  .dv h2.dv-statement-h2{font-size:28px;text-align:center;margin-inline:auto;}
+  .dv h2.dv-h2,.dv h2.dv-banner-h2{font-size:28px;}
+  .dv-lead,.dv-lead-muted,.dv-ft-lead{font-size:20px;}
+  .dv h3.dv-tool-title{font-size:26px;}
+  .dv-tool-art{max-width:360px;padding:16px;}
+  .dv-desk-win{padding:12px;gap:8px;}
+  .dv-desk-prompt{padding:8px 10px;gap:6px;}
+  .dv-desk-ask{font-size:11.5px;}
+  .dv-mini-chip{font-size:10.5px;padding:2px 7px;}
+  .dv-desk-pop{padding:5px;min-width:130px;}
+  .dv-desk-pop-item{font-size:11px;padding:3px 6px;}
+  .dv-term-bar{padding:8px 10px;}
+  .dv-term-body{padding:10px;font-size:10.5px;gap:4px;}
+  .dv-bench-body{grid-template-columns:minmax(0,78px) minmax(0,1fr);min-height:170px;}
+  .dv-bench-tree,.dv-bench-code{padding:8px;font-size:10.5px;}
+  .dv .dv-kit-label{font-size:20px;}
+  .dv-role-art{height:260px;padding:calc(var(--aura)*1.5);}
+  .dv h3.dv-role-label{font-size:26px;}
+  .dv-role-foot{flex-direction:column;}
+  .dv-split-grid{grid-template-columns:minmax(0,1fr);gap:calc(var(--aura)*3);}
+  .dv-stats-grid{grid-template-columns:minmax(0,1fr);}
+  .dv-form-panel{padding:calc(var(--aura)*2);}
+  .dv-form-grid{grid-template-columns:minmax(0,1fr);}
+  .dv-news-box{padding:calc(var(--aura)*3) calc(var(--aura)*1.5);}
+  .dv-pill-row{flex-direction:column;gap:10px;}
+  .dv .dv-pill-row input[type="email"]{padding:0 18px;}
+  .dv-pill-submit{position:static;width:100%;height:46px;}
+  .dv-banner{min-height:380px;padding:calc(var(--aura)*2.5);}
+  .dv-quote-fig{padding:calc(var(--aura)*2);}
+}
+</style>
+</head>
+<body class="dv">
+<a class="skip-link" href="#dv-main">Skip to main content</a>
+<header id="dv-header">
+  <div class="wrap dv-hdr-inner">
+    <a class="dv-brand" href="#dv-hero" aria-label="Drovemere home">
+      <span class="dv-mark" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <circle cx="6.5" cy="16.5" r="2.7" fill="currentColor"/>
+          <circle cx="12" cy="12" r="2.7" fill="currentColor"/>
+          <circle cx="17.5" cy="7.5" r="2.7" fill="currentColor"/>
+        </svg>
+      </span>
+      <span>Drovemere</span>
+    </a>
+
+    <nav class="dv-nav" aria-label="Primary">
+      <ul class="dv-nav-list">
+        <li class="dv-nav-item">
+          <button type="button" class="dv-nav-trigger" data-dropdown="tools" aria-expanded="false" aria-controls="dv-flyout-tools">
+            <span>Tools</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.5 5.25L7 8.75L10.5 5.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </li>
+        <li class="dv-nav-item">
+          <button type="button" class="dv-nav-trigger" data-dropdown="serves" aria-expanded="false" aria-controls="dv-flyout-serves">
+            <span>Who it serves</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.5 5.25L7 8.75L10.5 5.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </li>
+        <li class="dv-nav-item"><a class="dv-nav-plain" href="#dv-pricing">Plans</a></li>
+        <li class="dv-nav-item"><a class="dv-nav-plain" href="#dv-audiences">For companies</a></li>
+        <li class="dv-nav-item">
+          <button type="button" class="dv-nav-trigger" data-dropdown="learn" aria-expanded="false" aria-controls="dv-flyout-learn">
+            <span>Learn</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.5 5.25L7 8.75L10.5 5.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="dv-hdr-end">
+      <a class="dv-btn-secondary sm" href="#dv-showcase">
+        <span>Try in browser</span>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M4.5 9.5L9.5 4.5M9.5 4.5H5.5M9.5 4.5V8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="dv-btn-primary sm" href="#dv-download">
+        <span>Get Drovemere</span>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 2.5V8.75M7 8.75L4.5 6.25M7 8.75L9.5 6.25M3 11.25H11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <div class="dv-lang-wrap">
+        <button type="button" id="dv-lang-btn" class="dv-lang-btn" aria-expanded="false" aria-controls="dv-lang-panel" aria-label="Choose language">
+          <span id="dv-lang-code">EN</span>
+          <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.5 5.25L7 8.75L10.5 5.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div id="dv-lang-panel" class="dv-lang-panel" hidden>
+          <ul>
+            <li><button type="button" class="dv-lang-opt" data-lang="EN" aria-current="true"><span>English (sample)</span><span class="mono">EN</span></button></li>
+            <li><button type="button" class="dv-lang-opt" data-lang="ES" aria-current="false"><span>Spanish (sample)</span><span class="mono">ES</span></button></li>
+            <li><button type="button" class="dv-lang-opt" data-lang="JA" aria-current="false"><span>Japanese (sample)</span><span class="mono">JA</span></button></li>
+          </ul>
+        </div>
+        <span id="dv-lang-live" class="sr-only" aria-live="polite"></span>
+      </div>
+    </div>
+
+    <div class="dv-hdr-mob">
+      <a class="dv-btn-secondary sm" href="#dv-showcase">Try it</a>
+      <button type="button" id="dv-menu-open" class="dv-menu-btn" aria-expanded="false" aria-controls="dv-mobile-menu" aria-label="Open navigation menu">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3.5 6H14.5M3.5 9H14.5M3.5 12H14.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <div id="dv-flyout-tools" class="dv-flyout" hidden>
+      <ul class="dv-flyout-grid">
+        <li>
+          <a class="dv-flyout-link" href="#dv-tool-desk">
+            <span class="dv-flyout-title">Drovemere Desk</span>
+            <span class="dv-flyout-desc">Desktop window app for guiding parallel drover lanes.</span>
+          </a>
+        </li>
+        <li>
+          <a class="dv-flyout-link" href="#dv-tool-line">
+            <span class="dv-flyout-title">Drovemere Line</span>
+            <span class="dv-flyout-desc">Keyboard-first terminal tool for quick shell errands.</span>
+          </a>
+        </li>
+        <li>
+          <a class="dv-flyout-link" href="#dv-tool-bench">
+            <span class="dv-flyout-title">Drovemere Bench</span>
+            <span class="dv-flyout-desc">Focused code editor with live diff and lane previews.</span>
+          </a>
+        </li>
+        <li>
+          <a class="dv-flyout-link" href="#dv-tool-kit">
+            <span class="dv-flyout-title">Drovemere Kit</span>
+            <span class="dv-flyout-desc">Composable library for scripting custom helper bots.</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div id="dv-flyout-serves" class="dv-flyout" hidden>
+      <ul class="dv-flyout-grid">
+        <li>
+          <a class="dv-flyout-link" href="#dv-audience">
+            <span class="dv-flyout-title">Full-stack builders</span>
+            <span class="dv-flyout-desc">Ship schema changes, tests, and interface tweaks together.</span>
+          </a>
+        </li>
+        <li>
+          <a class="dv-flyout-link" href="#dv-audience">
+            <span class="dv-flyout-title">Frontend teams</span>
+            <span class="dv-flyout-desc">Audit layout tokens and responsive checks in parallel.</span>
+          </a>
+        </li>
+        <li>
+          <a class="dv-flyout-link" href="#dv-audience">
+            <span class="dv-flyout-title">Data engineers</span>
+            <span class="dv-flyout-desc">Verify pipeline queries and backfill scripts safely.</span>
+          </a>
+        </li>
+        <li>
+          <a class="dv-flyout-link" href="#dv-audience">
+            <span class="dv-flyout-title">Platform groups</span>
+            <span class="dv-flyout-desc">Keep shared guardrails and audit trails across repos.</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div id="dv-flyout-learn" class="dv-flyout" hidden>
+      <ul class="dv-flyout-grid">
+        <li>
+          <a class="dv-flyout-link" href="#dv-notes">
+            <span class="dv-flyout-title">Field notes</span>
+            <span class="dv-flyout-desc">Essays and release write-ups from the Drovemere crew.</span>
+          </a>
+        </li>
+        <li>
+          <a class="dv-flyout-link" href="#dv-faq">
+            <span class="dv-flyout-title">Common questions</span>
+            <span class="dv-flyout-desc">How local worktrees, sandboxes, and reviews behave.</span>
+          </a>
+        </li>
+        <li>
+          <a class="dv-flyout-link" href="#dv-walkthrough">
+            <span class="dv-flyout-title">Guided walkthrough</span>
+            <span class="dv-flyout-desc">Request a live sample session tailored to your team.</span>
+          </a>
+        </li>
+        <li>
+          <a class="dv-flyout-link" href="#dv-newsletter">
+            <span class="dv-flyout-title">Monthly dispatch</span>
+            <span class="dv-flyout-desc">Pick the exact tool updates you want in your inbox.</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<div id="dv-mobile-menu" role="dialog" aria-modal="true" aria-label="Site navigation" hidden>
+  <div class="dv-mmenu-top">
+    <a class="dv-brand" href="#dv-hero">
+      <span class="dv-mark" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <circle cx="6.5" cy="16.5" r="2.7" fill="currentColor"/>
+          <circle cx="12" cy="12" r="2.7" fill="currentColor"/>
+          <circle cx="17.5" cy="7.5" r="2.7" fill="currentColor"/>
+        </svg>
+      </span>
+      <span>Drovemere</span>
+    </a>
+    <button type="button" id="dv-menu-close" class="dv-mmenu-close" aria-label="Close navigation menu">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 4.5L13.5 13.5M13.5 4.5L4.5 13.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <nav class="dv-mmenu-nav" aria-label="Mobile navigation">
+    <ul>
+      <li><a class="dv-mmenu-link" href="#dv-tools">Tools</a></li>
+      <li><a class="dv-mmenu-link" href="#dv-audience">Who it serves</a></li>
+      <li><a class="dv-mmenu-link" href="#dv-pricing">Plans</a></li>
+      <li><a class="dv-mmenu-link" href="#dv-audiences">For companies</a></li>
+      <li><a class="dv-mmenu-link" href="#dv-notes">Field notes</a></li>
+      <li><a class="dv-mmenu-link" href="#dv-faq">FAQ</a></li>
+    </ul>
+  </nav>
+  <div class="dv-mmenu-actions">
+    <a class="dv-btn-secondary" href="#dv-showcase">Try in browser</a>
+    <a class="dv-btn-primary" href="#dv-download">Get Drovemere</a>
+  </div>
+</div>
+
+<section id="dv-notice" aria-label="Release announcement">
+  <div class="wrap dv-notice-inner">
+    <span class="dv-new-chip">
+      <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1L7.2 4.8L11 6L7.2 7.2L6 11L4.8 7.2L1 6L4.8 4.8L6 1Z" fill="currentColor"/></svg>
+      <span>NEW</span>
+    </span>
+    <p class="dv-notice-text">Drovemere 2.4 adds parallel errand lanes and instant Desk handoffs (sample note).</p>
+    <a class="dv-notice-link" href="#dv-notes">
+      <span>Read the note</span>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7H11M11 7L7.5 3.5M11 7L7.5 10.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <button type="button" id="dv-notice-close" class="dv-notice-close" aria-label="Dismiss notice">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M4 4L10 10M10 4L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</section>
+
+<main id="dv-main">
+  <section id="dv-hero" aria-labelledby="dv-hero-heading">
+    <div class="wrap">
+      <div class="dv-hero-stage">
+        <div class="dv-dash-field" aria-hidden="true">
+          <span class="dv-dash" style="left:6%;top:12%;transform:rotate(24deg);"></span>
+          <span class="dv-dash c" style="left:11%;top:22%;transform:rotate(-18deg);"></span>
+          <span class="dv-dash" style="left:15%;top:9%;transform:rotate(42deg);"></span>
+          <span class="dv-dash r" style="left:21%;top:16%;transform:rotate(-35deg);"></span>
+          <span class="dv-dash" style="left:28%;top:7%;transform:rotate(14deg);"></span>
+          <span class="dv-dash m" style="left:36%;top:11%;transform:rotate(52deg);"></span>
+          <span class="dv-dash" style="left:64%;top:9%;transform:rotate(-28deg);"></span>
+          <span class="dv-dash c" style="left:72%;top:15%;transform:rotate(33deg);"></span>
+          <span class="dv-dash" style="left:79%;top:10%;transform:rotate(-12deg);"></span>
+          <span class="dv-dash r" style="left:86%;top:20%;transform:rotate(46deg);"></span>
+          <span class="dv-dash" style="left:92%;top:14%;transform:rotate(-40deg);"></span>
+          <span class="dv-dash m" style="left:8%;top:38%;transform:rotate(64deg);"></span>
+          <span class="dv-dash" style="left:14%;top:48%;transform:rotate(-22deg);"></span>
+          <span class="dv-dash c" style="left:19%;top:62%;transform:rotate(18deg);"></span>
+          <span class="dv-dash" style="left:7%;top:72%;transform:rotate(-48deg);"></span>
+          <span class="dv-dash r" style="left:13%;top:84%;transform:rotate(30deg);"></span>
+          <span class="dv-dash" style="left:23%;top:88%;transform:rotate(-15deg);"></span>
+          <span class="dv-dash m" style="left:33%;top:86%;transform:rotate(40deg);"></span>
+          <span class="dv-dash" style="left:45%;top:92%;transform:rotate(-30deg);"></span>
+          <span class="dv-dash c" style="left:58%;top:90%;transform:rotate(25deg);"></span>
+          <span class="dv-dash" style="left:68%;top:84%;transform:rotate(-42deg);"></span>
+          <span class="dv-dash r" style="left:77%;top:78%;transform:rotate(15deg);"></span>
+          <span class="dv-dash" style="left:84%;top:66%;transform:rotate(-24deg);"></span>
+          <span class="dv-dash m" style="left:91%;top:54%;transform:rotate(38deg);"></span>
+          <span class="dv-dash c" style="left:87%;top:40%;transform:rotate(-52deg);"></span>
+          <span class="dv-dash" style="left:94%;top:74%;transform:rotate(20deg);"></span>
+          <span class="dv-dash" style="left:82%;top:89%;transform:rotate(-18deg);"></span>
+          <span class="dv-dash c" style="left:25%;top:34%;transform:rotate(48deg);"></span>
+          <span class="dv-dash" style="left:75%;top:32%;transform:rotate(-36deg);"></span>
+          <span class="dv-dash m" style="left:73%;top:58%;transform:rotate(28deg);"></span>
+          <span class="dv-dash" style="left:27%;top:74%;transform:rotate(-20deg);"></span>
+          <span class="dv-dash r" style="left:4%;top:56%;transform:rotate(32deg);"></span>
+        </div>
+
+        <div class="dv-hero-lockup">
+          <span class="dv-mark" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+              <circle cx="6.5" cy="16.5" r="2.7" fill="currentColor"/>
+              <circle cx="12" cy="12" r="2.7" fill="currentColor"/>
+              <circle cx="17.5" cy="7.5" r="2.7" fill="currentColor"/>
+            </svg>
+          </span>
+          <span>Drovemere</span>
+        </div>
+
+        <h1 id="dv-hero-heading" class="dv-hero-h1">Guide a quiet crew<br/>of coding drovers</h1>
+
+        <div class="dv-hero-ctas">
+          <a class="dv-btn-secondary" href="#dv-showcase">
+            <span>Try in browser</span>
+            <svg width="15" height="15" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M4.5 9.5L9.5 4.5M9.5 4.5H5.5M9.5 4.5V8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="dv-btn-primary" href="#dv-download">
+            <span>Get Drovemere</span>
+            <svg width="15" height="15" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 2.5V8.75M7 8.75L4.5 6.25M7 8.75L9.5 6.25M3 11.25H11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="dv-showcase" aria-label="Luminous workspace preview">
+    <div class="wrap">
+      <div id="dv-showcase-frame" class="dv-showcase-frame">
+        <div class="dv-orb-wrap" aria-hidden="true">
+          <div class="dv-orb-halo"></div>
+          <div class="dv-orb-ring"></div>
+          <div class="dv-orb-core"></div>
+          <div class="dv-orb-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+        <div id="dv-showcase-status" class="dv-showcase-status" aria-live="polite">Sample preview ready</div>
+        <button type="button" id="dv-showcase-toggle" class="dv-stage-btn" aria-pressed="false" aria-label="Pause or resume sample preview">
+          <svg id="dv-play-ico" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="4" y="3" width="3" height="10" rx="1" fill="currentColor"/><rect x="9.5" y="3" width="3" height="10" rx="1" fill="currentColor"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section id="dv-ribbon" aria-label="Errand action ribbon">
+    <p class="sr-only">Twelve everyday errand actions supported by Drovemere helpers, covering folders, terminal sessions, branches, checks, chat notes, fast jobs, grids, packages, code blocks, edits, monitors, and schedules.</p>
+    <div class="dv-ribbon-band" aria-hidden="true">
+      <svg class="dv-ribbon-svg" viewBox="0 0 1440 180" preserveAspectRatio="none">
+        <path d="M0,108 C260,18 520,18 760,84 C1000,150 1220,148 1440,56 L1440,148 C1220,180 1000,180 760,154 C520,96 260,96 0,174 Z" fill="color-mix(in srgb,var(--cobalt) 10%,var(--canvas))"/>
+        <path d="M0,88 C240,8 480,10 720,74 C960,138 1200,134 1440,42 L1440,138 C1200,180 960,178 720,144 C480,88 240,86 0,164 Z" fill="color-mix(in srgb,var(--ink) 7%,var(--canvas))"/>
+      </svg>
+      <div class="dv-ribbon-row">
+        <span class="dv-tile" style="--wy:28px;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2.5 5.5A1.5 1.5 0 014 4H7L8.5 5.5H14A1.5 1.5 0 0115.5 7V13A1.5 1.5 0 0114 14.5H4A1.5 1.5 0 012.5 13V5.5Z" stroke="currentColor" stroke-width="1.4"/></svg></span>
+        <span class="dv-tile" style="--wy:6px;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2.5" y="3.5" width="13" height="11" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M5.5 7.5L8 9.5L5.5 11.5M9.5 11.5H12.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="dv-tile" style="--wy:-20px;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="5.5" cy="4.5" r="1.7" stroke="currentColor" stroke-width="1.4"/><circle cx="12.5" cy="6.5" r="1.7" stroke="currentColor" stroke-width="1.4"/><circle cx="5.5" cy="13.5" r="1.7" stroke="currentColor" stroke-width="1.4"/><path d="M5.5 6.2V11.8M12.5 8.2C12.5 10.6 9.5 11 5.5 11" stroke="currentColor" stroke-width="1.4"/></svg></span>
+        <span class="dv-tile" style="--wy:-32px;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6.2" stroke="currentColor" stroke-width="1.4"/><path d="M6.2 9.2L8.2 11.2L12 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="dv-tile" style="--wy:-18px;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3.5 4.5H14.5V12H7.5L4.5 14.5V12H3.5V4.5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
+        <span class="dv-tile" style="--wy:6px;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M10 2.5L4.5 10H9L8 15.5L13.5 8H9L10 2.5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
+        <span class="dv-tile" style="--wy:26px;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="3" y="3" width="4.8" height="4.8" rx="1" stroke="currentColor" stroke-width="1.4"/><rect x="10.2" y="3" width="4.8" height="4.8" rx="1" stroke="currentColor" stroke-width="1.4"/><rect x="3" y="10.2" width="4.8" height="4.8" rx="1" stroke="currentColor" stroke-width="1.4"/><rect x="10.2" y="10.2" width="4.8" height="4.8" rx="1" stroke="currentColor" stroke-width="1.4"/></svg></span>
+        <span class="dv-tile" style="--wy:34px;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2.5L14.5 5.6V12.4L9 15.5L3.5 12.4V5.6L9 2.5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M9 9V15.5M9 9L14.5 5.6M9 9L3.5 5.6" stroke="currentColor" stroke-width="1.3"/></svg></span>
+        <span class="dv-tile" style="--wy:22px;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6.5 4.5C5.2 4.5 5 5.4 5 6.5V7.6C5 8.4 4.3 9 3.5 9C4.3 9 5 9.6 5 10.4V11.5C5 12.6 5.2 13.5 6.5 13.5M11.5 4.5C12.8 4.5 13 5.4 13 6.5V7.6C13 8.4 13.7 9 14.5 9C13.7 9 13 9.6 13 10.4V11.5C13 12.6 12.8 13.5 11.5 13.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+        <span class="dv-tile" style="--wy:0px;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3.5 14.5L11.5 6.5M10.5 4.5L13.5 7.5M12.5 3L13.2 4.2M14.8 5.2L13.6 5.9M9 3.5L9.7 4.7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+        <span class="dv-tile" style="--wy:-20px;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2.5" y="3.5" width="13" height="9" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M6.5 15H11.5M9 12.5V15" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+        <span class="dv-tile" style="--wy:-30px;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="3" y="4" width="12" height="11" rx="1.8" stroke="currentColor" stroke-width="1.4"/><path d="M3 7.5H15M6.2 2.5V5M11.8 2.5V5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+      </div>
+    </div>
+  </section>
+
+  <section id="dv-statement" aria-labelledby="dv-statement-h2">
+    <div class="wrap">
+      <h2 id="dv-statement-h2" class="dv-statement-h2">Drovemere is a calm workbench where one builder sends parallel drovers out on real errands and reviews clear results.</h2>
+    </div>
+  </section>
+  <section id="dv-tools" aria-label="Drovemere tools">
+    <div class="wrap">
+      <div class="dv-tool-list">
+        <article id="dv-tool-desk" class="dv-tool-row">
+          <div class="dv-tool-copy">
+            <h3 class="dv-tool-title">Drovemere Desk</h3>
+            <p class="dv-tool-desc">One quiet window for guiding several local helper bots at once. Sort errands into named folders, keep worktrees clean, and trigger nightly sweeps on your own clock.</p>
+          </div>
+          <div class="dv-tool-art dv-art-desk" aria-label="Sample Drovemere Desk window preview">
+            <div class="dv-desk-win">
+              <div class="dv-desk-folder">
+                <svg width="14" height="14" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M2.5 5.5A1.5 1.5 0 014 4H7L8.5 5.5H14A1.5 1.5 0 0115.5 7V13A1.5 1.5 0 0114 14.5H4A1.5 1.5 0 012.5 13V5.5Z" stroke="currentColor" stroke-width="1.5"/></svg>
+                <span>harbor-api</span>
+              </div>
+              <div class="dv-desk-prompt">
+                <span class="dv-desk-ask">Ask a drover anything (sample)</span>
+                <div class="dv-desk-chips">
+                  <span class="dv-mini-chip">Drover Swift (sample)</span>
+                  <span class="dv-mini-chip">lane/billing</span>
+                </div>
+              </div>
+              <div class="dv-desk-pop">
+                <span class="dv-desk-pop-item on">Local lane</span>
+                <span class="dv-desk-pop-item">Fresh worktree</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article id="dv-tool-line" class="dv-tool-row">
+          <div class="dv-tool-copy">
+            <h3 class="dv-tool-title">Drovemere Line</h3>
+            <p class="dv-tool-desc">A nimble terminal tool built for people who live on the keyboard. Kick off shell errands, watch dry-run output stream live, and inspect patch summaries without touching a mouse.</p>
+          </div>
+          <div class="dv-tool-art dv-art-line" aria-label="Sample Drovemere Line terminal session preview">
+            <div class="dv-term-win">
+              <div class="dv-term-bar">
+                <span class="dv-term-dot r" aria-hidden="true"></span>
+                <span class="dv-term-dot m" aria-hidden="true"></span>
+                <span class="dv-term-dot c" aria-hidden="true"></span>
+                <span class="dv-term-title">drovemere-line · sample</span>
+              </div>
+              <div class="dv-term-body">
+                <span><span class="dv-t-mint">$</span> drovemere errand &quot;add retry guard&quot;</span>
+                <span class="dv-t-mut">lane #3 ready · 2 files matched</span>
+                <span class="dv-t-cob">drover&gt; updating src/fetch.ts</span>
+                <span class="dv-t-cor">- return callApi(req)</span>
+                <span class="dv-t-mint">+ return withRetry(callApi, req, 3)</span>
+                <span class="dv-t-mut">checks: 14 passed · 0 warnings</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article id="dv-tool-bench" class="dv-tool-row">
+          <div class="dv-tool-copy">
+            <h3 class="dv-tool-title">Drovemere Bench</h3>
+            <p class="dv-tool-desc">A focused code editor where every drover change lands beside your own cursor. Browse open lanes, read inline rationales, and accept individual hunks with confidence.</p>
+          </div>
+          <div class="dv-tool-art dv-art-bench" aria-label="Sample Drovemere Bench code editor preview">
+            <div class="dv-bench-win">
+              <div class="dv-bench-tabs">
+                <span class="dv-bench-tab on">errand.ts</span>
+                <span class="dv-bench-tab">plan.md</span>
+              </div>
+              <div class="dv-bench-body">
+                <div class="dv-bench-tree">
+                  <span>src/</span>
+                  <span class="on">errand.ts</span>
+                  <span>lanes.ts</span>
+                  <span>checks.ts</span>
+                </div>
+                <div class="dv-bench-code">
+                  <span class="muted">1  export function run(job) {</span>
+                  <span>2    const lane = openLane(job);</span>
+                  <span class="dv-diff-add">3  + return lane.dispatch(job);</span>
+                  <span class="muted">4  }</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article id="dv-tool-kit" class="dv-tool-row">
+          <div class="dv-tool-copy">
+            <h3 class="dv-tool-title">Drovemere Kit</h3>
+            <p class="dv-tool-desc">A compact library for assembling your own helper bots on top of the Drovemere runner. Wire repository hooks, define review gates, and score custom tasks with plain scripts.</p>
+            <a class="dv-btn-secondary" href="#dv-walkthrough">See the kit</a>
+          </div>
+          <div class="dv-tool-art dv-art-kit" aria-label="Drovemere Kit glowing cobalt ring emblem">
+            <div class="dv-kit-ring">
+              <span class="dv-kit-label">Drovemere Kit</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="dv-audience" class="section-pad rule-top" aria-labelledby="dv-aud-heading">
+    <div class="wrap">
+      <div class="dv-aud-top">
+        <h2 id="dv-aud-heading" class="dv-h2">Made for builders<br/>at every desk</h2>
+        <p class="dv-aud-intro">Drovemere keeps humans in charge of every merge, whether you maintain a sprawling company monorepo or tinker on a weekend utility after dinner.</p>
+      </div>
+
+      <div class="dv-role-card">
+        <div id="dv-role-art" class="dv-role-art" data-tone="0">
+          <div class="dv-role-blobs" aria-hidden="true"></div>
+          <div class="dv-role-scrim" aria-hidden="true"></div>
+          <div class="dv-role-overlay">
+            <span id="dv-role-count" class="dv-role-tag">01 / 04 · Sample role</span>
+            <h3 id="dv-role-title" class="dv-role-label">Full-stack</h3>
+          </div>
+        </div>
+        <div class="dv-role-foot">
+          <div class="dv-role-meta" aria-live="polite">
+            <p id="dv-role-caption" class="dv-role-caption">Full-stack engineer</p>
+            <p id="dv-role-desc" class="dv-role-desc">Pair schema updates, endpoint handlers, and interface states inside one errand lane so every layer ships together cleanly.</p>
+          </div>
+          <div class="dv-role-ctrls">
+            <button type="button" id="dv-role-prev" class="dv-round-btn" aria-label="Previous role">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3.5L5.5 8L10 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button type="button" id="dv-role-next" class="dv-round-btn" aria-label="Next role">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3.5L10.5 8L6 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="dv-role-all">
+          <a class="dv-link-inline" href="#dv-walkthrough">
+            <span>View all roles</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M5.25 3.5L8.75 7L5.25 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="dv-audiences" class="section-pad rule-top" aria-label="Solo and team paths">
+    <div class="wrap">
+      <div class="dv-split-grid">
+        <div class="dv-split-col">
+          <span class="dv-kicker-chip">Solo</span>
+          <h2 class="dv-lead">For solo builders</h2>
+          <p class="dv-lead-muted">Run a steady crew from one laptop</p>
+          <a class="dv-btn-primary" href="#dv-download">Get Drovemere</a>
+        </div>
+        <div class="dv-split-col">
+          <span class="dv-kicker-chip">Teams</span>
+          <h2 class="dv-lead">For engineering teams</h2>
+          <p class="dv-lead-muted">Share errand recipes and review gates</p>
+          <a class="dv-btn-secondary" href="#dv-walkthrough">Talk to us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="dv-skeleton" class="section-pad rule-top" aria-label="Workspace overview, plans, and questions">
+    <div class="wrap dv-skel-stack">
+      <div aria-label="Sample throughput metrics">
+        <ul class="dv-stats-grid">
+          <li class="dv-stat-card">
+            <span class="dv-stat-val">4.2x</span>
+            <span class="dv-stat-lbl">Parallel errands per hour (sample)</span>
+          </li>
+          <li class="dv-stat-card">
+            <span class="dv-stat-val">18s</span>
+            <span class="dv-stat-lbl">Median local dry-run time (sample)</span>
+          </li>
+          <li class="dv-stat-card">
+            <span class="dv-stat-val">12</span>
+            <span class="dv-stat-lbl">Built-in workspace lanes (sample)</span>
+          </li>
+          <li class="dv-stat-card">
+            <span class="dv-stat-val">99.4%</span>
+            <span class="dv-stat-lbl">Clean patch apply rate (sample)</span>
+          </li>
+        </ul>
+      </div>
+
+      <div aria-label="Core workbench traits">
+        <ul class="dv-feat-grid">
+          <li class="dv-feat-card">
+            <span class="dv-feat-mono">01 · ISOLATED LANES</span>
+            <h3 class="dv-feat-title">Parallel worktrees by default</h3>
+            <p class="dv-feat-body">Each drover checks out its own scratch tree so simultaneous errands never step on your active branch or unstaged edits.</p>
+          </li>
+          <li class="dv-feat-card">
+            <span class="dv-feat-mono">02 · READABLE DIFFS</span>
+            <h3 class="dv-feat-title">Small hunks with short notes</h3>
+            <p class="dv-feat-body">Every finished task returns a plain-English summary beside line-level patches so code review takes minutes instead of an hour.</p>
+          </li>
+          <li class="dv-feat-card">
+            <span class="dv-feat-mono">03 · LOCAL FIRST</span>
+            <h3 class="dv-feat-title">Runs beside your own toolchain</h3>
+            <p class="dv-feat-body">Point drovers at local test suites, linters, and build scripts so verification matches what runs on your desk.</p>
+          </li>
+        </ul>
+      </div>
+
+      <div class="dv-table-scroll" role="region" aria-label="Sample plan comparison table" tabindex="0">
+        <table class="dv-table">
+          <caption>Sample plan comparison across Drovemere tiers (fictional figures)</caption>
+          <thead>
+            <tr>
+              <th scope="col">Capability</th>
+              <th scope="col">Solo (sample)</th>
+              <th scope="col">Crew (sample)</th>
+              <th scope="col">Studio (sample)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Parallel drover lanes</th>
+              <td>Up to 3</td>
+              <td>Up to 12</td>
+              <td>Up to 40</td>
+            </tr>
+            <tr>
+              <th scope="row">Included surfaces</th>
+              <td>Desk, Line, Bench</td>
+              <td>Desk, Line, Bench, Kit</td>
+              <td>All tools plus custom hooks</td>
+            </tr>
+            <tr>
+              <th scope="row">Shared errand recipes</th>
+              <td>Local folder</td>
+              <td>Team workspace library</td>
+              <td>Org-wide signed catalogs</td>
+            </tr>
+            <tr>
+              <th scope="row">Audit trail retention</th>
+              <td>14 days</td>
+              <td>90 days</td>
+              <td>365 days</td>
+            </tr>
+            <tr>
+              <th scope="row">Support response</th>
+              <td>Community forum</td>
+              <td>Next business day</td>
+              <td>Dedicated channel</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="dv-pricing" aria-labelledby="dv-pricing-heading">
+        <h2 id="dv-pricing-heading" class="dv-h2" style="margin-bottom:calc(var(--aura)*2.5);">Sample plans</h2>
+        <div class="dv-price-grid">
+          <article class="dv-price-card">
+            <div class="dv-price-head">
+              <h3 class="dv-price-name">Solo</h3>
+            </div>
+            <p class="dv-price-num">$0 <span>/ month (sample)</span></p>
+            <p class="muted">For individual builders running a small local crew on personal repositories.</p>
+            <ul class="dv-price-list">
+              <li>3 parallel local drover lanes</li>
+              <li>Desk, Line, and Bench included</li>
+              <li>Local diff review and check runner</li>
+            </ul>
+            <a class="dv-btn-secondary" href="#dv-download">Start Solo</a>
+          </article>
+
+          <article class="dv-price-card featured">
+            <div class="dv-price-head">
+              <h3 class="dv-price-name">Crew</h3>
+              <span class="dv-price-badge">Popular</span>
+            </div>
+            <p class="dv-price-num">$24 <span>/ seat · month (sample)</span></p>
+            <p class="muted">For product teams sharing errand templates and automated review checklists.</p>
+            <ul class="dv-price-list">
+              <li>12 parallel drover lanes per seat</li>
+              <li>Full Drovemere Kit library access</li>
+              <li>Shared recipe library and 90-day logs</li>
+            </ul>
+            <a class="dv-btn-primary" href="#dv-walkthrough">Choose Crew</a>
+          </article>
+
+          <article class="dv-price-card">
+            <div class="dv-price-head">
+              <h3 class="dv-price-name">Studio</h3>
+            </div>
+            <p class="dv-price-num">$68 <span>/ seat · month (sample)</span></p>
+            <p class="muted">For multi-repo engineering groups needing signed guardrails and long retention.</p>
+            <ul class="dv-price-list">
+              <li>40 parallel lanes with policy gates</li>
+              <li>Custom Kit evaluators and webhooks</li>
+              <li>365-day audit logs and priority help</li>
+            </ul>
+            <a class="dv-btn-secondary" href="#dv-walkthrough">Contact Studio</a>
+          </article>
+        </div>
+      </div>
+
+      <div id="dv-walkthrough" class="dv-form-panel" aria-labelledby="dv-walk-heading">
+        <div class="dv-form-intro">
+          <h2 id="dv-walk-heading" class="dv-h2">Request a walkthrough</h2>
+          <p class="muted">Tell us how your team splits coding chores today. This local demo form validates your entry and confirms without sending network data.</p>
+        </div>
+        <form id="dv-walk-form" class="dv-form-grid" novalidate>
+          <div class="dv-field">
+            <label class="dv-label" for="dv-w-name">Full name</label>
+            <input id="dv-w-name" name="name" type="text" placeholder="Jordan Alvarez (sample)" autocomplete="name" required/>
+          </div>
+          <div class="dv-field">
+            <label class="dv-label" for="dv-w-email">Work email</label>
+            <input id="dv-w-email" name="email" type="email" placeholder="Work email (sample)" autocomplete="email" required/>
+          </div>
+          <div class="dv-field full">
+            <label class="dv-label" for="dv-w-size">Team size</label>
+            <select id="dv-w-size" name="size" class="inputer">
+              <option value="1-5">1 to 5 builders</option>
+              <option value="6-25">6 to 25 builders</option>
+              <option value="26-100">26 to 100 builders</option>
+              <option value="100+">More than 100 builders</option>
+            </select>
+          </div>
+          <div class="dv-field full">
+            <label class="dv-label" for="dv-w-msg">What errands should drovers handle first?</label>
+            <textarea id="dv-w-msg" name="message" placeholder="Nightly dependency upgrades, test backfills, or release checklists (sample)"></textarea>
+          </div>
+          <div class="dv-form-actions">
+            <button type="submit" class="dv-btn-primary">Send request</button>
+            <span id="dv-walk-live" class="dv-live" aria-live="polite"></span>
+          </div>
+        </form>
+      </div>
+
+      <div id="dv-faq" class="dv-faq-wrap" aria-labelledby="dv-faq-heading">
+        <div>
+          <h2 id="dv-faq-heading" class="dv-h2">Common questions</h2>
+          <p class="muted" style="margin-top:calc(var(--aura)*1);">Quick answers on local isolation, code ownership, and getting started.</p>
+        </div>
+        <ul class="dv-faq-list">
+          <li class="dv-faq-item">
+            <button type="button" class="dv-faq-btn" aria-expanded="false" aria-controls="dv-faq-p1">
+              <span>How do parallel drovers avoid merge conflicts?</span>
+              <span class="dv-faq-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2.5V11.5M2.5 7H11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+            </button>
+            <div id="dv-faq-p1" class="dv-faq-panel" hidden>
+              <p>Each errand opens a fresh local worktree pinned to your chosen base branch. You inspect each resulting patch independently in Desk or Bench before merging a single line.</p>
+            </div>
+          </li>
+          <li class="dv-faq-item">
+            <button type="button" class="dv-faq-btn" aria-expanded="false" aria-controls="dv-faq-p2">
+              <span>Can I use Drovemere Line without opening Desk?</span>
+              <span class="dv-faq-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2.5V11.5M2.5 7H11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+            </button>
+            <div id="dv-faq-p2" class="dv-faq-panel" hidden>
+              <p>Yes. Drovemere Line runs standalone inside any terminal emulator and shares the same local lane state, so you can start an errand in the shell and review it later in Bench.</p>
+            </div>
+          </li>
+          <li class="dv-faq-item">
+            <button type="button" class="dv-faq-btn" aria-expanded="false" aria-controls="dv-faq-p3">
+              <span>What can teams build with Drovemere Kit?</span>
+              <span class="dv-faq-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2.5V11.5M2.5 7H11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+            </button>
+            <div id="dv-faq-p3" class="dv-faq-panel" hidden>
+              <p>Kit exposes a small scriptable library for defining custom drover steps, policy checks, and scoring harnesses that match your repository rules.</p>
+            </div>
+          </li>
+          <li class="dv-faq-item">
+            <button type="button" class="dv-faq-btn" aria-expanded="false" aria-controls="dv-faq-p4">
+              <span>Does this preview page send any account data?</span>
+              <span class="dv-faq-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2.5V11.5M2.5 7H11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+            </button>
+            <div id="dv-faq-p4" class="dv-faq-panel" hidden>
+              <p>No. Every form, toggle, and sample metric on this page is a local demonstration with zero background requests or external tracking.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <figure class="dv-quote-fig">
+        <blockquote>
+          <p>&ldquo;Running three drovers on separate worktrees turned our Friday release checklist from an afternoon slog into a twenty-minute review.&rdquo;</p>
+        </blockquote>
+        <figcaption class="dv-quote-cite">Nadia Okafor, Staff Builder at Northfield Harbor (sample quote)</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="dv-notes" class="section-pad rule-top" aria-labelledby="dv-notes-heading">
+    <div class="wrap">
+      <div class="dv-notes-head">
+        <h2 id="dv-notes-heading" class="dv-h2">Field notes</h2>
+        <a class="dv-btn-secondary sm" href="#dv-newsletter">All notes</a>
+      </div>
+
+      <div id="dv-notes-region" class="dv-notes-region" role="region" aria-label="Field notes articles" tabindex="0">
+        <ul class="dv-notes-track">
+          <li class="dv-note-card">
+            <div class="dv-note-thumb" aria-hidden="true">
+              <div class="dv-thumb-grid">
+                <span class="c"></span><span></span><span class="m"></span><span></span><span></span><span class="r"></span>
+                <span></span><span class="c"></span><span></span><span class="c"></span><span class="m"></span><span></span>
+                <span class="r"></span><span></span><span class="m"></span><span></span><span class="c"></span><span></span>
+              </div>
+            </div>
+            <h3 class="dv-note-title">Splitting a weekend refactor across four calm lanes</h3>
+            <p class="dv-note-meta">Nov 2026 · Sample tag</p>
+            <a class="dv-link-inline" href="#dv-newsletter">
+              <span>Read note</span>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M5.25 3.5L8.75 7L5.25 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </li>
+
+          <li class="dv-note-card">
+            <div class="dv-note-thumb" aria-hidden="true">
+              <div class="dv-thumb-stack">
+                <div class="dv-thumb-pane p1"></div>
+                <div class="dv-thumb-pane p2"></div>
+                <div class="dv-thumb-pane p3"><i></i><b></b></div>
+              </div>
+            </div>
+            <h3 class="dv-note-title">How Desk schedules nightly check sweeps cleanly</h3>
+            <p class="dv-note-meta">Nov 2026 · Sample tag</p>
+            <a class="dv-link-inline" href="#dv-newsletter">
+              <span>Read note</span>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M5.25 3.5L8.75 7L5.25 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </li>
+
+          <li class="dv-note-card">
+            <div class="dv-note-thumb" aria-hidden="true">
+              <div class="dv-thumb-puzzle">
+                <span class="c"></span><span></span><span class="m"></span>
+                <span></span><span class="r"></span><span class="c"></span>
+              </div>
+            </div>
+            <h3 class="dv-note-title">Composable hooks for custom Drovemere Kit runners</h3>
+            <p class="dv-note-meta">Nov 2026 · Sample tag</p>
+            <a class="dv-link-inline" href="#dv-newsletter">
+              <span>Read note</span>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M5.25 3.5L8.75 7L5.25 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </li>
+
+          <li class="dv-note-card">
+            <div class="dv-note-thumb" aria-hidden="true">
+              <div class="dv-thumb-glow-bg"></div>
+              <span class="dv-thumb-glow">Sample</span>
+            </div>
+            <h3 class="dv-note-title">Inside the 2.4 Bench patch reviewer and diff rail</h3>
+            <p class="dv-note-meta">Nov 2026 · Sample tag</p>
+            <a class="dv-link-inline" href="#dv-newsletter">
+              <span>Read note</span>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M5.25 3.5L8.75 7L5.25 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </li>
+
+          <li class="dv-note-card">
+            <div class="dv-note-thumb" aria-hidden="true">
+              <svg width="240" height="135" viewBox="0 0 240 135" fill="none">
+                <path d="M0 78C42 48 82 106 124 74C166 42 200 94 240 64" stroke="var(--dark-cobalt)" stroke-width="2.4" fill="none"/>
+                <path d="M0 94C48 64 88 118 134 86C174 58 206 104 240 78" stroke="var(--dark-mint)" stroke-width="2" fill="none"/>
+                <path d="M0 62C38 34 78 90 118 58C160 28 196 80 240 50" stroke="var(--dark-coral)" stroke-width="1.8" fill="none"/>
+              </svg>
+            </div>
+            <h3 class="dv-note-title">Keeping terminal sessions brisk across large trees</h3>
+            <p class="dv-note-meta">Nov 2026 · Sample tag</p>
+            <a class="dv-link-inline" href="#dv-newsletter">
+              <span>Read note</span>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M5.25 3.5L8.75 7L5.25 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="dv-notes-ctrls">
+        <button type="button" id="dv-notes-prev" class="dv-round-btn" aria-label="Scroll field notes left">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3.5L5.5 8L10 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" id="dv-notes-next" class="dv-round-btn" aria-label="Scroll field notes right">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3.5L10.5 8L6 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+  <section id="dv-newsletter" aria-labelledby="dv-news-heading">
+    <div class="wrap">
+      <div class="dv-news-box">
+        <h2 id="dv-news-heading" class="dv-h2">Stay in step with Drovemere</h2>
+        <p class="dv-news-sub">Pick the tool track you follow to receive monthly field notes, release logs, and sample errand recipes.</p>
+
+        <div id="dv-topic-group" class="dv-topic-group" role="radiogroup" aria-label="Newsletter topic">
+          <button type="button" class="dv-topic-chip" role="radio" aria-checked="true" tabindex="0" data-topic="All notes">
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7.2L5.8 10L11 4.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>All notes</span>
+          </button>
+          <button type="button" class="dv-topic-chip" role="radio" aria-checked="false" tabindex="-1" data-topic="Drovemere Desk">
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><rect x="2" y="2.5" width="10" height="9" rx="2" stroke="currentColor" stroke-width="1.4"/></svg>
+            <span>Drovemere Desk</span>
+          </button>
+          <button type="button" class="dv-topic-chip" role="radio" aria-checked="false" tabindex="-1" data-topic="Drovemere Line">
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 5L6 7.5L3 10M7.5 10H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Drovemere Line</span>
+          </button>
+          <button type="button" class="dv-topic-chip" role="radio" aria-checked="false" tabindex="-1" data-topic="Drovemere Bench">
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M5 4L2 7L5 10M9 4L12 7L9 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Drovemere Bench</span>
+          </button>
+          <button type="button" class="dv-topic-chip" role="radio" aria-checked="false" tabindex="-1" data-topic="Drovemere Kit">
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 2L11.5 4.5V9.5L7 12L2.5 9.5V4.5L7 2Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            <span>Drovemere Kit</span>
+          </button>
+        </div>
+
+        <form id="dv-news-form" class="dv-news-form" novalidate>
+          <div class="dv-pill-row">
+            <label class="sr-only" for="dv-news-email">Email address</label>
+            <input id="dv-news-email" name="email" type="email" placeholder="Email address (sample)" autocomplete="email" required/>
+            <button type="submit" class="dv-btn-primary dv-pill-submit">Join</button>
+          </div>
+          <label class="dv-consent" for="dv-news-agree">
+            <input id="dv-news-agree" class="dv-check-box default" type="checkbox"/>
+            <span>I accept the <a href="#dv-footer">Terms (sample)</a> and <a href="#dv-footer">Privacy (sample)</a> for this local demo dispatch.</span>
+          </label>
+          <p id="dv-news-live" class="dv-live" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section id="dv-download" aria-labelledby="dv-download-heading">
+    <div class="dv-banner">
+      <div class="dv-stars" aria-hidden="true"></div>
+      <div class="dv-banner-body">
+        <h2 id="dv-download-heading" class="dv-banner-h2">Bring Drovemere<br/>to your desk</h2>
+        <a class="dv-btn-light" href="#dv-walkthrough">
+          <span>Get it</span>
+          <svg width="15" height="15" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 2.5V8.75M7 8.75L4.5 6.25M7 8.75L9.5 6.25M3 11.25H11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="dv-footer">
+  <div class="wrap">
+    <div class="dv-ft-top">
+      <p class="dv-ft-lead">Run your crew</p>
+      <div class="dv-ft-cols">
+        <div>
+          <h3 class="dv-ft-col-title">Product</h3>
+          <ul class="dv-ft-links">
+            <li><a href="#dv-hero">Overview</a></li>
+            <li><a href="#dv-showcase">Live preview</a></li>
+            <li><a href="#dv-pricing">Sample plans</a></li>
+            <li><a href="#dv-download">Download</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="dv-ft-col-title">Tools</h3>
+          <ul class="dv-ft-links">
+            <li><a href="#dv-tool-desk">Drovemere Desk</a></li>
+            <li><a href="#dv-tool-line">Drovemere Line</a></li>
+            <li><a href="#dv-tool-bench">Drovemere Bench</a></li>
+            <li><a href="#dv-tool-kit">Drovemere Kit</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="dv-ft-col-title">Learn</h3>
+          <ul class="dv-ft-links">
+            <li><a href="#dv-notes">Field notes</a></li>
+            <li><a href="#dv-faq">Common questions</a></li>
+            <li><a href="#dv-walkthrough">Walkthrough</a></li>
+            <li><a href="#dv-newsletter">Dispatch</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="dv-ft-col-title">Company</h3>
+          <ul class="dv-ft-links">
+            <li><a href="#dv-audiences">For teams</a></li>
+            <li><a href="#dv-audience">Who it serves</a></li>
+            <li><a href="#dv-footer">Sample channel 1</a></li>
+            <li><a href="#dv-footer">Sample channel 2</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-wordmark-wrap" aria-hidden="true">
+      <p class="dv-wordmark-big">Drovemere</p>
+    </div>
+
+    <div class="dv-ft-bottom">
+      <div class="dv-ft-legal-row">
+        <a class="dv-brand" href="#dv-hero" aria-label="Drovemere home">
+          <span class="dv-mark" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <circle cx="6.5" cy="16.5" r="2.7" fill="currentColor"/>
+              <circle cx="12" cy="12" r="2.7" fill="currentColor"/>
+              <circle cx="17.5" cy="7.5" r="2.7" fill="currentColor"/>
+            </svg>
+          </span>
+        </a>
+        <ul class="dv-ft-inline">
+          <li><a href="#dv-statement">About (sample)</a></li>
+          <li><a href="#dv-footer">Privacy (sample)</a></li>
+          <li><a href="#dv-footer">Terms (sample)</a></li>
+          <li><a href="#dv-footer">Sample channel 1</a></li>
+          <li><a href="#dv-footer">Sample channel 2</a></li>
+          <li><a href="#dv-footer">Sample channel 3</a></li>
+          <li><a href="#dv-footer">Sample channel 4</a></li>
+        </ul>
+      </div>
+
+      <div id="dv-appearance-group" class="dv-sw-group" role="radiogroup" aria-label="Color appearance">
+        <button type="button" class="dv-sw-btn" role="radio" aria-checked="false" tabindex="-1" data-appearance="system">System</button>
+        <button type="button" class="dv-sw-btn" role="radio" aria-checked="false" tabindex="-1" data-appearance="light">Light</button>
+        <button type="button" class="dv-sw-btn" role="radio" aria-checked="false" tabindex="-1" data-appearance="dark">Dark</button>
+      </div>
+
+      <p class="dv-ft-copy">2026 Drovemere, a fictional studio.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var html=document.documentElement;
+  var hdrInner=document.querySelector(".dv-hdr-inner");
+  var triggers=Array.prototype.slice.call(document.querySelectorAll(".dv-nav-trigger[data-dropdown]"));
+  var flyouts={};
+  var activeTrigger=null;
+
+  triggers.forEach(function(t){
+    flyouts[t.dataset.dropdown]=document.getElementById(t.getAttribute("aria-controls"));
+  });
+
+  var langBtn=document.getElementById("dv-lang-btn");
+  var langPanel=document.getElementById("dv-lang-panel");
+  var langCode=document.getElementById("dv-lang-code");
+  var langLive=document.getElementById("dv-lang-live");
+  var langOpts=Array.prototype.slice.call(document.querySelectorAll(".dv-lang-opt"));
+
+  function closeLang(returnFocus){
+    if(langBtn.getAttribute("aria-expanded")==="true"){
+      langBtn.setAttribute("aria-expanded","false");
+      langPanel.hidden=true;
+      if(returnFocus)langBtn.focus();
+    }
+  }
+
+  function closeFlyouts(exceptId,returnFocus){
+    triggers.forEach(function(t){
+      var id=t.dataset.dropdown;
+      if(id===exceptId)return;
+      if(t.getAttribute("aria-expanded")==="true"){
+        t.setAttribute("aria-expanded","false");
+        flyouts[id].hidden=true;
+        if(returnFocus&&activeTrigger===t)t.focus();
+      }
+    });
+    if(!exceptId)activeTrigger=null;
+  }
+
+  function positionFlyout(t,panel){
+    var parentRect=hdrInner.getBoundingClientRect();
+    var trigRect=t.getBoundingClientRect();
+    var panelW=Math.min(560,window.innerWidth-32);
+    var left=trigRect.left-parentRect.left;
+    var maxLeft=Math.max(0,parentRect.width-panelW);
+    if(left>maxLeft)left=maxLeft;
+    if(left<0)left=0;
+    panel.style.left=left+"px";
+  }
+
+  triggers.forEach(function(t){
+    var id=t.dataset.dropdown;
+    var panel=flyouts[id];
+    t.addEventListener("click",function(e){
+      e.stopPropagation();
+      var isOpen=t.getAttribute("aria-expanded")==="true";
+      closeLang(false);
+      closeFlyouts(isOpen?null:id,false);
+      if(!isOpen){
+        positionFlyout(t,panel);
+        t.setAttribute("aria-expanded","true");
+        panel.hidden=false;
+        activeTrigger=t;
+      }else{
+        t.setAttribute("aria-expanded","false");
+        panel.hidden=true;
+        activeTrigger=null;
+      }
+    });
+    panel.addEventListener("click",function(e){
+      if(e.target.closest("a")){
+        closeFlyouts(null,false);
+      }else{
+        e.stopPropagation();
+      }
+    });
+  });
+
+  langBtn.addEventListener("click",function(e){
+    e.stopPropagation();
+    var isOpen=langBtn.getAttribute("aria-expanded")==="true";
+    closeFlyouts(null,false);
+    if(!isOpen){
+      langBtn.setAttribute("aria-expanded","true");
+      langPanel.hidden=false;
+    }else{
+      closeLang(false);
+    }
+  });
+
+  langOpts.forEach(function(opt){
+    opt.addEventListener("click",function(e){
+      e.stopPropagation();
+      var code=opt.dataset.lang;
+      langCode.textContent=code;
+      langOpts.forEach(function(o){
+        o.setAttribute("aria-current",o===opt?"true":"false");
+      });
+      langLive.textContent="Language set to "+opt.querySelector("span").textContent;
+      closeLang(true);
+    });
+  });
+
+  var menuOpen=document.getElementById("dv-menu-open");
+  var menuClose=document.getElementById("dv-menu-close");
+  var mobileMenu=document.getElementById("dv-mobile-menu");
+  var focusSel="a[href],button:not([disabled]),input,select,textarea,[tabindex]:not([tabindex='-1'])";
+
+  function openMobileMenu(){
+    closeFlyouts(null,false);
+    closeLang(false);
+    mobileMenu.hidden=false;
+    menuOpen.setAttribute("aria-expanded","true");
+    document.body.style.overflow="hidden";
+    menuClose.focus();
+  }
+
+  function closeMobileMenu(){
+    if(mobileMenu.hidden)return;
+    mobileMenu.hidden=true;
+    menuOpen.setAttribute("aria-expanded","false");
+    document.body.style.overflow="";
+    menuOpen.focus();
+  }
+
+  menuOpen.addEventListener("click",openMobileMenu);
+  menuClose.addEventListener("click",closeMobileMenu);
+  mobileMenu.addEventListener("click",function(e){
+    if(e.target.closest("a"))closeMobileMenu();
+  });
+
+  document.addEventListener("click",function(){
+    closeFlyouts(null,false);
+    closeLang(false);
+  });
+
+  document.addEventListener("keydown",function(e){
+    if(!mobileMenu.hidden){
+      if(e.key==="Escape"){
+        e.preventDefault();
+        closeMobileMenu();
+        return;
+      }
+      if(e.key==="Tab"){
+        var items=Array.prototype.slice.call(mobileMenu.querySelectorAll(focusSel));
+        var first=items[0];
+        var last=items[items.length-1];
+        if(e.shiftKey&&document.activeElement===first){
+          e.preventDefault();
+          last.focus();
+        }else if(!e.shiftKey&&document.activeElement===last){
+          e.preventDefault();
+          first.focus();
+        }
+      }
+      return;
+    }
+    if(e.key==="Escape"){
+      if(langBtn.getAttribute("aria-expanded")==="true"){
+        closeLang(true);
+      }else if(activeTrigger){
+        closeFlyouts(null,true);
+      }
+    }
+  });
+
+  var notice=document.getElementById("dv-notice");
+  var noticeClose=document.getElementById("dv-notice-close");
+  noticeClose.addEventListener("click",function(){
+    notice.hidden=true;
+  });
+
+  var showFrame=document.getElementById("dv-showcase-frame");
+  var showBtn=document.getElementById("dv-showcase-toggle");
+  var showStatus=document.getElementById("dv-showcase-status");
+  var playIco=document.getElementById("dv-play-ico");
+  showBtn.addEventListener("click",function(){
+    var paused=showBtn.getAttribute("aria-pressed")==="true";
+    var nextPaused=!paused;
+    showBtn.setAttribute("aria-pressed",String(nextPaused));
+    showFrame.classList.toggle("is-paused",nextPaused);
+    showStatus.textContent=nextPaused?"Demo paused (sample)":"Demo running (sample)";
+    playIco.innerHTML=nextPaused
+      ?'<path d="M5 3.5L12.5 8L5 12.5V3.5Z" fill="currentColor"/>'
+      :'<rect x="4" y="3" width="3" height="10" rx="1" fill="currentColor"/><rect x="9.5" y="3" width="3" height="10" rx="1" fill="currentColor"/>';
+  });
+
+  var roles=[
+    {label:"Full-stack",caption:"Full-stack engineer",desc:"Pair schema updates, endpoint handlers, and interface states inside one errand lane so every layer ships together cleanly."},
+    {label:"Frontend",caption:"Frontend specialist",desc:"Run spacing audits, keyboard checks, and dark-appearance refinements across dozens of views without juggling branches."},
+    {label:"Data",caption:"Data engineer",desc:"Validate warehouse transforms, backfill scripts, and fixture snapshots in isolated trees before touching production jobs."},
+    {label:"Platform",caption:"Platform maintainer",desc:"Coordinate dependency bumps and policy guards across dozens of service repositories with predictable patch summaries."}
+  ];
+  var roleIdx=0;
+  var roleArt=document.getElementById("dv-role-art");
+  var roleCount=document.getElementById("dv-role-count");
+  var roleTitle=document.getElementById("dv-role-title");
+  var roleCaption=document.getElementById("dv-role-caption");
+  var roleDesc=document.getElementById("dv-role-desc");
+
+  function renderRole(){
+    var item=roles[roleIdx];
+    roleArt.setAttribute("data-tone",String(roleIdx));
+    roleCount.textContent="0"+(roleIdx+1)+" / 04 · Sample role";
+    roleTitle.textContent=item.label;
+    roleCaption.textContent=item.caption;
+    roleDesc.textContent=item.desc;
+  }
+
+  document.getElementById("dv-role-prev").addEventListener("click",function(){
+    roleIdx=(roleIdx-1+roles.length)%roles.length;
+    renderRole();
+  });
+  document.getElementById("dv-role-next").addEventListener("click",function(){
+    roleIdx=(roleIdx+1)%roles.length;
+    renderRole();
+  });
+
+  var notesRegion=document.getElementById("dv-notes-region");
+  document.getElementById("dv-notes-prev").addEventListener("click",function(){
+    notesRegion.scrollBy({left:-266,behavior:html.classList.contains("motion")?"smooth":"auto"});
+  });
+  document.getElementById("dv-notes-next").addEventListener("click",function(){
+    notesRegion.scrollBy({left:266,behavior:html.classList.contains("motion")?"smooth":"auto"});
+  });
+
+  Array.prototype.slice.call(document.querySelectorAll(".dv-faq-btn")).forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var expanded=btn.getAttribute("aria-expanded")==="true";
+      btn.setAttribute("aria-expanded",String(!expanded));
+      document.getElementById(btn.getAttribute("aria-controls")).hidden=expanded;
+    });
+  });
+
+  var walkForm=document.getElementById("dv-walk-form");
+  var walkLive=document.getElementById("dv-walk-live");
+  walkForm.addEventListener("submit",function(e){
+    e.preventDefault();
+    var nameVal=document.getElementById("dv-w-name").value.trim();
+    var emailVal=document.getElementById("dv-w-email").value.trim();
+    if(!nameVal||emailVal.indexOf("@")<1){
+      walkLive.textContent="Enter a name and a valid sample email address to preview confirmation.";
+      return;
+    }
+    walkLive.textContent="Walkthrough request recorded locally for "+nameVal+" (sample confirmation, nothing sent).";
+    walkForm.reset();
+  });
+
+  var topicChips=Array.prototype.slice.call(document.querySelectorAll(".dv-topic-chip"));
+  var selectedTopic="All notes";
+  function selectTopic(idx,moveFocus){
+    topicChips.forEach(function(chip,i){
+      var active=i===idx;
+      chip.setAttribute("aria-checked",String(active));
+      chip.tabIndex=active?0:-1;
+      if(active){
+        selectedTopic=chip.dataset.topic;
+        if(moveFocus)chip.focus();
+      }
+    });
+  }
+  topicChips.forEach(function(chip,i){
+    chip.addEventListener("click",function(){selectTopic(i,false);});
+    chip.addEventListener("keydown",function(e){
+      if(e.key==="ArrowRight"||e.key==="ArrowDown"){
+        e.preventDefault();
+        selectTopic((i+1)%topicChips.length,true);
+      }else if(e.key==="ArrowLeft"||e.key==="ArrowUp"){
+        e.preventDefault();
+        selectTopic((i-1+topicChips.length)%topicChips.length,true);
+      }
+    });
+  });
+
+  var newsForm=document.getElementById("dv-news-form");
+  var newsEmail=document.getElementById("dv-news-email");
+  var newsAgree=document.getElementById("dv-news-agree");
+  var newsLive=document.getElementById("dv-news-live");
+  newsForm.addEventListener("submit",function(e){
+    e.preventDefault();
+    var mail=newsEmail.value.trim();
+    if(mail.indexOf("@")<1){
+      newsLive.textContent="Enter a sample email address containing @ to preview confirmation.";
+      newsEmail.focus();
+      return;
+    }
+    if(!newsAgree.checked){
+      newsLive.textContent="Check the consent box before joining the sample dispatch.";
+      newsAgree.focus();
+      return;
+    }
+    newsLive.textContent="Subscribed locally to "+selectedTopic+" for "+mail+" (sample confirmation, nothing sent).";
+    newsForm.reset();
+  });
+
+  var swBtns=Array.prototype.slice.call(document.querySelectorAll(".dv-sw-btn[data-appearance]"));
+  var initParam=new URLSearchParams(window.location.search).get("appearance");
+  var currentMode=initParam==="dark"?"dark":initParam==="light"?"light":"system";
+
+  function applyAppearance(mode,moveFocus){
+    currentMode=mode;
+    html.classList.remove("light","dark");
+    var resolved=mode==="system"?(window.matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"):mode;
+    html.classList.add(resolved);
+    html.style.colorScheme=resolved;
+    swBtns.forEach(function(btn){
+      var on=btn.dataset.appearance===mode;
+      btn.setAttribute("aria-checked",String(on));
+      btn.tabIndex=on?0:-1;
+      if(on&&moveFocus)btn.focus();
+    });
+  }
+
+  applyAppearance(currentMode,false);
+  swBtns.forEach(function(btn,i){
+    btn.addEventListener("click",function(){applyAppearance(btn.dataset.appearance,false);});
+    btn.addEventListener("keydown",function(e){
+      if(e.key==="ArrowRight"||e.key==="ArrowDown"){
+        e.preventDefault();
+        var next=swBtns[(i+1)%swBtns.length];
+        applyAppearance(next.dataset.appearance,true);
+      }else if(e.key==="ArrowLeft"||e.key==="ArrowUp"){
+        e.preventDefault();
+        var prev=swBtns[(i-1+swBtns.length)%swBtns.length];
+        applyAppearance(prev.dataset.appearance,true);
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
