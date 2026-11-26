@@ -1,0 +1,1718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Oakhollow · Aura flavor</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="stylesheet" href="/aura/main.css"/>
+<link rel="stylesheet" href="theme.css"/>
+<script>
+(function(){
+  var p=new URLSearchParams(window.location.search).get("appearance");
+  var d=p==="dark"?"dark":p==="light"?"light":(window.matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
+  var r=document.documentElement;
+  r.classList.add(d);
+  r.style.colorScheme=d;
+  r.dataset.appearancePref=p==="dark"||p==="light"?p:"system";
+  if(window.matchMedia("(prefers-reduced-motion: no-preference)").matches)r.classList.add("motion");
+})();
+</script>
+<style>
+*{box-sizing:border-box;}
+html{font-family:var(--aura-font-stack);background:var(--canvas);color:var(--ink);}
+body{margin:0;padding:0;background:var(--canvas);color:var(--ink);font-family:var(--aura-font-stack);font-size:16px;font-weight:400;line-height:1.5;min-width:0;}
+h1,h2,h3,h4,h5,h6,p,figure,blockquote,ul,ol,dl{margin:0;}
+ul,ol{padding:0;list-style:none;}
+h1,h2,h3,h4{font-family:var(--aura-font-stack);font-weight:700;letter-spacing:-0.02em;overflow-wrap:break-word;min-width:0;}
+p{overflow-wrap:break-word;min-width:0;}
+a{color:inherit;text-decoration:none;}
+img,svg{max-width:100%;}
+
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+.skip-link{position:absolute;left:16px;top:-64px;z-index:400;padding:10px 18px;border-radius:8px;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:14px;}
+.skip-link:focus{top:12px;}
+
+.oh{--aura-accents-primary:var(--accent);--aura-button-hover:var(--accent-hover);--aura-input-bg:var(--canvas);--aura-input-placeholder-color:var(--muted);--aura-link:var(--accent);--aura-outline:2px solid var(--focus);}
+.oh :focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.oh .oh-on-dark-scope :focus-visible,.oh #oh-footer :focus-visible{outline:2px solid var(--on-dark);outline-offset:2px;}
+.oh .oh-shop-tile :focus-visible,.oh .oh-band-sage :focus-visible,.oh .oh-tile-rose :focus-visible{outline:2px solid var(--ink);outline-offset:2px;}
+
+.oh button,.oh input,.oh select,.oh textarea{font-family:var(--aura-font-stack);}
+
+.oh .oh-btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:8px;background:var(--accent);color:var(--accent-ink);border:1px solid var(--accent);font-size:15px;font-weight:500;cursor:pointer;padding:0 calc(var(--aura) * 1.75);height:44px;text-decoration:none;white-space:nowrap;}
+.oh .oh-btn-primary:hover{background:var(--accent-hover);border-color:var(--accent-hover);}
+
+.oh .oh-btn-outline{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:8px;background:var(--canvas);color:var(--ink);border:1px solid var(--control-line);font-size:15px;font-weight:500;cursor:pointer;padding:0 calc(var(--aura) * 1.75);height:44px;text-decoration:none;white-space:nowrap;}
+.oh .oh-btn-outline:hover{background:var(--surface);}
+
+.oh .oh-round-btn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;cursor:pointer;padding:0;flex-shrink:0;}
+.oh .oh-round-light{background:var(--on-dark);color:var(--footer-bg);border:2px solid color-mix(in srgb,var(--scrim-base) 78%,transparent);}
+.oh .oh-round-light:hover{background:var(--on-dark-eyebrow);}
+.oh .oh-round-ink{background:var(--ink);color:var(--canvas);border:1px solid var(--ink);}
+.oh .oh-round-ink:hover{opacity:0.88;}
+.oh .oh-round-outline{background:var(--canvas);color:var(--ink);border:1px solid var(--control-line);}
+.oh .oh-round-outline:hover{background:var(--surface);}
+
+.oh input:not(.default),.oh textarea:not(.default){background:var(--canvas);border:1px solid var(--control-line);color:var(--ink);border-radius:8px;padding:0 calc(var(--aura) * 1.25);font-size:16px;width:100%;}
+.oh input:not(.default){height:44px;}
+.oh textarea:not(.default){padding:12px calc(var(--aura) * 1.25);min-height:104px;resize:vertical;line-height:1.5;}
+.oh input:not(.default)::placeholder,.oh textarea:not(.default)::placeholder{color:var(--muted);opacity:1;}
+.oh select.inputer{appearance:none;-webkit-appearance:none;background-color:var(--canvas);background-image:linear-gradient(45deg,transparent 50%,var(--control-line) 50%),linear-gradient(135deg,var(--control-line) 50%,transparent 50%);background-position:right 18px center,right 13px center;background-size:5px 5px,5px 5px;background-repeat:no-repeat,no-repeat;border:1px solid var(--control-line);color:var(--ink);border-radius:8px;height:44px;padding:0 40px 0 14px;font-size:16px;width:100%;cursor:pointer;}
+.oh .oh-footer-select.inputer{background-color:var(--on-dark-surface);background-image:linear-gradient(45deg,transparent 50%,var(--on-dark) 50%),linear-gradient(135deg,var(--on-dark) 50%,transparent 50%);background-position:right 18px center,right 13px center;background-size:5px 5px,5px 5px;background-repeat:no-repeat,no-repeat;border:1px solid var(--on-dark-line);color:var(--on-dark);border-radius:9999px;height:40px;padding:0 38px 0 16px;font-size:14px;width:auto;min-width:176px;}
+
+.oh blockquote{font-family:var(--aura-font-stack);font-weight:500;font-size:32px;line-height:1.2;letter-spacing:-0.025em;text-transform:none;font-style:normal;quotes:none;border:0;padding:0;margin:0;background:none;color:var(--ink);}
+.oh blockquote p{font-family:var(--aura-font-stack);font-weight:500;font-size:32px;line-height:1.2;letter-spacing:-0.025em;text-transform:none;font-style:normal;color:var(--ink);}
+
+.oh-wrap{width:100%;max-width:1280px;padding-inline:16px;margin-inline:auto;}
+.oh-stack{display:flex;flex-direction:column;gap:16px;}
+
+#oh-header{position:relative;z-index:100;background:var(--canvas);height:64px;}
+.oh-hdr-inner{position:relative;display:flex;align-items:center;height:100%;gap:24px;}
+.oh-brand{display:inline-flex;align-items:center;gap:10px;color:var(--ink);font-size:20px;font-weight:700;letter-spacing:-0.02em;flex-shrink:0;}
+.oh-brand-mark{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;color:var(--accent);flex-shrink:0;}
+.oh-nav{display:flex;align-items:center;}
+.oh-nav-list{display:flex;align-items:center;gap:6px;}
+.oh-nav-link,.oh-nav-trigger{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:8px;border:0;background:transparent;color:var(--ink);font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap;}
+.oh-nav-link:hover,.oh-nav-trigger:hover{background:var(--surface);}
+.oh-nav-trigger[aria-expanded="true"]{background:var(--surface);}
+.oh-nav-chev{flex-shrink:0;}
+html.motion .oh-nav-chev{transition:transform 0.2s ease;}
+.oh-nav-trigger[aria-expanded="true"] .oh-nav-chev{transform:rotate(180deg);}
+
+.oh-flyout{position:absolute;top:calc(100% + 4px);left:0;width:min(560px,calc(100vw - 32px));background:var(--surface-card);border:1px solid var(--control-line);border-radius:8px;box-shadow:0 12px 32px color-mix(in srgb,var(--ink) 12%,transparent);padding:16px;z-index:200;}
+.oh-flyout[hidden]{display:none;}
+.oh-flyout-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}
+.oh-flyout-link{display:block;padding:10px 12px;border-radius:8px;color:var(--ink);}
+.oh-flyout-link:hover{background:var(--surface);}
+.oh-flyout-title{display:block;font-size:15px;font-weight:500;color:var(--ink);line-height:1.3;}
+.oh-flyout-desc{display:block;font-size:13px;font-weight:400;color:var(--muted);line-height:1.4;margin-top:2px;}
+
+.oh .oh-menu-toggle{display:none;margin-left:auto;}
+#oh-mobile-menu{position:fixed;left:0;top:0;width:100vw;height:100vh;background:var(--canvas);color:var(--ink);z-index:300;display:flex;flex-direction:column;overflow-y:auto;padding:12px 16px 32px;}
+#oh-mobile-menu[hidden]{display:none;}
+.oh-mmenu-top{display:flex;align-items:center;justify-content:space-between;min-height:48px;margin-bottom:24px;}
+.oh-mmenu-list{display:flex;flex-direction:column;gap:8px;margin-bottom:24px;}
+.oh-mmenu-link{display:block;font-size:24px;font-weight:700;letter-spacing:-0.02em;color:var(--ink);padding:8px 0;}
+.oh-mmenu-heading{font-size:14px;font-weight:700;color:var(--muted);padding-top:16px;margin-bottom:10px;border-top:1px solid var(--rule);}
+.oh-mmenu-sublist{display:flex;flex-direction:column;gap:10px;}
+.oh-mmenu-sublink{display:block;padding:6px 0;}
+
+.oh-lead-grid{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:16px;align-items:stretch;}
+
+.oh-tile{position:relative;display:flex;flex-direction:column;justify-content:flex-end;border-radius:8px;overflow:hidden;min-width:0;background:var(--art-stone);}
+.oh-tile-lead{min-height:500px;}
+.oh-tile-square{aspect-ratio:1/1;min-height:320px;}
+.oh-tile-wide{min-height:600px;}
+.oh-tile-scrim::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(to top,color-mix(in srgb,var(--scrim-base) 92%,transparent) 0%,color-mix(in srgb,var(--scrim-base) 68%,transparent) 34%,color-mix(in srgb,var(--scrim-base) 16%,transparent) 64%,transparent 100%);}
+
+.oh-art{position:absolute;inset:0;z-index:0;overflow:hidden;}
+.oh-art svg{width:100%;height:100%;display:block;}
+.oh-art-drift{width:112%;height:100%;margin-left:-6%;}
+html.motion .oh-art-drift{animation:oh-drift 18s ease-in-out infinite alternate;}
+html.motion .oh-art-drift[data-paused="true"]{animation-play-state:paused;}
+@keyframes oh-drift{from{transform:translateX(-2.5%);}to{transform:translateX(2.5%);}}
+
+.oh-tile-body{position:relative;z-index:2;padding:96px 24px 24px;color:var(--on-dark);min-width:0;}
+.oh-tile-has-btn .oh-tile-body{padding-right:76px;}
+.oh-eyebrow{display:block;font-size:13px;font-weight:400;line-height:1.4;color:var(--on-dark-eyebrow);margin-bottom:6px;}
+.oh-lead-h1{font-size:28px;font-weight:700;line-height:1.18;letter-spacing:-0.02em;color:var(--on-dark);display:flex;align-items:flex-start;gap:10px;}
+.oh-lead-arrow{flex-shrink:0;margin-top:4px;}
+.oh-tile-title{font-size:24px;font-weight:700;line-height:1.2;letter-spacing:-0.02em;color:var(--on-dark);}
+.oh-tile-link{color:inherit;display:inline-flex;align-items:flex-start;gap:10px;}
+.oh-tile-link::after{content:"";position:absolute;inset:0;z-index:0;}
+.oh-tile-btn{position:absolute;right:20px;bottom:20px;z-index:4;}
+
+.oh-shop-tile{background:var(--band-marigold);color:var(--ink);border-radius:8px;display:flex;flex-direction:column;min-height:500px;min-width:0;position:relative;}
+.oh-shop-main{flex:1;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:32px 28px;color:var(--ink);}
+.oh-shop-cta{font-size:28px;font-weight:700;line-height:1.18;letter-spacing:-0.02em;color:var(--ink);}
+.oh-shop-footer{border-top:1px solid var(--band-marigold-line);padding:16px 24px;position:relative;}
+.oh-shop-trigger{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;background:transparent;color:var(--ink);border:1px solid var(--band-marigold-line);border-radius:8px;padding:10px 14px;font-size:14px;font-weight:500;cursor:pointer;text-align:left;}
+.oh-shop-trigger:hover{background:color-mix(in srgb,var(--ink) 8%,transparent);}
+.oh-shop-trigger[aria-expanded="true"] .oh-shop-chev{transform:rotate(180deg);}
+html.motion .oh-shop-chev{transition:transform 0.2s ease;}
+.oh-shop-panel{margin-top:10px;background:var(--surface-card);border:1px solid var(--control-line);border-radius:8px;padding:8px;color:var(--ink);}
+.oh-shop-panel[hidden]{display:none;}
+.oh-shop-list{display:flex;flex-direction:column;gap:4px;}
+.oh-shop-option{width:100%;display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-radius:6px;border:1px solid transparent;background:transparent;color:var(--ink);font-size:14px;font-weight:500;cursor:pointer;text-align:left;}
+.oh-shop-option:hover{background:var(--surface);}
+.oh-shop-option[aria-pressed="true"]{background:var(--surface);border-color:var(--control-line);font-weight:700;}
+
+.oh-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;}
+
+.oh-band{border-radius:8px;padding:48px;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:40px;align-items:center;min-width:0;}
+.oh-band-cranberry{background:var(--band-cranberry);color:var(--on-dark);}
+.oh-band-sage{background:var(--band-sage);color:var(--band-sage-ink);}
+.oh-band-plum{background:var(--band-plum);color:var(--on-dark);}
+.oh-band-copy{min-width:0;}
+.oh-band-eyebrow{display:block;font-size:13px;font-weight:400;line-height:1.4;margin-bottom:8px;}
+.oh-band-cranberry .oh-band-eyebrow,.oh-band-plum .oh-band-eyebrow{color:var(--on-dark-eyebrow);}
+.oh-band-sage .oh-band-eyebrow{color:var(--band-sage-ink);}
+.oh-band-h2{font-size:36px;font-weight:700;line-height:1.15;letter-spacing:-0.025em;max-width:14ch;}
+.oh-band-plum-h2{font-size:56px;font-weight:700;line-height:1.08;letter-spacing:-0.03em;color:var(--on-dark);}
+
+.oh-inset{position:relative;width:100%;aspect-ratio:16/10;border-radius:8px;overflow:hidden;background:var(--art-wall);}
+.oh-inset svg{width:100%;height:100%;display:block;}
+
+.oh-band-rust{background:var(--band-rust);color:var(--on-dark);border-radius:8px;padding:60px 48px;}
+.oh-rust-grid{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:36px;align-items:start;}
+.oh-rust-copy{min-width:0;}
+.oh-rust-h2{font-size:36px;font-weight:700;line-height:1.15;letter-spacing:-0.025em;color:var(--on-dark);margin-bottom:14px;}
+.oh-rust-p{font-size:16px;font-weight:400;line-height:1.5;color:var(--on-dark-eyebrow);}
+.oh-car-wrap{min-width:0;}
+.oh-car-viewport{overflow:hidden;width:100%;}
+.oh-car-track{display:flex;gap:16px;transform:translateX(0);}
+html.motion .oh-car-track{transition:transform 0.25s ease;}
+.oh-car-card{flex:0 0 calc((100% - 32px) / 3);width:calc((100% - 32px) / 3);border-radius:8px;overflow:hidden;background:var(--surface-card);color:var(--ink);display:flex;flex-direction:column;min-width:0;}
+.oh-car-art{width:100%;aspect-ratio:4/3;background:var(--art-wall);overflow:hidden;}
+.oh-car-art svg{width:100%;height:100%;display:block;}
+.oh-car-cap{padding:16px;background:var(--surface-card);flex:1;}
+.oh-car-eyebrow{display:block;font-size:13px;font-weight:400;color:var(--muted);line-height:1.4;margin-bottom:4px;}
+.oh-car-title{display:block;font-size:15px;font-weight:700;color:var(--ink);line-height:1.35;}
+.oh-car-controls{display:flex;justify-content:flex-end;align-items:center;gap:12px;margin-top:24px;}
+.oh .oh-car-btn{background:var(--on-dark);color:var(--footer-bg);border:1px solid var(--on-dark);}
+.oh .oh-car-btn:disabled{background:transparent;color:var(--on-dark);border:1px solid var(--on-dark);cursor:not-allowed;}
+
+.oh-tile-rose{background:var(--band-rose);color:var(--band-rose-ink);justify-content:space-between;padding:28px 24px 24px;}
+.oh-rose-circle-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:8px 0 20px;}
+.oh-rose-circle{width:min(280px,68%);aspect-ratio:1/1;border-radius:50%;overflow:hidden;background:var(--art-wall);}
+.oh-rose-circle svg{width:100%;height:100%;display:block;}
+.oh-tile-rose .oh-tile-body{padding:0 60px 0 0;color:var(--band-rose-ink);}
+.oh-tile-rose .oh-eyebrow{color:var(--band-rose-ink);}
+.oh-tile-rose .oh-tile-title{color:var(--band-rose-ink);}
+
+.oh-plum-panel{position:relative;background:var(--surface-card);border-radius:8px;padding:28px 28px 64px;border:1px solid var(--rule);}
+.oh-obj-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;align-items:center;}
+.oh-obj-cell{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;}
+.oh-obj-svg{width:76px;height:76px;display:block;}
+.oh-obj-label{font-size:13px;font-weight:500;color:var(--ink);}
+
+#oh-strip{position:relative;width:100%;margin-top:16px;background:var(--art-stone);overflow:hidden;}
+.oh-strip-stage{position:relative;width:100%;aspect-ratio:16/5;min-height:220px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.oh-strip-art{width:100%;height:100%;max-width:1280px;display:flex;align-items:center;justify-content:center;}
+.oh-strip-art svg{width:100%;height:100%;display:block;}
+html.motion .oh-strip-float{animation:oh-float 6s ease-in-out infinite alternate;}
+html.motion .oh-strip-float[data-paused="true"]{animation-play-state:paused;}
+@keyframes oh-float{from{transform:translateY(-4px);}to{transform:translateY(4px);}}
+.oh-strip-btn{position:absolute;top:16px;right:16px;z-index:4;}
+
+#oh-skeleton{padding-block:calc(var(--aura) * 4.5);background:var(--canvas);}
+.oh-skel-stack{display:flex;flex-direction:column;gap:calc(var(--aura) * 4);}
+.oh-skel-h2{font-size:32px;font-weight:700;line-height:1.18;letter-spacing:-0.025em;color:var(--ink);margin-bottom:calc(var(--aura) * 1.5);}
+.oh-skel-sub{font-size:16px;color:var(--muted);margin-bottom:calc(var(--aura) * 2);max-width:60ch;}
+
+.oh-stats-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;}
+.oh-stat-card{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:24px;min-width:0;}
+.oh-stat-val{font-size:44px;font-weight:700;line-height:1.05;letter-spacing:-0.03em;color:var(--ink);}
+.oh-stat-label{font-size:14px;color:var(--muted);margin-top:8px;}
+
+.oh-features-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+.oh-feature-card{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:24px;min-width:0;}
+.oh-feature-h3{font-size:20px;font-weight:700;color:var(--ink);margin-bottom:8px;}
+.oh-feature-p{font-size:15px;color:var(--body);line-height:1.5;}
+
+.oh-table-scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:8px;background:var(--surface-card);}
+.oh table{width:100%;border-collapse:collapse;min-width:560px;}
+.oh caption{text-align:left;padding:14px 18px;font-size:14px;font-weight:500;color:var(--muted);border-bottom:1px solid var(--rule);background:var(--surface);}
+.oh th,.oh td{padding:14px 18px;text-align:left;border-bottom:1px solid var(--rule);font-size:15px;}
+.oh th{font-weight:700;color:var(--ink);background:var(--surface);}
+.oh td{color:var(--body);}
+.oh tbody tr:last-child td{border-bottom:0;}
+
+.oh-pricing-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+.oh-plan{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:12px;min-width:0;}
+.oh-plan-featured{background:var(--surface-card);border:1px solid var(--control-line);}
+.oh-plan-top{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.oh-plan-name{font-size:20px;font-weight:700;color:var(--ink);}
+.oh-plan-tag{font-size:12px;font-weight:700;padding:3px 10px;border-radius:8px;background:var(--accent);color:var(--accent-ink);}
+.oh-plan-price{font-size:32px;font-weight:700;letter-spacing:-0.025em;color:var(--ink);}
+.oh-plan-desc{font-size:15px;color:var(--body);flex:1;}
+
+.oh-form-card{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:28px;max-width:640px;}
+.oh-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;}
+.oh-field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;min-width:0;}
+.oh-field-full{grid-column:1/-1;}
+.oh-label{font-size:14px;font-weight:500;color:var(--ink);}
+.oh-form-confirm{margin-top:12px;font-size:14px;font-weight:500;color:var(--accent);min-height:22px;}
+
+.oh-faq-list{border-top:1px solid var(--rule);}
+.oh-faq-item{border-bottom:1px solid var(--rule);}
+.oh-faq-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 4px;border:0;background:transparent;color:var(--ink);font-size:17px;font-weight:700;text-align:left;cursor:pointer;}
+.oh-faq-btn:hover{color:var(--accent);}
+.oh-faq-icon{flex-shrink:0;width:24px;height:24px;border-radius:50%;border:1px solid var(--control-line);display:inline-flex;align-items:center;justify-content:center;font-size:16px;font-weight:500;color:var(--ink);}
+.oh-faq-panel{padding:0 4px 18px;font-size:15px;color:var(--body);max-width:68ch;}
+.oh-faq-panel[hidden]{display:none;}
+
+.oh-quote-box{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:36px 32px;}
+.oh-quote-cite{margin-top:16px;font-size:14px;font-weight:500;color:var(--muted);}
+
+#oh-footer{background:var(--footer-bg);color:var(--on-dark);padding:56px 0 40px;min-height:360px;}
+.oh-footer-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;padding-bottom:44px;border-bottom:1px solid color-mix(in srgb,var(--on-dark-line) 45%,transparent);}
+.oh-footer-primary{display:flex;flex-direction:column;gap:16px;}
+.oh-footer-primary a{font-size:20px;font-weight:500;color:var(--on-dark);display:inline-block;}
+.oh-footer-primary a:hover{text-decoration:underline;}
+.oh-footer-secondary{display:flex;flex-direction:column;gap:10px;}
+.oh-footer-secondary a{font-size:14px;font-weight:400;color:var(--on-dark-muted);display:inline-block;}
+.oh-footer-secondary a:hover{color:var(--on-dark);text-decoration:underline;}
+
+.oh-footer-bottom{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding-top:28px;}
+.oh-footer-controls{display:flex;flex-wrap:wrap;align-items:center;gap:14px;}
+.oh-appearance-group{display:inline-flex;align-items:center;gap:6px;padding:3px;border-radius:9999px;border:1px solid var(--on-dark-line);background:transparent;}
+.oh .oh-app-btn{border:0;border-radius:9999px;background:transparent;color:var(--on-dark);padding:6px 14px;font-size:13px;font-weight:500;cursor:pointer;}
+.oh .oh-app-btn[aria-checked="true"]{background:var(--on-dark);color:var(--footer-bg);font-weight:700;}
+.oh-legal{font-size:13px;font-weight:400;color:var(--on-dark-muted);}
+
+@media (max-width:1099px){
+  .oh-car-card{flex:0 0 calc((100% - 16px) / 2);width:calc((100% - 16px) / 2);}
+}
+
+@media (max-width:999px){
+  .oh blockquote,.oh blockquote p{font-size:24px;}
+}
+
+@media (max-width:899px){
+  .oh-nav{display:none;}
+  .oh .oh-menu-toggle{display:inline-flex;}
+  .oh-stack{gap:12px;}
+  .oh-lead-grid{grid-template-columns:minmax(0,1fr);gap:12px;}
+  .oh-tile-lead{min-height:270px;}
+  .oh-shop-tile{min-height:360px;}
+  .oh-pair{grid-template-columns:minmax(0,1fr);gap:12px;}
+  .oh-tile-square{aspect-ratio:auto;min-height:320px;}
+  .oh-tile-wide{min-height:300px;}
+  .oh-band{grid-template-columns:minmax(0,1fr);gap:24px;padding:32px 20px;}
+  .oh-band-h2{font-size:28px;max-width:none;}
+  .oh-band-plum-h2{font-size:36px;}
+  .oh-rust-grid{grid-template-columns:minmax(0,1fr);gap:24px;}
+  .oh-band-rust{padding:36px 20px;}
+  .oh-rust-h2{font-size:28px;}
+  .oh-stats-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .oh-features-grid,.oh-pricing-grid{grid-template-columns:minmax(0,1fr);}
+  .oh-form-grid{grid-template-columns:minmax(0,1fr);}
+  .oh-footer-top{grid-template-columns:minmax(0,1fr);gap:28px;}
+}
+
+@media (max-width:639px){
+  .oh-lead-h1,.oh-shop-cta{font-size:22px;}
+  .oh-tile-title{font-size:20px;}
+  .oh-tile-body{padding:72px 18px 18px;}
+  .oh-tile-has-btn .oh-tile-body{padding-right:70px;}
+  .oh-band,.oh-band-rust{border-radius:0;margin-inline:-16px;padding:32px 16px;}
+  .oh-car-track{gap:0;}
+  .oh-car-card{flex:0 0 100%;width:100%;}
+  .oh-obj-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;}
+  .oh-plum-panel{padding:20px 16px 64px;}
+  .oh-stats-grid{grid-template-columns:minmax(0,1fr);}
+  .oh-stat-val{font-size:34px;}
+  .oh-quote-box{padding:24px 20px;}
+}
+</style>
+</head>
+<body class="oh">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header id="oh-header">
+  <div class="oh-wrap oh-hdr-inner">
+    <a class="oh-brand" href="#">
+      <span class="oh-brand-mark" aria-hidden="true">
+        <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
+          <path d="M14 3v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M5 12c0-4.2 4-6.5 9-6.5s9 2.3 9 6.5H5z" fill="currentColor"/>
+          <path d="M9 7.8L19 11.8M19 7.8L9 11.8" stroke="var(--canvas)" stroke-width="1.2" stroke-linecap="round"/>
+          <path d="M7.5 13h13v3.5c0 4.6-2.9 7.5-6.5 8.5-3.6-1-6.5-3.9-6.5-8.5V13z" fill="currentColor" opacity="0.88"/>
+        </svg>
+      </span>
+      <span>Oakhollow</span>
+    </a>
+
+    <nav class="oh-nav" aria-label="Primary">
+      <ul class="oh-nav-list">
+        <li><a class="oh-nav-link" href="#story-mosaic">Journal</a></li>
+        <li><a class="oh-nav-link" href="#oh-skeleton">Careers</a></li>
+        <li><a class="oh-nav-link" href="#oh-second-mosaic">Press room</a></li>
+        <li>
+          <button type="button" class="oh-nav-trigger" id="oh-about-trigger" data-dropdown="about" aria-expanded="false" aria-controls="oh-flyout-about">
+            <span>About us</span>
+            <svg class="oh-nav-chev" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="oh-flyout" id="oh-flyout-about" hidden>
+      <ul class="oh-flyout-grid">
+        <li>
+          <a class="oh-flyout-link" href="#oh-skeleton">
+            <span class="oh-flyout-title">Our workshop</span>
+            <span class="oh-flyout-desc">How timber and cloth pieces come together (sample)</span>
+          </a>
+        </li>
+        <li>
+          <a class="oh-flyout-link" href="#oh-skeleton">
+            <span class="oh-flyout-title">Material notes</span>
+            <span class="oh-flyout-desc">Reclaimed pine, washed linen and solid hardware</span>
+          </a>
+        </li>
+        <li>
+          <a class="oh-flyout-link" href="#oh-skeleton">
+            <span class="oh-flyout-title">Repair guides</span>
+            <span class="oh-flyout-desc">Spare pegs, hinges and care charts for older sets</span>
+          </a>
+        </li>
+        <li>
+          <a class="oh-flyout-link" href="#oh-lead">
+            <span class="oh-flyout-title">Local studios</span>
+            <span class="oh-flyout-desc">Neighborhood showrooms and room planning desks</span>
+          </a>
+        </li>
+        <li>
+          <a class="oh-flyout-link" href="#oh-skeleton">
+            <span class="oh-flyout-title">Annual ledger</span>
+            <span class="oh-flyout-desc">Timber stewardship and workshop safety notes (sample)</span>
+          </a>
+        </li>
+        <li>
+          <a class="oh-flyout-link" href="#oh-second-mosaic">
+            <span class="oh-flyout-title">Community grants</span>
+            <span class="oh-flyout-desc">Furnishing neighborhood libraries and shared halls</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <button type="button" class="oh-round-btn oh-round-outline oh-menu-toggle" id="oh-menu-toggle" aria-expanded="false" aria-controls="oh-mobile-menu" aria-label="Open navigation menu">
+      <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M3 5.5h14M3 10h14M3 14.5h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<div id="oh-mobile-menu" role="dialog" aria-modal="true" aria-label="Site navigation" hidden>
+  <div class="oh-mmenu-top">
+    <a class="oh-brand" href="#">
+      <span class="oh-brand-mark" aria-hidden="true">
+        <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
+          <path d="M14 3v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M5 12c0-4.2 4-6.5 9-6.5s9 2.3 9 6.5H5z" fill="currentColor"/>
+          <path d="M9 7.8L19 11.8M19 7.8L9 11.8" stroke="var(--canvas)" stroke-width="1.2" stroke-linecap="round"/>
+          <path d="M7.5 13h13v3.5c0 4.6-2.9 7.5-6.5 8.5-3.6-1-6.5-3.9-6.5-8.5V13z" fill="currentColor" opacity="0.88"/>
+        </svg>
+      </span>
+      <span>Oakhollow</span>
+    </a>
+    <button type="button" class="oh-round-btn oh-round-outline" id="oh-menu-close" aria-label="Close navigation menu">
+      <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+  <nav aria-label="Mobile primary">
+    <ul class="oh-mmenu-list">
+      <li><a class="oh-mmenu-link" href="#story-mosaic">Journal</a></li>
+      <li><a class="oh-mmenu-link" href="#oh-skeleton">Careers</a></li>
+      <li><a class="oh-mmenu-link" href="#oh-second-mosaic">Press room</a></li>
+    </ul>
+    <p class="oh-mmenu-heading">About us</p>
+    <ul class="oh-mmenu-sublist">
+      <li><a class="oh-mmenu-sublink" href="#oh-skeleton"><span class="oh-flyout-title">Our workshop</span><span class="oh-flyout-desc">How timber and cloth pieces come together (sample)</span></a></li>
+      <li><a class="oh-mmenu-sublink" href="#oh-skeleton"><span class="oh-flyout-title">Material notes</span><span class="oh-flyout-desc">Reclaimed pine, washed linen and solid hardware</span></a></li>
+      <li><a class="oh-mmenu-sublink" href="#oh-skeleton"><span class="oh-flyout-title">Repair guides</span><span class="oh-flyout-desc">Spare pegs, hinges and care charts for older sets</span></a></li>
+      <li><a class="oh-mmenu-sublink" href="#oh-lead"><span class="oh-flyout-title">Local studios</span><span class="oh-flyout-desc">Neighborhood showrooms and room planning desks</span></a></li>
+      <li><a class="oh-mmenu-sublink" href="#oh-skeleton"><span class="oh-flyout-title">Annual ledger</span><span class="oh-flyout-desc">Timber stewardship and workshop safety notes (sample)</span></a></li>
+      <li><a class="oh-mmenu-sublink" href="#oh-second-mosaic"><span class="oh-flyout-title">Community grants</span><span class="oh-flyout-desc">Furnishing neighborhood libraries and shared halls</span></a></li>
+    </ul>
+  </nav>
+</div>
+
+<main id="main">
+  <div class="oh-wrap oh-stack">
+    <section id="oh-lead" aria-label="Featured lead story and storefront">
+      <div class="oh-lead-grid">
+        <article class="oh-tile oh-tile-lead oh-tile-scrim oh-tile-has-btn oh-on-dark-scope">
+          <div class="oh-art">
+            <div class="oh-art-drift" id="oh-lead-scene" data-paused="false">
+              <svg viewBox="0 0 800 520" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sample interior scene: wooden shelf wall filled with colorful books, a round wall clock, trailing vines and ceramic vessels">
+                <rect width="800" height="520" fill="var(--art-wood-dark)"/>
+                <rect x="24" y="18" width="236" height="484" fill="var(--art-wood)"/>
+                <rect x="282" y="18" width="236" height="484" fill="var(--art-wood)"/>
+                <rect x="540" y="18" width="236" height="484" fill="var(--art-wood)"/>
+                <rect x="24" y="128" width="752" height="14" fill="var(--art-wood-dark)"/>
+                <rect x="24" y="256" width="752" height="14" fill="var(--art-wood-dark)"/>
+                <rect x="24" y="384" width="752" height="14" fill="var(--art-wood-dark)"/>
+                <circle cx="144" cy="74" r="40" fill="var(--art-cream)"/>
+                <circle cx="144" cy="74" r="34" fill="var(--art-wall)"/>
+                <path d="M144 50v24l16 10" stroke="var(--art-charcoal)" stroke-width="3.5" stroke-linecap="round"/>
+                <rect x="54" y="184" width="18" height="72" rx="2" fill="var(--art-berry)"/>
+                <rect x="76" y="170" width="22" height="86" rx="2" fill="var(--art-cream)"/>
+                <rect x="102" y="192" width="16" height="64" rx="2" fill="var(--art-sage)"/>
+                <rect x="122" y="176" width="20" height="80" rx="2" fill="var(--art-ochre)"/>
+                <rect x="148" y="188" width="18" height="68" rx="2" fill="var(--art-clay)"/>
+                <rect x="174" y="166" width="24" height="90" rx="2" fill="var(--art-slate)"/>
+                <circle cx="396" cy="210" r="32" fill="var(--art-cream)"/>
+                <rect x="378" y="240" width="36" height="16" rx="4" fill="var(--art-stone)"/>
+                <ellipse cx="640" cy="78" rx="34" ry="44" fill="var(--art-cream)"/>
+                <rect x="626" y="32" width="28" height="14" rx="4" fill="var(--art-wall)"/>
+                <circle cx="574" cy="64" r="24" fill="var(--art-moss)"/>
+                <circle cx="596" cy="96" r="20" fill="var(--art-sage)"/>
+                <circle cx="568" cy="116" r="18" fill="var(--art-moss)"/>
+                <rect x="304" y="308" width="18" height="76" rx="2" fill="var(--art-cream)"/>
+                <rect x="326" y="294" width="24" height="90" rx="2" fill="var(--art-clay)"/>
+                <rect x="354" y="314" width="18" height="70" rx="2" fill="var(--art-moss)"/>
+                <rect x="376" y="300" width="22" height="84" rx="2" fill="var(--art-ochre)"/>
+                <rect x="404" y="320" width="20" height="64" rx="2" fill="var(--art-berry)"/>
+                <rect x="430" y="298" width="20" height="86" rx="2" fill="var(--art-slate)"/>
+                <rect x="456" y="312" width="18" height="72" rx="2" fill="var(--art-cream)"/>
+                <rect x="570" y="296" width="110" height="18" rx="3" fill="var(--art-cream)"/>
+                <rect x="580" y="278" width="90" height="18" rx="3" fill="var(--art-clay)"/>
+                <circle cx="712" cy="224" r="26" fill="var(--art-wall)"/>
+                <rect x="698" y="246" width="28" height="10" fill="var(--art-wood-pale)"/>
+              </svg>
+            </div>
+          </div>
+          <div class="oh-tile-body">
+            <span class="oh-eyebrow">The Ridgeline shelf family</span>
+            <h1 class="oh-lead-h1">
+              <a class="oh-tile-link" href="#">
+                <svg class="oh-lead-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Wall shelving built to grow with your books</span>
+              </a>
+            </h1>
+          </div>
+          <button type="button" class="oh-round-btn oh-round-light oh-tile-btn" id="oh-lead-pause" aria-pressed="false" aria-label="Pause scene">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+              <rect x="3.5" y="2.5" width="3" height="11" rx="1"/>
+              <rect x="9.5" y="2.5" width="3" height="11" rx="1"/>
+            </svg>
+          </button>
+        </article>
+
+        <aside class="oh-shop-tile" aria-label="Oakhollow storefront">
+          <a class="oh-shop-main" href="#">
+            <span class="oh-shop-cta">Browse the catalog</span>
+            <span class="oh-round-btn oh-round-ink" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </a>
+          <div class="oh-shop-footer">
+            <button type="button" class="oh-shop-trigger" id="oh-shop-toggle" aria-expanded="false" aria-controls="oh-shop-panel">
+              <span id="oh-shop-label">Shop: Oakhollow Central (sample)</span>
+              <svg class="oh-shop-chev" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M4 10l4-4 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="oh-shop-panel" id="oh-shop-panel" hidden>
+              <ul class="oh-shop-list" aria-label="Choose a sample location">
+                <li><button type="button" class="oh-shop-option" data-shop="Oakhollow Central (sample)" aria-pressed="true">Oakhollow Central (sample)</button></li>
+                <li><button type="button" class="oh-shop-option" data-shop="Oakhollow Westside (sample)" aria-pressed="false">Oakhollow Westside (sample)</button></li>
+                <li><button type="button" class="oh-shop-option" data-shop="Oakhollow Riverfront (sample)" aria-pressed="false">Oakhollow Riverfront (sample)</button></li>
+                <li><button type="button" class="oh-shop-option" data-shop="Oakhollow North Market (sample)" aria-pressed="false">Oakhollow North Market (sample)</button></li>
+              </ul>
+            </div>
+            <p class="sr-only" id="oh-shop-live" aria-live="polite"></p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="story-mosaic" class="oh-stack" aria-label="Editorial stories">
+      <div class="oh-pair">
+        <article class="oh-tile oh-tile-square oh-tile-scrim oh-on-dark-scope">
+          <div class="oh-art">
+            <svg viewBox="0 0 500 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sample interior scene: cozy living room with terracotta sofa, round cushions, framed print and brass floor lamp">
+              <rect width="500" height="500" fill="var(--art-blush)"/>
+              <rect x="0" y="340" width="500" height="160" fill="var(--art-wood-dark)"/>
+              <rect x="380" y="0" width="120" height="340" fill="var(--art-cream)"/>
+              <rect x="348" y="0" width="44" height="340" fill="var(--art-ochre)"/>
+              <rect x="190" y="72" width="84" height="106" rx="4" fill="var(--art-wood)"/>
+              <rect x="200" y="82" width="64" height="86" fill="var(--art-cream)"/>
+              <circle cx="232" cy="122" r="18" fill="var(--art-clay)"/>
+              <rect x="314" y="114" width="6" height="236" fill="var(--art-charcoal)"/>
+              <path d="M292 118c0-16 14-26 26-26s26 10 26 26h-52z" fill="var(--art-moss)"/>
+              <rect x="74" y="232" width="320" height="132" rx="22" fill="var(--art-clay)"/>
+              <rect x="100" y="274" width="268" height="68" rx="14" fill="var(--art-berry)"/>
+              <circle cx="272" cy="296" r="28" fill="var(--art-ochre)"/>
+              <circle cx="196" cy="294" r="26" fill="var(--art-cream)"/>
+              <rect x="44" y="328" width="94" height="12" rx="4" fill="var(--art-wood-pale)"/>
+              <rect x="86" y="340" width="10" height="56" fill="var(--art-wood-dark)"/>
+            </svg>
+          </div>
+          <div class="oh-tile-body">
+            <span class="oh-eyebrow">The Briarwood sofa series</span>
+            <h2 class="oh-tile-title"><a class="oh-tile-link" href="#">Woven cushions for slow Sunday afternoons</a></h2>
+          </div>
+        </article>
+
+        <article class="oh-tile oh-tile-square oh-tile-scrim oh-tile-has-btn oh-on-dark-scope">
+          <div class="oh-art">
+            <svg viewBox="0 0 500 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sample interior scene: top-down bed with sage checked quilt, cream pillows and warm wood frame">
+              <rect width="500" height="500" fill="var(--art-wood-dark)"/>
+              <rect x="48" y="36" width="404" height="428" rx="14" fill="var(--art-cream)"/>
+              <rect x="74" y="58" width="166" height="96" rx="14" fill="var(--art-wall)"/>
+              <rect x="260" y="58" width="166" height="96" rx="14" fill="var(--art-wall-warm)"/>
+              <rect x="60" y="176" width="380" height="276" rx="12" fill="var(--art-sage)"/>
+              <rect x="60" y="220" width="380" height="24" fill="var(--art-moss)" opacity="0.45"/>
+              <rect x="60" y="292" width="380" height="24" fill="var(--art-moss)" opacity="0.45"/>
+              <rect x="60" y="364" width="380" height="24" fill="var(--art-moss)" opacity="0.45"/>
+              <rect x="130" y="176" width="24" height="276" fill="var(--art-moss)" opacity="0.45"/>
+              <rect x="236" y="176" width="24" height="276" fill="var(--art-moss)" opacity="0.45"/>
+              <rect x="342" y="176" width="24" height="276" fill="var(--art-moss)" opacity="0.45"/>
+            </svg>
+          </div>
+          <div class="oh-tile-body">
+            <span class="oh-eyebrow">The Mossbank bedding range</span>
+            <h2 class="oh-tile-title"><a class="oh-tile-link" href="#">Crisp woven sheets for deeper rest</a></h2>
+          </div>
+          <button type="button" class="oh-round-btn oh-round-light oh-tile-btn oh-demo-play" aria-pressed="false" aria-label="Play story preview: Mossbank bedding">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+              <path d="M4.5 2.5l9 5.5-9 5.5V2.5z"/>
+            </svg>
+          </button>
+        </article>
+      </div>
+
+      <section class="oh-band oh-band-cranberry oh-on-dark-scope" aria-label="Winter table feature">
+        <div class="oh-band-copy">
+          <span class="oh-band-eyebrow">Winter table notes</span>
+          <h2 class="oh-band-h2">Set a warm<br/>table for winter<br/>evenings</h2>
+        </div>
+        <div class="oh-inset">
+          <svg viewBox="0 0 640 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sample interior scene: sunlit dining table with striped linen cloth, hanging round winter baubles and wooden chairs">
+            <rect width="640" height="400" fill="var(--art-wall)"/>
+            <rect x="440" y="28" width="140" height="220" rx="4" fill="var(--art-cream)"/>
+            <rect x="0" y="290" width="640" height="110" fill="var(--art-wood-pale)"/>
+            <line x1="140" y1="0" x2="140" y2="86" stroke="var(--art-charcoal)" stroke-width="2"/>
+            <circle cx="140" cy="96" r="16" fill="var(--art-berry)"/>
+            <line x1="246" y1="0" x2="246" y2="62" stroke="var(--art-charcoal)" stroke-width="2"/>
+            <circle cx="246" cy="74" r="14" fill="var(--art-ochre)"/>
+            <line x1="354" y1="0" x2="354" y2="96" stroke="var(--art-charcoal)" stroke-width="2"/>
+            <circle cx="354" cy="110" r="18" fill="var(--art-moss)"/>
+            <line x1="472" y1="0" x2="472" y2="70" stroke="var(--art-charcoal)" stroke-width="2"/>
+            <circle cx="472" cy="82" r="13" fill="var(--art-berry)"/>
+            <polygon points="350,150 404,256 296,256" fill="var(--art-moss)"/>
+            <rect x="342" y="256" width="16" height="34" fill="var(--art-wood-dark)"/>
+            <rect x="92" y="246" width="410" height="110" rx="8" fill="var(--art-cream)"/>
+            <rect x="92" y="246" width="410" height="24" rx="4" fill="var(--art-berry)"/>
+            <rect x="136" y="270" width="32" height="86" fill="var(--art-clay)" opacity="0.5"/>
+            <rect x="220" y="270" width="32" height="86" fill="var(--art-clay)" opacity="0.5"/>
+            <rect x="304" y="270" width="32" height="86" fill="var(--art-clay)" opacity="0.5"/>
+            <rect x="388" y="270" width="32" height="86" fill="var(--art-clay)" opacity="0.5"/>
+            <rect x="52" y="220" width="36" height="128" rx="6" fill="var(--art-wood)"/>
+            <rect x="514" y="220" width="36" height="128" rx="6" fill="var(--art-wood)"/>
+          </svg>
+          <button type="button" class="oh-round-btn oh-round-ink oh-tile-btn oh-demo-play" aria-pressed="false" aria-label="Play winter table preview">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+              <path d="M4.5 2.5l9 5.5-9 5.5V2.5z"/>
+            </svg>
+          </button>
+        </div>
+      </section>
+
+      <div class="oh-pair">
+        <article class="oh-tile oh-tile-square oh-tile-scrim oh-on-dark-scope">
+          <div class="oh-art">
+            <svg viewBox="0 0 500 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sample exterior scene: light plaster gallery hall with horizontal clerestory windows and dark entry arcade">
+              <rect width="500" height="500" fill="var(--art-stone)"/>
+              <rect x="44" y="54" width="412" height="252" fill="var(--art-cream)"/>
+              <rect x="184" y="104" width="132" height="46" rx="6" fill="var(--art-moss)"/>
+              <circle cx="250" cy="127" r="12" fill="var(--art-cream)"/>
+              <rect x="132" y="206" width="110" height="32" fill="var(--art-ochre)"/>
+              <rect x="256" y="206" width="110" height="32" fill="var(--art-ochre)"/>
+              <rect x="44" y="306" width="412" height="194" fill="var(--art-charcoal)"/>
+              <rect x="96" y="330" width="112" height="118" fill="var(--art-wood-pale)"/>
+              <rect x="292" y="330" width="112" height="118" fill="var(--art-wood)"/>
+            </svg>
+          </div>
+          <div class="oh-tile-body">
+            <span class="oh-eyebrow">Oakhollow archive hall</span>
+            <h2 class="oh-tile-title"><a class="oh-tile-link" href="#">Inside our timber and textile archive hall</a></h2>
+          </div>
+        </article>
+
+        <article class="oh-tile oh-tile-square oh-tile-scrim oh-on-dark-scope">
+          <div class="oh-art">
+            <svg viewBox="0 0 500 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sample interior scene: candlelit wooden dining table with brass taper holder, ceramic bowls and autumn fruit">
+              <rect width="500" height="500" fill="var(--art-plum)"/>
+              <rect x="0" y="280" width="500" height="220" fill="var(--art-berry)"/>
+              <rect x="114" y="136" width="22" height="164" rx="4" fill="var(--art-cream)"/>
+              <ellipse cx="125" cy="112" rx="11" ry="22" fill="var(--art-ochre)"/>
+              <rect x="98" y="294" width="54" height="16" rx="4" fill="var(--art-wood-pale)"/>
+              <path d="M210 250h136c0 44-28 74-68 74s-68-30-68-74z" fill="var(--art-ochre)"/>
+              <ellipse cx="278" cy="250" rx="68" ry="16" fill="var(--art-cream)"/>
+              <circle cx="386" cy="216" r="38" fill="var(--art-clay)"/>
+              <circle cx="424" cy="242" r="28" fill="var(--art-sage)"/>
+            </svg>
+          </div>
+          <div class="oh-tile-body">
+            <span class="oh-eyebrow">Hearthstone table series</span>
+            <h2 class="oh-tile-title"><a class="oh-tile-link" href="#">Warm candlelight for shorter days</a></h2>
+          </div>
+        </article>
+      </div>
+
+      <article class="oh-tile oh-tile-wide oh-tile-scrim oh-on-dark-scope">
+        <div class="oh-art">
+          <svg viewBox="0 0 1000 480" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sample interior scene: bright kitchen counter with open timber shelves, glass spice jars, potted herbs and tall pantry cabinets">
+            <rect width="1000" height="480" fill="var(--art-wall)"/>
+            <rect x="160" y="16" width="380" height="48" fill="var(--art-cream)"/>
+            <rect x="690" y="24" width="210" height="420" rx="4" fill="var(--art-cream)"/>
+            <line x1="795" y1="24" x2="795" y2="444" stroke="var(--art-stone)" stroke-width="3"/>
+            <rect x="720" y="166" width="54" height="72" rx="4" fill="var(--art-charcoal)"/>
+            <rect x="176" y="138" width="460" height="14" fill="var(--art-wood)"/>
+            <rect x="200" y="92" width="32" height="46" rx="4" fill="var(--art-wood-pale)"/>
+            <rect x="244" y="102" width="24" height="36" rx="4" fill="var(--art-cream)"/>
+            <rect x="280" y="88" width="36" height="50" rx="6" fill="var(--art-clay)"/>
+            <rect x="330" y="98" width="28" height="40" rx="4" fill="var(--art-sage)"/>
+            <rect x="374" y="82" width="42" height="56" rx="6" fill="var(--art-wood-dark)"/>
+            <rect x="434" y="96" width="26" height="42" rx="4" fill="var(--art-ochre)"/>
+            <rect x="474" y="104" width="32" height="34" rx="4" fill="var(--art-cream)"/>
+            <rect x="36" y="256" width="620" height="20" fill="var(--art-wood-pale)"/>
+            <rect x="36" y="276" width="620" height="204" fill="var(--art-stone)"/>
+            <line x1="190" y1="276" x2="190" y2="480" stroke="var(--art-wall-warm)" stroke-width="3"/>
+            <line x1="346" y1="276" x2="346" y2="480" stroke="var(--art-wall-warm)" stroke-width="3"/>
+            <line x1="502" y1="276" x2="502" y2="480" stroke="var(--art-wall-warm)" stroke-width="3"/>
+            <circle cx="132" cy="198" r="34" fill="var(--art-moss)"/>
+            <circle cx="164" cy="178" r="24" fill="var(--art-sage)"/>
+            <rect x="114" y="216" width="36" height="40" rx="4" fill="var(--art-clay)"/>
+            <rect x="424" y="204" width="64" height="52" rx="6" fill="var(--art-slate)"/>
+            <circle cx="548" cy="212" r="28" fill="var(--art-charcoal)"/>
+            <circle cx="548" cy="176" r="22" fill="var(--art-moss)"/>
+          </svg>
+        </div>
+        <div class="oh-tile-body">
+          <span class="oh-eyebrow">The Kettle Hill kitchen</span>
+          <h2 class="oh-tile-title"><a class="oh-tile-link" href="#">Deep drawers keep every pot within reach</a></h2>
+        </div>
+      </article>
+      <div class="oh-pair">
+        <article class="oh-tile oh-tile-square oh-tile-scrim oh-on-dark-scope">
+          <div class="oh-art">
+            <svg viewBox="0 0 500 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sample interior scene: sunlit game corner with a moss green steel cabinet, pale wood lounge chair and side stool">
+              <rect width="500" height="500" fill="var(--art-wall-warm)"/>
+              <rect x="0" y="360" width="500" height="140" fill="var(--art-wood-pale)"/>
+              <rect x="66" y="102" width="154" height="232" rx="6" fill="var(--art-moss)"/>
+              <line x1="143" y1="102" x2="143" y2="334" stroke="var(--art-charcoal)" stroke-width="2" opacity="0.35"/>
+              <rect x="82" y="334" width="10" height="36" fill="var(--art-moss)"/>
+              <rect x="194" y="334" width="10" height="36" fill="var(--art-moss)"/>
+              <circle cx="106" cy="74" r="24" fill="var(--art-cream)"/>
+              <rect x="160" y="64" width="44" height="38" rx="6" fill="var(--art-clay)"/>
+              <path d="M276 168l66 138h68" stroke="var(--art-wood-dark)" stroke-width="14" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M262 178l64 128h82" stroke="var(--art-cream)" stroke-width="22" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="110" y="372" width="76" height="16" rx="8" fill="var(--art-moss)"/>
+              <rect x="136" y="388" width="24" height="58" fill="var(--art-moss)"/>
+            </svg>
+          </div>
+          <div class="oh-tile-body">
+            <span class="oh-eyebrow">Corner lounge setup</span>
+            <h2 class="oh-tile-title"><a class="oh-tile-link" href="#">Compact seating for evening board games</a></h2>
+          </div>
+        </article>
+
+        <article class="oh-tile oh-tile-square oh-tile-scrim oh-on-dark-scope">
+          <div class="oh-art">
+            <svg viewBox="0 0 500 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sample interior scene: cozy bed dressed in washed sage linen duvet with stacked cream and sage pillows">
+              <rect width="500" height="500" fill="var(--art-wall)"/>
+              <rect x="34" y="26" width="432" height="168" rx="14" fill="var(--art-cream)"/>
+              <rect x="52" y="42" width="190" height="114" rx="16" fill="var(--art-sage)"/>
+              <rect x="258" y="42" width="190" height="114" rx="16" fill="var(--art-stone)"/>
+              <path d="M0 184c120-26 360-20 500 10v306H0V184z" fill="var(--art-sage)"/>
+              <path d="M0 248c140-18 320 22 500-8v260H0V248z" fill="var(--art-moss)" opacity="0.28"/>
+              <path d="M84 218c90 12 220-16 340 12" stroke="var(--art-cream)" stroke-width="4" fill="none" opacity="0.45"/>
+            </svg>
+          </div>
+          <div class="oh-tile-body">
+            <span class="oh-eyebrow">Washed cotton weave</span>
+            <h2 class="oh-tile-title"><a class="oh-tile-link" href="#">Soft sage layers spun from spare yarn</a></h2>
+          </div>
+        </article>
+      </div>
+
+      <article class="oh-tile oh-tile-wide oh-tile-scrim oh-on-dark-scope">
+        <div class="oh-art">
+          <svg viewBox="0 0 1000 480" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sample interior scene: playful kids bedroom with triangular fabric bunting, pine bunk bed, ladder and small study table">
+            <rect width="1000" height="480" fill="var(--art-wall)"/>
+            <rect x="0" y="360" width="1000" height="120" fill="var(--art-wood-pale)"/>
+            <path d="M40 30 Q500 124 960 28" stroke="var(--art-charcoal)" stroke-width="3" fill="none"/>
+            <polygon points="150,50 194,58 168,104" fill="var(--art-clay)"/>
+            <polygon points="260,68 308,74 282,120" fill="var(--art-ochre)"/>
+            <polygon points="384,80 432,82 406,128" fill="var(--art-sage)"/>
+            <polygon points="510,82 558,78 534,126" fill="var(--art-berry)"/>
+            <polygon points="636,72 684,66 660,114" fill="var(--art-moss)"/>
+            <polygon points="758,56 804,48 784,96" fill="var(--art-ochre)"/>
+            <rect x="520" y="132" width="320" height="248" fill="none" stroke="var(--art-wood)" stroke-width="14"/>
+            <rect x="520" y="238" width="320" height="14" fill="var(--art-wood)"/>
+            <rect x="532" y="198" width="296" height="40" rx="6" fill="var(--art-cream)"/>
+            <rect x="532" y="328" width="296" height="40" rx="6" fill="var(--art-sage)"/>
+            <rect x="758" y="132" width="10" height="248" fill="var(--art-wood-dark)"/>
+            <rect x="802" y="132" width="10" height="248" fill="var(--art-wood-dark)"/>
+            <rect x="758" y="182" width="54" height="8" fill="var(--art-wood-dark)"/>
+            <rect x="758" y="232" width="54" height="8" fill="var(--art-wood-dark)"/>
+            <rect x="758" y="282" width="54" height="8" fill="var(--art-wood-dark)"/>
+            <rect x="758" y="332" width="54" height="8" fill="var(--art-wood-dark)"/>
+            <rect x="92" y="246" width="174" height="130" rx="6" fill="var(--art-slate)"/>
+            <rect x="104" y="274" width="150" height="72" rx="6" fill="var(--art-blush)"/>
+            <rect x="304" y="302" width="174" height="16" rx="4" fill="var(--art-wood)"/>
+            <rect x="322" y="318" width="12" height="62" fill="var(--art-wood-dark)"/>
+            <rect x="448" y="318" width="12" height="62" fill="var(--art-wood-dark)"/>
+            <circle cx="388" cy="272" r="24" fill="var(--art-clay)"/>
+          </svg>
+        </div>
+        <div class="oh-tile-body">
+          <span class="oh-eyebrow">The Pebblecreek playroom range</span>
+          <h2 class="oh-tile-title"><a class="oh-tile-link" href="#">Sturdy bunk frames for shared bedrooms</a></h2>
+        </div>
+      </article>
+
+      <div class="oh-pair">
+        <article class="oh-tile oh-tile-square oh-tile-scrim oh-tile-has-btn oh-on-dark-scope">
+          <div class="oh-art">
+            <svg viewBox="0 0 500 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sample scene: woven moss green canvas carryall tote bag resting centered on a light stone plinth">
+              <rect width="500" height="500" fill="var(--art-stone)"/>
+              <rect x="72" y="346" width="356" height="154" fill="var(--art-wall)"/>
+              <rect x="72" y="346" width="356" height="16" fill="var(--art-cream)"/>
+              <polygon points="108,166 392,166 364,346 136,346" fill="var(--art-moss)"/>
+              <path d="M188 166c0-54 124-54 124 0" stroke="var(--art-cream)" stroke-width="14" fill="none"/>
+              <path d="M168 166v154M332 166v154" stroke="var(--art-cream)" stroke-width="10" opacity="0.8"/>
+              <rect x="208" y="226" width="84" height="18" rx="4" fill="var(--art-ochre)"/>
+            </svg>
+          </div>
+          <div class="oh-tile-body">
+            <span class="oh-eyebrow">The Fieldstone carryall</span>
+            <h2 class="oh-tile-title"><a class="oh-tile-link" href="#">How our heavy canvas carryall gets woven</a></h2>
+          </div>
+          <button type="button" class="oh-round-btn oh-round-light oh-tile-btn oh-demo-play" aria-pressed="false" aria-label="Play story preview: Fieldstone carryall">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+              <path d="M4.5 2.5l9 5.5-9 5.5V2.5z"/>
+            </svg>
+          </button>
+        </article>
+
+        <article class="oh-tile oh-tile-square oh-tile-scrim oh-on-dark-scope">
+          <div class="oh-art">
+            <svg viewBox="0 0 500 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sample street scene: quiet brick sidewalk with a slatted wooden bench holding a moss canvas tote under a leafy tree">
+              <rect width="500" height="500" fill="var(--art-wall-warm)"/>
+              <rect x="0" y="344" width="500" height="156" fill="var(--art-stone)"/>
+              <rect x="28" y="42" width="210" height="302" fill="var(--art-clay)"/>
+              <rect x="64" y="88" width="56" height="84" fill="var(--art-cream)"/>
+              <rect x="146" y="88" width="56" height="84" fill="var(--art-cream)"/>
+              <circle cx="386" cy="112" r="76" fill="var(--art-sage)"/>
+              <circle cx="436" cy="144" r="56" fill="var(--art-moss)"/>
+              <rect x="380" y="176" width="16" height="168" fill="var(--art-wood-dark)"/>
+              <rect x="116" y="294" width="248" height="18" rx="4" fill="var(--art-wood)"/>
+              <rect x="116" y="266" width="248" height="14" rx="4" fill="var(--art-wood-pale)"/>
+              <rect x="136" y="312" width="12" height="48" fill="var(--art-charcoal)"/>
+              <rect x="332" y="312" width="12" height="48" fill="var(--art-charcoal)"/>
+              <polygon points="184,218 292,218 280,294 196,294" fill="var(--art-moss)"/>
+              <path d="M214 218c0-28 48-28 48 0" stroke="var(--art-cream)" stroke-width="8" fill="none"/>
+            </svg>
+          </div>
+          <div class="oh-tile-body">
+            <span class="oh-eyebrow">Updated woven straps</span>
+            <h2 class="oh-tile-title"><a class="oh-tile-link" href="#">Built to haul groceries and laundry home</a></h2>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="oh-sage-section" class="oh-stack" aria-label="Wardrobe storage and gallery stories">
+      <div class="oh-band oh-band-sage">
+        <div class="oh-band-copy">
+          <span class="oh-band-eyebrow">The Alderbrook closet system</span>
+          <h2 class="oh-band-h2">Calm order for daily clothes</h2>
+        </div>
+        <div class="oh-inset">
+          <svg viewBox="0 0 640 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sample interior scene: open pine clothes rail with hanging linen shirts, low wooden dresser and sunlit window">
+            <rect width="640" height="400" fill="var(--art-wall)"/>
+            <rect x="0" y="310" width="640" height="90" fill="var(--art-wood-pale)"/>
+            <rect x="520" y="24" width="102" height="214" fill="var(--art-cream)"/>
+            <rect x="64" y="48" width="12" height="270" fill="var(--art-wood)"/>
+            <rect x="268" y="48" width="12" height="270" fill="var(--art-wood)"/>
+            <rect x="64" y="48" width="216" height="12" fill="var(--art-wood)"/>
+            <rect x="76" y="84" width="192" height="6" fill="var(--art-charcoal)"/>
+            <rect x="92" y="90" width="28" height="132" rx="4" fill="var(--art-cream)"/>
+            <rect x="126" y="90" width="30" height="118" rx="4" fill="var(--art-sage)"/>
+            <rect x="162" y="90" width="26" height="138" rx="4" fill="var(--art-ochre)"/>
+            <rect x="194" y="90" width="28" height="126" rx="4" fill="var(--art-clay)"/>
+            <rect x="228" y="90" width="28" height="142" rx="4" fill="var(--art-stone)"/>
+            <rect x="64" y="264" width="216" height="10" fill="var(--art-wood)"/>
+            <rect x="336" y="206" width="160" height="114" rx="4" fill="var(--art-wood-pale)"/>
+            <line x1="336" y1="262" x2="496" y2="262" stroke="var(--art-wood-dark)" stroke-width="3"/>
+            <rect x="404" y="232" width="24" height="6" rx="3" fill="var(--art-wood-dark)"/>
+            <rect x="404" y="286" width="24" height="6" rx="3" fill="var(--art-wood-dark)"/>
+            <circle cx="380" cy="176" r="24" fill="var(--art-moss)"/>
+            <rect x="366" y="186" width="28" height="20" rx="3" fill="var(--art-cream)"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="oh-pair">
+        <article class="oh-tile oh-tile-square oh-tile-scrim oh-on-dark-scope">
+          <div class="oh-art">
+            <svg viewBox="0 0 500 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sample exterior scene: sturdy cardboard moving boxes stacked neatly on a paved sidewalk beside a potted shrub and wooden stool">
+              <rect width="500" height="500" fill="var(--art-stone)"/>
+              <rect x="0" y="328" width="500" height="172" fill="var(--art-slate)"/>
+              <rect x="40" y="24" width="420" height="280" fill="var(--art-wall)"/>
+              <circle cx="96" cy="144" r="54" fill="var(--art-moss)"/>
+              <circle cx="142" cy="166" r="38" fill="var(--art-sage)"/>
+              <rect x="90" y="192" width="14" height="136" fill="var(--art-wood-dark)"/>
+              <rect x="128" y="244" width="136" height="118" rx="4" fill="var(--art-wood-pale)"/>
+              <rect x="150" y="156" width="110" height="88" rx="4" fill="var(--art-wood)"/>
+              <line x1="128" y1="302" x2="264" y2="302" stroke="var(--art-wood-dark)" stroke-width="4"/>
+              <rect x="288" y="266" width="114" height="96" rx="4" fill="var(--art-ochre)"/>
+              <rect x="336" y="220" width="84" height="14" rx="4" fill="var(--art-cream)"/>
+              <rect x="348" y="234" width="10" height="32" fill="var(--art-wood-dark)"/>
+              <rect x="398" y="234" width="10" height="32" fill="var(--art-wood-dark)"/>
+            </svg>
+          </div>
+          <div class="oh-tile-body">
+            <span class="oh-eyebrow">Flat-pack moving kit</span>
+            <h2 class="oh-tile-title"><a class="oh-tile-link" href="#">Sturdy boxes for your next apartment move</a></h2>
+          </div>
+        </article>
+
+        <article class="oh-tile oh-tile-square oh-tile-scrim oh-on-dark-scope">
+          <div class="oh-art">
+            <svg viewBox="0 0 500 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sample gallery room: plaster walls with white display pedestals holding ceramic vessels, a terracotta arch and woven tapestry">
+              <rect width="500" height="500" fill="var(--art-wall-warm)"/>
+              <rect x="0" y="340" width="500" height="160" fill="var(--art-stone)"/>
+              <rect x="352" y="54" width="66" height="168" rx="4" fill="var(--art-moss)"/>
+              <line x1="340" y1="54" x2="430" y2="54" stroke="var(--art-charcoal)" stroke-width="5"/>
+              <rect x="66" y="264" width="96" height="132" fill="var(--art-cream)"/>
+              <rect x="200" y="242" width="106" height="164" fill="var(--art-cream)"/>
+              <rect x="344" y="274" width="96" height="122" fill="var(--art-cream)"/>
+              <ellipse cx="114" cy="236" rx="22" ry="30" fill="var(--art-slate)"/>
+              <path d="M224 242v-36a29 29 0 0 1 58 0v36h-16v-36a13 13 0 0 0-26 0v36h-16z" fill="var(--art-clay)"/>
+              <circle cx="392" cy="248" r="24" fill="var(--art-ochre)"/>
+            </svg>
+          </div>
+          <div class="oh-tile-body">
+            <span class="oh-eyebrow">Small-batch ceramic edit</span>
+            <h2 class="oh-tile-title"><a class="oh-tile-link" href="#">Sculpted vessels made for quiet shelves</a></h2>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="oh-carousel-section" class="oh-band-rust oh-on-dark-scope" aria-label="Study and play corner ideas">
+      <div class="oh-rust-grid">
+        <div class="oh-rust-copy">
+          <h2 class="oh-rust-h2">Study corners that fit</h2>
+          <p class="oh-rust-p">Practical desk lamps, cork pinboards and rolling bins that help small rooms shift from homework to weekend hobbies (sample).</p>
+        </div>
+        <div class="oh-car-wrap">
+          <div class="oh-car-viewport" id="oh-car-viewport">
+            <ul class="oh-car-track" id="oh-car-track">
+              <li class="oh-car-card">
+                <a href="#">
+                  <div class="oh-car-art">
+                    <svg viewBox="0 0 320 240" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sample desk corner with framed pinboard prints, shelf cubbies and study chair">
+                      <rect width="320" height="240" fill="var(--art-wall)"/>
+                      <rect x="24" y="22" width="44" height="54" rx="2" fill="var(--art-cream)"/>
+                      <circle cx="46" cy="48" r="14" fill="var(--art-berry)"/>
+                      <rect x="78" y="22" width="44" height="54" rx="2" fill="var(--art-cream)"/>
+                      <circle cx="100" cy="48" r="14" fill="var(--art-sage)"/>
+                      <rect x="132" y="22" width="44" height="54" rx="2" fill="var(--art-cream)"/>
+                      <circle cx="154" cy="48" r="14" fill="var(--art-ochre)"/>
+                      <rect x="18" y="138" width="284" height="14" fill="var(--art-wood)"/>
+                      <rect x="18" y="152" width="110" height="72" fill="var(--art-wood-pale)"/>
+                      <rect x="180" y="152" width="14" height="72" fill="var(--art-wood-dark)"/>
+                      <rect x="278" y="152" width="14" height="72" fill="var(--art-wood-dark)"/>
+                      <circle cx="242" cy="112" r="20" fill="var(--art-clay)"/>
+                    </svg>
+                  </div>
+                  <div class="oh-car-cap">
+                    <span class="oh-car-eyebrow">Study desk essentials</span>
+                    <span class="oh-car-title">Pinboards and drawers for tidy desks</span>
+                  </div>
+                </a>
+              </li>
+              <li class="oh-car-card">
+                <a href="#">
+                  <div class="oh-car-art">
+                    <svg viewBox="0 0 320 240" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sample dorm corner with sunlit window, rolling steel cart and task lamp">
+                      <rect width="320" height="240" fill="var(--art-wall-warm)"/>
+                      <rect x="92" y="16" width="120" height="122" fill="var(--art-cream)"/>
+                      <rect x="44" y="144" width="232" height="14" fill="var(--art-wood-pale)"/>
+                      <rect x="52" y="158" width="70" height="66" rx="4" fill="var(--art-sage)"/>
+                      <circle cx="64" cy="228" r="6" fill="var(--art-charcoal)"/>
+                      <circle cx="110" cy="228" r="6" fill="var(--art-charcoal)"/>
+                      <rect x="210" y="106" width="12" height="38" fill="var(--art-charcoal)"/>
+                      <path d="M196 106h40l-8-22h-24z" fill="var(--art-clay)"/>
+                      <rect x="148" y="172" width="66" height="52" rx="10" fill="var(--art-wood)"/>
+                    </svg>
+                  </div>
+                  <div class="oh-car-cap">
+                    <span class="oh-car-eyebrow">Small room corners</span>
+                    <span class="oh-car-title">Rolling carts that tuck under tables</span>
+                  </div>
+                </a>
+              </li>
+              <li class="oh-car-card">
+                <a href="#">
+                  <div class="oh-car-art">
+                    <svg viewBox="0 0 320 240" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sample craft table with wooden pegboard, clear storage jars and sketchbook">
+                      <rect width="320" height="240" fill="var(--art-wall)"/>
+                      <rect x="34" y="24" width="252" height="96" rx="6" fill="var(--art-wood-pale)"/>
+                      <circle cx="72" cy="52" r="5" fill="var(--art-wood-dark)"/>
+                      <circle cx="122" cy="52" r="5" fill="var(--art-wood-dark)"/>
+                      <circle cx="172" cy="52" r="5" fill="var(--art-wood-dark)"/>
+                      <circle cx="222" cy="52" r="5" fill="var(--art-wood-dark)"/>
+                      <rect x="52" y="154" width="216" height="16" fill="var(--art-wood)"/>
+                      <rect x="66" y="114" width="32" height="40" rx="6" fill="var(--art-ochre)"/>
+                      <rect x="110" y="122" width="32" height="32" rx="6" fill="var(--art-moss)"/>
+                      <rect x="156" y="118" width="44" height="36" rx="6" fill="var(--art-cream)"/>
+                      <rect x="214" y="126" width="38" height="28" rx="4" fill="var(--art-berry)"/>
+                    </svg>
+                  </div>
+                  <div class="oh-car-cap">
+                    <span class="oh-car-eyebrow">Weekend craft supplies</span>
+                    <span class="oh-car-title">Clear jars and trays for loose tools</span>
+                  </div>
+                </a>
+              </li>
+              <li class="oh-car-card">
+                <a href="#">
+                  <div class="oh-car-art">
+                    <svg viewBox="0 0 320 240" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sample reading nook with armchair, potted leaf plant and arched reading lamp">
+                      <rect width="320" height="240" fill="var(--art-stone)"/>
+                      <rect x="0" y="176" width="320" height="64" fill="var(--art-wood-pale)"/>
+                      <circle cx="72" cy="96" r="32" fill="var(--art-moss)"/>
+                      <circle cx="96" cy="116" r="22" fill="var(--art-sage)"/>
+                      <rect x="58" y="124" width="36" height="52" rx="4" fill="var(--art-clay)"/>
+                      <rect x="134" y="102" width="122" height="84" rx="18" fill="var(--art-ochre)"/>
+                      <rect x="150" y="142" width="90" height="34" rx="8" fill="var(--art-cream)"/>
+                      <rect x="272" y="54" width="6" height="122" fill="var(--art-charcoal)"/>
+                      <circle cx="258" cy="58" r="16" fill="var(--art-cream)"/>
+                    </svg>
+                  </div>
+                  <div class="oh-car-cap">
+                    <span class="oh-car-eyebrow">Quiet reading nooks</span>
+                    <span class="oh-car-title">Task lamps tuned for late chapters</span>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="oh-car-controls">
+            <span class="sr-only" id="oh-car-live" aria-live="polite">Ideas 1 of 4 (sample)</span>
+            <button type="button" class="oh-round-btn oh-car-btn" id="oh-car-prev" aria-label="Previous ideas" disabled>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M10 3.5L5.5 8l4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <button type="button" class="oh-round-btn oh-car-btn" id="oh-car-next" aria-label="Next ideas">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M6 3.5L10.5 8 6 12.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="oh-second-mosaic" class="oh-stack" aria-label="Studio storage, archive lookbook and object edit">
+      <div class="oh-pair">
+        <article class="oh-tile oh-tile-square oh-tile-scrim oh-on-dark-scope">
+          <div class="oh-art">
+            <svg viewBox="0 0 500 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sample interior scene: compact studio wall with floor-to-ceiling cream wardrobes, oak knobs and open bookshelf cubbies">
+              <rect width="500" height="500" fill="var(--art-stone)"/>
+              <rect x="34" y="64" width="144" height="360" fill="var(--art-cream)"/>
+              <rect x="48" y="84" width="116" height="68" fill="var(--art-wall)"/>
+              <rect x="48" y="166" width="116" height="68" fill="var(--art-wall)"/>
+              <rect x="48" y="248" width="116" height="68" fill="var(--art-wall)"/>
+              <rect x="64" y="114" width="38" height="38" rx="3" fill="var(--art-wood-pale)"/>
+              <rect x="112" y="198" width="36" height="36" rx="3" fill="var(--art-sage)"/>
+              <rect x="184" y="64" width="140" height="360" fill="var(--art-cream)"/>
+              <rect x="330" y="64" width="140" height="360" fill="var(--art-cream)"/>
+              <circle cx="242" cy="242" r="7" fill="var(--art-wood)"/>
+              <circle cx="264" cy="242" r="7" fill="var(--art-wood)"/>
+              <circle cx="388" cy="242" r="7" fill="var(--art-wood)"/>
+              <circle cx="410" cy="242" r="7" fill="var(--art-wood)"/>
+              <rect x="28" y="346" width="230" height="96" rx="14" fill="var(--art-wall-warm)"/>
+              <rect x="44" y="324" width="96" height="44" rx="12" fill="var(--art-cream)"/>
+            </svg>
+          </div>
+          <div class="oh-tile-body">
+            <span class="oh-eyebrow">Compact studio planning</span>
+            <h2 class="oh-tile-title"><a class="oh-tile-link" href="#">Tall wardrobes that calm narrow bedrooms</a></h2>
+          </div>
+        </article>
+
+        <article class="oh-tile oh-tile-square oh-tile-scrim oh-on-dark-scope">
+          <div class="oh-art">
+            <svg viewBox="0 0 500 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sample workshop scene: matte sage cabinet door fronts arranged on a workbench grid with brass hinge fittings">
+              <rect width="500" height="500" fill="var(--art-slate)"/>
+              <rect x="24" y="24" width="452" height="452" rx="6" fill="var(--art-charcoal)" opacity="0.45"/>
+              <polygon points="54,104 342,64 416,184 128,236" fill="var(--art-stone)"/>
+              <polygon points="68,118 332,82 396,174 134,218" fill="var(--art-wall)"/>
+              <polygon points="154,284 446,232 486,368 206,422" fill="var(--art-stone)"/>
+              <polygon points="170,296 436,250 470,356 214,404" fill="var(--art-wall)"/>
+              <rect x="218" y="294" width="24" height="14" rx="3" fill="var(--art-ochre)"/>
+              <rect x="372" y="266" width="24" height="14" rx="3" fill="var(--art-ochre)"/>
+            </svg>
+          </div>
+          <div class="oh-tile-body">
+            <span class="oh-eyebrow">The Cedarlane cabinet series</span>
+            <h2 class="oh-tile-title"><a class="oh-tile-link" href="#">Fresh door fronts for older kitchen frames</a></h2>
+          </div>
+        </article>
+      </div>
+
+      <div class="oh-pair">
+        <article class="oh-tile oh-tile-square oh-tile-rose">
+          <div class="oh-rose-circle-wrap">
+            <div class="oh-rose-circle">
+              <svg viewBox="0 0 320 320" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sample circular interior scene: bright living room with low sofa, round rug and pendant lamp">
+                <rect width="320" height="320" fill="var(--art-wall)"/>
+                <rect x="0" y="216" width="320" height="104" fill="var(--art-wood-pale)"/>
+                <line x1="114" y1="0" x2="114" y2="82" stroke="var(--art-charcoal)" stroke-width="3"/>
+                <path d="M90 82h48l-8 24h-32z" fill="var(--art-charcoal)"/>
+                <rect x="172" y="64" width="44" height="58" rx="3" fill="var(--art-cream)"/>
+                <rect x="228" y="76" width="36" height="46" rx="3" fill="var(--art-wood)"/>
+                <rect x="78" y="156" width="194" height="72" rx="14" fill="var(--art-stone)"/>
+                <circle cx="136" cy="186" r="18" fill="var(--art-ochre)"/>
+                <circle cx="196" cy="186" r="16" fill="var(--art-clay)"/>
+                <ellipse cx="160" cy="264" rx="92" ry="26" fill="var(--art-cream)"/>
+                <circle cx="88" cy="242" r="24" fill="var(--art-wood)"/>
+              </svg>
+            </div>
+          </div>
+          <div class="oh-tile-body">
+            <span class="oh-eyebrow">Archive lookbook (sample)</span>
+            <h2 class="oh-tile-title"><a class="oh-tile-link" href="#">Favorite small-room layouts from our archive</a></h2>
+          </div>
+          <button type="button" class="oh-round-btn oh-round-ink oh-tile-btn oh-demo-play" aria-pressed="false" aria-label="Play archive lookbook preview">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+              <path d="M4.5 2.5l9 5.5-9 5.5V2.5z"/>
+            </svg>
+          </button>
+        </article>
+
+        <article class="oh-tile oh-tile-square oh-tile-scrim oh-on-dark-scope">
+          <div class="oh-art">
+            <svg viewBox="0 0 500 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sample interior scene: warm living room with timber plank ceiling, cream sofa, clay cushions and low wooden coffee table">
+              <rect width="500" height="500" fill="var(--art-wall)"/>
+              <polygon points="0,0 500,0 500,88 0,148" fill="var(--art-wood)"/>
+              <rect x="0" y="346" width="500" height="154" fill="var(--art-wood-dark)"/>
+              <rect x="34" y="162" width="166" height="120" rx="4" fill="var(--art-wood-pale)"/>
+              <rect x="330" y="168" width="112" height="140" rx="4" fill="var(--art-ochre)"/>
+              <rect x="364" y="102" width="6" height="236" fill="var(--art-charcoal)"/>
+              <rect x="344" y="96" width="46" height="12" rx="4" fill="var(--art-cream)"/>
+              <rect x="92" y="246" width="292" height="110" rx="18" fill="var(--art-cream)"/>
+              <circle cx="294" cy="284" r="26" fill="var(--art-clay)"/>
+              <circle cx="218" cy="288" r="24" fill="var(--art-sage)"/>
+              <rect x="132" y="352" width="214" height="22" rx="4" fill="var(--art-charcoal)"/>
+              <rect x="154" y="374" width="12" height="44" fill="var(--art-charcoal)"/>
+              <rect x="314" y="374" width="12" height="44" fill="var(--art-charcoal)"/>
+            </svg>
+          </div>
+          <div class="oh-tile-body">
+            <span class="oh-eyebrow">Warm timber textures</span>
+            <h2 class="oh-tile-title"><a class="oh-tile-link" href="#">Layered oak and linen for evening gatherings</a></h2>
+          </div>
+        </article>
+      </div>
+
+      <section class="oh-band oh-band-plum oh-on-dark-scope" aria-label="Small Joys object edit">
+        <div class="oh-band-copy">
+          <span class="oh-band-eyebrow">40+ sample pieces</span>
+          <h2 class="oh-band-plum-h2">The Small<br/>Joys edit</h2>
+        </div>
+        <div class="oh-plum-panel">
+          <ul class="oh-obj-grid" aria-label="Eight sample home objects">
+            <li class="oh-obj-cell">
+              <svg class="oh-obj-svg" viewBox="0 0 80 80" aria-hidden="true">
+                <path d="M22 36c0-11 8-18 18-18s18 7 18 18H22z" fill="var(--art-ochre)"/>
+                <rect x="37" y="36" width="6" height="24" fill="var(--art-charcoal)"/>
+                <rect x="24" y="60" width="32" height="8" rx="4" fill="var(--art-wood)"/>
+              </svg>
+              <span class="oh-obj-label">Lamp</span>
+            </li>
+            <li class="oh-obj-cell">
+              <svg class="oh-obj-svg" viewBox="0 0 80 80" aria-hidden="true">
+                <rect x="18" y="24" width="44" height="10" rx="5" fill="var(--art-wood)"/>
+                <rect x="24" y="34" width="8" height="34" rx="2" fill="var(--art-wood-dark)"/>
+                <rect x="48" y="34" width="8" height="34" rx="2" fill="var(--art-wood-dark)"/>
+                <rect x="28" y="48" width="24" height="6" fill="var(--art-wood-pale)"/>
+              </svg>
+              <span class="oh-obj-label">Stool</span>
+            </li>
+            <li class="oh-obj-cell">
+              <svg class="oh-obj-svg" viewBox="0 0 80 80" aria-hidden="true">
+                <rect x="32" y="14" width="16" height="14" rx="4" fill="var(--art-moss)"/>
+                <ellipse cx="40" cy="48" rx="18" ry="22" fill="var(--art-clay)"/>
+                <rect x="28" y="64" width="24" height="6" rx="3" fill="var(--art-wood-dark)"/>
+              </svg>
+              <span class="oh-obj-label">Vase</span>
+            </li>
+            <li class="oh-obj-cell">
+              <svg class="oh-obj-svg" viewBox="0 0 80 80" aria-hidden="true">
+                <rect x="16" y="22" width="48" height="10" rx="3" fill="var(--art-wood-pale)"/>
+                <rect x="22" y="32" width="36" height="16" rx="2" fill="var(--art-wood)"/>
+                <rect x="20" y="32" width="6" height="36" fill="var(--art-wood-dark)"/>
+                <rect x="54" y="32" width="6" height="36" fill="var(--art-wood-dark)"/>
+              </svg>
+              <span class="oh-obj-label">Side table</span>
+            </li>
+            <li class="oh-obj-cell">
+              <svg class="oh-obj-svg" viewBox="0 0 80 80" aria-hidden="true">
+                <circle cx="40" cy="36" r="22" fill="var(--art-sage)"/>
+                <circle cx="40" cy="36" r="10" fill="var(--art-moss)"/>
+                <rect x="35" y="46" width="10" height="18" rx="5" fill="var(--art-wood-dark)"/>
+              </svg>
+              <span class="oh-obj-label">Wall hook</span>
+            </li>
+            <li class="oh-obj-cell">
+              <svg class="oh-obj-svg" viewBox="0 0 80 80" aria-hidden="true">
+                <rect x="37" y="14" width="6" height="52" fill="var(--art-charcoal)"/>
+                <path d="M40 24l-14-8M40 28l14-8M40 36l-12-6" stroke="var(--art-clay)" stroke-width="4" stroke-linecap="round"/>
+                <rect x="24" y="64" width="32" height="6" rx="3" fill="var(--art-berry)"/>
+              </svg>
+              <span class="oh-obj-label">Coat stand</span>
+            </li>
+            <li class="oh-obj-cell">
+              <svg class="oh-obj-svg" viewBox="0 0 80 80" aria-hidden="true">
+                <rect x="22" y="34" width="36" height="18" rx="6" fill="var(--art-wood)"/>
+                <rect x="46" y="20" width="14" height="20" rx="4" fill="var(--art-wood)"/>
+                <rect x="24" y="52" width="8" height="14" fill="var(--art-wood-dark)"/>
+                <rect x="48" y="52" width="8" height="14" fill="var(--art-wood-dark)"/>
+                <path d="M14 66q26 8 52 0" stroke="var(--art-berry)" stroke-width="4" fill="none" stroke-linecap="round"/>
+              </svg>
+              <span class="oh-obj-label">Toy horse</span>
+            </li>
+            <li class="oh-obj-cell">
+              <svg class="oh-obj-svg" viewBox="0 0 80 80" aria-hidden="true">
+                <circle cx="40" cy="24" r="10" fill="var(--art-wood-pale)"/>
+                <path d="M26 66l6-30h16l6 30H26z" fill="var(--art-plum)"/>
+                <rect x="22" y="64" width="36" height="6" rx="3" fill="var(--art-wood)"/>
+              </svg>
+              <span class="oh-obj-label">Figurine</span>
+            </li>
+          </ul>
+          <button type="button" class="oh-round-btn oh-round-ink oh-tile-btn oh-demo-play" aria-pressed="false" aria-label="Play Small Joys edit preview">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+              <path d="M4.5 2.5l9 5.5-9 5.5V2.5z"/>
+            </svg>
+          </button>
+        </div>
+      </section>
+    </section>
+  </div>
+
+  <section id="oh-strip" aria-label="Fieldstone tote banner">
+    <div class="oh-strip-stage">
+      <div class="oh-strip-art oh-strip-float" id="oh-strip-scene" data-paused="false">
+        <svg viewBox="0 0 1280 400" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Sample banner illustration: moss green Fieldstone tote bag standing on a stone plinth">
+          <rect width="1280" height="400" fill="var(--art-stone)"/>
+          <rect x="420" y="294" width="440" height="106" fill="var(--art-wall)"/>
+          <rect x="420" y="294" width="440" height="16" fill="var(--art-cream)"/>
+          <polygon points="486,104 794,104 762,294 518,294" fill="var(--art-moss)"/>
+          <path d="M568 104c0-66 144-66 144 0" stroke="var(--art-cream)" stroke-width="16" fill="none"/>
+          <path d="M548 104v170M732 104v170" stroke="var(--art-cream)" stroke-width="11" opacity="0.82"/>
+          <rect x="596" y="176" width="88" height="22" rx="4" fill="var(--art-ochre)"/>
+        </svg>
+      </div>
+      <button type="button" class="oh-round-btn oh-round-ink oh-strip-btn" id="oh-strip-pause" aria-pressed="false" aria-label="Pause banner scene">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+          <rect x="3.5" y="2.5" width="3" height="11" rx="1"/>
+          <rect x="9.5" y="2.5" width="3" height="11" rx="1"/>
+        </svg>
+      </button>
+    </div>
+  </section>
+  <section id="oh-skeleton" aria-label="Workshop facts, delivery, assembly plans, planning visit, FAQ and customer quote">
+    <div class="oh-wrap oh-skel-stack">
+      <div>
+        <h2 class="oh-skel-h2">Built for everyday rooms</h2>
+        <p class="oh-skel-sub">Sample workshop numbers from our annual ledger across modular shelving, bedding and kitchen hardware.</p>
+        <div class="oh-stats-grid">
+          <div class="oh-stat-card">
+            <div class="oh-stat-val">48</div>
+            <div class="oh-stat-label">Modular shelf widths (sample)</div>
+          </div>
+          <div class="oh-stat-card">
+            <div class="oh-stat-val">14 years</div>
+            <div class="oh-stat-label">Average frame warranty (sample)</div>
+          </div>
+          <div class="oh-stat-card">
+            <div class="oh-stat-val">86%</div>
+            <div class="oh-stat-label">Reclaimed timber share (sample)</div>
+          </div>
+          <div class="oh-stat-card">
+            <div class="oh-stat-val">320+</div>
+            <div class="oh-stat-label">Repair hardware kits stocked (sample)</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="oh-skel-h2">How every piece holds up</h2>
+        <div class="oh-features-grid">
+          <div class="oh-feature-card">
+            <h3 class="oh-feature-h3">Plain joinery</h3>
+            <p class="oh-feature-p">Every shelf and bench assembles with one hex key and wooden dowels so joints stay tight after moving house.</p>
+          </div>
+          <div class="oh-feature-card">
+            <h3 class="oh-feature-h3">Washable covers</h3>
+            <p class="oh-feature-p">Sofa cushions and chair pads zip off cleanly for cold-water washing and seasonal color swaps.</p>
+          </div>
+          <div class="oh-feature-card">
+            <h3 class="oh-feature-h3">Spare parts kept</h3>
+            <p class="oh-feature-p">Replacement hinges, pegs and drawer runners remain in our catalog for years after a line retires (sample).</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="oh-skel-h2">Delivery options</h2>
+        <div class="oh-table-scroll" role="region" aria-label="Delivery options comparison" tabindex="0">
+          <table>
+            <caption>Sample delivery and room-drop options for local Oakhollow orders</caption>
+            <thead>
+              <tr>
+                <th scope="col">Service</th>
+                <th scope="col">Lead time</th>
+                <th scope="col">Room carry</th>
+                <th scope="col">Box haul-away</th>
+                <th scope="col">Sample fee</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Parcel post</td>
+                <td>2–4 days</td>
+                <td>Doorstep</td>
+                <td>No</td>
+                <td>$9 (sample)</td>
+              </tr>
+              <tr>
+                <td>Scheduled van</td>
+                <td>3–5 days</td>
+                <td>Any room</td>
+                <td>Optional</td>
+                <td>$39 (sample)</td>
+              </tr>
+              <tr>
+                <td>Studio pickup</td>
+                <td>Same day</td>
+                <td>Loading bay</td>
+                <td>Not needed</td>
+                <td>Free (sample)</td>
+              </tr>
+              <tr>
+                <td>White-glove set</td>
+                <td>5–7 days</td>
+                <td>Any room and assembly</td>
+                <td>Included</td>
+                <td>$89 (sample)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="oh-skel-h2">Assembly plans</h2>
+        <div class="oh-pricing-grid">
+          <div class="oh-plan">
+            <div class="oh-plan-top">
+              <h3 class="oh-plan-name">Self-build kit</h3>
+            </div>
+            <div class="oh-plan-price">$0 (sample)</div>
+            <p class="oh-plan-desc">Printed step chart, hex key and spare dowel pack included in every flat box.</p>
+            <a class="oh-btn-outline" href="#oh-planning-form">View assembly guide</a>
+          </div>
+          <div class="oh-plan oh-plan-featured">
+            <div class="oh-plan-top">
+              <h3 class="oh-plan-name">Room assembly</h3>
+              <span class="oh-plan-tag">Popular (sample)</span>
+            </div>
+            <div class="oh-plan-price">$65 (sample)</div>
+            <p class="oh-plan-desc">Two workshop builders assemble up to four pieces, level cabinet doors and clear packing paper.</p>
+            <a class="oh-btn-primary" href="#oh-planning-form">Select room assembly</a>
+          </div>
+          <div class="oh-plan">
+            <div class="oh-plan-top">
+              <h3 class="oh-plan-name">Full kitchen fit</h3>
+            </div>
+            <div class="oh-plan-price">$290 (sample)</div>
+            <p class="oh-plan-desc">Wall anchoring, countertop cut-ins and hinge tuning for Kettle Hill cabinet runs.</p>
+            <a class="oh-btn-outline" href="#oh-planning-form">Request kitchen quote</a>
+          </div>
+        </div>
+      </div>
+
+      <div id="oh-planning-form">
+        <h2 class="oh-skel-h2">Book a planning visit</h2>
+        <div class="oh-form-card">
+          <form id="oh-visit-form" novalidate>
+            <div class="oh-form-grid">
+              <div class="oh-field">
+                <label class="oh-label" for="oh-name">Name</label>
+                <input id="oh-name" name="name" type="text" autocomplete="name" placeholder="Jamie Patel" required/>
+              </div>
+              <div class="oh-field">
+                <label class="oh-label" for="oh-email">Email</label>
+                <input id="oh-email" name="email" type="email" autocomplete="email" placeholder="Your email address" required/>
+              </div>
+              <div class="oh-field oh-field-full">
+                <label class="oh-label" for="oh-room">Room type</label>
+                <select id="oh-room" name="room" class="inputer">
+                  <option value="living">Living room</option>
+                  <option value="kitchen">Kitchen</option>
+                  <option value="bedroom">Bedroom</option>
+                  <option value="entryway">Entryway and hallway</option>
+                  <option value="study">Study corner</option>
+                </select>
+              </div>
+              <div class="oh-field oh-field-full">
+                <label class="oh-label" for="oh-msg">Message</label>
+                <textarea id="oh-msg" name="message" placeholder="Share rough wall widths and storage goals"></textarea>
+              </div>
+            </div>
+            <button type="submit" class="oh-btn-primary">Request planning visit</button>
+            <p class="oh-form-confirm" id="oh-form-confirm" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="oh-skel-h2">Common questions</h2>
+        <div class="oh-faq-list">
+          <div class="oh-faq-item">
+            <button type="button" class="oh-faq-btn" aria-expanded="false" aria-controls="oh-faq-1">
+              <span>Can I order replacement dowels or drawer slides?</span>
+              <span class="oh-faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="oh-faq-panel" id="oh-faq-1" hidden>
+              <p>Yes. Hardware packs for Ridgeline shelves, Alderbrook closets and Kettle Hill drawers stay in stock for at least ten years (sample).</p>
+            </div>
+          </div>
+          <div class="oh-faq-item">
+            <button type="button" class="oh-faq-btn" aria-expanded="false" aria-controls="oh-faq-2">
+              <span>How do I measure a narrow hallway for the Ridgeline shelves?</span>
+              <span class="oh-faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="oh-faq-panel" id="oh-faq-2" hidden>
+              <p>Measure the clear wall span between baseboards and allow at least 28 cm depth for the shallow frame option (sample).</p>
+            </div>
+          </div>
+          <div class="oh-faq-item">
+            <button type="button" class="oh-faq-btn" aria-expanded="false" aria-controls="oh-faq-3">
+              <span>Are the Mossbank quilt covers pre-washed?</span>
+              <span class="oh-faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="oh-faq-panel" id="oh-faq-3" hidden>
+              <p>Every Mossbank cotton and linen cover is garment-washed before folding so shrinkage stays minimal in a home washer (sample).</p>
+            </div>
+          </div>
+          <div class="oh-faq-item">
+            <button type="button" class="oh-faq-btn" aria-expanded="false" aria-controls="oh-faq-4">
+              <span>What happens to cardboard boxes after room assembly?</span>
+              <span class="oh-faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="oh-faq-panel" id="oh-faq-4" hidden>
+              <p>Our builders flatten all cartons and paper wraps and return them to the local studio baler for recycling (sample).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <figure class="oh-quote-box">
+        <blockquote>
+          <p>“We fitted the entire study wall in one afternoon, and every shelf still has room for winter blankets.”</p>
+        </blockquote>
+        <figcaption class="oh-quote-cite">Hannah Ortiz, Oakhollow sample customer</figcaption>
+      </figure>
+    </div>
+  </section>
+</main>
+
+<footer id="oh-footer">
+  <div class="oh-wrap">
+    <div class="oh-footer-top">
+      <ul class="oh-footer-primary">
+        <li><a href="#">Global sales (sample)</a></li>
+        <li><a href="#">Oakhollow group</a></li>
+        <li><a href="#">The maker's archive</a></li>
+      </ul>
+      <ul class="oh-footer-secondary">
+        <li><a href="#">Privacy choices</a></li>
+        <li><a href="#">Privacy notice (sample)</a></li>
+        <li><a href="#">Contact and feedback</a></li>
+        <li><a href="#">Common questions</a></li>
+        <li><a href="#">Site map</a></li>
+        <li><a href="#">Terms (sample)</a></li>
+      </ul>
+    </div>
+    <div class="oh-footer-bottom">
+      <div class="oh-footer-controls">
+        <div class="oh-appearance-group" role="radiogroup" aria-label="Appearance">
+          <button type="button" class="oh-app-btn" role="radio" aria-checked="false" data-appearance="system">System</button>
+          <button type="button" class="oh-app-btn" role="radio" aria-checked="false" data-appearance="light">Light</button>
+          <button type="button" class="oh-app-btn" role="radio" aria-checked="false" data-appearance="dark">Dark</button>
+        </div>
+        <label class="sr-only" for="oh-lang">Language</label>
+        <select id="oh-lang" class="inputer oh-footer-select">
+          <option value="en-US">English (US)</option>
+          <option value="es">Spanish (sample)</option>
+          <option value="fr">French (sample)</option>
+        </select>
+      </div>
+      <p class="oh-legal">2026 Oakhollow, a fictional home goods studio.</p>
+    </div>
+  </div>
+</footer>
+<p class="sr-only" id="oh-demo-live" aria-live="polite"></p>
+<script>
+(function(){
+  var hdrInner=document.querySelector(".oh-hdr-inner");
+  var aboutBtn=document.getElementById("oh-about-trigger");
+  var aboutFlyout=document.getElementById("oh-flyout-about");
+  function positionFlyout(){
+    if(aboutFlyout.hidden)return;
+    var hRect=hdrInner.getBoundingClientRect();
+    var bRect=aboutBtn.getBoundingClientRect();
+    var w=aboutFlyout.offsetWidth;
+    var left=Math.max(16,Math.min(bRect.left-hRect.left,hdrInner.clientWidth-w-16));
+    aboutFlyout.style.left=left+"px";
+  }
+  function closeFlyout(returnFocus){
+    if(aboutFlyout.hidden)return;
+    aboutBtn.setAttribute("aria-expanded","false");
+    aboutFlyout.hidden=true;
+    if(returnFocus)aboutBtn.focus();
+  }
+  aboutBtn.addEventListener("click",function(e){
+    var open=aboutBtn.getAttribute("aria-expanded")==="true";
+    if(open){
+      closeFlyout(false);
+    }else{
+      aboutBtn.setAttribute("aria-expanded","true");
+      aboutFlyout.hidden=false;
+      positionFlyout();
+    }
+    e.stopPropagation();
+  });
+  aboutFlyout.addEventListener("click",function(e){e.stopPropagation();});
+  window.addEventListener("resize",positionFlyout);
+
+  var menuBtn=document.getElementById("oh-menu-toggle");
+  var menuClose=document.getElementById("oh-menu-close");
+  var mobileMenu=document.getElementById("oh-mobile-menu");
+  var focusSel="a[href],button:not([disabled]),input,select,textarea,[tabindex]:not([tabindex='-1'])";
+  function openMenu(){
+    closeFlyout(false);
+    mobileMenu.hidden=false;
+    menuBtn.setAttribute("aria-expanded","true");
+    document.body.style.overflow="hidden";
+    menuClose.focus();
+  }
+  function closeMenu(){
+    if(mobileMenu.hidden)return;
+    mobileMenu.hidden=true;
+    menuBtn.setAttribute("aria-expanded","false");
+    document.body.style.overflow="";
+    menuBtn.focus();
+  }
+  menuBtn.addEventListener("click",openMenu);
+  menuClose.addEventListener("click",closeMenu);
+  mobileMenu.querySelectorAll("a").forEach(function(link){
+    link.addEventListener("click",function(){
+      mobileMenu.hidden=true;
+      menuBtn.setAttribute("aria-expanded","false");
+      document.body.style.overflow="";
+    });
+  });
+
+  var shopBtn=document.getElementById("oh-shop-toggle");
+  var shopPanel=document.getElementById("oh-shop-panel");
+  var shopLabel=document.getElementById("oh-shop-label");
+  var shopLive=document.getElementById("oh-shop-live");
+  var shopOpts=document.querySelectorAll(".oh-shop-option");
+  function closeShop(returnFocus){
+    if(shopPanel.hidden)return;
+    shopBtn.setAttribute("aria-expanded","false");
+    shopPanel.hidden=true;
+    if(returnFocus)shopBtn.focus();
+  }
+  shopBtn.addEventListener("click",function(e){
+    var open=shopBtn.getAttribute("aria-expanded")==="true";
+    if(open){closeShop(false);}
+    else{
+      shopBtn.setAttribute("aria-expanded","true");
+      shopPanel.hidden=false;
+    }
+    e.stopPropagation();
+  });
+  shopPanel.addEventListener("click",function(e){e.stopPropagation();});
+  shopOpts.forEach(function(opt){
+    opt.addEventListener("click",function(){
+      var val=opt.getAttribute("data-shop");
+      shopOpts.forEach(function(o){o.setAttribute("aria-pressed",o===opt?"true":"false");});
+      shopLabel.textContent="Shop: "+val;
+      shopLive.textContent="Selected "+val;
+      closeShop(true);
+    });
+  });
+
+  document.addEventListener("click",function(){
+    closeFlyout(false);
+    closeShop(false);
+  });
+  document.addEventListener("keydown",function(e){
+    if(e.key==="Escape"){
+      if(!mobileMenu.hidden){closeMenu();return;}
+      if(!aboutFlyout.hidden){closeFlyout(true);return;}
+      if(!shopPanel.hidden){closeShop(true);return;}
+    }
+    if(e.key==="Tab"&&!mobileMenu.hidden){
+      var items=Array.prototype.slice.call(mobileMenu.querySelectorAll(focusSel));
+      if(!items.length)return;
+      var first=items[0],last=items[items.length-1];
+      if(e.shiftKey){
+        if(document.activeElement===first){e.preventDefault();last.focus();}
+      }else{
+        if(document.activeElement===last){e.preventDefault();first.focus();}
+      }
+    }
+  });
+
+  var pauseSvg='<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.5" y="2.5" width="3" height="11" rx="1"/><rect x="9.5" y="2.5" width="3" height="11" rx="1"/></svg>';
+  var playSvg='<svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4.5 2.5l9 5.5-9 5.5V2.5z"/></svg>';
+  function bindScenePause(btnId,sceneId,pauseLabel,playLabel){
+    var btn=document.getElementById(btnId);
+    var scene=document.getElementById(sceneId);
+    if(!btn||!scene)return;
+    btn.addEventListener("click",function(){
+      var paused=btn.getAttribute("aria-pressed")==="true";
+      var next=!paused;
+      btn.setAttribute("aria-pressed",String(next));
+      btn.setAttribute("aria-label",next?playLabel:pauseLabel);
+      btn.innerHTML=next?playSvg:pauseSvg;
+      scene.setAttribute("data-paused",String(next));
+    });
+  }
+  bindScenePause("oh-lead-pause","oh-lead-scene","Pause scene","Play scene");
+  bindScenePause("oh-strip-pause","oh-strip-scene","Pause banner scene","Play banner scene");
+
+  var demoLive=document.getElementById("oh-demo-live");
+  document.querySelectorAll(".oh-demo-play").forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var playing=btn.getAttribute("aria-pressed")==="true";
+      var next=!playing;
+      btn.setAttribute("aria-pressed",String(next));
+      btn.innerHTML=next?pauseSvg:playSvg;
+      demoLive.textContent=next?"Playing sample story preview":"Paused sample story preview";
+    });
+  });
+
+  var carViewport=document.getElementById("oh-car-viewport");
+  var carTrack=document.getElementById("oh-car-track");
+  var carPrev=document.getElementById("oh-car-prev");
+  var carNext=document.getElementById("oh-car-next");
+  var carLive=document.getElementById("oh-car-live");
+  var carCards=carTrack?Array.prototype.slice.call(carTrack.querySelectorAll(".oh-car-card")):[];
+  var carIdx=0;
+  function getCarVisible(){
+    if(window.innerWidth<640)return 1;
+    if(window.innerWidth<1100)return 2;
+    return 3;
+  }
+  function renderCarousel(announce){
+    if(!carCards.length)return;
+    var visible=getCarVisible();
+    var maxIdx=Math.max(0,carCards.length-visible);
+    if(carIdx>maxIdx)carIdx=maxIdx;
+    var gap=window.innerWidth<640?0:16;
+    var step=carCards[0].getBoundingClientRect().width+gap;
+    carTrack.style.transform="translateX("+(-carIdx*step)+"px)";
+    carPrev.disabled=carIdx===0;
+    carNext.disabled=carIdx>=maxIdx;
+    carCards.forEach(function(card,i){
+      var inView=i>=carIdx&&i<carIdx+visible;
+      card.style.visibility=inView?"visible":"hidden";
+      if(inView){card.removeAttribute("inert");}
+      else{card.setAttribute("inert","");}
+    });
+    if(announce){
+      carLive.textContent="Ideas "+(carIdx+1)+" of "+carCards.length+" (sample)";
+    }
+  }
+  if(carPrev&&carNext){
+    renderCarousel(false);
+    carPrev.addEventListener("click",function(){
+      if(carIdx>0){carIdx--;renderCarousel(true);}
+    });
+    carNext.addEventListener("click",function(){
+      var maxIdx=Math.max(0,carCards.length-getCarVisible());
+      if(carIdx<maxIdx){carIdx++;renderCarousel(true);}
+    });
+    window.addEventListener("resize",function(){renderCarousel(false);});
+  }
+
+  var visitForm=document.getElementById("oh-visit-form");
+  var formConfirm=document.getElementById("oh-form-confirm");
+  if(visitForm){
+    visitForm.addEventListener("submit",function(e){
+      e.preventDefault();
+      var nameVal=document.getElementById("oh-name").value.trim();
+      var roomEl=document.getElementById("oh-room");
+      var roomText=roomEl.options[roomEl.selectedIndex].text;
+      formConfirm.textContent=(nameVal?nameVal+", your ":"Your ")+roomText.toLowerCase()+" planning visit request is noted for this sample demo.";
+    });
+  }
+
+  document.querySelectorAll(".oh-faq-btn").forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var open=btn.getAttribute("aria-expanded")==="true";
+      var panel=document.getElementById(btn.getAttribute("aria-controls"));
+      var icon=btn.querySelector(".oh-faq-icon");
+      btn.setAttribute("aria-expanded",String(!open));
+      if(panel)panel.hidden=open;
+      if(icon)icon.textContent=open?"+":"\u2212";
+    });
+  });
+
+  var appBtns=Array.prototype.slice.call(document.querySelectorAll(".oh-app-btn[data-appearance]"));
+  var rootEl=document.documentElement;
+  function syncAppearance(pref){
+    rootEl.dataset.appearancePref=pref;
+    rootEl.classList.remove("light","dark");
+    var resolved=pref==="light"?"light":pref==="dark"?"dark":(window.matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
+    rootEl.classList.add(resolved);
+    rootEl.style.colorScheme=resolved;
+    appBtns.forEach(function(b){
+      var checked=b.getAttribute("data-appearance")===pref;
+      b.setAttribute("aria-checked",checked?"true":"false");
+      b.setAttribute("tabindex",checked?"0":"-1");
+    });
+  }
+  syncAppearance(rootEl.dataset.appearancePref||"system");
+  appBtns.forEach(function(btn,i){
+    btn.addEventListener("click",function(){
+      syncAppearance(btn.getAttribute("data-appearance"));
+    });
+    btn.addEventListener("keydown",function(e){
+      if(e.key==="ArrowRight"||e.key==="ArrowDown"){
+        e.preventDefault();
+        var nextBtn=appBtns[(i+1)%appBtns.length];
+        syncAppearance(nextBtn.getAttribute("data-appearance"));
+        nextBtn.focus();
+      }else if(e.key==="ArrowLeft"||e.key==="ArrowUp"){
+        e.preventDefault();
+        var prevBtn=appBtns[(i-1+appBtns.length)%appBtns.length];
+        syncAppearance(prevBtn.getAttribute("data-appearance"));
+        prevBtn.focus();
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
