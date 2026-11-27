@@ -1,6 +1,6 @@
 "use client";
 
-import { type RefObject, useMemo, useState } from "react";
+import { type FocusEvent, type RefObject, useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -34,6 +34,12 @@ export interface SiteHeaderProps {
   menuTriggerRef?: RefObject<HTMLButtonElement | null>;
 }
 
+function scrollFocusedTabIntoView(event: FocusEvent<HTMLDivElement>) {
+  if (event.target instanceof HTMLElement) {
+    event.target.scrollIntoView({ block: "nearest", inline: "nearest" });
+  }
+}
+
 export function SiteHeader({ tree, menuTriggerRef }: SiteHeaderProps) {
   const [searchOpen, setSearchOpen] = useState(false);
   const { openMobile, setOpenMobile } = useSidebar();
@@ -65,7 +71,7 @@ export function SiteHeader({ tree, menuTriggerRef }: SiteHeaderProps) {
               type="button"
               variant="pill"
               size="icon"
-              className="md:hidden"
+              className="lg:hidden"
               aria-label="Search docs"
               onClick={() => setSearchOpen(true)}
             >
@@ -75,7 +81,7 @@ export function SiteHeader({ tree, menuTriggerRef }: SiteHeaderProps) {
               type="button"
               variant="pill"
               size="sm"
-              className="hidden md:inline-flex"
+              className="hidden lg:inline-flex"
               aria-label="Search docs"
               onClick={() => setSearchOpen(true)}
             >
@@ -105,7 +111,7 @@ export function SiteHeader({ tree, menuTriggerRef }: SiteHeaderProps) {
               type="button"
               variant="pill"
               size="icon"
-              className="md:hidden"
+              className="lg:hidden"
               aria-label="Menu"
               aria-haspopup="dialog"
               aria-expanded={openMobile}
@@ -136,8 +142,9 @@ export function SiteHeader({ tree, menuTriggerRef }: SiteHeaderProps) {
           </div>
         </div>
         <div
-          className="no-scrollbar hidden min-w-0 overflow-x-auto border-t border-gray-a6 px-1 md:flex md:items-stretch md:px-2"
+          className="no-scrollbar hidden min-w-0 overflow-x-auto border-t border-gray-a6 px-1 lg:flex lg:items-stretch lg:px-2"
           style={{ height: 44 }}
+          onFocus={scrollFocusedTabIntoView}
         >
           <NavigationMenu
             aria-label="Documentation sections"
@@ -155,7 +162,7 @@ export function SiteHeader({ tree, menuTriggerRef }: SiteHeaderProps) {
                       <Link
                         href={section.url}
                         className={cn(
-                          "inline-flex h-full items-center whitespace-nowrap border-b-2 px-1 py-0 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8",
+                          "inline-flex h-full items-center whitespace-nowrap border-b-2 px-1 py-0 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent-8",
                           isActive
                             ? "border-accent-9 text-gray-12"
                             : "border-transparent text-gray-11 hover:text-gray-12",
@@ -177,7 +184,7 @@ export function SiteHeader({ tree, menuTriggerRef }: SiteHeaderProps) {
                       href={link.url}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex h-full items-center gap-0.5 whitespace-nowrap border-b-2 border-transparent px-1 py-0 text-sm font-medium text-gray-11 transition-colors hover:text-gray-12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-8"
+                      className="inline-flex h-full items-center gap-0.5 whitespace-nowrap border-b-2 border-transparent px-1 py-0 text-sm font-medium text-gray-11 transition-colors hover:text-gray-12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent-8"
                     >
                       <span>{link.text}</span>
                       <ArrowTopRightIcon className="icon" aria-hidden />

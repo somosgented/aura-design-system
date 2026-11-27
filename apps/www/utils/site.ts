@@ -1,5 +1,7 @@
 export const siteName = "Aura Design System";
 
+export const siteUrl = "https://auradesignsystem.com";
+
 export const siteDescription =
   "With Aura, the soul is yours. Aura is an agentic design system: components, tokens, and written rules that people browse and coding agents follow.";
 
