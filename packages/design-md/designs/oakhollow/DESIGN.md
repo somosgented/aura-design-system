@@ -215,10 +215,15 @@ Dark mode moves to a warm near-black canvas (`#121211`) with `#1c1c1a` raised pa
 | Pull quote | Plus Jakarta Sans | 500 | 32px | 24px | 1.2 | -0.025em |
 | Lead tile and shop CTA | Plus Jakarta Sans | 700 | 28px | 22px | 1.18 | -0.02em |
 | Story tile title | Plus Jakarta Sans | 700 | 24px | 20px | 1.2 | -0.02em |
-| Wordmark and footer lead links | Plus Jakarta Sans | 700 / 500 | 20px | 20px | 1.25 | -0.015em |
+| Wordmark | Plus Jakarta Sans | 700 | 20px | 20px | 1.5 | -0.02em |
+| Footer lead links | Plus Jakarta Sans | 500 | 20px | 20px | 1.5 | 0 |
 | Body copy | Plus Jakarta Sans | 400 | 16px | 16px | 1.5 | 0 |
-| UI nav and carousel card title | Plus Jakarta Sans | 500 / 700 | 14–15px | 14–15px | 1.35 | 0 |
-| Tile eyebrow and legal copy | Plus Jakarta Sans | 400 | 13px | 13px | 1.4 | 0 |
+| Carousel card title | Plus Jakarta Sans | 700 | 15px | 15px | 1.35 | 0 |
+| UI nav links | Plus Jakarta Sans | 500 | 14px | hidden below `900px` | 1.5 | 0 |
+| UI nav `About us` trigger (`<button>`) | Plus Jakarta Sans | 500 | 14px | hidden below `900px` | normal | 0 |
+| Footer utility links | Plus Jakarta Sans | 400 | 14px | 14px | 1.5 | 0 |
+| Tile, band and carousel eyebrows | Plus Jakarta Sans | 400 | 13px | 13px | 1.4 | 0 |
+| Legal copy | Plus Jakarta Sans | 400 | 13px | 13px | 1.5 | 0 |
 
 Plus Jakarta Sans (400, 500, 700) loads through the single Google Fonts stylesheet in frontmatter. No secondary display or monospace face is loaded.
 
@@ -299,6 +304,9 @@ Blockquote override: `.oh blockquote` and `.oh blockquote p` override Aura's upp
 - Keep all interactive control boundaries high-contrast using `--control-line`, `--band-marigold-line`, `--on-dark-line`, and `2px` dark rims on white round tile buttons.
 - Use `min-width: 0` on grid/flex children and `minmax(0, 1fr)` grid tracks so no headline overflows at `360px`.
 - Gate all animations and transitions behind `html.motion` and provide a pause/play button for every looping scene.
+- Match the `2px` focus ring to its surface: `--focus` on the canvas, `--on-dark` inside dark bands, tile scrims and the footer, and `--ink` on light fills (marigold shop tile, sage band, rose tile and the `--surface-card` panel inside the plum band).
+- Draw carousel card focus inside the card: a `3px` `--ink` ring with a `2px` `--surface-card` inner rim on a pseudo-element that paints above the illustration, plus a transparent outline for forced colors, because the card and the track viewport clip anything outside the card edge.
+- When Previous or Next becomes disabled while it has keyboard focus, move focus to the opposite carousel control if that control is enabled, so focus never drops to the page.
 - Write all product family names in plain normal-case English with US spelling.
 
 **Don't:**
