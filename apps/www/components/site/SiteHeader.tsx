@@ -1,9 +1,14 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { type RefObject, useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowTopRightIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
+import {
+  ArrowTopRightIcon,
+  Cross2Icon,
+  GitHubLogoIcon,
+  HamburgerMenuIcon,
+} from "@radix-ui/react-icons";
 import type * as PageTree from "fumadocs-core/page-tree";
 import { Search } from "lucide-react";
 
@@ -19,17 +24,19 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/NavigationMenu";
-import { SidebarTrigger } from "@/components/ui/Sidebar";
+import { useSidebar } from "@/components/ui/Sidebar";
 import { cn } from "@/utils/class-names";
 import { getActiveSection, getDocsSections } from "@/utils/docs-sections";
 import { externalNavLinks, githubUrl } from "@/utils/site-nav";
 
 export interface SiteHeaderProps {
   tree: PageTree.Root;
+  menuTriggerRef?: RefObject<HTMLButtonElement | null>;
 }
 
-export function SiteHeader({ tree }: SiteHeaderProps) {
+export function SiteHeader({ tree, menuTriggerRef }: SiteHeaderProps) {
   const [searchOpen, setSearchOpen] = useState(false);
+  const { openMobile, setOpenMobile } = useSidebar();
   const pathname = usePathname();
 
   const sections = useMemo(() => getDocsSections(tree), [tree]);
@@ -42,7 +49,11 @@ export function SiteHeader({ tree }: SiteHeaderProps) {
     <>
       <header
         id="nd-nav"
-        className="fixed inset-x-0 top-0 z-40 border-b border-gray-a6 bg-gray-2"
+        data-menu-open={openMobile ? "" : undefined}
+        className={cn(
+          "fixed inset-x-0 top-0 border-b border-gray-a6 bg-gray-2",
+          openMobile ? "pointer-events-auto z-[60]" : "z-40",
+        )}
       >
         <div
           className="flex min-w-0 items-center gap-0.5 px-1 md:px-2"
@@ -89,12 +100,39 @@ export function SiteHeader({ tree }: SiteHeaderProps) {
               <ThemeColorSwitcher />
               <ThemeToggle />
             </div>
-            <SidebarTrigger
+            <Button
+              ref={menuTriggerRef}
+              type="button"
               variant="pill"
               size="icon"
-              aria-label="Open menu"
               className="md:hidden"
-            />
+              aria-label="Menu"
+              aria-haspopup="dialog"
+              aria-expanded={openMobile}
+              aria-controls="docs-mobile-menu"
+              onClick={() => setOpenMobile(!openMobile)}
+            >
+              <span className="relative inline-flex size-[1em] items-center justify-center">
+                <HamburgerMenuIcon
+                  className={cn(
+                    "icon absolute transition-[opacity,transform,rotate] duration-100 ease-out motion-reduce:transition-none",
+                    openMobile
+                      ? "rotate-90 opacity-0"
+                      : "rotate-0 opacity-100",
+                  )}
+                  aria-hidden
+                />
+                <Cross2Icon
+                  className={cn(
+                    "icon absolute transition-[opacity,transform,rotate] duration-100 ease-out motion-reduce:transition-none",
+                    openMobile
+                      ? "rotate-0 opacity-100"
+                      : "-rotate-90 opacity-0",
+                  )}
+                  aria-hidden
+                />
+              </span>
+            </Button>
           </div>
         </div>
         <div

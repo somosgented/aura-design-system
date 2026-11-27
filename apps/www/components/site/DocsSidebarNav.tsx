@@ -7,8 +7,6 @@ import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import type * as PageTree from "fumadocs-core/page-tree";
 import { ChevronRight } from "lucide-react";
 
-import { ThemeColorSwitcher } from "@/components/ThemeColorSwitcher";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import {
   Collapsible,
   CollapsibleContent,
@@ -18,7 +16,6 @@ import { ScrollArea } from "@/components/ui/ScrollArea";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -37,7 +34,6 @@ import {
   getDocsSections,
   normalizePathname,
 } from "@/utils/docs-sections";
-import { externalNavLinks } from "@/utils/site-nav";
 
 export interface DocsSidebarNavProps {
   tree: PageTree.Root;
@@ -74,17 +70,19 @@ function listHasIcons(nodes: PageTree.Node[], indexItem?: PageTree.Item): boolea
   );
 }
 
-function SidebarPageLink({
+export function SidebarPageLink({
   item,
   normalizedPathname,
   sub = false,
   reserveIconSlot = false,
+  mobile = false,
   onNavigate,
 }: {
   item: PageTree.Item;
   normalizedPathname: string;
   sub?: boolean;
   reserveIconSlot?: boolean;
+  mobile?: boolean;
   onNavigate?: () => void;
 }) {
   const isActive =
@@ -120,7 +118,15 @@ function SidebarPageLink({
   if (sub) {
     return (
       <SidebarMenuSubItem>
-        <SidebarMenuSubButton asChild isActive={isActive}>
+        <SidebarMenuSubButton
+          asChild
+          isActive={isActive}
+          className={
+            mobile
+              ? "min-h-3.5 data-[size=md]:h-3.5 data-[size=md]:text-base"
+              : undefined
+          }
+        >
           {content}
         </SidebarMenuSubButton>
       </SidebarMenuSubItem>
@@ -129,19 +135,25 @@ function SidebarPageLink({
 
   return (
     <SidebarMenuItem>
-      <SidebarMenuButton asChild isActive={isActive}>
+      <SidebarMenuButton
+        asChild
+        isActive={isActive}
+        size={mobile ? "lg" : "default"}
+        className={mobile ? "text-base" : undefined}
+      >
         {content}
       </SidebarMenuButton>
     </SidebarMenuItem>
   );
 }
 
-function SidebarFolderItem({
+export function SidebarFolderItem({
   folder,
   pathname,
   normalizedPathname,
   sub = false,
   reserveIconSlot = false,
+  mobile = false,
   onNavigate,
 }: {
   folder: PageTree.Folder;
@@ -149,6 +161,7 @@ function SidebarFolderItem({
   normalizedPathname: string;
   sub?: boolean;
   reserveIconSlot?: boolean;
+  mobile?: boolean;
   onNavigate?: () => void;
 }) {
   const containsActive = folderContainsPath(folder, pathname);
@@ -169,7 +182,11 @@ function SidebarFolderItem({
     <Collapsible open={open} onOpenChange={setOpen} asChild>
       <ItemWrapper>
         <CollapsibleTrigger asChild>
-          <SidebarMenuButton aria-expanded={open}>
+          <SidebarMenuButton
+            aria-expanded={open}
+            size={mobile ? "lg" : "default"}
+            className={mobile ? "text-base" : undefined}
+          >
             <span className="flex min-w-0 flex-1 items-center gap-0.5">
               <SidebarItemIcon
                 icon={folder.icon}
@@ -198,6 +215,7 @@ function SidebarFolderItem({
                 normalizedPathname={normalizedPathname}
                 sub
                 reserveIconSlot={subHasIcons}
+                mobile={mobile}
                 onNavigate={onNavigate}
               />
             ) : null}
@@ -207,6 +225,7 @@ function SidebarFolderItem({
               normalizedPathname={normalizedPathname}
               sub
               reserveIconSlot={subHasIcons}
+              mobile={mobile}
               onNavigate={onNavigate}
             />
           </SidebarMenuSub>
@@ -216,12 +235,13 @@ function SidebarFolderItem({
   );
 }
 
-function SidebarNodesList({
+export function SidebarNodesList({
   nodes,
   pathname,
   normalizedPathname,
   sub = false,
   reserveIconSlot,
+  mobile = false,
   onNavigate,
 }: {
   nodes: PageTree.Node[];
@@ -229,6 +249,7 @@ function SidebarNodesList({
   normalizedPathname: string;
   sub?: boolean;
   reserveIconSlot?: boolean;
+  mobile?: boolean;
   onNavigate?: () => void;
 }) {
   const ItemWrapper = sub ? SidebarMenuSubItem : SidebarMenuItem;
@@ -240,7 +261,15 @@ function SidebarNodesList({
         if (node.type === "separator") {
           return (
             <ItemWrapper key={node.$id ?? `separator-${index}`}>
-              <SidebarGroupLabel>{node.name}</SidebarGroupLabel>
+              <SidebarGroupLabel
+                className={
+                  mobile
+                    ? "text-xs uppercase tracking-wide text-gray-11"
+                    : undefined
+                }
+              >
+                {node.name}
+              </SidebarGroupLabel>
             </ItemWrapper>
           );
         }
@@ -254,6 +283,7 @@ function SidebarNodesList({
               normalizedPathname={normalizedPathname}
               sub={sub}
               reserveIconSlot={hasIcons}
+              mobile={mobile}
               onNavigate={onNavigate}
             />
           );
@@ -266,6 +296,7 @@ function SidebarNodesList({
             normalizedPathname={normalizedPathname}
             sub={sub}
             reserveIconSlot={hasIcons}
+            mobile={mobile}
             onNavigate={onNavigate}
           />
         );
@@ -289,20 +320,13 @@ export function DocsSidebarNav({ tree, variant }: DocsSidebarNavProps) {
     setOpenMobile(false);
   }, [pathname, setOpenMobile]);
 
-  if (variant === "home" && !isMobile) {
+  if (isMobile || variant === "home") {
     return null;
   }
 
   const defaultSection =
     sections.find((section) => section.title === "Get Started") ?? sections[0];
-  const displaySection =
-    variant === "home" ? defaultSection : (activeSection ?? defaultSection);
-
-  const handleNavigate = () => {
-    if (isMobile) {
-      setOpenMobile(false);
-    }
-  };
+  const displaySection = activeSection ?? defaultSection;
 
   return (
     <Sidebar
@@ -312,50 +336,6 @@ export function DocsSidebarNav({ tree, variant }: DocsSidebarNavProps) {
       <SidebarContent>
         <ScrollArea className="min-h-0 flex-1">
           <nav aria-label="Docs">
-            {isMobile ? (
-              <SidebarGroup>
-                <SidebarGroupLabel>Sections</SidebarGroupLabel>
-                <SidebarGroupContent>
-                  <SidebarMenu>
-                    {sections.map((section) => {
-                      const isActive = activeSection?.id === section.id;
-                      return (
-                        <SidebarMenuItem key={section.id}>
-                          <SidebarMenuButton asChild isActive={isActive}>
-                            <Link
-                              href={section.url}
-                              aria-current={isActive ? "page" : undefined}
-                              onClick={handleNavigate}
-                            >
-                              <span>{section.title}</span>
-                            </Link>
-                          </SidebarMenuButton>
-                        </SidebarMenuItem>
-                      );
-                    })}
-                    {externalNavLinks.map((link) => (
-                      <SidebarMenuItem key={link.url}>
-                        <SidebarMenuButton asChild>
-                          <a
-                            href={link.url}
-                            target="_blank"
-                            rel="noreferrer"
-                            onClick={handleNavigate}
-                          >
-                            <span>{link.text}</span>
-                            <ArrowTopRightIcon
-                              className="icon ms-auto"
-                              aria-hidden
-                            />
-                          </a>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    ))}
-                  </SidebarMenu>
-                </SidebarGroupContent>
-              </SidebarGroup>
-            ) : null}
-
             {displaySection ? (
               <SidebarGroup>
                 <SidebarGroupLabel>{displaySection.title}</SidebarGroupLabel>
@@ -365,7 +345,6 @@ export function DocsSidebarNav({ tree, variant }: DocsSidebarNavProps) {
                       nodes={displaySection.nodes}
                       pathname={pathname}
                       normalizedPathname={normalizedPathname}
-                      onNavigate={handleNavigate}
                     />
                   </SidebarMenu>
                 </SidebarGroupContent>
@@ -374,14 +353,6 @@ export function DocsSidebarNav({ tree, variant }: DocsSidebarNavProps) {
           </nav>
         </ScrollArea>
       </SidebarContent>
-      {isMobile ? (
-        <SidebarFooter className="sm:hidden">
-          <div className="flex items-center justify-between gap-0.5 border-t border-gray-a6 px-1 pt-1">
-            <ThemeColorSwitcher />
-            <ThemeToggle />
-          </div>
-        </SidebarFooter>
-      ) : null}
     </Sidebar>
   );
 }
