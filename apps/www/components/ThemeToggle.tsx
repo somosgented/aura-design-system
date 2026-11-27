@@ -1,83 +1,59 @@
 "use client";
-import { cva } from "class-variance-authority";
-import { Moon, Sun, Airplay } from "lucide-react";
-import { type HTMLAttributes } from "react";
 
+import { Airplay, Moon, Sun } from "lucide-react";
+
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/ToggleGroup";
 import { useAuraThemeColors } from "@/hooks/use-aura-theme-colors";
-import { cn } from "@/utils/class-names";
 
-const itemVariants = cva(
-  "size-2 rounded-full p-0.5 text-fd-muted-foreground",
-  {
-    variants: {
-      active: {
-        true: "bg-fd-accent text-fd-accent-foreground",
-        false: "text-fd-muted-foreground",
-      },
-    },
-  }
-);
+export interface ThemeToggleProps {
+  className?: string;
+  mode?: "light-dark" | "light-dark-system";
+}
 
-const full = [
-  ["light", Sun] as const,
-  ["dark", Moon] as const,
-  ["system", Airplay] as const,
-];
+const lightDarkItems = [
+  { value: "light", label: "Light theme", Icon: Sun },
+  { value: "dark", label: "Dark theme", Icon: Moon },
+] as const;
+
+const fullItems = [
+  ...lightDarkItems,
+  { value: "system", label: "System theme", Icon: Airplay },
+] as const;
 
 export function ThemeToggle({
   className,
   mode = "light-dark",
-  ...props
-}: HTMLAttributes<HTMLElement> & {
-  mode?: "light-dark" | "light-dark-system";
-}) {
+}: ThemeToggleProps) {
   const { setTheme, theme, resolvedTheme, mounted } = useAuraThemeColors();
 
-  const container = cn(
-    "inline-flex items-center rounded-full border p-0.5",
-    className
-  );
-
-  if (mode === "light-dark") {
-    const value = mounted ? resolvedTheme : null;
-
-    return (
-      <button
-        className={container}
-        aria-label={`Toggle Theme`}
-        onClick={() => setTheme(value === "light" ? "dark" : "light")}
-        data-theme-toggle=""
-        {...props}
-      >
-        {full.map(([key, Icon]) => {
-          if (key === "system") return;
-
-          return (
-            <Icon
-              key={key}
-              fill="currentColor"
-              className={cn(itemVariants({ active: value === key }))}
-            />
-          );
-        })}
-      </button>
-    );
-  }
-
-  const value = mounted ? theme : null;
+  const items = mode === "light-dark-system" ? fullItems : lightDarkItems;
+  const activeValue = mounted
+    ? (mode === "light-dark-system" ? theme : resolvedTheme) ?? ""
+    : "";
 
   return (
-    <div className={container} data-theme-toggle="" {...props}>
-      {full.map(([key, Icon]) => (
-        <button
-          key={key}
-          aria-label={key}
-          className={cn(itemVariants({ active: value === key }))}
-          onClick={() => setTheme(key)}
+    <ToggleGroup
+      type="single"
+      value={activeValue}
+      onValueChange={(next) => {
+        if (next) {
+          setTheme(next);
+        }
+      }}
+      aria-label="Theme"
+      data-theme-toggle=""
+      className={className}
+    >
+      {items.map(({ value, label, Icon }) => (
+        <ToggleGroupItem
+          key={value}
+          value={value}
+          size="icon"
+          aria-label={label}
         >
-          <Icon className="size-full" fill="currentColor" />
-        </button>
+          <Icon className="icon" aria-hidden />
+        </ToggleGroupItem>
       ))}
-    </div>
+    </ToggleGroup>
   );
 }

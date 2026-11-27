@@ -5,6 +5,7 @@
     "pages": [
       "---Get Started---",
       "index",
+      "quick-start",
       "registry",
       "namespace",
       "taste",
