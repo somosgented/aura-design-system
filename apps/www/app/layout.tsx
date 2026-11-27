@@ -7,7 +7,12 @@ import { DocsI18nProvider } from "@/components/layout/contexts/i18n";
 import { AuraThemeProvider } from "@/components/theme/AuraThemeProvider";
 import { ThemeBootScript } from "@/components/theme/ThemeBootScript";
 import { AURA_THEME_BOOT_SCRIPT } from "@/lib/aura-theme-boot";
-import { siteDescription, siteName, siteOgImage } from "@/utils/site";
+import {
+  siteDescription,
+  siteName,
+  siteOgImage,
+  siteUrl,
+} from "@/utils/site";
 
 const gabarito = Gabarito({
   subsets: ["latin"],
@@ -15,6 +20,7 @@ const gabarito = Gabarito({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: siteName,
   description: siteDescription,
   icons: {

@@ -34,9 +34,9 @@ function SiteShellInner({ tree, variant, children }: SiteShellProps) {
         <main
           id="nd-docs-layout"
           className={cn(
-            "fd-default-layout flex min-w-0 flex-1 flex-col pt-(--fd-nav-height) max-md:[--fd-sidebar-width:0px] xl:[--fd-toc-width:268px]",
+            "fd-default-layout flex min-w-0 flex-1 flex-col pt-(--fd-nav-height) max-lg:[--fd-sidebar-width:0px] xl:[--fd-toc-width:268px]",
             expanded
-              ? "md:ps-(--sidebar-width) md:[--fd-sidebar-width:var(--sidebar-width)]"
+              ? "lg:ps-(--sidebar-width) lg:[--fd-sidebar-width:var(--sidebar-width)]"
               : "[--fd-sidebar-width:0px]",
           )}
         >
@@ -58,7 +58,8 @@ export function SiteShell({ tree, variant, children }: SiteShellProps) {
   return (
     <TreeContextProvider tree={tree}>
       <SidebarProvider
-        className="min-w-0 flex-col overflow-x-clip [--fd-nav-height:56px] md:[--fd-nav-height:100px] on-root:[--fd-nav-height:56px] md:on-root:[--fd-nav-height:100px]"
+        mobileBreakpoint={1024}
+        className="min-w-0 flex-col overflow-x-clip [--fd-nav-height:56px] lg:[--fd-nav-height:100px] on-root:[--fd-nav-height:56px] lg:on-root:[--fd-nav-height:100px]"
         style={{ "--sidebar-width": "17rem" } as CSSProperties}
       >
         <SiteShellInner tree={tree} variant={variant}>
