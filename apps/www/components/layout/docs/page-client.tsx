@@ -30,7 +30,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/Collapsible";
-import { useSidebar } from "@/components/layout/contexts/sidebar";
+import { useSidebar } from "@/components/ui/Sidebar";
 import { useTOCItems } from "@/components/ui/Toc";
 import { useActiveAnchor } from "fumadocs-core/toc";
 
@@ -166,7 +166,8 @@ export function PageTOCPopoverContent(props: ComponentProps<"div">) {
 export function PageTOCPopover(props: ComponentProps<"div">) {
   const ref = useRef<HTMLElement>(null);
   const [open, setOpen] = useState(false);
-  const { collapsed } = useSidebar();
+  const { state, isMobile } = useSidebar();
+  const collapsed = state === "collapsed" || isMobile;
   const { isTransparent } = useNav();
 
   const onClick = useCallback(
@@ -393,7 +394,8 @@ export function PageBreadcrumb({
 }
 
 export function PageTOC(props: ComponentProps<"div">) {
-  const { collapsed } = useSidebar();
+  const { state, isMobile } = useSidebar();
+  const collapsed = state === "collapsed" || isMobile;
   const offset = collapsed ? "0px" : "var(--fd-layout-offset)";
 
   return (

@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import { Search, Loader2, ArrowUpIcon, ArrowDownIcon } from "lucide-react";
-import { ArrowTopRightIcon } from "@radix-ui/react-icons";
+import { Loader2, ArrowUpIcon, ArrowDownIcon } from "lucide-react";
 import useSWR from "swr";
 import Link from "fumadocs-core/link";
 import * as React from "react";
@@ -23,9 +22,7 @@ import {
 } from "@/components/ui/Command";
 import { Kbd, KbdGroup } from "@/components/ui/Kbd";
 import { ScrollArea } from "@/components/ui/ScrollArea";
-import { cn } from "@/utils/class-names";
 import { splitSearchMarks } from "@/utils/search-index";
-import { Button } from "@/components/ui/Button";
 
 interface SearchResult {
   id: string;
@@ -153,8 +150,8 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown, true);
+    return () => window.removeEventListener("keydown", handleKeyDown, true);
   }, [open, onOpenChange]);
 
   const searchItems: SearchItem[] = useMemo(() => {
@@ -209,7 +206,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
             onChange={(e) => setQuery(e.target.value)}
           />
           <CommandPanel>
-            <ScrollArea className="max-h-[60vh]">
+            <ScrollArea className="max-h-[60vh] [&_[data-radix-scroll-area-viewport]>div]:block! [&_[data-radix-scroll-area-viewport]>div]:w-full! [&_[data-radix-scroll-area-viewport]>div]:min-w-0!">
               {showLoading && (
                 <div className="flex items-center justify-center py-6">
                   <Loader2 className="size-1 text-gray-11 animate-spin" />
@@ -239,6 +236,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                               <CommandItem
                                 key={item.value}
                                 value={item.value}
+                                className="min-w-0"
                                 onClick={() => {
                                   handleItemClick(item);
                                   window.location.href = item.url;
@@ -246,15 +244,15 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                               >
                                 <Link
                                   href={item.url}
-                                  className="block w-full"
+                                  className="block w-full min-w-0"
                                   onClick={(e) => {
                                     e.preventDefault();
                                     handleItemClick(item);
                                     window.location.href = item.url;
                                   }}
                                 >
-                                  <div className="flex flex-col gap-0.5">
-                                    <div className="font-medium text-gray-12">
+                                  <div className="flex min-w-0 flex-col gap-0.5">
+                                    <div className="min-w-0 break-words font-medium text-gray-12 [overflow-wrap:anywhere]">
                                       {item.label.includes("<mark>") ? (
                                         <SearchHighlightedText text={item.label} />
                                       ) : "contentWithHighlights" in item &&
@@ -281,19 +279,19 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                                     </div>
                                     {"description" in item &&
                                       item.description && (
-                                        <div className="text-xs text-gray-11">
+                                        <div className="min-w-0 break-words text-xs text-gray-11 [overflow-wrap:anywhere]">
                                           {item.description}
                                         </div>
                                       )}
                                     {"breadcrumbs" in item &&
                                       item.breadcrumbs &&
                                       item.breadcrumbs.length > 0 && (
-                                        <div className="text-xs text-gray-11">
+                                        <div className="min-w-0 break-words text-xs text-gray-11 [overflow-wrap:anywhere]">
                                           {item.breadcrumbs.join(" / ")}
                                         </div>
                                       )}
                                     {"type" in item && item.type !== "page" && (
-                                      <div className="text-xs text-gray-11 truncate">
+                                      <div className="min-w-0 truncate text-xs text-gray-11">
                                         {item.url}
                                       </div>
                                     )}
@@ -323,11 +321,11 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                     <ArrowDownIcon />
                   </Kbd>
                 </KbdGroup>
-                <span>Navigate</span>
+                <span className="hidden sm:inline">Navigate</span>
               </div>
               <div className="flex items-center gap-0.5">
                 <Kbd>↵</Kbd>
-                <span>Open</span>
+                <span className="hidden sm:inline">Open</span>
               </div>
             </div>
             <div className="flex items-center gap-0.5">
@@ -340,59 +338,5 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
         </Command>
       </CommandDialogPopup>
     </CommandDialog>
-  );
-}
-
-interface SearchDialogTriggerProps {
-  className?: string;
-}
-
-export function SearchDialogTrigger({ className }: SearchDialogTriggerProps) {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <>
-      <Button
-        type="button"
-        variant="pill"
-        size="sm"
-        onClick={() => setOpen(true)}
-        className={cn(
-          "inline-flex items-center gap-1 p-0.5 ps-1.5 text-sm",
-          className
-        )}
-        aria-label="Open search"
-      >
-        <Search className="size-1" />
-        <span>Search</span>
-        <div className="ms-auto inline-flex gap-0.5">
-          <Kbd>⌘</Kbd>
-          <Kbd>K</Kbd>
-        </div>
-      </Button>
-      <SearchDialog open={open} onOpenChange={setOpen} />
-    </>
-  );
-}
-
-export function SearchDialogTriggerIcon({
-  className,
-}: SearchDialogTriggerProps) {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <>
-      <Button
-        type="button"
-        onClick={() => setOpen(true)}
-        variant="pill"
-        size="icon"
-        className={cn(className)}
-        aria-label="Open search"
-      >
-        <Search className="w-1 h-1 text-gray-11" />
-      </Button>
-      <SearchDialog open={open} onOpenChange={setOpen} />
-    </>
   );
 }
