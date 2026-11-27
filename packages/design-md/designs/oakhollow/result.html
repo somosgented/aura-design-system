@@ -36,7 +36,7 @@ img,svg{max-width:100%;}
 .oh{--aura-accents-primary:var(--accent);--aura-button-hover:var(--accent-hover);--aura-input-bg:var(--canvas);--aura-input-placeholder-color:var(--muted);--aura-link:var(--accent);--aura-outline:2px solid var(--focus);}
 .oh :focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
 .oh .oh-on-dark-scope :focus-visible,.oh #oh-footer :focus-visible{outline:2px solid var(--on-dark);outline-offset:2px;}
-.oh .oh-shop-tile :focus-visible,.oh .oh-band-sage :focus-visible,.oh .oh-tile-rose :focus-visible{outline:2px solid var(--ink);outline-offset:2px;}
+.oh .oh-shop-tile :focus-visible,.oh .oh-band-sage :focus-visible,.oh .oh-tile-rose :focus-visible,.oh .oh-on-dark-scope .oh-plum-panel :focus-visible{outline:2px solid var(--ink);outline-offset:2px;}
 
 .oh button,.oh input,.oh select,.oh textarea{font-family:var(--aura-font-stack);}
 
@@ -164,6 +164,9 @@ html.motion .oh-shop-chev{transition:transform 0.2s ease;}
 .oh-car-track{display:flex;gap:16px;transform:translateX(0);}
 html.motion .oh-car-track{transition:transform 0.25s ease;}
 .oh-car-card{flex:0 0 calc((100% - 32px) / 3);width:calc((100% - 32px) / 3);border-radius:8px;overflow:hidden;background:var(--surface-card);color:var(--ink);display:flex;flex-direction:column;min-width:0;}
+.oh-car-card > a{position:relative;flex:1 1 auto;display:flex;flex-direction:column;min-width:0;border-radius:8px;color:inherit;}
+.oh .oh-car-card > a:focus-visible{outline:2px solid transparent;outline-offset:-2px;}
+.oh .oh-car-card > a:focus-visible::after{content:"";position:absolute;inset:0;z-index:1;border-radius:inherit;border:3px solid var(--ink);box-shadow:inset 0 0 0 2px var(--surface-card);pointer-events:none;}
 .oh-car-art{width:100%;aspect-ratio:4/3;background:var(--art-wall);overflow:hidden;}
 .oh-car-art svg{width:100%;height:100%;display:block;}
 .oh-car-cap{padding:16px;background:var(--surface-card);flex:1;}
@@ -504,7 +507,7 @@ html.motion .oh-strip-float[data-paused="true"]{animation-play-state:paused;}
             <button type="button" class="oh-shop-trigger" id="oh-shop-toggle" aria-expanded="false" aria-controls="oh-shop-panel">
               <span id="oh-shop-label">Shop: Oakhollow Central (sample)</span>
               <svg class="oh-shop-chev" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M4 10l4-4 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
             <div class="oh-shop-panel" id="oh-shop-panel" hidden>
@@ -1632,8 +1635,14 @@ html.motion .oh-strip-float[data-paused="true"]{animation-play-state:paused;}
     var gap=window.innerWidth<640?0:16;
     var step=carCards[0].getBoundingClientRect().width+gap;
     carTrack.style.transform="translateX("+(-carIdx*step)+"px)";
-    carPrev.disabled=carIdx===0;
-    carNext.disabled=carIdx>=maxIdx;
+    var prevOff=carIdx===0;
+    var nextOff=carIdx>=maxIdx;
+    if(!prevOff)carPrev.disabled=false;
+    if(!nextOff)carNext.disabled=false;
+    if(prevOff&&!nextOff&&document.activeElement===carPrev)carNext.focus();
+    if(nextOff&&!prevOff&&document.activeElement===carNext)carPrev.focus();
+    carPrev.disabled=prevOff;
+    carNext.disabled=nextOff;
     carCards.forEach(function(card,i){
       var inView=i>=carIdx&&i<carIdx+visible;
       card.style.visibility=inView?"visible":"hidden";
