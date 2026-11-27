@@ -1,0 +1,86 @@
+---
+title: Quick Start
+description: Set up Aura in a new or existing Next.js app, add a component from the @aura registry, and render it.
+icon: Rocket
+---
+
+import { Steps, Step } from "fumadocs-ui/components/steps";
+
+<Steps>
+  <Step>
+    ### Set up your project
+
+    Create a new Next.js app with Aura:
+
+    ```bash
+    pnpm dlx @aura-design/cli@latest init
+    ```
+
+    Or apply Aura to an existing Next.js app (skips `create-next-app`):
+
+    ```bash
+    pnpm dlx @aura-design/cli@latest setup
+    ```
+
+    Pass `--dir` when the app is not the current working directory:
+
+    ```bash
+    pnpm dlx @aura-design/cli@latest setup --dir ./apps/web
+    ```
+
+    Both commands write `components.json` with the `@aura` and `@aura-dev` registries, generate light and dark accent and gray scales into `globals.css`, install `@aura/class-names`, `@aura/page-get-starter`, `@aura/css-main`, `@aura/rules`, `@aura/skill-aura`, and `@aura/skills`, and run blueprint scaffolding.
+  </Step>
+
+  <Step>
+    ### Add your first component
+
+    Install `Button` from the `@aura` registry:
+
+    ```bash
+    pnpm dlx shadcn@latest add @aura/button
+    ```
+
+    This command requires the `@aura` namespace in `components.json`, which `init` and `setup` configure. See [Namespaces](/docs/namespace).
+  </Step>
+
+  <Step>
+    ### Use the component
+
+    Import `Button` from `@/components/ui/Button` and pass one of its variants:
+
+    ```tsx
+    import { Button } from "@/components/ui/Button";
+
+    export function Example() {
+      return (
+        <div className="flex flex-wrap gap-1">
+          <Button variant="fill">Fill</Button>
+          <Button variant="pill">Pill</Button>
+          <Button variant="link">Link</Button>
+          <Button variant="menu">Menu</Button>
+        </div>
+      );
+    }
+    ```
+  </Step>
+
+  <Step>
+    ### Retheme colors (optional)
+
+    Regenerate light and dark scales in `globals.css` from accent and gray seed colors:
+
+    ```bash
+    pnpm dlx @aura-design/cli@latest colors --accent "#4015ca" --gray "#7254cb"
+    ```
+
+    You can also pass `--background <hex>` for a custom light canvas. The command runs a WCAG check before writing `globals.css`.
+  </Step>
+</Steps>
+
+## Next steps
+
+- [Installation](/docs/installation) — full details on `init`, `setup`, and installing skills
+- [CLI](/docs/cli) — options for `init`, `setup`, `link`, `blueprint`, `colors`, `typography generate`, and `spacing`
+- [Foundations](/docs/foundations) — color steps, typography, spacing, icons, and accessibility
+- [Components](/docs/components) — browse registry components and variants
+- [Rules](/docs/rules) — process rules and the Aura design skill

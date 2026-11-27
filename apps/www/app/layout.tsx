@@ -3,7 +3,6 @@ import { RootProvider } from "fumadocs-ui/provider/next";
 import { Gabarito } from "next/font/google";
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
-import { SidebarProvider } from "@/components/layout/contexts/sidebar";
 import { DocsI18nProvider } from "@/components/layout/contexts/i18n";
 import { AuraThemeProvider } from "@/components/theme/AuraThemeProvider";
 import { ThemeBootScript } from "@/components/theme/ThemeBootScript";
@@ -46,9 +45,7 @@ export default function Layout({ children }: LayoutProps<"/">) {
           theme={{ disableTransitionOnChange: false }}
         >
           <AuraThemeProvider>
-            <DocsI18nProvider>
-              <SidebarProvider>{children}</SidebarProvider>
-            </DocsI18nProvider>
+            <DocsI18nProvider>{children}</DocsI18nProvider>
           </AuraThemeProvider>
         </RootProvider>
         <Analytics />
