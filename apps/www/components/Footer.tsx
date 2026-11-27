@@ -41,7 +41,7 @@ const columns = [
       },
       {
         href: "https://design-md.auradesignsystem.com/",
-        label: "DESIGN.md",
+        label: "Flavors",
         external: true,
       },
     ],
