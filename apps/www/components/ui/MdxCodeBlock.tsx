@@ -118,6 +118,7 @@ export function CodeBlock({
         tabIndex={0}
         className={cn(
           "py-1 px-0.5 md:px-1.5 overflow-auto max-h-[600px] fd-scroll-container focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-fd-ring",
+          !title && allowCopy && "me-3.5",
           viewportProps.className
         )}
         style={
@@ -129,17 +130,7 @@ export function CodeBlock({
           } as object
         }
       >
-        <Pre
-          style={
-            !title
-              ? {
-                  paddingRight: "calc(var(--spacing) * 10)",
-                }
-              : undefined
-          }
-        >
-          {children}
-        </Pre>
+        <Pre>{children}</Pre>
       </div>
     </figure>
   );

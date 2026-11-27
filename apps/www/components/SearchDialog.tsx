@@ -201,7 +201,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
       <CommandDialogPopup>
         <Command items={groupedItems}>
           <CommandInput
-            placeholder="Search documentation…"
+            placeholder="Search docs…"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
